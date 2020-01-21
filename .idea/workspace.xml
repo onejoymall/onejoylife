@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="onejoylife:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1ed6b7b1-70bf-4c6b-9a4c-d5766c46653d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/29c4f644-0554-4c05-b838-0530f4b85ee8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/29c4f644-0554-4c05-b838-0530f4b85ee8/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/onejoylife.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/onejoylife_war_exploded/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/config/datasource-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/config/locale-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/config/root-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/config/servlet-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/properties/assist_properies.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/properties/jdbc_properties.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/properties/qremail_properies.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/sqlmap/sql-map-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/sqlmap/userMngMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/filter/RequestFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/interceptor/SessionInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CORSFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CustomTokenEnhancer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2AuthorizationServerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2ResourceServerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/TokenUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/WebSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDaoImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/model/UserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomAuthenticationProvider.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService$UserRepositoryUserDetails.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/webapp/mall/controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/datasource-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/locale-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/root-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/servlet-context.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/assist_properies.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/jdbc_properties.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/qremail_properies.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/sqlmap/sql-map-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/sqlmap/userMngMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/filter/RequestFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/interceptor/SessionInterceptor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/CORSFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/CustomTokenEnhancer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/OAuth2AuthorizationServerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/OAuth2ResourceServerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/TokenUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/WebSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/dao/UserInfoDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/dao/UserInfoDaoImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/model/UserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomAuthenticationProvider.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomUserDetailService$UserRepositoryUserDetails.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomUserDetailService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/support/RereadableRequestWrapper$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/support/RereadableRequestWrapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/mall/controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/activation-1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/aopalliance-1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/api-common-1.7.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/aspectjrt-1.6.10.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/auto-value-1.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/bcpkix-jdk15on-1.56.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/bcprov-jdk15on-1.56.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-codec-1.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-dbcp-1.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-io-2.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-lang3-3.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-logging-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-pool-1.5.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/ehcache-core-2.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/error_prone_annotations-2.1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/firebase-admin-6.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-1.30.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-grpc-1.30.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-httpjson-0.47.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-client-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-client-gson-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-services-storage-v1-rev135-1.24.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-auth-library-credentials-0.11.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-auth-library-oauth2-http-0.11.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-1.43.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-grpc-1.43.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-http-1.43.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-firestore-0.61.0-beta.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-storage-1.43.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-appengine-1.24.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-gson-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-jackson-1.24.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-jackson2-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-oauth-client-1.25.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-auth-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-context-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-core-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-netty-shaded-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-protobuf-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-protobuf-lite-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-stub-1.13.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gson-2.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/guava-20.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/httpclient-4.5.5.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/httpcore-4.4.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/j2objc-annotations-1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-annotations-2.5.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-core-2.5.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-core-asl-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-databind-2.5.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/javax.inject-1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/javax.mail-1.5.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jcl-over-slf4j-1.6.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jna-3.3.0-platform.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jna-3.3.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/joda-time-2.9.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/json-20180130.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/json-simple-1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jsr305-3.0.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jstl-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jul-to-slf4j-1.7.22.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4j-1.2.15.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4j-over-slf4j-1.7.22.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4jdbc-remix-0.2.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/logback-classic-1.1.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/logback-core-1.1.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mariadb-java-client-1.1.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-3.4.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-ehcache-1.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-spring-1.3.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-buffer-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-codec-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-codec-http-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-common-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-handler-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-resolver-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-transport-4.1.22.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-api-0.15.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-grpc-metrics-0.12.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-grpc-util-0.15.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-http-util-0.15.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-cloud-firestore-v1beta1-0.26.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-common-protos-1.12.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-iam-v1-0.12.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/protobuf-java-3.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/protobuf-java-util-3.6.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/slf4j-api-1.6.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/slf4j-log4j12-1.6.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/snakeyaml-1.17.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-aop-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-beans-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-1.4.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-autoconfigure-1.4.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-1.4.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-logging-1.4.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-mail-1.4.3.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-context-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-context-support-4.3.5.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-core-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-expression-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-jdbc-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-acl-4.2.6.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-config-4.2.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-core-4.2.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-jwt-1.0.9.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-oauth2-2.1.0.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-taglibs-4.2.6.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-web-4.2.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-tx-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-web-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-webmvc-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-websocket-4.3.2.RELEASE.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/threetenbp-1.3.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/views/mall/login.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/snapshot/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unnamed.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/images/bg_play_pause.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/images/bx_loader.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/images/controls.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/joinform.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/jquery.bxslider.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/mem-com.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/mo/mo-joinform.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/arrow-down-bk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/arrow-down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/arrow-left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/arrow-right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/arrow-up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/beauty-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/bg_1x9.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/chat-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/cloth-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/cloth-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/digital-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/digital-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/dot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/e-point-bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/e-point-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/e-point-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/e-point-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/event1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/event2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/event3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/event4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/exhibition1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/exhibition2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/exhibition3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/exhibition4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/exhibition5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/facebook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/food-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/food-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/ftc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/ico_arrow_56x56.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/but-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/but-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/but-g-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/but-g-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/icon-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/icon-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/icon-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/icon/icon-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/instagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/kakao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/kcp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/kcp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/kisac.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/list-img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/list-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/list-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/list-img4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/list-img5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/living-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/living-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/main-slider-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/main-slider-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/main-slider-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/main-slider-img4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/menu-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/mini-banner6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/naverblog.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/right.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/share.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/sports-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/sub-slider-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/sub-slider-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/sub-slider-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/twitter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/x-red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/img/youtube.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/js/jquery.bxslider.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/js/prefixfree.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/js/swiper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/assets/js/swiper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/images/bg_play_pause.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/images/bx_loader.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/images/controls.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/joinform.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/jquery.bxslider.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/mem-com.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/mo/mo-joinform.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/arrow-down-bk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/arrow-down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/arrow-left.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/arrow-right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/arrow-up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/beauty-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/bg_1x9.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/chat-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/cloth-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/cloth-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/digital-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/digital-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/dot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/e-point-bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/e-point-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/e-point-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/e-point-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/event1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/event2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/event3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/event4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/exhibition1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/exhibition2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/exhibition3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/exhibition4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/exhibition5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/facebook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/food-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/food-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/ftc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/ico_arrow_56x56.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/but-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/but-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/but-g-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/but-g-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/icon-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/icon-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/icon-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/icon/icon-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/instagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/kakao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/kcp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/kcp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/kisac.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/list-img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/list-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/list-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/list-img4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/list-img5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/living-ic-ac.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/living-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/main-slider-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/main-slider-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/main-slider-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/main-slider-img4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/menu-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/mini-banner6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/naverblog.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/right.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/share.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/sports-ic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/sub-slider-img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/sub-slider-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/sub-slider-img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/twitter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/x-red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/img/youtube.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/js/jquery.bxslider.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/js/prefixfree.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/js/swiper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resources/js/swiper.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/common/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/common/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/config/servlet-context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/config/servlet-context.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/mall/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/mall/login.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="416" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="onejoylife: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="onejoylife: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="user_auth_info: table" type="dbc44a63:MariaImplModel$Table" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Jsp File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="D:\restapi\onejoylife" />
+        <option value="D:\restapi\onejoylife\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/apache-maven-3.6.0" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.0\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1WU03LWvWqeakmStMtyhnYlDglu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/resources" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15332031" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\restapi\onejoylife\web" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\restapi\onejoylife\web\resources" />
+      <recent name="D:\restapi\onejoylife\src\main\java\com\webapp\common\support" />
+      <recent name="D:\restapi\onejoylife\src\main\java\com\webapp\common" />
+      <recent name="D:\restapi\onejoylife\src\main\java\com\webapp\common\interceptor" />
+      <recent name="D:\restapi\onejoylife\src\main\java\com\webapp\common\security\interceptor" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 7.0.94" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.94" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <deployment>
+        <artifact name="onejoylife:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_onejoylife" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="53017" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="onejoylife:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@5775a5a7" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ed6b7b1-70bf-4c6b-9a4c-d5766c46653d" name="Default Changelist" comment="" />
+      <created>1579188665111</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579188665111</updated>
+      <workItem from="1579188666414" duration="10560000" />
+    </task>
+    <task id="LOCAL-00001">
+      <created>1579195587958</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579195587958</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1st Default">
+      <created>1579195691125</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1579195691126</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="1st Default" />
+    <option name="LAST_COMMIT_MESSAGE" value="1st Default" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1688" y="0" key="#Project_Structure" timestamp="1579194844820">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1688" y="0" key="#Project_Structure/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579194844820" />
+    <state x="-1688" y="0" key="#Tomcat_Server" timestamp="1579190640295">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1688" y="0" key="#Tomcat_Server/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579190640295" />
+    <state x="-1826" y="-3" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579194852080">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1826" y="-3" key="#com.intellij.execution.impl.EditConfigurationsDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579194852080" />
+    <state x="-1653" y="20" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1579190803347">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1653" y="20" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579190803347" />
+    <state x="-1724" y="-64" key="CommitChangelistDialog2" timestamp="1579195688871">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1724" y="-64" key="CommitChangelistDialog2/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195688871" />
+    <state x="-1500" y="82" key="FileChooserDialogImpl" timestamp="1579195304274">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1500" y="82" key="FileChooserDialogImpl/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195304274" />
+    <state x="-1402" y="233" width="261" height="218" key="Github.ShareDialog" timestamp="1579195440123">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1402" y="233" width="261" height="218" key="Github.ShareDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195440123" />
+    <state x="-1487" y="47" key="Github.UntrackedFilesDialog" timestamp="1579195468984">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1487" y="47" key="Github.UntrackedFilesDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195468984" />
+    <state width="1371" height="404" key="GridCell.Tab.0.bottom" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.0.bottom/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.0.center" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.0.center/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.0.left" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.0.left/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.0.right" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.0.right/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.1.bottom" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.1.bottom/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.1.center" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.1.center/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.1.left" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.1.left/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.1.right" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.1.right/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.2.bottom" timestamp="1579258667689">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.2.bottom/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667689" />
+    <state width="1371" height="404" key="GridCell.Tab.2.center" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.2.center/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.2.left" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.2.left/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.2.right" timestamp="1579258667688">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.2.right/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
+    <state width="1371" height="404" key="GridCell.Tab.3.bottom" timestamp="1579258667689">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.3.bottom/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667689" />
+    <state width="1371" height="404" key="GridCell.Tab.3.center" timestamp="1579258667689">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.3.center/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667689" />
+    <state width="1371" height="404" key="GridCell.Tab.3.left" timestamp="1579258667689">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.3.left/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667689" />
+    <state width="1371" height="404" key="GridCell.Tab.3.right" timestamp="1579258667689">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="1371" height="404" key="GridCell.Tab.3.right/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667689" />
+    <state width="207" height="477" key="HiddenNamespacesPopup" timestamp="1579193425544">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state width="207" height="477" key="HiddenNamespacesPopup/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579193425544" />
+    <state x="-1365" y="-98" key="SettingsEditor" timestamp="1579197140237">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1365" y="-98" key="SettingsEditor/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579197140237" />
+    <state x="-1688" y="75" key="Vcs.Push.Dialog.v2" timestamp="1579195702500">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1688" y="75" key="Vcs.Push.Dialog.v2/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195702500" />
+    <state x="-1564" y="-18" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1579193632826">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1564" y="-18" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579193632826" />
+    <state x="1127" y="635" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579541649831">
+      <screen x="75" y="0" width="2485" height="1440" />
+    </state>
+    <state x="1127" y="635" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2635.363.1845.1080/75.0.2485.1440@75.0.2485.1440" timestamp="1579541649831" />
+    <state x="-1476" y="259" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195826622" />
+    <state x="-1587" y="-62" width="745" height="807" key="find.popup" timestamp="1579196696839">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1587" y="-62" width="745" height="807" key="find.popup/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579196696839" />
+    <state x="-1466" y="236" key="git4idea.ui.GitResetDialog" timestamp="1579195821296">
+      <screen x="-2560" y="-363" width="2560" height="1410" />
+    </state>
+    <state x="-1466" y="236" key="git4idea.ui.GitResetDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195821296" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/onejoylife$Tomcat_7_0_94.ic" NAME="Tomcat 7.0.94 Coverage Results" MODIFIED="1579196003069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

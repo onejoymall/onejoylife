@@ -1,0 +1,41 @@
+*{box-sizing: border-box;}
+/* header */
+.header-tit {
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+.header-tit > p {
+    font-size: 1.5rem;
+    float: left;
+}
+.header-tit > h3 {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-right: 23px
+}
+/* logo */
+.logo-img {
+    height: 50px;
+    background: skyblue;
+    margin: 20px 0;
+}
+/* form */
+.join-box {
+
+}
+
+
+
+
+/* joni */
+.join-box {
+    margin: 50px auto 0;
+    width: 200px;
+    height: 50px;
+    background: #da394d;
+}
+.join-box > a {
+    text-align: center;
+    color: #fff;
+    display: block;
+    line-height: 3rem;
+}
