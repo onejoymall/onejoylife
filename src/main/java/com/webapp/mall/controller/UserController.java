@@ -13,7 +13,7 @@ import java.util.Map;
 @Controller
 public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = "application/json")
-    public String index(@RequestParam HashMap params, ModelMap model) throws Exception {
+    public String mallLogin(@RequestParam HashMap params, ModelMap model) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
         try{
@@ -25,5 +25,19 @@ public class UserController {
 //        model.addAttribute("userList", userList);
 
         return "mall/login";
-    }  
+    }
+    @RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "application/json")
+    public String mallSignup(@RequestParam HashMap params, ModelMap model) throws Exception {
+//        List<Map<String, Object>> userList = null;
+//        Map<String, String> param = new HashMap<String, String>();
+
+        try{
+            //
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+//        model.addAttribute("test", "test");
+
+        return "mall/signup";
+    }
 }
