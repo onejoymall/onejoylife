@@ -36,27 +36,28 @@
                     <li>통신판매업신고 2019-서울서초-0844 <a href="#">[사업자정보확인]</a></li>
                     <li>주소 : 06643 서울특별시 서초구 서리풀길 4 (서초동) 영호빌딩 4층</li>
                     <li>개인정보관리책임자 : <a href="mailto:cs@onejoy.co.kr">김수현(cs@onejoy.co.kr)</a></li>
-                    <li>Copyright ONEJOYmall. All rights reserved. / hosting by cafe24 심플렉스인터넷(주)</li>
+                    <li>Copyright ONEJOYlife. All rights reserved. / hosting by cafe24 심플렉스인터넷(주)</li>
                 </ul>
             </div>
             <div class="footer-bottom-bottom">
                 <div class="authentication">
-                    <div><img src="/resources/assets/img/kisac.png" alt="kisa"/></div>
-                    <div><img src="/resources/assets/img/kcp.png" alt="kcp"/></div>
-                    <div><img src="/resources/assets/img/kcp2.png" alt="kcp2"/></div>
-                    <div><img src="/resources/assets/img/ftc.png" alt="공정거래위원회"/></div>
+                    <div><img src="assets/img/kisac.png" alt="kisa"/></div>
+                    <div><img src="assets/img/kcp.png" alt="kcp"/></div>
+                    <div><img src="assets/img/kcp2.png" alt="kcp2"/></div>
+                    <div><img src="assets/img/ftc.png" alt="공정거래위원회"/></div>
                 </div>
                 <div class="sns-list">
-                    <div><img src="/resources/assets/img/instagram.png" alt="인스타그램"/></div>
-                    <div><img src="/resources/assets/img/kakao.png" alt="카카오톡"/></div>
-                    <div><img src="/resources/assets/img/facebook.png" alt="페이스북"/></div>
-                    <div><img src="/resources/assets/img/naverblog.png" alt="네이버블로그"/></div>
-                    <div><img src="/resources/assets/img/twitter.png" alt="트위터"/></div>
+                    <div><img src="assets/img/instagram.png" alt="인스타그램"/></div>
+                    <div><img src="assets/img/kakao.png" alt="카카오톡"/></div>
+                    <div><img src="assets/img/facebook.png" alt="페이스북"/></div>
+                    <div><img src="assets/img/naverblog.png" alt="네이버블로그"/></div>
+                    <div><img src="assets/img/twitter.png" alt="트위터"/></div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+
 <script>
     $(document).ready(function(){
         $('.gnb>li:first-child').mouseover(function(){
@@ -82,6 +83,7 @@
             },100);
         });
     });
+
 </script>
 </body>
 </html>

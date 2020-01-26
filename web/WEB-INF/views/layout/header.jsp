@@ -8,19 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <title>onejoymall</title>
+    <title>Onejoy life</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=yes">
     <!--    <meta name="viewport" content="user-scalable=yes, width=1200, target-densitydpi=medium-dpi" />-->
-    <link href="/resources/assets/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="/resources/assets/css/common.css" rel="stylesheet" type="text/css">
-    <link href="/resources/assets/css/header.css" rel="stylesheet" type="text/css">
-    <link href="/resources/assets/css/footer.css" rel="stylesheet" type="text/css">
-    <link href="/resources/assets/css/login.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/header.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/footer.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/${style}.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,700&display=swap&subset=korean" rel="stylesheet">
     <!--
     [if lt IE 9]>
@@ -29,15 +30,15 @@
 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-    <script src="/resources/assets/js/jquery.bxslider.min.js"></script>
+    <script src="assets/js/jquery.bxslider.min.js"></script>
 </head>
 <body>
 <header class="header">
     <div class="usermenu-section">
         <div class="usermenu-inner">
             <ul class="usermenu">
-                <li><a href="joinform.html">회원가입</a></li>
-                <li><a href="login.html">로그인</a></li>
+                <li><a href="/signup">회원가입</a></li>
+                <li><a href="/login">로그인</a></li>
                 <li><a href="#">장바구니</a></li>
                 <li><a href="#">주문배송</a></li>
                 <li><a href="#">고객센터</a></li>
@@ -46,7 +47,7 @@
     </div>
     <div class="header-logo">
         <div class="header-logo-inner">
-            <a href="../index.html"><h1>onejoymall</h1></a>
+            <a href="/"><h1>onejoylife</h1></a>
         </div>
     </div>
     <div class="gnb-section">

@@ -28,7 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            .antMatchers("/api/assist/order")
 //            .antMatchers("/api/assist/result")
             .antMatchers("/login")
-//            .antMatchers("/index")
+            .antMatchers("/loginProc")
+            .antMatchers("/signup")
+            .antMatchers("/index")
+            .antMatchers("/authemail")
         	.antMatchers("/");
     }
 

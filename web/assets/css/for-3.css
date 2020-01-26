@@ -1,0 +1,99 @@
+*{box-sizing: border-box;}
+body{font-family: "noto sans kr"!important;}
+.login-box{width: 1100px; margin: 0 auto; padding:40px 0; letter-spacing: -0.5px;}
+.path{overflow: hidden;}
+.path > ul > li {
+    float: left;
+    list-style: none;
+    font-size: 0.8rem;
+}
+.path > ul > li > a {color: rgb(136, 136, 136);}
+.path-color{
+    color: #da394d;
+}
+.h2-box {
+    padding: 30px 0;
+    text-align: center;
+    color: #232a32;
+}
+.h2-box > h2 {
+    font-size: 2rem;
+}
+.h2-box > p {
+    font-size: 1rem;
+    margin-top: 5px;
+}
+/* tab-box */
+.tab-box{overflow: hidden;}
+.rd-box{display: none;}
+.tab-box > label {
+    display: block;
+    float: left;
+    width: calc(100% / 2);
+    border-bottom: 1px solid #232a32;
+    border-top: 0.5px solid #ccc;
+    border-right: 0.5px solid #ccc;
+    color: #ccc;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 50px;
+    text-align: center;
+    padding: 10px 0;
+}
+.for-id,
+.for-pw {
+    clear: both;
+    border-top: 2px solid #232a32;
+    border-bottom: 1px solid #d3d3d5;
+    background: #f7f7f9;
+}
+.box-in{
+    margin: 60px auto;
+    width: 565px;
+}
+.tit-id {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+}
+.tit-id > span {
+    color: #da394d;
+}
+/* but */
+.but-type2 {
+    margin: 0 auto;
+    text-align: center;
+    width: 270px;
+    height: 60px;
+    background: #232a32;
+}
+.but-1 {
+    font-size: 1.5rem;
+    color: #fff;
+    display: block;
+    line-height: 3.5rem;
+}
+/* tab */
+.rd-box:nth-of-type(1), .rd-box:nth-of-type(1) ~ div:nth-of-type(1), 
+.rd-box:nth-of-type(2), .rd-box:nth-of-type(2) ~ div:nth-of-type(2) {
+    display:none
+}
+.rd-box:nth-of-type(1):checked ~ div:nth-of-type(1), 
+.rd-box:nth-of-type(2):checked ~ div:nth-of-type(2) {
+    display:block
+}
+.tab-box > label:hover {
+    cursor:pointer
+}
+.rd-box:nth-of-type(1):checked ~ label:nth-of-type(1){
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #232a32;
+    color:#232a32
+}
+.rd-box:nth-of-type(2):checked ~ label:nth-of-type(2){
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #232a32;
+    color:#232a32
+}
