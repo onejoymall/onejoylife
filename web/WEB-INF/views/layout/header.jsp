@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,6 +50,7 @@
     <c:if test="${loginStatus}">
         <li><a href="#">장바구니</a></li>
         <li><a href="#">주문배송</a></li>
+        <li><a href="/MyPage/DashBoard">MyPage</a></li>
         <li><a href="#">고객센터</a></li>
         <li><a href="/sign/logout">로그아웃</a></li>
     </c:if>
