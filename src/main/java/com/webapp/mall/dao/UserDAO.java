@@ -27,6 +27,12 @@ public class UserDAO {
     public void updateToken(Map<String, String> params) throws SQLException {
         sql.update("mall.UserMapper.updateToken", params);
     }
+    public void updatePasswordChangeCode(Map<String, String> params) throws SQLException {
+        sql.update("mall.UserMapper.updatePasswordChangeCode", params);
+    }
+    public void updatePasswordChange(Map<String, String> params) throws SQLException {
+        sql.update("mall.UserMapper.updatePasswordChange", params);
+    }
     public void insertUser(Map<String, String> params) throws SQLException {
         sql.insert("mall.UserMapper.insertUser", params);
     }

@@ -54,12 +54,27 @@
 
         ]]>
         <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
+        <if test="password_change_code != null"> <![CDATA[AND A.password_change_code= #{password_change_code} ]]></if>
         <![CDATA[ limit 1 ]]>
     </select>
     <update id="updateToken" parameterType="String">
         <![CDATA[
         update user set
         access_token=#{access_token}
+        where email = #{email}
+        ]]>
+    </update>
+    <update id="updatePasswordChangeCode" parameterType="String">
+        <![CDATA[
+        update email_auth set
+        password_change_code=#{password_change_code}
+        where email = #{email}
+        ]]>
+    </update>
+    <update id="updatePasswordChange" parameterType="String">
+        <![CDATA[
+        update user set
+        password=#{password}
         where email = #{email}
         ]]>
     </update>

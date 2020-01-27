@@ -11,11 +11,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import static org.springframework.util.CollectionUtils.isEmpty;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 
 @Controller
 public class UserController {
@@ -27,21 +28,29 @@ public class UserController {
     private NumberGender numberGender;
     @Autowired
     private UserDAO userDAO;
-    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = "application/json")
-    public String mallLogin(@RequestParam HashMap params, ModelMap model) throws Exception {
-//        List<Map<String, Object>> userList = null;
-//        Map<String, String> param = new HashMap<String, String>();
+    // 로그아웃 하는 부분
+    @RequestMapping(value="/sign/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 초기화
+        return "redirect:/sign/login"; // 로그아웃 후 로그인화면으로 이동
+    }
+    @RequestMapping(value = "/sign/login", method = RequestMethod.GET, produces = "application/json")
+    public String mallLogin(@RequestParam HashMap params, ModelMap model,HttpServletRequest request) throws Exception {
+        String returnString ="mall/login";
         try{
-//            param.put("USR_ID","") //사용자조회시 사용
-//            userList = userDAO.getUserList(params);
+            HttpSession session = request.getSession();
+            Object obj = session.getAttribute("login");
+            if ( obj != null ){
+                returnString ="redirect:/";
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
         model.addAttribute("style", "login");
 
-        return "mall/login";
+        return returnString;
     }
-    @RequestMapping(value = "/signup")
+    @RequestMapping(value = "/sign/signup")
     public String mallSignup(@RequestParam HashMap params, ModelMap model) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
@@ -55,5 +64,38 @@ public class UserController {
 
         return "mall/signup";
     }
+    @RequestMapping(value = "/sign/findUserInfo")
+    public String findUserInfo( ModelMap model,HttpServletRequest request)throws Exception{
+        model.addAttribute("style", "for-1");
+        return "mall/findUserInfo";
+    }
+    @RequestMapping(value = "/sign/changePassword")
+    public String changePassword( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
 
+        String redirectUrl ="mall/changePassword";
+        try{
+            String email = (String)params.get("email");
+            String password_change_code = (String)params.get("password_change_code");
+//            Map<String,Object> userInfo = userDAO.getEmailAuthList(params);
+            if(isEmpty(params)){
+                redirectUrl = "redirect:/sign/findUserInfo";
+            }
+            model.addAttribute("email",email);
+            model.addAttribute("style", "for-2");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return redirectUrl;
+    }
+    @RequestMapping(value = "/sign/changePasswordDone")
+    public String changePasswordDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+        model.addAttribute("style", "for-3");
+        return "mall/changePasswordDone";
+    }
+    @RequestMapping(value = "/sign/signUpDone")
+    public String signUpDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+        model.addAttribute("style", "mem-com");
+        return "mall/signUpDone";
+    }
 }

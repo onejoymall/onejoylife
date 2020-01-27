@@ -32,7 +32,7 @@
                     <input type="checkbox" id="saveid" checked="checked" class="id-ch ">
                     아이디 저장하기
                 </label>
-                <a href="for-id-pw.html" class="id-pw">아이디/비밀번호 찾기</a>
+                <a href="<c:url value="/sign/findUserInfo"/>" class="id-pw">아이디/비밀번호 찾기</a>
             </div>
             <div class="link-box">
                 <div class="link-join">
@@ -40,7 +40,7 @@
                         <li class="txt-w">ㆍ아직 원조이몰 회원이 아니신가요?</li>
                         <li>원조이몰에 가입하시면 다양한 혜택을 누리실 수 있습니다.</li>
                     </ul>
-                    <a href="#" class="link-a">회원가입</a>
+                    <a href="<c:url value="/sign/signup"/>" class="link-a">회원가입</a>
                 </div>
                 <div class="link-nonmem">
                     <p class="txt-p2 txt-w">ㆍ비회원 주문/배송 조회가 필요하신가요?</p>
@@ -50,6 +50,7 @@
         </form>
     </div>
 </div>
+
 <script>
     $('.login-but').on("click",function () {
         var formData = $('#defaultLoginForm').serialize();
@@ -61,20 +62,22 @@
         jQuery.ajax({
             type:"GET",
             // contentType: 'application/json',
-            url:"/loginProc",
+            url:"/sign/loginProc",
             // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
             data:formData,
             success : function(data) {
                 // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
                 // TODO
-                console.log(data);
+
                 if(data.message) {
                     $('#loginCheckError').removeClass('er');
                     $('#loginCheckError').addClass('er-on');
                     $('#loginCheckError').empty();
                     $('#loginCheckError').html('* ' + data.message);
+                }else{
+                    // loginAuth(data.access_token);
+                    location.href=data.redirectUrl;
                 }
-                loginAuth(data.access_token);
             },
 
             complete : function(data) {
@@ -86,31 +89,33 @@
             }
         });
     })
-    function loginAuth(access_token){
-        jQuery.ajax({
-            type:"GET",
-            contentType: 'application/json',
-            url:"/loginProcAuth",
-            headers: {
-                'Authorization': `Bearer `+access_token,
-            },
+    // function loginAuth(access_token){
+    //     jQuery.ajax({
+    //         type:"GET",
+    //         contentType: 'application/json',
+    //         url:"/sign/loginProcAuth",
+    //         headers: {
+    //             'Authorization': `Bearer `+access_token,
+    //         },
+    //
+    //         // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+    //         // data:formData,
+    //         success : function(data) {
+    //             // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+    //             // TODO
+    //             location.href=data.redirectUrl;
+    //         },
+    //
+    //         complete : function(data) {
+    //             // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+    //             // TODO
+    //         },
+    //         error : function(xhr, status, error) {
+    //             alert("에러발생");
+    //         }
+    //     });
+    // }
 
-            // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-            // data:formData,
-            success : function(data) {
-                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                // TODO
-                location.href=data.redirectUrl;
-            },
-
-            complete : function(data) {
-                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-                // TODO
-            },
-            error : function(xhr, status, error) {
-                alert("에러발생");
-            }
-        });
-    }
 </script>
+
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

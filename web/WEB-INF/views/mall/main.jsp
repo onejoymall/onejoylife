@@ -35,7 +35,7 @@
         <h3 class="e-point-title hide">E-point 경품 추첨</h3>
         <div class="point-bnr">
             <div class="point-bnr-inner">
-                <img src="assets/img/e-point-bg.png" alt="E-point 경품 추첨. 망설이면 후회해요!" />
+                <img src="<c:url value="/assets/img/e-point-bg.png" />" alt="E-point 경품 추첨. 망설이면 후회해요!" />
             </div>
         </div>
         <div class="point-product-wrap">
@@ -44,7 +44,7 @@
                 <ul class="point-product-list">
                     <li>
                         <a href="#">
-                            <img src="assets/img/e-point-img1.png" />
+                            <img src="<c:url value="/assets/img/e-point-img1.png" />" />
                             <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
                         </a>
                         <p class="point-pdt-price">469,000원</p>
@@ -65,7 +65,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="assets/img/e-point-img2.png" />
+                            <img src="<c:url value="/assets/img/e-point-img2.png" />" />
                             <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
                         </a>
                         <p class="point-pdt-price">391,200원</p>
@@ -86,7 +86,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="assets/img/e-point-img3.png" />
+                            <img src="<c:url value="/assets/img/e-point-img3.png" />" />
                             <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>
                         </a>
                         <p class="point-pdt-price">193,800원</p>
@@ -110,7 +110,7 @@
             <div class="mini-bnr-section">
                 <div class="mini-bnr-inner">
                     <a href="#">
-                        <img src="assets/img/mini-banner1.png" alt="프리미엄 리뷰 상품평 쓰고 30만원 받자"/>
+                        <img src="<c:url value="/assets/img/mini-banner1.png" />" alt="프리미엄 리뷰 상품평 쓰고 30만원 받자"/>
                     </a>
                 </div>
             </div>
@@ -170,14 +170,14 @@
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                    <img src="<c:url value="/assets/img/mini-banner2.png" />" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                    <img src="<c:url value="/assets/img/mini-banner3.png" />" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
                 </a>
             </div>
         </div>
@@ -225,7 +225,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img.png" />
+                                            <img src="<c:url value="/assets/img/list-img.png" />" />
                                             <p class="sale-percent">35<span>%</span></p>
                                             <i class="share-ic"></i>
                                         </div>
@@ -244,7 +244,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img2.png" />
+                                            <img src="<c:url value="/assets/img/list-img2.png" />" />
                                             <i class="share-ic"></i>
                                         </div>
                                         <div class="product-info">
@@ -262,7 +262,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img3.png" />
+                                            <img src="<c:url value="/assets/img/list-img3.png" />" />
                                             <i class="share-ic"></i>
                                         </div>
                                         <div class="product-info">
@@ -280,7 +280,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img4.png" />
+                                            <img src="<c:url value="/assets/img/list-img4.png" />" />
                                             <p class="sale-percent">35<span>%</span></p>
                                             <i class="share-ic"></i>
                                         </div>
@@ -299,26 +299,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img5.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img.png" />
+                                            <img src="<c:url value="/assets/img/list-img5.png" />" />
                                             <p class="sale-percent">35<span>%</span></p>
                                             <i class="share-ic"></i>
                                         </div>
@@ -337,7 +318,26 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img2.png" />
+                                            <img src="<c:url value="/assets/img/list-img.png" />" />
+                                            <p class="sale-percent">35<span>%</span></p>
+                                            <i class="share-ic"></i>
+                                        </div>
+                                        <div class="product-info">
+                                            <p class="info-production">삼성전자</p>
+                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
+                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
+                                            <p class="info-score">
+                                                <i class="star-ic"></i>
+                                                <span class="score-number">4.5</span>
+                                                <span class="score-text">5,324개 평가</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="img-box">
+                                            <img src="<c:url value="/assets/img/list-img2.png" />" />
                                             <i class="share-ic"></i>
                                         </div>
                                         <div class="product-info">
@@ -355,7 +355,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img3.png" />
+                                            <img src="<c:url value="/assets/img/list-img3.png" />" />
                                             <i class="share-ic"></i>
                                         </div>
                                         <div class="product-info">
@@ -373,7 +373,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img4.png" />
+                                            <img src="<c:url value="/assets/img/list-img4.png" />" />
                                             <p class="sale-percent">35<span>%</span></p>
                                             <i class="share-ic"></i>
                                         </div>
@@ -392,7 +392,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img5.png" />
+                                            <img src="<c:url value="/assets/img/list-img5.png" />" />
                                             <p class="sale-percent">35<span>%</span></p>
                                             <i class="share-ic"></i>
                                         </div>
@@ -417,14 +417,14 @@
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                    <img src="<c:url value="/assets/img/mini-banner2.png" />" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                    <img src="<c:url value="/assets/img/mini-banner3.png" />" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
                 </a>
             </div>
         </div>
@@ -437,27 +437,27 @@
             <div class="category-wrap clearfix" id="special-price-section-cate">
                 <div class="category-row-type2 clearfix">
                     <div class="category-item active">
-                        <div class="img-box"><img src="assets/img/living-ic-ac.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/living-ic-ac.svg" />" /></div>
                         <span>가구/리빙/반려</span>
                     </div>
                     <div class="category-item">
-                        <div class="img-box"><img src="assets/img/sports-ic.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/sports-ic.svg" />" /></div>
                         <span>스포츠</span>
                     </div>
                     <div class="category-item">
-                        <div class="img-box"><img src="assets/img/cloth-ic.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/cloth-ic.svg" />" /></div>
                         <span>의류</span>
                     </div>
                     <div class="category-item">
-                        <div class="img-box"><img src="assets/img/food-ic.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/food-ic.svg" />" /></div>
                         <span>식품</span>
                     </div>
                     <div class="category-item">
-                        <div class="img-box"><img src="assets/img/digital-ic.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/digital-ic.svg" />" /></div>
                         <span>컴퓨터/디지털</span>
                     </div>
                     <div class="category-item">
-                        <div class="img-box"><img src="assets/img/beauty-ic.svg" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/beauty-ic.svg" />" /></div>
                         <span>뷰티</span>
                     </div>
                 </div>
@@ -467,7 +467,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img.png" />
+                                <img src="<c:url value="/assets/img/list-img.png" />" />
                                 <p class="sale-percent">35<span>%</span></p>
                                 <i class="share-ic"></i>
                             </div>
@@ -486,7 +486,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img2.png" />
+                                <img src="<c:url value="/assets/img/list-img2.png" />" />
                                 <i class="share-ic"></i>
                             </div>
                             <div class="product-info">
@@ -504,7 +504,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img3.png" />
+                                <img src="<c:url value="/assets/img/list-img3.png" />" />
                                 <i class="share-ic"></i>
                             </div>
                             <div class="product-info">
@@ -522,7 +522,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img4.png" />
+                                <img src="<c:url value="/assets/img/list-img4.png" />" />
                                 <p class="sale-percent">35<span>%</span></p>
                                 <i class="share-ic"></i>
                             </div>
@@ -541,26 +541,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img5.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img.png" />
+                                <img src="<c:url value="/assets/img/list-img5.png" />" />
                                 <p class="sale-percent">35<span>%</span></p>
                                 <i class="share-ic"></i>
                             </div>
@@ -579,7 +560,26 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img2.png" />
+                                <img src="<c:url value="/assets/img/list-img.png" />" />
+                                <p class="sale-percent">35<span>%</span></p>
+                                <i class="share-ic"></i>
+                            </div>
+                            <div class="product-info">
+                                <p class="info-production">삼성전자</p>
+                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
+                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
+                                <p class="info-score">
+                                    <i class="star-ic"></i>
+                                    <span class="score-number">4.5</span>
+                                    <span class="score-text">5,324개 평가</span>
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="img-box">
+                                <img src="<c:url value="/assets/img/list-img2.png" />" />
                                 <i class="share-ic"></i>
                             </div>
                             <div class="product-info">
@@ -597,7 +597,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img3.png" />
+                                <img src="<c:url value="/assets/img/list-img3.png" />" />
                                 <i class="share-ic"></i>
                             </div>
                             <div class="product-info">
@@ -615,7 +615,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img4.png" />
+                                <img src="<c:url value="/assets/img/list-img4.png" />" />
                                 <p class="sale-percent">35<span>%</span></p>
                                 <i class="share-ic"></i>
                             </div>
@@ -634,7 +634,7 @@
                     <li>
                         <a href="#">
                             <div class="img-box">
-                                <img src="assets/img/list-img5.png" />
+                                <img src="<c:url value="/assets/img/list-img5.png" />" />
                                 <p class="sale-percent">35<span>%</span></p>
                                 <i class="share-ic"></i>
                             </div>
@@ -656,14 +656,14 @@
         <div class="mini-bnr-section mini-bnr-5">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner5.png" alt="코카콜라 1만원 이상 구매시 1천원 할인"/>
+                    <img src="<c:url value="/assets/img/mini-banner5.png" />" alt="코카콜라 1만원 이상 구매시 1천원 할인"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-6">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner6.png" alt="유제품 1만원 이상 구매시 10%"/>
+                    <img src="<c:url value="/assets/img/mini-banner6.png" />" alt="유제품 1만원 이상 구매시 10%"/>
                 </a>
             </div>
         </div>
@@ -699,7 +699,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img.png" />
+                                    <img src="<c:url value="/assets/img/list-img.png" />" />
                                     <p class="sale-percent">탭1 35<span>%</span></p>
                                     <i class="share-ic"></i>
                                 </div>
@@ -718,7 +718,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img2.png" />
+                                    <img src="<c:url value="/assets/img/list-img2.png" />" />
                                     <i class="share-ic"></i>
                                 </div>
                                 <div class="product-info">
@@ -736,7 +736,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img3.png" />
+                                    <img src="<c:url value="/assets/img/list-img3.png" />" />
                                     <i class="share-ic"></i>
                                 </div>
                                 <div class="product-info">
@@ -754,7 +754,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img4.png" />
+                                    <img src="<c:url value="/assets/img/list-img4.png" />" />
                                     <p class="sale-percent">35<span>%</span></p>
                                     <i class="share-ic"></i>
                                 </div>
@@ -773,26 +773,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img5.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img.png" />
+                                    <img src="<c:url value="/assets/img/list-img5.png" />" />
                                     <p class="sale-percent">35<span>%</span></p>
                                     <i class="share-ic"></i>
                                 </div>
@@ -811,7 +792,26 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img2.png" />
+                                    <img src="<c:url value="/assets/img/list-img.png" />" />
+                                    <p class="sale-percent">35<span>%</span></p>
+                                    <i class="share-ic"></i>
+                                </div>
+                                <div class="product-info">
+                                    <p class="info-production">삼성전자</p>
+                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
+                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
+                                    <p class="info-score">
+                                        <i class="star-ic"></i>
+                                        <span class="score-number">4.5</span>
+                                        <span class="score-text">5,324개 평가</span>
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="img-box">
+                                    <img src="<c:url value="/assets/img/list-img2.png" />" />
                                     <i class="share-ic"></i>
                                 </div>
                                 <div class="product-info">
@@ -829,7 +829,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img3.png" />
+                                    <img src="<c:url value="/assets/img/list-img3.png" />" />
                                     <i class="share-ic"></i>
                                 </div>
                                 <div class="product-info">
@@ -847,7 +847,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img4.png" />
+                                    <img src="<c:url value="/assets/img/list-img4.png" />" />
                                     <p class="sale-percent">35<span>%</span></p>
                                     <i class="share-ic"></i>
                                 </div>
@@ -866,7 +866,7 @@
                         <li>
                             <a href="#">
                                 <div class="img-box">
-                                    <img src="assets/img/list-img5.png" />
+                                    <img src="<c:url value="/assets/img/list-img5.png" />" />
                                     <p class="sale-percent">35<span>%</span></p>
                                     <i class="share-ic"></i>
                                 </div>
@@ -897,25 +897,25 @@
             <ul class="event-list">
                 <li>
                     <a href="#">
-                        <div class="img-box"><img src="assets/img/event1.png" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/event1.png" />" /></div>
                         <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <div class="img-box"><img src="assets/img/event2.png" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/event2.png" />" /></div>
                         <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <div class="img-box"><img src="assets/img/event3.png" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/event3.png" />" /></div>
                         <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <div class="img-box"><img src="assets/img/event4.png" /></div>
+                        <div class="img-box"><img src="<c:url value="/assets/img/event4.png" />" /></div>
                         <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
                     </a>
                 </li>

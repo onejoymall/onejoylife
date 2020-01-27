@@ -1,6 +1,5 @@
 package com.webapp.mall.controller;
-
-import com.webapp.common.security.dao.UserInfoDao;
+import com.sun.javafx.collections.MappingChange;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
@@ -14,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @RestController
 public class restapiController {
@@ -34,33 +35,34 @@ public class restapiController {
     @Autowired
     private CurlPost curlPost;
     //이메일 인증
-    @RequestMapping(value = "/authemail", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
     public HashMap<String, Object> authEmail(@RequestParam HashMap params){
 
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        String email;
+        String email = (String)params.get("email");
         String memo;
         String subject =  messageSource.getMessage("authSendMailTitle","ko");//
         memo = messageSource.getMessage("atuhSendMailContent","ko");//
 
         try {
-            email = (String)params.get("email");
+
             //이메일 필수 체크
             if(email.isEmpty()){
                 resultMap.put("message", messageSource.getMessage("error.required","ko"));
             }else{
-                String basePassword = numberGender.numberGen(4,1);
-                List<Map<String, Object>> userData = null;
+                String basePassword = numberGender.numberGen(4,2);
+
                 //이메일 유효성검사
                 String regex ="^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                 Boolean emailValidation = email.matches(regex);
                 if(emailValidation){
                     //이메일 중복확인
-                    userData= userDAO.getUserList(params);
-                    if(userData.size() <= 0){
+                    Map<String, Object> userData= userDAO.getLoginUserList(params);
+                    //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
+                    if(isEmpty(userData)){
                         //중복이 아니면 메일전송
-//                mailSender.sendSimpleMessage(email, subject, memo+" : "+basePassword);
+                        mailSender.sendSimpleMessage(email, subject, memo+" : "+basePassword);
                         //메일이 정상 적으로 전송되면 회원 이메일과 인증코드를 저장하고 상태를 변경한다.
                         params.put("email_auth_code",basePassword);
                         userDAO.insertEmailAuth(params);
@@ -80,7 +82,7 @@ public class restapiController {
         return resultMap;
     }
     //회원 가입 처리
-    @RequestMapping(value = "/signupProc", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/sign/signupProc", method = RequestMethod.GET, produces = "application/json")
 
     public HashMap<String, Object> signupProc(@RequestParam HashMap params){
 //        Map<String, Object> authList = new ;
@@ -94,7 +96,7 @@ public class restapiController {
                 if(resultAuthCode.equals(postAuthCode)){
                     params.put("password", passwordEncoder.encode((String)params.get("password")));
                     userDAO.insertUser(params);
-                    resultMap.put("status", "success");
+                    resultMap.put("redirectUrl", "/sign/signUpDone");
                 }else{
                     resultMap.put("message", messageSource.getMessage("error.notVldtAthrzCd","ko"));
                 }
@@ -111,26 +113,47 @@ public class restapiController {
         return resultMap;
     }
     //로그인 처리 1
-    @RequestMapping(value = "/loginProc", method = RequestMethod.GET, produces = "application/json")
-    public HashMap<String, Object> loginProc(@RequestParam HashMap params){
+    @RequestMapping(value = "/sign/loginProc", method = RequestMethod.GET, produces = "application/json")
+    public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo){
         Map<String, Object> postToken = null;
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
 
             String email = (String)params.get("email");
             String password =(String)params.get("password");
+            params.put("password",null);//패스워드 초기화
             if(email.isEmpty() || password.isEmpty()){
                 resultMap.put("message", messageSource.getMessage("error.required","ko"));
             }else{
-                params.put("password",passwordEncoder.encode((String)params.get("password")));
+//                params.put("password",passwordEncoder.encode((String)params.get("password")));
+
+                //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
                 Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
 
-                if( loginUserList.isEmpty()){
-                    //최초 로그인시 토큰저장
-                    postToken = CurlPost.curlPostFn("http://127.0.0.1:8080/oauth/token?client_id=clientapp&grant_type=password&username="+email+"&password="+password,"application/json","application/x-www-form-urlencoded");
-                    params.put("access_token",postToken.get("access_token"));
-                    userDAO.updateToken(params);
-                    resultMap.put("access_token",postToken.get("access_token"));
+                if(!isEmpty(loginUserList)){
+
+                    if(passwordEncoder.matches(password,(String)loginUserList.get("password"))){
+                        if ( session.getAttribute("login") != null ){
+                            // 기존에 login이란 세션 값이 존재한다면
+                            session.removeAttribute("login"); // 기존값을 제거해 준다.
+                        }
+                        if ( userInfo != null ){ // 로그인 성공
+                            userInfo.setLogin(true);
+                            session.setAttribute("login", true); //
+                            session.setAttribute("userInfo",userInfo);
+                            resultMap.put("redirectUrl", "/");
+                        }
+//                        else { // 로그인에 실패한 경우
+//                            resultMap.put("redirectUrl", "/login");
+//                        }
+                        //최초 로그인시 토큰저장(지금은 안써도됨)
+//                        postToken = CurlPost.curlPostFn("http://127.0.0.1:8080/oauth/token?client_id=clientapp&grant_type=password&username="+email+"&password="+password,"application/json","application/x-www-form-urlencoded");
+//                        params.put("access_token",postToken.get("access_token"));
+//                        userDAO.updateToken(params);
+//                        resultMap.put("access_token",postToken.get("access_token"));
+                    }else{
+                        resultMap.put("message", messageSource.getMessage("error.notUsrInfo","ko"));
+                    }
                 }else{
                     resultMap.put("message", messageSource.getMessage("error.notUsrInfo","ko"));
                 }
@@ -143,27 +166,104 @@ public class restapiController {
         }
         return resultMap;
     }
-    //로그인 처리 2
-    @RequestMapping(value = "/loginProcAuth", method = RequestMethod.GET, produces = "application/json")
-    public HashMap<String, Object> loginProcAuth(@RequestParam HashMap params, UserInfo userInfo , HttpSession session){
+
+    //패스워드 초기화 1
+    @RequestMapping(value = "/sign/findPassword", method = RequestMethod.GET, produces = "application/json")
+
+    public HashMap<String, Object> findPassword(@RequestParam HashMap params,HttpServletRequest request){
+
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        try{
-            if ( session.getAttribute("login") != null ){
-                // 기존에 login이란 세션 값이 존재한다면
-                session.removeAttribute("login"); // 기존값을 제거해 준다.
+        String email;
+        String memo;
+        String subject =  messageSource.getMessage("sendMail.passwordChangeTitle","ko");//
+        memo = messageSource.getMessage("sendMail.passwordChangeContent","ko");//
+        String basePassword = numberGender.numberGen(4,2);
+        Object siteUrl = request.getRequestURL().toString().replace(request.getRequestURI(),"");
+        try {
+            email = (String)params.get("email");
+            //이메일 필수 체크
+            if(email.isEmpty()){
+                resultMap.put("message", messageSource.getMessage("error.required","ko"));
+            }else{
+                //이메일 유효성검사
+                String regex ="^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+                Boolean emailValidation = email.matches(regex);
+                if(emailValidation){
+                    //이메일 중복확인
+                    Map<String, Object> userData= userDAO.getLoginUserList(params);
+                    //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
+                    if(!isEmpty(userData)){
+
+                        mailSender.sendSimpleMessage(email, subject, memo+" : "+siteUrl+"/sign/changePassword?password_change_code="+basePassword+"&email="+email);
+                        params.put("password_change_code",basePassword);
+                        userDAO.updatePasswordChangeCode(params);
+                        resultMap.put("message", messageSource.getMessage("error.infoSendEmail","ko"));
+                    }else{
+                        resultMap.put("message", messageSource.getMessage("error.userNotFound","ko"));
+                    }
+                }else{
+                    resultMap.put("message", messageSource.getMessage("error.emailForm","ko"));
+                }
             }
-
-
-            if ( userInfo != null ){ // 로그인 성공
-                session.setAttribute("login", userInfo); // 세션에 login인이란 이름으로 UsersVO 객체를 저장해 놈.
-                resultMap.put("redirectUrl", "/");
-            }else { // 로그인에 실패한 경우
-                resultMap.put("redirectUrl", "/login");
-            }
-
-        }catch (Exception e){
+        } catch (Exception e) {
+            resultMap.put("status", "fail");
             resultMap.put("e", e);
         }
         return resultMap;
     }
+
+    //패스워드 초기화 2
+
+    @RequestMapping(value = "/sign/changePasswordProc", method = RequestMethod.GET, produces = "application/json")
+
+    public HashMap<String, Object> changePasswordProc(@RequestParam HashMap params,HttpServletRequest request){
+
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        String email = (String)params.get("email");
+        String password = (String)params.get("password");
+        String passwordCf =(String)params.get("password_cf");
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+
+            if(password==null || password.isEmpty()){
+                error.put("Password", messageSource.getMessage("error.required","ko"));
+            }
+            if(passwordCf==null || passwordCf.isEmpty()){
+                error.put("PasswordCf", messageSource.getMessage("error.required","ko"));
+            }
+            if(password.equals(passwordCf) && !email.isEmpty()){
+                params.put("password", passwordEncoder.encode((String)params.get("password")));
+                userDAO.updatePasswordChange(params);
+                resultMap.put("url","/sign/changePasswordDone");
+            }else {
+                error.put("PasswordCf", messageSource.getMessage("error.inpPwdCfm", "ko"));
+            }
+            resultMap.put("validateError",error);
+        } catch (Exception e) {
+            resultMap.put("status", "fail");
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //로그인 처리 2 $2a$10$H7XwLGO27fJwkZ5KrK6rCONJBIEJP.9WEW1C13rgpnX2InWhwlE6m
+//    @RequestMapping(value = "/sign/loginProcAuth", method = RequestMethod.GET, produces = "application/json")
+//    public HashMap<String, Object> loginProcAuth(@RequestParam HashMap params, UserInfo userInfo , HttpSession session){
+//        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+//        try{
+//            if ( session.getAttribute("login") != null ){
+//                // 기존에 login이란 세션 값이 존재한다면
+//                session.removeAttribute("login"); // 기존값을 제거해 준다.
+//            }
+//            if ( userInfo != null ){ // 로그인 성공
+//                session.setAttribute("login", userInfo); // 세션에 login인이란 이름으로 UsersVO 객체를 저장해 놈.
+//                resultMap.put("redirectUrl", "/");
+//            }else { // 로그인에 실패한 경우
+//                resultMap.put("redirectUrl", "/login");
+//            }
+//
+//        }catch (Exception e){
+//            resultMap.put("e", e);
+//        }
+//        return resultMap;
+//    }
 }

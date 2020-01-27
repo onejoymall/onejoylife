@@ -2,6 +2,7 @@ package com.webapp.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +18,23 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 	    logger.error("===========================          START         ===========================");
 	    logger.error(" Request URI \t:  " + request.getRequestURI());
-	    
-	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    
-	    if("anonymous".equals(principal)) {
-	    	response.sendRedirect("/login");
-	    	return false;
-	    }
-	    
-	    return super.preHandle(request, response, handler);
+	   //RestApi 사용시 (관리자단에 token 인증시 사용)
+//	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+//	    if("anonymous".equals(principal)) {
+//	    	response.sendRedirect("/login");
+//	    	return false;
+//	    }
+
+//	    return super.preHandle(request, response, handler);
+
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("login");
+		if ( obj == null ){
+			response.sendRedirect("/sign/login");
+			return false; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
+		}
+		return true;
 	 }
 	 
 	 @Override

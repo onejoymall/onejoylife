@@ -5,7 +5,7 @@ public class UserInfo{
 	private String usrId;
 	private String usrPw;
 	private String authId;
-	private String login;
+	private Boolean login;
 	
 	public String getUsrId() {
 		return usrId;
@@ -31,11 +31,11 @@ public class UserInfo{
 		this.authId = authId;
 	}
 
-	public String getLogin() {
+	public Boolean getLogin() {
 		return login;
 	}
 
-	public void setLogin(String login) {
+	public void setLogin(Boolean login) {
 		this.login = login;
 	}
 }

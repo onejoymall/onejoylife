@@ -86,6 +86,7 @@
                                 <p class="mem-id1">휴대폰번호(선택)</p>
                                 <div class="mem-id2">
                                     <input name="phone" type="text" placeholder="숫자만 입력해 주세요">
+
                                 </div>
                             </td>
                         </tr>
@@ -106,6 +107,7 @@
         </div>
     </div>
 </div>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.610.0.min.js"></script>
 <script>
     $('#formSubmit').on("click",function () {
         var password = $('#password').val();
@@ -118,7 +120,7 @@
                 jQuery.ajax({
                     type:"GET",
                     // contentType: 'application/json',
-                    url:"/signupProc",
+                    url:"/sign/signupProc",
                     // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
                     data:formData,
                     success : function(data) {
@@ -130,7 +132,7 @@
                             $('#emailAuthValidation td').empty();
                             $('#emailAuthValidation td').html('* '+data.message);
                         }else{
-                            location.href="/";
+                            location.href=data.redirectUrl;
                         }
 
                     },
@@ -159,7 +161,7 @@
         jQuery.ajax({
             type:"GET",
             // contentType: 'application/json',
-            url:"/authemail",
+            url:"/sign/authemail",
             // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
             data:formData,
             success : function(data) {
@@ -186,5 +188,8 @@
             }
         });
     })
+
+
 </script>
+
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

@@ -41,17 +41,17 @@
             </div>
             <div class="footer-bottom-bottom">
                 <div class="authentication">
-                    <div><img src="assets/img/kisac.png" alt="kisa"/></div>
-                    <div><img src="assets/img/kcp.png" alt="kcp"/></div>
-                    <div><img src="assets/img/kcp2.png" alt="kcp2"/></div>
-                    <div><img src="assets/img/ftc.png" alt="공정거래위원회"/></div>
+                    <div><img src="<c:url value="/assets/img/kisac.png" />" alt="kisa"/></div>
+                    <div><img src="<c:url value="/assets/img/kcp.png" />" alt="kcp"/></div>
+                    <div><img src="<c:url value="/assets/img/kcp2.png" />" alt="kcp2"/></div>
+                    <div><img src="<c:url value="/assets/img/ftc.png" />" alt="공정거래위원회"/></div>
                 </div>
                 <div class="sns-list">
-                    <div><img src="assets/img/instagram.png" alt="인스타그램"/></div>
-                    <div><img src="assets/img/kakao.png" alt="카카오톡"/></div>
-                    <div><img src="assets/img/facebook.png" alt="페이스북"/></div>
-                    <div><img src="assets/img/naverblog.png" alt="네이버블로그"/></div>
-                    <div><img src="assets/img/twitter.png" alt="트위터"/></div>
+                    <div><img src="<c:url value="/assets/img/instagram.png" />" alt="인스타그램"/></div>
+                    <div><img src="<c:url value="/assets/img/kakao.png" />" alt="카카오톡"/></div>
+                    <div><img src="<c:url value="/assets/img/facebook.png" />" alt="페이스북"/></div>
+                    <div><img src="<c:url value="/assets/img/naverblog.png" />" alt="네이버블로그"/></div>
+                    <div><img src="<c:url value="/assets/img/twitter.png" />" alt="트위터"/></div>
                 </div>
             </div>
         </div>
@@ -59,6 +59,10 @@
 </footer>
 
 <script>
+    $('.ready').on("click",function () {
+        alert("준비중입니다");
+        return false;
+    })
     $(document).ready(function(){
         $('.gnb>li:first-child').mouseover(function(){
             $('.gnb-submenu').show();
