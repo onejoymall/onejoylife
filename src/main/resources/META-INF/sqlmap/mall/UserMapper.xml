@@ -9,8 +9,8 @@
         SELECT
           A.*
         FROM user A where 1=1
-
         ]]>
+        <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
         <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
     </select>

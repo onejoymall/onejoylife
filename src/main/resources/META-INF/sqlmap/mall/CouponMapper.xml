@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.CouponMapper">
+
+    <select id="getCouponList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            coupon_id,
+            coupon_cd,
+            coupon_name,
+            coupon_payment,
+            reg_date,
+            coupon_use_yn
+        FROM coupon  where 1=1
+        ]]>
+
+        <if test="coupon_id != null"> <![CDATA[AND coupon_id= #{coupon_id} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_name != null"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="coupon_use_yn != null"> <![CDATA[AND coupon_use_yn= #{coupon_use_yn} ]]></if>
+    </select>
+    <select id="getCouponListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM coupon  where 1=1
+        ]]>
+
+        <if test="coupon_id != null"> <![CDATA[AND coupon_id= #{coupon_id} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_name != null"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="coupon_use_yn != null"> <![CDATA[AND coupon_use_yn= #{coupon_use_yn} ]]></if>
+    </select>
+    <select id="getUserCouponList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.coupon_paid_id,
+            A.coupon_id,
+            (select z.coupon_cd from coupon Z where Z.coupon=A.coupon_id) as coupon_cd,
+            A.coupon_paid_user_id,
+            A.reg_date,
+            A.coupon_paid_class_cd,
+        FROM coupon A  where 1=1
+        ]]>
+
+        <if test="coupon_paid_id != null"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
+        <if test="coupon_id != null"> <![CDATA[AND A.coupon_id= #{coupon_id} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND A.coupon_cd= #{coupon_cd} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
+    </select>
+    <select id="getUserCouponListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM coupon A  where 1=1
+        ]]>
+
+        <if test="coupon_paid_id != null"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
+        <if test="coupon_id != null"> <![CDATA[AND A.coupon_id= #{coupon_id} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND A.coupon_cd= #{coupon_cd} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
+    </select>
+
+    <insert id="insertCoupon" parameterType="String">
+        <![CDATA[
+        insert into coupon(
+        coupon_cd,coupon_name,coupon_payment,coupon_use_yn)
+      VALUES (
+        #{coupon_cd},
+        #{coupon_name},
+        #{coupon_payment},
+        #{coupon_use_yn}
+        )
+        ]]>
+    </insert>
+    <insert id="insertCouponPaidHistory" parameterType="String">
+        <![CDATA[
+        insert into coupon_paid_history(
+        coupon_id,coupon_paid_user_id,coupon_paid_class_cd)
+      VALUES (
+        #{coupon_id},
+        #{coupon_paid_user_id},
+        #{coupon_paid_class_cd}
+        )
+        ]]>
+    </insert>
+<!--    <update id="updatePasswordChangeCode" parameterType="String">-->
+<!--        <![CDATA[-->
+<!--        update email_auth set-->
+<!--        password_change_code=#{password_change_code}-->
+<!--        where email = #{email}-->
+<!--        ]]>-->
+<!--    </update>-->
+<!--    <update id="updatePasswordChange" parameterType="String">-->
+<!--        <![CDATA[-->
+<!--        update user set-->
+<!--        password=#{password}-->
+<!--        where email = #{email}-->
+<!--        ]]>-->
+<!--    </update>-->
+</mapper>

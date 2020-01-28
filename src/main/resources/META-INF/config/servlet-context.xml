@@ -32,14 +32,20 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/**" />
+			<mvc:mapping path="/MyPage/**" />
 			<mvc:exclude-mapping path="/" />                                     <!-- Interceptor에 예외를 적용 할 패턴 -->
 			<mvc:exclude-mapping path="/sign/**" />
 			<mvc:exclude-mapping path="/assets/**" />
-			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
+			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/Manager/**" />
+			<mvc:exclude-mapping path="/Manager/ManagerSign/**" />
+			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.ManagerSessionInterceptor"></beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />

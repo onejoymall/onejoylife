@@ -140,6 +140,7 @@ public class restapiController {
                         if ( userInfo != null ){ // 로그인 성공
                             userInfo.setLogin(true);
                             userInfo.setUserName(email);
+                            session.setAttribute("email",email);
                             session.setAttribute("login", true); //
                             session.setAttribute("userInfo",userInfo);
                             resultMap.put("redirectUrl", "/");

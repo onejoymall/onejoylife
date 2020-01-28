@@ -38,7 +38,7 @@
     <div class="usermenu-section">
         <div class="usermenu-inner">
             <ul class="usermenu">
-    <c:if test="${!loginStatus}">
+    <c:if test="${!sessionScope.login}">
 
         <li><a href="/sign/signup">회원가입</a></li>
         <li><a href="/sign/login">로그인</a></li>
@@ -47,7 +47,7 @@
         <li><a href="#">고객센터</a></li>
 
     </c:if>
-    <c:if test="${loginStatus}">
+    <c:if test="${sessionScope.login}">
         <li><a href="#">장바구니</a></li>
         <li><a href="#">주문배송</a></li>
         <li><a href="/MyPage/DashBoard">MyPage</a></li>
