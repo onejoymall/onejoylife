@@ -1,7 +1,7 @@
 *{box-sizing: border-box; }
 body{font-family: "noto sans kr"!important;}
-main{overflow: hidden; margin: 20px 0 100px;}
-.page-box{width: 1100px; margin: 0px auto;}
+main{overflow: hidden;}
+.page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
 .h1-box > h1 { display: inline-block;}
 .h1-box > h1:nth-child(1) {color: #da394d;}
 /* left-nav */
@@ -13,6 +13,7 @@ main{overflow: hidden; margin: 20px 0 100px;}
     text-align: center;
     font-size: 1.4rem;
     padding: 30px 0 10px 0;
+    line-height: 28px;
 }
 .outer-ul {
     background: #f7f7f9;
@@ -46,6 +47,7 @@ main{overflow: hidden; margin: 20px 0 100px;}
     padding: 10px;
     font-size: 2rem;
     margin: 10px 0;
+    line-height: 28px;
 }
 .but-img {
     display: inline-block;

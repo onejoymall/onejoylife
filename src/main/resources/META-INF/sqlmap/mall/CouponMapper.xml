@@ -7,12 +7,7 @@
     <select id="getCouponList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
-            coupon_id,
-            coupon_cd,
-            coupon_name,
-            coupon_payment,
-            reg_date,
-            coupon_use_yn
+          *
         FROM coupon  where 1=1
         ]]>
 
@@ -40,32 +35,32 @@
     <select id="getUserCouponList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
-            A.coupon_paid_id,
-            A.coupon_id,
-            (select z.coupon_cd from coupon Z where Z.coupon=A.coupon_id) as coupon_cd,
-            A.coupon_paid_user_id,
-            A.reg_date,
-            A.coupon_paid_class_cd,
-        FROM coupon A  where 1=1
+            A.*,
+            (SELECT DATE_ADD(A.reg_date, INTERVAL (select Z.coupon_use_day from coupon Z  where Z.coupon_id=A.coupon_id) DAY)) as coupon_use_day,
+            (select Z.coupon_name from coupon Z where Z.coupon_id=A.coupon_id) as coupon_name,
+            (select Z.coupon_payment_condition from coupon Z where Z.coupon_id=A.coupon_id) as coupon_payment_condition,
+            (select Z.coupon_cd from coupon Z where Z.coupon_id=A.coupon_id) as coupon_cd
+        FROM coupon_paid_history A  where 1=1
         ]]>
 
         <if test="coupon_paid_id != null"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
-        <if test="coupon_id != null"> <![CDATA[AND A.coupon_id= #{coupon_id} ]]></if>
-        <if test="coupon_cd != null"> <![CDATA[AND A.coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_name != null"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
+        <if test="coupon_paid_user_id != null"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
     </select>
     <select id="getUserCouponListCount" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM coupon A  where 1=1
+        FROM coupon_paid_history A  where 1=1
         ]]>
 
         <if test="coupon_paid_id != null"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
-        <if test="coupon_id != null"> <![CDATA[AND A.coupon_id= #{coupon_id} ]]></if>
-        <if test="coupon_cd != null"> <![CDATA[AND A.coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_name != null"><![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
@@ -94,18 +89,20 @@
         )
         ]]>
     </insert>
-<!--    <update id="updatePasswordChangeCode" parameterType="String">-->
-<!--        <![CDATA[-->
-<!--        update email_auth set-->
-<!--        password_change_code=#{password_change_code}-->
-<!--        where email = #{email}-->
-<!--        ]]>-->
-<!--    </update>-->
-<!--    <update id="updatePasswordChange" parameterType="String">-->
-<!--        <![CDATA[-->
-<!--        update user set-->
-<!--        password=#{password}-->
-<!--        where email = #{email}-->
-<!--        ]]>-->
-<!--    </update>-->
+    <update id="updateCoupon" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+            update coupon set
+            coupon_cd=#{item.coupon_cd},coupon_name=#{item.coupon_name},coupon_payment=#{item.coupon_payment},coupon_use_yn=#{item.coupon_use_yn}
+            where coupon_id = #{item.coupon_id}
+            ]]>
+        </foreach>
+    </update>
+    <delete id="deleteCoupon" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+        <![CDATA[
+        delete coupon where coupon_id = #{item.coupon_id}
+        ]]>
+        </foreach>
+    </delete>
 </mapper>

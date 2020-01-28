@@ -42,6 +42,7 @@ main{overflow: hidden;}
 }
 .inner-ul > li > a {color: #848484;}
 .inner-ul > li > a.active {color: #da394d;font-weight: 600;}
+
 /* right-contain */
 .right-contain {
     width: calc(914px - 20px);
@@ -49,7 +50,6 @@ main{overflow: hidden;}
     margin-left: 20px;
 }
 .r-sec1 {
-    /* background: slateblue; */
     padding: 10px;
     font-size: 2rem;
     margin: 10px 0;
@@ -111,47 +111,16 @@ main{overflow: hidden;}
 .in-coin2 {
     float: right;
 }
-/* sec3 */
-.r-sec3 {
-    height: 175px;
-    background: url(../img/solid-img.png) no-repeat center / contain;
+
+
+/* sec */
+.ojt-box {
+    display:block;
+    margin-top:45px;
 }
-.sec3-in {overflow: hidden; padding: 43px 0;}
-.sec3-in > div {
-    float: left;
-}
-.sec3-box1 {
-    width: 132px;
-    border: 1px solid #232a32;
-    border-radius: 20px;
-    background: #fff;
-    text-align: center;
-    font-size: 1.3rem;
-    padding: 5px 0;
-    margin: 12px 0;
-}
-.sec3-box2 {margin-left: 77px;}
-.sec3-box2 > div{
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    margin: auto;
-}
-.sec3-box2-icon1 {background: #232a32 url(../img/icon/my-icon-1.png)no-repeat center / contain;}
-.sec3-box2-icon2 {background: #232a32 url(../img/icon/my-icon-2.png)no-repeat center / contain;}
-.sec3-box2-icon3 {background: #232a32 url(../img/icon/my-icon-3.png)no-repeat center / contain;}
-.sec3-box2-icon4 {background: #232a32 url(../img/icon/my-icon-4.png)no-repeat center / contain;}
-.sec3-box2-icon5 {background: #232a32 url(../img/icon/my-icon-5.png)no-repeat center / contain;}
-.sec3-box2 > p {font-size: 1rem;margin-top: 5px;}
-.sec3-box2-icon1 + p > span {color: #da394d;}
-/* sec4,5,6 */
-.r-sec4,.r-sec5,.r-sec6{margin-bottom: 45px;}
-.r-sec4 > div,
-.r-sec5 > div,
-.r-sec6 > div {overflow: hidden;}
-.sec4-txt,
-.sec5-txt,
-.sec6-txt{margin-bottom: 15px;}
+.r-sec4{margin-bottom: 45px;}
+.r-sec4 > div{overflow: hidden;}
+.sec4-txt{margin-bottom: 15px;}
 .txt-tit {
     font-size: 1.6rem;
     font-weight: 500;
@@ -163,54 +132,21 @@ main{overflow: hidden;}
     margin-left: 5px;
     color: #848484;
 }
-.mor-a {
-    float: right;
-    overflow: hidden;
-}
-.mor-a > a {
-    color: #848484;}
-/* sec4 */
-.my-lis-2 > a > div {
- float: left;
-}
-.my-lis-img1{
-    width: 30%;
-    height: 90px;
-    background: url(../img/cam-img.jpg) no-repeat center / cover;
-}
-.my-lis-txt {
-    width: calc(70% - 20px);
-    text-align: left;
-    margin: 15px 0 15px 20px;
-}
-.my-lis-txt > p:nth-child(1) {
-    font-size: 0.8rem;
-    color: #62606b;
-}
-.my-lis-txt > p:nth-child(3) {
-    font-size: 0.8rem;
-    color: #ccc;
-    font-weight: 300;
-}
-.lis-font-w > a,
-.lis-font-w{
-    color: #232a32;
-}
-.lis-font-w > span{
-    font-size: 0.8rem;
-}
-.lis-txt-box {
-    border: 1px solid #da394d;
+.txt-right {float: right;}
+.txt-right button{
+    font-size:0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    padding:5px 15px;
     border-radius: 20px;
-    width: 95px;
-    margin: 5px auto;
-    padding: 3px;
-    font-size: 0.8rem;
+    line-height: 28px;
+    background:none;
+    border:1px solid;
 }
-.lis-txt-box > a {
-    display: block;
-    color: #da394d;
-}
+#del-chk-btn{color:#da394d;}
+#cart-chk-btn{color:#4159d3;}
+
+/* num */
 .num-box {margin: 20px 0;}
 .num-box-in{width: 141px; margin: 0 auto;overflow: hidden;}
 .num-box-in > div { float: left;}
@@ -224,6 +160,7 @@ main{overflow: hidden;}
     text-decoration: underline;
     color: #848484;
 }
+
 .left-box {
     width: 20px;
     height: 20px;
@@ -241,23 +178,41 @@ main{overflow: hidden;}
 /* table */
 table {
     border-top: 1px solid #232a32;
- }
+}
 .lis-head {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .lis-head > tr > th {padding: 8px;}
 .lis-body >  tr{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: center; 
     height: 150px;
 }
 .lis-body > tr > td{line-height: 1.3rem;}
+.sec4-lis input{display:none;}
+.sec4-lis label{display:block;margin:0 auto;width:20px;height:20px;border:1px solid #999;}
+.sec4-lis input:checked +label{background:url(../img/icon/checked.png) center center no-repeat;background-size:contain;border:none;}
+/* ojt-box1 */
+/* lis-1 */
 .my-lis-1 > p:nth-child(1) {
     color: #848484;
 }
 .my-lis-1 > p:nth-child(2) > a {
     font-size: 0.8rem;
     text-decoration: underline;
+}
+/* lis-2 */
+.my-lis-2 > a {display: block;}
+.my-lis-2 > a > div {
+    float: left;
+}
+.my-lis-2 > p {
+    width: 70%;
+}
+.my-lis-img1{
+    width: 22%;
+    height: 90px;
+    background: url(../img/cam-img.jpg) no-repeat center / cover;
 }
 .lis-body2 > tr > td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
@@ -267,9 +222,89 @@ table {
 .lis-body2 > tr > td:nth-child(1) {
     font-size: 0.8rem;
 }
-.com {
-    color: #848484;
+.my-lis-txt {
+    width: calc(70% - 20px);
+    text-align: left;
+    margin: 14px 0 7px 40px;
 }
-.txt-ok {
+.my-lis-txt > p:nth-child(1) {
+    font-size: 0.8rem;
+    color: #62606b;
+}
+.my-lis-txt > p:nth-child(3) {
+    font-size: 0.8rem;
+    color: #ccc;
+    font-weight: 300;
+}
+.lis-font-w{
+    color: #232a32;
+}
+.red-box {
+    display: inline-block;
+    background: #da394d;
+    color: #fff;
+    margin-left: 40px;
+}
+.red-box > span {
+    margin: 2px 10px;
+}
+.lis-txt-box {
+    border: 1px solid #8e8e8e;
+    border-radius: 20px;
+    width: 95px;
+    height: 25px;
+    margin: 5px auto;
+    padding: 3px;
+    line-height: 1.1rem;
+    font-size: 0.8rem;
+    color: #535353;
+}
+.win-icon {
+    width: 33px;
+    height: 37px;
+    background: url(../img/icon/eve-icon.jpg) no-repeat center / cover;
+    margin: auto;
+}
+.txt-s {
+    font-size: 0.7rem;
+    color: #959595;
+    letter-spacing: 1px;
+}
+.txt-color1 {
+    border-color: #4159d3;
+    color: #4159d3;
+}
+.txt-color2 {
+    border-color: #da394d;
     color: #da394d;
 }
+
+.dis-none{display: none;}
+/* ojt-box1 */
+/* lis-1 */
+.lis-body2 >  tr{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center; 
+    height: 100px;
+}
+.lis-body2 > tr > td{line-height: 1.3rem;}
+
+/* ra-num tab */
+.input-box1 > p:hover,
+.input-box1-1 > p {
+    cursor:pointer
+}
+.con,.con2-1 {
+    display:none
+}
+.input-box1 .on,
+.input-box1-1 .on1 {
+    border: 1px solid #da394d;
+    color: #da394d;
+}
+.ojt-tabbox .con.on,
+.ojt-tabbox .con2-1.on1 {
+    display: block;
+}
+
+

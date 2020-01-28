@@ -59,14 +59,6 @@ body{font-family: 'Noto Sans KR' !important;}
     margin-left: 303px;
     display: none;
 }
-.er-on {
-    clear: both;
-    color: #da394d;
-    font-size: 1rem;
-    width: 500px;
-    margin-left: 303px;
-    display: block !important;
-}
 .option {
     width: 500px;
     margin: 15px 303px;

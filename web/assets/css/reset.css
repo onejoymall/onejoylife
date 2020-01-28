@@ -52,4 +52,4 @@ table {
 	border-spacing: 0;
 }
 
-input{-webkit-appearance: none; outline: 0;}
+input{-webkit-appearance: none; -moz-appearance:none;appearance:none;outline: 0;}

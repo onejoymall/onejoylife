@@ -17,6 +17,7 @@ button{
     overflow:visible;
     white-space: nowrap;
 }
+
 .inner{
     margin:0 auto;
     width:1100px;

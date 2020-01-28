@@ -1,14 +1,30 @@
 package com.webapp.mall.controller;
 
+import com.webapp.common.support.MessageSource;
+import com.webapp.mall.dao.CouponDAO;
+import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MyPage {
+    @Autowired
+    MessageSource messageSource;
+    @Autowired
+    CouponDAO couponDAO;
+    @Autowired
+    ProductDAO productDAO;
+    @Autowired
+    UserDAO userDAO;
     //대시보드
     @RequestMapping(value="/MyPage/DashBoard")
     public String myPageDashBoard(HttpSession session, Model model, HttpServletRequest request) {
@@ -76,8 +92,20 @@ public class MyPage {
     }
     //쿠폰
     @RequestMapping(value="/MyPage/Coupon")
-    public String myPageCoupon(HttpSession session,Model model,HttpServletRequest request) {
-        model.addAttribute("style", "mypage-12");
+    public String myPageCoupon(HttpSession session, Model model, HttpServletRequest request, HashMap params) {
+
+        try{
+            //사용자 아이디 확인 후 전달
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("coupon_paid_user_id",userInfo.get("usr_id"));
+            List<Map<String,Object>> userCouponList = couponDAO.getUserCouponList(params);
+            model.addAttribute("message_coupon_payment_condition",messageSource.getMessage("coupon.coupon_payment_condition","ko"));
+            model.addAttribute("userCouponList", userCouponList);
+            model.addAttribute("style", "mypage-12");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "mypage/Coupon";
     }
     //경품 체험

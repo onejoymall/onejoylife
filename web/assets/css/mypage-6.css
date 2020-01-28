@@ -1,7 +1,8 @@
 *{box-sizing: border-box; }
 body{font-family: "noto sans kr"!important;}
-main{overflow: hidden; margin: 20px 0 100px;}
-.page-box{width: 1100px; margin: 0px auto;}
+main{overflow: hidden;}
+.wrap{width:100%; margin:0 auto;}
+.page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
 .h1-box {
     padding: 70px 0 50px;
     text-align: center;
@@ -17,7 +18,8 @@ main{overflow: hidden; margin: 20px 0 100px;}
 .left-tit{
     text-align: center;
     font-size: 1.4rem;
-    padding: 40px 0 10px 0;
+    padding: 30px 0 10px 0;
+    line-height: 28px;
 }
 .outer-ul {
     background: #f7f7f9;
@@ -51,10 +53,12 @@ main{overflow: hidden; margin: 20px 0 100px;}
 /* sec1 */
 .sec1-h1 {
     font-size: 1.5rem;
+    line-height: 28px;
 }
 .sec1-p1 {
     font-size: 0.9rem;
-    margin: 17px 0 5px;
+    margin: 7px 0 5px;
+    line-height: 28px;
 }
 .sec1-thead > tr {
     height: 45px;

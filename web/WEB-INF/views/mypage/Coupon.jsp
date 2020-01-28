@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -76,83 +77,55 @@
                         </div>
                     </div>
                 </div>
-                <div class="r-sec3">
-                    <div class="sec3-in">
-                        <div class="sec3-box1">배송현황</div>
-                        <div class="sec3-box2">
-                            <div class="sec3-box2-icon1"></div>
-                            <p>주문접수<span>(1)</span></p>
-                        </div>
-                        <div class="sec3-box2">
-                            <div class="sec3-box2-icon2"></div>
-                            <p>결제완료<span>(0)</span></p>
-                        </div>
-                        <div class="sec3-box2">
-                            <div class="sec3-box2-icon3"></div>
-                            <p>상품준비중<span>(0)</span></p>
-                        </div>
-                        <div class="sec3-box2">
-                            <div class="sec3-box2-icon4"></div>
-                            <p>배송중<span>(0)</span></p>
-                        </div>
-                        <div class="sec3-box2">
-                            <div class="sec3-box2-icon5"></div>
-                            <p>배송완료<span>(0)</span></p>
+                <div class="coupon1">
+                    <p class="cou-font">쿠폰 등록</p>
+                    <div class="coupon-box">
+
+                        <div class="coupon-input">
+                            <p>*소지하고 계신 원조이몰 할인쿠폰 번호 15자리를 입력해 주세요.</p>
+                            <input type="text" placeholder="1234">
+                            <button>등록하기</button>
                         </div>
                     </div>
                 </div>
-                <div class="r-sec4">
-                    <div class="sec4-txt">
-                        <p class="txt-tit">최근 구매내역<span>최근주문3건(1개월내)</span></p>
-                        <p class="mor-a">
-                            <a href="">더보기 ></a>
-                        </p>
-                    </div>
-                    <table class="sec4-lis">
+                <div class="coupon2">
+                    <p class="cou-font">등록된 쿠폰 내역</p>
+                    <table>
                         <colgroup>
-                            <col style="width: 150px;">
-                            <col style="width: 305px;">
-                            <col style="width: 125px;">
-                            <col style="width: 100px;">
-                            <col style="width: 100px;">
-                            <col style="width: 120px;">
+                            <col style="width:200px">
+                            <col style="width:247px">
+                            <col style="width:247px">
+                            <col style="width:200px">
                         </colgroup>
-                        <thead class="lis-head">
+                        <thead class="cou-header">
                         <tr>
-                            <th>주문일/주문번호</th>
-                            <th>상품정보</th>
-                            <th>상품금액</th>
-                            <th>수량</th>
-                            <th>주문금액</th>
-                            <th>진행상태</th>
+                            <th>등록시간</th>
+                            <th>쿠폰명</th>
+                            <th>조건</th>
+                            <th>유효기간</th>
                         </tr>
                         </thead>
-                        <tbody class="lis-body">
-                        <tr>
-                            <td class="my-lis-1">
-                                <p>2019.04.10</p>
-                                <p><a href="">123456789121</a></p>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="lis-font-w"><a href="">3,099,000</a><span>원</span></td>
-                            <td class="lis-font-w"><a href="">2</a></td>
-                            <td class="lis-font-w"><a href="">3,099,000</a><span>원</span></td>
-                            <td>
-                                <p class="lis-font-w">배송완료</p>
-                                <div class="lis-txt-box">
-                                    <a href="#">상품평작성</a>
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody class="cou-body">
+                        <c:if test="${not empty userCouponList}">
+                            <c:forEach var="userCouponList" items="${userCouponList}">
+                                <c:set var="coupon_payment_condition" value="${userCouponList.coupon_payment_condition}"/>
+                                <tr>
+                                    <td>${userCouponList.reg_date}</td>
+                                    <td>${userCouponList.coupon_name}</td>
+
+                                    <td><fmt:formatNumber value="${userCouponList.coupon_payment_condition}" pattern="#,###" /></td>
+                                    <td>${userCouponList.coupon_use_day}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${empty userCouponList}">
+                            <tr>
+                                <td colspan="4">사용 가능 쿠폰  Q&amp;A이 없습니다.</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </c:if>
+
                         </tbody>
                     </table>
                     <div class="num-box">
@@ -160,109 +133,12 @@
                             <div class="left-box"><a href=""></a></div>
                             <div class="num">
                                 <span><a href="">1</a></span>
-                                <span><a href="">2</a></span>
-                                <span><a href="">3</a></span>
-                                <span><a href="">4</a></span>
-                                <span><a href="">5</a></span>
                             </div>
                             <div class="right-box"><a href=""></a></div>
                         </div>
                     </div>
                 </div>
-                <div class="r-sec5">
-                    <div class="sec5-txt">
-                        <p class="txt-tit">경품 참여 내역</p>
-                        <p class="mor-a"><a href="#">더보기 ></a></p>
-                    </div>
-                    <table>
-                        <colgroup>
-                            <col style="width: 150px;">
-                            <col style="width: 630px;">
-                            <col style="width: 120px;">
-                        </colgroup>
-                        <thead class="lis-head">
-                        <tr>
-                            <th>참여일</th>
-                            <th>이벤트명</th>
-                            <th>진행상태</th>
-                        </tr>
-                        </thead>
-                        <tbody class="lis-body2">
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="com">발표완료</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td>진행중</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">당첨</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">당첨</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">당첨</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="r-sec6">
-                    <div class="sec6-txt">
-                        <p class="txt-tit">나의 상품 Q&A</p>
-                        <p class="mor-a"><a href="#">더보기 ></a></p>
-                    </div>
-                    <table>
-                        <colgroup>
-                            <col style="width: 150px;">
-                            <col style="width: 630px;">
-                            <col style="width: 120px;">
-                        </colgroup>
-                        <thead class="lis-head">
-                        <tr>
-                            <th>작성일</th>
-                            <th>제목</th>
-                            <th>답변상태</th>
-                        </tr>
-                        </thead>
-                        <tbody class="lis-body2">
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td>답변대기</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">답변완료</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">답변완료</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">답변완료</td>
-                        </tr>
-                        <tr>
-                            <td>2019.04.10</td>
-                            <td><a href="">[삼성전자] [일일특가] *사운드바 증정 이벤트*</a></td>
-                            <td class="txt-ok">답변완료</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+
             </div>
         </main>
 

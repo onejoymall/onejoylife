@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.ProductMapper">
+
+    <select id="getProductList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product  where 1=1
+        ]]>
+
+        <if test="product_id != null"> <![CDATA[AND product_id= #{product_id} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="product_name != null"> <![CDATA[AND product_name like CONCAT('%',#{product_name},'%') ]]></if>
+        <if test="product_payment != null"> <![CDATA[AND product_payment= #{product_payment} ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+    </select>
+    <select id="getProductListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product  where 1=1
+        ]]>
+        <if test="product_id != null"> <![CDATA[AND product_id= #{product_id} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="product_name != null"> <![CDATA[AND product_name like CONCAT('%',#{product_name},'%') ]]></if>
+        <if test="product_payment != null"> <![CDATA[AND product_payment= #{product_payment} ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+    </select>
+    <select id="getUserProductPaymentList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,
+            (select Z.product_cd from product Z where Z.product_id=A.product_id) as product_cd,
+            (select Z.product_name from product Z where Z.product_id=A.product_id) as product_name
+        FROM product_payment_history A  where 1=1
+        ]]>
+
+        <if test="pd_payment_user_id != null"> <![CDATA[AND A.coupon_id= #{pd_payment_user_id} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="pd_payment_amount != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="product_name != null"> <![CDATA[AND product_name= #{product_name} ]]></if>
+        <if test="pd_payment_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_cd} ]]></if>
+        <if test="pd_payment_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_class_cd} ]]></if>
+    </select>
+    <select id="getUserProductPaymentListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product_payment_history A  where 1=1
+        ]]>
+
+        <if test="pd_payment_user_id != null"> <![CDATA[AND A.coupon_id= #{pd_payment_user_id} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="pd_payment_amount != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="product_name != null"> <![CDATA[AND product_name= #{product_name} ]]></if>
+        <if test="pd_payment_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_cd} ]]></if>
+        <if test="pd_payment_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_class_cd} ]]></if>
+    </select>
+
+    <insert id="insertProduct" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
+        <![CDATA[
+        insert into product(
+        product_cd,product_name,product_payment,product_point_rate,product_use_yn)
+      VALUES (
+        #{item.product_cd},
+        #{item.product_name},
+        #{item.product_payment},
+        #{item.product_point_rate},
+        #{item.product_use_yn}
+        )
+        ]]>
+        </foreach>
+    </insert>
+    <insert id="insertProductPaymentHistory" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
+       <![CDATA[
+        insert into product_payment_history(
+        pd_payment_user_id,pd_payment_amount,pd_payment_cd,pd_payment_class_cd)
+      VALUES (
+        #{item.pd_payment_user_id},
+        #{item.pd_payment_amount},
+        #{item.pd_payment_cd},
+        #{item.pd_payment_class_cd}
+        )
+        ]]>
+        </foreach>
+    </insert>
+    <update id="updateProduct" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+            update product set
+            product_cd=#{item.product_cd},
+            product_name=#{item.product_name},
+            product_payment=#{item.product_payment},
+            product_point_rate=#{item.product_point_rate}
+            where product_id = #{item.product_id}
+            ]]>
+        </foreach>
+    </update>
+    <delete id="deleteProduct" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+        <![CDATA[
+        delete product where product_id = #{item.product_id}
+        ]]>
+        </foreach>
+    </delete>
+    <delete id="deleteProductPaymentHistory" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+        delete product_payment_history where pd_payment_history_id = #{item.pd_payment_history_id}
+        ]]>
+        </foreach>
+    </delete>
+</mapper>
