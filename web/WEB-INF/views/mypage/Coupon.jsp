@@ -14,69 +14,8 @@
         <main>
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
-                <div class="r-sec1">
-                    <span class="but-img"></span>
-                    <span class="name">gildonghong@onejoy.co.kr</span>
-                    <span>님</span>
-                </div>
-                <div class="r-sec2">
-                    <div class="rec2-in">
-                        <p class="font-de1">쿠폰</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">배송중인 상품</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">응모중인 경품</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">E-point</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>999,999,999</span>
-                                <span>p</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <div>
-                            <p class="in-coin1 font-de1">OJT</p>
-                            <p class="in-coin2 font-de2">
-                                <a href="#">
-                                    <span>999,999,999</span>
-                                    <span>coin</span>
-                                </a>
-                            </p>
-                        </div>
-                        <div>
-                            <p class="in-coin1 font-de1">OJST</p>
-                            <p class="in-coin2 font-de2">
-                                <a href="#">
-                                    <span>999,999,999</span>
-                                    <span>coin</span>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+<%--                <%@ include file="/WEB-INF/views/layout/MyPageRightHeader.jsp" %>--%>
+                <c:import url="/MyPage/RightHeader"/>
                 <div class="coupon1">
                     <p class="cou-font">쿠폰 등록</p>
                     <div class="coupon-box">
@@ -113,7 +52,7 @@
                                     <td>${userCouponList.reg_date}</td>
                                     <td>${userCouponList.coupon_name}</td>
 
-                                    <td><fmt:formatNumber value="${userCouponList.coupon_payment_condition}" pattern="#,###" /></td>
+                                    <td>${userCouponList.coupon_payment_condition} ${message_coupon_payment_condition}</td>
                                     <td>${userCouponList.coupon_use_day}</td>
                                 </tr>
                             </c:forEach>

@@ -267,6 +267,13 @@ table {
 .lis-body2 > tr > td:nth-child(1) {
     font-size: 0.8rem;
 }
+.lis-body3 > tr {
+    height: 195px;
+    text-align: center;
+}
+.dis-none1{
+    display: none;
+}
 .com {
     color: #848484;
 }

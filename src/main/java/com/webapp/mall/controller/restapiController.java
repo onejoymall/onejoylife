@@ -58,9 +58,10 @@ public class restapiController {
                 Boolean emailValidation = email.matches(regex);
                 if(emailValidation){
                     //이메일 중복확인
+                    params.put("password",null);
                     Map<String, Object> userData= userDAO.getLoginUserList(params);
                     //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
-                    if(isEmpty(userData)){
+                    if(isEmpty(userData) || userData == null){
                         //중복이 아니면 메일전송
                         mailSender.sendSimpleMessage(email, subject, memo+" : "+basePassword);
                         //메일이 정상 적으로 전송되면 회원 이메일과 인증코드를 저장하고 상태를 변경한다.
