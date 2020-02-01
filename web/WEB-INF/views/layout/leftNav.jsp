@@ -23,7 +23,7 @@
                         <li class="outer-li">나의 경품관리
                             <ul class="inner-ul">
                                 <li><a href="<c:url value="/MyPage/GiveawayExperience"/>" class="<c:if test="${leftNavOrder == 10}">active</c:if>">경품 체험하기</a></li>
-                                <li><a href="<c:url value="/MyPage/GiveawayWinningList"/> class="<c:if test="${leftNavOrder == 11}">active</c:if>">경품 당첨내역 조회</a></li>
+                                <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>" class="<c:if test="${leftNavOrder == 11}">active</c:if>">경품 당첨내역 조회</a></li>
                             </ul>
                         </li>
                         <li class="outer-li">나의 정보관리

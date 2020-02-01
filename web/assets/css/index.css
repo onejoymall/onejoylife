@@ -268,10 +268,18 @@ body{
     text-decoration: underline;
 }
 .point-pdt-price{
-    width:100%;
+    float:left;
+    width:60%;
     font-size:20px;
     font-family:'Malgun Gothic';
     font-weight: 700;
+}
+.deadline{
+    float:right;
+    width:40%;
+    font-size:14px;
+    color:#aaaaaa;
+    text-align: right;
 }
 .point-pdt-parti-wrap{
     position:absolute;
@@ -297,6 +305,9 @@ body{
 .progress-now-number{
     font-weight: 600;
     color:#da394d;
+}
+.parti-ppl{
+    color:#aaaaaa;
 }
 .progress-bar{
     position:relative;
@@ -549,7 +560,9 @@ body{
     background:url(../img/share.png) center center no-repeat rgb(199, 199, 199);
     background-size:contain;
     opacity: 0.6;
-    cursor: move
+}
+.share-ic:hover{
+    background:url(../img/share-hv.png)#da394d;
 }
 .product-info{
     width:100%;

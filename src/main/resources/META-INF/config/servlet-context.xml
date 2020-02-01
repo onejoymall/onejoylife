@@ -36,6 +36,7 @@
 			<mvc:exclude-mapping path="/" />                                     <!-- Interceptor에 예외를 적용 할 패턴 -->
 			<mvc:exclude-mapping path="/sign/**" />
 			<mvc:exclude-mapping path="/assets/**" />
+			<mvc:exclude-mapping path="/giveaWay/**" />
 			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

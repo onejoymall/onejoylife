@@ -7,79 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
         <main>
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
-                <div class="r-sec1">
-                    <span class="but-img"></span>
-                    <span class="name">${sessionScope.email}</span>
-                    <span>님</span>
-                </div>
-                <div class="r-sec2">
-                    <div class="rec2-in">
-                        <p class="font-de1">쿠폰</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">배송중인 상품</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">응모중인 경품</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <p class="font-de1">E-point</p>
-                        <p class="font-de2">
-                            <a href="#">
-                                <span>999,999,999</span>
-                                <span>p</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="rec2-in">
-                        <div>
-                            <p class="in-coin1 font-de1">OJT</p>
-                            <p class="in-coin2 font-de2">
-                                <a href="#">
-                                    <span>999,999,999</span>
-                                    <span>coin</span>
-                                </a>
-                            </p>
-                        </div>
-                        <div>
-                            <p class="in-coin1 font-de1">OJST</p>
-                            <p class="in-coin2 font-de2">
-                                <a href="#">
-                                    <span>999,999,999</span>
-                                    <span>coin</span>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
+                <c:import url="/MyPage/RightHeader"/>
                 <div class="ojt-tab-box">
                     <div class="ojt-tab">
                         <p class="ojt-but on2" data-id2="ojt1">E-POINT</p>
-                        <p class="ojt-but" data-id2="ojt2">OJT / OJST</p>
+                        <p class="ojt-but ready" data-id2="ojt2">OJT / OJST</p>
                     </div>
                 </div>
                 <div class="ojt-tabbox on2" id="ojt1">
@@ -139,71 +79,26 @@
                                 </tr>
                                 </thead>
                                 <tbody class="lis-body txt-color1">
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10<br><span>18:03</span></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <p>[브라운] 쿠쿠 10인용 IH전기압력밥솥</p>
-                                    </td>
-                                    <td><span>일반적립</span></td>
-                                    <td><span>2020.02.29</span></td>
-                                    <td><span>-</span></td>
-                                    <td><span>+ 950P</span></td>
-                                    <td><span>999,999,999P</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10<br><span>18:03</span></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <p>[브라운] 쿠쿠 10인용 IH전기압력밥솥</p>
-                                    </td>
-                                    <td><span>일반적립</span></td>
-                                    <td><span>2020.02.29</span></td>
-                                    <td><span>-</span></td>
-                                    <td><span>+ 950P</span></td>
-                                    <td><span>999,999,999P</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10<br><span>18:03</span></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <p>[브라운] 쿠쿠 10인용 IH전기압력밥솥</p>
-                                    </td>
-                                    <td><span>경품응모</span></td>
-                                    <td><span>2020.02.29</span></td>
-                                    <td><span>- 15,000P</span></td>
-                                    <td><span>-</span></td>
-                                    <td><span>999,999,999P</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10<br><span>18:03</span></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <p>[브라운] 쿠쿠 10인용 IH전기압력밥솥</p>
-                                    </td>
-                                    <td><span>경품응모</span></td>
-                                    <td><span>2020.02.29</span></td>
-                                    <td><span>- 15,000P</span></td>
-                                    <td><span>-</span></td>
-                                    <td><span>999,999,999P</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10<br><span>18:03</span></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <p>[브라운] 쿠쿠 10인용 IH전기압력밥솥</p>
-                                    </td>
-                                    <td><span>경품응모</span></td>
-                                    <td><span>2020.02.29</span></td>
-                                    <td><span>- 15,000P</span></td>
-                                    <td><span>-</span></td>
-                                    <td><span>999,999,999P</span></td>
-                                </tr>
+                                <c:if test="${not empty list}">
+                                    <c:forEach var="list" items="${list}">
+                                        <tr>
+                                            <td><p>${list.reg_date}</p></td>
+                                            <td><p>${list.point_paid_memo}</p></td>
+                                            <td>${list.point_paid_type_name}</td>
+                                            <td>${list.point_end_date}</td>
+                                            <td>-<fmt:formatNumber value="${list.point_use}" groupingUsed="true" /></td>
+                                            <td>+<fmt:formatNumber value="${list.point_add}" groupingUsed="true" /></td>
+                                            <td><fmt:formatNumber value="${list.point_amount}" groupingUsed="true" /></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty list}">
+                                    <tr>
+                                        <td colspan="7">표시할 내용이 없습니다.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </c:if>
                                 </tbody>
                             </table>
                             <div class="num-box">

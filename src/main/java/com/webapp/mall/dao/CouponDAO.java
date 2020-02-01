@@ -22,27 +22,27 @@ public class CouponDAO {
         return getUserCouponList;
     }
     public Map<String, Object> getCouponListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getCouponListCount=sql.selectOne("mall.CouponMapper.getCouponListCount");
+        Map<String, Object> getCouponListCount=sql.selectOne("mall.CouponMapper.getCouponListCount",params);
         return getCouponListCount;
     }
     public Map<String, Object> getUserCouponListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getUserCouponListCount=sql.selectOne("mall.CouponMapper.getUserCouponListCount");
+        Map<String, Object> getUserCouponListCount=sql.selectOne("mall.CouponMapper.getUserCouponListCount",params);
         return getUserCouponListCount;
     }
     public int insertCoupon(Map<String, String> params) throws SQLException {
-        int insertCoupon = sql.insert("mall.CouponMapper.insertCoupon");
+        int insertCoupon = sql.insert("mall.CouponMapper.insertCoupon",params);
         return insertCoupon;
     }
     public int insertCouponPaidHistory(Map<String, String> params) throws SQLException {
-        int insertCouponPaidHistory = sql.insert("mall.CouponMapper.insertCouponPaidHistory");
+        int insertCouponPaidHistory = sql.insert("mall.CouponMapper.insertCouponPaidHistory",params);
         return insertCouponPaidHistory;
     }
     public int updateCoupon(Map<String, String> params) throws SQLException {
-        int updateCoupon = sql.update("mall.CouponMapper.updateCoupon");
+        int updateCoupon = sql.update("mall.CouponMapper.updateCoupon",params);
         return updateCoupon;
     }
     public int deleteCoupon(Map<String, String> params) throws SQLException {
-        int deleteCoupon = sql.delete("mall.CouponMapper.deleteCoupon");
+        int deleteCoupon = sql.delete("mall.CouponMapper.deleteCoupon",params);
         return deleteCoupon;
     }
 

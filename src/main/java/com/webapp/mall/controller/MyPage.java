@@ -2,6 +2,7 @@ package com.webapp.mall.controller;
 
 import com.webapp.common.support.MessageSource;
 import com.webapp.mall.dao.CouponDAO;
+import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller
 public class MyPage {
     @Autowired
@@ -23,17 +24,24 @@ public class MyPage {
     @Autowired
     CouponDAO couponDAO;
     @Autowired
+    PointDAO pointDAO;
+    @Autowired
     ProductDAO productDAO;
     @Autowired
     UserDAO userDAO;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
-    public String RightHeader(Model model, HashMap params) throws SQLException {
+    public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
 
         try{
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
-
+            params.put("point_paid_user_id",userInfo.get("usr_id"));
+            Map<String ,Object> point = pointDAO.getPointAmount(params);
             model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
+            model.addAttribute("point_amount",point.get("point_amount").toString());
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -49,8 +57,17 @@ public class MyPage {
     }
     //이포인트
     @RequestMapping(value="/MyPage/ePoint")
-    public String myPagePoint(Model model,HttpServletRequest request) {
-        Object requestUri=request.getRequestURI();
+    public String myPagePoint(Model model,HttpServletRequest request,HttpSession session,HashMap params) throws SQLException {
+        try{
+            //사용자 아이디 확인 후 전달
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("point_paid_user_id",userInfo.get("usr_id"));
+            List<Map<String,Object>> list = pointDAO.getPointList(params);
+            model.addAttribute("list", list);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("leftNavOrder", 2);
         model.addAttribute("style", "mypage-2");
         return "mypage/ePoint";

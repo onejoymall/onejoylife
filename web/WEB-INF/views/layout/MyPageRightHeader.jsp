@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 
@@ -21,7 +21,7 @@
                     <div class="rec2-in">
                         <p class="font-de1">쿠폰</p>
                         <p class="font-de2">
-                            <a href="#">
+                            <a href="<c:url value="/MyPage/Coupon"/>">
                                 <span>${couponCnt}</span>
                                 <span>장</span>
                             </a>
@@ -48,8 +48,8 @@
                     <div class="rec2-in">
                         <p class="font-de1">E-point</p>
                         <p class="font-de2">
-                            <a href="#">
-                                <span>999,999,999</span>
+                            <a href="<c:url value="/MyPage/ePoint"/>">
+                                <span><fmt:formatNumber value="${point_amount}" groupingUsed="true" /></span>
                                 <span>p</span>
                             </a>
                         </p>

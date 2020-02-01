@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -47,12 +47,11 @@
                         <tbody class="cou-body">
                         <c:if test="${not empty userCouponList}">
                             <c:forEach var="userCouponList" items="${userCouponList}">
-                                <c:set var="coupon_payment_condition" value="${userCouponList.coupon_payment_condition}"/>
                                 <tr>
                                     <td>${userCouponList.reg_date}</td>
                                     <td>${userCouponList.coupon_name}</td>
 
-                                    <td>${userCouponList.coupon_payment_condition} ${message_coupon_payment_condition}</td>
+                                    <td><fmt:formatNumber value="${userCouponList.coupon_payment_condition}" groupingUsed="true" /> ${message_coupon_payment_condition}</td>
                                     <td>${userCouponList.coupon_use_day}</td>
                                 </tr>
                             </c:forEach>
