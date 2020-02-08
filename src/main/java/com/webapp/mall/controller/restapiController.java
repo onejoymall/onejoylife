@@ -269,4 +269,28 @@ public class restapiController {
 //        }
 //        return resultMap;
 //    }
+    //포인트 잔액확인
+    @RequestMapping(value = "/giveaway/PointAmountCheckProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> PointAmountCheckProc(@RequestParam HashMap params,HttpServletRequest request,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            String point = (String)params.get("point");
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                error.put("Point", messageSource.getMessage("error.noLoginInfo","ko"));
+            }
+            if(point==null || point.isEmpty()){
+                error.put("Point", messageSource.getMessage("error.required","ko"));
+            }
+            resultMap.put("validateError",error);
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
 }

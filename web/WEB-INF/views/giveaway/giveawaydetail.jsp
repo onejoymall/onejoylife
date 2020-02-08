@@ -56,10 +56,11 @@
                 <div class="shipping-fee-wrap">
                     <div class="shipping-fee-row">
                         <div class="shipping-title text-gray">
-                            배송비
+                            배송안내
                         </div>
                         <div class="shipping-number">
-                            현대택배 2,500원 &#40;결제금액 20,000원 이상 무료&#41;
+                            ${delivery.get("delivery_payment")}
+<%--                            현대택배 2,500원 &#40;결제금액 20,000원 이상 무료&#41;--%>
                         </div>
 <%--                        <c:forEach items="${fn:split('1|2|3|4|5', '|') }" var="item">--%>
 <%--                            ${item}<br/>--%>
@@ -68,9 +69,19 @@
                 </div>
                 <div class="cart-option-wrap">
                     <div class="quantity-box">
-                        <span>응모포인트</span>
+                        <span>
+                            <c:if test="${sessionScope.login}">
+                                보유포인트 <fmt:formatNumber value="${point_amount}" groupingUsed="true" /> Point
+                            </c:if>
+                            <c:if test="${!sessionScope.login}">
+                                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트학인</a>
+                            </c:if>
+                            / 응모포인트</span>
                         <div class="total-quantity">
-                            <input type="number" id="point" name="point" value='${detail.giveway_payment}'><span>  Point</span>
+                            <form name="defaultForm" id="defaultForm" method="post">
+                                <input type="number" id="point" name="point" value='${detail.giveway_payment}'><span>  Point</span>
+                                <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span>  Point</span>
+                            </form>
                         </div>
                     </div>
                     <div class="total-price">
@@ -79,7 +90,7 @@
                     </div>
                 </div>
                 <div class="buy-wrap">
-                    <button class="buynow" type="button">바로 응모하기</button>
+                    <button class="buynow" type="button" id="formSubmit">바로 응모하기</button>
                     <button class="favorite" type="button"><i class="heart-empty"></i></button>
                 </div>
             </div>
@@ -627,6 +638,33 @@
         });//click
     });
 
+    $('#formSubmit').on("click",function () {
+        var formData = $('#defaultForm').serialize();
+
+        jQuery.ajax({
+            type:"POST",
+            url:"<c:url value="/giveaway/PointAmountCheckProc"/>",
+            data:formData,
+            success : function(data) {
+                console.log(data)
+                if(data.validateError > 0) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function(index, item){
+                        // $('#validateError'+index).removeClass('none');
+                        $('#validateError'+index).html('* '+item);
+                    });
+
+                }else{
+                    // loginAuth(data.access_token);
+                    // location.href=data.redirectUrl;
+                }
+            },
+            error : function(xhr, status, error) {
+                alert("error");
+            }
+        });
+    })
+</script>
 
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

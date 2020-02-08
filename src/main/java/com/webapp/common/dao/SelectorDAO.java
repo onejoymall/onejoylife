@@ -5,13 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Repository
 public class SelectorDAO{
     @Autowired
     private SqlSession sql;
-    public Map<String,Object> getSelector(Map<String,Object> params) throws SQLException {
-        Map<String, Object> getSelector=sql.selectOne("common.CommonMapper.getSelector",params);
+    public List<Map<String,Object>> getSelector(Map<String,Object> params) throws SQLException {
+        List<Map<String, Object>> getSelector=sql.selectList("common.CommonMapper.getSelector",params);
         return getSelector;
     }
 }
