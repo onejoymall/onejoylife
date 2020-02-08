@@ -59,6 +59,9 @@
 </footer>
 
 <script>
+    function fn_formSubmit(){
+        document.form1.submit();
+    }
     $('.ready').on("click",function () {
         alert("준비중입니다");
         return false;

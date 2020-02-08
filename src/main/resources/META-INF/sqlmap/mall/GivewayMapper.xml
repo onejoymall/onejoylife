@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.GivewayMapper">
+    <select id="getGivewayDetail" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,
+            ifnull((((select sum(Z.giveway_payment_epoint) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) / A.giveway_play_min_point) * 100) , 0) as parti_rate,
+            ifnull((select sum(Z.giveway_payment_epoint) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) , 0) sum_play_point,
+            ifnull((select count(1) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) , 0) player_count
+        FROM giveaway A  where 1=1
+        ]]>
+        <if test="giveway_id != null"> <![CDATA[AND A.giveway_id= #{giveway_id} ]]></if>
+    </select>
+    <select id="getGivewayList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,
+            ifnull((((select sum(Z.giveway_payment_epoint) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) / A.giveway_play_min_point) * 100) , 0) as parti_rate,
+            ifnull((select sum(Z.giveway_payment_epoint) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) , 0) sum_play_point,
+            ifnull((select count(1) from giveway_play_hitory Z where Z.giveway_cd = A.giveway_cd) , 0) player_count
+        FROM giveaway A  where 1=1
+        ]]>
+
+        <if test="giveway_id != null"> <![CDATA[AND A.giveway_id= #{giveway_id} ]]></if>
+        <if test="giveway_cd != null"> <![CDATA[AND A.giveway_cd= #{giveway_cd} ]]></if>
+        <if test="giveway_use_yn != null"> <![CDATA[AND A.giveway_use_yn= #{giveway_use_yn} ]]></if>
+        <if test="giveway_sale_yn != null"> <![CDATA[AND A.giveway_sale_yn= #{giveway_sale_yn} ]]></if>
+        <if test="giveway_ct != null"> <![CDATA[AND A.giveway_ct= #{giveway_ct} ]]></if>
+        <if test="giveway_new_class != null"> <![CDATA[AND A.giveway_new_class= #{giveway_new_class} ]]></if>
+        <if test="giveway_name != null"> <![CDATA[AND A.giveway_name like CONCAT('%',#{giveway_name},'%') ]]></if>
+        <if test="giveway_user_payment != null"> <![CDATA[AND A.giveway_user_payment= #{giveway_user_payment} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+
+        LIMIT ${rowStart-1}, ${staticRowEnd}
+    </select>
+    <select id="getGivewayListCount" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT
+            count(*)
+        FROM giveaway  where 1=1
+        ]]>
+        <if test="giveway_id != null"> <![CDATA[AND giveway_id= #{giveway_id} ]]></if>
+        <if test="giveway_cd != null"> <![CDATA[AND giveway_cd= #{giveway_cd} ]]></if>
+        <if test="giveway_use_yn != null"> <![CDATA[AND giveway_use_yn= #{giveway_use_yn} ]]></if>
+        <if test="giveway_sale_yn != null"> <![CDATA[AND giveway_sale_yn= #{giveway_sale_yn} ]]></if>
+        <if test="giveway_ct != null"> <![CDATA[AND giveway_ct= #{giveway_ct} ]]></if>
+        <if test="giveway_new_class != null"> <![CDATA[AND giveway_new_class= #{giveway_new_class} ]]></if>
+        <if test="giveway_name != null"> <![CDATA[AND giveway_name like CONCAT('%',#{giveway_name},'%') ]]></if>
+        <if test="giveway_user_payment != null"> <![CDATA[AND giveway_user_payment= #{giveway_user_payment} ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+    </select>
+    <select id="getUserGivewayPlayList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,
+            (select Z.giveway_cd from giveaway Z where Z.giveway_cd=A.giveway_cd) as giveway_cd,
+            (select Z.giveway_name from giveaway Z where Z.giveway_cd=A.giveway_cd) as product_name
+        FROM giveway_play_hitory A  where 1=1
+        ]]>
+
+        <if test="giveway_play_id != null"> <![CDATA[AND A.giveway_play_id= #{giveway_play_id} ]]></if>
+        <if test="giveway_cd != null"> <![CDATA[AND giveway_cd= #{giveway_cd} ]]></if>
+        <if test="giveway_play_user_id != null"> <![CDATA[AND giveway_play_user_id= #{giveway_play_user_id} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+    </select>
+    <select id="getUserGivewayPlayListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM giveway_play_hitory A  where 1=1
+        ]]>
+
+        <if test="giveway_play_id != null"> <![CDATA[AND A.giveway_play_id= #{giveway_play_id} ]]></if>
+        <if test="giveway_cd != null"> <![CDATA[AND giveway_cd= #{giveway_cd} ]]></if>
+        <if test="giveway_play_user_id != null"> <![CDATA[AND giveway_play_user_id= #{giveway_play_user_id} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+    </select>
+    <insert id="insertGiveway" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
+        <![CDATA[
+        insert into giveway(
+        giveway_cd,
+        giveway_market_cd,
+        giveway_use_yn,
+        giveway_sale_yn,
+        giveway_ct,
+        giveway_new_class,
+        giveway_md_class,
+        giveway_name,
+        giveway_name_en,
+        giveway_name_mg,
+        giveway_supply_pd_name,
+        giveway_model_name,
+        giveway_summary_memo,
+        giveway_brief_memo,
+        giveway_html,
+        giveway_mobile_memo_config,
+        giveway_mobile_html,
+        giveway_keyword,
+        giveway_tex_class,
+        giveway_user_payment,
+        giveway_company_payment,
+        giveway_payment,
+        giveway_payment_empty_yn,
+        giveway_payment_memo,
+        giveway_order_limit_quantity,
+        giveway_min_limit,
+        giveway_max_limit,
+        giveway_point_rate,
+        giveway_go_event_yn,
+        giveway_adult_yn,
+        giveway_option_yn,
+        giveway_option_class,
+        giveway_option_view_type,
+        giveway_option_set_name,
+        giveway_option_input,
+        giveway_option_style,
+        giveway_option_button_img,
+        giveway_option_color,
+        giveway_option_required,
+        giveway_sold_out_memo,
+        giveway_add_option,
+        giveway_add_option_name,
+        giveway_add_option_required,
+        giveway_add_option_max_lang,
+        giveway_detail_image,
+        giveway_list_image,
+        giveway_list_image_sm,
+        giveway_list_image_response,
+        giveway_add_image,
+        giveway_made_company_cd,
+        giveway_supplier,
+        giveway_brand,
+        giveway_trend,
+        giveway_influencer,
+        giveway_self_class_cd,
+        giveway_create_date,
+        giveway_release_date,
+        giveway_validity_yn,
+        giveway_validity,
+        giveway_origin,
+        giveway_cm,
+        giveway_payment_info,
+        giveway_delivery_info,
+        giveway_change_info,
+        giveway_service_info,
+        giveway_delivery_class,
+        giveway_delivery_type,
+        giveway_delivery_International_type,
+        giveway_delivery_locale,
+        giveway_delivery_payment_type,
+        giveway_delivery_date,
+        giveway_delivery_payment_class,
+        giveway_delivery_payment,
+        giveway_delivery_store_pickup,
+        giveway_kg,
+        giveway_global_hs_code,
+        giveway_global_clearance,
+        giveway_material,
+        giveway_material_en,
+        giveway_fabric,
+        giveway_seo_yn,
+        giveway_seo_title,
+        giveway_seo_author,
+        giveway_seo_description,
+        giveway_seo_keywords,
+        giveway_seo_alt,
+        giveway_payment_type,
+        giveway_delivery_type_code,
+        giveway_memo,
+        giveway_point_class,
+        giveway_point_rate_cash,
+        giveway_members_limit,
+        giveway_view_locale_cd,
+        giveway_play_min_point
+        )
+      VALUES (
+        #{item.giveway_cd},
+        #{item.giveway_market_cd},
+        #{item.giveway_use_yn},
+        #{item.giveway_sale_yn},
+        #{item.giveway_ct},
+        #{item.giveway_new_class},
+        #{item.giveway_md_class},
+        #{item.giveway_name},
+        #{item.giveway_name_en},
+        #{item.giveway_name_mg},
+        #{item.giveway_supply_pd_name},
+        #{item.giveway_model_name},
+        #{item.giveway_summary_memo},
+        #{item.giveway_brief_memo},
+        #{item.giveway_html},
+        #{item.giveway_mobile_memo_config},
+        #{item.giveway_mobile_html},
+        #{item.giveway_keyword},
+        #{item.giveway_tex_class},
+        #{item.giveway_user_payment},
+        #{item.giveway_company_payment},
+        #{item.giveway_payment},
+        #{item.giveway_payment_empty_yn},
+        #{item.giveway_payment_memo},
+        #{item.giveway_order_limit_quantity},
+        #{item.giveway_min_limit},
+        #{item.giveway_max_limit},
+        #{item.giveway_point_rate},
+        #{item.giveway_go_event_yn},
+        #{item.giveway_adult_yn},
+        #{item.giveway_option_yn},
+        #{item.giveway_option_class},
+        #{item.giveway_option_view_type},
+        #{item.giveway_option_set_name},
+        #{item.giveway_option_input},
+        #{item.giveway_option_style},
+        #{item.giveway_option_button_img},
+        #{item.giveway_option_color},
+        #{item.giveway_option_required},
+         #{item.giveway_sold_out_memo},
+         #{item.giveway_add_option},
+         #{item.giveway_add_option_name},
+         #{item.giveway_add_option_required},
+         #{item.giveway_add_option_max_lang},
+         #{item.giveway_detail_image},
+         #{item.giveway_list_image},
+         #{item.giveway_list_image_sm},
+         #{item.giveway_list_image_response},
+         #{item.giveway_add_image},
+         #{item.giveway_made_company_cd},
+         #{item.giveway_supplier},
+         #{item.giveway_brand},
+         #{item.giveway_trend},
+         #{item.giveway_influencer},
+         #{item.giveway_self_class_cd},
+         #{item.giveway_create_date},
+         #{item.giveway_release_date},
+         #{item.giveway_validity_yn},
+         #{item.giveway_validity},
+         #{item.giveway_origin},
+         #{item.giveway_cm},
+         #{item.giveway_payment_info},
+         #{item.giveway_delivery_info},
+         #{item.giveway_change_info},
+         #{item.giveway_service_info},
+         #{item.giveway_delivery_class},
+         #{item.giveway_delivery_type},
+         #{item.giveway_delivery_International_type},
+         #{item.giveway_delivery_locale},
+         #{item.giveway_delivery_payment_type},
+         #{item.giveway_delivery_date},
+         #{item.giveway_delivery_payment_class},
+         #{item.giveway_delivery_payment},
+         #{item.giveway_delivery_store_pickup},
+         #{item.giveway_kg},
+         #{item.giveway_global_hs_code},
+         #{item.giveway_global_clearance},
+         #{item.giveway_material},
+         #{item.giveway_material_en},
+         #{item.giveway_fabric},
+         #{item.giveway_seo_yn},
+         #{item.giveway_seo_title},
+         #{item.giveway_seo_author},
+         #{item.giveway_seo_description},
+         #{item.giveway_seo_keywords},
+         #{item.giveway_seo_alt},
+         #{item.giveway_payment_type},
+         #{item.giveway_delivery_type_code},
+         #{item.giveway_memo},
+         #{item.giveway_point_class},
+         #{item.giveway_point_rate_cash},
+         #{item.giveway_members_limit},
+         #{item.giveway_view_locale_cd},
+         #{item.giveway_play_min_point}
+        )
+        ]]>
+        </foreach>
+    </insert>
+    <insert id="insertGivewayPlay" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
+       <![CDATA[
+        insert into giveway_play_hitory(
+        giveway_cd,
+        giveway_payment_epoint,
+        giveway_play_user_id,
+        )
+      VALUES (
+        #{item.giveway_cd},
+        #{item.giveway_payment_epoint},
+        #{item.giveway_play_user_id},
+        )
+        ]]>
+        </foreach>
+    </insert>
+    <update id="updateGiveway" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+            update giveway set
+            giveway_use_yn= {item.giveway_use_yn},
+            giveway_sale_yn= {item.giveway_sale_yn},
+            giveway_ct= {item.giveway_ct},
+            giveway_new_class= {item.giveway_new_class},
+            giveway_md_class= {item.giveway_md_class},
+            giveway_name= {item.giveway_name},
+            giveway_name_en= {item.giveway_name_en},
+            giveway_name_mg= {item.giveway_name_mg},
+            giveway_supply_pd_name= {item.giveway_supply_pd_name},
+            giveway_model_name= {item.giveway_model_name},
+            giveway_summary_memo= {item.giveway_summary_memo},
+            giveway_brief_memo= {item.giveway_brief_memo},
+            giveway_html= {item.giveway_html},
+            giveway_mobile_memo_config= {item.giveway_mobile_memo_config},
+            giveway_mobile_html= {item.giveway_mobile_html},
+            giveway_keyword= {item.giveway_keyword},
+            giveway_tex_class= {item.giveway_tex_class},
+            giveway_user_payment= {item.giveway_user_payment},
+            giveway_company_payment= {item.giveway_company_payment},
+            giveway_payment= {item.giveway_payment},
+            giveway_payment_empty_yn= {item.giveway_payment_empty_yn},
+            giveway_payment_memo= {item.giveway_payment_memo},
+            giveway_order_limit_quantity= {item.giveway_order_limit_quantity},
+            giveway_min_limit= {item.giveway_min_limit},
+            giveway_max_limit= {item.giveway_max_limit},
+            giveway_point_rate= {item.giveway_point_rate},
+            giveway_go_event_yn= {item.giveway_go_event_yn},
+            giveway_adult_yn= {item.giveway_adult_yn},
+            giveway_option_yn= {item.giveway_option_yn},
+            giveway_option_class= {item.giveway_option_class},
+            giveway_option_view_type= {item.giveway_option_view_type},
+            giveway_option_set_name= {item.giveway_option_set_name},
+            giveway_option_input= {item.giveway_option_input},
+            giveway_option_style= {item.giveway_option_style},
+            giveway_option_button_img= {item.giveway_option_button_img},
+            giveway_option_color= {item.giveway_option_color},
+            giveway_option_required= {item.giveway_option_required},
+            giveway_sold_out_memo= #{item.giveway_sold_out_memo},
+            giveway_add_option= #{item.giveway_add_option},
+            giveway_add_option_name= #{item.giveway_add_option_name},
+            giveway_add_option_required= #{item.giveway_add_option_required},
+            giveway_add_option_max_lang= #{item.giveway_add_option_max_lang},
+            giveway_detail_image= #{item.giveway_detail_image},
+            giveway_list_image= #{item.giveway_list_image},
+            giveway_list_image_sm= #{item.giveway_list_image_sm},
+            giveway_list_image_response= #{item.giveway_list_image_response},
+            giveway_add_image= #{item.giveway_add_image},
+            giveway_made_company_cd= #{item.giveway_made_company_cd},
+            giveway_supplier= #{item.giveway_supplier},
+            giveway_brand= #{item.giveway_brand},
+            giveway_trend= #{item.giveway_trend},
+            giveway_influencer= #{item.giveway_influencer},
+            giveway_self_class_cd= #{item.giveway_self_class_cd},
+            giveway_create_date= #{item.giveway_create_date},
+            giveway_release_date= #{item.giveway_release_date},
+            giveway_validity_yn= #{item.giveway_validity_yn},
+            giveway_validity= #{item.giveway_validity},
+            giveway_origin= #{item.giveway_origin},
+            giveway_cm= #{item.giveway_cm},
+            giveway_payment_info= #{item.giveway_payment_info},
+            giveway_delivery_info= #{item.giveway_delivery_info},
+            giveway_change_info= #{item.giveway_change_info},
+            giveway_service_info= #{item.giveway_service_info},
+            giveway_delivery_class= #{item.giveway_delivery_class},
+            giveway_delivery_type= #{item.giveway_delivery_type},
+            giveway_delivery_International_type= #{item.giveway_delivery_International_type},
+            giveway_delivery_locale= #{item.giveway_delivery_locale},
+            giveway_delivery_payment_type= #{item.giveway_delivery_payment_type},
+            giveway_delivery_date= #{item.giveway_delivery_date},
+            giveway_delivery_payment_class= #{item.giveway_delivery_payment_class},
+            giveway_delivery_payment= #{item.giveway_delivery_payment},
+            giveway_delivery_store_pickup= #{item.giveway_delivery_store_pickup},
+            giveway_kg= #{item.giveway_kg},
+            giveway_global_hs_code= #{item.giveway_global_hs_code},
+            giveway_global_clearance= #{item.giveway_global_clearance},
+            giveway_material= #{item.giveway_material},
+            giveway_material_en= #{item.giveway_material_en},
+            giveway_fabric= #{item.giveway_fabric},
+            giveway_seo_yn= #{item.giveway_seo_yn},
+            giveway_seo_title= #{item.giveway_seo_title},
+            giveway_seo_author= #{item.giveway_seo_author},
+            giveway_seo_description= #{item.giveway_seo_description},
+            giveway_seo_keywords= #{item.giveway_seo_keywords},
+            giveway_seo_alt= #{item.giveway_seo_alt},
+            giveway_payment_type= #{item.giveway_payment_type},
+            giveway_delivery_type_code= #{item.giveway_delivery_type_code},
+            giveway_memo= #{item.giveway_memo},
+            giveway_point_class= #{item.giveway_point_class},
+            giveway_point_rate_cash= #{item.giveway_point_rate_cash},
+            giveway_members_limit= #{item.giveway_members_limit},
+            giveway_view_locale_cd= #{item.giveway_view_locale_cd},
+            giveway_play_min_point= #{item.giveway_play_min_point}
+            where giveway_id = #{item.giveway_id}
+            ]]>
+        </foreach>
+    </update>
+    <delete id="deleteGiveway" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+        <![CDATA[
+        delete giveway where giveway_id = #{item.giveway_id}
+        ]]>
+        </foreach>
+    </delete>
+    <delete id="deleteGivewayPlayHistory" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+        delete giveway_play_hitory where giveway_play_id = #{item.giveway_play_id}
+        ]]>
+        </foreach>
+    </delete>
+</mapper>

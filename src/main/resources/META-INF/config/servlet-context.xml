@@ -37,6 +37,7 @@
 			<mvc:exclude-mapping path="/sign/**" />
 			<mvc:exclude-mapping path="/assets/**" />
 			<mvc:exclude-mapping path="/giveaWay/**" />
+			<mvc:exclude-mapping path="/Board/**" />
 			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -57,4 +58,10 @@
 	<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 		<beans:property name="paramName" value="lang" />
 	</beans:bean>
+
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="200000000" />
+		<beans:property name="maxInMemorySize" value="200000000" />
+	</beans:bean>
+
 </beans:beans>

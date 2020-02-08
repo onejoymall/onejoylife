@@ -8,6 +8,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <section class="main-section">
     <h2 class="main-section-title hide">main section</h2>
@@ -35,20 +36,20 @@
             <div class="goods-info-wrap">
                 <div class="goods-name-wrap">
                     <p class="goods-name">
-                        삼성모바일<br> 삼성 Samsung Galaxy S9+
+                        ${detail.get("giveway_name")}
                     </p>
                 </div>
                 <div class="point-pdt-parti-wrap">
                     <div class="parti-percent-wrap">
                         <span class="progress">0%</span>
-                        <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
+                        <span class="progress-now">참여율 <b class="progress-now-number"> ${detail.parti_rate}%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중&#41;</span></span>
                         <span class="progress">100%</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-bar-active"></div>
+                        <div class="progress-bar-active" style="width:${detail.parti_rate}%"></div>
                     </div>
                     <div class="parti-point-wrap">
-                        <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
+                        <p><span class="parti-point-now"><fmt:formatNumber value="${detail.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${detail.giveway_play_min_point}" groupingUsed="true" /> E-point</p>
                         <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
                     </div>
                 </div>
@@ -60,18 +61,21 @@
                         <div class="shipping-number">
                             현대택배 2,500원 &#40;결제금액 20,000원 이상 무료&#41;
                         </div>
+<%--                        <c:forEach items="${fn:split('1|2|3|4|5', '|') }" var="item">--%>
+<%--                            ${item}<br/>--%>
+<%--                        </c:forEach>--%>
                     </div>
                 </div>
                 <div class="cart-option-wrap">
                     <div class="quantity-box">
                         <span>응모포인트</span>
                         <div class="total-quantity">
-                            <input type="number" id="point" name="point" value='30000'><span>  Point</span>
+                            <input type="number" id="point" name="point" value='${detail.giveway_payment}'><span>  Point</span>
                         </div>
                     </div>
                     <div class="total-price">
-                        <div class="total-price-title">응모 E-point 합계</div>
-                        <div class="total-price-number"><span>30,000</span>point</div>
+                        <div class="total-price-title">응모 E-point</div>
+                        <div class="total-price-number"><span><fmt:formatNumber value="${detail.giveway_payment}" groupingUsed="true" /></span>point</div>
                     </div>
                 </div>
                 <div class="buy-wrap">

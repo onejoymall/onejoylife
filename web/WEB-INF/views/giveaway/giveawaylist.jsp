@@ -8,13 +8,14 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <section class="main-section">
     <h2 class="main-section-title hide">main section</h2>
     <article class="epoint-gift-wrap">
         <div class="inner clearfix">
             <h3>E-point 경품추첨</h3>
-            <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">1,017</span>개의 상품이 등록되어 있습니다.</p>
+            <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">${searchVO.totRow}</span>개의 상품이 등록되어 있습니다.</p>
             <div class="sort-tab">
                 <div class="sort-tab-left">
                     <button type="button" class="sort-tab-item active">임박순</button>
@@ -23,244 +24,63 @@
                 </div>
                 <div class="sort-tab-right">
                     <select name="order" class="order-select">
-                        <option value="9">9개씩 보기</option>
-                        <option value="24">24개씩 보기</option>
-                        <option value="60">60개씩 보기</option>
+                        <option value="9" <c:if test="${param.staticRowEnd ==9}">selected</c:if>>9개씩 보기</option>
+                        <option value="24" <c:if test="${param.staticRowEnd ==24}">selected</c:if>>24개씩 보기</option>
+                        <option value="60" <c:if test="${param.staticRowEnd ==60}">selected</c:if>>60개씩 보기</option>
                     </select>
                 </div>
             </div>
             <div class="point-product-list">
                 <div class="row clearfix">
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img1.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                        </a>
-                        <p class="point-pdt-price">469,000원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <span class="progress-now-number">80%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img2.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
-                        </a>
-                        <p class="point-pdt-price">391,200원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
+                <c:if test="${not empty list}">
+                    <c:forEach var="list" items="${list}" varStatus="status">
+                        <c:set var="lineCut" value="${status.count%3}"></c:set>
+                        <div class="point-product-item">
+                            <a href="<c:url value="/giveaway/giveawaydetail?giveway_id="/>${list.giveway_id}">
+                                <img src="<c:url value="/assets/img/"/>${list.giveway_list_image}" />
+                                <i class="share-ic"></i>
+                                <p class="point-pdt-title"> ${list.giveway_name}</p>
+                            </a>
+                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveway_payment}" groupingUsed="true" /> E-point</p>
+                            <p class="deadline">${list.giveway_validity}</p>
+                            <div class="point-pdt-parti-wrap">
+                                <div class="parti-percent-wrap">
+                                    <span class="progress">0%</span>
+                                    <span class="progress-now">참여율 <span class="progress-now-number">${list.parti_rate}%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중&#41;</span></span>
+                                    <span class="progress">100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
+                                </div>
+                                <div class="parti-point-wrap">
+                                    <p><span class="parti-point-now"><fmt:formatNumber value="${list.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${list.giveway_play_min_point}" groupingUsed="true" /> E-point</p>
+                                    <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
+                                </div>
                             </div>
                         </div>
+                    <c:if test="${lineCut  == 0}">
                     </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img3.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>
-                        </a>
-                        <p class="point-pdt-price">193,800원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img1.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                        </a>
-                        <p class="point-pdt-price">469,000원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <span class="progress-now-number">80%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img2.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
-                        </a>
-                        <p class="point-pdt-price">391,200원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img3.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>
-                        </a>
-                        <p class="point-pdt-price">193,800원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img1.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                        </a>
-                        <p class="point-pdt-price">469,000원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <span class="progress-now-number">80%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img2.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
-                        </a>
-                        <p class="point-pdt-price">391,200원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="point-product-item">
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
-                            <img src="../assets/img/e-point-img3.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>
-                        </a>
-                        <p class="point-pdt-price">193,800원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">8</a></li>
-                    <li class="page-item"><a class="page-link" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                    <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                </ul>
+                    <div class="row clearfix">
+                    </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${empty list}">
+                   표시할 내용이 없습니다.
+                </c:if>
+
+                        <form id="form1" name="form1"  method="post">
+                            <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+                            <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                        </form>
+
             </div>
         </div>
     </article>
 </section>
+<script>
+    $('.order-select').on("change",function () {
+        $('#staticRowEnd').val($(this).val())
+        $('#form1').submit();
+    })
+</script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
