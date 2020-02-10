@@ -1,0 +1,421 @@
+@charset "utf-8";
+
+.display-block{display:block!important;}
+a{transition: none;}
+body{
+    width:100%;
+    min-width: 1100px;
+    font-size:14px;
+    font-family: 'Noto Sans KR';
+    background-color:#fff;
+    word-break: keep-all;
+}
+.main-section{
+    margin:0 auto;
+    width:100%;
+}
+.main-section-title{
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    width:0;
+    height:0;
+}
+.goods-main{
+    margin:0 auto;
+    width:100%;
+}
+.inner{
+    margin:0 auto;
+    width:1100px;
+    padding:40px 0px;
+    overflow: hidden;
+}
+.epoint-gift-wrap h3{
+    font-size: 35px;
+    font-weight: 600;
+    line-height: normal;
+    color: #131415;
+    margin-bottom: 25px;
+}
+.inner > div {
+    float: left;
+}
+/* inner-left */
+.inner-left{
+    width: 170px;
+    padding: 10px 20px 10px 0px;
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+.inner-left > p {
+    font-size: 20px;
+    font-weight: 600;
+}
+.inner-left > .inner-filter1 {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 20px 0;
+}
+.inner-left > .inner-filter1:nth-of-type(7){
+    border: none;
+}
+.inner-filter1 > .filter-tit {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.inner-filter1 li>a.active{
+    color:#da394a;
+    font-weight: 600;
+}
+.inner-filter1 > ul > li {margin-top: 5px;}
+.inner-filter1 ul li a span:nth-of-type(1),
+.inner-filter1 ul li label span span:nth-of-type(1),
+.inner-filter1 ul li label a p{
+    display: inline-block;
+    overflow: hidden;
+    width: auto;
+    max-width: 70%;
+    letter-spacing: -.02px;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 300;
+}
+
+.inner-filter1 ul li a span:nth-of-type(2),
+.inner-filter1 ul li label span span:nth-of-type(2){
+    display: inline-block;
+    max-width: calc(30% - 5px);
+    font-size: 13px;
+    font-weight: 300;
+    color: #a6a9ad;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+.out-ul {
+    margin-left: 10px;
+    display: none;
+}
+.in-ul {
+    margin-left: 10px;
+    display: none;
+}
+.in-ul li::before{
+    content: "- ";
+}
+/* ck */
+input[type="checkbox"]{display:none;}
+input[type="checkbox"]+label{
+    cursor: pointer;
+    display:inline-block;
+    width: 20px;
+    height: 23px;
+    background: url(../img/icon/ch1-icon.png) no-repeat center / 16px;
+}
+input[type="checkbox"]:checked+label{
+    background:url(../img/icon/checked.png) no-repeat center / 14px;
+}
+input[type="checkbox"]+label > span {
+    width: 100px;
+    display: inline-block;
+    margin-left: 25px;
+}
+/* color-box */
+.color-box1 {
+    width: 15px !important;
+    height: 15px;
+    background: red;
+}
+.color-box2 {
+    width: 15px !important;
+    height: 15px;
+    background: orangered;
+}
+.color-box3 {
+    width: 15px !important;
+    height: 15px;
+    background: yellow;
+}
+.color-box4 {
+    width: 15px !important;
+    height: 15px;
+    background: green;
+}
+.color-box5 {
+    width: 15px !important;
+    height: 15px;
+    background: blue;
+}
+.color-box6 {
+    width: 15px !important;
+    height: 15px;
+    background: indigo;
+}
+.color-box7 {
+    width: 15px !important;
+    height: 15px;
+    background: purple;
+}
+/* 평점 */
+.star-box {
+    overflow: hidden;
+    display: inline-block;
+    padding-top: 4px;
+}
+.y-star-full{
+    display:block;
+    float:left;
+    width:14px;
+    height:14px;
+    background:url(../img/goods-view/star-full.png) center center no-repeat;
+    background-size:cover;
+}
+.y-star-half{
+    display:block;
+    float:left;
+    width:14px;
+    height:14px;
+    background:url(../img/goods-view/star-half.png) center center no-repeat;
+    background-size:cover;
+}
+.y-star-empty{
+    display:block;
+    float:left;
+    width:14px;
+    height:14px;
+    background:url(../img/goods-view/star-empty.png) center center no-repeat;
+    background-size:cover;
+}
+.score {
+    display: inline-block;
+    font-size: 13px;
+    color: #a6a9ad;
+    /* margin-left: 5px; */
+}
+/* search-box */
+.input-search {
+    margin-top: 10px;
+}
+.input-search input{
+    width: 45px;
+    height: 25px;
+    border: 1px solid #aaa;
+}
+.input-search button {
+    width: 43px;
+    height: 25px;
+    background: #da394d;
+    color: #fff;
+    line-height: 0.5rem;
+}
+/*inner-right*/
+.inner-right {
+    width: calc(930px - 20px);
+    margin-left: 20px;
+}
+.gift-amount{
+    width:100%;
+    height:30px;
+    margin:10px 0;
+    font-size:20px;
+    font-weight: 400;
+}
+.gift-amount-number{
+    color:#da394d;
+    font-weight: 600;
+}
+/*tab*/
+
+.sort-tab{
+    margin:20px auto 30px;
+    width:100%;
+    height:40px;
+}
+.sort-tab-left{
+    float: left;
+}
+.sort-tab-right{
+    float:right;
+}
+.sort-tab-item{
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: center;
+    color: #bababa;
+    background: rgba(242, 242, 242, 0.8);
+    border-radius: 25px;
+    cursor: pointer;
+}
+.sort-tab-item.active{
+    color:#fff;
+    background:#da394d;
+}
+select.order-select{
+    width:120px;
+    padding:5px 10px;
+    margin-top:5px;
+    font-size:12px;
+    text-align: right;
+    border:none;
+    -webkit-appearance: none;  /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../img/arrow-down-bk.png) no-repeat 95% 50%;  /* 화살표 모양의 이미지 */
+}
+/* IE 10, 11의 네이티브 화살표 숨기기 */
+select.order-select::-ms-expand {
+    display: none;
+}
+/* 카테고리 상품 */
+.sale-percent{
+    position:absolute;
+    top:10px;
+    left:10px;
+    padding:1px 10px;
+    color:#fff;
+    background:#da394a;
+    font-size:18px;
+    font-weight: 600;
+    line-height: normal;
+}
+.sale-percent span{
+    font-size:12px;
+}
+.share-ic{
+    position: absolute;
+    top:10px;
+    right:10px;
+    display: block;
+    width:35px;
+    height:35px;
+    border-radius: 50%;
+    background:url(../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size:contain;
+    opacity: 0.6;
+}
+.share-ic:hover{
+    background:url(../img/share-hv.png)#da394d;
+}
+.info-price{
+    font-size:18px;
+    font-weight: 600;
+    color:#da394d;
+}
+.price-before{
+    color:#979797;
+    font-weight: 100;
+    text-decoration: line-through;
+}
+.right-arrow{
+    display:inline-block;
+    width:15px;
+    height:15px;
+    margin:0 5px;
+    background:url(../img/right.svg) center center no-repeat;
+}
+.info-score{
+    margin-top:20px;
+}
+.star-ic{
+    display:inline-block;
+    width:14px;
+    height:14px;
+    background:url(../img/star.svg) center center no-repeat;
+}
+.score-number{
+    font-size:16px;
+    font-weight: 600;
+}
+.score-text{
+    font-size:12px;
+    font-weight: 100;
+    color:#666;
+    margin-left:5px;
+}
+
+/*list*/
+.point-product-list{
+    margin:0 auto;
+    width:100%;
+}
+.row{
+    width:auto;
+    height:auto;
+    margin:0 auto;
+}
+.point-product-item{
+    float:left;
+    position:relative;
+    width: calc((100% - (20px * 2)) / 3);
+    margin-right:20px;
+    margin-bottom:40px;
+}
+.row .point-product-item:last-child{
+    margin:0;
+}
+.point-product-item a img{
+    width:100%;
+}
+.info-production{
+    font-size:12px;
+    color:#666;
+    font-weight: 300;
+}
+.share-ic{
+    position: absolute;
+    top:10px;
+    right:10px;
+    display: block;
+    width:35px;
+    height:35px;
+    border-radius: 50%;
+    background:url(../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size:contain;
+    opacity: 0.6;
+}
+.share-ic:hover{
+    background:url(../img/share-hv.png)#da394d;
+}
+.point-pdt-title{
+    width:100%;
+    font-size:16px;
+    font-weight: 400;
+    line-height: normal;
+    color:#000;
+    margin-bottom:10px;
+}
+.point-pdt-title:hover{
+    text-decoration: underline;
+}
+.point-pdt-price{
+    float:left;
+    width:60%;
+    font-size:20px;
+    font-family:'Malgun Gothic';
+    font-weight: 700;
+}
+
+/* 페이지 넘김 */
+.pagination{
+    text-align: center;
+    margin-top: 30px;
+}
+.page-item{
+    display:inline-block;
+}
+.page-link{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    line-height: 29px;
+    padding-right:1px;
+    text-align: center;
+    color:rgba(0,0,0,0.7);
+    border:1px solid rgba(0,0,0,0.1);
+}
+.page-link.active{
+    font-weight: 600;
+    color:#fff;
+    background:#da394d;
+    border:1px solid #da394d;
+}

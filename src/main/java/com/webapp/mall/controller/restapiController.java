@@ -5,7 +5,9 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
@@ -34,6 +38,8 @@ public class restapiController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CurlPost curlPost;
+    @Autowired
+    private PointDAO pointDAO;
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -269,28 +275,85 @@ public class restapiController {
 //        }
 //        return resultMap;
 //    }
-    //포인트 잔액확인
+    //포인트 잔액확인 및 경품참여
     @RequestMapping(value = "/giveaway/PointAmountCheckProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> PointAmountCheckProc(@RequestParam HashMap params,HttpServletRequest request,HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+        BigDecimal userPointAmount;
         try {
-            String point = (String)params.get("point");
+            Integer usedPoint = Integer.parseInt((String)params.get("point"));
             params.put("email",session.getAttribute("email"));
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+
             if(isEmpty(userInfo)){
-                error.put("Point", messageSource.getMessage("error.noLoginInfo","ko"));
+                //로그인정보
+                error.put("Error", messageSource.getMessage("error.noLoginInfo","ko"));
+            }else{
+                //보유포인트 확인
+                params.put("point_paid_user_id",userInfo.get("usr_id"));
+                Map<String ,Object> userPoint = pointDAO.getPointAmount(params);
+                userPointAmount=(BigDecimal)userPoint.get("point_amount");
+                //배송비?
+                //금액부족
+                if(usedPoint > Integer.valueOf(userPointAmount.intValue())){
+                    error.put("Point", messageSource.getMessage("error.paymentIsLess","ko"));
+                }else{
+                    resultMap.put("redirectUrl","/MyPage/giveawayform");
+                }
             }
-            if(point==null || point.isEmpty()){
+            if(usedPoint==null || usedPoint < 0 ){
+                //필수입력항목
                 error.put("Point", messageSource.getMessage("error.required","ko"));
             }
-            resultMap.put("validateError",error);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }
         } catch (Exception e) {
-
             resultMap.put("e", e);
         }
         return resultMap;
     }
-
+    //배송정보 저장
+    @RequestMapping(value = "/SaveDeliveInfo", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> SaveDeliveInfo(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            if(deliveryInfoVO.getOrder_user_name().isEmpty()){
+                error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getOrder_user_email().isEmpty()){
+                error.put(messageSource.getMessage("order_user_email","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getOrder_user_phone().isEmpty()){
+                error.put(messageSource.getMessage("order_user_phone","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getDelivery_user_name().isEmpty()){
+                error.put(messageSource.getMessage("delivery_user_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getDelivery_user_phone().isEmpty()){
+                error.put(messageSource.getMessage("delivery_user_phone","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getDelivery_user_tel().isEmpty()){
+                error.put(messageSource.getMessage("delivery_user_tel","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getPostcode().isEmpty()){
+                error.put(messageSource.getMessage("postcode","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getRoadAddress().isEmpty()){
+                error.put(messageSource.getMessage("roadAddress","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getExtraAddress().isEmpty()){
+                error.put(messageSource.getMessage("extraAddress","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
 }

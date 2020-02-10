@@ -43,13 +43,23 @@ body{font-family: "noto sans kr"!important;}
 .for-id,
 .for-pw {
     clear: both;
+}
+.for-pw{
+    background: #f7f7f9;
     border-top: 2px solid #232a32;
     border-bottom: 1px solid #d3d3d5;
+}
+.for-id > div:nth-of-type(1){
     background: #f7f7f9;
+    border-top: 2px solid #232a32;
+}
+.for-id > div:nth-of-type(2){
+    background: #f7f7f9;
+    border-top: 1px solid #d3d3d5;
+    border-bottom: 1px solid #d3d3d5;
 }
 /* id-box1 */
 .id-box1 {
-    border-bottom: 1px solid #d3d3d5;
     padding: 30px 0;
 }
 .tit-id {
@@ -122,29 +132,31 @@ input[id="id-r"] {
     display: inline-block;
     margin-left: 12px;
 }
-.id-num2{display: none;}
+.id-num2{display: none; margin-top:20px;}
 .id-num2 > div > input {
     border: 1px solid;
     height: 30px;
     padding: 0 10px;
     display: inline-block;
 }
-.p-size {
+.p-notice {
+    display:none;
+    font-size: 0.8rem;
+    line-height: 1.3rem;
+    color: #232a32;
+}
+.error-box{
+    display:none;
     font-size: 0.8rem;
     line-height: 1.3rem;
     color: #da394d;
-    display: none;
 }
-.p-color {color: #232a32;}
 /* pw-box */
 .tit-box{
     margin-bottom: 20px;
     clear: both;
     text-align: center;
     font-size: 1.8rem;
-}
-.id-num1 {
-    margin: 20px 0;
 }
 .none {
     font-size: 0.8rem;
@@ -160,24 +172,33 @@ input[id="id-r"] {
 .la-input > input{
     width: 407px;
 }
+.id-num3 {
+    margin-top: 10px;
+}
 /* but */
+.but-go {
+    clear: both;
+    margin: 50px 450px;
+    width: 200px;
+    height: 50px;
+    background: #232a32;
+    font-size: 1.2rem;
+    color: #fff;
+}
 .but-box {
     text-align: center;
-    margin-bottom: 35px;
+    margin: 35px;
 }
-.but-box > div {
+.but-box > button {
     display: inline-block;
     width: 125px;
     height: 40px;
+    color: #fff;
+    font-size: 1rem;
 }
 .but-type2 {background: #232a32;}
 .but-type1 {background: #636c75;margin-right: 5px;}
-.but-1 {
-    font-size: 1rem;
-    color: #fff;
-    display: block;
-    line-height: 2.5rem;
-}
+
 /* tab */
 .rd-box:nth-of-type(1), .rd-box:nth-of-type(1) ~ div:nth-of-type(1), 
 .rd-box:nth-of-type(2), .rd-box:nth-of-type(2) ~ div:nth-of-type(2) {

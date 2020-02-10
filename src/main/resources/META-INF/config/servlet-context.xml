@@ -38,14 +38,15 @@
 			<mvc:exclude-mapping path="/assets/**" />
 			<mvc:exclude-mapping path="/giveaWay/**" />
 			<mvc:exclude-mapping path="/Board/**" />
-			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
+			<mvc:exclude-mapping path="/SaveDeliveInfo/**" />
+			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/Manager/**" />
 			<mvc:exclude-mapping path="/Manager/ManagerSign/**" />
-			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.ManagerSessionInterceptor"></beans:bean>
+			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.ManagerSessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<mvc:interceptors>

@@ -59,19 +59,14 @@ body{font-family: "noto sans kr"!important;}
 .tit-id > span {
     color: #da394d;
 }
-/* but */
-.but-type2 {
-    margin: 0 auto;
-    text-align: center;
-    width: 270px;
-    height: 60px;
-    background: #232a32;
-}
 .but-1 {
     font-size: 1.5rem;
     color: #fff;
     display: block;
     line-height: 3.5rem;
+    background: #232a32;width: 270px;
+    height: 60px;
+    margin: 0 auto;
 }
 /* tab */
 .rd-box:nth-of-type(1), .rd-box:nth-of-type(1) ~ div:nth-of-type(1), 

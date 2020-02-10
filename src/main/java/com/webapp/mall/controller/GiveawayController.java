@@ -81,8 +81,11 @@ public class GiveawayController {
         model.addAttribute("delivery_type_list", delivery.get("selector"));
         model.addAttribute("style", "gift-view");
         model.addAttribute("detail", detail);
+        //포인트 확인 url
+        model.addAttribute("postUrl", "/giveaway/PointAmountCheckProc");
         return "giveaway/giveawaydetail";
     }
+
     //배송정보 출력
     public Map<String ,Object> giveawayDelivery(HashMap params)throws SQLException {
 

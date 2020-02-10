@@ -910,6 +910,7 @@ button{
     display:block;
 }
 .shipping-wrap table td{
+    width:100%;
     padding:15px 30px;
 }
 .shipping-wrap table th{

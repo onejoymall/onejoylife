@@ -57,15 +57,15 @@
         </div>
     </div>
 </footer>
+    <!-- Toastr -->
+    <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
 
+    <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
+
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function fn_formSubmit(){
-        document.form1.submit();
-    }
-    $('.ready').on("click",function () {
-        alert("준비중입니다");
-        return false;
-    })
+
+
     $(document).ready(function(){
         $('.gnb>li:first-child').mouseover(function(){
             $('.gnb-submenu').show();

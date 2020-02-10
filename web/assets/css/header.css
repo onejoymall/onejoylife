@@ -127,7 +127,7 @@ h1{
 .gnb>li{
     float:left;
 }
-.gnb>li a, .gnb>li:first-child{
+.gnb>li>a, .gnb>li:first-child{
     padding:0 20px;
     display:block;
     font-weight: 400;
@@ -190,7 +190,7 @@ h1{
 }
 .gnb-submenu-2dp li{
     width:100%;
-    padding:0 5px;
+    padding:0 20px;
 }
 .gnb-submenu-2dp>li:hover >a{
     color:#da394d;
@@ -214,7 +214,7 @@ h1{
 .gnb-submenu>li:nth-child(7) .gnb-submenu-3dp{min-height: 450px;}
 .gnb-submenu-3dp li{
     width:100%;
-    padding:0 5px;
+    padding:0 20px;
 }
 .gnb-submenu-3dp li:hover{
     background:#da394d;

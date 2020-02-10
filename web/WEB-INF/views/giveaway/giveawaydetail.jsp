@@ -91,7 +91,7 @@
                 </div>
                 <div class="buy-wrap">
                     <button class="buynow" type="button" id="formSubmit">바로 응모하기</button>
-                    <button class="favorite" type="button"><i class="heart-empty"></i></button>
+                    <button class="favorite ready" type="button"><i class="heart-empty" ></i></button>
                 </div>
             </div>
         </div>
@@ -475,7 +475,9 @@
         </div>
     </article>
 </section>
+
 <script>
+
     $(document).ready(function(){
         $('.goods-slider').bxSlider({
             auto:false,
@@ -638,32 +640,7 @@
         });//click
     });
 
-    $('#formSubmit').on("click",function () {
-        var formData = $('#defaultForm').serialize();
 
-        jQuery.ajax({
-            type:"POST",
-            url:"<c:url value="/giveaway/PointAmountCheckProc"/>",
-            data:formData,
-            success : function(data) {
-                console.log(data)
-                if(data.validateError > 0) {
-                    $('.validateError').empty();
-                    $.each(data.validateError, function(index, item){
-                        // $('#validateError'+index).removeClass('none');
-                        $('#validateError'+index).html('* '+item);
-                    });
-
-                }else{
-                    // loginAuth(data.access_token);
-                    // location.href=data.redirectUrl;
-                }
-            },
-            error : function(xhr, status, error) {
-                alert("error");
-            }
-        });
-    })
 </script>
 
 </script>

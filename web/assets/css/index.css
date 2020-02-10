@@ -226,10 +226,14 @@ body{
     height:auto;
 }
 .point-product-inner{
+    position: relative;
     margin:0 auto;
     padding:0 25px;
     width:1100px;
     height:auto;
+}
+.point-product-inner .special-price-more{
+    top:30px;
 }
 .main-section-h4{
     font-size:36px;
@@ -663,7 +667,7 @@ body{
 }
 .special-price-more{
     position:absolute;
-    top:60px;
+    top:70px;
     right:25px;
     font-size:18px;
 }

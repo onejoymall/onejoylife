@@ -1,5 +1,6 @@
 package com.webapp.mall.controller;
 
+import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
 import com.webapp.common.support.MessageSource;
 import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.PointDAO;
@@ -181,6 +182,17 @@ public class MyPage {
         model.addAttribute("leftNavOrder", 11);
         model.addAttribute("style", "mypage-11");
         return "mypage/GiveawayWinningList";
+    }
+    //경품 참여 정보입력
+    @RequestMapping(value="/MyPage/giveawayform")
+    public String giveawayform(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws SQLException {
+        params.put("email",session.getAttribute("email"));
+        Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+        if(!isEmpty(userInfo)){
+            model.addAttribute("userInfo",userInfo );
+        }
+        model.addAttribute("style", "mypage-4-2-1");
+        return "giveaway/giveawayform";
     }
     //회원정보 변경
     @RequestMapping(value="/MyPage/ModifyUserInfo")

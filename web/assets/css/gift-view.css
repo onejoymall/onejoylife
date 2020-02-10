@@ -156,7 +156,7 @@ button{
     height:10px;
     background-color:#da394d;
     border-radius: 10px;
-    animation: mo1 1s forwards;
+    /*animation: mo1 1s forwards;*/
 }
 @keyframes mo1{
     0%{width:0%}
@@ -991,6 +991,7 @@ button{
     display:block;
 }
 .shipping-wrap table td{
+    width:100%;
     padding:15px 30px;
 }
 .shipping-wrap table th{

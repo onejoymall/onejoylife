@@ -43,13 +43,20 @@ body{font-family: "noto sans kr"!important;}
 .for-id,
 .for-pw {
     clear: both;
-    border-top: 2px solid #232a32;
-    border-bottom: 1px solid #d3d3d5;
+}
+.for-id > div:nth-of-type(1),
+.for-pw > div:nth-of-type(1){
     background: #f7f7f9;
+    border-top: 2px solid #232a32;
+}
+.for-id > div:nth-of-type(2),
+.for-pw > div:nth-of-type(2){
+    background: #f7f7f9;
+    border-top: 1px solid #d3d3d5;
+    border-bottom: 1px solid #d3d3d5;
 }
 /* id-box1 */
 .id-box1 {
-    border-bottom: 1px solid #d3d3d5;
     padding: 30px 0;
 }
 .tit-id {
@@ -88,6 +95,7 @@ input[id="id-r"] {
     padding: 30px 0;
 }
 /* id-box2 */
+
 .num{
     text-align: center;
     width: 115px;
@@ -113,20 +121,25 @@ input[id="id-r"] {
     display: inline-block;
     margin-left: 12px;
 }
-.id-num2{display: none;}
+.id-num2{display: none;margin-top:20px;}
 .id-num2 > div > input {
     border: 1px solid;
     height: 30px;
     padding: 0 10px;
     display: inline-block;
 }
-.p-size {
+.p-notice {
+    display:none;
+    font-size: 0.8rem;
+    line-height: 1.3rem;
+    color: #232a32;
+}
+.error-box{
+    display:none;
     font-size: 0.8rem;
     line-height: 1.3rem;
     color: #da394d;
-    display: none;
 }
-.p-color {color: #232a32;}
 /* pw-box */
 .none {
     font-size: 0.8rem;
@@ -143,19 +156,14 @@ input[id="id-r"] {
     width: 407px;
 }
 /* but */
-.but-type {
+.but-go {
     clear: both;
-    margin: 50px auto 0;
+    margin: 50px 450px;
     width: 200px;
     height: 50px;
     background: #232a32;
-    text-align: center;
-}
-.but-go {
     font-size: 1.2rem;
     color: #fff;
-    display: block;
-    line-height: 3rem;
 }
 /* tab */
 .rd-box:nth-of-type(1), .rd-box:nth-of-type(1) ~ div:nth-of-type(1), 

@@ -24,6 +24,9 @@
     <link href="<c:url value="/assets/css/footer.css"/>" rel="stylesheet" type="text/css">
     <link href="<c:url value="/assets/css/${style}.css"/>" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,700&display=swap&subset=korean" rel="stylesheet">
+    <link rel='stylesheet' href='<c:url value="/assets/css/common/common.css"/>'/>
+    <!-- Toastr -->
+    <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
     <!--
     [if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -32,6 +35,12 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js"/>"></script>
+    <script>
+    //전역변수
+    <c:if test="${not empty postUrl}">
+        var postUrl = '<c:url value="${postUrl}"/> ';
+    </c:if>
+    </script>
 </head>
 <body>
 <header class="header">
