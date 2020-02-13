@@ -1,11 +1,9 @@
 package com.webapp.mall.controller;
 
 import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
+import com.webapp.board.common.SearchVO;
 import com.webapp.common.support.MessageSource;
-import com.webapp.mall.dao.CouponDAO;
-import com.webapp.mall.dao.PointDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +28,8 @@ public class MyPage {
     ProductDAO productDAO;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    GiveawayDAO giveawayDAO;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
@@ -39,9 +39,11 @@ public class MyPage {
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
-            Map<String ,Object> point = pointDAO.getPointAmount(params);
+            params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+            Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
+            model.addAttribute("giveawayCnt",giveawayCnt);
             model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
-            model.addAttribute("point_amount",point.get("point_amount").toString());
+            model.addAttribute("point_amount",pointDAO.getPointAmount(params));
 
         }catch(Exception e){
             e.printStackTrace();
@@ -178,7 +180,20 @@ public class MyPage {
     }
     //경품담청내역
     @RequestMapping(value="/MyPage/GiveawayWinningList")
-    public String myPageGiveawayWinningList(Model model) {
+    public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session) throws SQLException {
+        searchVO.setDisplayRowCount(5);
+        searchVO.setStaticRowEnd(5);
+        params.put("email",session.getAttribute("email"));
+        Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+        params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+        searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+        params.put("rowStart",searchVO.getRowStart());
+        params.put("staticRowEnd",searchVO.getStaticRowEnd());
+
+        List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
+        model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
+        model.addAttribute("list", giveawayList);
+        model.addAttribute("searchVO", searchVO);
         model.addAttribute("leftNavOrder", 11);
         model.addAttribute("style", "mypage-11");
         return "mypage/GiveawayWinningList";
@@ -190,6 +205,7 @@ public class MyPage {
         Map<String, Object> userInfo = userDAO.getLoginUserList(params);
         if(!isEmpty(userInfo)){
             model.addAttribute("userInfo",userInfo );
+            model.addAttribute("postUrl","/SaveDeliveInfo" );
         }
         model.addAttribute("style", "mypage-4-2-1");
         return "giveaway/giveawayform";

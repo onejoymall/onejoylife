@@ -33,10 +33,10 @@
         <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
         <if test="point_paid_product_cd != null"> <![CDATA[AND point_paid_product_cd= #{point_paid_product_cd} ]]></if>
     </select>
-    <select id="getPointAmount" resultType="java.util.HashMap">
+    <select id="getPointAmount" resultType="java.lang.Integer" parameterType="java.util.Map">
         <![CDATA[
         select
-         (sum(A.point_add)-sum(A.point_use)) as point_amount from point_history A
+         sum(IFNULL (A.point_add,0))-sum(IFNULL (A.point_use,0)) from point_history A
          where 1=1
         ]]>
 
@@ -48,23 +48,26 @@
         <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
 
     </select>
-    <insert id="insertPoint" parameterType="String">
-        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
+    <insert id="insertPoint" parameterType="java.util.Map">
+
             <![CDATA[
             insert into point_history(
-            epoint,
+            point_amount,
+            point_paid_memo,
+            point_use,
             point_paid_user_id,
             point_paid_type,
             point_paid_product_cd)
             VALUES (
-            #{item.point},
-            #{item.point_paid_user_id},
-            #{item.point_paid_type},
-            #{item.point_paid_product_cd}
-            )
+            #{point_amount},
+            #{point_paid_memo},
+            #{point_use},
+            #{point_paid_user_id},
+            #{point_paid_type},
+            #{point_paid_product_cd}
             )
             ]]>
-        </foreach>
+
     </insert>
     <update id="updatePoint" parameterType="java.util.Map">
         <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">

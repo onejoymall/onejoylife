@@ -17,14 +17,14 @@
         <div class="inner">
             <div class="goods-slider-wrap">
                 <ul class="goods-slider">
-                    <li><img src="../assets/img/goods-view/main-slider.jpg" /></li>
-                    <li><img src="../assets/img/goods-view/main-slider.jpg" /></li>
-                    <li><img src="../assets/img/goods-view/main-slider.jpg" /></li>
+                    <li><img src="<c:url value="/assets/fileupload/giveaway/${detail.giveaway_list_image}"/>" /></li>
+                    <li><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></li>
+                    <li><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></li>
                 </ul>
                 <div id="bx-pager">
-                    <a data-slide-index="0" href=""><img src="../assets/img/thumbs/main-thumb.jpg" /></a>
-                    <a data-slide-index="1" href=""><img src="../assets/img/thumbs/main-thumb.jpg" /></a>
-                    <a data-slide-index="2" href=""><img src="../assets/img/thumbs/main-thumb.jpg" /></a>
+                    <a data-slide-index="0" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
+                    <a data-slide-index="1" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
+                    <a data-slide-index="2" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
                 </div>
 
                 <div class="share-list">
@@ -36,7 +36,7 @@
             <div class="goods-info-wrap">
                 <div class="goods-name-wrap">
                     <p class="goods-name">
-                        ${detail.get("giveway_name")}
+                        ${detail.get("giveaway_name")}
                     </p>
                 </div>
                 <div class="point-pdt-parti-wrap">
@@ -49,7 +49,7 @@
                         <div class="progress-bar-active" style="width:${detail.parti_rate}%"></div>
                     </div>
                     <div class="parti-point-wrap">
-                        <p><span class="parti-point-now"><fmt:formatNumber value="${detail.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${detail.giveway_play_min_point}" groupingUsed="true" /> E-point</p>
+                        <p><span class="parti-point-now"><fmt:formatNumber value="${detail.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /> E-point</p>
                         <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
                     </div>
                 </div>
@@ -79,14 +79,16 @@
                             / 응모포인트</span>
                         <div class="total-quantity">
                             <form name="defaultForm" id="defaultForm" method="post">
-                                <input type="number" id="point" name="point" value='${detail.giveway_payment}'><span>  Point</span>
+                                <input type="number" id="point" name="point" value='${detail.giveaway_payment}'><span>  Point</span>
                                 <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span>  Point</span>
+                                <input type="hidden" id="giveaway_id" name="giveaway_id" value='${requestScope.giveaway_id}'>
+                                <input type="hidden" id="giveaway_cd" name="giveaway_cd" value='${detail.giveaway_cd}'>
                             </form>
                         </div>
                     </div>
                     <div class="total-price">
                         <div class="total-price-title">응모 E-point</div>
-                        <div class="total-price-number"><span><fmt:formatNumber value="${detail.giveway_payment}" groupingUsed="true" /></span>point</div>
+                        <div class="total-price-number"><span><fmt:formatNumber value="${detail.giveaway_payment}" groupingUsed="true" /></span>point</div>
                     </div>
                 </div>
                 <div class="buy-wrap">

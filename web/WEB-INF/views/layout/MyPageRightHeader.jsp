@@ -39,9 +39,9 @@
                     <div class="rec2-in">
                         <p class="font-de1">응모중인 경품</p>
                         <p class="font-de2">
-                            <a href="#">
-                                <span>5</span>
-                                <span>장</span>
+                            <a href="<c:url value="/MyPage/GiveawayWinningList"/> ">
+                                <span>${giveawayCnt}</span>
+
                             </a>
                         </p>
                     </div>

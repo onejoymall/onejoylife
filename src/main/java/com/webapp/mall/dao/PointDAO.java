@@ -21,13 +21,12 @@ public class PointDAO {
         Map<String, Object> getPointListCount=sql.selectOne("mall.PointMapper.getPointListCount",params);
         return getPointListCount;
     }
-    public Map<String, Object> getPointAmount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getPointAmount=sql.selectOne("mall.PointMapper.getPointAmount",params);
+    public Integer getPointAmount(Map<String, String> params) throws SQLException {
+        Integer getPointAmount=sql.selectOne("mall.PointMapper.getPointAmount",params);
         return getPointAmount;
     }
-    public int insertPoint(Map<String, String> params) throws SQLException {
-        int insertPoint = sql.insert("mall.PointMapper.insertPoint",params);
-        return insertPoint;
+    public void insertPoint(Map<String, String> params) throws SQLException {
+        sql.insert("mall.PointMapper.insertPoint",params);
     }
 
     public int updatePoint(Map<String, String> params) throws SQLException {

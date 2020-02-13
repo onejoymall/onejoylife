@@ -36,13 +36,13 @@
                     <c:forEach var="list" items="${list}" varStatus="status">
                         <c:set var="lineCut" value="${status.count%3}"></c:set>
                         <div class="point-product-item">
-                            <a href="<c:url value="/giveaway/giveawaydetail?giveway_id="/>${list.giveway_id}">
-                                <img src="<c:url value="/assets/img/"/>${list.giveway_list_image}" />
+                            <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
+                                <img src="<c:url value="/assets/img/"/>${list.giveaway_list_image}" />
                                 <i class="share-ic"></i>
-                                <p class="point-pdt-title"> ${list.giveway_name}</p>
+                                <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
-                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveway_payment}" groupingUsed="true" /> E-point</p>
-                            <p class="deadline">${list.giveway_validity}</p>
+                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</p>
+                            <p class="deadline">${list.giveaway_validity}</p>
                             <div class="point-pdt-parti-wrap">
                                 <div class="parti-percent-wrap">
                                     <span class="progress">0%</span>
@@ -53,7 +53,7 @@
                                     <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
                                 </div>
                                 <div class="parti-point-wrap">
-                                    <p><span class="parti-point-now"><fmt:formatNumber value="${list.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${list.giveway_play_min_point}" groupingUsed="true" /> E-point</p>
+                                    <p><span class="parti-point-now"><fmt:formatNumber value="${list.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> E-point</p>
                                     <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
                                 </div>
                             </div>

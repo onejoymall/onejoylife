@@ -82,7 +82,7 @@
                                 <c:if test="${not empty list}">
                                     <c:forEach var="list" items="${list}">
                                         <tr>
-                                            <td><p>${list.reg_date}</p></td>
+                                            <td><p><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/><br><fmt:formatDate value="${list.reg_date}" pattern="HH:mm"/></p></td>
                                             <td><p>${list.point_paid_memo}</p></td>
                                             <td>${list.point_paid_type_name}</td>
                                             <td>${list.point_end_date}</td>

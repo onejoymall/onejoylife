@@ -5,9 +5,11 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.GiveawayVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,9 @@ public class restapiController {
     private CurlPost curlPost;
     @Autowired
     private PointDAO pointDAO;
+    @Autowired
+    private GiveawayDAO giveawayDAO;
+
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -277,12 +282,18 @@ public class restapiController {
 //    }
     //포인트 잔액확인 및 경품참여
     @RequestMapping(value = "/giveaway/PointAmountCheckProc", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> PointAmountCheckProc(@RequestParam HashMap params,HttpServletRequest request,HttpSession session){
+    public  HashMap<String, Object> PointAmountCheckProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
-        BigDecimal userPointAmount;
+
+        Integer usedPoint;
         try {
-            Integer usedPoint = Integer.parseInt((String)params.get("point"));
+            if(params.get("point").equals("")){
+                usedPoint =0;
+            }else{
+                usedPoint = Integer.parseInt((String)params.get("point"));
+            }
+
             params.put("email",session.getAttribute("email"));
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -293,20 +304,63 @@ public class restapiController {
             }else{
                 //보유포인트 확인
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
-                Map<String ,Object> userPoint = pointDAO.getPointAmount(params);
-                userPointAmount=(BigDecimal)userPoint.get("point_amount");
+                Integer userPoint = pointDAO.getPointAmount(params);
+                Map<String,Object> giveaway = giveawayDAO.getGiveawayDetail(params);
+
                 //배송비?
-                //금액부족
-                if(usedPoint > Integer.valueOf(userPointAmount.intValue())){
-                    error.put("Point", messageSource.getMessage("error.paymentIsLess","ko"));
-                }else{
-                    resultMap.put("redirectUrl","/MyPage/giveawayform");
+                //입력금액부족
+                if(usedPoint < (Integer)giveaway.get("giveaway_payment")){
+                    error.put("Error", messageSource.getMessage("error.paymentUsedIsLess","ko"));
                 }
+                //금액부족
+                if(usedPoint > userPoint ){
+                    error.put("Error", messageSource.getMessage("error.paymentIsLess","ko"));
+                }else{
+
+
+                    //경품 자동추첨 금액 달성시 당첨차 추첨
+                    Integer giveaway_play_winner_point = (Integer)giveaway.get("giveaway_play_winner_point");
+                    Integer giveawayPlaySumPoint = giveawayDAO.getGiveawayPlaySumPoint(params);
+                    if(giveaway_play_winner_point > giveawayPlaySumPoint){
+                        //경품참여정보 저장
+                        String giveaway_play_cd = numberGender.numberGen(8,1);
+                        giveawayVO.setGiveaway_play_cd("GP"+giveaway_play_cd);
+                        giveawayVO.setGiveaway_cd((String)giveaway.get("giveaway_cd"));
+                        giveawayVO.setGiveaway_payment_epoint(usedPoint);
+                        giveawayVO.setGiveaway_play_user_id((Integer)userInfo.get("usr_id"));
+                        giveawayDAO.insertGiveawayPlay(giveawayVO);
+                        //포인트 차감
+                        params.put("point_amount",userPoint-usedPoint);
+                        params.put("point_paid_memo",(String)giveaway.get("giveaway_name"));
+                        params.put("point_use",usedPoint);
+                        params.put("point_paid_user_id",(Integer)userInfo.get("usr_id"));
+                        params.put("point_paid_type","B");
+                        params.put("point_paid_product_cd",(String)giveaway.get("giveaway_cd"));
+                        pointDAO.insertPoint(params);
+                        //자동추첨
+                        if(giveaway_play_winner_point <= giveawayDAO.getGiveawayPlaySumPoint(params)){
+                            params.put("giveaway_play_status","W");
+                            Integer giveawayPlayCount = giveawayDAO.getUserGiveawayPlayListCount(params);
+                            //당첨자가 없으면 진행
+                            if(giveawayPlayCount <= 0 ){
+                                params.put("giveaway_play_id",giveawayDAO.getGiveawayPlayUserRandId(params));
+                                giveawayDAO.updateWinnerUser(params);
+                                giveawayDAO.insertGiveawayWinner(params);
+                            }
+                        }
+                        resultMap.put("redirectUrl","/MyPage/GiveawayWinningList");
+
+                    }else{
+                        error.put("Error", messageSource.getMessage("error.giveawayMaxPoint","ko"));
+                    }
+                }
+
             }
-            if(usedPoint==null || usedPoint < 0 ){
+            if(usedPoint.equals(null) || usedPoint <= 0 ){
                 //필수입력항목
-                error.put("Point", messageSource.getMessage("error.required","ko"));
+                error.put(messageSource.getMessage("used_point","ko"), messageSource.getMessage("error.required","ko"));
             }
+
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }
@@ -317,7 +371,7 @@ public class restapiController {
     }
     //배송정보 저장
     @RequestMapping(value = "/SaveDeliveInfo", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> SaveDeliveInfo(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO){
+    public  HashMap<String, Object> SaveDeliveInfo(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
@@ -350,6 +404,8 @@ public class restapiController {
             }
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
+            }else{
+
             }
         }catch (Exception e){
             e.printStackTrace();

@@ -45,6 +45,7 @@
                 <div class="in-box">
                     <div class="sec1">
                         <p class="sec-h1">주문자 정보</p>
+
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -153,9 +154,9 @@
                                         <option value="019">019</option>
                                     </select>
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b">
+                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" class="delivery_user_tel">
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c">
+                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" class="delivery_user_tel">
                                     <input type="hidden" name="delivery_user_tel" id="delivery_user_tel">
                                 </td>
                             </tr>

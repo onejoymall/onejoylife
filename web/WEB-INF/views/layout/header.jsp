@@ -24,6 +24,9 @@
     <link href="<c:url value="/assets/css/footer.css"/>" rel="stylesheet" type="text/css">
     <link href="<c:url value="/assets/css/${style}.css"/>" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,700&display=swap&subset=korean" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <link rel='stylesheet' href='<c:url value="/assets/css/common/common.css"/>'/>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>

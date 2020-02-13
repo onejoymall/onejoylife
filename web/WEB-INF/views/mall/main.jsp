@@ -43,7 +43,7 @@
                 <h4 class="main-section-h4">E-point 경품추천</h4>
                 <ul class="point-product-list">
                     <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
+                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=1"/>">
                             <img src="assets/img/e-point-img1.png" />
                             <i class="share-ic"></i>
                             <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
@@ -66,7 +66,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
+                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=2"/>">
                             <img src="assets/img/e-point-img2.png" />
                             <i class="share-ic"></i>
                             <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
@@ -89,7 +89,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail"/>">
+                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=3"/>">
                             <img src="assets/img/e-point-img3.png" />
                             <i class="share-ic"></i>
                             <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>

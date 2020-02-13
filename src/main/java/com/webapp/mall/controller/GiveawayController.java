@@ -2,7 +2,7 @@ package com.webapp.mall.controller;
 
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
-import com.webapp.mall.dao.GivewayDAO;
+import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class GiveawayController {
     @Autowired
     UserDAO userDAO;
     @Autowired
-    GivewayDAO givewayDAO;
+    GiveawayDAO GiveawayDAO;
     @Autowired
     SelectorDAO selectorDAO;
     @Autowired
@@ -41,10 +41,10 @@ public class GiveawayController {
 
 //            searchVO.setStaticRowEnd(9);
 
-            searchVO.pageCalculate(givewayDAO.getGivewayListCount(params));
+            searchVO.pageCalculate(GiveawayDAO.getGiveawayListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            List<Map<String,Object>> list = givewayDAO.getGivewayList(params);
+            List<Map<String,Object>> list = GiveawayDAO.getGiveawayList(params);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         }catch (Exception e){
@@ -61,20 +61,20 @@ public class GiveawayController {
         Map<String,Object> userInfo = userDAO.getLoginUserList(params);
         if(!isEmpty(userInfo)){
             params.put("point_paid_user_id",userInfo.get("usr_id"));
-            Map<String ,Object> point = pointDAO.getPointAmount(params);
-            model.addAttribute("point_amount",point.get("point_amount"));
+            Integer point = pointDAO.getPointAmount(params);
+            model.addAttribute("point_amount",point);
         }
 
-        params.put("giveway_id",request.getParameter("giveway_id"));
-        Map<String,Object> detail = givewayDAO.getGivewayDetail(params);
+        params.put("giveaway_id",request.getParameter("giveaway_id"));
+        Map<String,Object> detail = GiveawayDAO.getGiveawayDetail(params);
         //배송정보
-        params.put("delivery_class",detail.get("giveway_delivery_class"));
+        params.put("delivery_class",detail.get("giveaway_delivery_class"));
         //배송밥법
-        params.put("delivery_type",detail.get("giveway_delivery_type"));
+        params.put("delivery_type",detail.get("giveaway_delivery_type"));
         //배송비구분
-        params.put("delivery_payment_class",detail.get("giveway_delivery_payment_class"));
+        params.put("delivery_payment_class",detail.get("giveaway_delivery_payment_class"));
         //배송비 구분별 값
-        params.put("delivery_payment",detail.get("giveway_delivery_payment"));
+        params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
         Map<String,Object> delivery = giveawayDelivery(params);
 
         model.addAttribute("delivery",delivery);
@@ -94,7 +94,7 @@ public class GiveawayController {
             params.put("selector","기본배송");
         }else {
             //배송방법이 개별이면 사용자 선택
-            String splitString = (String)params.get("giveway_delivery_type");//배송방법
+            String splitString = (String)params.get("giveaway_delivery_type");//배송방법
             String[] splitArray = splitString.split( "\\|");
             //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
             params.put("code","product_delivery_type");
