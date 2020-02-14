@@ -6,200 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ed6b7b1-70bf-4c6b-9a4c-d5766c46653d" name="Default Changelist" comment="상품,경품,마이페이지,포인트,배송 기능 수정">
-      <change afterPath="$PROJECT_DIR$/.idea/onejoylife.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/dao/DeliveryDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/sqlmap/mall/DeliveryMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/views/mypage/GiveawayPayment.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/onejoylife_war_exploded.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/29c4f644-0554-4c05-b838-0530f4b85ee8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/29c4f644-0554-4c05-b838-0530f4b85ee8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1ed6b7b1-70bf-4c6b-9a4c-d5766c46653d" name="Default Changelist" comment="상품,경품,마이페이지,포인트,배송 기능 수정 2ck">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/GiveawayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/GiveawayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/MyPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/MyPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/restapiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/controller/restapiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webapp/mall/vo/DeliveryInfoVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/webapp/mall/vo/DeliveryInfoVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/properties/jdbc_properties.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/properties/jdbc_properties.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/sqlmap/mall/GiveawayMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/sqlmap/mall/GiveawayMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/sqlmap/mall/PointMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/sqlmap/mall/PointMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/config/servlet-context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/config/servlet-context.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/onejoylife.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/properties/jdbc_properties.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/properties/jdbc_properties.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/properties/qremail_properies.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/sqlmap/userMngMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/sqlmap/userMngMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/filter/RequestFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/filter/RequestFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/interceptor/SessionInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/interceptor/SessionInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CORSFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CORSFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CustomTokenEnhancer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/CustomTokenEnhancer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2AuthorizationServerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2AuthorizationServerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2ResourceServerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/OAuth2ResourceServerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/TokenUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/TokenUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/WebSecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/dao/UserInfoDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/model/UserInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/model/UserInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomAuthenticationProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomAuthenticationProvider.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService$UserRepositoryUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService$UserRepositoryUserDetails.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/security/service/CustomUserDetailService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/common/support/RereadableRequestWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/webapp/mall/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/webapp/mall/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/datasource-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/locale-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/root-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/config/servlet-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/onejoylife.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/assist_properies.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/jdbc_properties.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/properties/qremail_properies.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/sqlmap/sql-map-config.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/META-INF/sqlmap/userMngMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/filter/RequestFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/interceptor/SessionInterceptor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/CORSFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/CustomTokenEnhancer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/OAuth2AuthorizationServerConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/OAuth2ResourceServerConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/TokenUser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/WebSecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/dao/UserInfoDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/dao/UserInfoDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/model/UserInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomAuthenticationProvider.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomUserDetailService$UserRepositoryUserDetails.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/security/service/CustomUserDetailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/support/RereadableRequestWrapper$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/common/support/RereadableRequestWrapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/classes/com/webapp/mall/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/activation-1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/aopalliance-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/api-common-1.7.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/aspectjrt-1.6.10.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/auto-value-1.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/bcpkix-jdk15on-1.56.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/bcprov-jdk15on-1.56.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-codec-1.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-dbcp-1.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-io-2.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-lang3-3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-logging-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/commons-pool-1.5.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/ehcache-core-2.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/error_prone_annotations-2.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/firebase-admin-6.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-1.30.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-grpc-1.30.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gax-httpjson-0.47.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-client-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-client-gson-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-api-services-storage-v1-rev135-1.24.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-auth-library-credentials-0.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-auth-library-oauth2-http-0.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-1.43.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-grpc-1.43.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-core-http-1.43.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-firestore-0.61.0-beta.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-cloud-storage-1.43.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-appengine-1.24.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-gson-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-jackson-1.24.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-http-client-jackson2-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/google-oauth-client-1.25.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-auth-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-context-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-core-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-netty-shaded-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-protobuf-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-protobuf-lite-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/grpc-stub-1.13.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/gson-2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/guava-20.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/httpclient-4.5.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/httpcore-4.4.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/j2objc-annotations-1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-annotations-2.5.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-core-2.5.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-core-asl-1.9.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-databind-2.5.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/javax.inject-1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/javax.mail-1.5.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jcl-over-slf4j-1.6.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jna-3.3.0-platform.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jna-3.3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/joda-time-2.9.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/json-20180130.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/json-simple-1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jsr305-3.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jstl-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/jul-to-slf4j-1.7.22.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4j-1.2.15.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4j-over-slf4j-1.7.22.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/log4jdbc-remix-0.2.7.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/logback-classic-1.1.8.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/logback-core-1.1.8.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mariadb-java-client-1.1.7.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-3.4.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-ehcache-1.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/mybatis-spring-1.3.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-buffer-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-codec-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-codec-http-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-common-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-handler-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-resolver-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/netty-transport-4.1.22.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-api-0.15.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-grpc-metrics-0.12.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-grpc-util-0.15.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/opencensus-contrib-http-util-0.15.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-cloud-firestore-v1beta1-0.26.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-common-protos-1.12.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/proto-google-iam-v1-0.12.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/protobuf-java-3.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/protobuf-java-util-3.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/slf4j-api-1.6.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/slf4j-log4j12-1.6.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/snakeyaml-1.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-aop-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-beans-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-1.4.3.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-autoconfigure-1.4.3.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-1.4.3.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-logging-1.4.3.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-boot-starter-mail-1.4.3.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-context-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-context-support-4.3.5.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-core-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-expression-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-jdbc-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-acl-4.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-config-4.2.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-core-4.2.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-jwt-1.0.9.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-oauth2-2.1.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-taglibs-4.2.6.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-security-web-4.2.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-tx-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-web-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-webmvc-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/spring-websocket-4.3.2.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/lib/threetenbp-1.3.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/views/mall/login.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/snapshot/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/giveaway/giveawaydetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/giveaway/giveawaydetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/giveaway/giveawayform.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/giveaway/giveawayform.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/layout/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/layout/footer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/mall/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/mall/main.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/mypage/GiveawayWinningList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/mypage/GiveawayWinningList.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/views/mypage/ePoint.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/views/mypage/ePoint.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -544,7 +352,7 @@
       <workItem from="1581059115619" duration="37710000" />
       <workItem from="1581140837369" duration="617000" />
       <workItem from="1581179418687" duration="56517000" />
-      <workItem from="1581466145132" duration="66741000" />
+      <workItem from="1581466145132" duration="67070000" />
     </task>
     <task id="LOCAL-00001">
       <created>1579195587958</created>
@@ -588,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581591997330</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="상품,경품,마이페이지,포인트,배송 기능 수정 2ck">
+      <created>1581642736268</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1581642736268</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +428,8 @@
     <MESSAGE value="파일업로드" />
     <MESSAGE value="경품수정" />
     <MESSAGE value="상품,경품,마이페이지,포인트,배송 기능 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="상품,경품,마이페이지,포인트,배송 기능 수정" />
+    <MESSAGE value="상품,경품,마이페이지,포인트,배송 기능 수정 2ck" />
+    <option name="LAST_COMMIT_MESSAGE" value="상품,경품,마이페이지,포인트,배송 기능 수정 2ck" />
   </component>
   <component name="WindowStateProjectService">
     <state x="872" y="361" key="#Notifications" timestamp="1581049405823">
@@ -652,10 +468,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1077" y="614" key="#com.intellij.javaee.module.view.web.EditWebRootDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1581061740079" />
-    <state x="836" y="0" width="893" height="1309" key="CommitChangelistDialog2" timestamp="1581591996333">
+    <state x="836" y="0" width="893" height="1309" key="CommitChangelistDialog2" timestamp="1581642811913">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="836" y="0" width="893" height="1309" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581591996333" />
+    <state x="836" y="0" width="893" height="1309" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642811913" />
     <state x="-1724" y="-64" key="CommitChangelistDialog2/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195688871" />
     <state x="1060" y="442" key="FileChooserDialogImpl" timestamp="1581466804969">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -671,28 +487,28 @@
       <screen x="-2560" y="-363" width="2560" height="1410" />
     </state>
     <state x="-1487" y="47" key="Github.UntrackedFilesDialog/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195468984" />
-    <state width="1256" height="399" key="GridCell.Tab.0.bottom" timestamp="1581640401397">
+    <state width="1256" height="399" key="GridCell.Tab.0.bottom" timestamp="1581642832970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1256" height="399" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581640401397" />
+    <state width="1256" height="399" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642832970" />
     <state width="1231" height="653" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1581067688975" />
     <state width="1371" height="404" key="GridCell.Tab.0.bottom/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
-    <state width="1256" height="399" key="GridCell.Tab.0.center" timestamp="1581640401396">
+    <state width="1256" height="399" key="GridCell.Tab.0.center" timestamp="1581642832970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1256" height="399" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581640401396" />
+    <state width="1256" height="399" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642832970" />
     <state width="1231" height="653" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1581067688975" />
     <state width="1371" height="404" key="GridCell.Tab.0.center/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
-    <state width="1256" height="399" key="GridCell.Tab.0.left" timestamp="1581640401396">
+    <state width="1256" height="399" key="GridCell.Tab.0.left" timestamp="1581642832970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1256" height="399" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581640401396" />
+    <state width="1256" height="399" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642832970" />
     <state width="1231" height="653" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1581067688975" />
     <state width="1371" height="404" key="GridCell.Tab.0.left/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
-    <state width="1256" height="399" key="GridCell.Tab.0.right" timestamp="1581640401397">
+    <state width="1256" height="399" key="GridCell.Tab.0.right" timestamp="1581642832970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1256" height="399" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581640401397" />
+    <state width="1256" height="399" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642832970" />
     <state width="1231" height="653" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1581067688975" />
     <state width="1371" height="404" key="GridCell.Tab.0.right/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579258667688" />
     <state width="1389" height="365" key="GridCell.Tab.1.bottom" timestamp="1581640393490">
@@ -780,10 +596,10 @@
     </state>
     <state x="1195" y="263" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1581061743138" />
     <state x="-1365" y="-98" key="SettingsEditor/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579197140237" />
-    <state x="872" y="435" key="Vcs.Push.Dialog.v2" timestamp="1581592001750">
+    <state x="872" y="435" key="Vcs.Push.Dialog.v2" timestamp="1581642755148">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="435" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581592001750" />
+    <state x="872" y="435" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.2560.1400@0.0.2560.1400" timestamp="1581642755148" />
     <state x="-1688" y="75" key="Vcs.Push.Dialog.v2/75.0.1845.1080/-2560.-363.2560.1410@-2560.-363.2560.1410" timestamp="1579195702500" />
     <state width="1288" height="708" key="XDebugger.FullValuePopup" timestamp="1581626837879">
       <screen x="0" y="0" width="2560" height="1400" />
