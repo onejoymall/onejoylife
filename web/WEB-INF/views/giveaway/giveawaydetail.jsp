@@ -80,7 +80,7 @@
                         <div class="total-quantity">
                             <form name="defaultForm" id="defaultForm" method="post">
                                 <input type="number" id="point" name="point" value='${detail.giveaway_payment}'><span>  Point</span>
-                                <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span>  Point</span>
+                                <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span></span>
                                 <input type="hidden" id="giveaway_id" name="giveaway_id" value='${requestScope.giveaway_id}'>
                                 <input type="hidden" id="giveaway_cd" name="giveaway_cd" value='${detail.giveaway_cd}'>
                             </form>

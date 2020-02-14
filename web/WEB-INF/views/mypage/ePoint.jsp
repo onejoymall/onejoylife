@@ -101,19 +101,10 @@
                                 </c:if>
                                 </tbody>
                             </table>
-                            <div class="num-box">
-                                <div class="num-box-in">
-                                    <div class="left-box"><a href=""></a></div>
-                                    <div class="num">
-                                        <span><a href="">1</a></span>
-                                        <span><a href="">2</a></span>
-                                        <span><a href="">3</a></span>
-                                        <span><a href="">4</a></span>
-                                        <span><a href="">5</a></span>
-                                    </div>
-                                    <div class="right-box"><a href=""></a></div>
-                                </div>
-                            </div>
+                            <form id="form1" name="form1"  method="post">
+                                <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
+                                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                            </form>
                         </div>
                     </div>
                     <div class="con" id="con2">

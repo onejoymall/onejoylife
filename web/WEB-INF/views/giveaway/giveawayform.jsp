@@ -41,6 +41,9 @@
         </div>
         <main class="clearfix">
             <form name="defaultForm" id="defaultForm" method="POST">
+                <input name="product_cd"  type="hidden" value="<c:out value="${param.product_cd}"/>">
+                <input name="giveaway_cd"  type="hidden" value="<c:out value="${param.giveaway_cd}"/>">
+                <input name="giveaway_play_cd"  type="hidden" value="<c:out value="${param.giveaway_play_cd}"/>">
                 <h2 class="head-h2">정보입력</h2>
                 <div class="in-box">
                     <div class="sec1">
@@ -104,6 +107,25 @@
                             </colgroup>
                             <tbody class="sec2-tbody">
                             <tr>
+                                <td>배송 방법</td>
+                                <td class="sel-td">
+                                <c:if test="${delivery_class eq 'F'}">
+                                    ${selector}
+                                </c:if>
+                                <c:if test="${delivery_class eq 'T'}">
+                                    <select name="delivery_type">
+                                        <c:if test="${not empty selector}">
+                                            <c:forEach var="selectorList" items="${selector}" varStatus="status">
+                                                <option value="${selectorList.code_value}">${selectorList.code_name}</option>
+                                            </c:forEach>
+                                        </c:if>
+                                    </select>
+                                </c:if>
+
+
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
                                     <p>
@@ -122,53 +144,77 @@
                             </tr>
                             <tr>
                                 <td>받으시는 분</td>
-                                <td><input type="text" placeholder="김말자" class="sec2-in1" name="delivery_user_name" id="delivery_user_name"></td>
+                                <td><input type="text" placeholder="김말자" class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="${latestDelivery.order_user_name}"></td>
                             </tr>
                             <tr class="bor-none">
-                                <td>휴대폰 번호</td>
+                                <td>휴대폰 번호 <!-- Map 선언 -->
+                                    <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
+                                    <c:if test="${empty userInfo.phone}">
+                                        <c:set var="phoneNumber" value="010-0000-0000" />
+                                    </c:if>
+                                    <c:if test="${not empty userInfo.phone}">
+                                        <c:set var="phoneNumber" value="${latestDelivery.delivery_user_phone}" />
+                                    </c:if>
+                                    <c:forEach items="${fn:split(phoneNumber, '-') }" var="item" varStatus="status">
+                                        <c:set target="${phoneMap}" property="key${status.count}" value="${item}" />
+                                        <%--                                        ${phoneMap.key+status.count}/${item}<br>--%>
+                                    </c:forEach>
+                                </td>
                                 <td class="nth-3-td">
                                     <select name="delivery_user_phone_a" id="delivery_user_phone_a">
-                                        <option value="010">010</option>
-                                        <option value="011">011</option>
-                                        <option value="016">016</option>
-                                        <option value="017">017</option>
-                                        <option value="018">018</option>
-                                        <option value="019">019</option>
+                                        <option value="010" <c:if test="${phoneMap.key1 eq \"010\"}">selected</c:if> >010</option>
+                                        <option value="011" <c:if test="${phoneMap.key1 eq \"011\"}">selected</c:if>>011</option>
+                                        <option value="016" <c:if test="${phoneMap.key1 eq \"016\"}">selected</c:if>>016</option>
+                                        <option value="017" <c:if test="${phoneMap.key1 eq \"017\"}">selected</c:if>>017</option>
+                                        <option value="018" <c:if test="${phoneMap.key1 eq \"018\"}">selected</c:if>>018</option>
+                                        <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
                                     </select>
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_phone_b" id="delivery_user_phone_b" maxlength="4" class="delivery_user_phone">
+                                    <input type="text" name="delivery_user_phone_b" id="delivery_user_phone_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" maxlength="4" class="delivery_user_phone">
-                                    <input type="hidden" name="delivery_user_phone" id="delivery_user_phone">
+                                    <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
+                                    <input type="hidden" name="delivery_user_phone" id="delivery_user_phone" value="${latestDelivery.delivery_user_phone}">
                                 </td>
                             </tr>
                             <tr>
-                                <td>전화 번호</td>
+                                <td>전화 번호<!-- Map 선언 -->
+                                    <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
+                                    <c:if test="${empty userInfo.phone}">
+                                        <c:set var="phoneNumber" value="010-0000-0000" />
+                                    </c:if>
+                                    <c:if test="${not empty userInfo.phone}">
+                                        <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />
+                                    </c:if>
+                                    <c:forEach items="${fn:split(phoneNumber, '-') }" var="item" varStatus="status">
+                                        <c:set target="${phoneMap}" property="key${status.count}" value="${item}" />
+                                        <%--                                        ${phoneMap.key+status.count}/${item}<br>--%>
+                                    </c:forEach>
+                                </td>
                                 <td class="nth-3-td">
                                     <select name="delivery_user_tel_a" id="delivery_user_tel_a">
-                                        <option value="010">010</option>
-                                        <option value="011">011</option>
-                                        <option value="016">016</option>
-                                        <option value="017">017</option>
-                                        <option value="018">018</option>
-                                        <option value="019">019</option>
+                                        <option value="010" <c:if test="${phoneMap.key1 eq \"010\"}">selected</c:if> >010</option>
+                                        <option value="011" <c:if test="${phoneMap.key1 eq \"011\"}">selected</c:if>>011</option>
+                                        <option value="016" <c:if test="${phoneMap.key1 eq \"016\"}">selected</c:if>>016</option>
+                                        <option value="017" <c:if test="${phoneMap.key1 eq \"017\"}">selected</c:if>>017</option>
+                                        <option value="018" <c:if test="${phoneMap.key1 eq \"018\"}">selected</c:if>>018</option>
+                                        <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
                                     </select>
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" class="delivery_user_tel">
+                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" class="delivery_user_tel">
-                                    <input type="hidden" name="delivery_user_tel" id="delivery_user_tel">
+                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
+                                    <input type="hidden" name="delivery_user_tel" id="delivery_user_tel" value="${latestDelivery.delivery_user_tel}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>주소</td>
                                 <td>
                                     <p class="mar-p1">
-                                        <input type="text" name="postcode" id="postcode" class="sec2-in1">
+                                        <input type="text" name="postcode" id="postcode" class="sec2-in1" value="${latestDelivery.postcode}">
                                         <button type="button" id="daumMapCall">우편번호 찾기</button>
                                     </p>
-                                    <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress"></p>
-                                    <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress"></p>
+                                    <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="${latestDelivery.roadAddress}"></p>
+                                    <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="${latestDelivery.extraAddress}"></p>
                                     <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
 <%--                                    <p class="hidden"><input type="hidden" name="extraAddress" id="extraAddress"></p>--%>
                                     <p class="mar-p2" id="guide"></p>

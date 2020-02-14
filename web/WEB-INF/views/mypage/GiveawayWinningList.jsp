@@ -121,7 +121,7 @@
                                         <td>
 <%--                                            <a href=""><p class="lis-txt-box">참여자 내역</p></a>--%>
                                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                            <a href="/MyPage/giveawayform">
+                                            <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
                                                 <p class="lis-txt-box txt-color2">
                                                     <span>경품받기</span>
 <%--                                                    <span class="dis-none">주문상세</span>--%>

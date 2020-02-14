@@ -13,6 +13,7 @@
         FROM giveaway A  where 1=1
         ]]>
         <if test="giveaway_id != null"> <![CDATA[AND A.giveaway_id= #{giveaway_id} ]]></if>
+        <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
     </select>
     <select id="getGiveawayList" resultType="java.util.HashMap">
         <![CDATA[

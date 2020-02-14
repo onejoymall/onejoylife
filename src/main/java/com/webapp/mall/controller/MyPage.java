@@ -2,6 +2,7 @@ package com.webapp.mall.controller;
 
 import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.MessageSource;
 import com.webapp.mall.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,10 @@ public class MyPage {
     UserDAO userDAO;
     @Autowired
     GiveawayDAO giveawayDAO;
+    @Autowired
+    SelectorDAO selectorDAO;
+    @Autowired
+    DeliveryDAO deliveryDAO;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
@@ -60,8 +66,15 @@ public class MyPage {
     }
     //이포인트
     @RequestMapping(value="/MyPage/ePoint")
-    public String myPagePoint(Model model,HttpServletRequest request,HttpSession session,HashMap params) throws SQLException {
+    public String myPagePoint(Model model,HttpServletRequest request,HttpSession session,HashMap params,SearchVO searchVO) throws SQLException {
         try{
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            model.addAttribute("searchVO", searchVO);
+
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -181,11 +194,12 @@ public class MyPage {
     //경품담청내역
     @RequestMapping(value="/MyPage/GiveawayWinningList")
     public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session) throws SQLException {
-        searchVO.setDisplayRowCount(5);
-        searchVO.setStaticRowEnd(5);
+
         params.put("email",session.getAttribute("email"));
         Map<String, Object> userInfo = userDAO.getLoginUserList(params);
         params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+        searchVO.setDisplayRowCount(5);
+        searchVO.setStaticRowEnd(5);
         searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
         params.put("rowStart",searchVO.getRowStart());
         params.put("staticRowEnd",searchVO.getStaticRowEnd());
@@ -200,15 +214,71 @@ public class MyPage {
     }
     //경품 참여 정보입력
     @RequestMapping(value="/MyPage/giveawayform")
-    public String giveawayform(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws SQLException {
+    public String giveawayform(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
         params.put("email",session.getAttribute("email"));
         Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-        if(!isEmpty(userInfo)){
-            model.addAttribute("userInfo",userInfo );
-            model.addAttribute("postUrl","/SaveDeliveInfo" );
+        try {
+            if(!isEmpty(userInfo)){
+                params.put("giveaway_cd",request.getParameter("giveaway_cd"));
+                Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
+                //배송정보
+                params.put("delivery_class",detail.get("giveaway_delivery_class"));
+                //배송밥법
+                params.put("delivery_type",detail.get("giveaway_delivery_type"));
+                //배송비구분
+                params.put("delivery_payment_class",detail.get("giveaway_delivery_payment_class"));
+                //배송비 구분별 값
+                params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
+                Map<String,Object> delivery = giveawayDelivery(params);
+                //최근 배송지 불러오기
+                params.put("product_cd",null);
+                params.put("giveaway_cd",null);
+                params.put("order_user_id",userInfo.get("usr_id"));
+                Map<String,Object> latestDelivery = deliveryDAO.getDelivery(params);
+                model.addAttribute("userInfo",userInfo );
+                model.addAttribute("postUrl","/SaveDeliveInfo" );
+                model.addAttribute("delivery",delivery );
+                model.addAttribute("latestDelivery",latestDelivery );
+                model.addAttribute("detail",detail );
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         model.addAttribute("style", "mypage-4-2-1");
         return "giveaway/giveawayform";
+    }
+    //경품 결제
+    @RequestMapping(value="/MyPage/giveawaypayment")
+    public String giveawaypayment(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
+
+        try{
+            params.put("order_no",request.getParameter("order_no"));
+            Map<String,Object> delivery = deliveryDAO.getDelivery(params);
+            params.put("giveaway_cd",delivery.get("giveaway_cd"));
+            params.put("product_cd",delivery.get("product_cd"));
+            Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
+
+            Integer texPayment = Integer.parseInt((String)detail.get("giveaway_payment_memo"));
+            //부가세
+            double texD = Math.round((texPayment/1.1)-((texPayment/1.1)/1.1));
+
+            //기타소득세
+            double texE = Math.round(((texPayment/1.1)/1.1)*0.22);
+            //주민세
+            double texF= Math.round(((texPayment/1.1)/1.1)*0.022);
+
+            double Sum=texD+texE+texF;
+            String texSum = Double.toString(Sum);
+//            Integer texSumOut = Integer.parseInt(texSum);
+            model.addAttribute("texSum", texSum);
+            model.addAttribute("delivery", delivery);
+            model.addAttribute("detail", detail);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "mypage-4-2-2");
+        return "mypage/GiveawayPayment";
     }
     //회원정보 변경
     @RequestMapping(value="/MyPage/ModifyUserInfo")
@@ -229,5 +299,26 @@ public class MyPage {
     public String myPageOrderChangeDetail(Model model) {
         model.addAttribute("style", "mypage-6");
         return "mypage/OrderChangeDetail";
+    }
+
+    //배송정보 출력
+    public Map<String ,Object> giveawayDelivery(HashMap params)throws SQLException {
+
+        //배송방법이 없으면 입력값 고정 출력
+        if (params.get("delivery_class").equals("F")) {
+            //관리자가 설정한 기본 배송방법
+            params.put("selector", "기본배송");
+        } else {
+            //배송방법이 개별이면 사용자 선택
+            String splitString = (String) params.get("delivery_type");//배송방법
+            String[] splitArray = splitString.split("\\|");
+            //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
+            params.put("code", "product_delivery_type");
+            params.put("code_values", splitArray);
+            List<Map<String, Object>> selector = selectorDAO.getSelector(params);
+            params.put("selector", selector);
+        }
+
+        return params;
     }
 }

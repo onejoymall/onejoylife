@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="MySQL - onejoylife@onejoylife.cm7ncxzlg5yk.ap-northeast-2.rds.amazonaws.com">
+<dataSource name="onejoyDB">
   <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.17">
     <root id="1">
       <ServerVersion>10.2.21</ServerVersion>
@@ -1310,49 +1310,2241 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="329" parent="5" name="user_auth_info">
+    <table id="329" parent="5" name="TBL_BOARD">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <column id="330" parent="329" name="usr_no">
+    <table id="330" parent="5" name="TBL_BOARDFILE">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="331" parent="5" name="TBL_BOARDGROUP">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="332" parent="5" name="TBL_BOARDREPLY">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="333" parent="5" name="code">
+      <Comment>코드관리</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="334" parent="5" name="coupon">
+      <Comment>쿠폰</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="335" parent="5" name="coupon_paid_history">
+      <Comment>쿠폰 지급 내역</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="336" parent="5" name="coupon_pin_history">
+      <Comment>쿠폰 pin 발급 내역</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="337" parent="5" name="delivery_info">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="338" parent="5" name="display_multi_lang">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="339" parent="5" name="email_auth">
+      <Comment>이메일인증</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="340" parent="5" name="giveaway">
+      <Comment>경품마스터</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="341" parent="5" name="giveaway_play_history">
+      <Comment>경품 추첨 참여 내역</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="342" parent="5" name="giveaway_winner">
+      <Comment>경품 추첨 참여 내역</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="343" parent="5" name="msg_multi_lang">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="344" parent="5" name="point_history">
+      <Comment>포인트 사용 차감 발생 내역</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="345" parent="5" name="product">
+      <Comment>상품 목록</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="346" parent="5" name="product_category">
+      <Comment>카테고리</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="347" parent="5" name="product_payment_history">
+      <Comment>상품 구매 이력</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="348" parent="5" name="user">
+      <Comment>회원정보</Comment>
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <table id="349" parent="5" name="user_auth_info">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <column id="350" parent="329" name="BGNO">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="351" parent="329" name="BRDNO">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="352" parent="329" name="BRDTITLE">
+      <Position>3</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="353" parent="329" name="BRDWRITER">
+      <Position>4</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="354" parent="329" name="BRDMEMO">
+      <Position>5</Position>
+      <DataType>varchar(4000)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="355" parent="329" name="BRDDATE">
+      <Position>6</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="356" parent="329" name="BRDHIT">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="357" parent="329" name="BRDDELETEFLAG">
+      <Position>8</Position>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="358" parent="329" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>BRDNO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="359" parent="330" name="FILENO">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="329" name="usr_id">
+    <column id="360" parent="330" name="BRDNO">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="361" parent="330" name="FILENAME">
+      <Position>3</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="362" parent="330" name="REALNAME">
+      <Position>4</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="363" parent="330" name="FILESIZE">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="364" parent="330" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>FILENO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="365" parent="331" name="BGNO">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="366" parent="331" name="BGNAME">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="332" parent="329" name="auth_id">
+    <column id="367" parent="331" name="BGPARENT">
       <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="329" name="reg_id">
+    <column id="368" parent="331" name="BGDELETEFLAG">
       <Position>4</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="329" name="reg_dt">
+    <column id="369" parent="331" name="BGUSED">
+      <Position>5</Position>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="370" parent="331" name="BGREPLY">
+      <Position>6</Position>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="371" parent="331" name="BGREADONLY">
+      <Position>7</Position>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="372" parent="331" name="BGDATE">
+      <Position>8</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="373" parent="331" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>BGNO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="374" parent="332" name="BRDNO">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="375" parent="332" name="RENO">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="376" parent="332" name="REWRITER">
+      <Position>3</Position>
+      <DataType>varchar(10)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="377" parent="332" name="REMEMO">
+      <Position>4</Position>
+      <DataType>varchar(500)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="378" parent="332" name="REDATE">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="329" name="mod_id">
+    <column id="379" parent="332" name="REDELETEFLAG">
       <Position>6</Position>
+      <DataType>varchar(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="380" parent="332" name="REPARENT">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="381" parent="332" name="REDEPTH">
+      <Position>8</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="382" parent="332" name="REORDER">
+      <Position>9</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="383" parent="332" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>RENO</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="384" parent="333" name="code_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="385" parent="333" name="code">
+      <Position>2</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="386" parent="333" name="code_name">
+      <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="329" name="mod_dt">
+    <column id="387" parent="333" name="code_value">
+      <Position>4</Position>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="388" parent="333" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>code_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="389" parent="334" name="coupon_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="390" parent="334" name="coupon_cd">
+      <Position>2</Position>
+      <Comment>쿠폰 코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="391" parent="334" name="coupon_ct">
+      <Position>3</Position>
+      <Comment>카테고리</Comment>
+      <DataType>varchar(4)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="392" parent="334" name="coupon_dup_yn">
+      <Position>4</Position>
+      <Comment>중복적용</Comment>
+      <DataType>varchar(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="393" parent="334" name="coupon_use_day">
+      <Position>5</Position>
+      <Comment>유효 기간</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="394" parent="334" name="coupon_use_payment_class">
+      <Position>6</Position>
+      <Comment>사용가능결제수단/code : coupon_use_payment_class</Comment>
+      <DataType>int(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="395" parent="334" name="coupon_img_path">
+      <Position>7</Position>
+      <Comment>이미지경로</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="396" parent="334" name="coupon_name">
+      <Position>8</Position>
+      <Comment>이미지경로</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="397" parent="334" name="coupon_alert_class">
+      <Position>9</Position>
+      <Comment>알림 방법 / 로구인,sms,email</Comment>
+      <DataType>int(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="398" parent="334" name="coupon_condition">
+      <Position>10</Position>
+      <Comment>다운로드 조건</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="399" parent="334" name="coupon_payment_condition">
+      <Position>11</Position>
+      <Comment>쿠폰 사용조건 금액</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="400" parent="334" name="coupon_class">
+      <Position>12</Position>
+      <Comment>쿠폰종류 시리얼/온라인</Comment>
+      <DataType>int(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="401" parent="334" name="coupon_payment">
+      <Position>13</Position>
+      <Comment>쿠폰 금액</Comment>
+      <DataType>int(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="402" parent="334" name="reg_date">
+      <Position>14</Position>
+      <Comment>쿠폰 등록일</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="403" parent="334" name="coupon_use_yn">
+      <Position>15</Position>
+      <Comment>쿠폰 사용 가능여부</Comment>
+      <DataType>varchar(1)|0s</DataType>
+      <DefaultExpression>&apos;Y&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="404" parent="334" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>coupon_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="405" parent="335" name="coupon_paid_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="406" parent="335" name="coupon_id">
+      <Position>2</Position>
+      <Comment>지급한 쿠폰 코드</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="407" parent="335" name="coupon_paid_user_id">
+      <Position>3</Position>
+      <Comment>수령자</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="408" parent="335" name="reg_date">
+      <Position>4</Position>
+      <Comment>지급 날짜</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="409" parent="335" name="coupon_paid_class_cd">
+      <Position>5</Position>
+      <Comment>지급 방법</Comment>
+      <DataType>int(11)|0s</DataType>
+      <DefaultExpression>1</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="410" parent="335" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>coupon_paid_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="411" parent="336" name="coupon_pin_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="412" parent="336" name="coupon_id">
+      <Position>2</Position>
+      <Comment>쿠폰 ID</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="413" parent="336" name="coupon_pin_cd">
+      <Position>3</Position>
+      <Comment>수령자</Comment>
+      <DataType>int(15)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="414" parent="336" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>coupon_pin_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="415" parent="337" name="delivery_info_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="416" parent="337" name="order_no">
+      <Position>2</Position>
+      <Comment>주문번호</Comment>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="417" parent="337" name="order_user_name">
+      <Position>3</Position>
+      <Comment>주문자이름</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="418" parent="337" name="order_user_email">
+      <Position>4</Position>
+      <Comment>주문자이메일</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="419" parent="337" name="order_user_phone">
+      <Position>5</Position>
+      <Comment>주문자전화번호</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="420" parent="337" name="delivery_type">
+      <Position>6</Position>
+      <Comment>배송 방법</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="421" parent="337" name="delivery_user_name">
+      <Position>7</Position>
+      <Comment>배송 수취인 이름</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="422" parent="337" name="delivery_user_phone">
+      <Position>8</Position>
+      <Comment>배송 수취인 핸드폰</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="423" parent="337" name="delivery_user_tel">
+      <Position>9</Position>
+      <Comment>배송 수취인 전화번호</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="424" parent="337" name="postcode">
+      <Position>10</Position>
+      <Comment>배송 지 우편번호</Comment>
+      <DataType>varchar(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="425" parent="337" name="roadAddress">
+      <Position>11</Position>
+      <Comment>배송 지 도로명주소</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="426" parent="337" name="extraAddress">
+      <Position>12</Position>
+      <Comment>배송 지 상세주소</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="427" parent="337" name="jibunAddress">
+      <Position>13</Position>
+      <Comment>배송 지 지번주소</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="428" parent="337" name="delivery_message">
+      <Position>14</Position>
+      <Comment>배송 메세지</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="429" parent="337" name="reg_date">
+      <Position>15</Position>
+      <DataType>date|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="430" parent="337" name="product_cd">
+      <Position>16</Position>
+      <Comment>상품코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="431" parent="337" name="giveaway_cd">
+      <Position>17</Position>
+      <Comment>경품코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="432" parent="337" name="order_user_id">
+      <Position>18</Position>
+      <Comment>요청자 ID
+</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="433" parent="337" name="giveaway_play_cd">
+      <Position>19</Position>
+      <Comment>경품 추첨 코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="434" parent="337" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>delivery_info_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="435" parent="338" name="LANG_CD">
+      <Position>1</Position>
+      <DataType>varchar(2)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="436" parent="338" name="SCRN_ITEM_DISTC">
+      <Position>2</Position>
+      <DataType>varchar(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="437" parent="338" name="SCRN_ITEM_ID">
+      <Position>3</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="438" parent="338" name="DISP_CONT">
+      <Position>4</Position>
+      <DataType>varchar(4000)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="439" parent="338" name="REG_ID">
+      <Position>5</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="440" parent="338" name="REG_DT">
+      <Position>6</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="441" parent="338" name="MOD_ID">
+      <Position>7</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="442" parent="338" name="MOD_DT">
+      <Position>8</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="443" parent="339" name="email">
+      <Position>1</Position>
+      <Comment>이메일</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="444" parent="339" name="email_auth_code">
+      <Position>2</Position>
+      <DataType>varchar(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="445" parent="339" name="reg_date">
+      <Position>3</Position>
+      <Comment>이메일 인증 요청일</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="446" parent="339" name="auth_date">
+      <Position>4</Position>
+      <Comment>이메일 인증 일자</Comment>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="447" parent="339" name="password_change_code">
+      <Position>5</Position>
+      <DataType>varchar(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="448" parent="339" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>email</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="449" parent="340" name="giveaway_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="450" parent="340" name="giveaway_cd">
+      <Position>2</Position>
+      <Comment>상품코드</Comment>
+      <DataType>varchar(8)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="451" parent="340" name="giveaway_market_cd">
+      <Position>3</Position>
+      <Comment>자체 상품코드</Comment>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="452" parent="340" name="giveaway_use_yn">
+      <Position>4</Position>
+      <Comment>진열상태</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="453" parent="340" name="giveaway_sale_yn">
+      <Position>5</Position>
+      <Comment>판매상태</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="454" parent="340" name="giveaway_ct">
+      <Position>6</Position>
+      <Comment>상품분류 번호 20|21|22</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="455" parent="340" name="giveaway_new_class">
+      <Position>7</Position>
+      <Comment>상품분류 신상품영역 N|Y|Y</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="456" parent="340" name="giveaway_md_class">
+      <Position>8</Position>
+      <Comment>상품분류 추천상품영역 N|Y|Y</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="457" parent="340" name="giveaway_name">
+      <Position>9</Position>
+      <Comment>상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="458" parent="340" name="giveaway_name_en">
+      <Position>10</Position>
+      <Comment>영문 상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="459" parent="340" name="giveaway_name_mg">
+      <Position>11</Position>
+      <Comment>상품명(관리용)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="460" parent="340" name="giveaway_supply_pd_name">
+      <Position>12</Position>
+      <Comment>공급사 상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="461" parent="340" name="giveaway_model_name">
+      <Position>13</Position>
+      <Comment>모델명</Comment>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="462" parent="340" name="giveaway_summary_memo">
+      <Position>14</Position>
+      <Comment>상품 요약설명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="463" parent="340" name="giveaway_brief_memo">
+      <Position>15</Position>
+      <Comment>상품 간략설명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="464" parent="340" name="giveaway_html">
+      <Position>16</Position>
+      <Comment>상품 상세설명(html 작성가능)</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="465" parent="340" name="giveaway_mobile_memo_config">
+      <Position>17</Position>
+      <Comment>모바일 상품 상세설명</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="466" parent="340" name="giveaway_mobile_html">
+      <Position>18</Position>
+      <Comment>모바일 상품 상세설명(html 작성가능)</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="467" parent="340" name="giveaway_keyword">
+      <Position>19</Position>
+      <Comment>검색어설정 구분자,</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="468" parent="340" name="giveaway_tex_class">
+      <Position>20</Position>
+      <Comment>과세구분</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="469" parent="340" name="giveaway_user_payment">
+      <Position>21</Position>
+      <Comment>소비자가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="470" parent="340" name="giveaway_company_payment">
+      <Position>22</Position>
+      <Comment>공급가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="471" parent="340" name="giveaway_payment">
+      <Position>23</Position>
+      <Comment>판매가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="472" parent="340" name="giveaway_payment_empty_yn">
+      <Position>24</Position>
+      <Comment>판매가 대체문구 사용</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="473" parent="340" name="giveaway_payment_memo">
+      <Position>25</Position>
+      <Comment>판매가 대체문구</Comment>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="474" parent="340" name="giveaway_order_limit_quantity">
+      <Position>26</Position>
+      <Comment>주문수량 제한 기준</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="475" parent="340" name="giveaway_min_limit">
+      <Position>27</Position>
+      <Comment>최소 주문수량(이상)</Comment>
+      <DataType>int(7)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="476" parent="340" name="giveaway_max_limit">
+      <Position>28</Position>
+      <Comment>최대 주문수량(이하)</Comment>
+      <DataType>int(7)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="477" parent="340" name="giveaway_point_rate">
+      <Position>29</Position>
+      <Comment>E-point 적립(%)</Comment>
+      <DataType>decimal(7,2 digit)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="478" parent="340" name="giveaway_go_event_yn">
+      <Position>30</Position>
+      <Comment>공통이벤트 정보</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="479" parent="340" name="giveaway_adult_yn">
+      <Position>31</Position>
+      <Comment>성인인증</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="480" parent="340" name="giveaway_option_yn">
+      <Position>32</Position>
+      <Comment>옵션사용</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="481" parent="340" name="giveaway_option_class">
+      <Position>33</Position>
+      <Comment>품목 구성방식 조합T,연동E,독립F</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="482" parent="340" name="giveaway_option_view_type">
+      <Position>34</Position>
+      <Comment>T면 옵션 표시방식 C/S</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="483" parent="340" name="giveaway_option_set_name">
+      <Position>35</Position>
+      <Comment>옵션세트명</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="484" parent="340" name="giveaway_option_input">
+      <Position>36</Position>
+      <Comment>옵션입력</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="485" parent="340" name="giveaway_option_style">
+      <Position>37</Position>
+      <Comment>옵션 스타일</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="486" parent="340" name="giveaway_option_button_img">
+      <Position>38</Position>
+      <Comment>버튼이미지 설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="487" parent="340" name="giveaway_option_color">
+      <Position>39</Position>
+      <Comment>색상 설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="488" parent="340" name="giveaway_option_required">
+      <Position>40</Position>
+      <Comment>필수여부</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="489" parent="340" name="giveaway_sold_out_memo">
+      <Position>41</Position>
+      <Comment>품절표시 문구</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="490" parent="340" name="giveaway_add_option">
+      <Position>42</Position>
+      <Comment>추가입력옵션</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="491" parent="340" name="giveaway_add_option_name">
+      <Position>43</Position>
+      <Comment>추가입력옵션 명칭</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="492" parent="340" name="giveaway_add_option_required">
+      <Position>44</Position>
+      <Comment>추가입력옵션 선택/필수여부</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="493" parent="340" name="giveaway_add_option_max_lang">
+      <Position>45</Position>
+      <Comment>입력글자수(자)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="494" parent="340" name="giveaway_detail_image">
+      <Position>46</Position>
+      <Comment>이미지등록(상세)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="495" parent="340" name="giveaway_list_image">
+      <Position>47</Position>
+      <Comment>이미지등록(목록)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="496" parent="340" name="giveaway_list_image_sm">
+      <Position>48</Position>
+      <Comment>이미지등록(작은목록)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="497" parent="340" name="giveaway_list_image_response">
+      <Position>49</Position>
+      <Comment>이미지등록(축소)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="498" parent="340" name="giveaway_add_image">
+      <Position>50</Position>
+      <Comment>이미지등록(추가)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="499" parent="340" name="giveaway_made_company_cd">
+      <Position>51</Position>
+      <Comment>제조사</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="500" parent="340" name="giveaway_supplier">
+      <Position>52</Position>
+      <Comment>공급사</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="501" parent="340" name="giveaway_brand">
+      <Position>53</Position>
+      <Comment>브랜드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="502" parent="340" name="giveaway_trend">
+      <Position>54</Position>
+      <Comment>트렌드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="503" parent="340" name="giveaway_influencer">
+      <Position>55</Position>
+      <Comment>인플루언서</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="504" parent="340" name="giveaway_self_class_cd">
+      <Position>56</Position>
+      <Comment>자체분류 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="505" parent="340" name="giveaway_create_date">
+      <Position>57</Position>
+      <Comment>제조일자</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="506" parent="340" name="giveaway_release_date">
+      <Position>58</Position>
+      <Comment>출시일자</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="507" parent="340" name="giveaway_validity_yn">
+      <Position>59</Position>
+      <Comment>유효기간 사용여부</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="508" parent="340" name="giveaway_validity">
+      <Position>60</Position>
+      <Comment>유효기간</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="509" parent="340" name="giveaway_origin">
+      <Position>61</Position>
+      <Comment>원산지</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="510" parent="340" name="giveaway_cm">
+      <Position>62</Position>
+      <Comment>상품부피(cm)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="511" parent="340" name="giveaway_payment_info">
+      <Position>63</Position>
+      <Comment>상품결제안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="512" parent="340" name="giveaway_delivery_info">
+      <Position>64</Position>
+      <Comment>상품배송안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="513" parent="340" name="giveaway_change_info">
+      <Position>65</Position>
+      <Comment>교환/반품안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="514" parent="340" name="giveaway_service_info">
+      <Position>66</Position>
+      <Comment>서비스문의/안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="515" parent="340" name="giveaway_delivery_class">
+      <Position>67</Position>
+      <Comment>배송정보</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="516" parent="340" name="giveaway_delivery_type">
+      <Position>68</Position>
+      <Comment>배송방법</Comment>
+      <DataType>varchar(25)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="517" parent="340" name="giveaway_delivery_International_type">
+      <Position>69</Position>
+      <Comment>국내/해외배송</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="518" parent="340" name="giveaway_delivery_locale">
+      <Position>70</Position>
+      <Comment>배송지역</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="519" parent="340" name="giveaway_delivery_payment_type">
+      <Position>71</Position>
+      <Comment>배송비 선결제 설정</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="520" parent="340" name="giveaway_delivery_date">
+      <Position>72</Position>
+      <Comment>배송기간</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="521" parent="340" name="giveaway_delivery_payment_class">
+      <Position>73</Position>
+      <Comment>배송비 구분</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="522" parent="340" name="giveaway_delivery_payment">
+      <Position>74</Position>
+      <Comment>배송비입력</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="523" parent="340" name="giveaway_delivery_store_pickup">
+      <Position>75</Position>
+      <Comment>스토어픽업 설정</Comment>
+      <DataType>varchar(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="524" parent="340" name="giveaway_kg">
+      <Position>76</Position>
+      <Comment>상품 전체중량(kg)</Comment>
+      <DataType>decimal(7,2 digit)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="525" parent="340" name="giveaway_global_hs_code">
+      <Position>77</Position>
+      <Comment>HS코드</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="526" parent="340" name="giveaway_global_clearance">
+      <Position>78</Position>
+      <Comment>상품 구분(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="527" parent="340" name="giveaway_material">
+      <Position>79</Position>
+      <Comment>상품소재</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="528" parent="340" name="giveaway_material_en">
+      <Position>80</Position>
+      <Comment>영문 상품소재(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="529" parent="340" name="giveaway_fabric">
+      <Position>81</Position>
+      <Comment>옷감(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="530" parent="340" name="giveaway_seo_yn">
+      <Position>82</Position>
+      <Comment>SEO 노출 설정</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="531" parent="340" name="giveaway_seo_title">
+      <Position>83</Position>
+      <Comment>SEO Title</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="532" parent="340" name="giveaway_seo_author">
+      <Position>84</Position>
+      <Comment>SEO Author</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="533" parent="340" name="giveaway_seo_description">
+      <Position>85</Position>
+      <Comment>(SEO) Description</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="534" parent="340" name="giveaway_seo_keywords">
+      <Position>86</Position>
+      <Comment>(SEO) Keywords</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="535" parent="340" name="giveaway_seo_alt">
+      <Position>87</Position>
+      <Comment>(SEO) 상품 이미지 Alt 텍스트</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="536" parent="340" name="giveaway_payment_type">
+      <Position>88</Position>
+      <Comment>개별결제수단설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="537" parent="340" name="giveaway_delivery_type_code">
+      <Position>89</Position>
+      <Comment>상품배송유형 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="538" parent="340" name="giveaway_memo">
+      <Position>90</Position>
+      <Comment>메모</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="539" parent="340" name="giveaway_point_class">
+      <Position>91</Position>
+      <Comment>적립금 구분</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="540" parent="340" name="giveaway_point_rate_cash">
+      <Position>92</Position>
+      <Comment>E-point 적립(금액)</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="541" parent="340" name="giveaway_members_limit">
+      <Position>93</Position>
+      <Comment>회원전용 여부</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="542" parent="340" name="giveaway_view_locale_cd">
+      <Position>94</Position>
+      <Comment>노출대상 국가코드</Comment>
+      <DataType>varchar(4)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="543" parent="340" name="giveaway_play_min_point">
+      <Position>95</Position>
+      <Comment>경품 참여 최소 포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="544" parent="340" name="reg_date">
+      <Position>96</Position>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="545" parent="340" name="giveaway_play_winner_point">
+      <Position>97</Position>
+      <Comment>경품추첨 포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="546" parent="340" name="giveaway_play_max_point">
+      <Position>98</Position>
+      <Comment>최대 참여가능 포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="547" parent="340" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>giveaway_id
+giveaway_cd</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="548" parent="341" name="giveaway_play_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="549" parent="341" name="giveaway_cd">
+      <Position>2</Position>
+      <Comment>경품 추첨 참여한 경품 코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="550" parent="341" name="giveaway_payment_epoint">
+      <Position>3</Position>
+      <Comment>경품 추첨 참여 포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="551" parent="341" name="giveaway_play_user_id">
+      <Position>4</Position>
+      <Comment>경품 추첨 참여 사용자</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="552" parent="341" name="reg_date">
+      <Position>5</Position>
+      <Comment>경품 추첨 참여일</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="553" parent="341" name="giveaway_play_cd">
+      <Position>6</Position>
+      <Comment>응모번호</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="554" parent="341" name="giveaway_play_status">
+      <Position>7</Position>
+      <Comment>참여상태</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <DefaultExpression>&apos;I&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="555" parent="341" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>giveaway_play_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="556" parent="342" name="giveaway_winner_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="557" parent="342" name="giveaway_id">
+      <Position>2</Position>
+      <Comment>경품 ID</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="558" parent="342" name="giveaway_cd">
+      <Position>3</Position>
+      <Comment>경품 코드</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="559" parent="342" name="giveaway_winner_user_id">
+      <Position>4</Position>
+      <Comment>당첨자 아이디</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="560" parent="342" name="reg_date">
+      <Position>5</Position>
+      <Comment>경품 추첨 일</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="561" parent="342" name="column_6">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="562" parent="342" name="giveaway_play_id">
+      <Position>7</Position>
+      <Comment>당첨 된 경품 참여 ID</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="563" parent="342" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>giveaway_winner_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="564" parent="343" name="lang_cd">
+      <Position>1</Position>
+      <DataType>varchar(2)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="565" parent="343" name="msg_id">
+      <Position>2</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="566" parent="343" name="msg_cont">
+      <Position>3</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="567" parent="343" name="reg_id">
+      <Position>4</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="568" parent="343" name="reg_dt">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="569" parent="343" name="mod_id">
+      <Position>6</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="570" parent="343" name="mod_dt">
       <Position>7</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="337" parent="329" name="uid">
-      <ColNames>usr_no</ColNames>
+    <column id="571" parent="343" name="msg_distc">
+      <Position>8</Position>
+      <DataType>char(3)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="572" parent="344" name="point_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="573" parent="344" name="epoint">
+      <Position>2</Position>
+      <Comment>포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="574" parent="344" name="point_paid_user_id">
+      <Position>3</Position>
+      <Comment>포인트 지급 대상 사용자</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="575" parent="344" name="point_paid_memo">
+      <Position>4</Position>
+      <Comment>내역</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="576" parent="344" name="reg_date">
+      <Position>5</Position>
+      <Comment>포인트 지급 날짜</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="577" parent="344" name="point_paid_type">
+      <Position>6</Position>
+      <Comment>포인트 지급 구분</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="578" parent="344" name="point_paid_product_cd">
+      <Position>7</Position>
+      <Comment>지급 상품 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="579" parent="344" name="point_end_date">
+      <Position>8</Position>
+      <Comment>포인트사용종료일</Comment>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="580" parent="344" name="point_add">
+      <Position>9</Position>
+      <Comment>포인트 적립</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="581" parent="344" name="point_use">
+      <Position>10</Position>
+      <Comment>포인트 차감</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="582" parent="344" name="point_amount">
+      <Position>11</Position>
+      <Comment>발생시점 잔여포인트</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="583" parent="344" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>point_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="584" parent="345" name="product_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="585" parent="345" name="product_cd">
+      <Position>2</Position>
+      <Comment>상품코드</Comment>
+      <DataType>varchar(8)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="586" parent="345" name="product_market_cd">
+      <Position>3</Position>
+      <Comment>자체 상품코드</Comment>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="587" parent="345" name="product_use_yn">
+      <Position>4</Position>
+      <Comment>진열상태</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="588" parent="345" name="product_sale_yn">
+      <Position>5</Position>
+      <Comment>판매상태</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="589" parent="345" name="product_ct">
+      <Position>6</Position>
+      <Comment>상품분류 번호 20|21|22</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="590" parent="345" name="product_new_class">
+      <Position>7</Position>
+      <Comment>상품분류 신상품영역 N|Y|Y</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="591" parent="345" name="product_md_class">
+      <Position>8</Position>
+      <Comment>상품분류 추천상품영역 N|Y|Y</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="592" parent="345" name="product_name">
+      <Position>9</Position>
+      <Comment>상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="593" parent="345" name="product_name_en">
+      <Position>10</Position>
+      <Comment>영문 상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="594" parent="345" name="product_name_mg">
+      <Position>11</Position>
+      <Comment>상품명(관리용)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="595" parent="345" name="product_supply_pd_name">
+      <Position>12</Position>
+      <Comment>공급사 상품명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="596" parent="345" name="product_model_name">
+      <Position>13</Position>
+      <Comment>모델명</Comment>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="597" parent="345" name="product_summary_memo">
+      <Position>14</Position>
+      <Comment>상품 요약설명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="598" parent="345" name="product_brief_memo">
+      <Position>15</Position>
+      <Comment>상품 간략설명</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="599" parent="345" name="product_html">
+      <Position>16</Position>
+      <Comment>상품 상세설명(html 작성가능)</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="600" parent="345" name="product_mobile_memo_config">
+      <Position>17</Position>
+      <Comment>모바일 상품 상세설명</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="601" parent="345" name="product_mobile_html">
+      <Position>18</Position>
+      <Comment>모바일 상품 상세설명(html 작성가능)</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="602" parent="345" name="product_keyword">
+      <Position>19</Position>
+      <Comment>검색어설정 구분자,</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="603" parent="345" name="product_tex_class">
+      <Position>20</Position>
+      <Comment>과세구분</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="604" parent="345" name="product_user_payment">
+      <Position>21</Position>
+      <Comment>소비자가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="605" parent="345" name="product_company_payment">
+      <Position>22</Position>
+      <Comment>공급가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="606" parent="345" name="product_payment">
+      <Position>23</Position>
+      <Comment>판매가</Comment>
+      <DataType>int(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="607" parent="345" name="product_payment_empty_yn">
+      <Position>24</Position>
+      <Comment>판매가 대체문구 사용</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="608" parent="345" name="product_payment_memo">
+      <Position>25</Position>
+      <Comment>판매가 대체문구</Comment>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="609" parent="345" name="product_order_limit_quantity">
+      <Position>26</Position>
+      <Comment>주문수량 제한 기준</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="610" parent="345" name="product_min_limit">
+      <Position>27</Position>
+      <Comment>최소 주문수량(이상)</Comment>
+      <DataType>int(7)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="611" parent="345" name="product_max_limit">
+      <Position>28</Position>
+      <Comment>최대 주문수량(이하)</Comment>
+      <DataType>int(7)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="612" parent="345" name="product_point_rate">
+      <Position>29</Position>
+      <Comment>E-point 적립(%)</Comment>
+      <DataType>decimal(7,2 digit)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="613" parent="345" name="product_go_event_yn">
+      <Position>30</Position>
+      <Comment>공통이벤트 정보</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="614" parent="345" name="product_adult_yn">
+      <Position>31</Position>
+      <Comment>성인인증</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="615" parent="345" name="product_option_yn">
+      <Position>32</Position>
+      <Comment>옵션사용</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="616" parent="345" name="product_option_class">
+      <Position>33</Position>
+      <Comment>품목 구성방식 조합T,연동E,독립F</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="617" parent="345" name="product_option_view_type">
+      <Position>34</Position>
+      <Comment>T면 옵션 표시방식 C/S</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="618" parent="345" name="product_option_set_name">
+      <Position>35</Position>
+      <Comment>옵션세트명</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="619" parent="345" name="product_option_input">
+      <Position>36</Position>
+      <Comment>옵션입력</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="620" parent="345" name="product_option_style">
+      <Position>37</Position>
+      <Comment>옵션 스타일</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="621" parent="345" name="product_option_button_img">
+      <Position>38</Position>
+      <Comment>버튼이미지 설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="622" parent="345" name="product_option_color">
+      <Position>39</Position>
+      <Comment>색상 설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="623" parent="345" name="product_option_required">
+      <Position>40</Position>
+      <Comment>필수여부</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="624" parent="345" name="product_sold_out_memo">
+      <Position>41</Position>
+      <Comment>품절표시 문구</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="625" parent="345" name="product_add_option">
+      <Position>42</Position>
+      <Comment>추가입력옵션</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="626" parent="345" name="product_add_option_name">
+      <Position>43</Position>
+      <Comment>추가입력옵션 명칭</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="627" parent="345" name="product_add_option_required">
+      <Position>44</Position>
+      <Comment>추가입력옵션 선택/필수여부</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="628" parent="345" name="product_add_option_max_lang">
+      <Position>45</Position>
+      <Comment>입력글자수(자)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="629" parent="345" name="product_detail_image">
+      <Position>46</Position>
+      <Comment>이미지등록(상세)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="630" parent="345" name="product_list_image">
+      <Position>47</Position>
+      <Comment>이미지등록(목록)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="631" parent="345" name="product_list_image_sm">
+      <Position>48</Position>
+      <Comment>이미지등록(작은목록)</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="632" parent="345" name="product_list_image_response">
+      <Position>49</Position>
+      <Comment>이미지등록(축소)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="633" parent="345" name="product_add_image">
+      <Position>50</Position>
+      <Comment>이미지등록(추가)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="634" parent="345" name="product_made_company_cd">
+      <Position>51</Position>
+      <Comment>제조사</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="635" parent="345" name="product_supplier">
+      <Position>52</Position>
+      <Comment>공급사</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="636" parent="345" name="product_brand">
+      <Position>53</Position>
+      <Comment>브랜드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="637" parent="345" name="product_trend">
+      <Position>54</Position>
+      <Comment>트렌드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="638" parent="345" name="product_influencer">
+      <Position>55</Position>
+      <Comment>인플루언서</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="639" parent="345" name="product_self_class_cd">
+      <Position>56</Position>
+      <Comment>자체분류 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="640" parent="345" name="product_create_date">
+      <Position>57</Position>
+      <Comment>제조일자</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="641" parent="345" name="product_release_date">
+      <Position>58</Position>
+      <Comment>출시일자</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="642" parent="345" name="product_validity_yn">
+      <Position>59</Position>
+      <Comment>유효기간 사용여부</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="643" parent="345" name="product_validity">
+      <Position>60</Position>
+      <Comment>유효기간</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="644" parent="345" name="product_origin">
+      <Position>61</Position>
+      <Comment>원산지</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="645" parent="345" name="product_cm">
+      <Position>62</Position>
+      <Comment>상품부피(cm)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="646" parent="345" name="product_payment_info">
+      <Position>63</Position>
+      <Comment>상품결제안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="647" parent="345" name="product_delivery_info">
+      <Position>64</Position>
+      <Comment>상품배송안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="648" parent="345" name="product_change_info">
+      <Position>65</Position>
+      <Comment>교환/반품안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="649" parent="345" name="product_service_info">
+      <Position>66</Position>
+      <Comment>서비스문의/안내</Comment>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="650" parent="345" name="product_delivery_class">
+      <Position>67</Position>
+      <Comment>배송정보</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="651" parent="345" name="product_delivery_type">
+      <Position>68</Position>
+      <Comment>배송방법</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="652" parent="345" name="product_delivery_International_type">
+      <Position>69</Position>
+      <Comment>국내/해외배송</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="653" parent="345" name="product_delivery_locale">
+      <Position>70</Position>
+      <Comment>배송지역</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="654" parent="345" name="product_delivery_payment_type">
+      <Position>71</Position>
+      <Comment>배송비 선결제 설정</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="655" parent="345" name="product_delivery_date">
+      <Position>72</Position>
+      <Comment>배송기간</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="656" parent="345" name="product_delivery_payment_class">
+      <Position>73</Position>
+      <Comment>배송비 구분</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="657" parent="345" name="product_delivery_payment">
+      <Position>74</Position>
+      <Comment>배송비입력</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="658" parent="345" name="product_delivery_store_pickup">
+      <Position>75</Position>
+      <Comment>스토어픽업 설정</Comment>
+      <DataType>varchar(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="659" parent="345" name="product_kg">
+      <Position>76</Position>
+      <Comment>상품 전체중량(kg)</Comment>
+      <DataType>decimal(7,2 digit)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="660" parent="345" name="product_global_hs_code">
+      <Position>77</Position>
+      <Comment>HS코드</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="661" parent="345" name="product_global_clearance">
+      <Position>78</Position>
+      <Comment>상품 구분(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="662" parent="345" name="product_material">
+      <Position>79</Position>
+      <Comment>상품소재</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="663" parent="345" name="product_material_en">
+      <Position>80</Position>
+      <Comment>영문 상품소재(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="664" parent="345" name="product_fabric">
+      <Position>81</Position>
+      <Comment>옷감(해외통관)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="665" parent="345" name="product_seo_yn">
+      <Position>82</Position>
+      <Comment>SEO 노출 설정</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="666" parent="345" name="product_seo_title">
+      <Position>83</Position>
+      <Comment>SEO Title</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="667" parent="345" name="product_seo_author">
+      <Position>84</Position>
+      <Comment>SEO Author</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="668" parent="345" name="product_seo_description">
+      <Position>85</Position>
+      <Comment>(SEO) Description</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="669" parent="345" name="product_seo_keywords">
+      <Position>86</Position>
+      <Comment>(SEO) Keywords</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="670" parent="345" name="product_seo_alt">
+      <Position>87</Position>
+      <Comment>(SEO) 상품 이미지 Alt 텍스트</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="671" parent="345" name="product_payment_type">
+      <Position>88</Position>
+      <Comment>개별결제수단설정</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="672" parent="345" name="product_delivery_type_code">
+      <Position>89</Position>
+      <Comment>상품배송유형 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="673" parent="345" name="product_memo">
+      <Position>90</Position>
+      <Comment>메모</Comment>
+      <DataType>varchar(250)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="674" parent="345" name="product_point_class">
+      <Position>91</Position>
+      <Comment>적립금 구분</Comment>
+      <DataType>varchar(2)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="675" parent="345" name="product_point_rate_cash">
+      <Position>92</Position>
+      <Comment>E-point 적립(금액)</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="676" parent="345" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>product_id
+product_cd</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="677" parent="346" name="pd_category_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="678" parent="346" name="pd_category_upper_code">
+      <Position>2</Position>
+      <Comment>최상위 분류 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="679" parent="346" name="pd_category_code">
+      <Position>3</Position>
+      <Comment>분류 코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="680" parent="346" name="pd_category_name">
+      <Position>4</Position>
+      <Comment>분류 명</Comment>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="681" parent="346" name="pd_category_order">
+      <Position>5</Position>
+      <Comment>순번</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="682" parent="346" name="pd_category_payment_rate">
+      <Position>6</Position>
+      <Comment>분류별 포인트 적요</Comment>
+      <DataType>decimal(7,2 digit)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="683" parent="346" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>pd_category_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="684" parent="347" name="pd_payment_history_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="685" parent="347" name="product_id">
+      <Position>2</Position>
+      <Comment>구매 상품 ID</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="686" parent="347" name="pd_payment_user_id">
+      <Position>3</Position>
+      <Comment>구매자</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="687" parent="347" name="reg_date">
+      <Position>4</Position>
+      <Comment>구매날짜</Comment>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>sysdate()</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="688" parent="347" name="pd_payment_amount">
+      <Position>5</Position>
+      <Comment>구매금액</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="689" parent="347" name="pd_payment_cd">
+      <Position>6</Position>
+      <Comment>구매번호</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="690" parent="347" name="pd_payment_class_cd">
+      <Position>7</Position>
+      <Comment>구입방법</Comment>
+      <DataType>int(11)|0s</DataType>
+      <DefaultExpression>1</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="691" parent="347" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>pd_payment_history_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="692" parent="348" name="usr_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="693" parent="348" name="username">
+      <Position>2</Position>
+      <Comment>사용자이름</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="694" parent="348" name="email">
+      <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="695" parent="348" name="password">
+      <Position>4</Position>
+      <DataType>varchar(150)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="696" parent="348" name="lastname">
+      <Position>5</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="697" parent="348" name="firstname">
+      <Position>6</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="698" parent="348" name="email_auth_code">
+      <Position>7</Position>
+      <Comment>이메일 인증코드</Comment>
+      <DataType>varchar(100)|0s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="699" parent="348" name="email_auth_status">
+      <Position>8</Position>
+      <Comment>이메일인증상테</Comment>
+      <DataType>int(11)|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="700" parent="348" name="refferal_code">
+      <Position>9</Position>
+      <Comment>추천인코드</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="701" parent="348" name="iso_code">
+      <Position>10</Position>
+      <Comment>국가코드</Comment>
+      <DataType>varchar(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="702" parent="348" name="phone">
+      <Position>11</Position>
+      <Comment>전화번호</Comment>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="703" parent="348" name="level">
+      <Position>12</Position>
+      <Comment>회원 권한</Comment>
+      <DataType>int(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="704" parent="348" name="group_id">
+      <Position>13</Position>
+      <Comment>그룹 ID</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="705" parent="348" name="access_token">
+      <Position>14</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="706" parent="348" name="uid">
+      <ColNames>usr_id</ColNames>
       <Type>btree</Type>
     </index>
+    <key id="707" parent="348" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>email</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="708" parent="349" name="usr_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="709" parent="349" name="auth_id">
+      <Position>2</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="710" parent="349" name="reg_id">
+      <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="711" parent="349" name="reg_dt">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="712" parent="349" name="mod_id">
+      <Position>5</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="713" parent="349" name="mod_dt">
+      <Position>6</Position>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
   </database-model>
 </dataSource>

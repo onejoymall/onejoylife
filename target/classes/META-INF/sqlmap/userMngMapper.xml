@@ -6,12 +6,11 @@
     <select id="selectUserInfo" parameterType="java.lang.String" resultType="com.webapp.common.security.model.UserInfo">
     	<![CDATA[
     		SELECT
-	    		a.usr_id as usrId
-				, a.usr_pw as usrPw
-				, b.auth_id as authId
-    		FROM user_info a
-    		LEFT JOIN user_auth_info b ON a.usr_id = b.usr_id
-    		WHERE a.usr_id = #{usrId}
+	    		a.email as usrId
+				, a.password as usrPw
+				, a.email as authId
+    		FROM user a
+    		WHERE a.email = #{usrId}
     	]]>    	
     </select>
 </mapper>

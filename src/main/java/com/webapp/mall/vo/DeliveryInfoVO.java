@@ -1,11 +1,15 @@
 package com.webapp.mall.vo;
 
 public class DeliveryInfoVO {
+    String product_cd;
+    String giveaway_cd;
+    Integer order_user_id;
     String order_user_name;
     String order_user_email;
     String order_user_phone;
     String selectAddress;
     String delivery_user_name;
+    String delivery_type;
     String telNumber;
     String postcode;
     String roadAddress;
@@ -14,6 +18,61 @@ public class DeliveryInfoVO {
     String delivery_message_select;
     String delivery_user_phone;
     String delivery_user_tel;
+    String delivery_message;
+    String order_no;
+    String giveaway_play_cd;
+
+    public void setGiveaway_play_cd(String giveaway_play_cd) {
+        this.giveaway_play_cd = giveaway_play_cd;
+    }
+
+    public String getGiveaway_play_cd() {
+        return giveaway_play_cd;
+    }
+
+    public String getOrder_no() {
+        return order_no;
+    }
+
+    public void setOrder_no(String order_no) {
+        this.order_no = order_no;
+    }
+
+    public String getGiveaway_cd() {
+        return giveaway_cd;
+    }
+
+    public Integer getOrder_user_id() {
+        return order_user_id;
+    }
+
+    public void setGiveaway_cd(String giveaway_cd) {
+        this.giveaway_cd = giveaway_cd;
+    }
+
+    public void setOrder_user_id(Integer order_user_id) {
+        this.order_user_id = order_user_id;
+    }
+
+    public String getDelivery_message() {
+        return delivery_message;
+    }
+
+    public void setDelivery_message(String delivery_message) {
+        this.delivery_message = delivery_message;
+    }
+
+    public String getDelivery_type() {
+        return delivery_type;
+    }
+
+    public void setDelivery_type(String delivery_type) {
+        this.delivery_type = delivery_type;
+    }
+
+    public String getProduct_cd() {
+        return product_cd;
+    }
 
     public String getDelivery_message_select() {
         return delivery_message_select;
@@ -118,4 +177,9 @@ public class DeliveryInfoVO {
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
     }
+
+    public void setProduct_cd(String product_cd) {
+        this.product_cd = product_cd;
+    }
+
 }

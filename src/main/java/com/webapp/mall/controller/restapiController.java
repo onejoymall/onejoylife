@@ -5,6 +5,7 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
@@ -44,7 +45,8 @@ public class restapiController {
     private PointDAO pointDAO;
     @Autowired
     private GiveawayDAO giveawayDAO;
-
+    @Autowired
+    private DeliveryDAO deliveryDAO;
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -375,6 +377,15 @@ public class restapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
+            //사용자 아이디 확인 후 전달
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
+            //주문번호 생성
+            String order_no = "GW-ORDER-"+numberGender.numberGen(6,1);
+            //경품 추첨 번호
+            deliveryInfoVO.setGiveaway_play_cd((String)params.get("giveaway_play_cd"));
+            deliveryInfoVO.setOrder_no(order_no);
             if(deliveryInfoVO.getOrder_user_name().isEmpty()){
                 error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
             }
@@ -405,7 +416,8 @@ public class restapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-
+                deliveryDAO.insertDelivery(deliveryInfoVO);
+                resultMap.put("redirectUrl","/MyPage/giveawaypayment?order_no="+order_no);
             }
         }catch (Exception e){
             e.printStackTrace();

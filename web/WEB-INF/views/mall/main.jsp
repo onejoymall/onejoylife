@@ -41,76 +41,38 @@
         <div class="point-product-wrap">
             <div class="point-product-inner clearfix">
                 <h4 class="main-section-h4">E-point 경품추천</h4>
+                <p class="special-price-more"><a href="<c:url value="/giveaway"/>">경품 더보기<i class="right-arrow"></i></a></p>
                 <ul class="point-product-list">
-                    <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=1"/>">
-                            <img src="assets/img/e-point-img1.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                        </a>
-                        <p class="point-pdt-price">469,000원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
+                <c:if test="${not empty giveawaylist}">
+                    <c:forEach var="list" items="${giveawaylist}" varStatus="status">
+                        <li>
+                            <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
+                                <img src="<c:url value="/assets/img/"/>${list.giveaway_list_image}" />
+                                <i class="share-ic"></i>
+                                <p class="point-pdt-title"> ${list.giveaway_name}</p>
+                            </a>
+                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</p>
+                            <p class="deadline">${list.giveaway_validity}</p>
+                            <div class="point-pdt-parti-wrap">
+                                <div class="parti-percent-wrap">
+                                    <span class="progress">${list.parti_rate}%</span>
+                                    <span class="progress-now">참여율 <span class="progress-now-number">${list.parti_rate}%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중&#41;</span></span>
+                                    <span class="progress">100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
+                                </div>
+                                <div class="parti-point-wrap">
+                                    <p><span class="parti-point-now"><fmt:formatNumber value="${list.sum_play_point}" groupingUsed="true" /></span>/<fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> E-point</p>
+                                    <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
+                                </div>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=2"/>">
-                            <img src="assets/img/e-point-img2.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>
-                        </a>
-                        <p class="point-pdt-price">391,200원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=3"/>">
-                            <img src="assets/img/e-point-img3.png" />
-                            <i class="share-ic"></i>
-                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>
-                        </a>
-                        <p class="point-pdt-price">193,800원</p>
-                        <p class="deadline">~2020.02.03</p>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number">150</span>명 참여 중&#41;</span></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                                <p>&#40;현재 참여 응모포인트/전체 응모포인트&#41;</p>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${empty giveawaylist}">
+                    <li>표시할 내용이 없습니다.</li>
+                </c:if>
                 </ul>
             </div>
             <div class="mini-bnr-section">

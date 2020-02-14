@@ -25,7 +25,7 @@ public class GiveawayController {
     @Autowired
     UserDAO userDAO;
     @Autowired
-    GiveawayDAO GiveawayDAO;
+    GiveawayDAO giveawayDAO;
     @Autowired
     SelectorDAO selectorDAO;
     @Autowired
@@ -41,10 +41,10 @@ public class GiveawayController {
 
 //            searchVO.setStaticRowEnd(9);
 
-            searchVO.pageCalculate(GiveawayDAO.getGiveawayListCount(params));
+            searchVO.pageCalculate(giveawayDAO.getGiveawayListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            List<Map<String,Object>> list = GiveawayDAO.getGiveawayList(params);
+            List<Map<String,Object>> list = giveawayDAO.getGiveawayList(params);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         }catch (Exception e){
@@ -66,7 +66,7 @@ public class GiveawayController {
         }
 
         params.put("giveaway_id",request.getParameter("giveaway_id"));
-        Map<String,Object> detail = GiveawayDAO.getGiveawayDetail(params);
+        Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
         //배송정보
         params.put("delivery_class",detail.get("giveaway_delivery_class"));
         //배송밥법
@@ -94,7 +94,7 @@ public class GiveawayController {
             params.put("selector","기본배송");
         }else {
             //배송방법이 개별이면 사용자 선택
-            String splitString = (String)params.get("giveaway_delivery_type");//배송방법
+            String splitString = (String)params.get("delivery_type");//배송방법
             String[] splitArray = splitString.split( "\\|");
             //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
             params.put("code","product_delivery_type");

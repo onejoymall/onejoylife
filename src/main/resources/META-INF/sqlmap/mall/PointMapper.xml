@@ -17,7 +17,7 @@
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
-        <![CDATA[ order by point_id desc]]>
+        <![CDATA[ order by point_id desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
     </select>
     <select id="getPointListCount" resultType="java.util.HashMap">
         <![CDATA[

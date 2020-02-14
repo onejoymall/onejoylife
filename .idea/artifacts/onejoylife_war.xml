@@ -1,7 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="war" name="onejoylife:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="onejoylife_war.war">
+    <properties id="maven-jee-properties">
+      <options>
+        <module>onejoylife</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="onejoylife-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="onejoylife:war exploded" />
     </root>
   </artifact>
