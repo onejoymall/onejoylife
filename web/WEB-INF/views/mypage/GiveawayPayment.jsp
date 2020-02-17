@@ -38,7 +38,7 @@
             </div>
         </div>
         <main class="clearfix">
-            <form action="" method="POST">
+            <form name="defaultForm" ID="defaultForm" method="POST">
                 <h2 class="head-h2">세금결제</h2>
                 <div class="left-box">
                     <div class="l-sec1">
@@ -81,7 +81,7 @@
                         <div class="sec2-box">
                             <div class="sec2-p1">결제수단</div>
                             <div class="sec2-p2">
-                                <input type="radio" id="sec2-ra">
+                                <input type="radio" name="payment_type_cd" id="sec2-ra" value="C" checked>
                                 <label for="sec2-ra"><span class="ra-txt">신용카드</span></label>
                             </div>
                         </div>
@@ -113,11 +113,16 @@
                                 </div>
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /></span> 원</p>
+                                    <input type="hidden" name="payment" value="${detail.giveaway_delivery_payment+texSum}">
+                                    <input type="hidden" name="order_no" value="${delivery.order_no}">
+                                    <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
+                                    <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
+
                                 </div>
                             </div>
                         </div>
                         <div class="ck-box">
-                            <input type="checkbox" id="le-ck">
+                            <input type="checkbox" name="service_terms_of_use" id="le-ck" value="Y">
                             <label for="le-ck"><span class="le-ck-txt"><span class="le-ck-color">(필수)</span> 주문 상품정보 및 결제대행<br>서비스 이용약관에 모두 동의하십니까?</span></label>
                         </div>
                     </div>
@@ -135,37 +140,87 @@
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     $("#submitPayment").on("click",function() {
-        IMP.request_pay({ // param
-            pg: "inicis",
-            pay_method: "card",
-            merchant_uid: "${param.order_no}",
-            name: "${detail.giveaway_name}",
-            amount: ${detail.giveaway_delivery_payment+texSum},
-            buyer_email: "${sessionScope.email}",
-            buyer_name: "${delivery.order_user_name}",
-            buyer_tel: "${delivery.delivery_user_phone}",
-            buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
-            buyer_postcode: "${delivery.postcode}"
-        }, function (rsp) { // callback
-            console.log(rsp);
-            if(rsp.success){
+        if(!$('#le-ck').is(":checked")){
+            $.toast({
+                text: "이용약관 동의 는 필수 항목입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }else{
+            IMP.request_pay({ // param
+                pg: "inicis",
+                pay_method: "card",
+                merchant_uid: "${param.order_no}",
+                name: "${detail.giveaway_name}",
+                amount: ${detail.giveaway_delivery_payment+texSum},
+                buyer_email: "${sessionScope.email}",
+                buyer_name: "${delivery.order_user_name}",
+                buyer_tel: "${delivery.delivery_user_phone}",
+                buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
+                buyer_postcode: "${delivery.postcode}"
+            }, function (rsp) { // callback
+                var formData = $('#defaultForm').serialize()
+                    +'&payment_class=GIVEAWAY'
+                    +'&success='+rsp.success
+                    +'&imp_uid='+rsp.imp_uid
+                    +'&merchant_uid='+rsp.merchant_uid
+                    +'&pg_provider='+rsp.pg_provider
+                    +'&pay_method='+rsp.pay_method
+                    +'&pg_type='+rsp.pg_type
+                    +'&error_msg='+rsp.error_msg;
 
-            }else{
-                $.toast({
-                    text: rsp.error_msg,
-                    showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
-                    heading: 'Error',
-                    icon: 'error'
-                    // showHideTransition: 'slide', //슬라이드
-                    // showHideTransition: 'fade' //서서히나타남
-                    // position: 'top-left',
-                    // position: 'bottom-right',
-                    // position: 'bottom-left',
+                var alertType;
+                var showText;
+                if(rsp.success){
+                    jQuery.ajax({
+                        type: "POST",
+                        url: postUrl,
+                        data: formData,
+                        success: function (data) {
 
-                });
-            }
-        });
+                            if (data.validateError) {
+                                $('.validateError').empty();
+                                $.each(data.validateError, function (index, item) {
+                                    if(index == "Error"){//일반에러메세지
+                                        alertType = "error";
+                                        showText = item;
+                                    }else{
+                                        alertType = "error";
+                                        showText = index + " (은) " + item;
+                                    }
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'top-right',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                });
+
+                            } else {
+                                // loginAuth(data.access_token);
+                                location.href=data.redirectUrl;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("error");
+                        }
+                    });
+                }else{
+                    $.toast({
+                        text: rsp.error_msg,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+
     });
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

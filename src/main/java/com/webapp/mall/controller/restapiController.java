@@ -5,10 +5,7 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.GiveawayDAO;
-import com.webapp.mall.dao.PointDAO;
-import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +44,8 @@ public class restapiController {
     private GiveawayDAO giveawayDAO;
     @Autowired
     private DeliveryDAO deliveryDAO;
+    @Autowired
+    private PaymentDAO paymentDAO;
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -417,8 +416,38 @@ public class restapiController {
                 resultMap.put("validateError",error);
             }else{
                 deliveryDAO.insertDelivery(deliveryInfoVO);
+//                params.put("giveaway_payment_status","B");
+//                params.put("giveaway_play_cd",deliveryInfoVO.getGiveaway_play_cd());
+//                deliveryDAO.updateGiveawayDeliveryStatus(params);
                 resultMap.put("redirectUrl","/MyPage/giveawaypayment?order_no="+order_no);
             }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //결제 정보저장
+    @RequestMapping(value = "/SavePayment", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> SavePayment(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            //결제번호생성
+            params.put("payment_cd","PM"+numberGender.numberGen(6,1));
+            paymentDAO.insertPayment(params);
+            if(params.get("payment_class").equals("GIVEAWAY")){
+                if(params.get("success").equals("false")){
+                    params.put("giveaway_payment_status","A");
+                }else{
+                    params.put("giveaway_payment_status","B");
+                }
+
+                paymentDAO.updateGiveawayDeliveryStatus(params);
+            }
+//            if(params.get("payment_class").equals("PRODUCT")){
+//
+//            }
+            resultMap.put("redirectUrl", "/MyPage/GiveawayWinningList");
         }catch (Exception e){
             e.printStackTrace();
         }

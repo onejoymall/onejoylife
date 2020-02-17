@@ -135,3 +135,11 @@
             }
         }).open();
     });
+$('#SearchDelivery').click(function () {
+    var child;
+    if(child != undefined){
+        child.close()
+    }
+
+    child = window.open('/Popup/DeliverySearch','_blank','width=750, height=900');
+});

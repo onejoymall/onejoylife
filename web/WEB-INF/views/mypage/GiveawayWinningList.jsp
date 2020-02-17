@@ -93,7 +93,7 @@
 
                                                 <div class="red-box">
                                                     <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                                        <span>결제전</span>
+                                                        <span>${list.giveaway_payment_status_name}</span>
                                                         <%--                                                    <span class="dis-none">결제완료</span>--%>
                                                         <%--                                                    <span class="dis-none">상품준비중</span>--%>
                                                         <%--                                                    <span class="dis-none">배송중</span>--%>
@@ -121,13 +121,22 @@
                                         <td>
 <%--                                            <a href=""><p class="lis-txt-box">참여자 내역</p></a>--%>
                                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                            <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
-                                                <p class="lis-txt-box txt-color2">
-                                                    <span>경품받기</span>
+
+                                                <c:if test="${list.giveaway_payment_status eq 'A'}">
+                                                    <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
+                                                        <p class="lis-txt-box txt-color2">
+                                                            <span>경품받기</span>
+                                                        </p>
+                                                    </a>
+                                                </c:if>
 <%--                                                    <span class="dis-none">주문상세</span>--%>
-<%--                                                    <span class="dis-none">배송조회</span>--%>
-                                                </p>
-                                            </a>
+                                                <c:if test="${list.giveaway_payment_status !=  'A'}">
+                                                    <a href="#" id="SearchDelivery">
+                                                        <p class="lis-txt-box txt-color2">
+                                                            <span>배송조회</span>
+                                                        </p>
+                                                    </a>
+                                                </c:if>
                                             </c:if>
                                             <a href=""><p class="lis-txt-box">${list.giveaway_play_cd}</p></a>
                                         </td>
@@ -602,6 +611,13 @@
         $(this).addClass('on2');
         $("#"+tab_id2).addClass('on2');
     })
+    var child;
+    $('.click-span').click(function(){
+        if(child != undefined){
+            child.close()
+        }
 
+        child = window.open('mypage-6-mo1.html','_blank','width=750, height=900');
+    });
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

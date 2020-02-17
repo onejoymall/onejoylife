@@ -1,5 +1,4 @@
 package com.webapp.mall.vo;
-
 public class DeliveryInfoVO {
     String product_cd;
     String giveaway_cd;
@@ -21,6 +20,42 @@ public class DeliveryInfoVO {
     String delivery_message;
     String order_no;
     String giveaway_play_cd;
+    String delivery_t_key;//택배조회 api 인증키
+    String delivery_t_code;//택배사 콛
+    String delivery_t_invoice;//택배 송장번호
+    String delivery_t_url;//REST API 호출 url
+
+    public String getDelivery_t_url() {
+        return delivery_t_url;
+    }
+
+    public void setDelivery_t_url(String delivery_t_url) {
+        this.delivery_t_url = delivery_t_url;
+    }
+
+    public String getDelivery_t_code() {
+        return delivery_t_code;
+    }
+
+    public String getDelivery_t_invoice() {
+        return delivery_t_invoice;
+    }
+
+    public String getDelivery_t_key() {
+        return delivery_t_key;
+    }
+
+    public void setDelivery_t_code(String delivery_t_code) {
+        this.delivery_t_code = delivery_t_code;
+    }
+
+    public void setDelivery_t_invoice(String delivery_t_invoice) {
+        this.delivery_t_invoice = delivery_t_invoice;
+    }
+
+    public void setDelivery_t_key(String delivery_t_key) {
+        this.delivery_t_key = delivery_t_key;
+    }
 
     public void setGiveaway_play_cd(String giveaway_play_cd) {
         this.giveaway_play_cd = giveaway_play_cd;

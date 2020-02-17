@@ -170,9 +170,9 @@
                                         <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
                                     </select>
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_phone_b" id="delivery_user_phone_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
+                                    <input type="text" name="delivery_user_phone_b" id="delivery_user_phone_b" value="${phoneMap.key2}" class="delivery_user_phone" maxlength="4">
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
+                                    <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" value="${phoneMap.key3}" class="delivery_user_phone" maxlength="4">
                                     <input type="hidden" name="delivery_user_phone" id="delivery_user_phone" value="${latestDelivery.delivery_user_phone}">
                                 </td>
                             </tr>
@@ -200,9 +200,9 @@
                                         <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
                                     </select>
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
+                                    <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" value="${phoneMap.key2}" class="delivery_user_tel" maxlength="4">
                                     <span> - </span>
-                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
+                                    <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" value="${phoneMap.key3}" class="delivery_user_tel" maxlength="4">
                                     <input type="hidden" name="delivery_user_tel" id="delivery_user_tel" value="${latestDelivery.delivery_user_tel}">
                                 </td>
                             </tr>
@@ -260,12 +260,14 @@
         var phoneB = $("#delivery_user_phone_b").val();
         var phoneC = $("#delivery_user_phone_c").val();
         $("#delivery_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
+        console.log(phoneA+"-"+phoneB+"-"+phoneC)
     })
     $(".delivery_user_tel").on("focusout",function () {
         var phoneA = $("#delivery_user_tel_a").val();
         var phoneB = $("#delivery_user_tel_b").val();
         var phoneC = $("#delivery_user_tel_c").val();
         $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
+        console.log(phoneA+"-"+phoneB+"-"+phoneC)
     })
 
 </script>

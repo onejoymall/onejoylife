@@ -46,7 +46,10 @@ public class MyPage {
             Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+            params.put("order_user_id",userInfo.get("usr_id"));
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
+            Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
+            model.addAttribute("getDeliveryListCount",getDeliveryListCount);
             model.addAttribute("giveawayCnt",giveawayCnt);
             model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
@@ -123,7 +126,16 @@ public class MyPage {
     }
     //주문배송조회
     @RequestMapping(value="/MyPage/OrderAndDelivery")
-    public String myPageOrderAndDelivery(Model model) {
+    public String myPageOrderAndDelivery(Model model,HashMap params,HttpSession session) throws Exception{
+        try{
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("order_user_id",userInfo.get("usr_id"));
+            List<Map<String,Object>> deliveryList = deliveryDAO.getDeliveryList(params);
+            model.addAttribute("deliveryList", deliveryList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("style", "mypage-6");
         model.addAttribute("leftNavOrder", 6);
         return "mypage/OrderAndDelivery";
@@ -271,6 +283,8 @@ public class MyPage {
             double Sum=texD+texE+texF;
             String texSum = Double.toString(Sum);
 //            Integer texSumOut = Integer.parseInt(texSum);
+
+            model.addAttribute("postUrl", "/SavePayment");
             model.addAttribute("texSum", texSum);
             model.addAttribute("delivery", delivery);
             model.addAttribute("detail", detail);

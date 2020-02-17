@@ -13,6 +13,23 @@
         order by reg_date desc
         limit 1
     </select>
+    <select id="getDeliveryList"  parameterType="java.util.Map">
+        select A.*
+        from delivery_info A where 1=1
+        <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
+        <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        order by reg_date desc
+    </select>
+    <select id="getDeliveryListCount" resultType="Integer" parameterType="java.util.Map">
+        select count(*)
+        from delivery_info A where 1=1
+        <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
+        <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+    </select>
     <insert id="insertDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into delivery_info(
         giveaway_play_cd,
@@ -51,6 +68,23 @@
         #{jibunAddress},
         #{delivery_message}
         )
-    </insert>
+        on duplicate KEY update
 
+        order_no= #{order_no},
+        product_cd= #{product_cd},
+        giveaway_cd= #{giveaway_cd},
+        order_user_id= #{order_user_id},
+        order_user_name= #{order_user_name},
+        order_user_email= #{order_user_email},
+        order_user_phone= #{order_user_phone},
+        delivery_type= #{delivery_type},
+        delivery_user_name= #{delivery_user_name},
+        delivery_user_phone= #{delivery_user_phone},
+        delivery_user_tel=#{delivery_user_tel},
+        postcode=#{postcode},
+        roadAddress=#{roadAddress},
+        extraAddress=#{extraAddress},
+        jibunAddress=#{jibunAddress},
+        delivery_message=#{delivery_message}
+    </insert>
 </mapper>

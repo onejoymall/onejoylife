@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <section class="main-section">
     <h2 class="main-section-title hide">main section</h2>
@@ -52,7 +54,10 @@
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
                             <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</p>
-                            <p class="deadline">${list.giveaway_validity}</p>
+                            <p class="deadline">
+                                <c:set var="deadline" value="${fn:split(list.giveaway_validity,'~')}"/>
+                                <c:out value='~${deadline[1]}'/>
+                            </p>
                             <div class="point-pdt-parti-wrap">
                                 <div class="parti-percent-wrap">
                                     <span class="progress">${list.parti_rate}%</span>

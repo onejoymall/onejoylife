@@ -39,6 +39,7 @@
 			<mvc:exclude-mapping path="/giveaWay/**" />
 			<mvc:exclude-mapping path="/Board/**" />
 			<mvc:exclude-mapping path="/SaveDeliveInfo/**" />
+			<mvc:exclude-mapping path="/Popup/**" />
 			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

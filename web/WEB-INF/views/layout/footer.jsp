@@ -57,40 +57,14 @@
         </div>
     </div>
 </footer>
+    <script src='<c:url value="/assets/js/index.js"/>'></script>
     <!-- Toastr -->
     <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
 
     <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
 
 
-    $(document).ready(function(){
-        $('.gnb>li:first-child').mouseover(function(){
-            $('.gnb-submenu').show();
-        });
-        $('.gnb>li:first-child').mouseleave(function(){
-            $('.gnb-submenu').hide();
-        });
-        $('.gnb-submenu>li').mouseover(function(){
-            $(this).children('.gnb-submenu-2dp').show();
-        });
-        $('.gnb-submenu>li').mouseleave(function(){
-            $(this).children('.gnb-submenu-2dp').hide();
-        });
-        $('.gnb-submenu-2dp>li').mouseover(function(){
-            $(this).children('.gnb-submenu-3dp').show().animate({
-                width: '200px'
-            },100);
-        });
-        $('.gnb-submenu-2dp>li').mouseleave(function(){
-            $(this).children('.gnb-submenu-3dp').hide().animate({
-                width: '0px'
-            },100);
-        });
-    });
-
-</script>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class GiveawayController {
 //            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 //            params.put("point_paid_user_id",userInfo.get("usr_id"));
 
-//            searchVO.setStaticRowEnd(9);
+            searchVO.setStaticRowEnd(9);
 
             searchVO.pageCalculate(giveawayDAO.getGiveawayListCount(params));
             params.put("rowStart",searchVO.getRowStart());
