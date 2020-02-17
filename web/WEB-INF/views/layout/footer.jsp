@@ -60,31 +60,12 @@
     <!-- Toastr -->
     <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
 
-    <!-- iamport.payment.js -->
-    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
     <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    var IMP = window.IMP; // 생략해도 괜찮습니다.
-    IMP.init("imp78484974");
-    $("#submitPayment").on("click",function() {
-        IMP.request_pay({ // param
-        pg: "inicis",
-        pay_method: "card",
-        merchant_uid: "ORD20180131-0000011",
-        name: "노르웨이 회전 의자",
-        amount: 64900,
-        buyer_email: "gildong@gmail.com",
-        buyer_name: "홍길동",
-        buyer_tel: "010-4242-4242",
-        buyer_addr: "서울특별시 강남구 신사동",
-        buyer_postcode: "01181"
-        }, function (rsp) { // callback
 
-        });
-    })
+
     $(document).ready(function(){
         $('.gnb>li:first-child').mouseover(function(){
             $('.gnb-submenu').show();

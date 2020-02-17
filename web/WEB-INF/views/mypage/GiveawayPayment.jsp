@@ -129,4 +129,43 @@
         </main>
     </div>
 </div>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+    var IMP = window.IMP; // 생략해도 괜찮습니다.
+    IMP.init("imp78484974");
+    $("#submitPayment").on("click",function() {
+        IMP.request_pay({ // param
+            pg: "inicis",
+            pay_method: "card",
+            merchant_uid: "${param.order_no}",
+            name: "${detail.giveaway_name}",
+            amount: ${detail.giveaway_delivery_payment+texSum},
+            buyer_email: "${sessionScope.email}",
+            buyer_name: "${delivery.order_user_name}",
+            buyer_tel: "${delivery.delivery_user_phone}",
+            buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
+            buyer_postcode: "${delivery.postcode}"
+        }, function (rsp) { // callback
+            console.log(rsp);
+            if(rsp.success){
+
+            }else{
+                $.toast({
+                    text: rsp.error_msg,
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    heading: 'Error',
+                    icon: 'error'
+                    // showHideTransition: 'slide', //슬라이드
+                    // showHideTransition: 'fade' //서서히나타남
+                    // position: 'top-left',
+                    // position: 'bottom-right',
+                    // position: 'bottom-left',
+
+                });
+            }
+        });
+    });
+</script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
