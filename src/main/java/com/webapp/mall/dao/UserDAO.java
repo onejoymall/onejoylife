@@ -24,6 +24,10 @@ public class UserDAO {
         Map<String, Object> getLoginUserList = sql.selectOne("mall.UserMapper.getUserList",params);
         return getLoginUserList;
     }
+    public Map<String, Object> getFindUser(Map<String, String> params) throws SQLException {
+        Map<String, Object> getFindUser = sql.selectOne("mall.UserMapper.getFindUser",params);
+        return getFindUser;
+    }
     public void updateToken(Map<String, String> params) throws SQLException {
         sql.update("mall.UserMapper.updateToken", params);
     }

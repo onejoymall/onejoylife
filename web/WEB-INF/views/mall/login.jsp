@@ -56,9 +56,7 @@
         var formData = $('#defaultLoginForm').serialize();
         var email = $('#email').val();
         var password = $('#password').val();
-        $('#loginCheckError').removeClass('er');
-        $('#loginCheckError').removeClass('er-on');
-        $('#loginCheckError').addClass('er');
+
         jQuery.ajax({
             type:"GET",
             // contentType: 'application/json',
@@ -70,7 +68,7 @@
                 // TODO
 
                 if(data.message) {
-                    $('#loginCheckError').removeClass('er');
+                    // $('#loginCheckError').removeClass('er');
                     $('#loginCheckError').addClass('er-on');
                     $('#loginCheckError').empty();
                     $('#loginCheckError').html('* ' + data.message);
@@ -85,7 +83,7 @@
                 // TODO
             },
             error : function(xhr, status, error) {
-                alert("에러발생");
+                alert("error");
             }
         });
     })

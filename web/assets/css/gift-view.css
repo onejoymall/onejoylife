@@ -141,6 +141,7 @@ button{
     color:#aaaaaa;
 }
 .progress-bar{
+    overflow: hidden;
     position:relative;
     width:100%;
     height:10px;

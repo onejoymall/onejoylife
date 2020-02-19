@@ -16,10 +16,10 @@
         <h3 class="main-slider-title hide">main slider</h3>
         <div class="main-slider-inner">
             <ul class="main-slider-wrap">
-                <li id="main-slide-1"><a href="#"></a></li>
-                <li id="main-slide-2"><a href="#"></a></li>
-                <li id="main-slide-3"><a href="#"></a></li>
-                <li id="main-slide-4"><a href="#"></a></li>
+                <li id="main-slide-1"><a href="<c:url value="/product"/>"></a></li>
+                <li id="main-slide-2"><a href="<c:url value="/product"/>"></a></li>
+                <li id="main-slide-3"><a href="<c:url value="/product"/>"></a></li>
+                <li id="main-slide-4"><a href="<c:url value="/product"/>"></a></li>
             </ul>
         </div>
         <div class="sub-slider-inner">

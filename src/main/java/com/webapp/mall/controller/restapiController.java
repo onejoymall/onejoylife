@@ -1,4 +1,6 @@
 package com.webapp.mall.controller;
+import autovalue.shaded.com.google$.auto.common.$MoreTypes;
+import autovalue.shaded.com.google$.common.base.$Predicate;
 import com.sun.javafx.collections.MappingChange;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
@@ -71,6 +73,7 @@ public class restapiController {
                 if(emailValidation){
                     //이메일 중복확인
                     params.put("password",null);
+                    params.put("phone",null);
                     Map<String, Object> userData= userDAO.getLoginUserList(params);
                     //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
                     if(isEmpty(userData) || userData == null){
@@ -188,8 +191,10 @@ public class restapiController {
     public HashMap<String, Object> findPassword(@RequestParam HashMap params,HttpServletRequest request){
 
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
         String email;
         String memo;
+        String phone =  (String)params.get("phone");
         String subject =  messageSource.getMessage("sendMail.passwordChangeTitle","ko");//
         memo = messageSource.getMessage("sendMail.passwordChangeContent","ko");//
         String basePassword = numberGender.numberGen(4,2);
@@ -198,28 +203,34 @@ public class restapiController {
             email = (String)params.get("email");
             //이메일 필수 체크
             if(email.isEmpty()){
-                resultMap.put("message", messageSource.getMessage("error.required","ko"));
+                error.put("email", messageSource.getMessage("error.required","ko"));
             }else{
                 //이메일 유효성검사
                 String regex ="^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                 Boolean emailValidation = email.matches(regex);
                 if(emailValidation){
                     //이메일 중복확인
+                    params.put("password",null);
+                    params.put("phone",null);
                     Map<String, Object> userData= userDAO.getLoginUserList(params);
                     //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
-                    if(!isEmpty(userData)){
-
-                        mailSender.sendSimpleMessage(email, subject, memo+" : "+siteUrl+"/sign/changePassword?password_change_code="+basePassword+"&email="+email);
-                        params.put("password_change_code",basePassword);
-                        userDAO.updatePasswordChangeCode(params);
-                        resultMap.put("message", messageSource.getMessage("error.infoSendEmail","ko"));
-                    }else{
-                        resultMap.put("message", messageSource.getMessage("error.userNotFound","ko"));
+                    if(isEmpty(userData)){
+                        error.put("Error", messageSource.getMessage("error.userNotFound","ko"));
                     }
                 }else{
-                    resultMap.put("message", messageSource.getMessage("error.emailForm","ko"));
+                    error.put("Erro", messageSource.getMessage("error.emailForm","ko"));
                 }
             }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else {
+                mailSender.sendSimpleMessage(email, subject, memo+" : "+siteUrl+"/sign/changePassword?password_change_code="+basePassword+"&email="+email);
+                params.put("password_change_code",basePassword);
+                userDAO.updatePasswordChangeCode(params);
+                resultMap.put("success", messageSource.getMessage("error.infoSendEmail","ko"));
+                resultMap.put("redirectUrl","/sign/login");
+            }
+
         } catch (Exception e) {
             resultMap.put("status", "fail");
             resultMap.put("e", e);
@@ -227,6 +238,31 @@ public class restapiController {
         return resultMap;
     }
 
+    //아이디찾기
+    @RequestMapping(value = "/sign/findId", method = RequestMethod.GET, produces = "application/json")
+    public HashMap<String, Object> findId(@RequestParam HashMap params,HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        String phone=(String)params.get("phone");
+        try{
+            if(phone.equals("") || phone.equals(null)){
+                error.put(messageSource.getMessage("phone","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            Map<String, Object> userInfo = userDAO.getFindUser(params);
+            if(isEmpty(userInfo)){
+                resultMap.put("validateError",error);
+                error.put("Error", messageSource.getMessage("error.userNotFound","ko"));
+            }else{
+                resultMap.put("redirectUrl","/sign/findPassword");
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
     //패스워드 초기화 2
 
     @RequestMapping(value = "/sign/changePasswordProc", method = RequestMethod.GET, produces = "application/json")

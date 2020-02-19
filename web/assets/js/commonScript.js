@@ -15,8 +15,9 @@
         var formData = $('#defaultForm').serialize();
         var alertType;
         var showText;
+        console.log($('#defaultForm').attr('method'))
         jQuery.ajax({
-            type: "POST",
+            type: $('#defaultForm').attr('method'),
             url: postUrl,
             data: formData,
             success: function (data) {

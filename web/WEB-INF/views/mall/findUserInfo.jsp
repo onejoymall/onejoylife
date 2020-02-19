@@ -32,7 +32,7 @@
                         <div class="box-in">
                             <p class="tit-id">아이디 찾기 방법</p>
                             <div class="la-box1">
-                                <input type="radio" id="id-r">
+                                <input type="radio" id="id-r" name="find_id_type" value="phone" checked>
                                 <label for="id-r" class="ready">
                                     <p class="id-p">등록된 휴대폰 (가입 시 선택사항)</p>
                                 </label>
@@ -44,15 +44,15 @@
                             <div class="id-num1">
                                 <p class="tit-id">등록한 휴대폰 번호</p>
                                 <div class="la-box2">
-                                    <input type="text" placeholder="010-0000-0000">
+                                    <input type="text" placeholder="010-0000-0000" name="phone">
                                     <div class="num">
-                                        <a href="#" id="senderSmsAuthCode" class="ready">인증번호 전송</a>
+                                        <a href="#" id="senderSmsAuthCode" class="">인증번호 전송</a>
                                     </div>
-                                    <div class="num num-none">
-                                        <a href="#">인증번호 재전송</a>
+                                    <div class="num num-none none">
+                                        <a href="#">*인증번호 재전송</a>
                                     </div>
-                                    <p class="p-size">입력하신 휴대폰 번호로 계정정보를 찾을 수 업습니다.<br>확인 후 다시 이용하여 주세요.</p>
-                                    <p class="p-size p-color">입력하신 번호로 인증번호가 발송되었습니다.</p>
+                                    <p class="p-size none">*입력하신 휴대폰 번호로 계정정보를 찾을 수 업습니다.<br>확인 후 다시 이용하여 주세요.</p>
+                                    <p class="p-size p-color none">*입력하신 번호로 인증번호가 발송되었습니다.</p>
                                 </div>
                             </div>
                             <div class="id-num2">
@@ -103,33 +103,90 @@
     </div>
 </div>
 <script>
+    $('#senderSmsAuthCode').on("click",function () {
+        var formData = $('#defaultUserInfoFind').serialize();
 
+        jQuery.ajax({
+            type: "GET",
+            url: "/sign/findId",
+            data: formData,
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+                } else {
+                    // loginAuth(data.access_token);
+                    // location.href=data.redirectUrl;
+                    $.toast({
+                        text: "휴대폰인증은 준비중입니다.",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    })
     $('#senderFindPassword').on("click",function () {
         var formData = $('#defaultUserInfoFind').serialize();
 
         jQuery.ajax({
-            type:"GET",
-            // contentType: 'application/json',
-            url:"/sign/findPassword",
-            // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-            data:formData,
-            success : function(data) {
-                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                // TODO
-
-                if(data.message){
-                    $('#emailValidation').removeClass('none');
-                    $('#emailValidation').empty();
-                    $('#emailValidation').html('* '+data.message);
+            type: "GET",
+            url: "/sign/findPassword",
+            data: formData,
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+                } else {
+                    // loginAuth(data.access_token);
+                    $.toast({
+                        text: data.success,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Success',
+                        hideAfter : false,
+                        icon: 'success'
+                    });
+                    // location.href=data.redirectUrl;
                 }
             },
-
-            complete : function(data) {
-                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-                // TODO
-            },
-            error : function(xhr, status, error) {
-                alert("에러발생");
+            error: function (xhr, status, error) {
+                alert("error");
             }
         });
     })

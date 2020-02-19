@@ -3,7 +3,13 @@
 
 
 <mapper namespace="mall.UserMapper">
-
+    <select id="getFindUser" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+          A.*
+        FROM user A where phone =#{phone}
+        ]]>
+    </select>
     <select id="getUserList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
@@ -12,6 +18,7 @@
         ]]>
         <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
+        <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
     <insert id="insertUser" parameterType="String">
         <![CDATA[

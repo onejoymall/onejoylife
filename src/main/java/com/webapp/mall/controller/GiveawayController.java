@@ -106,52 +106,46 @@ public class GiveawayController {
         //관리자가 지정한 배송구분별 배송비용을 출력한다.
         String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
         String deliveryPutString="";
-        switch((String)params.get("delivery_payment_class")){
-            case "T":
-                params.put("delivery_payment","배송비 무료");
-                break;
-            case "R":
-                params.put("delivery_payment","배송비 "+String.format("%,d", Integer.parseInt(splitDeliveryPaymentString)) + "원");
-                break;
-            case "M":
-                String[] splitDeliveryTypeM = splitDeliveryPaymentString.split( "\\|");
-                params.put("delivery_payment","결재금액 "
-                        +String.format("%,d", Integer.parseInt(splitDeliveryTypeM[0])) +"원 이하 / 배송비"
-                        +String.format("%,d", Integer.parseInt(splitDeliveryTypeM[1]))+" 원");
-                break;
-            case "D":
-                String[] splitDeliveryTypeD = splitDeliveryPaymentString.split( "\\//");
+        String delivery_payment_class = (String) params.get("delivery_payment_class");
+        if ("T".equals(delivery_payment_class)) {
+            params.put("delivery_payment", "배송비 무료");
+        } else if ("R".equals(delivery_payment_class)) {
+            params.put("delivery_payment", "배송비 " + String.format("%,d", Integer.parseInt(splitDeliveryPaymentString)) + "원");
+        } else if ("M".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
+            params.put("delivery_payment", "결재금액 "
+                    + String.format("%,d", Integer.parseInt(splitDeliveryTypeM[0])) + "원 이하 / 배송비"
+                    + String.format("%,d", Integer.parseInt(splitDeliveryTypeM[1])) + " 원");
+        } else if ("D".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
 
-                for (int i=0;i<splitDeliveryTypeD.length; i++){
-                    deliveryPutString += "결재금액 "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0])) +"원 ~ "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1])) +"원 미만 / 배송비 "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2])) +"원</br>";
-                }
-                params.put("delivery_payment",deliveryPutString);
-                break;
-            case "W":
-                String[] splitDeliveryTypeW = splitDeliveryPaymentString.split( "\\//");
+            for (int i = 0; i < splitDeliveryTypeD.length; i++) {
+                deliveryPutString += "결재금액 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0])) + "원 ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1])) + "원 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
+        } else if ("W".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
 
-                for (int i=0;i<splitDeliveryTypeW.length; i++){
-                    deliveryPutString += ""
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0])) +"kg ~ "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1])) +"kg 미만 / 배송비 "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2])) +"원</br>";
-                }
-                params.put("delivery_payment",deliveryPutString);
-                break;
-            case "C":
-                String[] splitDeliveryTypeC = splitDeliveryPaymentString.split( "\\//");
+            for (int i = 0; i < splitDeliveryTypeW.length; i++) {
+                deliveryPutString += ""
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0])) + "kg ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1])) + "kg 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
+        } else if ("C".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
 
-                for (int i=0;i<splitDeliveryTypeC.length; i++){
-                    deliveryPutString += ""
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0])) +"ea ~ "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1])) +"ea 미만 / 배송비 "
-                            +String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2])) +"원</br>";
-                }
-                params.put("delivery_payment",deliveryPutString);
-                break;
+            for (int i = 0; i < splitDeliveryTypeC.length; i++) {
+                deliveryPutString += ""
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0])) + "ea ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1])) + "ea 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
         }
         return params;
     }

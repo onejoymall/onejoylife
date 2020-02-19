@@ -23,7 +23,7 @@ public class ManagerSingController {
         String returnString ="manager/managerSign/managerLogin";
         try{
             HttpSession session = request.getSession();
-            Object obj = session.getAttribute("login");
+            Object obj = session.getAttribute("managerLogin");
             if ( obj != null ){
                 returnString ="redirect:/Manager/ManagerMain";
             }
@@ -31,7 +31,7 @@ public class ManagerSingController {
             e.printStackTrace();
         }
         model.addAttribute("style", "login");
-
+        model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
         return returnString;
     }
 }

@@ -28,7 +28,7 @@ public class ManagerRestapiController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     //로그인 처리 1
-    @RequestMapping(value = "/Manager/ManagerSign/ManagerLoginProc", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/Manager/ManagerSign/ManagerLoginProc", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> ManagerLoginProc(@RequestParam HashMap params,HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -49,22 +49,23 @@ public class ManagerRestapiController {
             }else{
                 if(!isEmpty(loginUserList)){
                     if(passwordEncoder.matches(password,(String)loginUserList.get("password"))){
-                        if ( session.getAttribute("login") != null ){
+                        if ( session.getAttribute("adminLogin") != null ){
                             // 기존에 login이란 세션 값이 존재한다면
-                            session.removeAttribute("login"); // 기존값을 제거해 준다.
+                            session.removeAttribute("adminLogin"); // 기존값을 제거해 준다.
                         }
                         session.setAttribute("email",email);
-                        session.setAttribute("login", true); //
+                        session.setAttribute("adminLogin", true); //
                         resultMap.put("redirectUrl", "/Manager/ManagerMain");
                     }else{
-                        error.put("Password", messageSource.getMessage("error.notUsrInfo","ko"));
+                        error.put("Error", messageSource.getMessage("error.notUsrInfo","ko"));
                     }
                 }else{
-                    error.put("Password", messageSource.getMessage("error.notUsrInfo","ko"));
+                    error.put("Error", messageSource.getMessage("error.notUsrInfo","ko"));
                 }
             }
-
-             resultMap.put("validateError",error);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }
         } catch (Exception e) {
 
             resultMap.put("e", e);

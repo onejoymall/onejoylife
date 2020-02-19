@@ -28,7 +28,7 @@ public class ManagerSessionInterceptor extends HandlerInterceptorAdapter {
 //	    return super.preHandle(request, response, handler);
 
 		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("login");
+		Object obj = session.getAttribute("adminLogin");
 		if ( obj == null ){
 			response.sendRedirect("/Manager/ManagerSign/ManagerLogin");
 			return false; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함

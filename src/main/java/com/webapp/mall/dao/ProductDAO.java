@@ -17,8 +17,8 @@ public class ProductDAO {
         List<Map<String, Object>> getProductList = sql.selectList("mall.ProductMapper.getProductList",params);
         return getProductList;
     }
-    public Map<String, Object> getProductListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getProductListCount=sql.selectOne("mall.ProductMapper.getProductListCount",params);
+    public Integer getProductListCount(Map<String, String> params) throws SQLException {
+        Integer getProductListCount=sql.selectOne("mall.ProductMapper.getProductListCount",params);
         return getProductListCount;
     }
     public List<Map<String, Object>> getUserProductPaymentList(Map<String, String> params) throws SQLException {
