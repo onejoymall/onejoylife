@@ -3,5 +3,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:forEach items="${fn:split(detail., '|') }" var="item">
-	${item}<br/>
+	#{item}<br/>
 </c:forEach>

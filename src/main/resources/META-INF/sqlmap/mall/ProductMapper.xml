@@ -4,34 +4,34 @@
 
 <mapper namespace="mall.ProductMapper">
 
-    <select id="getProductList" resultType="java.util.HashMap">
+    <select id="getProductList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.Map">
         <![CDATA[
         SELECT
             *
         FROM product  where 1=1
         ]]>
-
-        <if test="product_id != null"> <![CDATA[AND product_id= #{product_id} ]]></if>
-        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
-        <if test="product_name != null"> <![CDATA[AND product_name like CONCAT('%',#{product_name},'%') ]]></if>
-        <if test="product_payment != null"> <![CDATA[AND product_payment= #{product_payment} ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
-        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
-    <select id="getProductListCount" resultType="java.util.HashMap">
+    <select id="getProductListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
         <![CDATA[
         SELECT
             count(*) as cnt
         FROM product  where 1=1
         ]]>
-        <if test="product_id != null"> <![CDATA[AND product_id= #{product_id} ]]></if>
-        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
-        <if test="product_name != null"> <![CDATA[AND product_name like CONCAT('%',#{product_name},'%') ]]></if>
-        <if test="product_payment != null"> <![CDATA[AND product_payment= #{product_payment} ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
-        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+    </select>
+    <select id="getProductViewDetail" parameterType="java.util.Map" resultType="java.util.Map">
+        select A.*
+        from product A where A.product_cd=#{product_cd}
     </select>
     <select id="getUserProductPaymentList" resultType="java.util.HashMap">
         <![CDATA[

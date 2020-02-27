@@ -1,6 +1,12 @@
 .hidden{
     display: none!important;
 }
+.show-table-row{
+    display: table-row !important;
+}
+.show-block{
+    display:block !important;
+}
 .jq-toast-wrap {
     z-index: 9999 !important;
 }
@@ -12,3 +18,22 @@
 .er-on{
     display: block!important;
 }
+
+.category > table{
+    width: 100%;
+}
+.category table th {
+    border-right: 1px solid #dadada;
+    text-align: center;
+}
+.category table td {
+    border-right: 1px solid #dadada;
+    vertical-align: top;
+}
+.category table ul li{
+    cursor: pointer;
+}
+.font-weight-bold{
+    font-weight: bold;
+}
+

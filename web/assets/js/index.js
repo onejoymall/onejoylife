@@ -31,6 +31,17 @@ $(document).ready(function(){
         $(this).addClass('active');
         });
     })
+    $(document).ready(function(){
+        $('.notice-section-ul li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('.notice-section-ul li').removeClass('on');
+            $('.notice-section .ul-tab-box').removeClass('on');
+
+            $(this).addClass('on');
+            $("#"+tab_id).addClass('on');
+        })
+    });
     // 달력
     $(function() { 
         $.datepicker.setDefaults({
@@ -201,6 +212,13 @@ $(function(){
     $(".modal-close3").click(function(){
         $(".modal3").attr("style", "display:none");
     });
+
+    $("button[name='mo-btn']").click(function(){
+        $(".modal2").attr("style", "display:block");
+    });
+    $(".modal-close4").click(function(){
+        $(".modal2").attr("style", "display:none");
+    });
 });
 //file upload
 var uploadFile1 = $('.fileBox1 .uploadBtn1');
@@ -233,9 +251,141 @@ uploadFile3.on('change', function(){
     $(this).siblings('.fileName3').val(filename3);
 });
 
+$(function(){
+    //사용가능 기준금액
+    $('input[name=goods-validity]').click(function(){
+        if($('input[name=goods-validity]:checked').val() == "Y"){
+            $('tr.goods-validity-detail1').attr('style','display:table-row');
+            $('tr.goods-validity-detail2').attr('style','display:none')
+            $('tr.goods-validity-detail2 input[type=text]').val('');
+        }
+        else if($('input[name=goods-validity]:checked').val() == "N"){
+            $('tr.goods-validity-detail2').attr('style','display:table-row');
+            $('tr.goods-validity-detail1').attr('style','display:none');
+            $('tr.goods-validity-detail1 input[type=text]').val('');
+        }
+        else if($('input[name=goods-validity]:checked').val() == "O"){
+            $('tr.goods-validity-detail2').attr('style','display:none');
+            $('tr.goods-validity-detail1').attr('style','display:none');
+            $('tr.goods-validity-detail1 input[type=text]').val('');
+            $('tr.goods-validity-detail2 input[type=text]').val('');
+        }
+    })
+    // 혜택구분 promotion-coupon.html
+    $('input[name=discount-radio]').click(function(){
+        if($('input[name=discount-radio]:checked').val() == "one"){
+            $('tr.discount-detail1').attr('style','display:table-row');
+            $('tr.discount-detail2').attr('style','display:none')
+            $('tr.discount-detail2 input[type=text]').val('');
+        }
+        else{
+            $('tr.discount-detail2').attr('style','display:table-row');
+            $('tr.discount-detail1').attr('style','display:none')
+            $('tr.discount-detail1 input[type=text]').val('');
+        }
+    })
+    
+    //발급구분 promotion-coupon.html
+    $('.option-box').change(function() {
+        var state = $('.option-box option:selected').val();
+        if ( state == 'option1' ) {
+            $('.option1-box').show();
+            $('#option2-select').hide();
+            $('#option3-select').hide();
+            $('.option2-box').hide();
+            $('.option3-box').hide();
+        }
+        else if ( state == 'option2' ) {
+            $('#option2-select').show();
+            $('.option2-box').show();
+            $('.option1-box').hide();
+            $('#option3-select').hide();
+            $('.option3-box').hide();
+        } 
+        else if (state == 'option3' ){
+            $('#option3-select').show();
+            $('.option3-box').show();
+            $('#option2-select').hide();
+            $('.option2-box').hide();
+            $('.option1-box').hide();
+        }
+    });
+    $('#option2-select').change(function() {
+        var state1 = $('#option2-select option:selected').val();
+        if ( state1 == 'option2-1' ) {
+            $('table.option2-box').children('tr').attr('style','display:none');
+            $('.option2-box1').show();
+            
+        }
+        else if ( state1 == 'option2-2' ) {
+            $('table.option2-box').children('tr').attr('style','display:none');
+            $('.option2-box2').show();
+        }
+    });
 
+});
+$(function(){
+    //품목구성방식1
+    $('input[name=goods-compType]').click(function(){
+        if($('input[name=goods-compType]:checked').val() == "T"){
+            $('tr.goods-compType-t-detail').attr('style','display:table-row');
+        }else{
+            $('tr.goods-compType-t-detail').attr('style','display:none');
+            $('input[name=goods-optionType]').prop('checked',false);
+        }
+    })
+    $('input[name=goods-compType]').click(function(){
+        if($('input[name=goods-compType]:checked').val() == "E"){
+            $('tr.goods-compType-e-detail').attr('style','display:table-row');
+        }else{
+            $('tr.goods-compType-e-detail').attr('style','display:none');
+            $('input[name=goods-optionSet-name]').val('');
+        }
+    })
+    //필수여부1
+    $('input:radio[name=goods-compType]').on('click', function(){
+        if($("input[name=goods-compType]:checked").val() == "T"){
+            $("input:text[name=goods-option-mandatory]").attr("disabled",true);
+            // radio 버튼의 value 값이 T라면 비활성화
 
+        }else{$("input:text[name=goods-option-mandatory]").attr("disabled",false);
+            // 활성화
+        }
+    });
+    //품목구성방식2
+    $('input[name=goods-compType2]').click(function(){
+        if($('input[name=goods-compType2]:checked').val() == "T2"){
+            $('tr.goods-compType-t-detail2').attr('style','display:table-row');
+        }else{
+            $('tr.goods-compType-t-detail2').attr('style','display:none');
+            $('input[name=goods-optionType2]').prop('checked',false);
+        }
+    })
+    $('input[name=goods-compType2]').click(function(){
+        if($('input[name=goods-compType2]:checked').val() == "E2"){
+            $('tr.goods-compType-e-detail2').attr('style','display:table-row');
+        }else{
+            $('tr.goods-compType-e-detail2').attr('style','display:none');
+            $('input[name=goods-optionSet-name]').val('');
+        }
+    })
+    //필수여부2
+    $('input:radio[name=goods-compType2]').on('click', function(){
+        if($("input[name=goods-compType2]:checked").val() == "T2"){
+            $("input:text[name=goods-option-mandatory2]").attr("disabled",true);
+            // radio 버튼의 value 값이 T라면 비활성화
 
+        }else{$("input:text[name=goods-option-mandatory2]").attr("disabled",false);
+            // 활성화
+        }
+    });
+});
 //ckeditor
 // CKEDITOR.replace( 'editor' );
 // CKEDITOR.replace( 'editor1' );
+
+
+
+
+
+

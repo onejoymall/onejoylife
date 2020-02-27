@@ -1,19 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>board9</title>
-<script>
-function fn_formSubmit(){ 
-	document.form1.submit();	
-}
-</script>
-</head>
-<body>
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 	<h1><c:out value="${bgInfo.bgname}"/></h1>				
 	<c:if test="${bgInfo.bgreadonly=='N'}">
 		<a href="board9Form?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>
@@ -72,6 +60,5 @@ function fn_formSubmit(){
 			<input type="text" name="searchKeyword" style="width:150px;" maxlength="50" value='<c:out value="${searchVO.searchKeyword}"/>' onkeydown="if(event.keyCode == 13) { fn_formSubmit();}">
 			<input name="btn_search" value="검색" class="btn_sch" type="button" onclick="fn_formSubmit()" />
 		</div>
-	</form>	
-</body>
-</html>
+	</form>
+<%@ include file="/WEB-INF/views/layout/footer.jsp" %>

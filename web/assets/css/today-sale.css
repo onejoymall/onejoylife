@@ -62,8 +62,8 @@ body{
     line-height: 2.5rem;
     color: #666;
 }
-.ul-line {border: 1px solid #da394d !important;}
-.ul-line > a {color: #da394d !important;}
+.txt-box-ul .active {border: 1px solid #da394d !important;}
+.txt-box-ul .active > a {color: #da394d !important;}
 
 /*main section*/
 

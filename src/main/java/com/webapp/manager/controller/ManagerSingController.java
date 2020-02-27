@@ -30,7 +30,7 @@ public class ManagerSingController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "login");
+        model.addAttribute("style", "login-admin");
         model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
         return returnString;
     }

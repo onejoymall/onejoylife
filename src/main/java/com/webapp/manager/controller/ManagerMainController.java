@@ -14,6 +14,8 @@ import java.util.HashMap;
 public class ManagerMainController {
     @RequestMapping(value = "/Manager/ManagerMain")
     public String ManagerMain(@RequestParam HashMap params, ModelMap model) throws Exception {
+        model.addAttribute("topNav",1);
+        model.addAttribute("style","index-admin");
         return "/manager/ManagerMain";
     }
 }

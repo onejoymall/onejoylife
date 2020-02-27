@@ -9,39 +9,23 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
 
-        <form  name="defaultForm" id="defaultForm" method="POST">
-            <label for="id-input" class="id-la">아이디(이메일)</label><input type="text" name="email" id="id-input" placeholder="아이디를 입력하세요" class="form-con">
-            <p id="validateErrorEmail" class="validateError">&nbsp;</p>
-            <label for="pw-input" class="id-la">비밀번호</label><input type="password" name="password" id="pw-input" placeholder="비밀번호를 입력하시오" class="form-con">
-            <p id="validateErrorPassword" class="validateError">&nbsp;</p>
-            <button id="formSubmit" type="button">로그인</button>
-        </form>
-<script>
-    // $('#formSubmit').on("click",function () {
-    //     var formData = $('#defaultLoginForm').serialize();
-    //     jQuery.ajax({
-    //         type:"GET",
-    //         url:"/Manager/ManagerSign/ManagerLoginProc",
-    //         data:formData,
-    //         success : function(data) {
-    //             if(data.validateError > 0) {
-    //                 $('.validateError').empty();
-    //                 $.each(data.validateError, function(index, item){
-    //
-    //                     // $('#validateError'+index).removeClass('none');
-    //
-    //                     $('#validateError'+index).html('* '+item);
-    //                 });
-    //             }else{
-    //                 // loginAuth(data.access_token);
-    //                 location.href=data.redirectUrl;
-    //             }
-    //         },
-    //         error : function(xhr, status, error) {
-    //             alert("error");
-    //         }
-    //     });
-    // })
-</script>
+
+    <main>
+        <div class="main-content">
+            <div class="login-box">
+                <div class="box-header">
+                    <div class="login-logo"></div>
+                    <h2>관리자페이지 로그인 하기</h2>
+                </div>
+                <form  name="defaultForm" id="defaultForm" method="POST">
+                    <fieldset>
+                        <input type="text" id="email" name="email" placeholder="관리자 아이디">
+                        <input type="password" id="password" name="password" placeholder="비밀번호">
+                        <button type="button" id="formSubmit">로그인</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </main>
 
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

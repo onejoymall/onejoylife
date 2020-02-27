@@ -31,16 +31,18 @@ public class ProductController {
 //            params.put("point_paid_user_id",userInfo.get("usr_id"));
 
             searchVO.setStaticRowEnd(9);
-            searchVO.pageCalculate(productDAO.getProductListCount(params));
+            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            List<Map<String,Object>> list = productDAO.getProductList(params);
+            //검색필드 정의
+
+            List<Map<String,Object>> list = productDAO.getProductList(searchVO);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "epoint-gift");
+        model.addAttribute("style", "goods");
         return "product/productList";
     }
 }

@@ -31,10 +31,10 @@ public class SearchVO extends  PageVO  {
     public void setSearchType(String searchType) {
         this.searchType = searchType;
     }
-    
+
     public String[] getSearchTypeArr() {
         return searchType.split(",");
     }
-    
+
 }
  

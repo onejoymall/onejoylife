@@ -114,7 +114,7 @@ h3{
     margin-bottom:20px;
     text-align: left;
 }
-.goods-detail-table input{
+.goods-detail-table input[type="text"], .goods-detail-table input[type="number"]{
     border:none;
     border: 1px solid #b5b5b5;
     height:31px;
@@ -138,10 +138,6 @@ td>span{
     line-height:28px;
 }
 
-input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-mng"], input[name="goods-name-supplier"], input[name="goods-name-model"], #goods-info1, #goods-info2, 
-#goods-search, #goods-detail-info, #goods-shipping, #sp-replace-text{
-    width:100%;
-}
 
 .plus-btn{
     display:none;
@@ -192,11 +188,13 @@ input[type="radio"]{
     appearance: radio;
     height:auto;
 }
-input[type="radio"]+label{
+input[type="radio"]+label, input[type="checkbox"]+label{
     margin-right:10px;
 }
 .cc{font-weight: 100; margin-left:10px;color:#999;}
 .cc-red{font-weight: 100; margin-left:7px;color:#fd5353}
+.cc-blue{color:#50a1ff}
+.cc2{font-weight: 600;margin-bottom:10px;}
 .checkbox-wrap{
     margin-bottom:10px;
     line-height: normal;
@@ -207,14 +205,17 @@ input[type="radio"]+label{
     margin-right:5px;
 }
 
-#goods-taxation-detail{
-    width:100px;
-}
+
 #goods-taxation-detail+span{
     margin:0 15px 0 5px;
 }
 
-#limited-quantity-max, #limited-quantity-min, #goods-point{
+
+input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-mng"], input[name="goods-name-supplier"], input[name="goods-name-model"], #goods-info1, #goods-info2, 
+#goods-search, #goods-detail-info, #goods-shipping, #sp-replace-text, #goods-option-detail, #goods-option-style, #goods-option-color, #goods-option-mandatory, #goods-stockout, #goods-addInput-name, #goods-imgExtra, #goods-volume, #shipping-period, .long #shippingFee-detail, #goods-HScode, #goods-material, #goods-material-en, #goods-fabric-en,#goods-seo-title, #goods-seo-author, #goods-seo-description, #goods-seo-keywords, #goods-seo-alt, #goods-payment, #goods-memo{
+    width:100%;
+}
+#limited-quantity-max, #limited-quantity-min, #goods-point, #goods-taxation-detail{
     width:100px;
 }
 #shipping-min, #shipping-max{
@@ -227,9 +228,24 @@ input[type="radio"]+label{
     width:120px;
 }
 
-.shippingFee-detail-wrap{
-    display:none;
+.code-wrap-button{
+    padding:10px;
+    margin-top:5px;
+    font-weight: 600;
+    line-height: 12px;
+    border-radius: 5px;
 }
-.shippingFee-detail-wrap.active{
+.code-wrap{
+    display:none;
+    position:absolute;
+    top:10px;
+    left:184px;
+    width:685px;
+    background:#fff;
+    border:#939393 1px solid;
+    padding:10px;
+    line-height: 20px;
+}
+.code-wrap.active{
     display:block;
 }

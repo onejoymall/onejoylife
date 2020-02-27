@@ -304,7 +304,8 @@ input[type="checkbox"] {
 }
 .goods-detail-table tr{
     height:35px;
-    border:1px solid #dadada
+    border:1px solid #dadada;
+    text-align: left;
 }
 .goods-detail-table tr:nth-of-type(4) > input[type=""] {
     height: auto;

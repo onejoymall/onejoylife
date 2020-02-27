@@ -1,5 +1,6 @@
 package com.webapp.mall.dao;
 
+import com.webapp.board.common.SearchVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,12 +14,12 @@ public class ProductDAO {
     @Autowired
     private SqlSession sql;
 
-    public List<Map<String, Object>> getProductList(Map<String, String> params) throws SQLException {
-        List<Map<String, Object>> getProductList = sql.selectList("mall.ProductMapper.getProductList",params);
+    public List<Map<String, Object>> getProductList(SearchVO searchVO) throws SQLException {
+        List<Map<String, Object>> getProductList = sql.selectList("mall.ProductMapper.getProductList",searchVO);
         return getProductList;
     }
-    public Integer getProductListCount(Map<String, String> params) throws SQLException {
-        Integer getProductListCount=sql.selectOne("mall.ProductMapper.getProductListCount",params);
+    public Integer getProductListCount(SearchVO searchVO) throws SQLException {
+        Integer getProductListCount=sql.selectOne("mall.ProductMapper.getProductListCount",searchVO);
         return getProductListCount;
     }
     public List<Map<String, Object>> getUserProductPaymentList(Map<String, String> params) throws SQLException {

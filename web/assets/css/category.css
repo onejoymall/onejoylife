@@ -382,7 +382,8 @@ input[id="right-ra2"]:checked + label
 }
 .goods-detail-table tr{
     height:35px;
-    border:1px solid #dadada
+    border:1px solid #dadada;
+    text-align: left;
 }
 .goods-detail-table tr:nth-of-type(4) > input[type=""] {
     height: auto;
@@ -439,6 +440,7 @@ input[id="right-ra2"]:checked + label
 }
 .goods-detail-table1 th{
     background:#ededed;
+    text-align: left;
 }
 .goods-detail-table1 th, .goods-detail-table1 td{
     padding:5px 10px;

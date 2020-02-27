@@ -277,7 +277,7 @@ input[type="checkbox"] {
 }
 .goods-detail-table tr{
     height:35px;
-    border:1px solid #dadada
+    border:1px solid #dadada;
 }
 .goods-detail-table tr:nth-of-type(3) span {
     width: 110px;
@@ -293,6 +293,7 @@ input[type="checkbox"] {
 }
 .goods-detail-table th{
     background:#ededed;
+    text-align: left;
 }
 .goods-detail-table th, .goods-detail-table td{
     padding:5px 10px;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.CategoryMapper">
+
+    <select id="getCategoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where 1=1
+        ]]>
+        <if test="pd_category_id!=null and pd_category_id!=''">
+            AND pd_category_id=#{pd_category_id}
+        </if>
+        <if test="pd_category_upper_code!=null and pd_category_upper_code!=''">
+            AND pd_category_upper_code=#{pd_category_upper_code}
+        </if>
+    </select>
+    <select id="getCategorySubList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where 1=1
+        ]]>
+        <if test="pd_category_id!=null and pd_category_id!=''">
+            AND pd_category_id=#{pd_category_id}
+        </if>
+        <if test="pd_category_upper_code!=null and pd_category_upper_code!=''">
+            AND pd_category_upper_code=#{pd_category_upper_code}
+        </if>
+    </select>
+    <select id="getCategoryThirdList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where 1=1
+        ]]>
+        <if test="pd_category_id!=null and pd_category_id!=''">
+            AND pd_category_id=#{pd_category_id}
+        </if>
+        <if test="pd_category_upper_code!=null and pd_category_upper_code!=''">
+            AND pd_category_upper_code=#{pd_category_upper_code}
+        </if>
+    </select>
+</mapper>

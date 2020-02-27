@@ -14,6 +14,10 @@
 
 </body>
 <!-- Toastr -->
+<%--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>--%>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+<script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
+<script type="text/javascript" src="/assets/js/index.js"></script>
 <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
 <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 </html>
