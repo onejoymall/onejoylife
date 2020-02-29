@@ -71,7 +71,7 @@
                 <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/ManagerMain">운영관리</a></li>
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">상품관리</a>
+                        <li><a href="/Manager/Product">상품관리</a>
                             <ul>
                                 <li><a href="/Manager/Product">상품리스트</a></li>
                                 <li><a href="/Manager/ProductAdd">상품등록</a></li>

@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 public class FileUtil {
-    @Value("${download_path}")
-    private String download_path;
+
     /**
      * 파일 업로드.
      */
-    public List<FileVO> saveAllFiles(List<MultipartFile> upfiles) {
-        String filePath = download_path;
+    public List<FileVO> saveAllFiles(List<MultipartFile> upfiles,String path) {
+        String filePath = path;
         List<FileVO> filelist = new ArrayList<FileVO>();
 
         for (MultipartFile uploadfile : upfiles ) {
@@ -27,11 +28,11 @@ public class FileUtil {
             
             String newName = getNewName();
             
-            saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", newName);
+            saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
             
             FileVO filedo = new FileVO();
             filedo.setFilename(uploadfile.getOriginalFilename());
-            filedo.setRealname(newName);
+            filedo.setRealname(newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
             filedo.setFilesize(uploadfile.getSize());
             filelist.add(filedo);
         }

@@ -80,7 +80,7 @@ public class Board9Ctr {
         String[] fileno = request.getParameterValues("fileno");
         
         FileUtil fs = new FileUtil();
-        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile());
+        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
 
         boardSvc.insertBoard(boardInfo, filelist, fileno);
 

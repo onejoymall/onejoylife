@@ -59,7 +59,7 @@ public class Board41Ctr {
         String[] fileno = request.getParameterValues("fileno");
 //        boardInfo.setBrdwriter((String)session.getAttribute("email"));
         FileUtil fs = new FileUtil();
-        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile());
+        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
 
         boardSvc.insertBoard(boardInfo, filelist, fileno);
 

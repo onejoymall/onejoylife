@@ -36,4 +36,9 @@
 .font-weight-bold{
     font-weight: bold;
 }
-
+.modal-header{
+    width: 65% !important;
+}
+.modal-content{
+    width: 65% !important;
+}

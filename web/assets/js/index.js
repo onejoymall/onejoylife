@@ -8,7 +8,7 @@ $(document).ready(function(){
 
         $(this).addClass('on');
         $("#"+tab_id).addClass('on');
-    })
+    });
 });
 $(document).ready(function(){
     $('.main-tab-box p').click(function(){
@@ -17,31 +17,40 @@ $(document).ready(function(){
         $('.main-content .tab-box').removeClass('on');
         $(this).addClass('on');
         $("#"+tab_id).addClass('on');
-    })
+    });
 $(document).ready(function(){
     $(".category-tree-2dp").hide();
         $(".category-tree li a").click(function(){
             event.preventDefault();
             $(this).next().slideToggle(300);
         });
-    });
     $(function(){
         $('.category-tree li>a').click(function(){
         $('.category-tree li>a').removeClass('active');
         $(this).addClass('active');
         });
-    })
-    $(document).ready(function(){
-        $('.notice-section-ul li').click(function(){
-            var tab_id = $(this).attr('data-tab');
-
-            $('.notice-section-ul li').removeClass('on');
-            $('.notice-section .ul-tab-box').removeClass('on');
-
-            $(this).addClass('on');
-            $("#"+tab_id).addClass('on');
-        })
     });
+});
+$(document).ready(function(){
+    $('.notice-section-ul li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('.notice-section-ul li').removeClass('on');
+        $('.notice-section .ul-tab-box').removeClass('on');
+
+        $(this).addClass('on');
+        $("#"+tab_id).addClass('on');
+    });
+});
+$(document).ready(function(){
+    $('.goods-list-tab th').click(function(){
+        var data_id = $(this).attr('data-tab');
+        $('.goods-list-tab th').removeClass('on');
+        $('.in-list-tab').removeClass('on');
+        $(this).addClass('on');
+        $("#"+data_id).addClass('on');
+    });
+});
     // 달력
     $(function() { 
         $.datepicker.setDefaults({
@@ -79,52 +88,73 @@ $(document).ready(function(){
     $(function(){
          $(".product-list").click(function(){
             $(".modal").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
         $(".modal-close").click(function(){
             $(".modal").attr("style", "display:none");
+            $('body').css("overflow", "auto");
         });
 
         $(".product-list1").click(function(){
             $(".modal1").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
         $(".modal-close1").click(function(){
             $(".modal1").attr("style", "display:none");
+            $('body').css("overflow", "auto");
         });
         $(".product-list2").click(function(){
             $(".modal2").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
         $(".modal-close2").click(function(){
             $(".modal2").attr("style", "display:none");
+            $('body').css("overflow", "auto");
         });
     });
     $(function(){
         $("button[name='detail']").click(function(){
             $(".modal").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
         $(".modal-close").click(function(){
             $(".modal").attr("style", "display:none");
+            $('body').css("overflow", "auto");
         });
         $("button[name='detail1']").click(function(){
             $(".modal1").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
-        $(".modal-close").click(function(){
-            $(".modal1").attr("style", "display:none");
-        });
-    });
-    //modal
-    $(function(){
-         $("button[name='detail']").click(function(){
-            $(".modal").attr("style", "display:block");
-        });
-        $(".modal-close").click(function(){
-            $(".modal").attr("style", "display:none");
-        });
-
         $("button[name='detail0']").click(function(){
             $(".modal1").attr("style", "display:block");
+            $('body').css("overflow", "hidden");
         });
-        $(".modal-close").click(function(){
-            $(".modal1").attr("style", "display:none");
+    });
+    //매출현황 modal
+    $(function(){
+         $(".modal-open").click(function(){
+             if($('.modal2').css('display') == 'none'){
+                $(".modal2").attr("style", "display:block");
+                $(".modal-content2").animate({
+                    bottom: 0
+                }, 100,'easeOutBounce');
+                $('.modal-open').animate({
+                    bottom:'400px'
+                },100,'easeOutBounce');
+                $('body').css("overflow", "hidden");
+             }else{
+                $(".modal-content2").animate({
+                    bottom:'-400px'
+                }, 100,'easeOutBounce');
+                $('.modal-open').animate({
+                    bottom:'0px'
+                },100,'easeOutBounce');
+                $(".modal2").attr("style", "display:none");
+                $('body').css("overflow", "auto");
+             }
+        });
+        $('.modal2').click(function(){
+            $('.modal-open').trigger("click");
         });
     });
     //checkbox1
@@ -380,12 +410,3 @@ $(function(){
         }
     });
 });
-//ckeditor
-// CKEDITOR.replace( 'editor' );
-// CKEDITOR.replace( 'editor1' );
-
-
-
-
-
-

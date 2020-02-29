@@ -57,6 +57,10 @@
         </div>
     </div>
 </footer>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+
+    <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
+
     <script src='<c:url value="/assets/js/index.js"/>'></script>
     <!-- Toastr -->
     <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>

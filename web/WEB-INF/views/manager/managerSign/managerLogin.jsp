@@ -17,7 +17,7 @@
                     <div class="login-logo"></div>
                     <h2>관리자페이지 로그인 하기</h2>
                 </div>
-                <form  name="defaultForm" id="defaultForm" method="POST">
+                <form name="defaultForm" id="defaultForm" class="loginForm" method="POST">
                     <fieldset>
                         <input type="text" id="email" name="email" placeholder="관리자 아이디">
                         <input type="password" id="password" name="password" placeholder="비밀번호">

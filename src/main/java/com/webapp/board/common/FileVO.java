@@ -6,7 +6,34 @@ public class FileVO {
     private String filename;
     private String realname;
     private long filesize;
-    
+    private String filelink;
+    private String filepath;
+    private Integer fileorder;
+
+    public Integer getFileorder() {
+        return fileorder;
+    }
+
+    public void setFileorder(Integer fileorder) {
+        this.fileorder = fileorder;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public String getFilelink() {
+        return filelink;
+    }
+
+    public void setFilelink(String filelink) {
+        this.filelink = filelink;
+    }
+
     /**
      * 파일 크기를 정형화하기.
      */

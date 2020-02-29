@@ -196,7 +196,7 @@ body{
 
 /*modal*/
 /* 모달 팝업창 */
-.modal,.modal1{
+.modal,.modal1,.modal2{
     display: none;
     position: fixed;
     z-index: 999999;
@@ -299,6 +299,17 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
     font-size:14px;
     border-radius: 5px;
 }
+.btn-border-red{
+    float: right;
+    background:#fff;
+    color:#da394a;
+    padding:10px 15px;
+    margin-top:9px;
+    margin-right:10px;
+    font-size:14px;
+    border: 1px solid #da394a;
+    border-radius: 5px;
+}
 .plus-btn{
     width:20px;
     height:20px;
@@ -362,13 +373,17 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
 .option1-rd2-txt input{
     margin-left: 104px;
 }
-.option2-box ,.option2-box3,.option2-box4,.option2-box5,.option2-box6,.option2-box7 
+.option2-box ,.option2-box2,.option2-box3,.option2-box4,.option2-box5,.option2-box6,.option2-box7 
 ,.option2-box2-in,.option2-box5-in
-,.option3-box,.option3-box2{
+,.option3-box,.option3-box2,.box2-span,.box5-span{
     display: none;
 }
-.option2-box tr{display:none;}
-.option2-box tr.option2-box1{display:table-row}
+.modify2-box ,.modify2-box2,.modify2-box3,.modify2-box4,.modify2-box5,.modify2-box6,.modify2-box7 
+,.modify2-box2-in,.modify2-box5-in
+,.modify3-box,.modify3-box2,.box2-span,.box5-span{
+    display: none;
+}
+.box5-span,.box2-span{vertical-align: 1px;}
 /* cc  */
 .cc{font-weight: 100; margin-left:10px;color:#999;}
 .cc-blue{color:#50a1ff}
@@ -380,6 +395,21 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
     font-weight: 600;
     line-height: 12px;
     border-radius: 5px;
+}
+.txt-right {
+    text-align: right;
+}
+.num-width1{
+    width: 50px;
+}
+.num-width2{
+    width: 100px;
+}
+.num-width3{
+    min-width: 50px !important;
+}
+.txt-active{
+    color: #da394a;
 }
 /* 달력 */
 .cla-p1{

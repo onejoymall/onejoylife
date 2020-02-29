@@ -100,6 +100,7 @@
                 <colgroup>
                     <col width="4%">
                     <col width="6%">
+                    <col width="5%">
                     <col width="30%">
                     <col width="6%">
                     <col width="5%">
@@ -114,8 +115,8 @@
                 <tr>
                     <td><input type="checkbox" id="all-chk" name="all-chk"></td>
                     <td name="detail">상품코드</td>
-                    <td name="detail">상품명</td>
-                    <td>카테고리</td>
+                    <td name="detail" colspan="2">상품명</td>
+<%--                    <td>카테고리</td>--%>
                     <td>정가</td>
                     <td>판매가</td>
                     <td>재고</td>
@@ -133,17 +134,18 @@
                                 <input type="checkbox" id="chk" name="chk" value="${productList.product_id}">
                                 <input type="hidden" name="product_cd" value="${productList.product_cd}">
                             </td>
-                            <td>${productList.product_cd}</td>
-                            <td>${productList.product_name}</td>
-                            <td></td>
+                            <td >${productList.product_cd}</td>
+                            <td ><img src='${productList.file_1}' onerror="this.src='http://placehold.it/80x80'" height="80"></td>
+                            <td style="border-left: none!important;">${productList.product_name}</td>
+<%--                            <td>${productList.product_ct}</td>--%>
                             <td>${productList.product_user_payment}</td>
                             <td>${productList.product_payment}</td>
                             <td></td>
-                            <td>${productList.product_delivery_type}</td>
+                            <td>${productList.product_delivery_type_name}</td>
                             <td></td>
-                            <td>${productList.product_sale_yn}</td>
+                            <td>${productList.product_sale_yn_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn ready" name="copy">복사 등록</button>
+                                <button type="button" class="goods-list-btn" name="copy" onclick="productCopy('${productList.product_cd}')">복사 등록</button>
                                 <button type="button" class="goods-list-btn" name="detail" onclick="defaultModal('${productList.product_cd}')" >상세보기</button>
                             </td>
                         </tr>
@@ -171,234 +173,929 @@
 <%--            <div class="right">--%>
 <%--                <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>상품 정보 다운로드</button>--%>
 <%--            </div>--%>
-            <h3>기본 정보</h3>
-            <table class="goods-detail-table">
-                <colgroup>
-                    <col width="142px">
-                    <col width="800px">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th>상품명 <span class="cc">&#40;필수&#41;</span></th>
-                    <td>
-                        <input type="text" id="product_name" name="product_name" >
-                    </td>
+            <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/productAddProc"/>">
+                <h3>기본 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+                    <%--                    <tr>--%>
+                    <%--                        <th>상품 코드<span class="cc-red">&#40;필수&#41;</span></th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <input type="text" id="product_cd" name="product_cd" placeholder="ex) P000001">--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
+                    <tr>
+                        <th>자체 상품 코드</th>
+                        <td>
+                            <input type="text" id="product_market_cd" name="product_market_cd" placeholder="ex) ABCDEF1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>진열</th>
+                        <td>
+                            <input type="radio" id="goods-exposure" name="product_use_yn" value="Y" checked>
+                            <label for="goods-exposure">진열</label>
+                            <input type="radio" id="goods-hide" name="product_use_yn" value="N">
+                            <label for="goods-hide">숨김</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>판매</th>
+                        <td>
+                            <input type="radio" id="goods-sale" name="product_sale_yn" value="Y" checked>
+                            <label for="goods-sale">판매</label>
+                            <input type="radio" id="goods-notsale" name="product_sale_yn" value="N">
+                            <label for="goods-notsale">판매 안 함</label>
+                        </td>
+                    </tr>
+                    <%--                    <tr>--%>
+                    <%--                        <th>국가별 노출</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <input type="checkbox" id="goods-exposure-kr" name="goods-exposure-ct" value="Y" checked>--%>
+                    <%--                            <label for="goods-exposure-kr">대한민국</label>--%>
+                    <%--                            <input type="checkbox" id="goods-exposure-usa" name="goods-exposure-ct" value="N">--%>
+                    <%--                            <label for="goods-exposure-usa">미국</label>--%>
+                    <%--                            <input type="checkbox" id="goods-exposure-ch" name="goods-exposure-ct" value="N">--%>
+                    <%--                            <label for="goods-exposure-ch">중국</label>--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
+                    <%--                    <tr>--%>
+                    <%--                        <th>회원 전용 상품</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <input type="radio" id="goods-member-only1" name="goods-member-only" value="Y" checked>--%>
+                    <%--                            <label for="goods-member-only1">회원 전용</label>--%>
+                    <%--                            <input type="radio" id="goods-member-only2" name="goods-member-only" value="N">--%>
+                    <%--                            <label for="goods-member-only2">제한 없음</label>--%>
+                    <%--                            <span class="cc">* 회원 전용 상품으로 설정 시 회원에게만 노출됩니다.</span>--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
 
-                </tr>
-                <tr>
-                    <th>국가별 진열</th>
-                    <td>
-                        <select name="ios_code">
-                            <option value="kr">한국</option>
-                            <option value="us">미국</option>
-                            <option value="cn">중국</option>
-                        </select>
-                        <button type="button" class="plus-btn"></button>
+                    <tr>
+                        <th>상품 분류 선택</th>
+                        <td class="category">
+                            <table >
+                                <colgroup>
+                                    <col width='33%' />
+                                    <col width='33%' />
+                                    <col width='33%' />
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>대분류</th> <th>중분류</th> <th>소분류</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <ul>
+                                            <c:if test="${not empty list}">
+                                                <c:forEach var="categoryList" items="${list}">
+                                                    <li class="selectCategory" data-id="${categoryList.pd_category_id}">${categoryList.pd_category_name}</li>
+                                                </c:forEach>
+                                            </c:if>
+                                        </ul>
+                                    </td>
+                                    <td id="subCategory"></td>
+                                    <td id="tirdCategory"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <span id="category1t">[대분류] ${list[0].pd_category_name}</span>
+                            <span id="category2t"></span>
+                            <span id="category3t"></span>
 
-                    </td>
-                </tr>
-                <tr>
-                    <th>브랜드</th>
-                    <td>
-                        <input type="text" name="product_brand">
-                    </td>
-                </tr>
-                <tr>
-                    <th>카테고리</th>
-                    <td>
-                        <span>1차 분류 :</span>
-                        <select name="src-category">
-                            <option value="전체">전체</option>
-                            <option value="뷰티">뷰티</option>
-                            <option value="식품">식품</option>
-                        </select>
-                        <span style="margin-left:20px;">2차 분류 :</span>
-                        <select name="src-category">
-                            <option value="전체">전체</option>
-                            <option value="수입">수입</option>
-                            <option value="명품">명품</option>
-                            <option value="매스티지">매스티지</option>
-                            <option value="트렌드">트렌드</option>
-                            <option value="해외직구">해외직구</option>
-                        </select>
-                        <span style="margin-left:20px;">3차 분류 :</span>
-                        <select name="src-category">
-                            <option value="전체">전체</option>
-                            <option value="스킨케어">스킨케어</option>
-                            <option value="메이크업">메이크업</option>
-                            <option value="향수">향수</option>
-                            <option value="남성화장품">남성화장품</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>소비자가 <span class="cc">&#40;필수&#41;</span></th>
-                    <td>
-                        <input type="text" name="product_user_payment"  value=""> 원
-                    </td>
+                            <input type="hidden" name="selectCtCode" id="selectCtCode" value="${list[0].pd_category_id}">
 
-                </tr>
-                <tr>
-                    <th>할인가</th>
-                    <td>
-                        <input type="text" id="product_payment" name="product_payment" value="30000"> 원
-                    </td>
-                </tr>
-                <tr>
-                    <th>상품 이미지</th>
-                    <td>
-                        <div class="fileBox">
-                            <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
-                            <label for="uploadBtn" class="btn_file">파일찾기</label>
-                            <input type="file" id="uploadBtn" name="uploadBtn" class="uploadBtn">
-                            <span class="ex">상품 대표이미지를 업로드 해주세요.</span>
-                        </div>
-                        <div class="img-thumb-box">
-                            <img src="http://placehold.it/500x300" id="product_detail_image" alt="상품이미지"/>
-                            <input type="hidden" name="product_detail_image">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>상품 설명</th>
-                    <td>
-                        <textarea id="product_html" name="product_html"></textarea>
-<%--                        <div class="fileBox">--%>
-<%--                            <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">--%>
-<%--                            <label for="uploadBtn" class="btn_file">파일찾기</label>--%>
-<%--                            <input type="file" id="uploadBtn" name="uploadBtn" class="uploadBtn">--%>
-<%--                            <span class="ex">상품 상세페이지 이미지를 업로드 해주세요.</span>--%>
-<%--                        </div>--%>
-                    </td>
-                </tr>
-                <tr>
-                    <th>검색어</th>
-                    <td>
-                        <input type="text" id="product_keyword" name="product_keyword">
-                        <br>
-                        * 쉼표&#40;,&#41;로 구분
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="goods-detail-table">
-                <colgroup>
-                    <col width="142px">
-                    <col width="800px">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th>재고</th>
-                    <td>
-                        <input type="text" id="goods-stock" name="goods-stock">
-                    </td>
-                </tr>
-                <tr>
-                    <th>구매 수량 범위</th>
-                    <td>
-                        최소 <input type="text" id="goods-min" name="goods-min"> 개 ~ 최대 <input type="text" id="goods-max" name="goods-max"> 개
-                    </td>
-                </tr>
-                <tr>
-                    <th>포인트 지급액</th>
-                    <td>
-                        <input type="text" id="goods-point" name="goods-point"> 포인트
-                    </td>
-                </tr>
-                <tr>
-                    <th>회원 혜택</th>
-                    <td>
-                        <select name="goods-membership">
-                            <option value="배송비무료">배송비 무료</option>
-                            <option value="혜택2">혜택2</option>
-                            <option value="혜택3">혜택3</option>
-                            <option value="혜택4">혜택4</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>노출/숨김</th>
-                    <td>
-                        <input type="radio" id="goods-exposure" name="goods-exposure" value="노출" checked>
-                        <label for="goods-exposure">노출</label>
-                        <input type="radio" id="goods-hide" name="goods-exposure" value="숨김">
-                        <label for="goods-hide">숨김</label>
-                    </td>
-                </tr>
+                            <button class="btn-default" type="button" id="addCategoryList">추가</button>
+                            <br>
+                            <table>
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="25%">
+                                    <col width="25%">
+                                </colgroup>
+                                <tbody id="addCategoryView">
 
-                <tr>
-                    <th>결제/배송/교환/반품 안내</th>
-                    <td>
-                        <span>결제 안내</span>
-                        <textarea id="product_payment_info" name="product_payment_info"></textarea>
-                        <span>교환/반품/배송안내</span>
-                        <textarea id="product_delivery_info" name="product_delivery_info"></textarea>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <h3>배송 정보</h3>
-            <table class="goods-detail-table">
-                <colgroup>
-                    <col width="142px">
-                    <col width="800px">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th>배송 방법</th>
-                    <td>
-                        <select name="shipping-type">
-                            <option value="택배">택배</option>
-                            <option value="퀵배송">퀵배송</option>
-                            <option value="매장 방문수령">매장 방문수령</option>
-                            <option value="직접배송">직접배송</option>
-                            <option value="기타">기타</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>배송 기간</th>
-                    <td>
-                        최소 <input type="text" id="shipping-min" name="shipping-min"> 일 ~ 최대 <input type="text" id="shipping-max" name="shipping-max"> 일
-                    </td>
-                </tr>
-                <tr>
-                    <th>배송비 설정</th>
-                    <td>
-                        <select name="shipping-fee">
-                            <option value="배송비무료">배송비 무료</option>
-                            <option value="고정배송비">고정 배송비</option>
-                            <option value="구매금액별">구매 금액 별 부과</option>
-                            <option value="상품갯수별">상품 갯수 별 부과</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>배송비 상세 설정</th>
-                    <td>
-                        <div class="shippingFee-detail-wrap active">
-                            어떤 경우든 배송비 <input type="text" id="shippingFee-fixed" name="shippingFee-fixed"> 원을 고정적으로 부과함.
-                        </div>
-                        <div class="shippingFee-detail-wrap active">
-                            <input type="text" id="shippingFee2-min" name="shippingFee2-min"> 원 이상 ~ <input type="text" id="shippingFee2-max" name="shippingFee2-max"> 원 미만일 때 배송비 <input type="text" id="shippingFee2" name="shippingFee2"> 원<button type="button" class="plus-btn"></button>
-                        </div>
-                        <div class="shippingFee-detail-wrap active">
-                            <input type="text" id="shippingFee3-min" name="shippingFee3-min"> 개 이상 ~ <input type="text" id="shippingFee3-max" name="shippingFee3-max"> 개 미만일 때 배송비 <input type="text" id="shippingFee3" name="shippingFee3"> 원<button type="button" class="plus-btn"></button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="goods-detail-table">
-                <colgroup>
-                    <col width="142px">
-                    <col width="800px">
-                </colgroup>
-                <tbody>
+                                </tbody>
+                            </table>
 
-                </tbody>
-            </table>
-            <button type="button" name="detail" class="btn-red">저장하기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품분류 번호</th>
+                        <td>
+                            <p class="cc2">해당 상품이 속할 상품 분류 번호(상품 카테고리 번호)를 입력합니다.<br>
+                                <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
+                                <span class="cc">* 상품 분류의 분류URL이 /product/list.html?cale_no=7 이라면 7을 입력합니다.</span><br>
+                                <span class="cc">* 분류 개수가 많은 경우는 10|20|21 등으로 입력합니다.</span><br></p>
+                            <input type="text" id="product_ct" name="product_ct" placeholder="ex) 24|29|30" value="${list[0].pd_category_id}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 분류 신상품 영역</th>
+                        <td>
+                            <p class="cc2">신상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
+                                <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
+                            <input type="text" id="product_new_class" name="product_new_class" placeholder="ex) N|Y|Y" value="Y">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>상품 분류 추천상품 영역</th>
+                        <td>
+                            <p class="cc2">추천 상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
+                                <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
+                            <input type="text" id="product_md_class" name="product_md_class" placeholder="ex) N|Y|Y" value="N">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 분류 특가상품 영역</th>
+                        <td>
+                            <p class="cc2">특가 상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
+                                <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
+                            <input type="text" id="product_sp_class" name="product_sp_class" placeholder="ex) N|Y|Y" value="N">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품명<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_name" name="product_name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>영문 상품명<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_name_en" name="product_name_en">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품명&#40;관리용&#41;</th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 50byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_name_mg" name="product_name_mg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>공급사 상품명</th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_supply_pd_name" name="product_supply_pd_name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>모델명</th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 100byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_model_name" name="product_model_name" value="AD-2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 요약 설명<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 최대 120byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_summary_memo" name="product_summary_memo" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 간략 설명</th>
+                        <td>
+                            <input type="text" id="product_brief_memo" name="product_brief_memo" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 상세 설명</th>
+                        <td>
+                            <textarea name="product_html" id="summernote">상품 상세 설명을 적어주세요.</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>모바일 상품 상세 설명 설정</th>
+                        <td>
+                            <input type="radio" id="goods-info-mobile1" name="goods-info-mobile" value="A" checked>
+                            <label for="goods-info-mobile1">상품 상세 설명과 동일</label>
+                            <input type="radio" id="goods-info-mobile2" name="goods-info-mobile" value="M">
+                            <label for="goods-info-mobile2">직접 등록</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>모바일 상품 상세 설명</th>
+                        <td>
+                            <textarea name="product_mobile_html" id="summernote2">모바일용 상품 상세 설명을 적어주세요.</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>검색어 설정</th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 쉼표&#40;,&#41;로 구분하여 복수 설정 가능</span><br>
+                                <span class="cc">* 최대 200byte 까지만 등록됩니다.</span></p>
+                            <input type="text" id="product_keyword" name="product_keyword" placeholder="ex) 치마, 스커트, 봄, 신상품">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>과세 구분</th>
+                        <td>
+                            <input type="radio" id="goods-taxation" name="goods-tax" class="goods-tax" value="A" checked>
+                            <label for="goods-taxation">과세 상품</label>
+                            <label for="goods-taxation-detail">&#40;과세율 : </label>
+                            <input type="number" id="goods-taxation-detail" name="goods-taxation-detail" placeholder=""><span>%&#41;</span>
+                            <input type="radio" id="goods-taxFree" name="goods-tax" class="goods-tax" value="B">
+                            <label for="goods-taxFree">면세 상품</label>
+                            <input type="radio" id="goods-taxZero" name="goods-tax"class="goods-tax" value="C">
+                            <label for="goods-taxZero">영세 상품</label>
+                            <input type="hidden" name="product_tex_class" id="product_tex_class" value="A|0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>소비자가<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <input type="text" id="product_user_payment" name="product_user_payment"> 원
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>공급가</th>
+                        <td>
+                            <input type="text" id="product_company_payment" name="product_company_payment"> 원
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>판매가</th>
+                        <td>
+                            <input type="text" id="product_payment" name="product_payment"> 원
+                        </td>
+                    </tr>
+                    <%--                    <tr>--%>
+                    <%--                        <th>상품가</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <input type="text" id="" name="product_payment"> 원--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
+                    <tr>
+                        <th>판매가 대체 문구 사용</th>
+                        <td>
+                            <input type="radio" id="sp-replace-y" name="salePrice-replace" value="Y">
+                            <label for="sp-replace-y">사용함</label>
+                            <input type="radio" id="sp-replace-n" name="salePrice-replace" value="N" checked>
+                            <label for="sp-replace-n">사용 안 함</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>판매가 대체 문구</th>
+                        <td>
+                            <input type="text" id="sp-replace-text" name="product_payment_memo" placeholder="200byte까지 등록 가능. ex) 임시 품절 상품" disabled>
+                        </td>
+                    </tr>
+                    <%--                    <tr>--%>
+                    <%--                        <th>판매 기간</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.--%>
+                    <%--                            </p>--%>
+                    <%--                            <input type="text" id="goods-sDate-start" name="goods-sDate-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="goods-sDate-end" placeholder="ex) 2020-02-28">--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
+                    </tbody>
+                </table>
+                <h3>옵션 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="120px">
+                        <col width="680px">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>주문 수량 제한 기준</th>
+                        <td colspan="2">
+                            <input type="radio" id="limited-quantity-p" name="product_order_limit_quantity" value="P">
+                            <label for="limited-quantity-p">상품</label>
+                            <input type="radio" id="limited-quantity-o" name="product_order_limit_quantity" value="O" checked>
+                            <label for="limited-quantity-o">품목</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>주문 수량 제한</th>
+                        <td colspan="2">
+                            최소 <input type="number" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="number" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>적립금</th>
+                        <td colspan="2">
+                            <input type="number" id="goods-savings" name="product_point_rate">
+                            <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>적립금 구분</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-savings-p" name="product_point_class" value="P" checked>
+                            <label for="goods-savings-p">상품 금액에 비례</label>
+                            <input type="radio" id="goods-savings-w" name="product_point_class" value="W">
+                            <label for="goods-savings-w">임의 금액</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>공통 이벤트 정보</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-event-y" name="product_go_event_yn" value="Y" checked>
+                            <label for="goods-event-y">표시함</label>
+                            <input type="radio" id="goods-event-n" name="product_go_event_yn" value="N">
+                            <label for="goods-event-n">표시 안 함</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>성인 인증</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-adult-y" name="product_adult_yn" value="Y">
+                            <label for="goods-adult-y">사용함</label>
+                            <input type="radio" id="goods-adult-n" name="product_adult_yn" value="N" checked>
+                            <label for="goods-adult-n">사용 안 함</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>옵션 사용</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-option-y" name="product_option_yn" class="product_option_yn" value="Y">
+                            <label for="goods-option-y">상품 옵션 사용함</label>
+                            <input type="radio" id="goods-option-n" name="product_option_yn" class="product_option_yn" value="N" checked>
+                            <label for="goods-option-n">사용 안 함</label>
+                        </td>
+                    </tr>
+                    <tr class="option-group-1 hidden">
+                        <th>품목 구성 방식</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-compType-t" name="product_option_class" value="T" checked>
+                            <label for="goods-compType-t">조합형</label>
+                            <input type="radio" id="goods-compType-e" name="product_option_class" value="E">
+                            <label for="goods-compType-e">상품연동형</label>
+                            <input type="radio" id="goods-compType-f" name="product_option_class" value="F">
+                            <label for="goods-compType-f">독립선택형</label>
+                        </td>
+                    </tr>
+                    <tr class="option-group-2 hidden">
+                        <th>옵션 표시 방식</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-optionType-c" name="product_option_view_type" value="C">
+                            <label for="goods-optionType-c">일체선택형</label>
+                            <input type="radio" id="goods-optionType-s" name="product_option_view_type" value="S">
+                            <label for="goods-optionType-s">분리선택형</label>
+                        </td>
+                    </tr>
+                    <tr class="option-group-3 hidden">
+                        <th>옵션 세트명</th>
+                        <td colspan="2">
+                            <input type="text" id="goods-optionSet-name" name="goods-optionSet-name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>옵션 입력</th>
+                        <td colspan="2">
+                            <p class="cc2">옵션 입력 방식 : 옵션명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
+                            <input type="text" id="goods-option-detail" name="product_option_input" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>옵션 스타일</th>
+                        <td colspan="2"><p class="cc2">셀렉트박스: S, 미리보기 : P, 텍스트버튼: B, 라디오버튼: R<br>
+                            <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span><br>
+                            <span class="cc">* 빈 값이거나 옵션의 개수보다 적게 입력되었을 경우 남은 순서대로 '셀렉트박스(S)'로 저장됩니다.</span><br>
+                            <span class="cc">* 미리보기(P)로 입력한 옵션은 색상 설정을 필수 입력해야 합니다.</span></p>
+                            <input type="text" id="goods-option-style" name="product_option_style" placeholder="ex) P,B,S">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>색상 설정</th>
+                        <td colspan="2">
+                            <p class="cc2">옵션 입력 방식 : &#123;색상값a|색상값b|색상값c&#125;//&#123;색상값d|색상값e|색상값f&#125;<br>
+                                <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span></p>
+                            <input type="text" id="goods-option-color" name="product_option_color" placeholder="ex) &#123;#ff0000|#0033cc&#125;//&#123;#da294a|#000000|#e9e9e9&#125;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>필수 여부</th>
+                        <td colspan="2">
+                            <p class="cc2">필수: T, 선택: F<br>
+                                <span class="cc">* 옵션 입력의 옵션명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
+                                <span class="cc">* 품목 구성 방식이 상품연동형, 독립선택형일 경우에만 입력합니다.</span><br>
+                            </p>
+                            <input type="text" id="goods-option-mandatory" name="product_option_required" placeholder="ex) T|F|T">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>품절 표시 문구</th>
+                        <td colspan="2">
+                            <p class="cc2">품목생성형 옵션 품절 시 표시할 문구를 입력합니다.<br>
+                                <span class="cc">* 빈 값인 경우 '품절'로 표시됩니다.</span><br>
+                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span><br>
+                            </p>
+                            <input type="text" id="goods-stockout" name="product_sold_out_memo" placeholder="ex) 품절">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>추가 입력 옵션</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-addInput-y" name="product_add_option" value="Y">
+                            <label for="goods-addInput-y">사용함</label>
+                            <input type="radio" id="goods-addInput-n" name="product_add_option" value="N" checked>
+                            <label for="goods-addInput-n">사용 안 함</label>
+                            <span class="cc">* 사용 안 함을 선택할 경우, 입력했던 사항은 초기화됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr class="product_add_option_name hidden" >
+                        <th>추가 입력 옵션 명칭</th>
+                        <td colspan="2">
+                            <p class="cc2">
+                                <span class="cc">* 추가 입력 옵션 명칭을 원하는 개수만큼 bar(|)로 구분해 입력합니다.</span><br>
+                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-addInput-name" name="product_add_option_name" placeholder="ex) 이름|사은품 입력">
+                        </td>
+                    </tr>
+                    <tr class="product_add_option_required hidden" >
+                        <th>추가 입력 옵션 선택/필수 여부</th>
+                        <td colspan="2">
+                            <p class="cc2">필수: T, 선택: F<br>
+                                <span class="cc">* '추가 입력 옵션 명칭' 개수만큼 순서대로 bar(|)로 구분해 입력합니다.</span><br>
+                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span><br>
+                            </p>
+                            <input type="text" id="goods-addInput-mandatory" name="product_add_option_required" placeholder="ex) T|F|T">
+                        </td>
+                    </tr>
+                    <tr class="product_add_option_max_lang hidden" >
+                        <th>추가 입력 옵션 글자수(자)</th>
+                        <td colspan="2">
+                            <p class="cc2">
+                                <span class="cc">* '추가 입력 옵션 명칭' 개수만큼 순서대로 bar(|)로 구분해 제한입력 글자수를 입력합니다.</span>
+                            </p>
+                            <input type="text" id="goods-ch-count" name="product_add_option_max_lang" placeholder="ex) 10|15|5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지 등록&#40;상세&#41;</th>
+                        <td>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_detail_image">
+
+                        </td>
+                        <td>
+                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지 등록&#40;목록&#41;</th>
+                        <td>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image">
+                        </td>
+                        <td>
+                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지 등록&#40;작은목록&#41;</th>
+                        <td>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image_sm">
+                        </td>
+                        <td>
+                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지 등록&#40;축소&#41;</th>
+                        <td>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image_response">
+                        </td>
+                        <td>
+                            <input type="file" name="uploadfile" placeholder="ex) sample1.jpg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지 등록&#40;추가&#41;</th>
+                        <td>
+<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
+<%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
+<%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
+<%--                            </p>--%>
+                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_add_image">
+                        </td>
+                        <td>
+                            <input type="file"  name="uploadfile" placeholder="ex) sample1.jpg">
+                        </td>
+<%--                        <td>--%>
+<%--                            <input type="text" id="goods-imgExtra" name="product_add_image" placeholder="ex) sample1.jpg|sample2.png|sample3.jpg">--%>
+<%--                        </td>--%>
+                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>재고 현황</th>--%>
+<%--                        <td colspan="2">--%>
+<%--                            <input type="number" id="goods-stock" name="goods-stock">--%>
+<%--                            <span class="cc">* 현재 재고 갯수를 숫자로 적어주세요.</span>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+                    <tr>
+                        <th>제조사</th>
+                        <td colspan="2">
+                            <p class="cc2">&#91;판매분류관리 &#62; 제조사 관리&#93;에 등록한 유효한 제조사 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>공급사</th>
+                        <td colspan="2">
+                            <p class="cc2">&#91;판매분류관리 &#62; 공급사 관리&#93;에 등록한 유효한 공급사 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>브랜드</th>
+                        <td colspan="2">
+                            <p class="cc2">&#91;판매분류관리 &#62; 브랜드 관리&#93;에 등록한 유효한 브랜드 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-b" name="product_brand" placeholder="ex) B00000000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>트렌드</th>
+                        <td colspan="2">
+                            <p class="cc2">&#91;판매분류관리 &#62; 트렌드 관리&#93;에 등록한 유효한 트렌드 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-t" name="product_trend" placeholder="ex) T00000000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>자체 분류</th>
+                        <td colspan="2">
+                            <p class="cc2">&#91;판매분류관리 &#62; 자체분류 관리&#93;에 등록한 유효한 자체 분류 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-c" name="product_self_class_cd" placeholder="ex) C00000000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제조일자</th>
+                        <td colspan="2">
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
+                            </p>
+                            <input type="text" id="goods-mDate" name="product_create_date" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>출시일자</th>
+                        <td colspan="2">
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
+                            </p>
+                            <input type="text" id="goods-rDate" name="product_release_date" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>유효 기간 사용 여부</th>
+                        <td colspan="2">
+                            <input type="radio" id="goods-validity-y" name="product_validity_yn" value="Y">
+                            <label for="goods-validity-y">사용함</label>
+                            <input type="radio" id="goods-validity-n" name="product_validity_yn" value="N" checked>
+                            <label for="goods-validity-n">사용 안 함</label>
+                            <span class="cc">* 사용 안 함을 선택할 경우, 입력했던 사항은 초기화됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr class="goods-validity-detail hidden">
+                        <th>유효 기간</th>
+                        <td colspan="2">
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD~YYYY-MM-DD&#41;으로 입력합니다.<br>
+                                <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-validity-start" name="product_validity" placeholder="ex) 2020-02-28~2021-02-28">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>원산지</th>
+                        <td colspan="2">
+                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a>를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-origin" name="product_origin" placeholder="ex) 1575">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품부피&#40;cm&#41;</th>
+                        <td colspan="2">
+                            <p class="cc2"><span class="cc">* 가로, 세로, 높이 값을 bar&#40;|&#41;로 구분해서 입력합니다</span><br>
+                                <span class="cc">* 소수점 첫째 자리까지 입력가능하며 최대 10,000단위까지만 입력할 수 있습니다.</span><br>
+                                <span class="cc">* 빈 값인 경우 '사용 안 함'으로 저장됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-volume" name="product_cm" placeholder="ex) 가로30cm, 세로 50cm, 높이 20.50cm인 경우 → 30|50|20.5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 결제 안내</th>
+                        <td colspan="2">
+                            <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
+                            <textarea name="product_payment_info" id="editor3"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 배송 안내</th>
+                        <td colspan="2">
+                            <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
+                            <textarea name="product_delivery_info" id="editor4"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>교환/반품 안내</th>
+                        <td colspan="2">
+                            <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
+                            <textarea name="product_change_info" id="editor5"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>서비스 문의/안내</th>
+                        <td colspan="2">
+                            <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
+                            <textarea name="product_service_info" id="editor6"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3>배송 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>배송정보</th>
+                        <td>
+                            <input type="radio" id="goods-shipping-t" name="product_delivery_class" value="T" checked>
+                            <label for="goods-shipping-t">배송 정보 개별 설정</label>
+                            <input type="radio" id="goods-shipping-f" name="product_delivery_class" value="F" >
+                            <label for="goods-shipping-f">기본 설정 사용</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>배송 방법</th>
+                        <td>
+                            <select name="product_delivery_type">
+                                <option value="A">택배</option>
+                                <option value="B">빠른등기</option>
+                                <option value="C">일반등기</option>
+                                <option value="E">퀵배송</option>
+                                <option value="F">기타</option>
+                                <option value="G">화물배송</option>
+                                <option value="H">매장직접수령</option>
+                                <option value="I">배송 필요 없음</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>국내/해외 배송<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <select name="product_delivery_International_type">
+                                <option value="A">국내 배송</option>
+                                <option value="B">국내/해외 배송</option>
+                                <option value="C">해외 배송</option>
+                            </select>
+                            <span class="cc">* 국내 배송을 포함하지 않은 단독 해외 배송은 해외 쇼핑몰에서만 사용할 수 있습니다.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>배송 지역</th>
+                        <td>
+                            <input type="text" id="shipping-area2" name="product_delivery_locale" placeholder="ex) 전국">
+                            <span class="cc">* 최대 40byte까지만 등록됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>배송비 선결제 설정<span class="cc-red">&#40;필수&#41;</span></th>
+                        <td>
+                            <select name="product_delivery_payment_type">
+                                <option value="C">착불</option>
+                                <option value="P">선결제</option>
+                                <option value="B">선결제/착불</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>배송 기간</th>
+                        <td>
+                            <p class="cc2">1부터 99까지의 숫자를 사용해 입력합니다.</p>
+                            <input type="text" id="shipping-period" name="product_delivery_date" placeholder="ex) 배송 기간이 2~4일 걸릴 경우 '2|4'라고 입력">
+                        </td>
+                    </tr>
+                    <tr class="shipping-fee-tr shipping-t-detail">
+                        <th>배송비 구분</th>
+                        <td>
+                            <select name="product_delivery_payment_class">
+                                <option value="T">배송비 무료</option>
+                                <option value="R">고정 배송비 사용</option>
+                                <option value="M">구매 금액에 따른 부과</option>
+                                <option value="D">구매 금액별 차등 배송료 사용</option>
+                                <option value="W">상품 무게별 차등 배송료 사용</option>
+                                <option value="C">상품 수량별 차등 배송료 사용</option>
+                                <option value="N">상품 수량에 비례하여 배송료 부과</option>
+                            </select>
+                            <span class="cc">* 옵션을 새로 선택하면 상세 설정 내역이 초기화됩니다.</span>
+                        </td>
+                    </tr>
+                    <tr class="shipping-f-detail">
+                        <th>스토어픽업 설정</th>
+                        <td>
+                            <input type="radio" id="goods-storePickup-y" name="product_delivery_store_pickup" value="Y">
+                            <label for="goods-storePickup-y">사용함</label>
+                            <input type="radio" id="goods-storePickup-n" name="product_delivery_store_pickup" value="N" checked>
+                            <label for="goods-storePickup-n">사용 안 함</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 전체 중량&#40;kg&#41;</th>
+                        <td>
+                            <p class="cc2"><span class="cc">* 소수점 둘째 자리까지 입력할 수 있습니다.</span></p>
+                            <input type="text" id="product_kg" name=product_kg">Kg
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>HS코드</th>
+                        <td style="position:relative">
+                            <p class="cc2">국가 별로 HS코드를 따로 입력하려면 쉼표&#40;,&#41;로 구분해 입력합니다.
+                                <span class="cc">ex&#41; CHN|60064100,JPN|081310000</span><br>
+                                국가 코드 없이 HS코드를 입력할 경우 대한민국 HS코드로 저장됩니다.
+                                <span class="cc">* 대한민국 HS코드는 10자리만 입력할 수 있습니다.</span><br>
+                                <button type="button" class="code-wrap-button cc-blue">국가 코드 정보 확인하기</button>
+                            </p>
+                            <div class="code-wrap">
+                                <p>미국: USA, EU: EU, 일본: JPN, 중국: CHN, 대만: TWN, 호주: AUS, 칠레: CHL, 브라질: BRA, 페루: PER, 러시아: RUS, 사우디아라비아: SAU, 멕시코: MEX, 태국: THA, 베트남: VNM, 인도네시아: IDN, 싱가포르: SGP, 필리핀: PHL, 말레이시아: MYS, 인도: IND, 노르웨이: NOR, 스위스: CHE, 캐나다: CAN, 뉴질랜드: NZL</p>
+                            </div>
+                            <input type="text" id="goods-HScode" name="product_global_hs_code" placeholder="ex) CHN|60064100r">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품구분&#40;해외통관용&#41;</th>
+                        <td>
+                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a>를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 상품구분&#40;해외통관용&#41; 코드를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-code-overseas" name="product_global_clearance" placeholder="ex) AAAA0000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 소재</th>
+                        <td>
+                            <p class="cc2">상품의 소재 정보를 입력합니다.
+                            </p>
+                            <input type="text" id="goods-material" name="product_material" placeholder="ex) 나일론 80%, 실크 20%">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>영문 상품 소재&#40;해외통관용&#41;</th>
+                        <td>
+                            <p class="cc2">소재 정보를 영문으로 입력합니다.<span class="span cc">* 대문자 'AUTO'를 입력할 경우 '상품 소재' 항목에 입력한 데이터가 자동 번역됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-material-en" name="product_material_en" placeholder="ex) Rayon 80%, Silk 20%">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>옷감&#40;해외통관용&#41;</th>
+                        <td>
+                            <p class="cc2">상품이 의류일 경우 해외통관용 옷감 정보를 입력합니다.<span class="span cc">* 편물: knit, 직물: woven으로 입력합니다.</span>
+                            </p>
+                            <input type="text" id="goods-fabric-en" name="product_fabric" placeholder="ex) knit">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3>검색 최적화 및 기타</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>검색엔진 최적화&#40;SEO&#41;<br>노출 설정</th>
+                        <td>
+                            <input type="radio" id="goods-seo-y" name="product_seo_yn" value="Y" checked>
+                            <label for="goods-seo-y">노출함</label>
+                            <input type="radio" id="goods-seo-n" name="product_seo_yn" value="N">
+                            <label for="goods-seo-n">노출 안 함</label>
+                        </td>
+                    </tr>
+                    <tr class="seo-detail">
+                        <th>검색엔진 최적화&#40;SEO&#41;<br> Title</th>
+                        <td>
+                            <p class="cc2">상품별 브라우저 Title 값을 원할 경우 입력합니다.
+                            </p>
+                            <input type="text" id="goods-seo-title" name="product_seo_title">
+                        </td>
+                    </tr>
+                    <tr class="seo-detail">
+                        <th>검색엔진 최적화&#40;SEO&#41;<br> Author</th>
+                        <td>
+                            <p class="cc2">상품별 메타태그 Author 값을 원할 경우 입력합니다.
+                            </p>
+                            <input type="text" id="goods-seo-author" name="product_seo_author">
+                        </td>
+                    </tr>
+                    <tr class="seo-detail">
+                        <th>검색엔진 최적화&#40;SEO&#41;<br> Description</th>
+                        <td>
+                            <p class="cc2">상품별 메타태그 Description 값을 원할 경우 입력합니다.
+                            </p>
+                            <input type="text" id="goods-seo-description" name="product_seo_description">
+                        </td>
+                    </tr>
+                    <tr class="seo-detail">
+                        <th>검색엔진 최적화&#40;SEO&#41;<br> Keywords</th>
+                        <td>
+                            <p class="cc2">상품별 메타태그 Keywords 값을 원할 경우 입력합니다.
+                                <span class="cc">* 쉼표&#40;,&#41;로 구분합니다.</span>
+                            </p>
+                            <input type="text" id="goods-seo-keywords" name="product_seo_keywords" placeholder="ex) Keyword1, Keyword2">
+                        </td>
+                    </tr>
+                    <tr class="seo-detail">
+                        <th>검색엔진 최적화&#40;SEO&#41;<br>상품 이미지 Alt 텍스트</th>
+                        <td>
+                            <p class="cc2">상품 이미지에 Alt 텍스트를 넣을 경우 입력합니다.
+                            </p>
+                            <input type="text" id="goods-seo-alt" name="product_seo_alt">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>개별 결제 수단 설정</th>
+                        <td>
+                            <p class="cc2">상품의 개별 결제수단을 설정할 경우 다음 항목 중 입력합니다.<br><br>
+                                무통장입금: cash, 카드결제: card, 적립금: mileage, 실시간 계좌이체: tcash, 가상계좌: icash, 휴대폰결제: cell, 케이페이: kpay, 페이나우: paynow, 페이코: payco, 카카오페이: kakaopay, 스마일페이: smilepay, 네이버페이: naverpay<br>
+                                <span class="cc">* 결제 수단이 여러 개인 경우 쉼표&#40;,&#41;로 구분합니다.</span>
+                            </p>
+                            <input type="text" id="goods-payment" name="product_payment_type" placeholder="ex) cash, mileage">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품 배송 유형 코드</th>
+                        <td>
+                            <p class="cc2">상품의 배송 유형을 설정할 경우 다음 항목 중 입력합니다.<br><br>
+                                사입배송: D, 직접배송: C, 기타: E|창고코드<br>
+                                <span class="cc">* 기타(E)의 경우 김포 창고 코드가 2이면 'E|2'로 입력</span><br>
+                                <span class="cc">* 빈 값일 경우 직접등록(C)으로 자동 등록됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-shipping-code" name="product_delivery_type_code" placeholder="ex) E|2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>메모</th>
+                        <td>
+                            <p class="cc2">각 상품별로 상품 메모 정보를 입력합니다.<br>
+                                <span class="cc">* 상품 메모는 업로드마다 1개씩 추가됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-memo" name="product_memo">
+                        </td>
+                    </tr>
+                    <%--                    <tr>--%>
+                    <%--                        <th>추가항목01_<br>$추가항목명</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <p class="cc2">[상품관리 &#62; 상품표시관리 &#62; 상품정보표시설정]에서 항목 추가 시 추가한 순서대로 제공되는 항목입니다.<br>--%>
+                    <%--                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span>--%>
+                    <%--                            </p>--%>
+                    <%--                            <input type="text" id="goods-additional" name="goods-additional">--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
+                    </tbody>
+                </table>
+                <%--                <table class="goods-detail-table">--%>
+                <%--                    <colgroup>--%>
+                <%--                        <col width="142px">--%>
+                <%--                        <col width="800px">--%>
+                <%--                    </colgroup>--%>
+                <%--                    <tbody>--%>
+                <%--                    <tr>--%>
+                <%--                        <th>예약등록</th>--%>
+                <%--                        <td>--%>
+                <%--                            <p class="cc2">상품을 등록할 시간을 미리 예약할 수 있습니다.<br>--%>
+                <%--                                <span class="cc">* YYYY-MM-DD-HH-MM 연도-월-날짜-시간-분 순으로 입력합니다.</span><br>--%>
+                <%--                                <span class="cc">* 시간은 24시 체계로 입력합니다. ex&#41; 낮 2시 = 14시</span>--%>
+                <%--                            </p>--%>
+                <%--                            <input type="text" id="goods-reserve" name="goods-reserve" placeholder="ex) 2020-02-28-18-32">--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                    </tbody>--%>
+                <%--                </table>--%>
+                <button type="button" id="productUpdate" class="btn-red">저장하기</button>
+                <input type="hidden" name="file_1">
+                <input type="hidden" name="file_2">
+                <input type="hidden" name="file_3">
+                <input type="hidden" name="file_4">
+                <input type="hidden" name="file_5">
+                <input type="hidden" name="product_cd">
+            </form>
         </div>
     </div>
 </div>

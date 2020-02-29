@@ -48,6 +48,8 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/Manager/**" />
 			<mvc:exclude-mapping path="/Manager/ManagerSign/**" />
+			<mvc:exclude-mapping path="/Manager/productAddProc" />
+			<mvc:exclude-mapping path="/Manager/productAdd" />
 			<beans:bean id="commonManagerInterceptor" class="com.webapp.common.interceptor.ManagerSessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -7,7 +7,7 @@ $(document).ready(function(){
 
         $(this).addClass('on');
         $("#"+tab_id).addClass('on');
-    })
+    });
 });
 
 //checkbox
@@ -23,7 +23,6 @@ $(function(){
 $(function(){
      $("button[name='detail']").click(function(){
         $(".modal").attr("style", "display:block");
-        console.log(12312323)
     });
     $(".modal-close").click(function(){
         $(".modal").attr("style", "display:none");
@@ -44,17 +43,11 @@ uploadFile.on('change', function(){
 //
 $(function(){
    $('button[name="back"]').click(function(){
-       alert('저장하지 않고 돌아가시겠습니까?')
-   }) 
+       alert('저장하지 않고 돌아가시겠습니까?');
+   });
 });
 
 //텍스트 에디터
-CKEDITOR.replace( 'editor1' );
-CKEDITOR.replace( 'editor2' );
-CKEDITOR.replace( 'editor3' );
-CKEDITOR.replace( 'editor4' );
-CKEDITOR.replace( 'editor5' );
-CKEDITOR.replace( 'editor6' );
 
 
 //과세
@@ -89,7 +82,7 @@ $('input[name=goods-compType]').click(function(){
         $('tr.goods-compType-t-detail').attr('style','display:none');
         $('input[name=goods-optionType]').prop('checked',false);
     }
-})
+});
 $('input[name=goods-compType]').click(function(){
     if($('input[name=goods-compType]:checked').val() == "E"){
         $('tr.goods-compType-e-detail').attr('style','display:table-row');
@@ -97,7 +90,7 @@ $('input[name=goods-compType]').click(function(){
         $('tr.goods-compType-e-detail').attr('style','display:none');
         $('input[name=goods-optionSet-name]').val('');
     }
-})
+});
 
 
 //필수여부
@@ -119,7 +112,7 @@ $('input[name=goods-addInput]').click(function(){
         $('tr.goods-addInput-detail').attr('style','display:none');
         $('tr.goods-addInput-detail input[type=text]').val('');
     }
-})
+});
 
 //유효기간
  $('input[name=goods-validity]').click(function(){
@@ -129,7 +122,7 @@ $('input[name=goods-addInput]').click(function(){
         $('tr.goods-validity-detail').attr('style','display:none');
         $('tr.goods-validity-detail input[type=text]').val('');
     }
-})
+});
 
 //배송비
 $('input[name=goods-shipping]').click(function(){
@@ -142,15 +135,15 @@ $('input[name=goods-shipping]').click(function(){
         $('tr.shipping-f-detail').attr('style','display:table-row');
         $('tr.shipping-t-detail input').val('');
     }
-})
+});
 
 $('select[name=shipping-fee]').change(function(){
-    var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="shippingFee-detail" name="shippingFee-detail"> 원을 고정적으로 부과함.</td></tr>'
-    var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 30000|2500"></td></tr>'
-    var shipD='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>'
-    var shipW='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>'
-    var shipC='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>'
-    var shipN='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" id="shippingFee-detail" name="shippingFee-detail">원을 부과함.</td></tr>'
+    var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="shippingFee-detail" name="shippingFee-detail"> 원을 고정적으로 부과함.</td></tr>';
+    var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 30000|2500"></td></tr>';
+    var shipD='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>';
+    var shipW='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+    var shipC='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="shippingFee-detail" name="shippingFee-detail" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+    var shipN='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" id="shippingFee-detail" name="shippingFee-detail">원을 부과함.</td></tr>';
 
     if($('select[name=shipping-fee]').val() == "R"){
         $('.shippingFee-detail-wrap').remove();
@@ -173,7 +166,7 @@ $('select[name=shipping-fee]').change(function(){
     }else if($('select[name=shipping-fee]').val() == "T"){
         $('.shippingFee-detail-wrap').remove();
     }
-})
+});
 
 //국가코드
 $('.code-wrap-button').click(function(){
@@ -188,4 +181,4 @@ $('input[name=goods-seo]').click(function(){
         $('tr.seo-detail').attr('style','display:none');
         $('tr.seo-detail input[type=text]').val('');
     }
-})
+});

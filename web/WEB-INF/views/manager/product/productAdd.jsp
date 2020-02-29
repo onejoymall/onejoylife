@@ -17,7 +17,7 @@
             <div class="right">
 <%--                <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>상품 정보 다운로드</button>--%>
             </div>
-            <form name="defaultForm" id="defaultForm" method="post">
+            <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/productAddProc"/>">
                 <h3>기본 정보</h3>
                 <table class="goods-detail-table">
                     <colgroup>
@@ -25,12 +25,12 @@
                         <col width="800px">
                     </colgroup>
                     <tbody>
-                    <tr>
-                        <th>상품 코드<span class="cc-red">&#40;필수&#41;</span></th>
-                        <td>
-                            <input type="text" id="product_cd" name="product_cd" placeholder="ex) P000001">
-                        </td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>상품 코드<span class="cc-red">&#40;필수&#41;</span></th>--%>
+<%--                        <td>--%>
+<%--                            <input type="text" id="product_cd" name="product_cd" placeholder="ex) P000001">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     <tr>
                         <th>자체 상품 코드</th>
                         <td>
@@ -156,6 +156,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>상품 분류 특가상품 영역</th>
+                        <td>
+                            <p class="cc2">특가 상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
+                                <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
+                            <input type="text" id="product_sp_class" name="product_sp_class" placeholder="ex) N|Y|Y" value="N">
+                        </td>
+                    </tr>
+                    <tr>
                         <th>상품명<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
@@ -262,7 +270,7 @@
                     <tr>
                         <th>판매가</th>
                         <td>
-                            <input type="text" id="product_payment" name="goods-discount"> 원
+                            <input type="text" id="product_payment" name="product_payment"> 원
                         </td>
                     </tr>
 <%--                    <tr>--%>
@@ -475,7 +483,7 @@
                         <td>
 <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
 <%--                            </p>--%>
-                            <input type="file" id="goods-imgBig" name="product_detail_image" placeholder="ex) sample1.jpg">
+                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg" value="1">
                         </td>
                     </tr>
                     <tr>
@@ -483,7 +491,7 @@
                         <td>
 <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
 <%--                            </p>--%>
-                            <input type="file" id="goods-imgMidium" name="product_list_image" placeholder="ex) sample1.jpg">
+                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg" value="2">
                         </td>
                     </tr>
                     <tr>
@@ -491,7 +499,7 @@
                         <td>
 <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
 <%--                            </p>--%>
-                            <input type="file" id="goods-imgTiny" name="product_list_image_sm" placeholder="ex) sample1.jpg">
+                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg" value="3">
                         </td>
                     </tr>
                     <tr>
@@ -499,26 +507,26 @@
                         <td>
 <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
 <%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="product_list_image_response" placeholder="ex) sample1.jpg">
+                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;추가&#41;</th>
                         <td>
-                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>
-                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>
-                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>
-                            </p>
-                            <input type="text" id="goods-imgExtra" name="goods-imgExtra" placeholder="ex) sample1.jpg|sample2.png|sample3.jpg">
+<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
+<%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
+<%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
+<%--                            </p>--%>
+                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
                         </td>
                     </tr>
-                    <tr>
-                        <th>재고 현황</th>
-                        <td>
-                            <input type="number" id="goods-stock" name="goods-stock">
-                            <span class="cc">* 현재 재고 갯수를 숫자로 적어주세요.</span>
-                        </td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>재고 현황</th>--%>
+<%--                        <td>--%>
+<%--                            <input type="number" id="goods-stock" name="goods-stock">--%>
+<%--                            <span class="cc">* 현재 재고 갯수를 숫자로 적어주세요.</span>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     <tr>
                         <th>제조사</th>
                         <td>
@@ -652,16 +660,16 @@
                     <tr>
                         <th>배송정보</th>
                         <td>
-                            <input type="radio" id="goods-shipping-t" name="goods-shipping" value="T">
+                            <input type="radio" id="goods-shipping-t" name="product_delivery_class" value="T" checked>
                             <label for="goods-shipping-t">배송 정보 개별 설정</label>
-                            <input type="radio" id="goods-shipping-f" name="goods-shipping" value="F" checked>
+                            <input type="radio" id="goods-shipping-f" name="product_delivery_class" value="F" >
                             <label for="goods-shipping-f">기본 설정 사용</label>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail" style="display:none">
+                    <tr>
                         <th>배송 방법</th>
                         <td>
-                            <select name="shipping-type">
+                            <select name="product_delivery_type">
                                 <option value="A">택배</option>
                                 <option value="B">빠른등기</option>
                                 <option value="C">일반등기</option>
@@ -673,10 +681,10 @@
                             </select>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail" style="display:none">
+                    <tr>
                         <th>국내/해외 배송<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <select name="shipping-area">
+                            <select name="product_delivery_International_type">
                                 <option value="A">국내 배송</option>
                                 <option value="B">국내/해외 배송</option>
                                 <option value="C">해외 배송</option>
@@ -684,34 +692,34 @@
                             <span class="cc">* 국내 배송을 포함하지 않은 단독 해외 배송은 해외 쇼핑몰에서만 사용할 수 있습니다.</span>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail" style="display:none">
+                    <tr>
                         <th>배송 지역</th>
                         <td>
-                            <input type="text" id="shipping-area2" name="shipping-area2" placeholder="ex) 전국">
+                            <input type="text" id="shipping-area2" name="product_delivery_locale" placeholder="ex) 전국">
                             <span class="cc">* 최대 40byte까지만 등록됩니다.</span>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail" style="display:none">
+                    <tr>
                         <th>배송비 선결제 설정<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <select name="shipping-prepayment">
+                            <select name="product_delivery_payment_type">
                                 <option value="C">착불</option>
                                 <option value="P">선결제</option>
                                 <option value="B">선결제/착불</option>
                             </select>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail" style="display:none">
+                    <tr>
                         <th>배송 기간</th>
                         <td>
                             <p class="cc2">1부터 99까지의 숫자를 사용해 입력합니다.</p>
-                            <input type="text" id="shipping-period" name="shipping-period" placeholder="ex) 배송 기간이 2~4일 걸릴 경우 '2|4'라고 입력">
+                            <input type="text" id="shipping-period" name="product_delivery_date" placeholder="ex) 배송 기간이 2~4일 걸릴 경우 '2|4'라고 입력">
                         </td>
                     </tr>
-                    <tr class="shipping-fee-tr shipping-t-detail" style="display:none">
+                    <tr class="shipping-fee-tr shipping-t-detail">
                         <th>배송비 구분</th>
                         <td>
-                            <select name="shipping-fee">
+                            <select name="product_delivery_payment_class">
                                 <option value="T">배송비 무료</option>
                                 <option value="R">고정 배송비 사용</option>
                                 <option value="M">구매 금액에 따른 부과</option>
@@ -726,9 +734,9 @@
                     <tr class="shipping-f-detail">
                         <th>스토어픽업 설정</th>
                         <td>
-                            <input type="radio" id="goods-storePickup-y" name="goods-storePickup" value="Y">
+                            <input type="radio" id="goods-storePickup-y" name="product_delivery_store_pickup" value="Y">
                             <label for="goods-storePickup-y">사용함</label>
-                            <input type="radio" id="goods-storePickup-n" name="goods-storePickup" value="N" checked>
+                            <input type="radio" id="goods-storePickup-n" name="product_delivery_store_pickup" value="N" checked>
                             <label for="goods-storePickup-n">사용 안 함</label>
                         </td>
                     </tr>
@@ -736,7 +744,7 @@
                         <th>상품 전체 중량&#40;kg&#41;</th>
                         <td>
                             <p class="cc2"><span class="cc">* 소수점 둘째 자리까지 입력할 수 있습니다.</span></p>
-                            <input type="text" id="goods-weight" name="goods-weight">Kg
+                            <input type="text" id="product_kg" name=product_kg">Kg
                         </td>
                     </tr>
                     <tr>
@@ -751,7 +759,7 @@
                             <div class="code-wrap">
                                 <p>미국: USA, EU: EU, 일본: JPN, 중국: CHN, 대만: TWN, 호주: AUS, 칠레: CHL, 브라질: BRA, 페루: PER, 러시아: RUS, 사우디아라비아: SAU, 멕시코: MEX, 태국: THA, 베트남: VNM, 인도네시아: IDN, 싱가포르: SGP, 필리핀: PHL, 말레이시아: MYS, 인도: IND, 노르웨이: NOR, 스위스: CHE, 캐나다: CAN, 뉴질랜드: NZL</p>
                             </div>
-                            <input type="text" id="goods-HScode" name="goods-HScode" placeholder="ex) CHN|60064100r">
+                            <input type="text" id="goods-HScode" name="product_global_hs_code" placeholder="ex) CHN|60064100r">
                         </td>
                     </tr>
                     <tr>
@@ -759,7 +767,7 @@
                         <td>
                             <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a>를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 상품구분&#40;해외통관용&#41; 코드를 입력합니다.
                             </p>
-                            <input type="text" id="goods-code-overseas" name="goods-code-overseas" placeholder="ex) AAAA0000">
+                            <input type="text" id="goods-code-overseas" name="product_global_clearance" placeholder="ex) AAAA0000">
                         </td>
                     </tr>
                     <tr>
@@ -767,7 +775,7 @@
                         <td>
                             <p class="cc2">상품의 소재 정보를 입력합니다.
                             </p>
-                            <input type="text" id="goods-material" name="goods-material" placeholder="ex) 나일론 80%, 실크 20%">
+                            <input type="text" id="goods-material" name="product_material" placeholder="ex) 나일론 80%, 실크 20%">
                         </td>
                     </tr>
                     <tr>
@@ -775,7 +783,7 @@
                         <td>
                             <p class="cc2">소재 정보를 영문으로 입력합니다.<span class="span cc">* 대문자 'AUTO'를 입력할 경우 '상품 소재' 항목에 입력한 데이터가 자동 번역됩니다.</span>
                             </p>
-                            <input type="text" id="goods-material-en" name="goods-material-en" placeholder="ex) Rayon 80%, Silk 20%">
+                            <input type="text" id="goods-material-en" name="product_material_en" placeholder="ex) Rayon 80%, Silk 20%">
                         </td>
                     </tr>
                     <tr>
@@ -783,7 +791,7 @@
                         <td>
                             <p class="cc2">상품이 의류일 경우 해외통관용 옷감 정보를 입력합니다.<span class="span cc">* 편물: knit, 직물: woven으로 입력합니다.</span>
                             </p>
-                            <input type="text" id="goods-fabric-en" name="goods-fabric-en" placeholder="ex) knit">
+                            <input type="text" id="goods-fabric-en" name="product_fabric" placeholder="ex) knit">
                         </td>
                     </tr>
                     </tbody>
@@ -798,9 +806,9 @@
                     <tr>
                         <th>검색엔진 최적화&#40;SEO&#41;<br>노출 설정</th>
                         <td>
-                            <input type="radio" id="goods-seo-y" name="goods-seo" value="Y" checked>
+                            <input type="radio" id="goods-seo-y" name="product_seo_yn" value="Y" checked>
                             <label for="goods-seo-y">노출함</label>
-                            <input type="radio" id="goods-seo-n" name="goods-seo" value="N">
+                            <input type="radio" id="goods-seo-n" name="product_seo_yn" value="N">
                             <label for="goods-seo-n">노출 안 함</label>
                         </td>
                     </tr>
@@ -809,7 +817,7 @@
                         <td>
                             <p class="cc2">상품별 브라우저 Title 값을 원할 경우 입력합니다.
                             </p>
-                            <input type="text" id="goods-seo-title" name="goods-seo-title">
+                            <input type="text" id="goods-seo-title" name="product_seo_title">
                         </td>
                     </tr>
                     <tr class="seo-detail">
@@ -817,7 +825,7 @@
                         <td>
                             <p class="cc2">상품별 메타태그 Author 값을 원할 경우 입력합니다.
                             </p>
-                            <input type="text" id="goods-seo-author" name="goods-seo-author">
+                            <input type="text" id="goods-seo-author" name="product_seo_author">
                         </td>
                     </tr>
                     <tr class="seo-detail">
@@ -825,7 +833,7 @@
                         <td>
                             <p class="cc2">상품별 메타태그 Description 값을 원할 경우 입력합니다.
                             </p>
-                            <input type="text" id="goods-seo-description" name="goods-seo-description">
+                            <input type="text" id="goods-seo-description" name="product_seo_description">
                         </td>
                     </tr>
                     <tr class="seo-detail">
@@ -834,7 +842,7 @@
                             <p class="cc2">상품별 메타태그 Keywords 값을 원할 경우 입력합니다.
                                 <span class="cc">* 쉼표&#40;,&#41;로 구분합니다.</span>
                             </p>
-                            <input type="text" id="goods-seo-keywords" name="goods-seo-keywords" placeholder="ex) Keyword1, Keyword2">
+                            <input type="text" id="goods-seo-keywords" name="product_seo_keywords" placeholder="ex) Keyword1, Keyword2">
                         </td>
                     </tr>
                     <tr class="seo-detail">
@@ -842,7 +850,7 @@
                         <td>
                             <p class="cc2">상품 이미지에 Alt 텍스트를 넣을 경우 입력합니다.
                             </p>
-                            <input type="text" id="goods-seo-alt" name="goods-seo-alt">
+                            <input type="text" id="goods-seo-alt" name="product_seo_alt">
                         </td>
                     </tr>
                     <tr>
@@ -852,7 +860,7 @@
                                 무통장입금: cash, 카드결제: card, 적립금: mileage, 실시간 계좌이체: tcash, 가상계좌: icash, 휴대폰결제: cell, 케이페이: kpay, 페이나우: paynow, 페이코: payco, 카카오페이: kakaopay, 스마일페이: smilepay, 네이버페이: naverpay<br>
                                 <span class="cc">* 결제 수단이 여러 개인 경우 쉼표&#40;,&#41;로 구분합니다.</span>
                             </p>
-                            <input type="text" id="goods-payment" name="goods-payment" placeholder="ex) cash, mileage">
+                            <input type="text" id="goods-payment" name="product_payment_type" placeholder="ex) cash, mileage">
                         </td>
                     </tr>
                     <tr>
@@ -863,7 +871,7 @@
                                 <span class="cc">* 기타(E)의 경우 김포 창고 코드가 2이면 'E|2'로 입력</span><br>
                                 <span class="cc">* 빈 값일 경우 직접등록(C)으로 자동 등록됩니다.</span>
                             </p>
-                            <input type="text" id="goods-shipping-code" name="goods-shipping-code" placeholder="ex) E|2">
+                            <input type="text" id="goods-shipping-code" name="product_delivery_type_code" placeholder="ex) E|2">
                         </td>
                     </tr>
                     <tr>
@@ -872,39 +880,39 @@
                             <p class="cc2">각 상품별로 상품 메모 정보를 입력합니다.<br>
                                 <span class="cc">* 상품 메모는 업로드마다 1개씩 추가됩니다.</span>
                             </p>
-                            <input type="text" id="goods-memo" name="goods-memo">
+                            <input type="text" id="goods-memo" name="product_memo">
                         </td>
                     </tr>
-                    <tr>
-                        <th>추가항목01_<br>$추가항목명</th>
-                        <td>
-                            <p class="cc2">[상품관리 &#62; 상품표시관리 &#62; 상품정보표시설정]에서 항목 추가 시 추가한 순서대로 제공되는 항목입니다.<br>
-                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span>
-                            </p>
-                            <input type="text" id="goods-additional" name="goods-additional">
-                        </td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>추가항목01_<br>$추가항목명</th>--%>
+<%--                        <td>--%>
+<%--                            <p class="cc2">[상품관리 &#62; 상품표시관리 &#62; 상품정보표시설정]에서 항목 추가 시 추가한 순서대로 제공되는 항목입니다.<br>--%>
+<%--                                <span class="cc">* 최대 250byte까지만 등록됩니다.</span>--%>
+<%--                            </p>--%>
+<%--                            <input type="text" id="goods-additional" name="goods-additional">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     </tbody>
                 </table>
-                <table class="goods-detail-table">
-                    <colgroup>
-                        <col width="142px">
-                        <col width="800px">
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th>예약등록</th>
-                        <td>
-                            <p class="cc2">상품을 등록할 시간을 미리 예약할 수 있습니다.<br>
-                                <span class="cc">* YYYY-MM-DD-HH-MM 연도-월-날짜-시간-분 순으로 입력합니다.</span><br>
-                                <span class="cc">* 시간은 24시 체계로 입력합니다. ex&#41; 낮 2시 = 14시</span>
-                            </p>
-                            <input type="text" id="goods-reserve" name="goods-reserve" placeholder="ex) 2020-02-28-18-32">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button type="button" name="detail" class="btn-red">저장하기</button>
+<%--                <table class="goods-detail-table">--%>
+<%--                    <colgroup>--%>
+<%--                        <col width="142px">--%>
+<%--                        <col width="800px">--%>
+<%--                    </colgroup>--%>
+<%--                    <tbody>--%>
+<%--                    <tr>--%>
+<%--                        <th>예약등록</th>--%>
+<%--                        <td>--%>
+<%--                            <p class="cc2">상품을 등록할 시간을 미리 예약할 수 있습니다.<br>--%>
+<%--                                <span class="cc">* YYYY-MM-DD-HH-MM 연도-월-날짜-시간-분 순으로 입력합니다.</span><br>--%>
+<%--                                <span class="cc">* 시간은 24시 체계로 입력합니다. ex&#41; 낮 2시 = 14시</span>--%>
+<%--                            </p>--%>
+<%--                            <input type="text" id="goods-reserve" name="goods-reserve" placeholder="ex) 2020-02-28-18-32">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    </tbody>--%>
+<%--                </table>--%>
+                <button type="button" id="formProductSubmit" class="btn-red">저장하기</button>
             </form>
         </div>
     </div>
