@@ -93,6 +93,15 @@ String product_delivery_type_code;
 String product_memo;
 String product_point_class;
 Integer product_point_rate_cash;
+String product_sp_class;
+
+    public String getProduct_sp_class() {
+        return product_sp_class;
+    }
+
+    public void setProduct_sp_class(String product_sp_class) {
+        this.product_sp_class = product_sp_class;
+    }
 
     public String getProduct_id() {
         return product_id;

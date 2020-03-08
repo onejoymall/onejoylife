@@ -16,7 +16,7 @@ import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 
 @Service
-public class Board8Svc {
+public class BoardSvc {
 
     @Autowired
     private SqlSessionTemplate sqlSession;    

@@ -31,6 +31,12 @@ $(document).ready(function(){
         });
     });
 });
+
+
+
+
+
+
 $(document).ready(function(){
     $('.notice-section-ul li').click(function(){
         var tab_id = $(this).attr('data-tab');
@@ -166,6 +172,11 @@ $(document).ready(function(){
             else $('.goods-list-wrap input').prop('checked',false);
         });
     });
+    $('#all-chk1').click(function(){
+            var chk = $(this).is(':checked');//.attr('checked');
+            if(chk) $('.goods-list-wrap1 input').prop('checked',true);
+            else $('.goods-list-wrap1 input').prop('checked',false);
+        });
     //checkbox2
     $(function(){
         $('#all-chk1').click(function(){
@@ -177,6 +188,13 @@ $(document).ready(function(){
             var chk = $(this).is(':checked');//.attr('checked');
             if(chk) $('.sort-wrap-table2 input').prop('checked',true);
             else $('.sort-wrap-table2 input').prop('checked',false);
+        });
+    });
+    $(function(){
+        $('#all-chk2').click(function(){
+            var chk = $(this).is(':checked');//.attr('checked');
+            if(chk) $('.goods-detail-table input').prop('checked',true);
+            else $('.goods-detail-table input').prop('checked',false);
         });
     });
 });
@@ -219,35 +237,78 @@ $(function(){
 $(function(){
     $("button[name='detail']").click(function(){
         $(".modal").attr("style", "display:block");
+        $("body").css("overflow", "hidden");
     });
     $(".modal-close").click(function(){
         $(".modal").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
 
     $("button[name='detail1']").click(function(){
         $(".modal1").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
     });
     $(".modal-close").click(function(){
         $(".modal1").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
     $(".search-even-but").click(function(){
         $(".modal2").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
     });
     $(".modal-close2").click(function(){
         $(".modal2").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
     $("button[name='detail2']").click(function(){
         $(".modal3").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
     });
     $(".modal-close3").click(function(){
         $(".modal3").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
 
     $("button[name='mo-btn']").click(function(){
         $(".modal2").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
     });
     $(".modal-close4").click(function(){
         $(".modal2").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+
+    $(".member-list-btn").click(function(){
+        $(".modal3").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal3-close").click(function(){
+        $(".modal3").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+    $(".member-add").click(function(){
+        $(".modal2").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal2-close").click(function(){
+        $(".modal2").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+    $("button[name='detail2-1']").click(function(){
+        $(".modal2").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal-close").click(function(){
+        $(".modal2").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+    $("button[name='detail3']").click(function(){
+        $(".modal3").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal-close").click(function(){
+        $(".modal3").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
 });
 //file upload
@@ -407,6 +468,28 @@ $(function(){
 
         }else{$("input:text[name=goods-option-mandatory2]").attr("disabled",false);
             // 활성화
+        }
+    });
+    // 공지
+    $('#date-ck1').on('click', function(){
+        if($("#date-ck1:checked").val() == "T"){
+            $(".check-in1 *").attr("disabled",false);
+
+        }else{$(".check-in1 *").attr("disabled",true);
+        }
+    });
+    $('#date-ck2').on('click', function(){
+        if($("#date-ck2:checked").val() == "T2"){
+            $(".check-in2 *").attr("disabled",false);
+
+        }else{$(".check-in2 *").attr("disabled",true);
+        }
+    });
+    $('#authority-rd6-n').on('click', function(){
+        if($("#authority-rd6-n:checked").val() == "T2"){
+            $(".noti-ck-box *").attr("disabled",true);
+
+        }else{$(".noti-ck-box *").attr("disabled",false);
         }
     });
 });

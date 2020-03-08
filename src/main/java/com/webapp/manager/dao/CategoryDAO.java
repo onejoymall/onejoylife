@@ -25,4 +25,8 @@ public class CategoryDAO {
         List<Map<String, Object>> getCategoryThirdList = sql.selectList("mall.CategoryMapper.getCategoryThirdList",params);
         return getCategoryThirdList;
     }
+    public Map<String,Object> getCategoryDetail(SearchVO searchVO) throws SQLException {
+        Map<String,Object> getCategoryDetail=sql.selectOne("mall.CategoryMapper.getCategoryDetail",searchVO);
+        return getCategoryDetail;
+    }
 }

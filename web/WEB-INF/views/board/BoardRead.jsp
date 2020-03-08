@@ -1,12 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>board9</title>
-<script src="js/jquery-2.2.3.min.js"></script>
 <script>
 
 function chkInputValue(id, msg){
@@ -23,7 +19,7 @@ function fn_formSubmit(){
 	
 	var formData = $("#form1").serialize();
 	$.ajax({
-		url: "board9ReplySave", 
+		url: "/Board/boardReplySave",
 		type:"post", 
 		data : formData,
 		success: function(result){ 
@@ -44,7 +40,7 @@ function fn_replyDelete(reno){
 		return;
 	}
 	$.ajax({
-		url: "board9ReplyDelete",
+		url: "/Board/boardReplyDelete",
 		type:"post", 
 		data: {"reno": reno},
 		success: function(result){
@@ -83,7 +79,7 @@ function fn_replyUpdateSave(){
 	
 	var formData = $("#form2").serialize();
 	$.ajax({
-		url: "board9ReplySave", 
+		url: "/Board/boardReplySave",
 		type:"post", 
 		data : formData,
 		success: function(result){
@@ -132,7 +128,7 @@ function fn_replyReplySave(){
 
 	var formData = $("#form3").serialize();
 	$.ajax({
-		url: "board9ReplySave",
+		url: "/Board/boardReplySave",
 		type:"post", 
 		data : formData,
 		success: function(result){
@@ -236,5 +232,5 @@ function fn_replyReplySave(){
 				<a href="#" onclick="fn_replyReplyCancel()">취소</a>
 			</form>
 		</div>							
-</body>
-</html>
+
+<%@ include file="/WEB-INF/views/layout/footer.jsp" %>

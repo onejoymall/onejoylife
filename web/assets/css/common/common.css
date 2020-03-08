@@ -42,3 +42,10 @@
 .modal-content{
     width: 65% !important;
 }
+.add_image > li{
+    float:left;
+}
+.point-pdt-parti-wrap{
+    overflow: hidden!important;
+}
+.bx-clone {display: none;}

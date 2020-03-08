@@ -14,8 +14,8 @@
             <div class="main-left">
                 <div class="main-left-head">
                     <p class="left-head-tit">
-                        <span>카테고리</span>
-                        <span><input type="button" class="add-folder" value="생성"></span>
+
+                        <span><input type="text" name="pd_category_name"><input type="button" class="add-folder" value="생성"></span>
                         <span><input type="button" class="remove-folder" value="삭제"></span>
                     </p>
                 </div>

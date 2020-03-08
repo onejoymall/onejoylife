@@ -195,17 +195,21 @@
                         </div>
                         <div class="product-list-type2">
                             <ul class="selected-list">
+                            <c:if test="${not empty productList}">
+                                <c:forEach var="productList" items="${productList}" varStatus="status">
                                 <li>
-                                    <a href="#">
+                                    <a href="/product/productDetail?product_cd=${productList.product_cd}">
                                         <div class="img-box">
-                                            <img src="assets/img/list-img.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
+                                            <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
+<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
                                             <i class="share-ic"></i>
                                         </div>
                                         <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
+                                            <p class="info-production">${productList.product_made_company_name}</p>
+                                            <p class="info-product-name">${productList.product_name}</p>
+                                            <p class="info-price"><span class="price-before">
+                                                <fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</span>
+                                                <i class="right-arrow"></i><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</p>
                                             <p class="info-score">
                                                 <i class="star-ic"></i>
                                                 <span class="score-number">4.5</span>
@@ -214,173 +218,11 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img2.png" />
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img3.png" />
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img4.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img5.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img2.png" />
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img3.png" />
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img4.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price">15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="img-box">
-                                            <img src="assets/img/list-img5.png" />
-                                            <p class="sale-percent">35<span>%</span></p>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">삼성전자</p>
-                                            <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                            <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty productList}">
+                                <li>표시할 내용이 없습니다.</li>
+                            </c:if>
                             </ul>
                         </div>
                     </div>
@@ -1045,30 +887,7 @@
             $('.bnr-header').slideUp(300);
         });
     });
-    $(document).ready(function(){
-        $('.gnb>li:first-child').mouseover(function(){
-            $('.gnb-submenu').show();
-        });
-        $('.gnb>li:first-child').mouseleave(function(){
-            $('.gnb-submenu').hide();
-        });
-        $('.gnb-submenu>li').mouseover(function(){
-            $(this).children('.gnb-submenu-2dp').show();
-        });
-        $('.gnb-submenu>li').mouseleave(function(){
-            $(this).children('.gnb-submenu-2dp').hide();
-        });
-        $('.gnb-submenu-2dp>li').mouseover(function(){
-            $(this).children('.gnb-submenu-3dp').show().animate({
-                width: '200px'
-            },100);
-        });
-        $('.gnb-submenu-2dp>li').mouseleave(function(){
-            $(this).children('.gnb-submenu-3dp').hide().animate({
-                width: '0px'
-            },100);
-        });
-    });
+
 
     //헤더 sticky
     $(function(){

@@ -16,22 +16,22 @@ import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 
 @Controller 
-public class Board9Ctr {
+public class BoardCtr {
 
     @Autowired
-    private Board8Svc boardSvc;
+    private BoardSvc boardSvc;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     
     /**
      * 리스트.
      */
-    @RequestMapping(value = "/Board/board9List")
+    @RequestMapping(value = "/Board/boardList")
     public String boardList(SearchVO searchVO, ModelMap modelMap) {
         
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
         if (bgInfo == null) {
-            return "board9/BoardGroupFail";
+            return "board/BoardGroupFail";
         }
         
         searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
@@ -41,14 +41,14 @@ public class Board9Ctr {
         modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("bgInfo", bgInfo);
-        
-        return "board9/BoardList";
+        modelMap.addAttribute("style", "help-7");
+        return "board/BoardList";
     }
     
     /** 
      * 글 쓰기. 
      */
-    @RequestMapping(value = "/Board/board9Form")
+    @RequestMapping(value = "/Board/boardForm")
     public String boardForm(HttpServletRequest request, ModelMap modelMap) {
         String bgno = request.getParameter("bgno");
         String brdno = request.getParameter("brdno");
@@ -63,19 +63,19 @@ public class Board9Ctr {
         }
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(bgno);
         if (bgInfo == null) {
-            return "board9/BoardGroupFail";
+            return "board/BoardGroupFail";
         }
         
         modelMap.addAttribute("bgno", bgno);
         modelMap.addAttribute("bgInfo", bgInfo);
         
-        return "board9/BoardForm";
+        return "board/BoardForm";
     }
     
     /**
      * 글 저장.
      */
-    @RequestMapping(value = "/Board/board9Save")
+    @RequestMapping(value = "/Board/boardSave")
     public String boardSave(HttpServletRequest request, BoardVO boardInfo) {
         String[] fileno = request.getParameterValues("fileno");
         
@@ -84,13 +84,13 @@ public class Board9Ctr {
 
         boardSvc.insertBoard(boardInfo, filelist, fileno);
 
-        return "redirect:/board9List?bgno=" + boardInfo.getBgno();
+        return "redirect:/Board/boardList?bgno=" + boardInfo.getBgno();
     }
 
     /**
      * 글 읽기.
      */
-    @RequestMapping(value = "/Board/board9Read")
+    @RequestMapping(value = "/Board/boardRead")
     public String board8Read(HttpServletRequest request, ModelMap modelMap) {
         String brdno = request.getParameter("brdno");
         
@@ -101,7 +101,7 @@ public class Board9Ctr {
 
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardInfo.getBgno());
         if (bgInfo == null) {
-            return "board9/BoardGroupFail";
+            return "board/BoardGroupFail";
         }
         
         modelMap.addAttribute("boardInfo", boardInfo);
@@ -109,20 +109,20 @@ public class Board9Ctr {
         modelMap.addAttribute("replylist", replylist);
         modelMap.addAttribute("bgInfo", bgInfo);
         
-        return "board9/BoardRead";
+        return "board/BoardRead";
     }
     
     /**
      * 글 삭제.
      */
-    @RequestMapping(value = "/Board/board9Delete")
+    @RequestMapping(value = "/Board/boardDelete")
     public String boardDelete(HttpServletRequest request) {
         String brdno = request.getParameter("brdno");
         String bgno = request.getParameter("bgno");
         
         boardSvc.deleteBoardOne(brdno);
         
-        return "redirect:/board9List?bgno=" + bgno;
+        return "redirect:/boardList?bgno=" + bgno;
     }
 
     /* ===================================================================== */
@@ -130,20 +130,20 @@ public class Board9Ctr {
     /**
      * 댓글 저장.
      */
-    @RequestMapping(value = "/Board/board9ReplySave")
+    @RequestMapping(value = "/Board/boardReplySave")
     public String board8ReplySave(HttpServletRequest request, BoardReplyVO boardReplyInfo, ModelMap modelMap) {
         
         boardSvc.insertBoardReply(boardReplyInfo);
 
         modelMap.addAttribute("replyInfo", boardReplyInfo);
         
-        return "board8/BoardReadAjax4Reply";        
+        return "board8/BoardReadAjaxReply";
     }
     
     /**
      * 댓글 삭제.
      */
-    @RequestMapping(value = "/Board/board9ReplyDelete")
+    @RequestMapping(value = "/Board/boardReplyDelete")
     public void board8ReplyDelete(HttpServletResponse response, BoardReplyVO boardReplyInfo) {
         
         ObjectMapper mapper = new ObjectMapper();

@@ -1,3 +1,160 @@
+$(document).ready(function(){
+    $('.gnb>li:first-child').mouseover(function(){
+        $('.gnb-submenu').show();
+    });
+    $('.gnb>li:first-child').mouseleave(function(){
+        $('.gnb-submenu').hide();
+    });
+    $('.gnb-submenu>li').mouseover(function(){
+        $(this).children('.gnb-submenu-2dp').show();
+    });
+    $('.gnb-submenu>li').mouseleave(function(){
+        $(this).children('.gnb-submenu-2dp').hide();
+    });
+    $('.gnb-submenu-2dp>li').mouseover(function(){
+        $(this).children('.gnb-submenu-3dp').show().animate({
+            width: '200px'
+        },100);
+    });
+    $('.gnb-submenu-2dp>li').mouseleave(function(){
+        $(this).children('.gnb-submenu-3dp').hide().animate({
+            width: '0px'
+        },100);
+    });
+});
+//공통 리스트 삭제
+    $('.commonlistDelete').on("click",function(){
+        var formData = $('#defaultForm').serialize();
+        var alertType;
+        var showText;
+        jQuery.ajax({
+            type: 'POST',
+            url: '/MyPage/commonListDelete',
+            data: formData,
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    });
+
+    //장바구니 삭제
+    $(document).on("click","button.x",function(){
+        var product_cd = $(this).attr("data-id");
+        jQuery.ajax({
+            type: 'POST',
+            data: {"product_cd":product_cd},
+            url:'/cart/deletecart',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        // $('#validateError'+index).removeClass('none');
+                        // $('#validateError'+index).html('* '+item);
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: "장바구니 삭제 완료",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'success'
+                    });
+                    // loginAuth(data.access_token);
+                    location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    });
+    //장바구니 등록
+    function addShoppingBasket(product_cd) {
+        jQuery.ajax({
+            type: 'POST',
+            data: {"product_cd":product_cd},
+            url:'/cart/addcart',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        // $('#validateError'+index).removeClass('none');
+                        // $('#validateError'+index).html('* '+item);
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: "장바구니 등록 완료",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'success'
+                    });
+                    // loginAuth(data.access_token);
+                    // location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    }
     //상품카피
     function productCopy(productCd){
         jQuery.ajax({
@@ -584,7 +741,7 @@
             }
         });
     });
-
+    //관리자 리스트 딜리트
     $('#listDelete').on("click",function(){
         var formData = $('#defaultListForm').serialize();
         var alertType;

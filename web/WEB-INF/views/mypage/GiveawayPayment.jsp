@@ -152,7 +152,7 @@
             IMP.request_pay({ // param
                 pg: "inicis",
                 pay_method: "card",
-                merchant_uid: "${param.order_no}",
+                merchant_uid: "${delivery.order_user_id}",
                 name: "${detail.giveaway_name}",
                 amount: ${detail.giveaway_delivery_payment+texSum},
                 buyer_email: "${sessionScope.email}",

@@ -17,6 +17,7 @@ import com.webapp.manager.dao.MgProductDAO;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,6 +51,8 @@ public class ManagerRestapiController {
     CategoryDAO categoryDAO;
     @Autowired
     private NumberGender numberGender;
+    @Value("${downloadPath}")
+    private String downloadPath;
     //로그인 처리 1
     @RequestMapping(value = "/Manager/ManagerSign/ManagerLoginProc", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> ManagerLoginProc(@RequestParam HashMap params,HttpSession session){
@@ -173,7 +176,7 @@ public class ManagerRestapiController {
         try{
 
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"D:\\localWork\\onejoylife\\target\\onejoylife-1.0-SNAPSHOT\\assets\\fileupload\\product");
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath);
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/assets/fileupload/product/"+ft.format(new Date())+"/");
             //

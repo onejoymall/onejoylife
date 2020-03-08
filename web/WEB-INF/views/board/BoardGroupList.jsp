@@ -25,7 +25,7 @@ function TreenodeActivate(node) {
 	
     if (selectedNode==null || selectedNode.data.key==0) return;
     $.ajax({
-    	url: "boardGroupRead", 
+    	url: "/Board/boardGroupRead",
     	cache: false,
     	data: { bgno : selectedNode.data.key }    	
     }).done(receiveData);
@@ -60,7 +60,7 @@ function fn_groupDelete(value){
     
     if(!confirm("삭제하시겠습니까?")) return;
     $.ajax({
-    	url: "boardGroupDelete",
+    	url: "/Board/boardGroupDelete",
     	cache: false,
     	data: { bgno : selectedNode.data.key }    	
     }).done(receiveData4Delete);

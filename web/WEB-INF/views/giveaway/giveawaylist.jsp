@@ -17,21 +17,22 @@
         <div class="inner clearfix">
             <h3>E-point 경품추첨</h3>
             <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">${searchVO.totRow}</span>개의 상품이 등록되어 있습니다.</p>
-            <div class="sort-tab">
-                <div class="sort-tab-left">
-                    <button type="button" class="sort-tab-item active">임박순</button>
-                    <button type="button" class="sort-tab-item">낮은가격순</button>
-                    <button type="button" class="sort-tab-item">높은가격순</button>
+            <form id="form1" name="form1"  method="post">
+                <div class="sort-tab">
+                    <div class="sort-tab-left">
+                        <button type="button" class="sort-tab-item active">임박순</button>
+                        <button type="button" class="sort-tab-item">낮은가격순</button>
+                        <button type="button" class="sort-tab-item">높은가격순</button>
+                    </div>
+                    <div class="sort-tab-right">
+                        <select name="displayRowCount" class="order-select">
+                            <option value="9" <c:if test="${searchVO.displayRowCount ==9}">selected</c:if>>9개씩 보기</option>
+                            <option value="24" <c:if test="${searchVO.displayRowCount ==24}">selected</c:if>>24개씩 보기</option>
+                            <option value="60" <c:if test="${searchVO.displayRowCount ==60}">selected</c:if>>60개씩 보기</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="sort-tab-right">
-                    <select name="order" class="order-select">
-                        <option value="9" <c:if test="${param.staticRowEnd ==9}">selected</c:if>>9개씩 보기</option>
-                        <option value="24" <c:if test="${param.staticRowEnd ==24}">selected</c:if>>24개씩 보기</option>
-                        <option value="60" <c:if test="${param.staticRowEnd ==60}">selected</c:if>>60개씩 보기</option>
-                    </select>
-                </div>
-            </div>
-            <div class="point-product-list">
+                <div class="point-product-list">
                 <div class="row clearfix">
                 <c:if test="${not empty list}">
                     <c:forEach var="list" items="${list}" varStatus="status">
@@ -39,7 +40,7 @@
                         <div class="point-product-item">
                             <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
                                 <img src="<c:url value="/assets/img/"/>${list.giveaway_list_image}" />
-                                <i class="share-ic"></i>
+<%--                                <i class="share-ic"></i>--%>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
                             <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</p>
@@ -73,15 +74,13 @@
                 </c:if>
             </div>
         </div>
-            <form id="form1" name="form1"  method="post">
+
                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
             </form>
     </article>
 </section>
 <script>
     $('.order-select').on("change",function () {
-        $('#staticRowEnd').val($(this).val())
         $('#form1').submit();
     })
 </script>

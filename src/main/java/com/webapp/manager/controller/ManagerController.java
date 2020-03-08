@@ -82,7 +82,7 @@ public class ManagerController {
             List<Map<String,Object>> thirdList = categoryDAO.getCategoryThirdList(params);
             model.addAttribute("list",list);
             model.addAttribute("subList",subList);
-            model.addAttribute("thirdList",subList);
+            model.addAttribute("thirdList",thirdList);
             model.addAttribute("topNav",2);
             model.addAttribute("style","category");
 //            model.addAttribute("productList",productList);

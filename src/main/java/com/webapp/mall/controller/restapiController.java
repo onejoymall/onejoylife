@@ -8,8 +8,10 @@ import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
+import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.manager.vo.MgCommonVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +50,12 @@ public class restapiController {
     private DeliveryDAO deliveryDAO;
     @Autowired
     private PaymentDAO paymentDAO;
+    @Autowired
+    private CartDAO cartDAO;
+    @Autowired
+    private CommonDAO commonDAO;
+    @Autowired
+    private ProductDAO productDAO;
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -414,16 +422,21 @@ public class restapiController {
         try{
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
-            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
             //주문번호 생성
-            String order_no = "GW-ORDER-"+numberGender.numberGen(6,1);
+            String order_no = "ORDER-"+numberGender.numberGen(6,1);
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                deliveryInfoVO.setOrder_user_id( Integer.parseInt(numberGender.numberGen(6,1)));
+            }else{
+                deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
+
+//            if(deliveryInfoVO.getOrder_user_name().isEmpty()){
+//                error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
+//            }
+            }
             //경품 추첨 번호
             deliveryInfoVO.setGiveaway_play_cd((String)params.get("giveaway_play_cd"));
             deliveryInfoVO.setOrder_no(order_no);
-            if(deliveryInfoVO.getOrder_user_name().isEmpty()){
-                error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
-            }
             if(deliveryInfoVO.getOrder_user_email().isEmpty()){
                 error.put(messageSource.getMessage("order_user_email","ko"), messageSource.getMessage("error.required","ko"));
             }
@@ -470,7 +483,33 @@ public class restapiController {
         try{
             //결제번호생성
             params.put("payment_cd","PM"+numberGender.numberGen(6,1));
+            if(!deliveryInfoVO.getProduct_cd().isEmpty()){
+                params.put("email",session.getAttribute("email"));
+                //로그인 확인
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                //보유포인트 확인
+                params.put("point_paid_user_id",userInfo.get("usr_id"));
+                Integer userPoint = pointDAO.getPointAmount(params);
+                //상품 포인트
+                Map<String,Object> productInfo  = productDAO.getProductViewDetail(params);
+                Integer payment = (Integer)productInfo.get("product_payment");
+
+                if((Double)productInfo.get("product_point_rate") > 0.0){
+                    Double rate = (Double)productInfo.get("product_point_rate");
+                    Double sum = (payment * rate)/100;
+                    params.put("point_amount",userPoint+sum);
+                    params.put("point_paid_memo",productInfo.get("product_name"));
+                    params.put("point_add",sum);
+                    params.put("point_paid_user_id",userInfo.get("usr_id"));
+                    params.put("point_paid_type","P");
+                    params.put("point_paid_product_cd",productInfo.get("product_cd"));
+                    pointDAO.insertPoint(params);
+                }
+            }
+
             paymentDAO.insertPayment(params);
+            //상품결제 시 포인트 배율 확인 및 지급
+
             if(params.get("payment_class").equals("GIVEAWAY")){
                 if(params.get("success").equals("false")){
                     params.put("giveaway_payment_status","A");
@@ -486,6 +525,95 @@ public class restapiController {
             resultMap.put("redirectUrl", "/MyPage/GiveawayWinningList");
         }catch (Exception e){
             e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //장바구니 등록
+    @RequestMapping(value = "/cart/addcart")
+    public  HashMap<String, Object> addCart(@RequestParam HashMap params,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            //카트번호
+            params.put("cart_cd","CR"+numberGender.numberGen(6,1));
+            //사용자 아이디 확인 후 전달
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+
+
+            if(isEmpty(userInfo)){
+                params.put("member_yn","N");
+                params.put("cart_user_id",numberGender.numberGen(6,1));
+            }else{
+                params.put("member_yn","Y");
+                params.put("cart_user_id",userInfo.get("usr_id"));
+            }
+            //카트 중복조회
+            if(cartDAO.getCartListCount(params) > 0){
+                error.put("Error", messageSource.getMessage("error.duplicateCart","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+               cartDAO.insertCart(params);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //장바구니 삭제
+    @RequestMapping(value = "/cart/deletecart")
+    public  HashMap<String, Object> deleteCart(@RequestParam HashMap params,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            cartDAO.deleteCart(params);
+            resultMap.put("redirectUrl","/MyPage/ShoppingBasket");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    // 상품 결제
+    @RequestMapping(value = "/product/paymentProc")
+    public  HashMap<String, Object> productPaymentProc(@RequestParam HashMap params,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+//            cartDAO.deleteCart(params);
+            resultMap.put("redirectUrl","/MyPage/OrderAndDelivery");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //공통 리스트삭제
+    @RequestMapping(value = "/MyPage/commonListDelete", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageListDelete(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            //테이블명 table
+            //pk 필드명 pk
+            //삭제할 배열 chk
+
+            if(commonVO.getPk().equals(null) || commonVO.getPk().equals("")){
+                error.put("Pk name", messageSource.getMessage("error.required","ko"));
+            }
+            if(commonVO.getTable_name().equals(null) || commonVO.getTable_name().equals("")){
+                error.put("Table", messageSource.getMessage("error.required","ko"));
+            }
+//            if(mgCommonVO.getChk().size() <= 0){
+//                error.put("check box selector", messageSource.getMessage("error.required","ko"));
+//            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                commonDAO.commonListDelete(commonVO);
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
         }
         return resultMap;
     }

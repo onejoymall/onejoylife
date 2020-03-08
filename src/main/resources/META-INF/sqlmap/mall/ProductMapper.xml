@@ -9,7 +9,7 @@
             SELECT
                 *,
                 (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
-                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
                 (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 2) as file_2,
@@ -23,7 +23,10 @@
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
-        order by product_id DESC LIMIT ${rowStart-1}, ${staticRowEnd}
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) ]]></if>
+
+        order by product_id DESC LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getProductListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
         <![CDATA[
@@ -36,12 +39,14 @@
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) ]]></if>
     </select>
     <select id="getProductViewDetail" parameterType="java.util.Map" resultType="java.util.Map">
         select
          *,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
-            (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+            (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
             (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 2) as file_2,
@@ -180,7 +185,8 @@
         product_memo,
         product_point_class,
         product_point_rate,
-        product_point_rate_cash
+        product_point_rate_cash,
+        product_sp_class
        )values(
         #{product_cd},
         #{product_market_cd},
@@ -272,7 +278,8 @@
         #{product_memo},
         #{product_point_class},
         #{product_point_rate},
-        #{product_point_rate_cash}
+        #{product_point_rate_cash},
+        #{product_sp_class}
        )
 
     </insert>
@@ -469,20 +476,6 @@
         insert into product_file (key_id,file_name,real_name,file_size,file_link,file_order)
         select #{product_cd},file_name,real_name,file_size,file_link,file_order from product_file where key_id =#{request_product_cd}
     </insert>
-    <insert id="insertProductPaymentHistory" parameterType="java.util.Map">
-        <foreach collection="list" item="item" separator=";" open="DECEARD BEGIN" close="; END;">
-       <![CDATA[
-        insert into product_payment_history(
-        pd_payment_user_id,pd_payment_amount,pd_payment_cd,pd_payment_class_cd)
-      VALUES (
-        #{item.pd_payment_user_id},
-        #{item.pd_payment_amount},
-        #{item.pd_payment_cd},
-        #{item.pd_payment_class_cd}
-        )
-        ]]>
-        </foreach>
-    </insert>
     <update id="updateProduct" parameterType="com.webapp.manager.vo.ProductVO">
         <![CDATA[
         update product set
@@ -575,7 +568,8 @@
         product_memo=#{ product_memo},
         product_point_class=#{ product_point_class},
         product_point_rate=#{ product_point_rate},
-        product_point_rate_cash=#{ product_point_rate_cash}
+        product_point_rate_cash=#{ product_point_rate_cash},
+        product_sp_class = #{product_sp_class}
         where product_cd =#{product_cd}
         ]]>
     </update>

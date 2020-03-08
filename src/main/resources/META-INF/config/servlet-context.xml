@@ -34,6 +34,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/MyPage/**" />
 			<mvc:exclude-mapping path="/" />                                     <!-- Interceptor에 예외를 적용 할 패턴 -->
+			<mvc:exclude-mapping path="/cart/**" />
 			<mvc:exclude-mapping path="/sign/**" />
 			<mvc:exclude-mapping path="/assets/**" />
 			<mvc:exclude-mapping path="/giveaWay/**" />
@@ -41,6 +42,8 @@
 			<mvc:exclude-mapping path="/SaveDeliveInfo/**" />
 			<mvc:exclude-mapping path="/Popup/**" />
 			<mvc:exclude-mapping path="/product/**" />
+			<mvc:exclude-mapping path="/layout/**" />
+			<mvc:exclude-mapping path="/MyPage/ShoppingBasket" />
 			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

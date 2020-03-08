@@ -37,4 +37,35 @@
     <update id="updateGiveawayDeliveryStatus" parameterType="java.util.Map">
         update giveaway_play_history set giveaway_payment_status = #{giveaway_payment_status} where giveaway_play_cd=#{giveaway_play_cd}
     </update>
+
+    <select id="getPaymentList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,B.*,
+            (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
+        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
+        ]]>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+    </select>
+    <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM payment A  where 1=1
+        ]]>
+
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+    </select>
+
+
 </mapper>

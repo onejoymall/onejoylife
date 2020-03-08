@@ -35,7 +35,7 @@
         <if test="giveaway_user_payment != null"> <![CDATA[AND A.giveaway_user_payment= #{giveaway_user_payment} ]]></if>
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
-
+        order by reg_date desc
         LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
     <select id="getGiveawayListCount" resultType="java.lang.Integer">
@@ -77,6 +77,7 @@
         <if test="giveaway_play_user_id != null"> <![CDATA[AND giveaway_play_user_id= #{giveaway_play_user_id} ]]></if>
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        order by reg_date desc
         LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
     <select id="getUserGiveawayPlayListCount" resultType="java.lang.Integer">

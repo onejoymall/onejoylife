@@ -43,4 +43,11 @@
             AND pd_category_upper_code=#{pd_category_upper_code}
         </if>
     </select>
+    <select id="getCategoryDetail" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where pd_category_id=#{pd_category_id}
+        ]]>
+    </select>
 </mapper>

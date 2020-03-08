@@ -36,6 +36,10 @@ public class MyPage {
     SelectorDAO selectorDAO;
     @Autowired
     DeliveryDAO deliveryDAO;
+    @Autowired
+    CartDAO cartDAO;
+    @Autowired
+    PaymentDAO paymentDAO;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
@@ -112,7 +116,28 @@ public class MyPage {
     }
     //장바구니
     @RequestMapping(value="/MyPage/ShoppingBasket")
-    public String myPageShoppingBasket(Model model) {
+    public String myPageShoppingBasket(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+        //사용자 아이디 확인 후 전달
+        params.put("email",session.getAttribute("email"));
+        Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+        try {
+            //페이징
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(cartDAO.getCartListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            model.addAttribute("searchVO", searchVO);
+            params.put("cart_user_id",userInfo.get("usr_id"));
+            //결제비용
+
+            Map<String,Object> getCartSum = cartDAO.getCartSum(params);
+            List<Map<String,Object>> list = cartDAO.getCartList(params);
+            model.addAttribute("list", list);
+            model.addAttribute("getCartSum", getCartSum);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("style", "mypage-4");
         model.addAttribute("leftNavOrder", 4);
         return "mypage/ShoppingBasket";
@@ -126,13 +151,28 @@ public class MyPage {
     }
     //주문배송조회
     @RequestMapping(value="/MyPage/OrderAndDelivery")
-    public String myPageOrderAndDelivery(Model model,HashMap params,HttpSession session) throws Exception{
+    public String myPageOrderAndDelivery(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("merchant_uid",userInfo.get("usr_id"));
+
+            //페이징
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            model.addAttribute("searchVO", searchVO);
+
+
+
             params.put("order_user_id",userInfo.get("usr_id"));
-            List<Map<String,Object>> deliveryList = deliveryDAO.getDeliveryList(params);
-            model.addAttribute("deliveryList", deliveryList);
+
+
+            List<Map<String,Object>> paymentList = paymentDAO.getPaymentList(params);
+
+            model.addAttribute("paymentList", paymentList);
         }catch (Exception e){
             e.printStackTrace();
         }
