@@ -115,6 +115,9 @@ main{
     background:#da394a;
     color:#fff;
 }
+.src-filter-wrap{
+    margin-top:7px;
+}
 .keyword-src-table{
     width:100%;
     text-align: left;
@@ -279,4 +282,6 @@ main{
     background:#da394d;
     border:1px solid #da394d;
 }
-
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
+}

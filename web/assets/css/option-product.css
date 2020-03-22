@@ -92,6 +92,9 @@ body{
     background:#da394a;
     color:#fff;
 }
+.src-filter-wrap{
+    margin-top:7px;
+}
 .keyword-src-table{
     width:100%;
     text-align: left;
@@ -353,14 +356,10 @@ input[name="brand-name"]{
     border-left: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
 }
-/* .goods-list-wrap tbody td:nth-child(2){text-align: center;} */
-/* .goods-list-wrap tbody td:nth-child(3){text-align: left;} */
+
 .goods-list-wrap tbody td:nth-child(4){text-align: left;}
- .goods-list-wrap tbody td:nth-child(5){text-align: left;} 
- .goods-list-wrap tbody td:nth-child(6){text-align: left;} 
-/*.goods-list-wrap tbody td:nth-child(7){text-align: right;}*/
-/* .goods-list-wrap tbody td:nth-child(8){text-align: left;}
-.goods-list-wrap tbody td:nth-child(9){text-align: right;} */
+.goods-list-wrap tbody td:nth-child(5){text-align: left;} 
+.goods-list-wrap tbody td:nth-child(6){text-align: left;} 
 .goods-list-wrap1 tbody td{
     padding:5px;
     border-left: 1px solid #dadada;
@@ -368,4 +367,7 @@ input[name="brand-name"]{
 }
 #listSrcForm1{
     margin:0 auto;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
 }

@@ -21,7 +21,7 @@ public class BoardVO {
 
     /* 첨부파일 */
     private List<MultipartFile> uploadfile;
-
+    private List<MultipartFile> uploadfile2;
     /**
      * 게시물 제목을 글자수에 맞추어 자르기.
      */
@@ -96,11 +96,15 @@ public class BoardVO {
     public List<MultipartFile> getUploadfile() {
         return uploadfile;
     }
-
+    public List<MultipartFile> getUploadfile2() {
+        return uploadfile2;
+    }
     public void setUploadfile(List<MultipartFile> uploadfile) {
         this.uploadfile = uploadfile;
     }
-
+    public void setUploadfile2(List<MultipartFile> uploadfile2) {
+        this.uploadfile2 = uploadfile2;
+    }
     public String getFilecnt() {
         return filecnt;
     }

@@ -15,10 +15,13 @@
                 <div class="keyword-src-wrap">
                     <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                     <button type="submit" class="keyword-src-button">검색</button>
-                    <br>
-                        <label for="check2">상품명</label> <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
-                        <label for="check1">상품코드</label> <input type="checkbox" name="searchType" value="product_cd" id="check1" <c:if test="${param.searchType eq 'product_cd'}">checked</c:if>>
 
+                    <div class="src-filter-wrap">
+                        <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
+                        <label for="check2">상품명</label>
+                        <input type="checkbox" name="searchType" value="product_cd" id="check1" <c:if test="${param.searchType eq 'product_cd'}">checked</c:if>>
+                        <label for="check1">상품코드</label>
+                    </div>
                 </div>
                 <!--
                 <table class="keyword-src-table">
@@ -106,9 +109,9 @@
                     <col width="5%">
                     <col width="5%">
                     <col width="5%">
-                    <col width="10%">
-                    <col width="5%">
-                    <col width="10%">
+<%--                    <col width="10%">--%>
+<%--                    <col width="5%">--%>
+<%--                    <col width="10%">--%>
                     <col width="14%">
                 </colgroup>
                 <thead>
@@ -119,9 +122,9 @@
 <%--                    <td>카테고리</td>--%>
                     <td>정가</td>
                     <td>판매가</td>
-                    <td>재고</td>
+<%--                    <td>재고</td>--%>
                     <td>배송</td>
-                    <td>구매수량</td>
+<%--                    <td>구매수량</td>--%>
                     <td name="detail">상태</td>
                     <td>관리</td>
                 </tr>
@@ -140,9 +143,9 @@
 <%--                            <td>${productList.product_ct}</td>--%>
                             <td>${productList.product_user_payment}</td>
                             <td>${productList.product_payment}</td>
-                            <td></td>
+<%--                            <td></td>--%>
                             <td>${productList.product_delivery_type_name}</td>
-                            <td></td>
+<%--                            <td></td>--%>
                             <td>${productList.product_sale_yn_name}</td>
                             <td>
                                 <button type="button" class="goods-list-btn" name="copy" onclick="productCopy('${productList.product_cd}')">복사 등록</button>

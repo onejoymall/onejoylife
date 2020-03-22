@@ -37,7 +37,7 @@
 -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-    <script src="<c:url value="/assets/js/jquery.bxslider.min.js"/>"></script>
+
     <script>
     //전역변수
     <c:if test="${not empty postUrl}">

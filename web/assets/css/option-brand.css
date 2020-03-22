@@ -92,6 +92,9 @@ body{
     background:#da394a;
     color:#fff;
 }
+.src-filter-wrap{
+    margin-top:7px;
+}
 .keyword-src-table{
     width:100%;
     text-align: left;
@@ -314,4 +317,7 @@ input[name="brand-name"]{
 }
 .brand-label{
     margin-right: 15px;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
 }

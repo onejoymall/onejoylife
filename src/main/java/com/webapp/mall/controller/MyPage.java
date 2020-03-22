@@ -121,6 +121,12 @@ public class MyPage {
         params.put("email",session.getAttribute("email"));
         Map<String,Object> userInfo = userDAO.getLoginUserList(params);
         try {
+
+            if(isEmpty(userInfo)){
+                params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("cart_user_id",userInfo.get("usr_id"));
+            }
             //페이징
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
@@ -128,7 +134,6 @@ public class MyPage {
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             model.addAttribute("searchVO", searchVO);
-            params.put("cart_user_id",userInfo.get("usr_id"));
             //결제비용
 
             Map<String,Object> getCartSum = cartDAO.getCartSum(params);
@@ -215,12 +220,19 @@ public class MyPage {
         model.addAttribute("style", "mypage-7-1");
         return "mypage/OrderChange";
     }
+    //취소신청
+    @RequestMapping(value="/MyPage/OrderCancel")
+    public String myPageOrderCancel(HttpSession session,Model model,HttpServletRequest request) {
+        model.addAttribute("leftNavOrder", 7);
+        model.addAttribute("style", "mypage-7-2");
+        return "mypage/OrderCancel";
+    }
     //반품
     @RequestMapping(value="/MyPage/OrderRollback")
     public String myPageOrderRollback(HttpSession session,Model model,HttpServletRequest request) {
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-2");
-        return "mypage/OrderRollback";
+        return "mypage/OrderCancel";
     }
     //리뷰
     @RequestMapping(value="/MyPage/Reviews")
@@ -334,12 +346,26 @@ public class MyPage {
         model.addAttribute("style", "mypage-4-2-2");
         return "mypage/GiveawayPayment";
     }
-    //회원정보 변경
+    //회원정보 변경 비번확인
     @RequestMapping(value="/MyPage/ModifyUserInfo")
     public String myPageModifyUserInfo(Model model) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12");
         return "mypage/ModifyUserInfo";
+    }
+    //회원정보 변경
+    @RequestMapping(value="/MyPage/ModifyUserInfoForm")
+    public String myPageModifyUserInfoForm(Model model) {
+        model.addAttribute("leftNavOrder", 12);
+        model.addAttribute("style", "mypage-12-1");
+        return "mypage/ModifyUserInfoForm";
+    }
+    //회원정보 탈퇴
+    @RequestMapping(value="/MyPage/ModifyUserInfoExit")
+    public String myPageModifyUserInfoExit(Model model) {
+        model.addAttribute("leftNavOrder", 12);
+        model.addAttribute("style", "mypage-12-1-1");
+        return "mypage/ModifyUserInfoExit";
     }
     //배송지 변경
     @RequestMapping(value="/MyPage/DeliveryAddress")

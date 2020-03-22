@@ -1,15 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>board9</title>
-<link rel="stylesheet" href="<c:url value="/assets/js/dynatree/ui.dynatree.css" />" id="skinSheet"/>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-<script src="<c:url value="/assets/js/dynatree/jquery.dynatree.js" />"></script>
+<%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
 <script type="text/javascript"> 
 var selectedNode = null;
 
@@ -25,16 +16,20 @@ function TreenodeActivate(node) {
 	
     if (selectedNode==null || selectedNode.data.key==0) return;
     $.ajax({
-    	url: "/Board/boardGroupRead",
+    	url: "/Manager/boardGroupRead",
     	cache: false,
     	data: { bgno : selectedNode.data.key }    	
     }).done(receiveData);
 }
 
 function receiveData(data){
+
     $("#bgno").val(data.bgno);
     $("#bgname").val(data.bgname);
     $('#showBgno').attr("href","<c:url value="/Board/boardList?bgno="/>"+data.bgno);
+	$('#showBgno').html("<c:url value="/Board/boardList?bgno="/>"+data.bgno);
+	$('#showMgBgno').attr("href","<c:url value="/Manager/boardList?bgno="/>"+data.bgno);
+	$('#showMgBgno').html("<c:url value="/Manager/boardList?bgno="/>"+data.bgno);
 	$('input:radio[name="bgused"][value="' + data.bgused + '"]').prop('checked', true);
 	$('input:radio[name="bgreadonly"][value="' + data.bgreadonly + '"]').prop('checked', true);
 	$('input:radio[name="bgreply"][value="' + data.bgreply + '"]').prop('checked', true);
@@ -60,7 +55,7 @@ function fn_groupDelete(value){
     
     if(!confirm("삭제하시겠습니까?")) return;
     $.ajax({
-    	url: "/Board/boardGroupDelete",
+    	url: "/Manager/boardGroupDelete",
     	cache: false,
     	data: { bgno : selectedNode.data.key }    	
     }).done(receiveData4Delete);
@@ -84,7 +79,7 @@ function fn_groupSave(){
     if (!confirm("저장하시겠습니까?")) return;
 
     $.ajax({
-    	url: "/Board/boardGroupSave",
+    	url: "/Manager/boardGroupSave",
     	cache: false,
     	type: "POST",
     	data: { bgno:$("#bgno").val(), bgname:$("#bgname").val(), bgparent: pid,
@@ -114,59 +109,87 @@ function addNode(nodeNo, nodeTitle){
 	node.tree.redraw();
 }
 </script>
-</head>
-<body>
-	<div style="width:270px; height:400px; overflow:auto; display: inline-block;" >
-    	<div id="tree">
-			<ul id="treeData" style="display: none;">
-				
-			</ul>
+
+<main>
+	<div class="main-content">
+		<div class="main-title">
+			<h2>게시판 관리</h2>
+		</div>
+		<div class="join-form-box">
+			<div style="width:300px; height:400px; overflow:auto; display: inline-block;" >
+				<div id="tree">
+					<ul id="treeData" style="display: none;">
+
+					</ul>
+				</div>
+			</div>
+			<div style="width:1000px ; padding-left: 10px; display: inline-block;vertical-align:top;background: #fff;padding:15px;">
+				<div class="left">
+					<p>* 대분류 추가시 화면세로고침 후 그룹명 입력 > 저장</p>
+					<p>* 하위 분류 추가시 상위 게시판 선택 후 "추가" 버튼 클릭 > 그룹명 입력 > 저장</p>
+
+				</div>
+				<div class="right"><button class="btn-default" onclick="fn_groupNew()" >추가</button></div>
+
+				<p>&nbsp;</p>
+				<input name="bgno" id="bgno" type="hidden" value="">
+				<table class="right-table">
+					<colgroup>
+						<col style="width: 160px;">
+						<col style="width: 914px;">
+					</colgroup>
+					<tbody class="sec1-tbody">
+					<tr>
+						<td>그룹명</td>
+						<td>
+							<input name="bgname" id="bgname" style="width: 300px;" type="text" maxlength="100" value="">
+						</td>
+					</tr>
+					<tr>
+						<td>관리</td>
+						<td>
+							<a href="" id="showMgBgno">* 관리할 게시판을 선택하세요</a>
+						</td>
+					</tr>
+					<tr>
+						<td>일반</td>
+						<td>
+							<a href="" id="showBgno">* 관리할 게시판을 선택하세요</a>
+						</td>
+					</tr>
+					<tr class="radio-td">
+						<td>사용여부</td>
+						<td class="radio-td">
+							<input name="bgused" id="bgusedY" type="radio" checked="checked" value="Y" class="styleClass">
+							<label for="bgusedY"><span>사용</span></label>
+							<input name="bgused" id="bgusedN" type="radio" value="N" class="styleClass">
+							<label for="bgusedN"><span>사용중지</span></label>
+						</td>
+					</tr>
+					<tr class="radio-td">
+						<td>등록가능</td>
+						<td>
+							<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N" class="styleClass"><label for="bgreadonlyN"><span>사용</span></label>
+							<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y" class="styleClass"><label for="bgreadonlyY"><span>사용중지</span></label>
+						</td>
+					</tr>
+					<tr class="radio-td">
+						<td>댓글</td>
+						<td>
+							<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y" class="styleClass"><label for="bgreplyY"><span>사용</span></label>
+							<input name="bgreply" id="bgreplyN" type="radio" value="N" class="styleClass"><label for="bgreplyN"><span>사용중지</span></label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<p>&nbsp;</p>
+				<div style="text-align: right;">
+					<button class="btn-default" onclick="fn_groupSave()" href="#">저장</button>
+					<button class="btn-default" onclick="fn_groupDelete()" href="#">삭제</button>
+				</div>
+			</div>
 		</div>
 	</div>
+</main>
 
-	<div style="width: 500px; padding-left: 10px; display: inline-block;vertical-align:top">
-		<div style="text-align: right;"><a onclick="fn_groupNew()" href="#">추가</a></div>
-		<input name="bgno" id="bgno" type="hidden" value=""> 
-		<table style="border: 1px solid; width: 100%; height: 160px">
-			<colgroup>
-				<col width="30%">
-				<col width="70%">
-			</colgroup>
- 	 		<tbody>
-			<tr>
-	 			<th>그룹명</th>
-	 			<td> 
-	 				<input name="bgname" id="bgname" style="width: 300px;" type="text" maxlength="100" value="">
-	 			</td>
-				<th>url</th><td><a href="" id="showBgno">view</a></td>
- 			</tr>
- 			<tr>
-				<th>사용여부</th>
-				<td>
-					<input name="bgused" id="bgusedY" type="radio" checked="checked" value="Y"><label for="bgusedY">사용</label>
-					<input name="bgused" id="bgusedN" type="radio" value="N"><label for="bgusedN">사용중지</label>
-				</td>
-			</tr>
- 			<tr>
-	 			<th>등록가능</th>
-	 			<td>
-					<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N"><label for="bgreadonlyN">사용</label>
-					<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y"><label for="bgreadonlyY">사용안함</label>
-				</td>
- 			</tr>
- 			<tr>
-	 			<th>댓글</th>
-	 			<td>
-					<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y"><label for="bgreplyY">사용</label>
-					<input name="bgreply" id="bgreplyN" type="radio" value="N"><label for="bgreplyN">사용안함</label>
-				</td>
- 			</tr>
-		 </tbody>
-		 </table>
-		<div style="text-align: right;">
-			<a onclick="fn_groupSave()" href="#">저장</a>
-			<a onclick="fn_groupDelete()" href="#">삭제</a>
-        </div>
-	</div>	
-</body>
-</html>
+<%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

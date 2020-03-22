@@ -95,6 +95,9 @@ body{
     background:#da394a;
     color:#fff;
 }
+.src-filter-wrap{
+    margin-top:7px;
+}
 .keyword-src-table{
     width:100%;
     text-align: left;
@@ -193,14 +196,15 @@ body{
     border-bottom: 1px solid #dadada;
 }
 
-.goods-list-wrap tbody td:nth-child(2){text-align: left;}
-.goods-list-wrap tbody td:nth-child(3){text-align: left;}
+.goods-list-wrap tbody td:nth-child(2){text-align: center;}
+.goods-list-wrap tbody td:nth-child(3){text-align: center;}
 .goods-list-wrap tbody td:nth-child(4){text-align: left;}
-.goods-list-wrap tbody td:nth-child(5){text-align: right;}
+.goods-list-wrap tbody td:nth-child(5){text-align: center;}
 .goods-list-wrap tbody td:nth-child(6){text-align: right;}
 .goods-list-wrap tbody td:nth-child(7){text-align: right;}
 .goods-list-wrap tbody td:nth-child(8){text-align: left;}
 .goods-list-wrap tbody td:nth-child(9){text-align: right;}
+.goods-list-wrap tbody td:nth-child(10){text-align: right;}
 .goods-list-wrap tbody td{
     padding:5px;
     border-left: 1px solid #dadada;
@@ -212,9 +216,6 @@ body{
     padding:3px 5px;
     font-size:14px;
     border-radius: 5px;
-}
-.goods-list-btn[name="detail"]{
-    background-color:#da394a;
 }
 
 /*pagination*/
@@ -371,40 +372,11 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
 .fileBox{
     width:100%;
 }
-
-.modal-body textarea{
-    width:100%;
-    min-height:100px;
-    padding:10px;
-}
 .modal-body input[type="radio"]{
     -webkit-appearance: radio;
     -moz-appearance: radio;
     appearance: radio;
     height:auto;
-}
-#goods-exposure+label{
-    margin-right:10px;
-}
-.cc{font-weight: 100;color:#fd5353}
-#goods-min, #goods-max, #goods-point{
-    width:100px;
-}
-#shipping-min, #shipping-max{
-    width:40px;
-}
-#goods-retail, #goods-discount{
-    width:120px;
-}
-.shippingFee-detail-wrap input{
-    width:120px;
-}
-
-.shippingFee-detail-wrap{
-    display:none;
-}
-.shippingFee-detail-wrap.active{
-    display:block;
 }
 
 /*modal goods-add.css*/
@@ -421,13 +393,6 @@ h3{
     border:1px solid;
     padding:3px 5px;
     font-size:12px;
-    border-radius: 5px;
-}
-.goods-list-btn{
-    background:#555555;
-    color:#fff;
-    padding:3px 5px;
-    font-size:14px;
     border-radius: 5px;
 }
 

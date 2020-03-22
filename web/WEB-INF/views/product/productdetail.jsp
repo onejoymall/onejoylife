@@ -34,10 +34,10 @@
                 <form name="defaultForm" id="defaultForm" method="POST" action="/product/productPayment">
                     <div class="goods-name-wrap">
                         <p class="goods-name">
-                            <span class="tag-sale">세일</span>
-                            <span class="tag-coupon">쿠폰</span>
+<%--                            <span class="tag-sale">세일</span>--%>
+<%--                            <span class="tag-coupon">쿠폰</span>--%>
                             <br>
-                            ${list.product_brand}<br> ${list.product_name}
+                            ${list.product_brand_name}<br> ${list.product_name}
                         </p>
                     </div>
                     <div class="goods-price-wrap">

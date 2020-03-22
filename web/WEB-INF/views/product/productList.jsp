@@ -184,11 +184,11 @@
             <form id="form1" name="form1"  method="post">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
-                        <button type="button" class="sort-tab-item active">랭킹순</button>
-                        <button type="button" class="sort-tab-item">낮은가격순</button>
-                        <button type="button" class="sort-tab-item">높은가격순</button>
-                        <button type="button" class="sort-tab-item">판매량</button>
-                        <button type="button" class="sort-tab-item">최신순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=1"/>'">랭킹순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=ASC&sortOrder=2"/>'">낮은가격순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=DESC&sortOrder=3"/>'">높은가격순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=4"/>'">판매량</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=5"/>'">최신순</button>
                     </div>
                     <div class="sort-tab-right">
                         <select name="displayRowCount" class="order-select">
@@ -206,6 +206,7 @@
                 <c:set var="lineCut" value="${status.count%4}"></c:set>
                 <div class="point-product-item">
                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+
                         <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
 <%--                        <p class="sale-percent">35<span>%</span></p>--%>
 <%--                        <i class="share-ic"></i>--%>

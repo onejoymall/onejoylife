@@ -7,7 +7,7 @@ input[type="checkbox"]{
     -moz-appearance: checkbox;
     appearance: checkbox;
 }
-body{
+body main{
     width:100%;
     min-width: 1400px;
     font-size:13px;

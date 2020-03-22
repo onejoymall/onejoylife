@@ -16,10 +16,11 @@
         <h3 class="main-slider-title hide">main slider</h3>
         <div class="main-slider-inner">
             <ul class="main-slider-wrap">
-                <li id="main-slide-1"><a href="<c:url value="/product"/>"></a></li>
-                <li id="main-slide-2"><a href="<c:url value="/product"/>"></a></li>
-                <li id="main-slide-3"><a href="<c:url value="/product"/>"></a></li>
-                <li id="main-slide-4"><a href="<c:url value="/product"/>"></a></li>
+        <c:if test="${not empty categoryBannerList}">
+            <c:forEach var="categoryBannerList" items="${categoryBannerList}" varStatus="status">
+                <li id="main-slide-${status.index+1}" style="background:url(${categoryBannerList.file_link2}) no-repeat center / contain;"><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"></a></li>
+            </c:forEach>
+        </c:if>
             </ul>
         </div>
         <div class="sub-slider-inner">
@@ -49,7 +50,7 @@
                     <c:forEach var="list" items="${giveawaylist}" varStatus="status">
                         <li>
                             <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
-                                <img src="<c:url value="/assets/img/"/>${list.giveaway_list_image}" />
+                                <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'">
                                 <i class="share-ic"></i>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
@@ -95,48 +96,32 @@
             <h4 class="main-section-h4">기획전</h4>
             <div class="exhibition-list-wrap clearfix">
                 <div class="exhibition-row clearfix">
-                    <div class="exhibition-list-item-type1">
-                        <a href="#">
-                            <div class="img-box" id="exhibition-img1"></div>
-                            <p class="exhibition-list-item-title">fashion season off</p>
-                            <p class="exhibition-list-item-date">2019/12/01~2020/01/31</p>
-                            <p class="exhibition-list-item-text">100개 패션 브랜드의 최대 95% 연말 세일</p>
-                        </a>
-                    </div>
-                    <div class="exhibition-list-item-type1">
-                        <a href="#">
-                            <div class="img-box" id="exhibition-img2"></div>
-                            <p class="exhibition-list-item-title">fashion season off</p>
-                            <p class="exhibition-list-item-date">2019/12/01~2020/01/31</p>
-                            <p class="exhibition-list-item-text">100개 패션 브랜드의 최대 95% 연말 세일</p>
-                        </a>
-                    </div>
+                <c:if test="${not empty categoryEventList}">
+                    <c:forEach var="categoryEventList" items="${categoryEventList}" varStatus="status">
+                        <div class="exhibition-list-item-type1">
+                            <a href="/product?product_ct=${categoryEventList.pd_category_id}">
+                                <div class="img-box" id="exhibition-img1" style=" background:url(${categoryEventList.file_link}) center center no-repeat;"></div>
+                                <p class="exhibition-list-item-title">${categoryEventList.pd_category_event_title}</p>
+                                <p class="exhibition-list-item-date">${categoryEventList.pd_category_event_start}~${categoryEventList.pd_category_event_end}</p>
+                                <p class="exhibition-list-item-text">${categoryEventList.pd_category_event_memo}</p>
+                            </a>
+                        </div>
+                    </c:forEach>
+                </c:if>
                 </div>
                 <div class="exhibition-row clearfix">
-                    <div class="exhibition-list-item-type2">
-                        <a href="#">
-                            <div class="img-box" id="exhibition-img3"></div>
-                            <p class="exhibition-list-item-title">달달한게 먹고싶어</p>
-                            <p class="exhibition-list-item-date">2019/12/01~2020/01/31</p>
-                            <p class="exhibition-list-item-text">100개 패션 브랜드의 최대 95% 연말 세일</p>
-                        </a>
-                    </div>
-                    <div class="exhibition-list-item-type2">
-                        <a href="#">
-                            <div class="img-box" id="exhibition-img4"></div>
-                            <p class="exhibition-list-item-title">안다르 따뜻한 연말을 위한 기모상품 추천</p>
-                            <p class="exhibition-list-item-date">2019/12/01~2020/01/31</p>
-                            <p class="exhibition-list-item-text">100개 패션 브랜드의 최대 95% 연말 세일</p>
-                        </a>
-                    </div>
-                    <div class="exhibition-list-item-type2">
-                        <a href="#">
-                            <div class="img-box" id="exhibition-img5"></div>
-                            <p class="exhibition-list-item-title">RIDI BOOKS 기획전</p>
-                            <p class="exhibition-list-item-date">2019/12/01~2020/01/31</p>
-                            <p class="exhibition-list-item-text">100개 패션 브랜드의 최대 95% 연말 세일</p>
-                        </a>
-                    </div>
+                    <c:if test="${not empty categoryEventListSub}">
+                        <c:forEach var="categoryEventListSub" items="${categoryEventListSub}" varStatus="status">
+                            <div class="exhibition-list-item-type2">
+                                <a href="/product?product_ct=${categoryEventListSub.pd_category_id}">
+                                    <div class="img-box" id="exhibition-img${status.index}" style=" background:url(${categoryEventListSub.file_link}) center center no-repeat;"></div>
+                                    <p class="exhibition-list-item-title">${categoryEventListSub.pd_category_event_title}</p>
+                                    <p class="exhibition-list-item-date">${categoryEventListSub.pd_category_event_start}~${categoryEventListSub.pd_category_event_end}</p>
+                                    <p class="exhibition-list-item-text">${categoryEventListSub.pd_category_event_memo}</p>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -160,13 +145,13 @@
         <div class="selected-list-inner">
             <ul class="nav-tabs clearfix">
                 <li class="nav-item">
-                    <a class="nav-link active" data-tab="tab1">MD추천</a>
+                    <a href="javascript:void(0)" class="nav-link active" data-tab="product_md_class">MD추천</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-tab="tab2">인기상품</a>
+                    <a href="javascript:void(0)" class="nav-link" data-tab="product_sp_class">인기상품</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-tab="tab2">신상품</a>
+                    <a href="javascript:void(0)" class="nav-link" data-tab="product_new_class">신상품</a>
                 </li>
             </ul>
             <div class="tab-content-wrap">
@@ -174,23 +159,17 @@
                     <div class="tab-content-item-inner">
                         <div class="category-wrap" id="selected-list-section-cate">
                             <div class="category-row">
-                                <span class="active">채소</span>
-                                <span>과일/견과/쌀</span>
-                                <span>수산/해산/건어물</span>
-                                <span>정육/계란</span>
-                                <span>국/반찬/메인요리</span>
-                                <span>샐러드/간편식</span>
-                                <span>면/양념/오일</span>
+                                <span class="active" onclick="mdSlideCategorySelect()">ALL</span>
+                    <c:if test="${not empty categoryList}">
+                        <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
+                        <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
+                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}')">${categoryList.pd_category_name}</span>
+                        <c:if test="${categoryLineCut  == 0}">
                             </div>
                             <div class="category-row">
-                                <span>음료/우유/떡/간식</span>
-                                <span>베이커리/치즈/델리</span>
-                                <span>건강식품</span>
-                                <span>생활용품</span>
-                                <span>주방용품</span>
-                                <span>가전제품</span>
-                                <span>베이비/키즈</span>
-                                <span>반려동물</span>
+                        </c:if>
+                        </c:forEach>
+                    </c:if>
                             </div>
                         </div>
                         <div class="product-list-type2">
@@ -279,192 +258,34 @@
             </div>
             <div class="product-list-type2">
                 <ul class="special-price-list">
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img2.png" />
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img3.png" />
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img4.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img5.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img2.png" />
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img3.png" />
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img4.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price">15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="img-box">
-                                <img src="assets/img/list-img5.png" />
-                                <p class="sale-percent">35<span>%</span></p>
-                                <i class="share-ic"></i>
-                            </div>
-                            <div class="product-info">
-                                <p class="info-production">삼성전자</p>
-                                <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                <p class="info-score">
-                                    <i class="star-ic"></i>
-                                    <span class="score-number">4.5</span>
-                                    <span class="score-text">5,324개 평가</span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
+                    <c:if test="${not empty productSpList}">
+                        <c:forEach var="productSpList" items="${productSpList}" varStatus="status">
+                            <li>
+                                <a href="/product/productDetail?product_cd=${productSpList.product_cd}">
+                                    <div class="img-box">
+                                        <img src='${productSpList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
+                                            <%--                                            <p class="sale-percent">35<span>%</span></p>--%>
+                                        <i class="share-ic"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <p class="info-production">${productSpList.product_made_company_name}</p>
+                                        <p class="info-product-name">${productSpList.product_name}</p>
+                                        <p class="info-price"><span class="price-before">
+                                            <fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</span>
+                                            <i class="right-arrow"></i><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />원</p>
+                                        <p class="info-score">
+                                            <i class="star-ic"></i>
+                                            <span class="score-number">4.5</span>
+                                            <span class="score-text">5,324개 평가</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty productSpList}">
+                        <li>표시할 내용이 없습니다.</li>
+                    </c:if>
                 </ul>
             </div>
         </div>
@@ -489,218 +310,50 @@
             <h4 class="main-section-h4">카테고리</h4>
             <div class="category-wrap" id="category-section-cate">
                 <div class="category-row">
-                    <span class="active" data-tab="cate-tab1">채소</span>
-                    <span data-tab="cate-tab2">과일/견과/쌀</span>
-                    <span data-tab="cate-tab3">수산/해산/건어물</span>
-                    <span>정육/계란</span>
-                    <span>국/반찬/메인요리</span>
-                    <span>샐러드/간편식</span>
-                    <span>면/양념/오일</span>
+                    <span class="active" onclick="categorySlideCategorySelect()">ALL</span>
+                    <c:if test="${not empty categoryList}">
+                    <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
+                    <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
+                    <span onclick="categorySlideCategorySelect('${categoryList.pd_category_id}')">${categoryList.pd_category_name}</span>
+                    <c:if test="${categoryLineCut  == 0}">
                 </div>
                 <div class="category-row">
-                    <span>음료/우유/떡/간식</span>
-                    <span>베이커리/치즈/델리</span>
-                    <span>건강식품</span>
-                    <span>생활용품</span>
-                    <span>주방용품</span>
-                    <span>가전제품</span>
-                    <span>베이비/키즈</span>
-                    <span>반려동물</span>
+                    </c:if>
+                    </c:forEach>
+                    </c:if>
                 </div>
             </div>
             <div class="product-list-type2">
-                <div class="category-tab-wrap active" id="cate-tab1">
-                    <ul class="category-list">
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img.png" />
-                                    <p class="sale-percent">탭1 35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img2.png" />
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img3.png" />
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img4.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img5.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img2.png" />
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img3.png" />
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img4.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price">15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <div class="img-box">
-                                    <img src="assets/img/list-img5.png" />
-                                    <p class="sale-percent">35<span>%</span></p>
-                                    <i class="share-ic"></i>
-                                </div>
-                                <div class="product-info">
-                                    <p class="info-production">삼성전자</p>
-                                    <p class="info-product-name">갤럭시 버즈 SM-R170NZWAKOO</p>
-                                    <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>
-                                    <p class="info-score">
-                                        <i class="star-ic"></i>
-                                        <span class="score-number">4.5</span>
-                                        <span class="score-text">5,324개 평가</span>
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="category-tab-wrap">
-                </div>
+                <ul class="category-list">
+                    <c:if test="${not empty productList}">
+                        <c:forEach var="productList" items="${productList}" varStatus="status">
+                            <li>
+                                <a href="/product/productDetail?product_cd=${productList.product_cd}">
+                                    <div class="img-box">
+                                        <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
+                                            <%--                                            <p class="sale-percent">35<span>%</span></p>--%>
+                                        <i class="share-ic"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <p class="info-production">${productList.product_made_company_name}</p>
+                                        <p class="info-product-name">${productList.product_name}</p>
+                                        <p class="info-price"><span class="price-before">
+                                                <fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</span>
+                                            <i class="right-arrow"></i><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</p>
+                                        <p class="info-score">
+                                            <i class="star-ic"></i>
+                                            <span class="score-number">4.5</span>
+                                            <span class="score-text">5,324개 평가</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty productList}">
+                        <li>표시할 내용이 없습니다.</li>
+                    </c:if>
+                </ul>
             </div>
         </div>
     </article>
@@ -743,7 +396,7 @@
             <h4 class="main-section-h4">ONEJOY 고객지원센터</h4>
             <div class="qna-wrap">
                 <div class="qna-button">
-                    <a href="#">
+                    <a href="/Help/csBoard">
                         <i class="chat-ic"></i>
                         <p class="qna-title">문의하기</p>
                         <p class="qna-subtitle">무엇이든 물어보세요</p>
@@ -757,121 +410,105 @@
         <h3 class=hide>공지</h3>
         <div class="notice-inner">
             <h4 class="main-section-h4">공지합니다</h4>
-            <p class="special-price-more"><a href="#">공지사항 더보기<i class="right-arrow"></i></a></p>
+            <p class="special-price-more"><a href="/Board/boardList?bgno=8">공지사항 더보기<i class="right-arrow"></i></a></p>
             <ul class="notice-list">
+<c:if test="${not empty noticeListView}">
+    <c:forEach var="noticeListView" items="${noticeListView}" varStatus="status">
                 <li>
-                    <div class="notice-title"><a href="#">&#91;안내&#93; 개인정보처리방침 변경 안내</a></div>
-                    <div class="notice-date"><span>2019.10.18</span><i class="arrow-down" id="arrow"></i></div>
+
+                    <div class="notice-title"><a>${noticeListView.brdtitle}</a></div>
+                    <div class="notice-date"><span>${noticeListView.brddate}</span><i class="arrow-down" id="arrow"></i></div>
                     <div class="notice-content">
-                        개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경안내 개인정보처리방침 변경 안내 개인정 보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 <br>개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내 개인정보처리방침 변경 안내
+                            ${noticeListView.brdmemo}
                     </div>
                 </li>
-                <li>
-                    <div class="notice-title"><a href="#">&#91;안내&#93; 전자금융거래약관 개정</a></div>
-                    <div class="notice-date"><span>2019.10.18</span><i class="arrow-down" id="arrow"></i></div>
-                    <div class="notice-content">
-                        내용
-                    </div>
-                </li>
-                <li>
-                    <div class="notice-title"><a href="#">&#91;주의&#93; 식약처, 산란계 농가 계란 검사 결과, 부적합 계란 회수·폐기</a></div>
-                    <div class="notice-date"><span>2019.10.18</span><i class="arrow-down" id="arrow"></i></div>
-                    <div class="notice-content">
-                        내용
-                    </div>
-                </li>
-                <li>
-                    <div class="notice-title"><a href="#">&#91;주의&#93; 식약처, 비멸균 의료용 겔 유통 판매 금지 및 회수 조치</a></div>
-                    <div class="notice-date"><span>2019.10.18</span><i class="arrow-down" id="arrow"></i></div>
-                    <div class="notice-content">
-                        내용
-                    </div>
-                </li>
+    </c:forEach>
+</c:if>
             </ul>
         </div>
     </article>
 </section>
 
 <script>
-    $(document).ready(function(){
-        $('.main-slider-wrap').bxSlider({
-            auto:true,
-            autoHover:true,
-            speed:500,
-            mode:'horizontal',
-            autoControls:true,
-            pager:true,
-            pagerType:'short',
-            controls:true,
-            useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
-        });
-        $('.sub-slider-wrap').bxSlider({
-            auto:false,
-            mode:'horizontal',
-            slideWidth:330,
-            moveSlides:3,
-            slideMargin:30,
-            minSlides:3,
-            maxSlides:3,
-            speed:500,
-            pager:false,
-            autoControls:true,
-            controls:true,
-            useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
-        });
-        $('.selected-list').bxSlider({
-            auto:false,
-            mode:'horizontal',
-            infiniteLoop:false,
-            hideControlOnEnd:false,
-            slideWidth:190,
-            moveSlides:5,
-            slideMargin:25,
-            minSlides:5,
-            maxSlides:5,
-            speed:500,
-            pager:false,
-            autoControls:true,
-            controls:true,
-            useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
-        });
-        $('.special-price-list').bxSlider({
-            auto:false,
-            mode:'horizontal',
-            infiniteLoop:false,
-            hideControlOnEnd:false,
-            slideWidth:243,
-            moveSlides:4,
-            slideMargin:25,
-            minSlides:4,
-            maxSlides:4,
-            speed:500,
-            pager:false,
-            autoControls:true,
-            controls:true,
-            useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
-        });
-        $('.category-list').bxSlider({
-            auto:false,
-            mode:'horizontal',
-            infiniteLoop:false,
-            hideControlOnEnd:false,
-            slideWidth:190,
-            moveSlides:5,
-            slideMargin:25,
-            minSlides:5,
-            maxSlides:5,
-            speed:500,
-            pager:false,
-            autoControls:true,
-            controls:true,
-            useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
-        });
+    //슬라이더 선언
+
+    $('.main-slider-wrap').bxSlider({
+        auto:true,
+        autoHover:true,
+        speed:500,
+        mode:'horizontal',
+        autoControls:true,
+        pager:true,
+        pagerType:'short',
+        controls:true,
+        useCSS:false,
+        touchEnabled : (navigator.maxTouchPoints > 0),
+    });
+    $('.sub-slider-wrap').bxSlider({
+        auto:false,
+        mode:'horizontal',
+        slideWidth:330,
+        moveSlides:3,
+        slideMargin:30,
+        minSlides:3,
+        maxSlides:3,
+        speed:500,
+        pager:false,
+        autoControls:true,
+        controls:true,
+        useCSS:false,
+        touchEnabled : (navigator.maxTouchPoints > 0),
+    });
+    $('.special-price-list').bxSlider({
+        auto:false,
+        mode:'horizontal',
+        infiniteLoop:false,
+        hideControlOnEnd:false,
+        slideWidth:243,
+        moveSlides:4,
+        slideMargin:25,
+        minSlides:4,
+        maxSlides:4,
+        speed:500,
+        pager:false,
+        autoControls:true,
+        controls:true,
+        useCSS:false,
+        touchEnabled : (navigator.maxTouchPoints > 0),
+    });
+    var categoryList = $('.category-list').bxSlider({
+        auto:false,
+        mode:'horizontal',
+        infiniteLoop:false,
+        hideControlOnEnd:false,
+        slideWidth:190,
+        moveSlides:5,
+        slideMargin:25,
+        minSlides:5,
+        maxSlides:5,
+        speed:500,
+        pager:false,
+        autoControls:true,
+        controls:true,
+        useCSS:false,
+        touchEnabled : (navigator.maxTouchPoints > 0),
+    });
+    var selectedList = $('.selected-list').bxSlider({
+        auto:false,
+        mode:'horizontal',
+        infiniteLoop:false,
+        hideControlOnEnd:false,
+        slideWidth:190,
+        moveSlides:5,
+        slideMargin:25,
+        minSlides:5,
+        maxSlides:5,
+        speed:500,
+        pager:false,
+        autoControls:true,
+        controls:true,
+        useCSS:false,
+        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
     });
     $(document).ready(function(){
         $('.notice-list>li').click(function(){
@@ -911,22 +548,20 @@
 
     //탭메뉴
     $(document).ready(function(){
-
-
         $('.category-wrap span').on('click',function(){
             var tab_id = $(this).attr('data-tab');
             var arti = $(this).parents('article');
-
             arti.find('span').removeClass('active');
             arti.find('.category-tab-wrap').removeClass('active');
-
             $(this).addClass('active');
             $("#" + tab_id).addClass('active');
-
-            cateslider.reloadSlider({});
-
         });
 
+    });
+    $('.selected-list-inner .nav-item a').click(function(){
+        $('.selected-list-inner .nav-item a').removeClass('active');
+        $(this).addClass('active');
+        mdSlideCategorySelect('',$(this).attr('data-tab'))
     });
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

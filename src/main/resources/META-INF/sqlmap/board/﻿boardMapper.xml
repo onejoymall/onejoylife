@@ -22,6 +22,7 @@
              , (SELECT COUNT(*) FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT
              , (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
              , BRDMEMO
+
           FROM TBL_BOARD TB
          <include refid="includeBoard"/>
          ORDER BY BRDNO DESC 

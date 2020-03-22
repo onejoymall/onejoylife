@@ -3,29 +3,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
-	<c:if test="${bgInfo.bgreadonly=='N'}">
-		<a href="boardForm?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>
-	</c:if>
+<%--	<c:if test="${bgInfo.bgreadonly=='N'}">--%>
+<%--		<a href="boardForm?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>--%>
+<%--	</c:if>--%>
 
 <div class="wrap">
 	<div class="page-box">
 		<main class="clearfix">
-			<div class="left-nav">
-				<h2 class="left-tit"><a href="help-1.html">고객센터</a></h2>
-				<ul class="outer-ul">
-					<li class="outer-li"><a href="help-1.html">ONEJOYLIFE</a></li>
-					<li class="outer-li"><a href="help-2.html">포인트 사용안내</a></li>
-					<li class="outer-li"><a href="help-3.html">FAQ 센터</a></li>
-					<li class="outer-li">1:1 문의하기
-						<ul class="inner-ul">
-							<li><a href="help-4.html">1:1 메일문의 작성</a></li>
-							<li><a href="help-5.html">고객센터 전화번호 안내</a></li>
-						</ul>
-					</li>
-					<li class="outer-li"><a href="help-6.html">채팅 문의하기</a></li>
-					<li class="outer-li"><a href="help-7.html" class="active">공지사항</a></li>
-				</ul>
-			</div>
+			<%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
 			<div class="right-contain">
 				<div class="r-sec1">
 

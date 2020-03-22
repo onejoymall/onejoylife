@@ -48,13 +48,13 @@
                 </li>
                 <li><a href="/mall/today">오늘의 특가</a></li>
                 <li><a href="#">이벤트</a></li>
-                <li><a href="#">라이브 쇼핑</a></li>
+                <li><a href="/mall/live-shopping">라이브 쇼핑</a></li>
             </ul>
             <div class="search-box">
                 <div class="cart-box">
-                    <a href="sub/mypage-4.html">
+                    <a href="/MyPage/ShoppingBasket">
                         <i class="cart-ic"></i>
-                        <span class="cart-num">0</span>
+                        <span class="cart-num">${searchVO.totRow}</span>
                     </a>
                 </div>
                 <form action="" id="main-search-form" name="main-search-form" method="get">

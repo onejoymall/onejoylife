@@ -17,14 +17,12 @@
         <div class="inner">
             <div class="goods-slider-wrap">
                 <ul class="goods-slider">
-                    <li><img src="<c:url value="/assets/fileupload/giveaway/${detail.giveaway_list_image}"/>" /></li>
-                    <li><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></li>
-                    <li><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></li>
+                    <li><img src='${detail.file_1}'  ></li>
+                    <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
                 </ul>
                 <div id="bx-pager">
-                    <a data-slide-index="0" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
-                    <a data-slide-index="1" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
-                    <a data-slide-index="2" href=""><img src="/assets/fileupload/giveaway/${detail.giveaway_list_image}" /></a>
+                    <a data-slide-index="0" href=""><img src='${detail.file_1}'  ></a>
+                    <a data-slide-index="1" href=""><img src='${detail.file_5}' onerror="this.src='http://placehold.it/80'" ></a>
                 </div>
 
                 <div class="share-list">
@@ -103,48 +101,7 @@
             <a href="#" class="img-box"><img src="../assets/img/goods-view/bnr1.jpg" alt="매일 100% 당첨 행운의 룰렛" /></a>
         </div>
     </article>
-    <article class="related-goods-section">
-        <div class="inner">
-            <h2>비슷한 상품</h2>
-            <ul class="related-goods">
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-                <li><a href="#">
-                    <div class="img-box"><img src="../assets/img/goods-view/main-slider.jpg" /></div>
-                    <p class="goods-name">STUDIO TOMBOY<br>봄맞이 트렌치코트, 자켓 외 30종 할인</p>
-                    <p class="goods-price"><span>92,344</span>원</p>
-                </a></li>
-            </ul>
-        </div>
-    </article>
+
     <article class="goods-detail-section">
         <div class="inner">
             <div class="goods-detail-wrap" id="goods-description">
@@ -154,140 +111,10 @@
                     <li><a href="#goods-shipping"><span>경품안내</span></a></li>
                 </ul>
                 <div class="description-img">
-                    <img src="../assets/img/goods-view/details.jpg" />
+                    ${detail.giveaway_html}
                 </div>
             </div>
-            <div class="also-viewed-goods">
-                <h5>함께 본 경품</h5>
-                <ul class="related-goods">
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">
-                        <img src="../assets/img/e-point-img1.png" />
-                        <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>
-                    </a>
-                        <div class="point-pdt-parti-wrap">
-                            <div class="parti-percent-wrap">
-                                <span class="progress">0%</span>
-                                <span class="progress-now">참여율 <b class="progress-now-number">80%</b></span>
-                                <span class="progress">100%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-active"></div>
-                            </div>
-                            <div class="parti-point-wrap">
-                                <p><span class="parti-point-now">195,980</span>/239,000 E-point</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
             <div class="goods-detail-wrap" id="goods-information">
                 <ul class="detail-nav">
                     <li><a href="#goods-description"><span>상품설명</span></a></li>

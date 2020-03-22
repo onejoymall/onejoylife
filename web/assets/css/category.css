@@ -66,7 +66,7 @@ body{
 }
 /* left */
 .main-left {
-    width: 15%;
+    min-width: 15%;
     border: 1px solid #dadada;
     float: left;
     margin-right:10px;
@@ -78,19 +78,49 @@ body{
     background: #f1f1f1;
     border-bottom: 1px solid #dadada;
 }
+.main-left-footer{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 10px;
+    background: #f1f1f1;
+    border-top: 1px solid #dadada;
+}
 .left-head-tit span input{
-    width: 50px;
+    padding: 5px 10px;
     height: 30px;
     border: none;
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
 }
-.left-head-tit span:nth-of-type(2) input{
+.left-head-tit input{
+    padding: 5px 10px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+.categoty-select{
+    width:150px;
+}
+.main-left-head input.add-folder{
     background: #59a9e5;
 }
-.left-head-tit span:nth-of-type(3) input{
+.main-left-head input.remove-folder{
     background: #ef606f;
+}
+.main-left-footer input {
+    background: #59a9e5;
+}
+.main-left-head span:nth-of-type(2) input{
+    background: #59a9e5;
+}
+.main-left-head span:nth-of-type(3) input{
+    background: #ef606f;
+}
+.main-left-footer span input {
+    background: #59a9e5;
 }
 .category-tree{
     width: 100%;
@@ -105,6 +135,10 @@ body{
 .category-tree li a.active{
     background:#84c2ff;
     padding:5px;
+}
+/*하단에 새로 추가 : img/icon폴더에 d-6.png 파일도 새로 추가됨*/
+.category-tree-2dp > li > a > span.active, .category-tree > li > a > span.active{
+    background: url(../img/icon/d-6.png) no-repeat center / 15px
 }
 .category-tree > li > a > span{
     display: inline-block;
@@ -127,6 +161,16 @@ body{
     height: 15px;
     background: url(../img/icon/d-4.png) no-repeat center / 15px
 }
+.category-tree-2dp > li:last-child > a::after,
+.category-tree-3dp > li:last-child > a::after{
+    content: "";
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-left: 5px;
+    background: url(../img/icon/+-icon.svg) no-repeat center / cover;
+    vertical-align: -3px;
+}
 .category-tree-2dp > li {
     padding-left: 20px;
 }
@@ -135,7 +179,7 @@ body{
 }
 /* right */
 .main-right{
-    width: calc(85% - 10px);
+    min-width: calc(80% - 10px);
     float:left;
 }
 .main-right>div{
@@ -247,6 +291,21 @@ input[id="right-ra2"] + label{
 }
 input[id="right-ra1"]:checked + label,
 input[id="right-ra2"]:checked + label
+{
+    background: url(../img/icon/but-g-2.png)no-repeat center / 20px;
+}
+input[class='styleClass'] + label
+{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url(../img/icon/but-g-1.png)no-repeat center / 20px;
+    cursor: pointer;
+}
+.radio-td label:nth-of-type(2){
+    margin-left: 35px;
+}
+input[class='styleClass']:checked + label
 {
     background: url(../img/icon/but-g-2.png)no-repeat center / 20px;
 }

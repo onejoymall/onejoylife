@@ -44,10 +44,14 @@ public class ProductController {
 //            params.put("email",session.getAttribute("email"));
 //            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 //            params.put("point_paid_user_id",userInfo.get("usr_id"));
-            if(searchVO.getDisplayRowCount()==null){
+            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
                 searchVO.setDisplayRowCount(12);
             }
-
+            // 기본정렬
+            if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
+                searchVO.setOrderByKey("product_id");
+                searchVO.setOrderByValue("DESC");
+            }
 
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
 

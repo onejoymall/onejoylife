@@ -92,6 +92,9 @@ body{
     background:#da394a;
     color:#fff;
 }
+.src-filter-wrap{
+    margin-top:7px;
+}
 .keyword-src-table{
     width:100%;
     text-align: left;
@@ -443,4 +446,7 @@ input[name="com-ra"]{
 }
 .in-charge2 tr td:nth-of-type(3) input{
     width: 100%;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
 }

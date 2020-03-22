@@ -11,7 +11,7 @@ body{
     width:100%;
     min-width: 1400px;
     font-size:12px;
-    font-family: '돋움',sans-serif;
+    font-family: '맑은 고딕', 'Malgun Gothic', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
     word-break: keep-all;
 }
 .main-content {
@@ -91,6 +91,9 @@ body{
     height:100%;
     background:#da394a;
     color:#fff;
+}
+.src-filter-wrap{
+    margin-top:7px;
 }
 .keyword-src-table{
     width:100%;
@@ -370,4 +373,7 @@ a[name='detail']:hover {
     -moz-appearance: radio;
     appearance: radio;
     height:auto;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
 }

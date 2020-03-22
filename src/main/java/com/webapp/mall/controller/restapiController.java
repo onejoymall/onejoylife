@@ -2,6 +2,7 @@ package com.webapp.mall.controller;
 import autovalue.shaded.com.google$.auto.common.$MoreTypes;
 import autovalue.shaded.com.google$.common.base.$Predicate;
 import com.sun.javafx.collections.MappingChange;
+import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
@@ -423,7 +424,13 @@ public class restapiController {
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
             //주문번호 생성
-            String order_no = "ORDER-"+numberGender.numberGen(6,1);
+            String order_no;
+            if(params.get("order_no").equals("")){
+                order_no = "GW-ORDER-"+numberGender.numberGen(6,1);
+            }else{
+                order_no = (String)params.get("order_no");
+            }
+
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             if(isEmpty(userInfo)){
                 deliveryInfoVO.setOrder_user_id( Integer.parseInt(numberGender.numberGen(6,1)));
@@ -493,8 +500,8 @@ public class restapiController {
                 //상품 포인트
                 Map<String,Object> productInfo  = productDAO.getProductViewDetail(params);
                 Integer payment = (Integer)productInfo.get("product_payment");
-
-                if((Double)productInfo.get("product_point_rate") > 0.0){
+                //포인트 배율이 있으면
+                if(productInfo.get("product_point_rate") !=null){
                     Double rate = (Double)productInfo.get("product_point_rate");
                     Double sum = (payment * rate)/100;
                     params.put("point_amount",userPoint+sum);
@@ -522,7 +529,7 @@ public class restapiController {
 //            if(params.get("payment_class").equals("PRODUCT")){
 //
 //            }
-            resultMap.put("redirectUrl", "/MyPage/GiveawayWinningList");
+            resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -530,20 +537,27 @@ public class restapiController {
     }
     //장바구니 등록
     @RequestMapping(value = "/cart/addcart")
-    public  HashMap<String, Object> addCart(@RequestParam HashMap params,HttpSession session){
+    public  HashMap<String, Object> addCart(@RequestParam HashMap params,HttpSession session,HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
+
             //카트번호
             params.put("cart_cd","CR"+numberGender.numberGen(6,1));
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 
-
             if(isEmpty(userInfo)){
+                String cart_user_id = numberGender.numberGen(6,1);
                 params.put("member_yn","N");
-                params.put("cart_user_id",numberGender.numberGen(6,1));
+
+                if ( session.getAttribute("nonMembersUserId") == null ){
+                    session.setAttribute("nonMembersUserId",cart_user_id);
+                    params.put("cart_user_id",cart_user_id);
+                }else{
+                    params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+                }
             }else{
                 params.put("member_yn","Y");
                 params.put("cart_user_id",userInfo.get("usr_id"));
@@ -555,7 +569,8 @@ public class restapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-               cartDAO.insertCart(params);
+                cartDAO.insertCart(params);
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -581,6 +596,26 @@ public class restapiController {
         try{
 //            cartDAO.deleteCart(params);
             resultMap.put("redirectUrl","/MyPage/OrderAndDelivery");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    // 매인 상품 진열
+    @RequestMapping(value="/product/mainList")
+    public HashMap<String, Object> productMainList(@RequestParam HashMap params, HttpSession session, SearchVO searchVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
+                searchVO.setOrderByKey("product_id");
+                searchVO.setOrderByValue("DESC");
+            }
+            searchVO.setDisplayRowCount(8);
+            searchVO.setStaticRowEnd(8);
+            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
+            searchVO.setProduct_sale_yn("Y");
+            List<Map<String,Object>> list = productDAO.getProductList(searchVO);
+            resultMap.put("mdSlideCategorySelect",list);
         }catch (Exception e){
             e.printStackTrace();
         }

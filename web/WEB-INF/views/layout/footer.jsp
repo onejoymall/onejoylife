@@ -7,14 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+    <%@ include file="/WEB-INF/views/layout/modal.jsp" %>
 <footer>
     <div class="footer-top-section">
         <ul class="clearfix">
             <li><a href="#">이용약관</a></li>
             <li><a href="#">개인정보처리방침</a></li>
             <li><a href="#">쇼핑몰 입점/제휴 문의</a></li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="/Help/csinfo">고객센터</a></li>
         </ul>
     </div>
     <div class="footer-bottom-section clearfix">
@@ -57,6 +57,8 @@
         </div>
     </div>
 </footer>
+
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
 
     <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
@@ -69,6 +71,6 @@
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 </body>
 </html>

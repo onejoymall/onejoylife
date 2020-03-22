@@ -1,7 +1,10 @@
 package com.webapp.board.common;
 
 
-public class SearchVO extends  PageVO  {
+import com.webapp.mall.vo.GiveawayVO;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class SearchVO extends PageVO{
 
     private String bgno;                       // 게시판 그룹
     private String searchKeyword = "";         // 검색 키워드
@@ -10,6 +13,51 @@ public class SearchVO extends  PageVO  {
     private String product_sale_yn;
     private Integer product_ct;
     private Integer pd_category_id;
+    private String mainViewType;
+    private String orderByKey;
+    private String orderByValue;
+    private Integer sortOrder;
+    private Integer giveaway_id;
+
+    public Integer getGiveaway_id() {
+        return giveaway_id;
+    }
+
+    public void setGiveaway_id(Integer giveaway_id) {
+        this.giveaway_id = giveaway_id;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getOrderByKey() {
+        return orderByKey;
+    }
+
+    public void setOrderByKey(String orderByKey) {
+        this.orderByKey = orderByKey;
+    }
+
+    public String getOrderByValue() {
+        return orderByValue;
+    }
+
+    public void setOrderByValue(String orderByValue) {
+        this.orderByValue = orderByValue;
+    }
+
+    public String getMainViewType() {
+        return mainViewType;
+    }
+
+    public void setMainViewType(String mainViewType) {
+        this.mainViewType = mainViewType;
+    }
 
     public Integer getPd_category_id() {
         return pd_category_id;

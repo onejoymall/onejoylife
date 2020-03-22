@@ -21,16 +21,13 @@
     <link href="/assets/css/header-admin.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/${style}.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/common/common.css" rel="stylesheet" type="text/css">
-
-
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
-
-
-
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <link rel="stylesheet" href="<c:url value="/assets/js/dynatree/ui.dynatree.css" />" id="skinSheet"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script src="<c:url value="/assets/js/dynatree/jquery.dynatree.js" />"></script>
     <script>
         //전역변수
         <c:if test="${not empty postUrl}">
@@ -64,11 +61,16 @@
             </div>
         </div>
     </div>
-    <c:if test="${sessionScope.adminLogin}">
+    <c:if test="${!sessionScope.adminLogin}">
     <div class="header-in">
         <div class="header-gnb">
             <ul class="gnb-out-ul">
-                <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/ManagerMain">운영관리</a></li>
+                <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/info-join">운영관리</a>
+                    <ul class="gnb-in-ul">
+                        <li><a href="/Manager/info-join">기본 관리</a></li>
+                        <li><a href="/Manager/boardGroupList">게시판관리</a> </li>
+                    </ul>
+                </li>
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/Product">상품관리</a>
@@ -78,51 +80,50 @@
 <%--                                <li><a href="">업체가격 수정승인</a></li>--%>
                             </ul>
                         </li>
-                        <li><a href="">경품관리</a>
+                        <li><a href="/Manager/Giveaway">경품관리</a>
                             <ul>
-                                <li><a href="">경품리스트</a></li>
-                                <li><a href="">경품등록</a></li>
+                                <li><a href="/Manager/Giveaway">경품리스트</a></li>
+                                <li><a href="/Manager/GiveawayAdd">경품등록</a></li>
                             </ul>
                         </li>
-                        <li><a href="">프로모션관리</a>
+                        <li><a href="/Manager/promotion-coupon">프로모션관리</a>
                             <ul>
-                                <li><a href="">쿠폰 등록 및 관리</a></li>
-                                <li><a href="">메인페이지, 기획전/이벤트 관리</a></li>
+                                <li><a href="/Manager/promotion-coupon">쿠폰 등록 및 관리</a></li>
+<%--                                <li><a href="">메인페이지, 기획전/이벤트 관리</a></li>--%>
                             </ul>
                         </li>
-                        <li><a href="">상품속성관리</a>
+                        <li><a href="/Manager/option-product">상품속성관리</a>
                             <ul>
-                                <li><a href="">상품옵션설정</a></li>
-                                <li><a href="">서비스 안내관리</a></li>
-                                <li><a href="">브랜드등록</a></li>
+                                <li><a href="/Manager/option-product">상품옵션설정</a></li>
+                                <li><a href="/Manager/market-config-partner">서비스 안내관리</a></li>
+                                <li><a href="/Manager/option-brand">브랜드등록</a></li>
                             </ul>
                         </li>
                         <li><a href="/Manager/Category">카테고리관리</a>
                             <ul>
                                 <li><a href="/Manager/Category">관리분류</a></li>
-                                <li><a href="">전시분류</a></li>
+<%--                                <li><a href="">전시분류</a></li>--%>
                             </ul>
                         </li>
                     </ul>
                 </li>
-                <li><a href="">업체관리</a>
+                <li <c:if test="${topNav == 3}">class="active" </c:if>><a href="">업체관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">업체관리</a>
+                        <li><a href="/Manager/company-app">업체관리</a>
                             <ul>
-                                <li><a href="">업체신청현황</a></li>
-                                <li><a href="">업체현황조회</a></li>
+                                <li><a href="/Manager/company-app">업체신청현황</a></li>
                             </ul>
                         </li>
-                        <li><a href="">공지사항관리</a></li>
+<%--                        <li><a href="">공지사항관리</a></li>--%>
                     </ul>
                 </li>
-                <li><a href="">주문관리</a>
+                <li <c:if test="${topNav == 4}">class="active" </c:if>><a href="">주문관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">주문관리</a>
+                        <li><a href="/Manager/order">주문관리</a>
                             <ul>
-                                <li><a href="">주문현황관리</a></li>
-                                <li><a href="">주문취소관리</a></li>
-                                <li><a href="">교환/반품처리</a></li>
+                                <li><a href="/Manager/order">주문현황관리</a></li>
+                                <li><a href="/Manager/canceled">주문취소관리</a></li>
+                                <li><a href="/Manager/returned">교환/반품처리</a></li>
                             </ul>
                         </li>
                         <li><a href="">배송관리</a>
@@ -134,26 +135,26 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="">매출관리</a>
+                <li <c:if test="${topNav == 5}">class="active" </c:if>><a href="">매출관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="">분류별 매출현황</a></li>
                         <li><a href="">상품별 매출현황</a></li>
                         <li><a href="">날짜별 매출현황</a></li>
                     </ul>
                 </li>
-                <li><a href="">회원관리</a>
+                <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="">회원관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="">일반 회원관리</a></li>
                         <li><a href="">회원 마케팅관리</a></li>
                     </ul>
                 </li>
-                <li><a href="">계정관리</a>
+                <li <c:if test="${topNav == 7}">class="active" </c:if>><a href="">계정관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="">사용권한 설정</a></li>
                         <li><a href="">사용자 계정관리</a></li>
                     </ul>
                 </li>
-                <li><a href="">정산관리</a>
+                <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="">정산관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="">업체별 정산내역</a>
                             <ul>
@@ -164,7 +165,7 @@
                         <li><a href="">경품관리</a></li>
                     </ul>
                 </li>
-                <li><a href="">CS관리</a>
+                <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="">CS관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="">상품 QA</a></li>
                         <li><a href="">상담관리</a>

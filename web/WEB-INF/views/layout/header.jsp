@@ -30,6 +30,9 @@
     <link rel='stylesheet' href='<c:url value="/assets/css/common/common.css"/>'/>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+
+    <!--modal-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <!--
     [if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>

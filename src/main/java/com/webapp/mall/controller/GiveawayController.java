@@ -5,6 +5,8 @@ import com.webapp.common.dao.SelectorDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.manager.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,25 +32,33 @@ public class GiveawayController {
     SelectorDAO selectorDAO;
     @Autowired
     PointDAO pointDAO;
+    @Autowired
+    private CategoryDAO categoryDAO;
     //경품 목록
     @RequestMapping(value="/giveaway")
-    public String giveawayList(Model model, HttpSession session, HashMap params, SearchVO searchVO) {
+    public String giveawayList(Model model, HttpSession session, HashMap params, GiveawayVO giveawayVO) {
         try{
             //사용자 아이디 확인 후 전달
 //            params.put("email",session.getAttribute("email"));
 //            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 //            params.put("point_paid_user_id",userInfo.get("usr_id"));
-            if(searchVO.getDisplayRowCount()==null){
-                searchVO.setDisplayRowCount(9);
+            if(giveawayVO.getDisplayRowCount()==null || giveawayVO.getDisplayRowCount() < 9){
+                giveawayVO.setDisplayRowCount(9);
             }
 
-
-            searchVO.pageCalculate(giveawayDAO.getGiveawayListCount(params));
-            params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            List<Map<String,Object>> list = giveawayDAO.getGiveawayList(params);
+            // 기본정렬
+            if(giveawayVO.getOrderByValue()==null || giveawayVO.getOrderByKey()==null){
+                giveawayVO.setOrderByKey("giveaway_id");
+                giveawayVO.setOrderByValue("DESC");
+            }
+            giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
+            params.put("rowStart",giveawayVO.getRowStart());
+            params.put("staticRowEnd",giveawayVO.getStaticRowEnd());
+            List<Map<String,Object>> list = giveawayDAO.getGiveawayList(giveawayVO);
+            Map<String,Object> categoryRowData = categoryDAO.getCategoryDetail(giveawayVO);
             model.addAttribute("list", list);
-            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("categoryRowData",categoryRowData);
+            model.addAttribute("searchVO", giveawayVO);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -58,33 +68,39 @@ public class GiveawayController {
     //경품 상세333
     @RequestMapping(value="/giveaway/giveawaydetail",method = RequestMethod.GET)
     public String giveawayDetail(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws SQLException {
-        params.put("email",session.getAttribute("email"));
-        //로그인 확인
-        Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-        if(!isEmpty(userInfo)){
-            params.put("point_paid_user_id",userInfo.get("usr_id"));
-            Integer point = pointDAO.getPointAmount(params);
-            model.addAttribute("point_amount",point);
+        try{
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                params.put("point_paid_user_id",userInfo.get("usr_id"));
+                Integer point = pointDAO.getPointAmount(params);
+                model.addAttribute("point_amount",point);
+            }
+
+            params.put("giveaway_id",request.getParameter("giveaway_id"));
+            Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
+            //배송정보
+            params.put("delivery_class",detail.get("giveaway_delivery_class"));
+            //배송밥법
+            params.put("delivery_type",detail.get("giveaway_delivery_type"));
+            //배송비구분
+            params.put("delivery_payment_class",detail.get("giveaway_delivery_payment_class"));
+            //배송비 구분별 값
+            params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
+            Map<String,Object> delivery = giveawayDelivery(params);
+
+            model.addAttribute("delivery",delivery);
+            model.addAttribute("delivery_type_list", delivery.get("selector"));
+            model.addAttribute("style", "gift-view");
+            model.addAttribute("detail", detail);
+            //포인트 확인 url
+            model.addAttribute("postUrl", "/giveaway/PointAmountCheckProc");
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        params.put("giveaway_id",request.getParameter("giveaway_id"));
-        Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
-        //배송정보
-        params.put("delivery_class",detail.get("giveaway_delivery_class"));
-        //배송밥법
-        params.put("delivery_type",detail.get("giveaway_delivery_type"));
-        //배송비구분
-        params.put("delivery_payment_class",detail.get("giveaway_delivery_payment_class"));
-        //배송비 구분별 값
-        params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
-        Map<String,Object> delivery = giveawayDelivery(params);
 
-        model.addAttribute("delivery",delivery);
-        model.addAttribute("delivery_type_list", delivery.get("selector"));
-        model.addAttribute("style", "gift-view");
-        model.addAttribute("detail", detail);
-        //포인트 확인 url
-        model.addAttribute("postUrl", "/giveaway/PointAmountCheckProc");
         return "giveaway/giveawaydetail";
     }
 

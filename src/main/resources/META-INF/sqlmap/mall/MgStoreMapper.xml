@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgStoreMapper">
+  <select id="getStoreList" parameterType="com.webapp.manager.vo.StoreVO" resultType="java.util.Map">
+    select *,
+      (select code.code_name from code where code.code='store_approval_status' and code.code_value=store.store_approval_status) as store_approval_status_name,
+    (select product_file.file_link from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_1
+    from store where 1=1
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
+    <if test="orderByKey == null"> order by reg_date DESC </if>
+    LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  <select id="getStoreListCount" parameterType="com.webapp.manager.vo.StoreVO" resultType="Integer">
+    select IFNULL(count(*),0) as cnt
+    from store where 1=1
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+  </select>
+  <select id="getStoreDetail" parameterType="com.webapp.manager.vo.StoreVO" resultType="java.util.Map">
+    select *,
+    (select code.code_name from code where code.code='store_approval_status' and code.code_value=store.store_approval_status) as store_approval_status_name,
+    (select product_file.file_link from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_1,
+    (select product_file.file_name from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_name
+    from store where store_id=#{store_id}
+  </select>
+  <select id="getStoreRegDetail" parameterType="com.webapp.manager.vo.StoreVO" resultType="java.util.Map">
+    select *,
+    (select code.code_name from code where code.code='store_approval_status' and code.code_value=store.store_approval_status) as store_approval_status_name,
+    (select product_file.file_link from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_1
+    from store where store_reg=#{store_reg}
+  </select>
+  <insert id="insertStore" parameterType="com.webapp.manager.vo.StoreVO">
+      insert into store
+      (
+        store_id,
+        store_password,
+        store_name,
+        store_reg,
+        store_ceo_name,
+        store_type,
+        store_item,
+        store_online_reg,
+        store_tel,
+        store_mail,
+        store_fax,
+        postcode,
+        roadAddress,
+        jibunAddress,
+        extraAddress,
+        store_approval_status
+      )
+      values
+      (
+        #{store_id},
+        #{store_password},
+        #{store_name},
+        #{store_reg},
+        #{store_ceo_name},
+        #{store_type},
+        #{store_item},
+        #{store_online_reg},
+        #{store_tel},
+        #{store_mail},
+        #{store_fax},
+        #{postcode},
+        #{roadAddress},
+        #{jibunAddress},
+        #{extraAddress},
+        #{store_approval_status}
+      )
+    </insert>
+  <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">
+      update store set
+         store_password = #{store_password},
+         store_name = #{store_name},
+         store_reg = #{store_reg},
+         store_ceo_name = #{store_ceo_name},
+         store_type = #{store_type},
+         store_item = #{store_item},
+         store_online_reg = #{store_online_reg},
+         store_tel = #{store_tel},
+         store_mail = #{store_mail},
+         store_fax = #{store_fax},
+         postcode = #{postcode},
+         roadAddress = #{roadAddress},
+         jibunAddress = #{jibunAddress},
+         extraAddress = #{extraAddress}
+         where store_id = #{store_id}
+    </update>
+  <update id="updateStoreApproval" parameterType="com.webapp.manager.vo.StoreVO">
+      update store set
+         store_approval_date = now(),
+         store_approval_status = #{store_approval_status}
+         where store_id = #{store_id}
+    </update>
+</mapper>

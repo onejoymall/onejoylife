@@ -6,36 +6,44 @@
         <div class="main-header">
             <h2 name="detail">카테고리</h2>
             <div class="main-hd-btn-wrap">
-                <button type="button" name="detail">화면 보기</button>
-                <button type="button"><i class="exel-ic"></i>저장하기</button>
+<%--                <button type="button" name="detail">화면 보기</button>--%>
+                <button type="button" id="formCtegorySubmit">저장하기</button>
             </div>
         </div>
         <div class="main-body">
+            <form name="defaultForm" id="defaultForm" method="post"  enctype="multipart/form-data">
+
+
             <div class="main-left">
                 <div class="main-left-head">
-                    <p class="left-head-tit">
-
-                        <span><input type="text" name="pd_category_name"><input type="button" class="add-folder" value="생성"></span>
-                        <span><input type="button" class="remove-folder" value="삭제"></span>
-                    </p>
+                    <div class="left-head-tit">
+                        <input type="text" class="category-select" name="pd_category_name_add" placeholder="카테고리선택" style="color:#363636!important;">
+                        <input type="button" class="add-folder" value="생성" onclick="addCategory(0,$('input[name=pd_category_name_add]').val())">
+                        <input type="hidden" name="pd_category_id" value="7">
+                        <input type="hidden" name="pd_category_upper_code" value="7">
+                        <input type="button" class="remove-folder" onclick="deleteCategory()" value="삭제">
+                    </div>
                 </div>
                 <ul class="category-tree">
+                    <li>
+                        <a href="#" onclick="$('input[name=pd_category_name_add]').val('');$('input[name=pd_category_upper_code]').val(0);$('input[name=pd_category_name_add]').attr('placeholder','대분류');"><span></span>대분류</a>
+                    </li>
                 <c:if test="${not empty list}">
                     <c:forEach var="list" items="${list}" varStatus="status">
                         <li>
-                            <a href="#"><span></span>${list.pd_category_name}</a>
+                            <a href="#" onclick="selectCategory(${list.pd_category_id})"><span></span>${list.pd_category_name}</a>
                             <ul class="category-tree-2dp">
                             <c:if test="${not empty subList}">
                                 <c:forEach var="subList" items="${subList}">
                                     <c:if test="${list.pd_category_id eq subList.pd_category_upper_code}">
                                     <li>
-                                        <a href="#"><span></span>${subList.pd_category_name}</a>
+                                        <a href="#" onclick="selectCategory(${subList.pd_category_id})"><span></span>${subList.pd_category_name}</a>
                                         <ul class="category-tree-3dp">
                                             <c:if test="${not empty thirdList}">
                                                 <c:forEach var="thirdList" items="${thirdList}">
                                                     <c:if test="${subList.pd_category_id eq thirdList.pd_category_upper_code}">
                                                         <li>
-                                                            <a href="#"><span></span>${thirdList.pd_category_name}</a>
+                                                            <a href="#" onclick="selectCategory(${thirdList.pd_category_id})"><span></span>${thirdList.pd_category_name}</a>
                                                         </li>
                                                     </c:if>
                                                 </c:forEach>
@@ -55,8 +63,13 @@
             <div class="main-right">
                 <div class="main-right-1">
                     <div class="main-right-head">
-                        <p>
-                            [ <span>뷰티</span> ]
+<%--                        <p>--%>
+<%--                            [ <span id="pd_category_name"></span> ]<input type="text">--%>
+<%--                        </p>--%>
+                        <p class="left-head-tit">
+                            <span>
+                                <input type="text" name="pd_category_name"  style="color:#363636!important;">
+                            </span>
                         </p>
                     </div>
                     <div class="main-right-sec">
@@ -66,29 +79,49 @@
                                 <col style="width: 80%;">
                             </colgroup>
                             <tbody>
-                            <tr>
-                                <td>담당자명</td>
-                                <td><input type="text"></td>
-                            </tr>
+<%--                            <tr>--%>
+<%--                                <td>담당자명</td>--%>
+<%--                                <td><input type="text"></td>--%>
+<%--                            </tr>--%>
                             <tr>
                                 <td>상품수</td>
-                                <td><span>9</span> 개 (하위 카테고리 포함)</td>
+                                <td><span id="product_cnt"></span> 개 <%--(하위 카테고리 포함)--%></td>
                             </tr>
                             <tr>
                                 <td>카테고리 숨김처리 여부</td>
                                 <td class="radio-td">
-                                    <input type="radio" id="right-ra1" name="right-ra">
-                                    <label for="right-ra1"><span>사용</span></label>
-                                    <input type="radio" id="right-ra2" name="right-ra">
-                                    <label for="right-ra2"><span>사용 안 함(숨김)</span></label>
+                                    <input type="radio" id="right-ra1" name="pd_category_use_yn" class="styleClass" value="Y">
+                                    <label for="right-ra1"><span>표시함</span></label>
+                                    <input type="radio" id="right-ra2" name="pd_category_use_yn" class="styleClass" value="N">
+                                    <label for="right-ra2"><span>표시안함</span></label>
                                 </td>
                             </tr>
                             <tr>
-                                <td>관련상품 등록/수정</td>
-                                <td>
-                                    <button type="button" class="product-list">상품 리스트 보기</button>
+                                <!--기획전,메인배너표시 radio버튼도 하단html와 같음-->
+                                <td>메인 카테고리 표시상태</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="pd_category_main_view1" name="pd_category_main_view" class="styleClass" value="Y">
+                                    <label for="pd_category_main_view1"><span>표시</span></label>
+                                    <input type="radio" id="pd_category_main_view2" name="pd_category_main_view" class="styleClass" value="N">
+                                    <label for="pd_category_main_view2"><span>표시안함</span></label>
                                 </td>
                             </tr>
+                            <tr>
+                                <!--기획전,메인배너표시 radio버튼도 하단html와 같음-->
+                                <td>메인 특가상품 표시상태</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="pd_category_main_view_sp1" name="pd_category_main_view_sp" class="styleClass" value="Y">
+                                    <label for="pd_category_main_view_sp1"><span>표시</span></label>
+                                    <input type="radio" id="pd_category_main_view_sp2" name="pd_category_main_view_sp" class="styleClass" value="N">
+                                    <label for="pd_category_main_view_sp2"><span>표시안함</span></label>
+                                </td>
+                            </tr>
+<%--                            <tr>--%>
+<%--                                <td>관련상품 등록/수정</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list">상품 리스트 보기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
 
                             </tbody>
                         </table>
@@ -103,34 +136,41 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <td>프로모션</td>
-                                <td><input type="checkbox" id="promotion-ck"><label for="promotion-ck">기획전</label></td>
+                                <td>기획전</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="pd_category_event_use_y" name="pd_category_event_use_yn" class="styleClass" value="Y">
+                                    <label for="pd_category_event_use_y"><span>표시함</span></label>
+                                    <input type="radio" id="pd_category_event_use_n" name="pd_category_event_use_yn" class="styleClass" value="N">
+                                    <label for="pd_category_event_use_n"><span>표시안함</span></label>
+                                </td>
                             </tr>
                             <tr>
                                 <td>배너 이미지 등록</td>
                                 <td><p>* PC버전 가로 500px / 세로 255xp, 모바일버전 가로 500px / 세로 255xp</p>
+                                    <img src="" onerror="this.src='http://placehold.it/300'" width="300" class="file_link"/>
                                     <div class="fileBox">
+
                                         <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
                                         <label for="uploadBtn" class="btn_file">파일찾기</label>
-                                        <input type="file" id="uploadBtn" name="uploadBtn" class="uploadBtn">
+                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>제목</td>
-                                <td><input type="text" class="text-width"></td>
+                                <td><input type="text" class="text-width" name="pd_category_event_title"></td>
                             </tr>
                             <tr class="day-none">
                                 <td>기간</td>
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="from_date" class="date_pick">
+                                            <input type="text" id="from_date" class="date_pick" name="pd_category_event_start">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="to_date" class="date_pick">
+                                            <input type="text" id="to_date" class="date_pick" name="pd_category_event_end">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
@@ -138,7 +178,7 @@
                             </tr>
                             <tr>
                                 <td>간단 설명</td>
-                                <td><input type="text" class="text-width"></td>
+                                <td><input type="text" class="text-width" name="pd_category_event_memo"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -153,34 +193,38 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <td>프로모션</td>
-                                <td><input type="checkbox" id="promotion-ck2"><label for="promotion-ck2">메인 배너</label></td>
+                                <td>매인 배너 표시</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="pd_category_main_bn_use_y" name="banner_use_yn" class="styleClass" value="Y"><label for="pd_category_main_bn_use_y"><span>표시함</span></label>
+                                    <input type="radio" id="pd_category_main_bn_use_n" name="banner_use_yn" class="styleClass" value="N"><label for="pd_category_main_bn_use_n"><span>표시안함</span></label>
+                                </td>
                             </tr>
                             <tr>
                                 <td>배너 이미지 등록</td>
                                 <td><p>* PC버전 가로 500px / 세로 255xp, 모바일버전 가로 500px / 세로 255xp</p>
+                                    <img src="" onerror="this.src='http://placehold.it/300'" width="300" class="file_link2"/>
                                     <div class="fileBox2">
                                         <input type="text" class="fileName2" id="fileName2" name="fileName2" readonly="readonly">
                                         <label for="uploadBtn2" class="btn_file2">파일찾기</label>
-                                        <input type="file" id="uploadBtn2" name="uploadBtn2" class="uploadBtn2">
+                                        <input type="file" id="uploadBtn2" name="uploadfile2" class="uploadBtn2">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>제목</td>
-                                <td><input type="text" class="text-width"></td>
+                                <td><input type="text" class="text-width" name="banner_title"></td>
                             </tr>
                             <tr class="day-none">
                                 <td>기간</td>
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="from_date1" class="date_pick">
+                                            <input type="text" id="from_date1" class="date_pick" name="banner_start_date">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="to_date2" class="date_pick">
+                                            <input type="text" id="to_date2" class="date_pick" name="banner_end_date">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
@@ -188,121 +232,123 @@
                             </tr>
                             <tr>
                                 <td>간단 설명</td>
-                                <td><input type="text" class="text-width"></td>
+                                <td><input type="text" class="text-width" name="banner_memo"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="main-right-4">
-                    <div class="main-right-sec">
-                        <table class="right-table-4">
-                            <colgroup>
-                                <col style="width: 3%;">
-                                <col style="width: 5%;">
-                                <col style="width: 10%;">
-                                <col style="width: 5%;">
-                                <col style="width: 50%;">
-                                <col style="width: 15%;">
-                                <col style="width: 5%;">
-                                <col style="width: 7%;">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <td>번호</td>
-                                <td>상태</td>
-                                <td>업체명</td>
-                                <td>행사종류</td>
-                                <td>행사명</td>
-                                <td>기간</td>
-                                <td>처리</td>
-                                <td>정보</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>01</td>
-                                <td>신청</td>
-                                <td>안다르</td>
-                                <td>기획전</td>
-                                <td>가을 전품목 할인</td>
-                                <td>2020.02.20 ~ 2020.03.10</td>
-                                <td>---</td>
-                                <td>
-                                    <button type="button" class="product-list1">승인하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>02</td>
-                                <td>재신청</td>
-                                <td>안다르</td>
-                                <td>기획전</td>
-                                <td>가을 전품목 할인</td>
-                                <td>2020.02.20 ~ 2020.03.10</td>
-                                <td>---</td>
-                                <td>
-                                    <button type="button" class="product-list1">승인하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>03</td>
-                                <td>승인</td>
-                                <td>안다르</td>
-                                <td>기획전</td>
-                                <td>가을 전품목 할인</td>
-                                <td>2020.02.20 ~ 2020.03.10</td>
-                                <td>승인</td>
-                                <td>
-                                    <button type="button" class="product-list1">승인하기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>04</td>
-                                <td>반려</td>
-                                <td>안다르</td>
-                                <td>기획전</td>
-                                <td>가을 전품목 할인</td>
-                                <td>2020.02.20 ~ 2020.03.10</td>
-                                <td>반려</td>
-                                <td>
-                                    <button type="button" class="product-list2">상세보기</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>05</td>
-                                <td>승인</td>
-                                <td>안다르</td>
-                                <td>기획전</td>
-                                <td>가을 전품목 할인</td>
-                                <td>2020.02.20 ~ 2020.03.10</td>
-                                <td>승인</td>
-                                <td>
-                                    <button type="button" class="product-list1">승인하기</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <ul class="pagination2">
-                        <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                        <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                        <li class="page-item"><a class="page-link" href="#">8</a></li>
-                        <li class="page-item"><a class="page-link" href="#">9</a></li>
-                        <li class="page-item"><a class="page-link" href="#">10</a></li>
-                        <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                        <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                    </ul>
-                </div>
+<%--                <div class="main-right-4">--%>
+<%--                    <div class="main-right-sec">--%>
+<%--                        <table class="right-table-4">--%>
+<%--                            <colgroup>--%>
+<%--                                <col style="width: 3%;">--%>
+<%--                                <col style="width: 5%;">--%>
+<%--                                <col style="width: 10%;">--%>
+<%--                                <col style="width: 5%;">--%>
+<%--                                <col style="width: 50%;">--%>
+<%--                                <col style="width: 15%;">--%>
+<%--                                <col style="width: 5%;">--%>
+<%--                                <col style="width: 7%;">--%>
+<%--                            </colgroup>--%>
+<%--                            <thead>--%>
+<%--                            <tr>--%>
+<%--                                <td>번호</td>--%>
+<%--                                <td>상태</td>--%>
+<%--                                <td>업체명</td>--%>
+<%--                                <td>행사종류</td>--%>
+<%--                                <td>행사명</td>--%>
+<%--                                <td>기간</td>--%>
+<%--                                <td>처리</td>--%>
+<%--                                <td>정보</td>--%>
+<%--                            </tr>--%>
+<%--                            </thead>--%>
+<%--                            <tbody>--%>
+<%--                            <tr>--%>
+<%--                                <td>01</td>--%>
+<%--                                <td>신청</td>--%>
+<%--                                <td>안다르</td>--%>
+<%--                                <td>기획전</td>--%>
+<%--                                <td>가을 전품목 할인</td>--%>
+<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
+<%--                                <td>---</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>02</td>--%>
+<%--                                <td>재신청</td>--%>
+<%--                                <td>안다르</td>--%>
+<%--                                <td>기획전</td>--%>
+<%--                                <td>가을 전품목 할인</td>--%>
+<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
+<%--                                <td>---</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>03</td>--%>
+<%--                                <td>승인</td>--%>
+<%--                                <td>안다르</td>--%>
+<%--                                <td>기획전</td>--%>
+<%--                                <td>가을 전품목 할인</td>--%>
+<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
+<%--                                <td>승인</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>04</td>--%>
+<%--                                <td>반려</td>--%>
+<%--                                <td>안다르</td>--%>
+<%--                                <td>기획전</td>--%>
+<%--                                <td>가을 전품목 할인</td>--%>
+<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
+<%--                                <td>반려</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list2">상세보기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>05</td>--%>
+<%--                                <td>승인</td>--%>
+<%--                                <td>안다르</td>--%>
+<%--                                <td>기획전</td>--%>
+<%--                                <td>가을 전품목 할인</td>--%>
+<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
+<%--                                <td>승인</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                            </tbody>--%>
+<%--                        </table>--%>
+<%--                    </div>--%>
+<%--                    <ul class="pagination2">--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">≪</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">＜</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link active" href="#">1</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">2</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">3</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">4</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">5</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">6</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">7</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">8</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">9</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">10</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">＞</a></li>--%>
+<%--                        <li class="page-item"><a class="page-link" href="#">≫</a></li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
 
 
             </div>
+
+            </form>
         </div>
     </div>
 </main>

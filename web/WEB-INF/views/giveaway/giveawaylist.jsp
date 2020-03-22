@@ -20,9 +20,9 @@
             <form id="form1" name="form1"  method="post">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
-                        <button type="button" class="sort-tab-item active">임박순</button>
-                        <button type="button" class="sort-tab-item">낮은가격순</button>
-                        <button type="button" class="sort-tab-item">높은가격순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${empty searchVO.sortOrder}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/giveaway"/>'">ALL</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=ASC&sortOrder=2"/>'">낮은가격순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=DESC&sortOrder=3"/>'">높은가격순</button>
                     </div>
                     <div class="sort-tab-right">
                         <select name="displayRowCount" class="order-select">
@@ -39,7 +39,7 @@
                         <c:set var="lineCut" value="${status.count%3}"></c:set>
                         <div class="point-product-item">
                             <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
-                                <img src="<c:url value="/assets/img/"/>${list.giveaway_list_image}" />
+                                <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
 <%--                                <i class="share-ic"></i>--%>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>

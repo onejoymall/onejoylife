@@ -27,13 +27,15 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-    public String boardList(SearchVO searchVO, ModelMap modelMap) {
+    public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request                                           ) {
         
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
         if (bgInfo == null) {
             return "board/BoardGroupFail";
         }
-        
+        if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
+            searchVO.setDisplayRowCount(10);
+        }
         searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
 
         List<?> listview  = boardSvc.selectBoardList(searchVO);
@@ -41,6 +43,7 @@ public class BoardCtr {
         modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("bgInfo", bgInfo);
+        modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
         modelMap.addAttribute("style", "help-7");
         return "board/BoardList";
     }
@@ -65,7 +68,8 @@ public class BoardCtr {
         if (bgInfo == null) {
             return "board/BoardGroupFail";
         }
-        
+        modelMap.addAttribute("style", "help-4");
+        modelMap.addAttribute("leftNavOrder", bgno);
         modelMap.addAttribute("bgno", bgno);
         modelMap.addAttribute("bgInfo", bgInfo);
         

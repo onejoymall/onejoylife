@@ -161,7 +161,7 @@
                 </div>
             </div>
             <div class="setting-section">
-                <a href="info-join.html" class="setting info">
+                <a href="/Manager/info-join" class="setting info">
                     이용약관 설정
                 </a>
                 <a href="#" class="setting epoint">

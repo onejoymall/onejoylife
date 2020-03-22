@@ -12,7 +12,7 @@ body{
     width:100%;
     min-width: 1400px;
     font-size:12px;
-    font-family: '돋움',sans-serif;
+    font-family: '맑은 고딕', 'Malgun Gothic', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
     word-break: keep-all;
 }
 .main-content {
@@ -92,6 +92,9 @@ body{
     height:100%;
     background:#da394a;
     color:#fff;
+}
+.src-filter-wrap{
+    margin-top:7px;
 }
 .keyword-src-table{
     width:100%;
@@ -319,19 +322,6 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
     background-size:contain;
     vertical-align:middle;
 }
-
-.fileBox{
-    width:100%;
-}
-.fileBox .fileName {display:inline-block;width:290px;height:30px;padding-left:10px;line-height:30px;border:none;border:1px solid #aaa;background-color:#efefef;vertical-align:middle}
-.fileBox .btn_file {display:inline-block;background: #fff;border:1px solid;
-    color: #777;width:65px;height:30px;font-size:12px;font-weight:100;line-height:30px;text-align:center;vertical-align:middle}
-.fileBox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
-.fileBox .ex{line-height: normal;}
-.img-thumb-box{
-    margin-top:10px;
-    line-height: 0;
-}
 .modal-body textarea{
     width:100%;
     min-height:100px;
@@ -449,4 +439,7 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
     width: 20%;
     height: 100%;
     background: url(../img/icon/calendar.png) no-repeat center / cover;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
 }

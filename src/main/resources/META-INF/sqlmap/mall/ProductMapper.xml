@@ -24,9 +24,11 @@
             </foreach>
         </if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
-        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) ]]></if>
-
-        order by product_id DESC LIMIT ${rowStart-1}, ${displayRowCount}
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
+        <if test="orderByKey == null"> order by product_id DESC </if>
+        LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getProductListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
         <![CDATA[
@@ -40,11 +42,13 @@
             </foreach>
         </if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
-        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
     </select>
     <select id="getProductViewDetail" parameterType="java.util.Map" resultType="java.util.Map">
         select
          *,
+            (select code.code_name from code where code.code='product_brand' and code.code_value =product.product_brand) as product_brand_name,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
             (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,

@@ -76,7 +76,7 @@
                                             <p><a href="">${paymentList.order_no}</a></p>
                                         </td>
                                         <td class="my-lis-2">
-                                            <a href="">
+                                            <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
                                                 <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
                                                 <div class="my-lis-txt">
                                                     <p>${paymentList.product_made_company_name}</p>
