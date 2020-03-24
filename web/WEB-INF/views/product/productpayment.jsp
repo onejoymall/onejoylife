@@ -396,8 +396,8 @@
             jQuery.ajax({
                 type: "POST",
                 url: "/SaveDeliveInfo",
-                data: formData,
-                enctype: 'multipart/form-data',
+                data: $('#defaultForm').serialize(),
+                // enctype: 'multipart/form-data',
                 success: function (data) {
                     if (data.validateError) {
                         $('.validateError').empty();
@@ -539,5 +539,26 @@
         }
 
     });
+
+    $(".order_user_phone").on("focusout",function () {
+        var phoneA = $("#order_user_phone_a").val();
+        var phoneB = $("#order_user_phone_b").val();
+        var phoneC = $("#order_user_phone_c").val();
+        $("#order_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
+    })
+    $(".delivery_user_phone").on("focusout",function () {
+        var phoneA = $("#delivery_user_phone_a").val();
+        var phoneB = $("#delivery_user_phone_b").val();
+        var phoneC = $("#delivery_user_phone_c").val();
+        $("#delivery_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
+        console.log(phoneA+"-"+phoneB+"-"+phoneC)
+    })
+    $(".delivery_user_tel").on("focusout",function () {
+        var phoneA = $("#delivery_user_tel_a").val();
+        var phoneB = $("#delivery_user_tel_b").val();
+        var phoneC = $("#delivery_user_tel_c").val();
+        $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
+        console.log(phoneA+"-"+phoneB+"-"+phoneC)
+    })
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

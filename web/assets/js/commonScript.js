@@ -1426,7 +1426,7 @@
         jQuery.ajax({
             type: $('#defaultForm').attr('method'),
             url: postUrl,
-            enctype: 'multipart/form-data',
+            // enctype: 'multipart/form-data',
             data: formData,
             success: function (data) {
                 console.log(data.validateError)

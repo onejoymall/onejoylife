@@ -44,6 +44,7 @@
                 <input name="product_cd"  type="hidden" value="<c:out value="${param.product_cd}"/>">
                 <input name="giveaway_cd"  type="hidden" value="<c:out value="${param.giveaway_cd}"/>">
                 <input name="giveaway_play_cd"  type="hidden" value="<c:out value="${param.giveaway_play_cd}"/>">
+                <input name="order_no"  type="hidden" value="<c:out value="${order_no}"/>">
                 <h2 class="head-h2">정보입력</h2>
                 <div class="in-box">
                     <div class="sec1">

@@ -3,6 +3,7 @@ package com.webapp.mall.vo;
 import com.webapp.board.common.SearchVO;
 
 public class GiveawayVO extends SearchVO {
+    public Integer point=0;
     public Integer giveaway_id;
     public String giveaway_use_yn;
     public String giveaway_sale_yn;
@@ -104,6 +105,14 @@ public class GiveawayVO extends SearchVO {
     public Integer giveaway_play_min_point;
     public Integer giveaway_play_winner_point;
     public Integer giveaway_play_max_point;
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
 
     public String getGiveaway_members_limit() {
         return giveaway_members_limit;

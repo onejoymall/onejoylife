@@ -119,7 +119,8 @@ public class ProductController {
                 params.put("product_cd",null);
                 params.put("giveaway_cd",null);
                 params.put("order_user_id",userInfo.get("usr_id"));
-                Map<String,Object> latestDelivery = deliveryDAO.getDelivery(params);
+                params.put("order_no",null);
+                Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
                 model.addAttribute("userInfo",userInfo );
                 model.addAttribute("latestDelivery",latestDelivery );
             }

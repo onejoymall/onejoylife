@@ -4,11 +4,13 @@ import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.MessageSource;
+import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +42,8 @@ public class MyPage {
     CartDAO cartDAO;
     @Autowired
     PaymentDAO paymentDAO;
+    @Autowired
+    private NumberGender numberGender;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
@@ -51,6 +55,9 @@ public class MyPage {
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
+            //배송중
+            params.put("delivery_status",userInfo.get("W"));
+
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
             model.addAttribute("getDeliveryListCount",getDeliveryListCount);
@@ -187,7 +194,15 @@ public class MyPage {
     }
     //주문상세
     @RequestMapping(value="/MyPage/OrderAndDeliveryDetail")
-    public String myPageOrderAndDeliveryDetail(Model model) {
+    public String myPageOrderAndDeliveryDetail(Model model,@RequestParam HashMap params) {
+        try{
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("delivery", delivery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("leftNavOrder", 6);
         model.addAttribute("style", "mypage-6-1");
         return "mypage/OrderAndDeliveryDetail";
@@ -294,11 +309,11 @@ public class MyPage {
                 //배송비 구분별 값
                 params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
                 Map<String,Object> delivery = giveawayDelivery(params);
+                //주문번호 생성
+                model.addAttribute("order_no","GW-ORDER-"+numberGender.numberGen(6,1) );
                 //최근 배송지 불러오기
-                params.put("product_cd",null);
-                params.put("giveaway_cd",null);
                 params.put("order_user_id",userInfo.get("usr_id"));
-                Map<String,Object> latestDelivery = deliveryDAO.getDelivery(params);
+                Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
                 model.addAttribute("userInfo",userInfo );
                 model.addAttribute("postUrl","/SaveDeliveInfo" );
                 model.addAttribute("delivery",delivery );
@@ -318,12 +333,12 @@ public class MyPage {
 
         try{
             params.put("order_no",request.getParameter("order_no"));
-            Map<String,Object> delivery = deliveryDAO.getDelivery(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             params.put("giveaway_cd",delivery.get("giveaway_cd"));
             params.put("product_cd",delivery.get("product_cd"));
             Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
-
-            Integer texPayment = Integer.parseInt((String)detail.get("giveaway_payment_memo"));
+            //공급가
+            Integer texPayment = (Integer) detail.get("giveaway_user_payment");
             //부가세
             double texD = Math.round((texPayment/1.1)-((texPayment/1.1)/1.1));
 

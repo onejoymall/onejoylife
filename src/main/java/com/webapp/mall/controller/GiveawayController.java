@@ -77,7 +77,7 @@ public class GiveawayController {
                 Integer point = pointDAO.getPointAmount(params);
                 model.addAttribute("point_amount",point);
             }
-
+            params.put("giveaway_cd",request.getParameter("giveaway_cd"));
             params.put("giveaway_id",request.getParameter("giveaway_id"));
             Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
             //배송정보

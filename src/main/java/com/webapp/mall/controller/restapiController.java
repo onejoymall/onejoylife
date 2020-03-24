@@ -332,83 +332,90 @@ public class restapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
-        Integer usedPoint;
-        try {
-            if(params.get("point").equals("")){
-                usedPoint =0;
-            }else{
-                usedPoint = Integer.parseInt((String)params.get("point"));
-            }
 
-            params.put("email",session.getAttribute("email"));
+        try {
+            Integer userPoint = 0; //사용자 포인트
+            Integer usedPoint = giveawayVO.getPoint();  //입력 포인트
+
             //로그인 확인
+            params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 
             if(isEmpty(userInfo)){
-                //로그인정보
+                //로그인정보 확인
                 error.put("Error", messageSource.getMessage("error.noLoginInfo","ko"));
             }else{
                 //보유포인트 확인
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
-                Integer userPoint = pointDAO.getPointAmount(params);
-                Map<String,Object> giveaway = giveawayDAO.getGiveawayDetail(params);
-
-                //배송비?
-                //입력금액부족
-                if(usedPoint < (Integer)giveaway.get("giveaway_payment")){
-                    error.put("Error", messageSource.getMessage("error.paymentUsedIsLess","ko"));
-                }
-                //금액부족
+                userPoint = pointDAO.getPointAmount(params);
+                //보유 포인트 와 금액부족
                 if(usedPoint > userPoint ){
                     error.put("Error", messageSource.getMessage("error.paymentIsLess","ko"));
-                }else{
-
-
-                    //경품 자동추첨 금액 달성시 당첨차 추첨
-                    Integer giveaway_play_winner_point = (Integer)giveaway.get("giveaway_play_winner_point");
-                    Integer giveawayPlaySumPoint = giveawayDAO.getGiveawayPlaySumPoint(params);
-                    if(giveaway_play_winner_point > giveawayPlaySumPoint){
-                        //경품참여정보 저장
-                        String giveaway_play_cd = numberGender.numberGen(8,1);
-                        giveawayVO.setGiveaway_play_cd("GP"+giveaway_play_cd);
-                        giveawayVO.setGiveaway_cd((String)giveaway.get("giveaway_cd"));
-                        giveawayVO.setGiveaway_payment_epoint(usedPoint);
-                        giveawayVO.setGiveaway_play_user_id((Integer)userInfo.get("usr_id"));
-                        giveawayDAO.insertGiveawayPlay(giveawayVO);
-                        //포인트 차감
-                        params.put("point_amount",userPoint-usedPoint);
-                        params.put("point_paid_memo",(String)giveaway.get("giveaway_name"));
-                        params.put("point_use",usedPoint);
-                        params.put("point_paid_user_id",(Integer)userInfo.get("usr_id"));
-                        params.put("point_paid_type","B");
-                        params.put("point_paid_product_cd",(String)giveaway.get("giveaway_cd"));
-                        pointDAO.insertPoint(params);
-                        //자동추첨
-                        if(giveaway_play_winner_point <= giveawayDAO.getGiveawayPlaySumPoint(params)){
-                            params.put("giveaway_play_status","W");
-                            Integer giveawayPlayCount = giveawayDAO.getUserGiveawayPlayListCount(params);
-                            //당첨자가 없으면 진행
-                            if(giveawayPlayCount <= 0 ){
-                                params.put("giveaway_play_id",giveawayDAO.getGiveawayPlayUserRandId(params));
-                                giveawayDAO.updateWinnerUser(params);
-                                giveawayDAO.insertGiveawayWinner(params);
-                            }
-                        }
-                        resultMap.put("redirectUrl","/MyPage/GiveawayWinningList");
-
-                    }else{
-                        error.put("Error", messageSource.getMessage("error.giveawayMaxPoint","ko"));
-                    }
                 }
-
             }
-            if(usedPoint.equals(null) || usedPoint <= 0 ){
-                //필수입력항목
+
+            if(usedPoint==0){
                 error.put(messageSource.getMessage("used_point","ko"), messageSource.getMessage("error.required","ko"));
             }
 
+
+
+            params.put("giveaway_cd",request.getParameter("giveaway_cd"));
+            params.put("giveaway_id",request.getParameter("giveaway_id"));
+            Map<String,Object> giveaway = giveawayDAO.getGiveawayDetail(params);
+            Integer giveawayUsePoint = (Integer)giveaway.get("giveaway_payment");
+            Integer giveaway_play_winner_point=0;
+
+            //자동추첨 기준
+            if(giveaway.get("giveaway_play_winner_point")==null) {
+                error.put("Error", messageSource.getMessage("error.giveawayPlayWinnerPoint","ko"));
+            }else{
+                giveaway_play_winner_point = (Integer) giveaway.get("giveaway_play_winner_point");
+            }
+            //상품응모포인트와 입력한 포인트
+            if(giveawayUsePoint > usedPoint){
+                error.put("Error", messageSource.getMessage("error.paymentUsedIsLess","ko"));
+            }
+
+            //검증
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
+            }else{
+                //경품 자동추첨 금액 달성시 당첨차 추첨
+
+                Integer giveawayPlaySumPoint = giveawayDAO.getGiveawayPlaySumPoint(params);
+                if(giveaway_play_winner_point > giveawayPlaySumPoint){
+                    //경품참여정보 저장
+                    String giveaway_play_cd = numberGender.numberGen(8,1);
+                    giveawayVO.setGiveaway_play_cd("GP"+giveaway_play_cd);
+                    giveawayVO.setGiveaway_cd((String)giveaway.get("giveaway_cd"));
+                    giveawayVO.setGiveaway_payment_epoint(usedPoint);
+                    giveawayVO.setGiveaway_play_user_id((Integer)userInfo.get("usr_id"));
+                    giveawayDAO.insertGiveawayPlay(giveawayVO);
+                    //포인트 차감
+                    params.put("point_amount",userPoint-usedPoint);
+                    params.put("point_paid_memo",(String)giveaway.get("giveaway_name"));
+                    params.put("point_use",usedPoint);
+                    params.put("point_paid_user_id",(Integer)userInfo.get("usr_id"));
+                    params.put("point_paid_type","B");
+                    params.put("point_paid_product_cd",(String)giveaway.get("giveaway_cd"));
+                    pointDAO.insertPoint(params);
+                    //자동추첨
+                    if(giveaway_play_winner_point <= giveawayDAO.getGiveawayPlaySumPoint(params)){
+                        params.put("giveaway_play_status","W");
+                        Integer giveawayPlayCount = giveawayDAO.getUserGiveawayPlayListCount(params);
+                        //당첨자가 없으면 진행
+                        if(giveawayPlayCount <= 0 ){
+                            params.put("giveaway_play_id",giveawayDAO.getGiveawayPlayUserRandId(params));
+                            giveawayDAO.updateWinnerUser(params);
+                            giveawayDAO.insertGiveawayWinner(params);
+                        }
+                    }
+                    resultMap.put("redirectUrl","/MyPage/GiveawayWinningList");
+
+                }else{
+                    error.put("Error", messageSource.getMessage("error.giveawayMaxPoint","ko"));
+                }
             }
         } catch (Exception e) {
             resultMap.put("e", e);
@@ -423,27 +430,14 @@ public class restapiController {
         try{
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
-            //주문번호 생성
-            String order_no;
-            if(params.get("order_no").equals("")){
-                order_no = "GW-ORDER-"+numberGender.numberGen(6,1);
-            }else{
-                order_no = (String)params.get("order_no");
-            }
 
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             if(isEmpty(userInfo)){
                 deliveryInfoVO.setOrder_user_id( Integer.parseInt(numberGender.numberGen(6,1)));
             }else{
                 deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
-
-//            if(deliveryInfoVO.getOrder_user_name().isEmpty()){
-//                error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
-//            }
             }
-            //경품 추첨 번호
-            deliveryInfoVO.setGiveaway_play_cd((String)params.get("giveaway_play_cd"));
-            deliveryInfoVO.setOrder_no(order_no);
+
             if(deliveryInfoVO.getOrder_user_email().isEmpty()){
                 error.put(messageSource.getMessage("order_user_email","ko"), messageSource.getMessage("error.required","ko"));
             }
@@ -475,7 +469,7 @@ public class restapiController {
 //                params.put("giveaway_payment_status","B");
 //                params.put("giveaway_play_cd",deliveryInfoVO.getGiveaway_play_cd());
 //                deliveryDAO.updateGiveawayDeliveryStatus(params);
-                resultMap.put("redirectUrl","/MyPage/giveawaypayment?order_no="+order_no);
+                resultMap.put("redirectUrl","/MyPage/giveawaypayment?order_no="+deliveryInfoVO.getOrder_no());
             }
         }catch (Exception e){
             e.printStackTrace();

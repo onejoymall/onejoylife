@@ -508,7 +508,7 @@
         autoControls:true,
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
+        touchEnabled : (navigator.maxTouchPoints > 0),
     });
     $(document).ready(function(){
         $('.notice-list>li').click(function(){

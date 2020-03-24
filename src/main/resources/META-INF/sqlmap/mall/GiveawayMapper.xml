@@ -20,8 +20,8 @@
             ifnull((select count(1) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) player_count
         FROM giveaway A  where 1=1
         ]]>
-        <if test="giveaway_id != null"> <![CDATA[AND A.giveaway_id= #{giveaway_id} ]]></if>
-        <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
+        <if test="giveaway_id != null and giveaway_id != ''"  > <![CDATA[AND A.giveaway_id= #{giveaway_id} ]]></if>
+        <if test="giveaway_cd != null and giveaway_cd != ''"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
     </select>
     <select id="getGiveawayList" resultType="java.util.HashMap">
         <![CDATA[

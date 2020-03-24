@@ -175,7 +175,7 @@
                 }else{
                     $('#emailAuthValidation').addClass('p-none');
                     $('#emailValidation').addClass('p-none');
-                    alert("이메일 인증 완료")
+                    alert("인증번호 발송 완료")
                 }
             },
 
