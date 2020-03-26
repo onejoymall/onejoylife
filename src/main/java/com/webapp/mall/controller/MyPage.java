@@ -56,7 +56,7 @@ public class MyPage {
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
             //배송중
-            params.put("delivery_status",userInfo.get("W"));
+            params.put("delivery_status","D");
 
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
@@ -73,7 +73,34 @@ public class MyPage {
     }
     //대시보드
     @RequestMapping(value="/MyPage/DashBoard")
-    public String myPageDashBoard( Model model) {
+    public String myPageDashBoard( Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO) {
+        try{
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("payment_user_id",userInfo.get("usr_id"));
+            //최근 구매내역
+            searchVO.setDisplayRowCount(3);
+            searchVO.setStaticRowEnd(3);
+            searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            model.addAttribute("searchVO", searchVO);
+            List<Map<String,Object>> paymentList = paymentDAO.getPaymentList(params);
+            model.addAttribute("paymentList", paymentList);
+
+            //경품참여
+            params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+
+            List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
+            model.addAttribute("giveawayList", giveawayList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("leftNavOrder", 1);
         model.addAttribute("style", "mypage-1");
         return "mypage/DashBoard";
@@ -156,19 +183,44 @@ public class MyPage {
     }
     //찜 목록
     @RequestMapping(value="/MyPage/ShoppingAddList")
-    public String myPageShoppingAddList(Model model) {
+    public String myPageShoppingAddList(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+        //사용자 아이디 확인 후 전달
+        params.put("email",session.getAttribute("email"));
+        Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+        try {
+
+            if(isEmpty(userInfo)){
+                params.put("user_id",session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("user_id",userInfo.get("usr_id"));
+            }
+            //페이징
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            model.addAttribute("searchVO", searchVO);
+            //결제비용
+
+            Map<String,Object> getCartSum = cartDAO.getFavoritesSum(params);
+            List<Map<String,Object>> list = cartDAO.getFavoritesList(params);
+            model.addAttribute("list", list);
+            model.addAttribute("getCartSum", getCartSum);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("style", "mypage-5");
         model.addAttribute("leftNavOrder", 5);
         return "mypage/ShoppingAddList";
     }
     //주문배송조회
     @RequestMapping(value="/MyPage/OrderAndDelivery")
-    public String myPageOrderAndDelivery(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+    public String myPageOrderAndDelivery(Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            params.put("merchant_uid",userInfo.get("usr_id"));
-
+            params.put("payment_user_id",userInfo.get("usr_id"));
             //페이징
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
@@ -207,12 +259,37 @@ public class MyPage {
         model.addAttribute("style", "mypage-6-1");
         return "mypage/OrderAndDeliveryDetail";
     }
+    //주문상세
+    @RequestMapping(value="/MyPage/OrderDetailGuest")
+    public String myPageOrderAndDeliveryDetailGuest(Model model,@RequestParam HashMap params) {
+        try{
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("delivery", delivery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("leftNavOrder", 6);
+        model.addAttribute("style", "mypage-6-1");
+        return "mypage/OrderAndDeliveryDetail";
+    }
+
     //취소
-    @RequestMapping(value="/MyPage/OrderChangeCancel")
-    public String myPageOrderChangeCancel(HttpSession session,Model model,HttpServletRequest request) {
+    @RequestMapping(value="/MyPage/OrderCancel")
+    public String myPageOrderChangeCancel(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
+        try{
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("delivery", delivery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("postUrl","/SavePaymentCancel");
         model.addAttribute("leftNavOrder", 6);
         model.addAttribute("style", "mypage-6-1-1");
-        return "mypage/OrderChangeCancel";
+        return "mypage/mypage-6-1-1";
     }
     //주문상세 무통장
     @RequestMapping(value="/MyPage/OrderAndDeliveryDetailVA")
@@ -235,19 +312,19 @@ public class MyPage {
         model.addAttribute("style", "mypage-7-1");
         return "mypage/OrderChange";
     }
-    //취소신청
-    @RequestMapping(value="/MyPage/OrderCancel")
-    public String myPageOrderCancel(HttpSession session,Model model,HttpServletRequest request) {
-        model.addAttribute("leftNavOrder", 7);
-        model.addAttribute("style", "mypage-7-2");
-        return "mypage/OrderCancel";
-    }
+    //반품신청
+//    @RequestMapping(value="/MyPage/OrderCancel")
+//    public String myPageOrderCancel(HttpSession session,Model model,HttpServletRequest request) {
+//        model.addAttribute("leftNavOrder", 7);
+//        model.addAttribute("style", "mypage-7-2");
+//        return "mypage/OrderCancel";
+//    }
     //반품
     @RequestMapping(value="/MyPage/OrderRollback")
     public String myPageOrderRollback(HttpSession session,Model model,HttpServletRequest request) {
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-2");
-        return "mypage/OrderCancel";
+        return "mypage/mypage-7-2";
     }
     //리뷰
     @RequestMapping(value="/MyPage/Reviews")

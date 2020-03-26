@@ -1,4 +1,88 @@
-    $(document).ready(function(){
+
+//찜
+$('.favorite').click(function(){
+    $(this).children('i').toggleClass('heart-full');
+    console.log(1111111111111111)
+    jQuery.ajax({
+        type: 'POST',
+        data: {"product_cd":$(this).attr("data-id")},
+        url:'/cart/addFavorites',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                $.toast({
+                    text: "SUCCSS",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    heading: 'Error',
+                    icon: 'success'
+                });
+                // loginAuth(data.access_token);
+                location.href=data.redirectUrl;
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+//상품구매수량 변경
+$('.minus').click(function () {
+    var data =  $("input[name=payment_order_quantity]");
+    data.val(Number(data.val())-1);
+    $('.number').html(data.val());
+});
+$('.plus').click(function () {
+    var data =  $("input[name=payment_order_quantity]");
+    data.val(Number(data.val())+1);
+    $('.number').html(data.val());
+});
+
+//날짜 지정
+function setDatepickerToday(datepicker,mt,dt) { var d = new Date(); datepicker.datepicker("setDate", new Date(d.getFullYear(), d.getMonth()+mt, d.getDate()+dt) ); }
+$(document).on("click",".ra-num",function () {
+    $('.ra-num').removeClass("on");
+    $(this).addClass("on");
+    if($(this).attr("data-id")=="con1"){
+        setDatepickerToday($('input[name=start_date]'),0,0);
+        setDatepickerToday($('input[name=end_date]'),0,0);
+    }
+    if($(this).attr("data-id")=="con2"){
+        setDatepickerToday($('input[name=start_date]'),0,-7);
+        setDatepickerToday($('input[name=end_date]'),0,0);
+    }
+    if($(this).attr("data-id")=="con3"){
+        setDatepickerToday($('input[name=start_date]'),-1,0);
+        setDatepickerToday($('input[name=end_date]'),0,0);
+    }
+    if($(this).attr("data-id")=="con4"){
+        setDatepickerToday($('input[name=start_date]'),-3,0);
+        setDatepickerToday($('input[name=end_date]'),0,0);
+    }
+});
+
+$(document).ready(function(){
     $('.gnb>li:first-child').mouseover(function(){
         $('.gnb-submenu').show();
     });

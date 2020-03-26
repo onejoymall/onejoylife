@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%@ include file="/WEB-INF/views/layout/modal.jsp" %>
+<%--    <%@ include file="/WEB-INF/views/layout/modal.jsp" %>--%>
 <footer>
     <div class="footer-top-section">
         <ul class="clearfix">
@@ -71,6 +71,6 @@
 
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>--%>
 </body>
 </html>

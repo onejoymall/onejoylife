@@ -37,10 +37,10 @@
     font-weight: bold;
 }
 .modal-header{
-    width: 65% !important;
+    /*width: 65% !important;*/
 }
 .modal-content{
-    width: 65% !important;
+    /*width: 65% !important;*/
 }
 .add_image > li{
     float:left;

@@ -59,19 +59,19 @@
                             <col style="width: 370px;">
                             <col style="width: 120px;">
                             <col style="width: 120px;">
-                            <col style="width: 120px;">
-                            <col style="width: 120px;">
-                            <col style="width: 50px;">
+                            <col style="width: 290px;">
+                            <col style="width: 170px;">
+<%--                            <col style="width: 50px;">--%>
                         </colgroup>
                         <thead>
                         <tr class="head-tr">
                             <td><input type="checkbox" id="tr-ck1-1"><label for="tr-ck1-1" class="tr-icon"></label></td>
                             <td></td>
                             <td>상품정보</td>
-                            <td>옵션병경</td>
+<%--                            <td>옵션병경</td>--%>
                             <td>수량</td>
                             <td>상품가격</td>
-                            <td>배송정보</td>
+<%--                            <td>배송비</td>--%>
                             <td></td>
                         </tr>
                         </thead>
@@ -88,10 +88,10 @@
                                         <p>${list.product_model_name}</p>
 <%--                                        <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                     </td>
-                                    <td><p class="op-td1">옵션변경</p></td>
+<%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
                                     <td><input type="number" value="1" class="num-box"></td>
                                     <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
-                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>
+<%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
                                     <td><button class="x" data-id="${list.product_cd}"></button></td>
                                 </tr>
                             </c:forEach>

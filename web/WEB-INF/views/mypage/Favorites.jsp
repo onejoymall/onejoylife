@@ -21,7 +21,7 @@
                         <p class="txt-tit">자주 구매하는 상품</p>
                         <div class="txt-right">
                             <button type="button" id="del-chk-btn">삭제하기</button>
-                            <button type="button" id="cart-chk-btn">장바구니 담기</button>
+<%--                            <button type="button" id="cart-chk-btn">장바구니 담기</button>--%>
                         </div>
                     </div>
                     <table class="sec4-lis">
@@ -43,106 +43,33 @@
                         </tr>
                         </thead>
                         <tbody class="lis-body">
-                        <tr>
-                            <td class="my-lis-1">
-                                <input type="checkbox" id="chk1" name="chk1">
-                                <label for="chk1"></label>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="goods-view.html">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td><span>19,000원</span></td>
-                            <td>
-                                <a href="goods-view.html"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="my-lis-1">
-                                <input type="checkbox" id="chk2" name="chk2">
-                                <label for="chk2"></label>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td><span>19,000원</span></td>
-                            <td>
-                                <a href="goods-view.html"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="my-lis-1">
-                                <input type="checkbox" id="chk3" name="chk3">
-                                <label for="chk3"></label>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td><span>9,000원</span></td>
-                            <td>
-                                <a href="goods-view.html"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="my-lis-1">
-                                <input type="checkbox" id="chk4" name="chk4">
-                                <label for="chk4"></label>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td><span>9,000원</span></td>
-                            <td>
-                                <a href="goods-view.html"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="my-lis-1">
-                                <input type="checkbox" id="chk5" name="chk5">
-                                <label for="chk5"></label>
-                            </td>
-                            <td class="my-lis-2">
-                                <a href="">
-                                    <div class="my-lis-img1"></div>
-                                    <div class="my-lis-txt">
-                                        <p>브라운</p>
-                                        <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                        <p>VR20H9050UWS</p>
-                                    </div>
-                                </a>
-                            </td>
-                            <td><span>9,000원</span></td>
-                            <td>
-                                <a href="goods-view.html"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
-                            </td>
-                        </tr>
+                        <c:if test="${not empty list}">
+                            <c:forEach var="list" items="${list}" varStatus="status">
+                                <tr>
+                                    <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.cart_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
+                                    <td class="p-box">
+                                        <p>${list.product_brand}</p>
+                                        <p>${list.product_name}</p>
+                                        <p>${list.product_model_name}</p>
+                                            <%--                                        <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
+                                    </td>
+                                        <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
+                                    <td><input type="number" value="1" class="num-box"></td>
+                                    <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
+                                        <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
+                                    <td><button class="x" data-id="${list.product_cd}"></button></td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${empty list}">
+                            <tr>
+                                <td colspan="8">
+                                    표시할 내용이 없습니다.
+                                </td>
+                            </tr>
+
+                        </c:if>
                         </tbody>
                     </table>
                     <div class="num-box">

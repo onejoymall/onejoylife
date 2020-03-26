@@ -1,6 +1,11 @@
 package com.webapp.mall.controller;
 import autovalue.shaded.com.google$.auto.common.$MoreTypes;
 import autovalue.shaded.com.google$.common.base.$Predicate;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import com.sun.javafx.collections.MappingChange;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
@@ -57,6 +62,7 @@ public class restapiController {
     private CommonDAO commonDAO;
     @Autowired
     private ProductDAO productDAO;
+
     //이메일 인증
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -481,37 +487,52 @@ public class restapiController {
     public  HashMap<String, Object> SavePayment(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+
         try{
             //결제번호생성
             params.put("payment_cd","PM"+numberGender.numberGen(6,1));
-            if(!deliveryInfoVO.getProduct_cd().isEmpty()){
-                params.put("email",session.getAttribute("email"));
-                //로그인 확인
-                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-                //보유포인트 확인
+
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                //비회원 주문시 사용자아이디 임시 저장
+                params.put("payment_user_id",numberGender.numberGen(6,1));
+                resultMap.put("redirectUrl", "/MyPage/OrderDetailGuest?order_no="+deliveryInfoVO.getOrder_no());
+            }else{
+                params.put("payment_user_id",userInfo.get("usr_id"));
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
+                //회원인 경우 보유포인트 확인
+
                 Integer userPoint = pointDAO.getPointAmount(params);
-                //상품 포인트
-                Map<String,Object> productInfo  = productDAO.getProductViewDetail(params);
+                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
                 Integer payment = (Integer)productInfo.get("product_payment");
-                //포인트 배율이 있으면
-                if(productInfo.get("product_point_rate") !=null){
-                    Double rate = (Double)productInfo.get("product_point_rate");
-                    Double sum = (payment * rate)/100;
-                    params.put("point_amount",userPoint+sum);
-                    params.put("point_paid_memo",productInfo.get("product_name"));
-                    params.put("point_add",sum);
-                    params.put("point_paid_user_id",userInfo.get("usr_id"));
-                    params.put("point_paid_type","P");
-                    params.put("point_paid_product_cd",productInfo.get("product_cd"));
-                    pointDAO.insertPoint(params);
+
+                //상품결제 시 포인트 배율 확인 및 지급
+                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
+                if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+                    productInfo = productDAO.getProductViewDetail(params);
+                    if((Double)productInfo.get("product_point_rate") > 0){
+                        Double rate = (Double)productInfo.get("product_point_rate");
+                        Double sum = (payment * rate)/100;
+                        params.put("point_amount",userPoint+sum);
+                        params.put("point_paid_memo",productInfo.get("product_name"));
+                        params.put("point_add",sum);
+                        params.put("point_paid_user_id",userInfo.get("usr_id"));
+                        params.put("point_paid_type","P");
+                        params.put("point_paid_product_cd",productInfo.get("product_cd"));
+                        params.put("order_no",deliveryInfoVO.getOrder_no());
+                        pointDAO.insertPoint(params);
+                    }
                 }
+                resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
             }
 
-            paymentDAO.insertPayment(params);
-            //상품결제 시 포인트 배율 확인 및 지급
 
-            if(params.get("payment_class").equals("GIVEAWAY")){
+            paymentDAO.insertPayment(params);
+
+            //경품 응모시 결제 상태 변경
+            if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
                 if(params.get("success").equals("false")){
                     params.put("giveaway_payment_status","A");
                 }else{
@@ -520,15 +541,106 @@ public class restapiController {
 
                 paymentDAO.updateGiveawayDeliveryStatus(params);
             }
-//            if(params.get("payment_class").equals("PRODUCT")){
-//
-//            }
-            resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
         return resultMap;
     }
+    //결제 취소요청
+    @RequestMapping(value = "/SavePaymentCancel", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> SavePaymentCancel(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                //비회원 주문
+                resultMap.put("redirectUrl", "/");
+            }else{
+                params.put("payment_user_id",userInfo.get("usr_id"));
+                //회원인 경우 보유포인트 확인
+                resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
+            }
+
+//            //환불을위한 토큰발급
+//            IamportClient client;
+//            String test_api_key = "7152058542143411";
+//            String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+//            client = new IamportClient(test_api_key, test_api_secret);
+////            IamportResponse<AccessToken> auth_response = client.getAuth();
+//            String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
+//            CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+//            //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
+//
+//            IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+//
+//            if(payment_response.getResponse()==null){
+//                error.put("Error", payment_response.getMessage());
+//            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                deliveryInfoVO.setDelivery_status("C");
+                deliveryInfoVO.setPayment_status("C");
+                deliveryDAO.updateDelivery(deliveryInfoVO);
+                paymentDAO.updatePayment(deliveryInfoVO);
+                paymentDAO.insertPaymentRefund(deliveryInfoVO);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //찜
+    @RequestMapping(value = "/cart/addFavorites")
+    public  HashMap<String, Object> addaddFavorites(@RequestParam HashMap params,HttpSession session,HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+
+            //카트번호
+            params.put("product_favorites_cd","FV"+numberGender.numberGen(6,1));
+            //사용자 아이디 확인 후 전달
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+
+            if(isEmpty(userInfo)){
+                String cart_user_id = numberGender.numberGen(6,1);
+                params.put("member_yn","N");
+
+                if ( session.getAttribute("nonMembersUserId") == null ){
+                    session.setAttribute("nonMembersUserId",cart_user_id);
+                    params.put("user_id",cart_user_id);
+                }else{
+                    params.put("user_id",session.getAttribute("nonMembersUserId"));
+                }
+            }else{
+                params.put("member_yn","Y");
+                params.put("user_id",userInfo.get("usr_id"));
+            }
+            //카트 중복조회
+            if(cartDAO.getFavoritesListCount(params) > 0){
+                error.put("Error", messageSource.getMessage("error.duplicateFavorites","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                cartDAO.insertFavorites(params);
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
     //장바구니 등록
     @RequestMapping(value = "/cart/addcart")
     public  HashMap<String, Object> addCart(@RequestParam HashMap params,HttpSession session,HttpServletRequest request){

@@ -1,6 +1,7 @@
 package com.webapp.mall.vo;
-public class DeliveryInfoVO {
+public class DeliveryInfoVO extends PaymentVO {
    private String product_cd;
+   private String payment_class;
    private String giveaway_cd;
    private Integer order_user_id;
    private String order_user_name;
@@ -24,6 +25,24 @@ public class DeliveryInfoVO {
    private String delivery_t_code;//택배사 콛
    private String delivery_t_invoice;//택배 송장번호
    private String delivery_t_url;//REST API 호출 url
+   private String delivery_status;
+
+
+    public String getDelivery_status() {
+        return delivery_status;
+    }
+
+    public void setDelivery_status(String delivery_status) {
+        this.delivery_status = delivery_status;
+    }
+
+    public String getPayment_class() {
+        return payment_class;
+    }
+
+    public void setPayment_class(String payment_class) {
+        this.payment_class = payment_class;
+    }
 
     public String getProduct_cd() {
         return product_cd;

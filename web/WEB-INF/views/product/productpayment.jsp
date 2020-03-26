@@ -427,7 +427,7 @@
                         IMP.request_pay({ // param
                             pg: "inicis",
                             pay_method: "card",
-                            merchant_uid: "${userInfo.usr_id}",
+                            merchant_uid:$('input[name=order_no]').val(),
                             name: "${detail.product_name}",
                             amount: ${detail.product_payment+detail.product_delivery_payment},
                             buyer_email: "${sessionScope.email}",
@@ -437,7 +437,7 @@
                             buyer_postcode: $('#postcode').val()
                         }, function (rsp) { // callback
                             var formData = $('#defaultForm').serialize()
-                                +'&payment_class=GIVEAWAY'
+                                +'&payment_class=PRODUCT'
                                 +'&success='+rsp.success
                                 +'&imp_uid='+rsp.imp_uid
                                 +'&merchant_uid='+rsp.merchant_uid
@@ -485,41 +485,6 @@
                                     }
                                 });
                             }else{
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "/SavePayment",
-                                    data: formData,
-                                    success: function (data) {
-
-                                        if (data.validateError) {
-                                            $('.validateError').empty();
-                                            $.each(data.validateError, function (index, item) {
-                                                if(index == "Error"){//일반에러메세지
-                                                    alertType = "error";
-                                                    showText = item;
-                                                }else{
-                                                    alertType = "error";
-                                                    showText = index + " (은) " + item;
-                                                }
-                                                // $.toast().reset('all');//토스트 초기화
-                                                $.toast({
-                                                    text: showText,
-                                                    showHideTransition: 'plain', //펴짐
-                                                    position: 'top-right',
-                                                    heading: 'Error',
-                                                    icon: 'error'
-                                                });
-                                            });
-
-                                        } else {
-                                            // loginAuth(data.access_token);
-                                            location.href=data.redirectUrl;
-                                        }
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("error");
-                                    }
-                                });
                                 $.toast({
                                     text: rsp.error_msg,
                                     showHideTransition: 'plain', //펴짐

@@ -11,16 +11,17 @@
     </select>
     <select id="getDeliveryList"  parameterType="java.util.Map">
         select A.*
-        from delivery_info A where 1=1
+        from delivery_info A where product_cd is not null
         <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="delivery_status != null"> <![CDATA[AND A.delivery_status= #{delivery_status} ]]></if>
         order by reg_date desc
     </select>
     <select id="getDeliveryListCount" resultType="Integer" parameterType="java.util.Map">
         select count(*)
-        from delivery_info A where 1=1
+        from delivery_info A  where product_cd is not null
         <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
@@ -94,4 +95,9 @@
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     </select>
+    <update id="updateDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update delivery_info set
+        delivery_status = #{delivery_status}
+        where order_no=#{merchant_uid}
+    </update>
 </mapper>

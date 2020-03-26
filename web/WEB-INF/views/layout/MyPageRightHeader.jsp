@@ -58,7 +58,7 @@
                             <p class="in-coin1 font-de1">OJT</p>
                             <p class="in-coin2 font-de2">
                                 <a href="#">
-                                    <span>999,999,999</span>
+                                    <span>0</span>
                                     <span>coin</span>
                                 </a>
                             </p>
@@ -67,7 +67,7 @@
                             <p class="in-coin1 font-de1">OJST</p>
                             <p class="in-coin2 font-de2">
                                 <a href="#">
-                                    <span>999,999,999</span>
+                                    <span>0</span>
                                     <span>coin</span>
                                 </a>
                             </p>

@@ -102,7 +102,8 @@ main{overflow: hidden;}
     height: calc(100% / 2);
 }
 .rec2-in:nth-child(5) > div > p {
-    line-height: 4rem;
+    /*line-height: 4rem;*/
+    line-height: 60px;
     padding: 0 20px;
 }
 .in-coin1 {

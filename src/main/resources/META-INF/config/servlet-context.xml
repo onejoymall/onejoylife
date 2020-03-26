@@ -45,6 +45,8 @@
 			<mvc:exclude-mapping path="/product/**" />
 			<mvc:exclude-mapping path="/layout/**" />
 			<mvc:exclude-mapping path="/MyPage/ShoppingBasket" />
+			<mvc:exclude-mapping path="/MyPage/OrderCancel" />
+			<mvc:exclude-mapping path="/MyPage/OrderDetailGuest" />
 			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

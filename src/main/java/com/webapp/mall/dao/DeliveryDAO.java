@@ -24,6 +24,9 @@ public class DeliveryDAO {
     public void insertDelivery(DeliveryInfoVO deliveryInfoVO) throws SQLException {
         sql.insert("mall.DeliveryMapper.insertDelivery",deliveryInfoVO);
     }
+    public void updateDelivery(DeliveryInfoVO deliveryInfoVO) throws SQLException {
+        sql.insert("mall.DeliveryMapper.updateDelivery",deliveryInfoVO);
+    }
     public Map<String,Object> getDeliveryLatest(Map<String,Object> paramas) throws SQLException{
         Map<String,Object> getDeliveryLatest=sql.selectOne("mall.DeliveryMapper.getDeliveryLatest",paramas);
         return getDeliveryLatest;

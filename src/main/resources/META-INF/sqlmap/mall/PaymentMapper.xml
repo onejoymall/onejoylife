@@ -7,6 +7,7 @@
         insert into payment(
         success,
         imp_uid,
+        payment_user_id,
         merchant_uid,
         pay_method,
         pg_provider,
@@ -21,6 +22,7 @@
         )values (
          #{success},
          #{imp_uid},
+          #{payment_user_id},
          #{merchant_uid},
          #{pay_method},
          #{pg_provider},
@@ -44,6 +46,7 @@
             A.*,B.*,
             (select Z.username from user Z where Z.usr_id=A.merchant_uid) as username,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
+            (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
@@ -51,9 +54,11 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
-    <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-    <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
-    <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
 </select>
     <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
@@ -72,18 +77,40 @@
         SELECT
             A.*,B.*,
             (select Z.username from user Z where Z.usr_id=A.merchant_uid) as username,
+            (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
-        FROM payment A left join product B on (B.product_cd = A.product_cd)
+        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
-        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
-
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     </select>
-
-
+    <update id="updatePayment" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update payment set
+        payment_status = #{payment_status}
+        where order_no=#{merchant_uid}
+    </update>
+    <insert id="insertPaymentRefund" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        insert into payment_refund
+        (
+            merchant_uid,
+            cancel_request_amount,
+            reason,
+            refund_holder,
+            refund_bank,
+            refund_account
+        )values(
+            #{merchant_uid},
+            #{cancel_request_amount},
+            #{reason},
+            #{refund_holder},
+            #{refund_bank},
+            #{refund_account}
+        )
+    </insert>
 </mapper>

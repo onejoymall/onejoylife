@@ -31,4 +31,24 @@ public class CartDAO {
         Map<String,Object> getCartSum = sql.selectOne("mall.CartMapper.getCartSum",params);
         return getCartSum;
     }
+
+    public List<Map<String, Object>> getFavoritesList(Map<String, Object> params) throws SQLException {
+        List<Map<String, Object>> getFavoritesList = sql.selectList("mall.CartMapper.getFavoritesList",params);
+        return getFavoritesList;
+    }
+    public Integer getFavoritesListCount(Map<String, String> params) throws SQLException {
+        Integer getFavoritesListCount=sql.selectOne("mall.CartMapper.getFavoritesListCount",params);
+        return getFavoritesListCount;
+    }
+    public void insertFavorites(Map<String, String> params) throws Exception{
+        sql.insert("mall.CartMapper.insertFavorites",params);
+    }
+    public void deleteFavorites(Map<String, String> params) throws Exception{
+        sql.insert("mall.CartMapper.deleteFavorites",params);
+    }
+    public Map<String,Object> getFavoritesSum(Map<String, Object> params) throws SQLException{
+        Map<String,Object> getFavoritesSum = sql.selectOne("mall.CartMapper.getFavoritesSum",params);
+        return getFavoritesSum;
+    }
+
 }
