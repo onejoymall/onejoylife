@@ -13,7 +13,8 @@
         <ul class="clearfix">
             <li><a href="#">이용약관</a></li>
             <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">쇼핑몰 입점/제휴 문의</a></li>
+            <li class="company-app"><a href="javascript:void(0)" >쇼핑몰 입점/제휴 문의</a></li>
+
             <li><a href="/Help/csinfo">고객센터</a></li>
         </ul>
     </div>

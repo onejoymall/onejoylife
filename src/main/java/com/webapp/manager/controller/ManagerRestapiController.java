@@ -567,6 +567,11 @@ public class ManagerRestapiController {
             if(storeVO.getStore_id().isEmpty()){
                 error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.required","ko"));
             }
+            Map<String,Object> soterInfo = mgStoreDAO.getStoreDetail(storeVO);
+
+            if(!isEmpty(soterInfo)){
+                error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.chkDplcId","ko"));
+            }
             if(storeVO.getStore_password()==null || storeVO.getStore_password().isEmpty()){
                 error.put("Password", messageSource.getMessage("error.required","ko"));
             }
@@ -583,7 +588,13 @@ public class ManagerRestapiController {
                 fileVO.setParentPK(storeVO.getStore_id());
                 mgProductDAO.insertProductFile(filelist,fileVO);
                 mgStoreDAO.insertStore(storeVO);
-                resultMap.put("redirectUrl","/Manager/company-app");
+                Object obj = session.getAttribute("adminLogin");
+                if ( obj == null ){
+                    resultMap.put("redirectUrl","/");
+                }else{
+                    resultMap.put("redirectUrl","/Manager/company-app");
+                }
+
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -660,7 +671,7 @@ public class ManagerRestapiController {
         return resultMap;
     }
 
-    //아이디 중복체크
+    //입점업체 아이디 중복체크
     @RequestMapping(value = "/Manager/storeIdDupCheck", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerStoreIdDupCheck(StoreVO storeVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();

@@ -1,0 +1,124 @@
+*{box-sizing: border-box; }
+body{font-family: "noto sans kr"!important; padding:20px 0;}
+main{overflow: hidden;}
+
+h2{padding:10px 20px;}
+/* sec1 */
+.sec1-h1 {
+    font-size: 1.5rem;
+    line-height: 28px;
+}
+.sec1-p1 {
+    font-size: 0.8rem;
+    margin: 7px 0 5px;
+    line-height: 28px;
+    color: #848484;
+}
+.sec1-tbody > tr {
+    width:100%;
+    height: 50px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.sec1-tbody td:first-child{
+    padding:0 30px;
+    background:#f7f7f9
+}
+.sec1-tbody td:nth-child(2){
+    padding:10px 20px;
+}
+.sec1-tbody input, .sec1-tbody select{
+    width:100%;
+    min-height:35px;
+    outline: none;
+    border: 1px solid #aaa;
+    padding: 0 10px;
+    font-family: 'Noto Sans KR';
+    font-weight: 300;
+    color:#777777;
+}
+.email-box input, .email-box select{
+    width:130px;
+}
+.chk-box{
+    display:inline-block;
+}
+.ex, label{font-size:12px;color:#777;}
+.ex{line-height: 30px;}
+input[type="checkbox"]{display:none;}
+input[type="checkbox"]+label{
+    display:inline-block;
+    width:250px;
+    height:24px;
+    background:url(../img/icon/ch1-icon.png) center left no-repeat;
+    padding-left:27px;
+    line-height: 24px;
+    margin-left:10px;
+}
+input[type="checkbox"]:checked+label{
+    background:url(../img/icon/ch2-icon.png) no-repeat;
+}
+.phone-box input, .phone-box select{
+    width:80px;
+}
+.sort-box select{
+    width:200px;
+}
+.inquire{
+    padding:3px 8px;
+    margin-right:10px;
+    background: #6c6c6c;
+    color:#fff;
+}
+textarea {
+    width: 100%;
+    height: 100px;
+    outline: none;
+    border: 1px solid #aaa;
+    padding: 0 10px;
+    font-family: 'Noto Sans KR';
+    font-weight: 300;
+    color:#777777;
+}
+.txt-counting{
+    width:100%;
+    text-align: right;
+    font-size:12px;
+    color:#777777;
+}
+.fileBox{
+    width:100%;
+}
+.fileBox .fileName {display:inline-block;width:290px;height:30px;padding-left:10px;margin-right:10px;line-height:30px;border:none;border:1px solid #aaa;background-color:#efefef;vertical-align:middle}
+.fileBox .btn_file {display:inline-block;background: #fff;border:1px solid;
+    color: #777;width:65px;height:30px;font-size:12px;font-weight:100;line-height:30px;text-align:center;vertical-align:middle}
+.fileBox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.fileBox .ex{line-height: normal;}
+
+table+p.ex{
+    position: relative;
+    margin:30px 0;
+    padding-left:20px;
+    line-height: 20px;
+}
+table+p.ex span.bullet-point{
+    position:absolute;
+    left:10px
+}
+table+p.ex a{
+    text-decoration: underline;
+}
+.button-box{
+    margin-top:20px;
+    width:100%;
+    text-align: center;
+}
+.button-box button{
+    width:120px;
+    height:40px;
+    color:#fff;
+    font-weight: 600;
+}
+.button-box button{
+    background:#da394d;
+}

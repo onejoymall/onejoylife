@@ -764,7 +764,7 @@ $(document).ready(function(){
             }
         });
     })
-    $("button[name='detail0']").click(function(){
+    function resetStoreForm(){
         $(".modal1").attr("style", "display:block");
         $('#defaultForm')[0].reset();
         $('#store_reg').attr("readonly",false);
@@ -776,6 +776,9 @@ $(document).ready(function(){
         $('#formStoreSubmit').removeClass('hidden');
         $('.updateBtn').addClass('hidden');
         $('body').css("overflow", "hidden");
+    }
+    $("button[name='detail0']").click(function(){
+        resetStoreForm();
     });
     //입점업체등록
     $(document).on("click","#formStoreSubmit",function () {

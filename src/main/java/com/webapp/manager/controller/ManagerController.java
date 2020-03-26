@@ -394,6 +394,45 @@ public class ManagerController {
         return "/manager/info-service";
     }
 
+    //일반이용약관
+    @RequestMapping(value = "/Manager/info-main")
+    public String managerInfoMain(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            params.put("market_config_code", "info-main");
+            Map<String, Object> config = configDAO.getConfigDetail(params);
+            if (isEmpty(config)) {
+                config.put("market_config_value", "");
+            }
+            model.addAttribute("config", config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "info-setting");
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/info-main";
+    }
+    //개인정보처리방침
+    @RequestMapping(value = "/Manager/info-privacy")
+    public String managerInfoPrivacy(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            params.put("market_config_code", "info-privacy");
+            Map<String, Object> config = configDAO.getConfigDetail(params);
+            if (isEmpty(config)) {
+                config.put("market_config_value", "");
+            }
+            model.addAttribute("config", config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "info-setting");
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/info-privacy";
+    }
+
     //쿠폰관리
     @RequestMapping(value = "/Manager/promotion-coupon")
     public String managerPromotionCoupon(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {

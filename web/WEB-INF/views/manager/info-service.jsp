@@ -11,13 +11,15 @@
             <form id="defaultForm" name="defaultForm" method="POST">
                 <input type="hidden" name="market_config_code" value="info-service">
                 <ul class="info-tab clearfix">
-                    <li><a href="/Manager/info-join" >회원가입 이용약관</a></li>
-                    <li><a href="/Manager/info-order">주문안내</a></li>
-                    <li><a href="/Manager/info-pay">결제안내</a></li>
-                    <li><a href="/Manager/info-service" class="active">배송안내</a></li>
-                    <li><a href="/Manager/info-refund"  >교환/반품안내</a></li>
+                    <li><a href="/Manager/info-join" >회원가입</a></li>
+                    <li><a href="/Manager/info-order">주문</a></li>
+                    <li><a href="/Manager/info-pay">결제</a></li>
+                    <li><a href="/Manager/info-service" class="active">배송</a></li>
+                    <li><a href="/Manager/info-refund"  >교환/반품</a></li>
                     <li><a href="/Manager/info-change">환불안내</a></li>
-                    <li><a href="/Manager/info-point">적립금 및 포인트 안내</a></li>
+                    <li><a href="/Manager/info-point">적립금 및 포인트</a></li>
+                    <li><a href="/Manager/info-main">이용약관</a></li>
+                    <li><a href="/Manager/info-privacy">개인정보처리방침</a></li>
                 </ul>
                 <div class="text-editor clearfix">
                     <textarea name="market_config_value" id="summernote">${config.market_config_value}</textarea>
