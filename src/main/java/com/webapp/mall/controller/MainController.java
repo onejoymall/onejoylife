@@ -11,6 +11,7 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.ConfigDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,6 +41,8 @@ public class MainController {
     CartDAO cartDAO;
     @Autowired
     private BoardSvc boardSvc;
+    @Autowired
+    ConfigDAO configDAO;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
@@ -120,6 +123,12 @@ public class MainController {
             List<Map<String,Object>> categoryBannerList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryBannerList",categoryBannerList);
 
+            params.put("market_config_code","info-main");
+            Map<String,Object> configMain = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain", configMain);
+            params.put("market_config_code","info-privacy");
+            Map<String,Object> configMain2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy", configMain2);
             //공지사항
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("8");
             searchVO.setBgno("8");

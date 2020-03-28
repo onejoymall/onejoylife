@@ -101,6 +101,7 @@
                     </div>
                     <div class="join-box">
                         <a href="#" id="formSubmit">회원가입</a>
+                        <a id="kakao-login-btn"></a>
                     </div>
                 </form>
             </div>
@@ -175,7 +176,8 @@
                 }else{
                     $('#emailAuthValidation').addClass('p-none');
                     $('#emailValidation').addClass('p-none');
-                    alert("인증번호 발송 완료")
+                    $('#mailSender').addClass("bg-secondary");
+                    $(this).attr("text","인증번호입력");
                 }
             },
 

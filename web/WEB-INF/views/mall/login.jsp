@@ -25,6 +25,7 @@
                     <button type="button" title="login" class="login-on"><span>로그인</span>
                     </button>
                 </div>
+
             </div>
             <div class="er" id="loginCheckError">회원 아이디 또는 비밀번호가 일치하지 않습니다.</div>
             <div class="option">
@@ -35,6 +36,13 @@
                 <a href="<c:url value="/sign/findUserInfo"/>" class="id-pw">아이디/비밀번호 찾기</a>
             </div>
             <div class="link-box">
+                <div class="link-join">
+                    <ul class="txt-p1">
+                        <li class="txt-w">&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>
+                    <a id="kakao-login-btn" ></a>
+                </div>
                 <div class="link-join">
                     <ul class="txt-p1">
                         <li class="txt-w">ㆍ아직 원조이몰 회원이 아니신가요?</li>
@@ -50,8 +58,32 @@
         </form>
     </div>
 </div>
-
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
+    //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('6538b0a9dbcb56e8345458a647f599c8');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+            console.log(authObj);
+           $.ajax({
+               url: "/sign/kakaoLogin",
+               contentType: 'application/json',
+               cache: false,
+               type: "POST",
+               data: JSON.stringify(authObj)
+           }).done();
+
+        },
+        fail: function(err) {
+            alert(JSON.stringify(err));
+        }
+    });
+    //]]>
+
+
     $('.login-but').on("click",function () {
         var formData = $('#defaultLoginForm').serialize();
         var email = $('#email').val();

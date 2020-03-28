@@ -10,9 +10,11 @@ import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.PaymentVO;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.ProductVO;
@@ -58,6 +60,8 @@ public class ManagerRestapiController {
     private ConfigDAO configDAO;
     @Autowired
     private MgStoreDAO mgStoreDAO;
+    @Autowired
+    PaymentDAO paymentDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     //로그인 처리 1
@@ -136,6 +140,30 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
+
+    //상품상세보기
+    @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            Map<String,Object> list = paymentDAO.getPaymentDetail(params);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+//                resultMap.put("deliveryInfoVO",deliveryInfoVO);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
     //상품상세보기
     @RequestMapping(value = "/Manager/viewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerViewDetail(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){

@@ -429,11 +429,11 @@
     </article>
 </section>
 <!-- 업체신청 모달 -->
-<div class="modal">
+<div class="modal" id="modal-store">
     <div class="modal-content">
         <form name="defaultForm" id="defaultForm" method="multipart/form-data">
             <div class="modal-header">
-                <h2>입점업체 등록</h2>
+                <h2>공급사 등록</h2>
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
@@ -445,7 +445,7 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th>입점사 ID</th>
+                        <th>공급사 ID</th>
                         <td>
                             <input type="text" id="store_id" name="store_id">
                             <button type="button" class="btn_file" id="storIdDupCheck">중복확인</button>
@@ -463,7 +463,7 @@
 
                     </tbody>
                 </table>
-                <h3>판매자</h3>
+                <h3>공급사</h3>
                 <table class="goods-detail-table">
                     <colgroup>
                         <col width="142px">
@@ -559,18 +559,28 @@
     </div>
 </div>
 
+
 <script>
     // 모달
-    $(document).on("click",".company-app",function(){
-        event.preventDefault();
-        $(".modal").attr("style", "display:block");
-        $('body').css("overflow", "hidden");
-    });
-    $(".modal-close").click(function(){
-        $(".modal").attr("style", "display:none");
-        $('body').css("overflow", "auto");
-    });
-
+    // $(document).on("click",".company-app",function(){
+    //     event.preventDefault();
+    //     $(".modal").attr("style", "display:block");
+    //     $('body').css("overflow", "hidden");
+    // });
+    // $(".modal-close").click(function(){
+    //     $(".modal").attr("style", "display:none");
+    //     $('body').css("overflow", "auto");
+    // });
+    //
+    // $(document).on("click",".company-app",function(){
+    //     event.preventDefault();
+    //     $(".modal").attr("style", "display:block");
+    //     $('body').css("overflow", "hidden");
+    // });
+    // $(".modal-close").click(function(){
+    //     $(".modal").attr("style", "display:none");
+    //     $('body').css("overflow", "auto");
+    // });
     //슬라이더 선언
 
     $('.main-slider-wrap').bxSlider({

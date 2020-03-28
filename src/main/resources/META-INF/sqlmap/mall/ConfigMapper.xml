@@ -13,7 +13,14 @@
         FROM market_config A where A.market_config_code = #{market_config_code}
 
     </select>
+    <select id="getConfigList" parameterType="java.util.Map" resultType="java.util.Map">
 
+        SELECT
+            A.*
+
+        FROM market_config A
+
+    </select>
     <select id="getPartnerMarketConfigDetail" parameterType="java.util.Map" resultType="java.util.Map">
 
         SELECT

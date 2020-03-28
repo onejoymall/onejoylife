@@ -19,7 +19,10 @@ public class ConfigDAO {
         Map<String,Object> getConfigDetail=sql.selectOne("mall.ConfigMapper.getConfigDetail",params);
         return getConfigDetail;
     }
-
+    public List<Map<String,Object>>getConfigList(Map<String, Object> params) throws SQLException {
+        List<Map<String,Object>> getConfigList=sql.selectOne("mall.ConfigMapper.getConfigList",params);
+        return getConfigList;
+    }
     public  void insertConfig(Map<String, Object> params) throws SQLException{
         sql.insert("mall.ConfigMapper.insertConfig",params);
     }

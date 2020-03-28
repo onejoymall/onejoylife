@@ -192,4 +192,22 @@ input[class='styleClass']:checked + label
 .modal, .modal1{
     z-index: 999!important;
 }
+.bg-info {
+    background: #17a2b8;
+}
+.bg-success {
+    background: #28a745;
+}
+.bg-warning {
+    background: #ffc107;
+}
+.bg-danger{
+    background: #dc3545;
+}
+.bg-dark{
+    background: #343a40;
+}
+.bg-secondary {
+    background: #6c757d;
+}
 

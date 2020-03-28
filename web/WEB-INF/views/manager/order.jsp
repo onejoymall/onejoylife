@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
     <main>
         <div class="main-content">
@@ -162,7 +164,7 @@
                             <td>수량</td>
                             <td>결제금액</td>
                             <td>상태</td>
-                            <td>메모</td>
+                            <td>관리</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,16 +174,16 @@
                             <td><input type="checkbox" id="chk10" name="chk10"></td>
                             <td>${list.order_no}</td>
                             <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
-                            <td>${list.username}</td>
-                            <td>2020-03-14</td>
-                            <td>2140912832</td>
-                            <td>-</td>
-                            <td>제주 신선 한라봉/1KG</td>
-                            <td>1</td>
-                            <td>30,150</td>
-                            <td>배송완료</td>
+                            <td>${list.email}</td>
+                            <td></td>
+                            <td></td>
+                            <td>${list.product_made_company_name}</td>
+                            <td>${list.product_name}</td>
+                            <td>${list.payment_order_quantity}</td>
+                            <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
+                            <td>${list.payment_status_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail">상세보기</button>
+                                <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.order_no}')">송장번호입력</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -215,53 +217,53 @@
                         <tbody>
                             <tr>
                                 <th>주문번호</th>
-                                <td>6549858</td>
+                                <td class="order_no">6549858</td>
                             </tr>
                             <tr>
                                 <th>주문일</th>
-                                <td>2020-03-13</td>
+                                <td class="reg_date">2020-03-13</td>
                             </tr>
                             <tr>
                                 <th>주문자</th>
-                                <td>unknown01</td>
+                                <td class="email">unknown01</td>
                             </tr>
                             <tr>
                                 <th>배송일</th>
-                                <td>2020-03-14</td>
+                                <td class="email">2020-03-14</td>
                             </tr>
                             <tr>
                                 <th>택배사/운송장 번호</th>
-                                <td>한진/2140912832</td>
+                                <td><span class="delivery_t_invoice"></span>/<span class="delivery_t_code"></span></td>
                             </tr>
                             <tr>
                                 <th>공급사</th>
-                                <td>-</td>
+                                <td class="product_made_company_name">-</td>
                             </tr>
                             <tr>
                                 <th>상품명/옵션</th>
-                                <td>제주 신선 한라봉/1KG</td>
+                                <td class="product_name">제주 신선 한라봉/1KG</td>
                             </tr>
                             <tr>
                                 <th>수량</th>
-                                <td>1</td>
+                                <td class="payment_order_quantity">1</td>
                             </tr>
                             <tr>
                                 <th>결제수단</th>
-                                <td>카드</td>
+                                <td class="pay_method">카드</td>
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td>30,150원</td>
+                                <td class="payment">30,150원</td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td>배송완료</td>
+                                <td class="payment_status">배송완료</td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-gray" onclick="window.open('tax-bill.html','세금계산서','width=1000, height=800,loaction=no,status=no,scrollbars=yes');">세금계산서</button>
-                    <button type="button" name="detail" class="btn-gray" onclick="window.open('receipts.html','현금영수증','width=650, height=750,loaction=no,status=no,scrollbars=yes');">현금영수증</button>
-                    <button type="button" name="detail" class="btn-gray" onclick="window.open('transaction.html','거래명세서','width=1015, height=750,loaction=no,status=no,scrollbars=yes');">거래명세서</button>
+<%--                    <button type="button" name="detail" class="btn-gray" onclick="window.open('tax-bill.html','세금계산서','width=1000, height=800,loaction=no,status=no,scrollbars=yes');">세금계산서</button>--%>
+<%--                    <button type="button" name="detail" class="btn-gray" onclick="window.open('receipts.html','현금영수증','width=650, height=750,loaction=no,status=no,scrollbars=yes');">현금영수증</button>--%>
+<%--                    <button type="button" name="detail" class="btn-gray" onclick="window.open('transaction.html','거래명세서','width=1015, height=750,loaction=no,status=no,scrollbars=yes');">거래명세서</button>--%>
                 </div>
             </div>
         </div>
