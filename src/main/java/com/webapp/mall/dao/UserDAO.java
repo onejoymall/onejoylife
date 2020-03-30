@@ -1,5 +1,6 @@
 package com.webapp.mall.dao;
 
+import com.webapp.mall.vo.UserVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,11 @@ public class UserDAO {
         Map<String, Object> getEmailAuthList = sql.selectOne("mall.UserMapper.getEmailAuthList",params);
         return getEmailAuthList;
     }
+    public Map<String, Object> getEmailAuthCode(UserVO userVO) throws SQLException {
+        Map<String, Object> getEmailAuthCode = sql.selectOne("mall.UserMapper.getEmailAuthCode",userVO);
+        return getEmailAuthCode;
+    }
+
     public Map<String, Object> getLoginUserList(Map<String, String> params) throws SQLException {
         Map<String, Object> getLoginUserList = sql.selectOne("mall.UserMapper.getUserList",params);
         return getLoginUserList;

@@ -64,7 +64,7 @@
 
 <script>
     $('.kko-login-btn').click(function () {
-        window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=http://210.178.80.160:8080/Popup/kakao&response_type=code','_blank','width=750, height=900');
+        window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');
     });
 
     $('.login-but').on("click",function () {

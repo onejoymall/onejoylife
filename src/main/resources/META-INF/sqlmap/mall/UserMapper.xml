@@ -52,6 +52,14 @@
         email_auth_code=#{email_auth_code}
         ]]>
     </insert>
+    <select id="getEmailAuthCode" parameterType="com.webapp.mall.vo.UserVO" resultType="java.util.Map">
+        <![CDATA[
+        SELECT
+          *
+        FROM email_auth A where email=#{email} order by reg_date desc limit 1
+
+        ]]>
+    </select>
     <select id="getEmailAuthList" resultType="java.util.Map">
         <![CDATA[
         SELECT

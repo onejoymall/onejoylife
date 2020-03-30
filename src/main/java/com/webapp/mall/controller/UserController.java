@@ -7,9 +7,12 @@ import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.UserDAO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -41,12 +44,14 @@ public class UserController {
 
         String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
         HttpClient client = HttpClientBuilder.create().build();
-        HttpGet httpGet = new HttpGet(RequestUrl);
-        httpGet.addHeader("Authorization", (String)session.getAttribute("token"));
-        HttpResponse response = client.execute(httpGet);
+        HttpPost postRequest = new HttpPost(RequestUrl); //POST 메소드 URL
+        postRequest.addHeader("Authorization", (String)session.getAttribute("token"));
+        HttpResponse response = client.execute(postRequest);
         try {
             int responseCode = response.getStatusLine().getStatusCode();
             if (responseCode == 200) {
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                handler.handleResponse(response);
 
             }
         }catch (Exception e){
@@ -60,16 +65,20 @@ public class UserController {
     public String mallLogin(@RequestParam HashMap params, ModelMap model,HttpServletRequest request) throws Exception {
         String returnString ="mall/login";
         try{
+            Object siteUrl = request.getRequestURL().toString()
+                    .replaceAll(" " , "")
+                    .replace(request.getRequestURI(),"");
             HttpSession session = request.getSession();
             Object obj = session.getAttribute("login");
             if ( obj != null ){
                 returnString ="redirect:/";
             }
+            model.addAttribute("siteUrl", siteUrl);
         }catch(Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "login");
 
+        model.addAttribute("style", "login");
         return returnString;
     }
     @RequestMapping(value = "/sign/signup")
@@ -83,7 +92,7 @@ public class UserController {
             e.printStackTrace();
         }
         model.addAttribute("style", "joinform");
-
+        model.addAttribute("postUrl","/sign/signupProc");
         return "mall/signup";
     }
     @RequestMapping(value = "/sign/findUserInfo")

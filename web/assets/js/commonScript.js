@@ -1,13 +1,4 @@
 
-$(document).on("click","#link-info-main",function(){
-    $('#modal-info-main').modal('toogle');
-});
-$(document).on("click","#link-info-privacy",function(){
-    $('#modal-info-privacy').modal('toogle');
-});
-$(document).on("click","#link-company-app",function(){
-    $('#modal-store').modal('toogle');
-});
 //찜
 $('.favorite').click(function(){
     $(this).children('i').toggleClass('heart-full');

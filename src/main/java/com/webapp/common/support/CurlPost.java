@@ -186,30 +186,4 @@ public class CurlPost {
         return responBody;
 
     }
-    public static void kakaoLogOut(HttpSession session)throws Exception{
-
-        String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(RequestUrl);
-        Map<String, Object> responBody = null;
-        try {
-            post.addHeader("Authorization", (String)session.getAttribute("token"));
-            HttpResponse response = client.execute(post);
-            int responseCode = response.getStatusLine().getStatusCode();
-
-
-            if (responseCode == 200) {
-               //로그아웃 처리
-            }
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            // clear resources
-        }
-    }
 }

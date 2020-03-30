@@ -276,4 +276,22 @@ public class MainController {
         }
         return "mall/live-view";
     }
+    //modal
+    @RequestMapping(value = "/layout/modal", method = RequestMethod.GET, produces = "application/json")
+    public String mallModal(@RequestParam HashMap params, ModelMap model) throws Exception {
+
+        try{
+
+            params.put("market_config_code","info-main");
+            Map<String,Object> configMain = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain", configMain);
+            params.put("market_config_code","info-privacy");
+            Map<String,Object> configMain2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy", configMain2);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "layout/modal";
+    }
 }
