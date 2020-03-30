@@ -35,14 +35,17 @@
                 </label>
                 <a href="<c:url value="/sign/findUserInfo"/>" class="id-pw">아이디/비밀번호 찾기</a>
             </div>
-            <div class="link-box">
-                <div class="link-join">
-                    <ul class="txt-p1">
-                        <li class="txt-w">&nbsp;</li>
-                        <li>&nbsp;</li>
-                    </ul>
-                    <a id="kakao-login-btn" ></a>
+            <div class="sns-login-wrap">
+                <div class="sns-login-inner">
+                    <div class="sns-login-ttl">
+                        <div class="ttl-line"></div>
+                        <span>또는 소셜 아이디로 로그인</span>
+                        <div class="ttl-line"></div>
+                    </div>
+                    <button type="button" class="kko-login-btn"><i class="kko-ic"></i>Kakao 계정으로 로그인</button>
                 </div>
+            </div>
+            <div class="link-box">
                 <div class="link-join">
                     <ul class="txt-p1">
                         <li class="txt-w">ㆍ아직 원조이몰 회원이 아니신가요?</li>
@@ -58,31 +61,11 @@
         </form>
     </div>
 </div>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 <script>
-    //<![CDATA[
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init('6538b0a9dbcb56e8345458a647f599c8');
-    // 카카오 로그인 버튼을 생성합니다.
-    Kakao.Auth.createLoginButton({
-        container: '#kakao-login-btn',
-        success: function(authObj) {
-            console.log(authObj);
-           $.ajax({
-               url: "/sign/kakaoLogin",
-               contentType: 'application/json',
-               cache: false,
-               type: "POST",
-               data: JSON.stringify(authObj)
-           }).done();
-
-        },
-        fail: function(err) {
-            alert(JSON.stringify(err));
-        }
+    $('.kko-login-btn').click(function () {
+        window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=http://210.178.80.160:8080/Popup/kakao&response_type=code','_blank','width=750, height=900');
     });
-    //]]>
-
 
     $('.login-but').on("click",function () {
         var formData = $('#defaultLoginForm').serialize();

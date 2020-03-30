@@ -10,3 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
 ${data}
+<script>
+    close();
+    opener.location.href = '/';
+</script>

@@ -40,6 +40,9 @@ public class UserDAO {
     public void insertUser(Map<String, String> params) throws SQLException {
         sql.insert("mall.UserMapper.insertUser", params);
     }
+    public void insertSnsUser(Map<String, String> params) throws SQLException {
+        sql.insert("mall.UserMapper.insertSnsUser", params);
+    }
     public void insertEmailAuth(Map<String, String> params) throws SQLException {
         sql.insert("mall.UserMapper.insertEmailAuth", params);
     }

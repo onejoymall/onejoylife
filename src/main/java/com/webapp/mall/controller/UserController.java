@@ -1,9 +1,15 @@
 package com.webapp.mall.controller;
 
+import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.UserDAO;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +37,22 @@ public class UserController {
     private UserDAO userDAO;
     // 로그아웃 하는 부분
     @RequestMapping(value="/sign/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session) throws IOException {
+
+        String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet httpGet = new HttpGet(RequestUrl);
+        httpGet.addHeader("Authorization", (String)session.getAttribute("token"));
+        HttpResponse response = client.execute(httpGet);
+        try {
+            int responseCode = response.getStatusLine().getStatusCode();
+            if (responseCode == 200) {
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         session.invalidate(); // 세션 초기화
         return "redirect:/sign/login"; // 로그아웃 후 로그인화면으로 이동
     }

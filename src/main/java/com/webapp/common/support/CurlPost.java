@@ -1,6 +1,7 @@
 package com.webapp.common.support;
 
 
+import com.webapp.mall.dao.PaymentDAO;
 import org.apache.http.HttpResponse;
 
 import org.apache.http.NameValuePair;
@@ -18,6 +19,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -28,9 +31,11 @@ import java.util.Map;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Component("curlPost")
 public class CurlPost {
-
     public static Map<String,Object> curlPostFn(String url, String Accept, String ContentType,String Method) throws IOException {
 
         HttpClient client = HttpClientBuilder.create().build(); // HttpClient 생성
@@ -118,24 +123,23 @@ public class CurlPost {
         return responBody;
     }
 
-    public static Map<String, Object> getAccessToken(String autorize_code) throws Exception{
+    public static Map<String, Object> getAccessToken(String autorize_code,Object siteUrl,String kakaoClientId, String kakaoRedirectUri) throws Exception{
 
-        final String RequestUrl = "https://kauth.kakao.com/oauth/token";
-
-        final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
+        String RequestUrl = "https://kauth.kakao.com/oauth/token";
+        List<NameValuePair> postParams = new ArrayList<NameValuePair>();
         postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
-        postParams.add(new BasicNameValuePair("client_id", "edae5e01f6d81723613c9cd06f550593")); // REST API KEY
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://210.178.80.160:8080/sign/kakaoLogin")); // 리다이렉트 URI
+        postParams.add(new BasicNameValuePair("client_id", kakaoClientId)); // REST API KEY
+        postParams.add(new BasicNameValuePair("redirect_uri", siteUrl+kakaoRedirectUri)); // 리다이렉트 URI
         postParams.add(new BasicNameValuePair("code", autorize_code)); // 로그인 과정중 얻은 code 값
 
-        final HttpClient client = HttpClientBuilder.create().build();
-        final HttpPost post = new HttpPost(RequestUrl);
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(RequestUrl);
         Map<String, Object> responBody = null;
 
         try {
             post.setEntity(new UrlEncodedFormEntity(postParams));
-            final HttpResponse response = client.execute(post);
-            final int responseCode = response.getStatusLine().getStatusCode();
+            HttpResponse response = client.execute(post);
+            int responseCode = response.getStatusLine().getStatusCode();
 
 
             if (responseCode == 200) {
@@ -150,12 +154,62 @@ public class CurlPost {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            // clear resources
         }
 
         return responBody;
 
     }
+    public static Map<String, Object> getKakaoUserInfo(Map<String, Object> params) throws Exception{
 
+        String RequestUrl = "https://kapi.kakao.com/v2/user/me";
+
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet httpGet = new HttpGet(RequestUrl);
+        Map<String, Object> responBody = null;
+        try {
+            httpGet.addHeader("Authorization", params.get("token_type")+" "+params.get("access_token"));
+            httpGet.addHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            HttpResponse response = client.execute(httpGet);
+            int responseCode = response.getStatusLine().getStatusCode();
+            if (responseCode == 200) {
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                String body = handler.handleResponse(response);
+                responBody = new ObjectMapper().readValue(body,Map.class);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responBody;
+
+    }
+    public static void kakaoLogOut(HttpSession session)throws Exception{
+
+        String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(RequestUrl);
+        Map<String, Object> responBody = null;
+        try {
+            post.addHeader("Authorization", (String)session.getAttribute("token"));
+            HttpResponse response = client.execute(post);
+            int responseCode = response.getStatusLine().getStatusCode();
+
+
+            if (responseCode == 200) {
+               //로그아웃 처리
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // clear resources
+        }
+    }
 }

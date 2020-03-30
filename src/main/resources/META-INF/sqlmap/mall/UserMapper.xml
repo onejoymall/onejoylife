@@ -84,4 +84,30 @@
         where email = #{email}
         ]]>
     </update>
+
+    <insert id="insertSnsUser" parameterType="java.util.Map">
+
+        insert into user(
+        username,email,password,lastname,firstname,email_auth_code,email_auth_status,refferal_code,iso_code,phone,level,group_id)
+      VALUES (
+        #{username},
+        #{email},
+        #{password},
+        #{lastname},
+        #{firstname},
+        #{email_auth_code},
+        #{email_auth_status},
+        #{refferal_code},
+        #{iso_code},
+        #{phone},
+        #{level},
+        #{group_id}
+        )
+        on duplicate KEY update
+        username=#{username}
+
+    </insert>
+
+
 </mapper>
+

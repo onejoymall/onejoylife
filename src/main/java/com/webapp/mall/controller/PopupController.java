@@ -3,8 +3,10 @@ package com.webapp.mall.controller;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
+import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import org.bouncycastle.math.raw.Mod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,16 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller
 public class PopupController {
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
     private String t_url;
+    @Value("${kakaoClientId}")
+    private String kakaoClientId;
+    @Value("${kakaoRedirectUri}")
+    private String kakaoRedirectUri;
+    @Autowired
+    UserDAO userDAO;
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         deliveryInfoVO.setDelivery_t_key(t_key);
@@ -55,8 +64,33 @@ public class PopupController {
         return "popup/deliverySearch";
     }
     @RequestMapping(value = "/Popup/kakao" , produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
-    public String mallKakaoLogin(@RequestParam("code") String code ) throws Exception{
+    public String mallKakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpSession session,Map params) throws Exception{
+        Object siteUrl = request.getRequestURL().toString().replace(request.getRequestURI(),"");
+        Map<String, Object> kakaoMap = CurlPost.getAccessToken(code,siteUrl,kakaoClientId,kakaoRedirectUri);
+        try {
+            if(!isEmpty(kakaoMap)){
+                if ( session.getAttribute("login") != null ){
+                    // 기존에 login이란 세션 값이 존재한다면
+                    session.removeAttribute("login"); // 기존값을 제거해 준다.
+                    //기존 로그인 세션을 로그아웃후 다시 sns 로그인 할지여부 협의
+                }
+                session.setAttribute("login", true);
+                session.setAttribute("token", kakaoMap.get("token_type")+" "+kakaoMap.get("access_token"));
 
+                //로그인 사용자 정보 획득
+                Map<String,Object> kakaoUserMap = CurlPost.getKakaoUserInfo(kakaoMap);
+                if(!isEmpty(kakaoUserMap)){
+                    Map<String,Object> kakaoUserAccount = (Map<String,Object>)kakaoUserMap.get("kakao_account");
+                    session.setAttribute("email", kakaoUserAccount.get("email"));
+                    params.put("email", kakaoUserAccount.get("email"));
+                    userDAO.insertSnsUser(params);
+                }
+
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
        return "popup/kakaologin";
     }
 }
