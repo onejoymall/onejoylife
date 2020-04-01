@@ -58,8 +58,10 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
@@ -72,9 +74,13 @@
         FROM payment A  where 1=1
         ]]>
 
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     </select>
     <select id="getPaymentDetail" resultType="java.util.HashMap" parameterType="java.util.Map" >
         <![CDATA[

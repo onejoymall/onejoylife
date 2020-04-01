@@ -15,7 +15,7 @@
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
                         <input type="text" class="keyword-src" name="keyword-src">
-                        <button type="button" class="keyword-src-button">검색</button>
+                        <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
                             <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
                             <label for="check2">상품명</label>
@@ -51,12 +51,12 @@
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="startDate" name="startDate" class="date_pick">
+                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="endDate" name="endDate" class="date_pick">
+                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
@@ -65,12 +65,12 @@
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="delivery_start_date" name="delivery_start_date" class="date_pick">
+                                            <input type="text" id="delivery_start_date" name="delivery_start_date" class="${param.delivery_start_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="delivery_end_date" name="delivery_end_date" class="date_pick">
+                                            <input type="text" id="delivery_end_date" name="delivery_end_date" class="${param.delivery_end_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
