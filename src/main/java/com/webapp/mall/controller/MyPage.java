@@ -457,11 +457,11 @@ public class MyPage {
         return "mypage/GiveawayPayment";
     }
     //회원정보 변경 비번확인
-    @RequestMapping(value="/MyPage/ModifyUserInfo")
+    @RequestMapping(value="/MyPage/mypage-12")
     public String myPageModifyUserInfo(Model model) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12");
-        return "mypage/ModifyUserInfo";
+        return "mypage/mypage-12";
     }
     //회원정보 변경
     @RequestMapping(value="/MyPage/ModifyUserInfoForm")

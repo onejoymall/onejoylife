@@ -545,6 +545,7 @@ public class ManagerController {
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
+
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             List<Map<String,Object>> list = paymentDAO.getPaymentList(params);

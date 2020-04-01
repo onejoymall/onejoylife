@@ -28,7 +28,7 @@
                         </li>
                         <li class="outer-li">나의 정보관리
                             <ul class="inner-ul">
-                                <li><a href="<c:url value="/MyPage/ModifyUserInfo"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">회원정보 변경</a></li>
+                                <li><a href="<c:url value="/MyPage/mypage-12"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">회원정보 변경</a></li>
                                 <li><a href="<c:url value="/MyPage/DeliveryAddress"/>"  class="<c:if test="${leftNavOrder == 13}">active</c:if>">배송지 정보</a></li>
                             </ul>
                         </li>
