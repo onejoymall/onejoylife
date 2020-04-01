@@ -554,20 +554,23 @@ public class restapiController {
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
                 //회원인 경우 보유포인트 확인
 
-                Integer userPoint = pointDAO.getPointAmount(params);
-                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
-                Integer payment = (Integer)productInfo.get("product_payment");
 
+                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
+                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
                 //상품결제 시 포인트 배율 확인 및 지급
                 //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
                 if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
-                    productInfo = productDAO.getProductViewDetail(params);
-                    if((Double)productInfo.get("product_point_rate") > 0){
-                        Double rate = (Double)productInfo.get("product_point_rate");
-                        Double sum = (payment * rate)/100;
-                        params.put("point_amount",userPoint+sum);
+                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
+                    BigDecimal payment = new BigDecimal(getPaymentString);//구매금액
+                    BigDecimal productPointRate = new BigDecimal((String)productInfo.get("product_point_rate"));//포인트배율
+                    BigDecimal hPersent = new BigDecimal("100");//백분율
+                    if(productPointRate.compareTo(BigDecimal.ZERO) == 1){
+
+                        BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
+                        params.put("point_amount",userPoint.add(pointMultiply));
                         params.put("point_paid_memo",productInfo.get("product_name"));
-                        params.put("point_add",sum);
+                        params.put("point_add",pointMultiply);
                         params.put("point_paid_user_id",userInfo.get("usr_id"));
                         params.put("point_paid_type","P");
                         params.put("point_paid_product_cd",productInfo.get("product_cd"));
@@ -618,20 +621,20 @@ public class restapiController {
             }
 
 //            //환불을위한 토큰발급
-//            IamportClient client;
-//            String test_api_key = "7152058542143411";
-//            String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
-//            client = new IamportClient(test_api_key, test_api_secret);
-////            IamportResponse<AccessToken> auth_response = client.getAuth();
-//            String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
-//            CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
-//            //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
-//
-//            IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
-//
-//            if(payment_response.getResponse()==null){
-//                error.put("Error", payment_response.getMessage());
-//            }
+            IamportClient client;
+            String test_api_key = "7152058542143411";
+            String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+            client = new IamportClient(test_api_key, test_api_secret);
+//            IamportResponse<AccessToken> auth_response = client.getAuth();
+            String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
+            CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+            //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
+
+            IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+
+            if(payment_response.getResponse()==null){
+                error.put("Error", payment_response.getMessage());
+            }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);

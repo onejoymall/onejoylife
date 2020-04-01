@@ -48,7 +48,7 @@
                 </li>
                 <li><a href="/mall/today">오늘의 특가</a></li>
                 <li><a href="#">이벤트</a></li>
-                <li><a href="/mall/live-shopping">라이브 쇼핑</a></li>
+                <li><a href="javascript:void(0);" class="ready">라이브 쇼핑</a></li>
             </ul>
             <div class="search-box">
                 <div class="cart-box">

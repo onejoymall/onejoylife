@@ -17,21 +17,19 @@
                         <input type="text" class="keyword-src" name="keyword-src">
                         <button type="button" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="src-name">
-                            <label for="src-name">상품명</label>
-                            <input type="checkbox" name="src-code">
-                            <label for="src-code">상품코드</label>
+                            <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
+                            <label for="check2">상품명</label>
                         </div>
                     </div>
-<%--                    <table class="keyword-src-table">--%>
-<%--                        <colgroup>--%>
-<%--                            <col width="80px">--%>
-<%--                            <col width="420px">--%>
-<%--                            <col width="80px">--%>
-<%--                            <col width="420px">--%>
-<%--                        </colgroup>--%>
-<%--                        <tbody>--%>
-<%--                            <tr>--%>
+                    <table class="keyword-src-table">
+                        <colgroup>
+                            <col width="80px">
+                            <col width="420px">
+                            <col width="80px">
+                            <col width="420px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
 <%--                                <th>주문 상태</th>--%>
 <%--                                <td>--%>
 <%--                                    <select name="src-orderState">--%>
@@ -49,21 +47,35 @@
 <%--                                       <option value="반품">반품</option>--%>
 <%--                                   </select>--%>
 <%--                                </td>--%>
-<%--                                <th>배송완료일</th>--%>
-<%--                                <td>--%>
-<%--                                    <div class="input-box2">--%>
-<%--                                        <div class="cla">--%>
-<%--                                            <input type="text" id="from_date" name="from_date" class="date_pick">--%>
-<%--                                            <div class="cla-img1"></div>--%>
-<%--                                        </div>--%>
-<%--                                        <p class="cla-p1"> ~ </p>--%>
-<%--                                        <div class="cla">--%>
-<%--                                            <input type="text" id="to_date" name="to_date" class="date_pick">--%>
-<%--                                            <div class="cla-img1"></div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>   --%>
-<%--                            </tr>--%>
+                                <th>주문일</th>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text" id="startDate" name="startDate" class="date_pick">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text" id="endDate" name="endDate" class="date_pick">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <th>배송일</th>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text" id="delivery_start_date" name="delivery_start_date" class="date_pick">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text" id="delivery_end_date" name="delivery_end_date" class="date_pick">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
 <%--                            <tr>--%>
 <%--                                <th>카테고리</th>--%>
 <%--                                <td>--%>
@@ -118,8 +130,8 @@
 <%--                                    </select>--%>
 <%--                                </td>--%>
 <%--                            </tr>--%>
-<%--                        </tbody>--%>
-<%--                    </table>--%>
+                        </tbody>
+                    </table>
                 </form>
             </div>
             <div class="goods-list-wrap">

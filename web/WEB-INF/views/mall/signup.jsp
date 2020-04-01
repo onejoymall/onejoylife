@@ -119,9 +119,9 @@
        var password_cf = $('#password_cf').val();
        var formData = $('#defaultJoinform').serialize();
         $('.er').html('');
-        $('.loading-bar-wrap').removeClass("hidden");
-       if($('#ch').is(":checked")) {
 
+       if($('#ch').is(":checked")) {
+           $('.loading-bar-wrap').removeClass("hidden");
                jQuery.ajax({
                    type:"GET",
                    // contentType: 'application/json',
@@ -149,7 +149,7 @@
                        $('.loading-bar-wrap').addClass("hidden");
                    },
                    error : function(xhr, status, error) {
-                       alert("에러발생");
+                       console.log(xhr+status+error);
                    }
                });
 

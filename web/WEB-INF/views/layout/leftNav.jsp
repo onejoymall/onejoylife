@@ -15,7 +15,7 @@
                                 <li><a href="<c:url value="/MyPage/ShoppingBasket"/>" class="<c:if test="${leftNavOrder == 4}">active</c:if>">장바구니</a></li>
                                 <li><a href="<c:url value="/MyPage/ShoppingAddList"/>" class="<c:if test="${leftNavOrder == 5}">active</c:if>">찜 목록</a></li>
                                 <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>" class="<c:if test="${leftNavOrder == 6}">active</c:if>">주문/배송 조회</a></li>
-                                <li><a href="<c:url value="/MyPage/OrderCancels"/>" class="<c:if test="${leftNavOrder == 7}">active</c:if>">취소/재결제/교환/반품</a></li>
+<%--                                <li><a href="<c:url value="/MyPage/OrderCancels"/>" class="<c:if test="${leftNavOrder == 7}">active</c:if>">취소/재결제/교환/반품</a></li>--%>
                                 <li><a href="<c:url value="/MyPage/Reviews"/>" class="<c:if test="${leftNavOrder == 8}">active</c:if>">나의 상품평 보기</a></li>
                                 <li><a href="<c:url value="/MyPage/Favorites"/>" class="<c:if test="${leftNavOrder == 9}">active</c:if>">자주 구매하는 상품</a></li>
                             </ul>

@@ -307,7 +307,16 @@ public class MyPage {
     }
     //교환신청
     @RequestMapping(value="/MyPage/OrderChange")
-    public String myPageOrderChange(HttpSession session,Model model,HttpServletRequest request) {
+    public String myPageOrderChange(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
+        try{
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("delivery", delivery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("postUrl","/SaveOrderChange");
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-1");
         return "mypage/OrderChange";
@@ -321,7 +330,16 @@ public class MyPage {
 //    }
     //반품
     @RequestMapping(value="/MyPage/OrderRollback")
-    public String myPageOrderRollback(HttpSession session,Model model,HttpServletRequest request) {
+    public String myPageOrderRollback(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
+        try{
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("delivery", delivery);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("postUrl","/SaveOrderRollback");
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-2");
         return "mypage/mypage-7-2";

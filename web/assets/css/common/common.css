@@ -307,3 +307,16 @@ input[class='styleClass']:checked + label
     height:auto;
     padding:30px 20px;
 }
+
+.select-op {
+    width: 240px;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+    /*padding-left: 10px;*/
+}
+.select-op-long {
+    width: 480px;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+    /*padding-left: 10px;*/
+}

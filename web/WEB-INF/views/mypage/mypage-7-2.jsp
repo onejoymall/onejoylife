@@ -1,12 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ttagg
-  Date: 2020-01-17
-  Time: 오전 1:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -16,34 +10,36 @@
                 <form action="" method="POST">
                     <div class="r-sec1">
                         <p class="sec1-h1">반품신청</p>
-                        <p class="sec1-p1">주문번호 : <span>123456789456</span><span> │ </span>주문일 : <span>2019.04.23</span></p>
+                        <p class="sec1-p1">주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
+                        <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
+                        <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
                         <table>
                             <colgroup>
                                 <col style="width: 150px;">
                                 <col style="width: 260px;">
-                                <col style="width: 125px;">
-                                <col style="width: 259px;">
-                                <col style="width: 100px;">
+                                <col style="width: 525px;">
+                                <%--                                    <col style="width: 259px;">--%>
+                                <%--                                    <col style="width: 100px;">--%>
                             </colgroup>
                             <thead class="sec1-thead">
                             <tr>
                                 <th></th>
                                 <th>상품정보</th>
-                                <th>판매자</th>
+                                <%--                                        <th>판매자</th>--%>
                                 <th>상품금액</th>
-                                <th>수량</th>
+                                <%--                                        <th>수량</th>--%>
                             </tr>
                             </thead>
                             <tbody class="sec1-tbody">
                             <tr>
-                                <td><div class="sec1-td-img"></div></td>
+                                <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                                 <td class="sec1-tbody-p1">
-                                    <p>KFC 메뉴교환권</p>
-                                    <p>17_KFC 오리지널 치킨 교환권</p>
+                                    <p>${paymentDetail.product_name}</p>
+                                    <p>${paymentDetail.product_made_company_model}</p>
                                 </td>
-                                <td><span>KFC</span></td>
-                                <td><span>3,099,000</span>원</td>
-                                <td><span>1</span></td>
+                                <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
+                                <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
+                                <%--                                        <td><span>1</span></td>--%>
                             </tr>
                             </tbody>
                         </table>
@@ -57,20 +53,9 @@
                             </colgroup>
                             <tbody class="sec2-body body-tr-s  body-border">
                             <tr>
-                                <td class="body-td-tit">사유선택</td>
+                                <td class="body-td-tit">반품사유</td>
                                 <td class="body-td-txt1">
-                                    <select name="" id="" class="txt1-select">
-                                        <option value="">사유를 선택하세요</option>
-                                        <option value="">사유1</option>
-                                        <option value="">사유2</option>
-                                        <option value="">사유3</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="body-td-tit">사유입력</td>
-                                <td class="body-td-txt1">
-                                    <textarea name="" id="" cols="97" rows="4" class="area-content"></textarea>
+                                    <textarea name="reason" id="reason" cols="97" rows="4" class="area-content"></textarea>
                                     <p class="area-num">(0/20000)</p>
                                 </td>
                             </tr>
@@ -174,15 +159,15 @@
                             <tbody class="sec4-body body-tr-s body-border">
                             <tr>
                                 <td class="body-td-tit">주문금액</td>
-                                <td class="body-td-txt2"><span>3,099,000</span>원</td>
+                                <td class="body-td-txt2"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                                 <td class="body-td-tit">상품금액</td>
-                                <td class="body-td-txt2"><span>3,099,000</span>원</td>
+                                <td class="body-td-txt2"><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
                             </tr>
                             <tr>
                                 <td class="body-td-tit">결제금액</td>
-                                <td class="body-td-txt2 txt-color"><span>3,099,000</span>원</td>
+                                <td class="body-td-txt2 txt-color"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                                 <td class="body-td-tit">결제수단</td>
-                                <td class="body-td-txt2"><span>하나체크카드</span> / <span>일시불</span></td>
+                                <td class="body-td-txt2"><span>${paymentDetail.pay_method}</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -200,32 +185,27 @@
                                 <td class="body-td-tit" rowspan="3">환불계좌</td>
                                 <td class="body-td-txt2 pad-top">은행명</td>
                                 <td class="pad-top">
-                                    <select name="" id="" class="select-op">
-                                        <option value="">은행을 선택해주세요.</option>
-                                        <option value="">은행1</option>
-                                        <option value="">은행2</option>
-                                        <option value="">은행3</option>
-                                        <option value="">은행4</option>
-                                    </select>
+                                    <input name="refund_bank" type="text" class="select-op">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="body-td-txt2">계좌번호</td>
                                 <td>
-                                    <input type="text" placeholder="1234-12-12312356" class="select-op">
+                                    <input type="text" name="refund_account"  class="select-op">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="body-td-txt2 pad-bottom">예금주</td>
                                 <td class="pad-bottom">
-                                    <input type="text" placeholder="홍길동" class="select-op">
-                                    <button class="sec-but">계좌인증</button>
+                                    <input type="text" name="refund_holder" class="select-op">
+                                    <%--                                            <button class="sec-but">계좌인증</button>--%>
                                 </td>
 
                             </tr>
                             </tbody>
                         </table>
                     </div>
+
                     <div class="r-sec6">
                         <button type="submit">신청</button>
                         <button>이전</button>

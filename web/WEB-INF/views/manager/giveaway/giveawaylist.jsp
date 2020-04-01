@@ -169,7 +169,7 @@
 <div class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>상품 정보 수정</h2>
+            <h2>경품 정보 수정</h2>
             <button type="button" class="modal-close">×</button>
         </div>
         <div class="modal-body clearfix">
@@ -188,6 +188,33 @@
                         <th>자체 상품 코드</th>
                         <td>
                             <input type="text" id="product_market_cd" name="giveaway_market_cd" placeholder="ex) ABCDEF1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>경품 추첨 설정</th>
+                        <td>
+                            <p class="cc2">경품의 자동 추첨 기준 포인트 를 입력합니다.<br>
+                                <span class="cc">* 설정된 기준 포인트 달성시 자동추첨 됩니다.</span><br>
+                            </p>
+                            <input type="text" id="giveaway_play_winner_point" name="giveaway_play_winner_point" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>경품 응모 최대 포인트</th>
+                        <td>
+                            <p class="cc2">경품의 응모 가능한 최대 포인트 를 입력합니다.<br>
+<%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
+                            </p>
+                            <input type="text" id="giveaway_play_max_point" name="giveaway_play_max_point" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>경품 응모 최소 포인트</th>
+                        <td>
+                            <p class="cc2">경품의 응모 가능한 최소 포인트 를 입력합니다.<br>
+<%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
+                            </p>
+                            <input type="text" id="giveaway_play_min_point" name="giveaway_play_min_point" >
                         </td>
                     </tr>
                     <tr>

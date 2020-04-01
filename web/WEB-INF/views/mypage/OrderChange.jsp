@@ -1,12 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ttagg
-  Date: 2020-01-17
-  Time: 오전 1:13
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -16,34 +10,36 @@
                 <form action="" method="POST">
                     <div class="r-sec1">
                         <p class="sec1-h1">교환신청</p>
-                        <p class="sec1-p1">주문번호 : <span>123456789456</span><span> │ </span>주문일 : <span>2019.04.23</span></p>
+                        <p class="sec1-p1">주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
+                        <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
+                        <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
                         <table>
                             <colgroup>
                                 <col style="width: 150px;">
                                 <col style="width: 260px;">
-                                <col style="width: 125px;">
-                                <col style="width: 259px;">
-                                <col style="width: 100px;">
+                                <col style="width: 525px;">
+                                <%--                                    <col style="width: 259px;">--%>
+                                <%--                                    <col style="width: 100px;">--%>
                             </colgroup>
                             <thead class="sec1-thead">
                             <tr>
                                 <th></th>
                                 <th>상품정보</th>
-                                <th>판매자</th>
+                                <%--                                        <th>판매자</th>--%>
                                 <th>상품금액</th>
-                                <th>수량</th>
+                                <%--                                        <th>수량</th>--%>
                             </tr>
                             </thead>
                             <tbody class="sec1-tbody">
                             <tr>
-                                <td><div class="sec1-td-img"></div></td>
+                                <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                                 <td class="sec1-tbody-p1">
-                                    <p>KFC 메뉴교환권</p>
-                                    <p>17_KFC 오리지널 치킨 교환권</p>
+                                    <p>${paymentDetail.product_name}</p>
+                                    <p>${paymentDetail.product_made_company_model}</p>
                                 </td>
-                                <td><span>KFC</span></td>
-                                <td><span>3,099,000</span>원</td>
-                                <td><span>1</span></td>
+                                <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
+                                <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
+                                <%--                                        <td><span>1</span></td>--%>
                             </tr>
                             </tbody>
                         </table>
@@ -56,17 +52,17 @@
                                 <col style="width: 720px;">
                             </colgroup>
                             <tbody class="sec2-body body-tr-s">
-                            <tr>
-                                <td class="body-td-tit">사유선택</td>
-                                <td class="body-td-txt1">
-                                    <select name="" id="" class="txt1-select">
-                                        <option value="">사유를 선택하세요</option>
-                                        <option value="">사유1</option>
-                                        <option value="">사유2</option>
-                                        <option value="">사유3</option>
-                                    </select>
-                                </td>
-                            </tr>
+<%--                            <tr>--%>
+<%--                                <td class="body-td-tit">사유선택</td>--%>
+<%--                                <td class="body-td-txt1">--%>
+<%--                                    <select name="" id="" class="txt1-select">--%>
+<%--                                        <option value="">사유를 선택하세요</option>--%>
+<%--                                        <option value="">사유1</option>--%>
+<%--                                        <option value="">사유2</option>--%>
+<%--                                        <option value="">사유3</option>--%>
+<%--                                    </select>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
                             <tr>
                                 <td class="body-td-tit">사유입력</td>
                                 <td class="body-td-txt1">
@@ -87,17 +83,27 @@
                             <tbody class="sec3-body body-tr-s">
                             <tr>
                                 <td class="body-td-tit">수령인</td>
-                                <td class="body-td-txt2"><span>홍길동</span></td>
+                                <td class="body-td-txt2"><input name = "delivery_user_name" type="text" value="${delivery.delivery_user_name}" class="select-op"></td>
                             </tr>
                             <tr>
                                 <td class="body-td-tit">연락처</td>
-                                <td class="body-td-txt2"><span>010</span><span class="td-txt-un"> - </span><span>1234</span><span class="td-txt-un"> - </span><span>1234</span></td>
+                                <td class="body-td-txt2"><input name = "delivery_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op"></td>
                             </tr>
 
                             <tr>
+                                <td class="body-td-tit">우편번호</td>
+                                <td class="body-td-txt2"><input name = "postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button" id="daumMapCall">주소지 변경</button></td>
+                            </tr>
+                            <tr>
                                 <td class="body-td-tit">주소</td>
-                                <td class="body-td-txt2"><span>06643 서울특별시 서초구 서리풀길 4 영호빌딩 4층</span><button class="sec-but">주소지 변경</button></td>
-
+                                <td class="body-td-txt2">
+                                    <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
+                                    <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="body-td-tit">상세주소</td>
+                                <td class="body-td-txt2"><input name = "extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -112,16 +118,27 @@
                             <tbody class="sec3-body body-tr-s">
                             <tr>
                                 <td class="body-td-tit">수령인</td>
-                                <td class="body-td-txt2"><span>홍길동</span></td>
+                                <td class="body-td-txt2"><input name = "delivery_user_name" type="text" value="${delivery.delivery_user_name}" class="select-op"></td>
                             </tr>
                             <tr>
                                 <td class="body-td-tit">연락처</td>
-                                <td class="body-td-txt2"><span>010</span><span class="td-txt-un"> - </span><span>1234</span><span class="td-txt-un"> - </span><span>1234</span></td>
+                                <td class="body-td-txt2"><input name = "delivery_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op"></td>
                             </tr>
 
                             <tr>
+                                <td class="body-td-tit">우편번호</td>
+                                <td class="body-td-txt2"><input name = "postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button"  id="daumMapCall2">주소지 변경</button></td>
+                            </tr>
+                            <tr>
                                 <td class="body-td-tit">주소</td>
-                                <td class="body-td-txt2"><span>06643 서울특별시 서초구 서리풀길 4 영호빌딩 4층</span><button class="sec-but">주소지 변경</button></td>
+                                <td class="body-td-txt2">
+                                    <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
+                                    <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="body-td-tit">상세주소</td>
+                                <td class="body-td-txt2"><input name = "extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
                         </table>

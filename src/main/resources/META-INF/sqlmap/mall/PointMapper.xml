@@ -36,7 +36,7 @@
     <select id="getPointAmount" resultType="java.lang.Integer" parameterType="java.util.Map">
         <![CDATA[
         select
-         sum(IFNULL (A.point_add,0))-sum(IFNULL (A.point_use,0)) from point_history A
+         IFNULL((sum(IFNULL (A.point_add,0))-sum(IFNULL (A.point_use,0))),0) from point_history A
          where 1=1
         ]]>
 
