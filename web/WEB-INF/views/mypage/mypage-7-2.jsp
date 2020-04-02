@@ -7,11 +7,11 @@
         <main>
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
-                <form action="" method="POST">
+                <form id="defaultForm" name="defaultForm" method="POST">
                     <div class="r-sec1">
                         <p class="sec1-h1">반품신청</p>
                         <p class="sec1-p1">주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
-                        <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
+                        <input type="hidden" name="order_no" value="${paymentDetail.order_no}">
                         <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
                         <table>
                             <colgroup>
@@ -75,11 +75,11 @@
                                 <td class="body-td-txt2">
                                     <ul class="input-ul">
                                         <li class="ra-tab1 on" data-id="tab1">
-                                            <input type="radio" id="tab1-rd" name="rd-tab" checked>
+                                            <input type="radio" id="tab1-rd" name="refund_send_type" checked value="Y">
                                             <label for="tab1-rd" class="rd-label"><span class="rd-txt">네, 이미 발송하였습니다.</span></label>
                                         </li>
                                         <li class="ra-tab2" data-id="tab2">
-                                            <input type="radio" id="tab2-rd" name="rd-tab">
+                                            <input type="radio" id="tab2-rd" name="refund_send_type" value="N">
                                             <label for="tab2-rd" class="rd-label"><span class="rd-txt">아니요, 아직 발송하지 않았습니다.</span></label>
                                         </li>
                                     </ul>
@@ -97,7 +97,7 @@
                                 <td class="body-td-tit1">반품상품 발송일</td>
                                 <td class="body-td-txt2">
                                     <div class="cla">
-                                        <input type="text" id="from_date" class="date_pick">
+                                        <input type="text" id="from_date" class="date_pick" name="refund_send_date">
                                         <div class="cla-img1"></div>
                                     </div>
                                 </td>
@@ -105,23 +105,25 @@
                             <tr>
                                 <td class="body-td-tit1">반품상품 택배사</td>
                                 <td class="body-td-txt2">
-                                    <select name="" id="" class="txt1-select">
-                                        <option value="">선택</option>
-                                        <option value="">택배사1</option>
-                                        <option value="">택배사2</option>
-                                        <option value="">택배사3</option>
+
+                                    <select name="refund_delivery_t_code" class="txt1-select">
+                                        <c:forEach var="companyList" items="${companyList}" varStatus="status">
+                                            <option value="${companyList.Name}">${companyList.Name}</option>
+                                        </c:forEach>
                                     </select>
+
+
                                 </td>
                             </tr>
 
                             <tr>
                                 <td class="body-td-tit1">반풍상품 송장번호</td>
                                 <td class="body-td-txt2">
-                                    <input type="text" class="num-s">
-                                    <input type="checkbox" id="ch-box">
-                                    <label for="ch-box">
-                                        <span class="ch-display">송장번호 없이 반품신청</span>
-                                    </label>
+                                    <input type="text" name="refund_delivery_t_invoice" class="num-s" >
+<%--                                    <input type="checkbox" id="ch-box">--%>
+<%--                                    <label for="ch-box">--%>
+<%--                                        <span class="ch-display">송장번호 없이 반품신청</span>--%>
+<%--                                    </label>--%>
                                 </td>
                             </tr>
                             </tbody>
@@ -133,16 +135,29 @@
                             </colgroup>
                             <tbody class="sec3-body body-tr-s body-border">
                             <tr>
-                                <td class="body-td-tit1">수령인</td>
-                                <td class="body-td-txt2"><span>홍길동</span></td>
+                                <td class="body-td-tit">수령인</td>
+                                <td class="body-td-txt2"><input name = "return_user_name" type="text" value="${delivery.delivery_user_name}" class="select-op"></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit1">연락처</td>
-                                <td class="body-td-txt2"><span>010</span><span class="td-txt-un"> - </span><span>1234</span><span class="td-txt-un"> - </span><span>1234</span></td>
+                                <td class="body-td-tit">연락처</td>
+                                <td class="body-td-txt2"><input name = "return_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="body-td-tit">우편번호</td>
+                                <td class="body-td-txt2"><input name = "postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button" id="daumMapCall">주소지 변경</button></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit1">주소</td>
-                                <td class="body-td-txt2"><span>06643 서울특별시 서초구 서리풀길 4 영호빌딩 4층</span><button class="sec-but">주소지 변경</button></td>
+                                <td class="body-td-tit">주소</td>
+                                <td class="body-td-txt2">
+                                    <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
+                                    <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
+                                    <input name = "guide" type="hidden" value="${delivery.jibunAddress}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="body-td-tit">상세주소</td>
+                                <td class="body-td-txt2"><input name = "extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -207,8 +222,8 @@
                     </div>
 
                     <div class="r-sec6">
-                        <button type="submit">신청</button>
-                        <button>이전</button>
+                        <button type="button" id="formSubmit">반품신청</button>
+                        <button type="button" onclick="location.href='${header.referer}'">이전</button>
                     </div>
                 </form>
             </div>

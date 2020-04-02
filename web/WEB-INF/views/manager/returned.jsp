@@ -6,7 +6,7 @@
     <main>
         <div class="main-content">
             <div class="main-header">
-                <h2 name="detail">주문현황관리</h2>
+                <h2 name="detail">교환/반품 관리</h2>
             </div>
             <div class="dashboard-wrap">
                 <div class="open-arrow"></div>
@@ -169,7 +169,7 @@
                             <td>주문번호</td>
                             <td>주문일</td>
                             <td>주문자</td>
-                            <td>배송등록일</td>
+                            <td>배송일</td>
                             <td>운송장번호</td>
                             <td>공급사</td>
                             <td>상품명/옵션</td>
@@ -187,15 +187,15 @@
                             <td>${list.order_no}</td>
                             <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                             <td>${list.email}</td>
-                            <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
-                            <td>${list.delivery_t_invoice}</td>
-                            <td>${list.product_made_company_name}</td>
+                           <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
+                           <td>${list.delivery_t_invoice}</td>
+                           <td>${list.product_made_company_name}</td>
                             <td>${list.product_name}</td>
                             <td>1</td>
                             <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
                             <td>${list.payment_status_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.order_no}')">상세보기</button>
+                                <button type="button" class="goods-list-btn" name="detail" onclick="selectDeliveryRefund('${list.order_no}')">상세보기</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -281,6 +281,54 @@
                             <tr>
                                 <th>상태</th>
                                 <td class="payment_status_name">배송완료</td>
+                            </tr>
+                            <tr>
+                                <th>요청 사유</th>
+                                <td class="reason">배송완료</td>
+                            </tr>
+                            <tr>
+                                <th>상품 회수처 이름</th>
+                                <td class="refund_user_name"></td>
+                            </tr>
+                            <tr>
+                                <th>상품 회수처 전화번호</th>
+                                <td class="refund_user_phone"></td>
+                            </tr>
+                            <tr>
+                                <th>상품 회수처 주소</th>
+                                <td><span class="refund_postcode"></span>&nbsp;<span class="refund_roadAddress"></span>&nbsp;<span class="refund_extraAddress"></span></td>
+                            </tr>
+                            <tr>
+                                <th>교환상품 배송지 수령인</th>
+                                <td class="return_user_name"></td>
+                            </tr>
+                            <tr>
+                                <th>교환상품 배송지 연락처</th>
+                                <td class="return_user_phone"></td>
+                            </tr>
+                            <tr>
+                                <th>교환상품 배송지 주소</th>
+                                <td><span class="postcode"></span>&nbsp;<span class="roadAddress"></span>&nbsp;<span class="extraAddress"></span></td>
+                            </tr>
+                            <tr>
+                                <th>환불 계좌 은행명</th>
+                                <td class="refund_bank_name"></td>
+                            </tr>
+                            <tr>
+                                <th>환불 계좌번호</th>
+                                <td class="refund_account_number"></td>
+                            </tr>
+                            <tr>
+                                <th>환불 계좌 예금주</th>
+                                <td class="refund_account_holder"></td>
+                            </tr>
+                            <tr>
+                                <th>반품 택배사</th>
+                                <td class="refund_delivery_t_code"></td>
+                            </tr>
+                            <tr>
+                                <th>반품 택배 송장번호</th>
+                                <td class="refund_delivery_t_invoice"></td>
                             </tr>
                         </tbody>
                     </table>

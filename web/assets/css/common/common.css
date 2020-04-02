@@ -320,3 +320,6 @@ input[class='styleClass']:checked + label
     border: 1px solid #aaaaaa;
     /*padding-left: 10px;*/
 }
+.f-left{
+    float: left;
+}

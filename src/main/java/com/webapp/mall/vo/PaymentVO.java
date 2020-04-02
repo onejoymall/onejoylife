@@ -1,6 +1,8 @@
 package com.webapp.mall.vo;
 
-public class PaymentVO {
+import com.webapp.board.common.SearchVO;
+
+public class PaymentVO extends SearchVO {
     private String merchant_uid;
     private Integer cancel_request_amount;
     private String reason;

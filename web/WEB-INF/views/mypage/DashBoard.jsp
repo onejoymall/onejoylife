@@ -94,13 +94,19 @@
                                         <div class="lis-txt-box lis-txt-box1-2">
                                             <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
                                         </div>
-                                        <c:if test="${paymentList.payment_status eq 'D'}">
-                                            <div class="lis-txt-box lis-txt-box1-3">
-                                                <a href="#" id="SearchDelivery" class="click-span">배송조회</a>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${paymentList.payment_status eq 'S'}">
-                                        <div class="lis-txt-box lis-txt-box1-4 dis-none">
+<%--                                        <c:if test="${paymentList.payment_status eq 'R'}">--%>
+<%--                                            <div class="lis-txt-box">--%>
+<%--                                                <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.order_no}">배송조회</a>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="lis-txt-box">--%>
+<%--                                                <a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}" class="click-span">교환신청 하기</a>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="lis-txt-box">--%>
+<%--                                                <a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}" class="click-span">반품신청 하기</a>--%>
+<%--                                            </div>--%>
+<%--                                        </c:if>--%>
+                                        <c:if test="${paymentList.payment_status eq 'P'}">
+                                        <div class="lis-txt-box lis-txt-box1-4">
                                             <span>상품평작성</span>
                                         </div>
                                         </c:if>

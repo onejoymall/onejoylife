@@ -3,6 +3,7 @@ package com.webapp.mall.controller;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
+import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import org.bouncycastle.math.raw.Mod;
@@ -32,12 +33,15 @@ public class PopupController {
     private String kakaoRedirectUri;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    DeliveryDAO deliveryDAO;
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         deliveryInfoVO.setDelivery_t_key(t_key);
         deliveryInfoVO.setDelivery_t_url(t_url);
-        deliveryInfoVO.setDelivery_t_code("22");
-        deliveryInfoVO.setDelivery_t_invoice("8054001009376");
+        Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+        deliveryInfoVO.setDelivery_t_code((String)delivery.get("delivery_t_code"));
+        deliveryInfoVO.setDelivery_t_invoice((String)delivery.get("delivery_t_invoice"));
         //택배사목록
         Map<String, Object> companylist = CurlPost.curlPostFn(
                 deliveryInfoVO.getDelivery_t_url()

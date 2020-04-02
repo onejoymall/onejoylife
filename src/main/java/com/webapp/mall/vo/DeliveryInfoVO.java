@@ -26,7 +26,172 @@ public class DeliveryInfoVO extends PaymentVO {
    private String delivery_t_invoice;//택배 송장번호
    private String delivery_t_url;//REST API 호출 url
    private String delivery_status;
+   private String delivery_start_date;
+    private String delivery_end_date;
+    private String reason;
+    private String refund_postcode;
+    private String refund_roadAddress;
+    private String refund_jibunAddress;
+    private String refund_extraAddress;
+    private String return_user_name;
+    private String return_user_phone;
+    private String refund_user_name;
+    private String refund_user_phone;
 
+    //반품
+    private String refund_bank_name;
+    private String refund_account_number;
+    private String refund_account_holder;
+    private String refund_send_type;
+    private String refund_send_date;
+    private String refund_delivery_t_code;
+    private String refund_delivery_t_invoice;
+
+    public String getRefund_delivery_t_code() {
+        return refund_delivery_t_code;
+    }
+
+    public void setRefund_delivery_t_code(String refund_delivery_t_code) {
+        this.refund_delivery_t_code = refund_delivery_t_code;
+    }
+
+    public String getRefund_delivery_t_invoice() {
+        return refund_delivery_t_invoice;
+    }
+
+    public void setRefund_delivery_t_invoice(String refund_delivery_t_invoice) {
+        this.refund_delivery_t_invoice = refund_delivery_t_invoice;
+    }
+
+    public String getRefund_bank_name() {
+        return refund_bank_name;
+    }
+
+    public void setRefund_bank_name(String refund_bank_name) {
+        this.refund_bank_name = refund_bank_name;
+    }
+
+    public String getRefund_account_number() {
+        return refund_account_number;
+    }
+
+    public void setRefund_account_number(String refund_account_number) {
+        this.refund_account_number = refund_account_number;
+    }
+
+    public String getRefund_account_holder() {
+        return refund_account_holder;
+    }
+
+    public void setRefund_account_holder(String refund_account_holder) {
+        this.refund_account_holder = refund_account_holder;
+    }
+
+    public String getRefund_send_type() {
+        return refund_send_type;
+    }
+
+    public void setRefund_send_type(String refund_send_type) {
+        this.refund_send_type = refund_send_type;
+    }
+
+    public String getRefund_send_date() {
+        return refund_send_date;
+    }
+
+    public void setRefund_send_date(String refund_send_date) {
+        this.refund_send_date = refund_send_date;
+    }
+
+    public String getDelivery_start_date() {
+        return delivery_start_date;
+    }
+
+    public void setDelivery_start_date(String delivery_start_date) {
+        this.delivery_start_date = delivery_start_date;
+    }
+
+    public String getDelivery_end_date() {
+        return delivery_end_date;
+    }
+
+    public void setDelivery_end_date(String delivery_end_date) {
+        this.delivery_end_date = delivery_end_date;
+    }
+
+    @Override
+    public String getReason() {
+        return reason;
+    }
+
+    @Override
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getRefund_postcode() {
+        return refund_postcode;
+    }
+
+    public void setRefund_postcode(String refund_postcode) {
+        this.refund_postcode = refund_postcode;
+    }
+
+    public String getRefund_roadAddress() {
+        return refund_roadAddress;
+    }
+
+    public void setRefund_roadAddress(String refund_roadAddress) {
+        this.refund_roadAddress = refund_roadAddress;
+    }
+
+    public String getRefund_jibunAddress() {
+        return refund_jibunAddress;
+    }
+
+    public void setRefund_jibunAddress(String refund_jibunAddress) {
+        this.refund_jibunAddress = refund_jibunAddress;
+    }
+
+    public String getRefund_extraAddress() {
+        return refund_extraAddress;
+    }
+
+    public void setRefund_extraAddress(String refund_extraAddress) {
+        this.refund_extraAddress = refund_extraAddress;
+    }
+
+    public String getReturn_user_name() {
+        return return_user_name;
+    }
+
+    public void setReturn_user_name(String return_user_name) {
+        this.return_user_name = return_user_name;
+    }
+
+    public String getReturn_user_phone() {
+        return return_user_phone;
+    }
+
+    public void setReturn_user_phone(String return_user_phone) {
+        this.return_user_phone = return_user_phone;
+    }
+
+    public String getRefund_user_name() {
+        return refund_user_name;
+    }
+
+    public void setRefund_user_name(String refund_user_name) {
+        this.refund_user_name = refund_user_name;
+    }
+
+    public String getRefund_user_phone() {
+        return refund_user_phone;
+    }
+
+    public void setRefund_user_phone(String refund_user_phone) {
+        this.refund_user_phone = refund_user_phone;
+    }
 
     public String getDelivery_status() {
         return delivery_status;

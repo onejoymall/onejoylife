@@ -91,6 +91,7 @@
             (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
             (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
             (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
+            (select Z.delivery_status from delivery_info Z where Z.order_no=A.order_no) as delivery_status,
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
@@ -108,6 +109,11 @@
         update payment set
         payment_status = #{payment_status}
         where order_no=#{merchant_uid}
+    </update>
+    <update id="updatePaymentManger" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update payment set
+        payment_status = #{payment_status}
+        where order_no=#{order_no}
     </update>
     <insert id="insertPaymentRefund" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into payment_refund

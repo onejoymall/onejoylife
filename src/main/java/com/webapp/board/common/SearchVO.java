@@ -18,23 +18,23 @@ public class SearchVO extends PageVO{
     private String orderByValue;
     private Integer sortOrder;
     private Integer giveaway_id;
-    private String startDate;
-    private String endDate;
+    private String start_date;
+    private String end_date;
 
-    public String getStartDate() {
-        return startDate;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public Integer getGiveaway_id() {
