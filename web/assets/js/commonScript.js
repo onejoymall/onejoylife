@@ -2,7 +2,7 @@
 //찜
 $('.favorite').click(function(){
     $(this).children('i').toggleClass('heart-full');
-    console.log(1111111111111111)
+
     jQuery.ajax({
         type: 'POST',
         data: {"product_cd":$(this).attr("data-id")},
@@ -32,10 +32,9 @@ $('.favorite').click(function(){
 
             } else {
                 $.toast({
-                    text: "SUCCSS",
+                    text: "등록 완료",
                     showHideTransition: 'plain', //펴짐
                     position: 'top-right',
-                    heading: 'Error',
                     icon: 'success'
                 });
                 // loginAuth(data.access_token);
@@ -490,7 +489,7 @@ $(document).ready(function(){
                         text: "장바구니 삭제 완료",
                         showHideTransition: 'plain', //펴짐
                         position: 'top-right',
-                        heading: 'Error',
+                        // heading: 'Error',
                         icon: 'success'
                     });
                     // loginAuth(data.access_token);
@@ -779,11 +778,56 @@ $(document).ready(function(){
     $("button[name='detail0']").click(function(){
         resetStoreForm();
     });
+    //교환 신청 선택
+    function selectDeliveryRefund(order_no){
+        var file_link='';
+        $(".modal1").attr("style", "display:block");
+        // $('input:radio[name=store_reg_type]').eq(0).click();
+        var html;
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Manager/selectDeliveryRefund',
+            data: {"order_no":order_no},
+            success: function (data) {
+                $.each(data.list, function (index, item) {
+                    $('.' + index).html(item);
+                    if(index=="delivery_t_code"){
+                        $('select[name=delivery_t_code]').val(item);
+                    }
+                    if(index=="delivery_t_invoice"){
+                        $('input[name=delivery_t_invoice]').val(item);
+                    }
+                    if(index=="payment_status" && item=="W"){
+                        html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="F"){
+                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환수락</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="H"){
+                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품수락</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="delivery_start_date" || index=="reg_date"){
+                        $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
+
+                    }
+
+                    $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
+                });
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        });
+    }
     //주문현황 선택
     function selectPayment(order_no){
         var file_link='';
         $(".modal1").attr("style", "display:block");
         // $('input:radio[name=store_reg_type]').eq(0).click();
+        var html;
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/selectPayment',
@@ -791,12 +835,128 @@ $(document).ready(function(){
             success: function (data) {
                 $.each(data.list, function (index, item) {
                     $('.' + index).html(item);
+                    if(index=="delivery_t_code"){
+                        $('select[name=delivery_t_code]').val(item);
+                    }
+                    if(index=="delivery_t_invoice"){
+                        $('input[name=delivery_t_invoice]').val(item);
+                    }
+                    if(index=="payment_status" && item=="W"){
+                        html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="R"){
+                        html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송정보수정</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="delivery_start_date" || index=="reg_date"){
+                        $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
+
+                    }
+                    $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },
             error: function (xhr, status, error) {
                 alert(error);
             },
         });
+    }
+//교환 반품 취소
+function refundCancel(order_no,delivery_status){
+    var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;
+    $.ajax({
+        type: 'POST',
+        data: formData,
+        url:'/Manager/refundCancel',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                $.toast({
+                    text: data.success,
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 2000,
+                    afterHidden: function () {
+                        location.href=data.redirectUrl;
+                    }
+                });
+                // loginAuth(data.access_token);
+                // location.href=data.redirectUrl;
+            }
+        },
+        error: function (xhr, status, error) {
+            alert(error);
+        },
+    })
+}
+    //배송정보 저장
+    function deliverySave(order_no,delivery_status){
+        var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;
+        $.ajax({
+            type: 'POST',
+            data: formData,
+            url:'/Manager/SaveDelivery',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: data.success,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                            location.href=data.redirectUrl;
+                        }
+                    });
+                    // loginAuth(data.access_token);
+                    // location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        })
     }
     //입점업체등록
     $(document).on("click","#formStoreSubmit",function () {
@@ -1565,7 +1725,7 @@ $(document).ready(function(){
 
                 } else {
                     // loginAuth(data.access_token);
-                    location.href=data.redirectUrl;
+                    history.back();
                 }
             },
             error: function (xhr, status, error) {
@@ -1658,18 +1818,18 @@ $(document).ready(function(){
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('postcode').value = data.zonecode;
-                document.getElementById("roadAddress").value = roadAddr;
-                document.getElementById("jibunAddress").value = data.jibunAddress;
+                $('input[name=postcode]').val(data.zonecode);
+                $('input[name=roadAddress]').val(roadAddr);
+                $('input[name=jibunAddress]').val(data.jibunAddress);
 
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
                 if(roadAddr !== ''){
-                    document.getElementById("extraAddress").value = extraRoadAddr;
+                    $('input[name=extraAddress]').val(extraRoadAddr);
                 } else {
-                    document.getElementById("extraAddress").value = '';
+                    $('input[name=extraAddress]').val('');
                 }
 
-                var guideTextBox = document.getElementById("guide");
+                var guideTextBox =  $('input[name=guide]');
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
                     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
@@ -1687,11 +1847,67 @@ $(document).ready(function(){
             }
         }).open();
     });
+$("#daumMapCall2").on("click",function () {
+    //다음 지도
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var roadAddr = data.roadAddress; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
+
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            $('input[name=refund_postcode]').val(data.zonecode);
+            $('input[name=refund_roadAddress]').val(roadAddr);
+            $('input[name=refund_jibunAddress]').val(data.jibunAddress);
+
+            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+            if(roadAddr !== ''){
+                $('input[name=refund_extraAddress]').val(extraRoadAddr);
+            } else {
+                $('input[name=refund_extraAddress]').val('');
+            }
+
+            var guideTextBox =  $('input[name=refund_guide]');
+            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+            if(data.autoRoadAddress) {
+                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.style.display = 'block';
+
+            } else if(data.autoJibunAddress) {
+                var expJibunAddr = data.autoJibunAddress;
+                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                guideTextBox.style.display = 'block';
+            } else {
+                guideTextBox.innerHTML = '';
+                guideTextBox.style.display = 'none';
+            }
+        }
+    }).open();
+});
     $('#SearchDelivery').click(function () {
         var child;
+        var order_no=$(this).attr("data-id");
         if(child != undefined){
             child.close()
         }
 
-        child = window.open('/Popup/DeliverySearch','_blank','width=750, height=900');
+        child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });

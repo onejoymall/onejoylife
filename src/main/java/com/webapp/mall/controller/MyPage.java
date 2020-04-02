@@ -3,10 +3,13 @@ package com.webapp.mall.controller;
 import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
+import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
+import com.webapp.mall.vo.DeliveryInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +47,10 @@ public class MyPage {
     PaymentDAO paymentDAO;
     @Autowired
     private NumberGender numberGender;
+    @Value("${t_key}")
+    private String t_key;
+    @Value("${t_url}")
+    private String t_url;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
@@ -330,12 +337,27 @@ public class MyPage {
 //    }
     //반품
     @RequestMapping(value="/MyPage/OrderRollback")
-    public String myPageOrderRollback(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
+    public String myPageOrderRollback(HttpSession session, Model model, HttpServletRequest request, @RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO) {
         try{
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
+
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+            model.addAttribute("companyList", company);
+
+
         }catch (Exception e){
             e.printStackTrace();
         }

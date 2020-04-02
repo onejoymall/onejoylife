@@ -52,22 +52,16 @@
 <%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
                                 <c:if test="${paymentDetail.payment_status eq 'W'}">
                                     <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
+
+                                </c:if>
+                                <c:if test="${paymentDetail.payment_status eq 'R'}">
+                                    <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${paymentDetail.order_no}">배송조회</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>
 <%--                                    <p><a href="">판매자 문의</a></p>--%>
                                 </div>
 
-                                <c:if test="${paymentDetail.payment_status eq 'D'}">
-                                <div class="p2-box2">
-
-                                    <p class="p2-color"><a href="">배송조회</a></p>
-
-<%--                                    <p><a href="">반품/교환 신청</a></p>--%>
-<%--                                    <p><a href="">판매자 문의</a></p>--%>
-<%--                                    <p><a href="">리뷰쓰기</a></p>--%>
-                                </div>
-                                </c:if>
                             </td>
                         </tr>
                         </tbody>

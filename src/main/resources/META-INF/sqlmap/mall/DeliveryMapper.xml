@@ -100,4 +100,12 @@
         delivery_status = #{delivery_status}
         where order_no=#{merchant_uid}
     </update>
+    <update id="updateDeliveryManager" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update delivery_info set
+        delivery_status = #{delivery_status},
+        delivery_start_date = now(),
+        delivery_t_invoice = #{delivery_t_invoice},
+        delivery_t_code = #{delivery_t_code}
+        where order_no=#{order_no}
+    </update>
 </mapper>

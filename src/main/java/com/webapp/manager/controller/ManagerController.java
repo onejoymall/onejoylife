@@ -7,10 +7,13 @@ import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.board.common.TreeMaker;
+import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.RefundDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -20,6 +23,7 @@ import com.webapp.manager.vo.ProductVO;
 import com.webapp.manager.vo.StoreVO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +63,12 @@ public class ManagerController {
     private BoardGroupSvc boardSvc;
     @Autowired
     private PaymentDAO paymentDAO;
+    @Autowired
+    private RefundDAO refundDAO;
+    @Value("${t_key}")
+    private String t_key;
+    @Value("${t_url}")
+    private String t_url;
     /**
      *  리스트.
      */
@@ -540,8 +550,10 @@ public class ManagerController {
     }
     //주문관리
     @RequestMapping(value = "/Manager/order")
-    public String managerOrder(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerOrder(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
@@ -549,8 +561,16 @@ public class ManagerController {
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             List<Map<String,Object>> list = paymentDAO.getPaymentList(params);
-            model.addAttribute("table_name", "payment");
-            model.addAttribute("Pk", "payment_cd");
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+            model.addAttribute("companyList", company);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         } catch (Exception e) {
@@ -578,15 +598,34 @@ public class ManagerController {
 
     //교환반품처리
     @RequestMapping(value = "/Manager/returned")
-    public String managerRetured(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerRetured(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
-
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
+            searchVO.setDisplayRowCount(10);
+            searchVO.setStaticRowEnd(10);
+            searchVO.pageCalculate(refundDAO.getDeliveryRefundListCount(deliveryInfoVO));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            List<Map<String,Object>> list = refundDAO.getDeliveryRefundList(deliveryInfoVO);
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+            model.addAttribute("companyList", company);
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "returned");
-        model.addAttribute("postUrl", "/Manager/returned");
-        return "/manager/order";
+        model.addAttribute("postUrl", "/Manager/updateRefund");
+        return "/manager/returned";
     }
 }

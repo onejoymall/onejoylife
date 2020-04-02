@@ -9,9 +9,7 @@ import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.GiveawayDAO;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.PaymentVO;
@@ -61,7 +59,11 @@ public class ManagerRestapiController {
     @Autowired
     private MgStoreDAO mgStoreDAO;
     @Autowired
+    private DeliveryDAO deliveryDAO;
+    @Autowired
     PaymentDAO paymentDAO;
+    @Autowired
+    RefundDAO refundDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     //로그인 처리 1
@@ -141,8 +143,54 @@ public class ManagerRestapiController {
         return resultMap;
     }
 
+    //교환 환불 취소
+    @RequestMapping(value = "/Manager/refundCancel", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> refundCancel(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
 
-    //상품상세보기
+        try {
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
+                deliveryDAO.updateDelivery(deliveryInfoVO);
+                paymentDAO.updatePayment(deliveryInfoVO);
+                resultMap.put("success",messageSource.getMessage("success.done","ko"));
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+    //교환신청 선택
+
+    @RequestMapping(value = "/Manager/selectDeliveryRefund", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> selectDeliveryRefund(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            Map<String,Object> list = refundDAO.getDeliveryRefundDetail(deliveryInfoVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+//                resultMap.put("deliveryInfoVO",deliveryInfoVO);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+    //주문내역 선택
     @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -163,7 +211,36 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //배송처리
+    @RequestMapping(value = "/Manager/SaveDelivery", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerSaveDelivery(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
 
+        try {
+            if(deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
+                error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getDelivery_t_code().isEmpty()){
+                error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+
+                deliveryDAO.updateDeliveryManager(deliveryInfoVO);
+                paymentDAO.updatePaymentManger(deliveryInfoVO);
+                resultMap.put("success",messageSource.getMessage("success.done","ko"));
+//                resultMap.put("list",list);
+//                resultMap.put("deliveryInfoVO",deliveryInfoVO);
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
     //상품상세보기
     @RequestMapping(value = "/Manager/viewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerViewDetail(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){

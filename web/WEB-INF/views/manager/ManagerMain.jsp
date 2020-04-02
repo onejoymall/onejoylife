@@ -132,32 +132,30 @@
                         <p>최근 판매된 상품이 없습니다.</p>
                     </div>
                     <ul class="content-section-ul">
-                        <li><a href="#" class="font-weight">[필독]  원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[공지] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[공지] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[공지] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[공지] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[공지] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[안내] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[안내] 원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
+                        <c:if test="${not empty noticeListView}">
+                            <c:forEach var="noticeListView" items="${noticeListView}" varStatus="status">
+                                <li><a href="/Manager/boardRead?brdno=${noticeListView.brdno}" class="font-weight">${noticeListView.brdtitle}</a><span class="new-icon">new</span><span class="new-date">${noticeListView.brddate}</span></li>
+                            </c:forEach>
+                        </c:if>
+<%--                        <li><a href="#" class="font-weight">[필독]  원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>--%>
+
                     </ul>
-                    <a href="#" class="tab-more">더보기 ></a>
+                    <a href="/Manager/boardList?bgno=9" class="tab-more">더보기 ></a>
                 </div>
                 <div class="ul-tab-box" id="tab-li2">
                     <div class="ul-tab1-nodata nodata-none">
                         <p>최근 판매된 상품이 없습니다.</p>
                     </div>
                     <ul class="content-section-ul">
-                        <li><a href="#" class="font-weight">[필독]  1:1 문의하기</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
-                        <li><a href="#">[1:1문의] 상품문의 합니다.</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>
+                        <c:if test="${not empty listOneOne}">
+                            <c:forEach var="listOneOne" items="${listOneOne}" varStatus="status">
+                                <li><a href="/Manager/boardRead?brdno=${listOneOne.brdno}" class="font-weight">${listOneOne.brdtitle}</a><span class="new-icon">new</span><span class="new-date">${listOneOne.brddate}</span></li>
+                            </c:forEach>
+                        </c:if>
+<%--                        <li><a href="#" class="font-weight">[필독]  1:1 문의하기</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>--%>
+
                     </ul>
-                    <a href="#" class="tab-more">더보기 ></a>
+                    <a href="/Manager/boardList?bgno=15" class="tab-more">더보기 ></a>
                 </div>
             </div>
             <div class="setting-section">

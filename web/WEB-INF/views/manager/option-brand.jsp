@@ -298,6 +298,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../assets/js/index.js"></script>
 
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

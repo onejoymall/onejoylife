@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.RefundMapper">
+    <insert id="insertDeliveryRefund" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        insert into delivery_refund(
+        order_no,
+        reason,
+        refund_postcode,
+        refund_roadAddress,
+        refund_jibunAddress,
+        refund_extraAddress,
+        return_user_name,
+        return_user_phone,
+        refund_user_name,
+        refund_user_phone,
+        postcode,
+        roadAddress,
+        jibunAddress,
+        extraAddress,
+        refund_bank_name,
+        refund_account_number,
+        refund_account_holder,
+        refund_delivery_t_code,
+        refund_delivery_t_invoice,
+        refund_send_type,
+        refund_send_date
+        )values (
+        #{order_no},
+        #{reason},
+        #{refund_postcode},
+        #{refund_roadAddress},
+        #{refund_jibunAddress},
+        #{refund_extraAddress},
+        #{return_user_name},
+        #{return_user_phone},
+        #{refund_user_name},
+        #{refund_user_phone},
+        #{postcode},
+        #{roadAddress},
+        #{jibunAddress},
+        #{extraAddress},
+        #{refund_bank_name},
+        #{refund_account_number},
+        #{refund_account_holder},
+        #{refund_delivery_t_code},
+        #{refund_delivery_t_invoice},
+        #{refund_send_type},
+        #{refund_send_date}
+        )
+    </insert>
+    <select id="getDeliveryRefundList" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="java.util.Map">
+        select
+            A.*,B.*,
+            (select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+            (select Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+            (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
+            (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
+            (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
+            (select Z.product_name from product Z where Z.product_cd=B.product_cd ) as product_name,
+            (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
+            (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where 1=1
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+    </select>
+    <select id="getDeliveryRefundListCount" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where 1=1
+        ]]>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+    </select>
+    <select id="getDeliveryRefundDetail" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="java.util.Map">
+        select
+        A.*,B.*,
+        (select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+        (select Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+        (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
+        (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
+        (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
+        (select Z.product_name from product Z where Z.product_cd=B.product_cd ) as product_name,
+        (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
+        (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
+        (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where  A.order_no= #{order_no}
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
+    </select>
+</mapper>

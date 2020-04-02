@@ -123,15 +123,7 @@
                         <li><a href="/Manager/order">주문관리</a>
                             <ul>
                                 <li><a href="/Manager/order">주문현황관리</a></li>
-                                <li><a href="/Manager/canceled">주문취소관리</a></li>
                                 <li><a href="/Manager/returned">교환/반품처리</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">배송관리</a>
-                            <ul>
-                                <li><a href="">배송준비중 처리</a></li>
-                                <li><a href="">송장번호 입력</a></li>
-                                <li><a href="">배송정보 변경</a></li>
                             </ul>
                         </li>
                     </ul>
