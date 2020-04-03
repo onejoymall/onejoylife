@@ -628,4 +628,111 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/updateRefund");
         return "/manager/returned";
     }
+
+    //분류별 매출
+    @RequestMapping(value = "/Manager/class-sales")
+    public String managerClassSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "class-sales");
+        model.addAttribute("postUrl", "/Manager/class-sales");
+        return "/manager/class-sales";
+    }
+
+    //상품별 매출
+    @RequestMapping(value = "/Manager/product-sales")
+    public String managerProductSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "product-sales");
+        model.addAttribute("postUrl", "/Manager/product-sales");
+        return "/manager/product-sales";
+    }
+    //날짜별 매출
+    @RequestMapping(value = "/Manager/date-sales")
+    public String managerDataSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "date-sales");
+        model.addAttribute("postUrl", "/Manager/date-sales");
+        return "/manager/date-sales";
+    }
+    //회원관리
+    @RequestMapping(value = "/Manager/member-management")
+    public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "member-management");
+        model.addAttribute("postUrl", "/Manager/member-management");
+        return "/manager/member-management";
+    }
+    //회원 마케팅 관리
+    @RequestMapping(value = "/Manager/member-marketing")
+    public String managerMemberMarketing(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "member-marketing");
+        model.addAttribute("postUrl", "/Manager/member-marketing");
+        return "/manager/member-marketing";
+    }
+    //회원 마케팅 관리
+    @RequestMapping(value = "/Manager/cs-review")
+    public String managerCsReview(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 9);
+        model.addAttribute("style", "cs-review");
+        model.addAttribute("postUrl", "/Manager/cs-review");
+        return "/manager/cs-review";
+    }
+    //업체 별 정산
+    @RequestMapping(value = "/Manager/calculate-company")
+    public String managerCalculateCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 8);
+        model.addAttribute("style", "calculate-company");
+        model.addAttribute("postUrl", "/Manager/calculate-company");
+        return "/manager/calculate-company";
+    }
 }
