@@ -26,9 +26,9 @@
                                 <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>" class="<c:if test="${leftNavOrder == 11}">active</c:if>">경품 당첨내역 조회</a></li>
                             </ul>
                         </li>
-                        <li class="outer-li">나의 정보관리
+                        <li class="outer-li">나의 정보
                             <ul class="inner-ul">
-                                <li><a href="<c:url value="/MyPage/ModifyUserInfo"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">회원정보 변경</a></li>
+                                <li><a href="<c:url value="/MyPage/mypage-12"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">회원정보 변경</a></li>
                                 <li><a href="<c:url value="/MyPage/DeliveryAddress"/>"  class="<c:if test="${leftNavOrder == 13}">active</c:if>">배송지 정보</a></li>
                             </ul>
                         </li>
