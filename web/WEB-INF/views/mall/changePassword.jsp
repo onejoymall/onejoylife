@@ -88,12 +88,12 @@
                                 </div>
                             </div>
                             <div class="but-box">
-                                <div class="but-type1">
-                                    <a href="#" class="but-1">취소</a>
-                                </div>
-                                <div class="but-type2">
-                                    <a href="#" class="but-1" id="formSubmit">확인</a>
-                                </div>
+                                <button class="but-type1" type="button" onclick="location.href='/'">
+                                  취소
+                                </button>
+                                <button class="but-type2" type="button" id="formSubmit">
+                                    확인
+                                </button>
                             </div>
 
                         </div>

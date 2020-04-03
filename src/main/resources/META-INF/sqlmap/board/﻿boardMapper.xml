@@ -27,8 +27,17 @@
          <include refid="includeBoard"/>
          ORDER BY BRDNO DESC 
          LIMIT ${rowStart-1}, 10
-    </select> 
-    
+    </select>
+    <insert id="insertBoard" parameterType="com.webapp.board.app.BoardVO" >
+        <selectKey resultType="String" keyProperty="brdno" order="BEFORE">
+            SELECT IFNULL(MAX(BRDNO),0)+1 FROM TBL_BOARD
+        </selectKey>
+
+        INSERT INTO TBL_BOARD(
+        BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N', #{email}, #{phone}, #{question_type}, #{order_no} )
+    </insert>
+
     <insert id="insertBoard8" parameterType="com.webapp.board.app.BoardVO" >
         <selectKey resultType="String" keyProperty="brdno" order="BEFORE">
             SELECT IFNULL(MAX(BRDNO),0)+1 FROM TBL_BOARD

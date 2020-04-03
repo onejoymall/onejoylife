@@ -130,46 +130,46 @@
                 </li>
                 <li <c:if test="${topNav == 5}">class="active" </c:if>><a href="">매출관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">분류별 매출현황</a></li>
-                        <li><a href="">상품별 매출현황</a></li>
-                        <li><a href="">날짜별 매출현황</a></li>
+                        <li><a href="/Manager/class-sales">분류별 매출현황</a></li>
+                        <li><a href="/Manager/product-sales">상품별 매출현황</a></li>
+                        <li><a href="/Manager/date-sales">날짜별 매출현황</a></li>
                     </ul>
                 </li>
                 <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="">회원관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">일반 회원관리</a></li>
-                        <li><a href="">회원 마케팅관리</a></li>
+                        <li><a href="/Manager/member-management">일반 회원관리</a></li>
+<%--                        <li><a href="/Manager/member-marketing">회원 마케팅관리</a></li>--%>
                     </ul>
                 </li>
-                <li <c:if test="${topNav == 7}">class="active" </c:if>><a href="">계정관리</a>
-                    <ul class="gnb-in-ul">
-                        <li><a href="">사용권한 설정</a></li>
-                        <li><a href="">사용자 계정관리</a></li>
-                    </ul>
-                </li>
+<%--                <li <c:if test="${topNav == 7}">class="active" </c:if>><a href="">계정관리</a>--%>
+<%--                    <ul class="gnb-in-ul">--%>
+<%--                        <li><a href="">사용권한 설정</a></li>--%>
+<%--                        <li><a href="">사용자 계정관리</a></li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
                 <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="">정산관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">업체별 정산내역</a>
-                            <ul>
-                                <li><a href="">업체별 정산내역</a></li>
-                                <li><a href="">크리에이터 정산내역</a></li>
-                            </ul>
+                        <li><a href="/Manager/calculate-company">업체별 정산내역</a>
+<%--                            <ul>--%>
+<%--                                <li><a href="">업체별 정산내역</a></li>--%>
+<%--                                <li><a href="">크리에이터 정산내역</a></li>--%>
+<%--                            </ul>--%>
                         </li>
-                        <li><a href="">경품관리</a></li>
+<%--                        <li><a href="">경품관리</a></li>--%>
                     </ul>
                 </li>
                 <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="">CS관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="">상품 QA</a></li>
-                        <li><a href="">상담관리</a>
+                        <li><a href="/Manager/boardList?bgno=16">상품 QA</a></li>
+                        <li><a href="/Manager/boardList?bgno=15">상담관리</a>
                             <ul>
-                                <li><a href="">1:1 메일문의 게시판</a></li>
-                                <li><a href="">입점 및 제휴문의</a></li>
-                                <li><a href="">공지사항</a></li>
+                                <li><a href="/Manager/boardList?bgno=15">1:1 메일문의 게시판</a></li>
+                                <li><a href="/Manager/company-app">입점 및 제휴문의</a></li>
+                                <li><a href="/Manager/boardList?bgno=8">공지사항</a></li>
                             </ul>
                         </li>
-                        <li><a href="">상풍평관리</a></li>
-                        <li><a href="">FAQ</a></li>
+                        <li><a href="/Manager/cs-review">상풍평관리</a></li>
+                        <li><a href="/Manager/boardList?bgno=16">FAQ</a></li>
                     </ul>
                 </li>
             </ul>

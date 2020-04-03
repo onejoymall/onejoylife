@@ -18,7 +18,8 @@
         product_cd,
         giveaway_cd,
         payment,
-        payment_type_cd
+        payment_type_cd,
+        password
         )values (
          #{success},
          #{imp_uid},
@@ -33,7 +34,8 @@
         #{product_cd},
         #{giveaway_cd},
         #{payment},
-        #{payment_type_cd}
+        #{payment_type_cd},
+        #{password}
         )
     </insert>
     <update id="updateGiveawayDeliveryStatus" parameterType="java.util.Map">

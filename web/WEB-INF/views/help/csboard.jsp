@@ -15,10 +15,10 @@
         <main class="clearfix">
             <%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
             <div class="right-contain">
-                <form action="" method="POST">
+                <form id="form1" name="form1" action="/Board/boardSave" method="post" enctype="multipart/form-data">
                     <div class="r-sec1">
                         <p class="sec1-h1">1:1 문의하기</p>
-                        <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변은 질문 시 등록하신 이메일에서 확인하실 수 있습니다.</p>
+<%--                        <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변은 질문 시 등록하신 이메일에서 확인하실 수 있습니다.</p>--%>
                         <table>
                             <colgroup>
                                 <col style="width: 160px;">
@@ -27,19 +27,12 @@
                             <tbody class="sec1-tbody">
                             <tr class="name-box">
                                 <td>이름</td>
-                                <td><span>홍길동</span></td>
+                                <td><input type="text" id="brdwriter" name="brdwriter" size="20" maxlength="20" value="<c:out value="${boardInfo.brdwriter}"/>"></td>
                             </tr>
-                            <tr class="email-box">
+                            <tr class="name-box">
                                 <td>이메일 *</td>
                                 <td>
-                                    <input type="text" id="email-id" name="email-id"> @ <input type="text" id="email-2" name="email-2" readonly>
-                                    <select id="email-3" name="email-3">
-                                        <option value="hanmail.net">hanmail.net</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="etc" selected>직접 입력</option>
-                                    </select>
-                                    <p class="ex">1:1 문의 답변을 수신하실 이메일 주소를 정확히 기입해주시기 바랍니다.</p>
+                                    <input type="text" id="email" name="email">
                                 </td>
                             </tr>
                             <tr class="phone-box">
@@ -53,13 +46,14 @@
                                             <option value="019">019</option>
                                         </select>
                                         <span> - </span>
-                                        <input type="tel" name="phoneNum-2" id="phoneNum-2">
+                                        <input type="tel" name="phoneNum-2" id="phoneNum-2" maxlength="4" class="phoneNum">
                                         <span> - </span>
-                                        <input type="tel" name="phoneNum-3" id="phoneNum-3">
-                                        <div class="chk-box">
-                                            <input type="checkbox" id="sms-chk" name="sms-chk">
-                                            <label for="sms-chk">답변여부를 SMS로 받으시겠습니까?</label>
-                                        </div>
+                                        <input type="tel" name="phoneNum-3" id="phoneNum-3" maxlength="4" class="phoneNum">
+                                        <input type="hidden" name="phone">
+<%--                                        <div class="chk-box">--%>
+<%--                                            <input type="checkbox" id="sms-chk" name="sms-chk">--%>
+<%--                                            <label for="sms-chk">답변여부를 SMS로 받으시겠습니까?</label>--%>
+<%--                                        </div>--%>
                                     </div>
 
                                 </td>
@@ -77,21 +71,21 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr class="goods-box">
-                                <td>문의 상품</td>
-                                <td>
-                                    <button type="button" class="inquire">주문 상품 조회</button>
-                                    <span>159753258456</span>
-                                </td>
-                            </tr>
+<%--                            <tr class="goods-box">--%>
+<%--                                <td>문의 상품</td>--%>
+<%--                                <td>--%>
+<%--                                    <button type="button" class="inquire">주문 상품 조회</button>--%>
+<%--                                    <span>159753258456</span>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
                             <tr class="title-box">
                                 <td>문의 제목 *</td>
-                                <td><input type="text" name="q-title" id="q-title"></td>
+                                <td><input type="text" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>"></td>
                             </tr>
                             <tr>
                                 <td>문의 내용 *</td>
                                 <td>
-                                    <textarea name="q-contents" id="q-contents" style="resize:none;"></textarea>
+                                    <textarea name="brdmemo" id="brdmemo" style="resize:none;"></textarea>
                                     <p class="txt-counting">&#40;<span>0</span>/1000&#41;</p>
                                 </td>
                             </tr>
@@ -101,26 +95,52 @@
                                     <div class="fileBox">
                                         <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
                                         <label for="uploadBtn" class="btn_file">파일찾기</label>
-                                        <input type="file" id="uploadBtn" name="uploadBtn" class="uploadBtn">
+                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
                                         <span class="ex">이미지 첨부는 1개만 가능합니다. 5Mbyte 이하로 올려주세요.</span>
                                     </div>
 
                                 </td>
                             </tr>
+
                             </tbody>
                         </table>
                         <p class="ex"><span class="bullet-point">·</span><span>쇼핑몰 관련 1:1 문의하기 입니다.<br>매장 이용관련 불편사항은<a href="">[원조이몰 고객지원센터]</a>를 이용하여 글을 남겨주세요.</span></p>
                     </div>
                     <div class="button-box">
-                        <button type="submit">접수</button>
+                        <button type="button" onclick="fn_formSubmit();">접수</button>
                         <button type="button">취소</button>
                     </div>
+                    <input type="hidden" name="bgno" value="<c:out value="${bgno}"/>">
+                    <input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
                 </form>
             </div>
 
         </main>
     </div>
 </div>
+<script>
+    $('.phoneNum').on("keyup", function () {
+        $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
+    })
+    $('#phoneNum-1').on("change", function () {
+        $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
+    })
+    function chkInputValue(id, msg){
+        if ( $.trim($(id).val()) == "") {
+            alert(msg+" 입력해주세요.");
+            $(id).focus();
+            return false;
+        }
+        return true;
+    }
+    function fn_formSubmit(){
+        if ( ! chkInputValue("#brdwriter", "작성자를")) return;
+        if ( ! chkInputValue("#brdtitle", "글 제목을")) return;
+        if ( ! chkInputValue("#brdmemo", "글 내용을")) return;
+
+        $("#form1").submit();
+    }
+</script>
 
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
 

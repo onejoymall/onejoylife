@@ -53,20 +53,20 @@
                             <tbody class="sec1-tbody">
                             <tr>
                                 <td>주문하시는 분</td>
-                                <td><input type="text" name="order_user_name" id="order_user_name" placeholder="홍길동" class="sec1-in1"  value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
+                                <td><input type="text" name="order_user_name" id="order_user_name"  class="sec1-in1"  value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
                             </tr>
                             <tr>
                                 <td>이메일주소</td>
                                 <td><input type="text" name="order_user_email" id="order_user_email"  class="sec1-in1" value="<c:if test="${not empty sessionScope.email}">${sessionScope.email}</c:if>"></td>
                             </tr>
-                            <tr class="bor-none">
+                            <tr >
                                 <td>휴대폰 번호
 
                                     <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
 
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+                                        <c:set var="phoneNumber" value="" />
                                     </c:if>
 
 
@@ -96,10 +96,27 @@
                                     <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
                                 </td>
                             </tr>
+                            <c:if test="${empty sessionScope.email}">
+                            <tr >
+                                <td>비밀번호 입력</td>
+                                <td>
+                                    <input type="password" name="password" class="sec1-in1">
+                                    <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
+                                </td>
+                            </tr>
+                            <tr class="bor-none">
+                                <td>비밀번호 입력 확인</td>
+                                <td>
+                                    <input type="password"  name="password_cf" class="sec1-in1">
+                                    <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
+                                </td>
+                            </tr>
+                            </c:if>
                             </tbody>
                         </table>
                         <p class="sec1-f-txt">·<span> 주문자 정보로 주문과 관련된 SMS와 E-MAIL이 발송됩니다. 정확한 정보인지 확인해주세요.</span></p>
                     </div>
+
                     <div class="sec2">
                         <p class="sec-h1">배송지 정보</p>
                         <table>
@@ -146,13 +163,13 @@
                             </tr>
                             <tr>
                                 <td>받으시는 분</td>
-                                <td><input type="text" placeholder="김말자" class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
+                                <td><input type="text"  class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
                             </tr>
                             <tr class="bor-none">
                                 <td>휴대폰 번호 <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+                                        <c:set var="phoneNumber" value="" />
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${latestDelivery.delivery_user_phone}" />
@@ -182,7 +199,7 @@
                                 <td>전화 번호<!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+                                        <c:set var="phoneNumber" value="" />
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />
@@ -524,6 +541,25 @@
         var phoneC = $("#delivery_user_tel_c").val();
         $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
         console.log(phoneA+"-"+phoneB+"-"+phoneC)
+    })
+
+    var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+    //패스워드 체크
+    $(document).on('keyup','input[name=password]',function () {
+        if(!$(this).val().match(mathPassword)){
+            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
+            $("#passwordValidation").removeClass("text-success");
+        }else{
+            $("#passwordValidation").addClass("text-success");
+        }
+    })
+    $(document).on('keyup','input[name=password_cf]',function () {
+        if(!$(this).val().match($('input[name=password]').val())){
+            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
+            $("#password_cfValidation").removeClass("text-success");
+        }else{
+            $("#password_cfValidation").addClass("text-success");
+        }
     })
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
