@@ -1,0 +1,193 @@
+*{box-sizing: border-box; }
+body{font-family: "noto sans kr"!important;}
+main{overflow: hidden;}
+.page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
+.h1-box {
+    padding: 70px 0 50px;
+    text-align: center;
+    color: #232a32;
+}
+.h1-box > h1 { display: inline-block;}
+.h1-box > h1:nth-child(1) {color: #da394d;}
+/* left-nav */
+.left-nav {
+    width: 186px;
+    float: left;
+}
+.left-tit{
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 30px 0 10px 0;
+    line-height: 28px;
+}
+.outer-ul {
+    background: #f7f7f9;
+    border-style: solid;
+    border-width: 2px 0 1px;
+    border-color: #232a32;
+    
+}
+.outer-li {
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    line-height: 2.5rem;
+    color: #62606b;
+}
+.outer-li > a {
+    color: #62606b;
+}
+.inner-ul {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7rem;
+}
+.inner-ul > li > a {color: #848484;}
+.outer-ul a.active {color: #da394d;font-weight: 600;}
+
+/* right-contain */
+.right-contain {
+    width: calc(914px - 20px);
+    float: left;
+    margin-left: 20px;
+}
+
+
+/* sec1 */
+.sec1-h1 {
+    padding-top:10px;
+    margin-bottom:30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 28px;
+}
+.sec1-p1 {
+    font-size: 0.8rem;
+    margin: 7px 0 5px;
+    line-height: 28px;
+    color: #848484;
+}
+
+
+
+.notice-data-list{
+    width:100%;
+    margin:0 auto;
+    margin-bottom:20px;
+    border-bottom:1px solid #000;
+}
+.notice-data-item, .notice-data-title{
+    width:100%;
+    height:auto;
+}
+.notice-data-item, .notice-data-title{
+    width:100%;
+    padding:0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.main-title-box, .notice-data-title{
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    padding:15px 20px;
+}
+.notice-data-title{
+    font-weight: 600;
+    border-top:1px solid #000;
+}
+.notice-title{
+    -webkit-box-flex: 8;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 8;         /* OLD - Firefox 19- */
+    width: 80%;               /* For old syntax, otherwise collapses. */
+    -webkit-flex: 8;          /* Chrome */
+    -ms-flex: 8;              /* IE 10 */
+    flex: 8;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    text-align: left;
+    color:rgba(0,0,0,0.5);
+    padding-left:20px;
+}
+.notice-data-title .notice-title{
+    text-align: center;
+}
+.active .notice-title{
+    font-weight: 600;
+    color:#da394a;
+}
+.notice-sort, .notice-date{
+    -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;         /* OLD - Firefox 19- */
+    width: 10%;               /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;          /* Chrome */
+    -ms-flex: 1;              /* IE 10 */
+    flex: 1;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    text-align: center;
+    color:rgba(0,0,0,0.5);
+}
+.content-box{
+    display:none;
+    padding:50px 20px 20px;
+}
+.active .content-box{
+    display:block;
+}
+.notice-data-list .content-box{
+    position: relative;
+    background:rgba(0,0,0,0.03);
+    padding:20px 40px 20px 125px;
+    flex-direction: row-reverse;
+    display:none;
+}
+.notice-data-list .active .content-box{
+    display:block;
+}
+.notice-setting-box{
+    top:20px;
+    right:30px;
+    width:100%;
+    height:auto;
+    text-align: right;
+}
+.file-ic{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background:url(../img/icon/file.svg) center center no-repeat;
+}
+.notice-content-body{
+    clear: both;
+    width:90%;
+    padding:25px 0;
+    line-height: 25px;
+    word-break: keep-all;
+}
+.notice-content-body-a{
+    margin-bottom:20px;
+}
+.pagination{
+    text-align: center;
+}
+.page-item{
+    display:inline-block;
+}
+.page-link{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    line-height: 32px;
+    color:rgba(0,0,0,0.7);
+    border:1px solid rgba(0,0,0,0.1);
+}
+.page-link.active{
+    font-weight: 600;
+    color:#fff;
+    background:#da394d;
+    border:1px solid #da394d;
+}
+
+
+
+.ex, label{font-size:12px;color:#777;}
+.ex{line-height: 30px;}

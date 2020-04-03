@@ -51,4 +51,5 @@ public class CartDAO {
         return getFavoritesSum;
     }
 
+
 }

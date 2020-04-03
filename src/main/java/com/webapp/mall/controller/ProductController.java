@@ -3,6 +3,7 @@ package com.webapp.mall.controller;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
@@ -36,6 +37,8 @@ public class ProductController {
     private NumberGender numberGender;
     @Autowired
     private CategoryDAO categoryDAO;
+    @Autowired
+    private CartDAO cartDAO;
     //상품 목록
     @RequestMapping(value="/product")
     public String productList(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {
@@ -71,11 +74,25 @@ public class ProductController {
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
-    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session) throws Exception {
         try{
+            params.put("email",session.getAttribute("email"));
+            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> list = productDAO.getProductViewDetail(params);
             model.addAttribute("style","goods-view");
             model.addAttribute("list",list);
+
+            params.put("user_id", userInfo.get("usr_id"));
+
+            searchVO.setDisplayRowCount(1);
+            searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+
+            List<Map<String,Object>> heart = cartDAO.getFavoritesList(params);
+            if(!isEmpty(heart)){
+                model.addAttribute("heart",true);
+            }
             //배송정보
             params.put("delivery_class",list.get("product_delivery_class"));
             //배송밥법

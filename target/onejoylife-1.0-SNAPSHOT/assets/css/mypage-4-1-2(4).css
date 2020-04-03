@@ -1,0 +1,114 @@
+*{box-sizing: border-box; }
+body{font-family: "noto sans kr"!important; line-height: 1.8rem;min-width: 600px;overflow-x: hidden;}
+/* 헤더 */
+.body-mar {
+    margin:  30px;
+}
+.header-top {
+    overflow: hidden;
+    height: 55px;
+    background: #2d2e43;
+    color: #fff;
+}
+.header-top > p {
+    float: left;
+    font-size: 1.3rem;
+    margin-left: 30px;
+    line-height: 3.4rem;
+}
+.hea-img {
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin: 12px 30px;
+    background: url(../img/x.png) no-repeat center / 22px;
+}
+.body-tit{
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 2px solid #2d2e43;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+table{text-align: center;}
+.tr-tit {
+    background: #f6f6f8;
+    color: #888;
+}
+.tr-color {color: #da394d;}
+.t-body1 tr,.t-body2 tr {height: 30px; border-bottom: 1px solid rgba(0, 0, 0, 0.1);}
+.t-body1 td,.t-body2 td {border-right: 1px solid rgba(0, 0, 0, 0.1);}
+.t-body1 td:nth-of-type(3),.t-body2 td:nth-of-type(2) {border: none;}
+.bor-non{border-right-width: 0px !important;}
+
+
+
+
+.txt-p{
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+}
+.but-box {
+    width: 200px;
+    margin: 20px auto 30px;
+    padding-bottom: 30px;
+}
+.but-box > button {
+    width: 95px;
+    height: 30px;
+}
+.but1 {
+    background: #2d2e43;
+    color: #fff;
+    text-align: center;
+}
+.but2 {
+    background: #fff;
+    border: 1px solid #2d2e43;
+}
+.f-tit {
+    font-size: 1rem;
+    color: #2d2e43;
+}
+.f-tit + p {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #989898;
+    margin: 10px 0 20px;
+}
+/* 하단 */
+.mar-f{
+    background: #f6f6f8;
+}
+.mar-txt{
+    width: 445px;
+    padding: 30px 0;
+    overflow: hidden;
+    margin: auto;
+}
+.mar-txt > div {
+    float: left;
+}
+.logo-icon {
+    width: 130px;
+    height: 96px;
+    background: url(../img/logo.png) no-repeat center / contain;
+}
+.logo-icon > a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.left-bar{
+    width: 1px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 18px 20px;
+}
+.txt-box {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+    color: #888;
+}

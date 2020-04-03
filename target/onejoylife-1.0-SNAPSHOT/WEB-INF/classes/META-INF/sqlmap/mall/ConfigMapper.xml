@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.ConfigMapper">
+
+
+    <select id="getConfigDetail" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT
+            A.*
+
+        FROM market_config A where A.market_config_code = #{market_config_code}
+
+    </select>
+    <select id="getConfigList" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT
+            A.*
+
+        FROM market_config A
+
+    </select>
+    <select id="getPartnerMarketConfigDetail" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT
+            A.*
+        FROM market_config_partner A where A.market_partner_id = #{market_partner_id}
+
+    </select>
+    <insert id="insertPartnerMarketConfig" parameterType="java.util.Map">
+       insert into market_config_partner
+       (market_partner_id,market_info_order,market_info_change,market_info_refund,market_info_service)
+       values
+       (#{market_partner_id},#{market_info_order},#{market_info_change},#{market_info_refund},#{market_info_service})
+        on duplicate KEY update
+       market_partner_id=#{market_partner_id},
+       market_info_order=#{market_info_order},
+       market_info_change=#{market_info_change},
+       market_info_refund=#{market_info_refund},
+       market_info_service=#{market_info_service}
+    </insert>
+
+    <insert id="insertConfig" parameterType="java.util.Map">
+       insert into market_config
+       (market_config_code,market_config_value)
+       values
+       (#{market_config_code},#{market_config_value})
+        on duplicate KEY update
+       market_config_value = #{market_config_value}
+    </insert>
+
+</mapper>

@@ -1,0 +1,401 @@
+@charset "utf-8";
+
+.display-block{display:block!important;}
+a{transition: none;}
+input[type="checkbox"]{
+    -webkit-appearance:checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
+}
+body{
+    width:100%;
+    min-width: 1400px;
+    font-size:12px;
+    font-family: '맑은 고딕', 'Malgun Gothic', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
+    word-break: keep-all;
+}
+.main-content {
+    width: 100%;
+    margin: auto;
+}
+.main-header{
+    width:100%;
+    height:60px;
+    padding:0 10px;
+    position:relative;
+    border-bottom:1px solid #c6c6c6;
+    background: url(../img/admin-hd-bg.gif) repeat-x;
+}
+.main-header h2{
+    width:100%;
+    text-align: center;
+    font-size:18px;
+    font-weight: 600;
+    line-height: 60px;
+}
+.main-hd-btn-wrap{
+    position:absolute; top:0; right:0;
+    width:350px;
+    height:60px;
+}
+.main-header button{
+    float: right;
+    background:#da394a;
+    color:#fff;
+    padding:10px 15px;
+    margin-top:9px;
+    margin-right:10px;
+    font-size:14px;
+    border-radius: 5px;
+}
+.search-form{
+    width: 100%;
+    padding: 40px 10px;
+    background: #f9fbfc;
+    border-bottom: 1px solid #d6d6d6;
+}
+#listSrcForm{
+    margin:0 auto;
+    width: 1000px;
+}
+.keyword-src-wrap{
+    position:relative;
+    margin:0 auto;
+    width:800px;
+    height:36px;
+    border:1px solid #da394a;
+    background:#fff;
+    margin-bottom:30px;
+}
+.keyword-src-wrap *{
+    border:none;
+    background:none;
+}
+.keyword-src{
+    width:100%;
+    height:36px;
+    padding:0 10px 0 10px;
+}
+.keyword-src-button{
+    position:absolute; top:0; right:0;
+    width:50px;
+    height:100%;
+    background:#da394a;
+    color:#fff;
+}
+.src-filter-wrap{
+    margin-top:7px;
+}
+.keyword-src-table{
+    width:100%;
+    text-align: left;
+}
+.keyword-src-table tr{
+    height:30px;
+}
+.keyword-src-table tr label {
+    margin-right: 10px;
+}
+.keyword-src-table tr input{
+    vertical-align: -2px;
+    margin-left: 5px;
+}
+.keyword-src-table select{
+    min-width:120px;
+    height:25px;
+}
+.keyword-ck-box {
+    width: 800px;
+    margin: auto;
+    overflow: hidden;
+}
+.keyword-ck-box > p {
+    width: 50px;
+    display: inline-block;
+    font-weight: bold;
+}
+.keyword-ck-box > .ck-box {
+    display: inline-block;
+    
+}
+.keyword-ck-box > .ck-box label{
+    margin: 0 8px 0 0px;
+    
+}
+.keyword-ck-box > .ck-box input{
+    vertical-align: -2px;
+}
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
+    
+}
+input[type="radio"]{
+    -webkit-appearance: radio;
+    -moz-appearance: radio;
+    appearance: radio;
+    height:auto;
+}
+.age-margin input {
+    vertical-align: -2px;
+}
+.age-margin label {
+    margin-right: 15px;
+}
+.goods-list-wrap,.goods-list-wrap1{
+    width:100%;
+    padding:10px;
+}
+.list-tit{
+    font-size: 18px;
+    margin-top: 25px;
+}
+.list-sort-wrap{
+    width:100%;
+    height:35px;
+    margin-top:20px;
+    position:relative;
+}
+.list-sort-wrap .left{
+    width:50%;
+    position:absolute; top:0; left:0;
+}
+.list-sort-wrap .right{
+    width:50%;
+    position:absolute; top:0; right:0;
+}
+.right .order-select{
+    float:right;
+    height:25px;
+}
+.list-sort-wrap button{
+    background:#ffffff;
+    color:#5f5f5f;
+    padding:3px 5px;
+    border:1px solid;
+    font-size:12px;
+    border-radius: 5px;
+}
+.list-sort-wrap button.big{
+    padding:4px 7px;
+}
+.list-sort-wrap button select{
+    padding:0;
+    margin-top:-4px;
+    font-size:12px;
+}
+
+.goods-list-wrap table,.goods-list-wrap1 table{
+    width:100%;
+    text-align: center;
+    border: 1px solid #dadada;
+    margin-bottom:20px;
+}
+.goods-list-wrap thead, .goods-list-wrap1 thead{
+    background:#f1f1f1
+}
+.goods-list-wrap thead td ,.goods-list-wrap1 thead td{
+    padding:10px;
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+
+.txt-align1 tbody td:nth-child(9){text-align: right;}
+.txt-align1 tbody td:nth-child(10){text-align: right;}
+
+.txt-align2 tbody td:nth-child(5){text-align: left;}
+.txt-align2 tbody td:nth-child(6){text-align: left;}
+.goods-list-wrap tbody td,.goods-list-wrap1 tbody td{
+    padding:5px;
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+.goods-list-btn{
+    background:#da394a;
+    color:#fff;
+    padding:3px 5px;
+    font-size:14px;
+    border-radius: 5px;
+}
+.ok-color {
+    color: #da294a;
+}
+/*pagination*/
+.pagination{
+    text-align: center;
+}
+.page-item{
+    display:inline-block;
+}
+.page-link{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    line-height: 32px;
+    color:rgba(0,0,0,0.7);
+    border:1px solid rgba(0,0,0,0.1);
+}
+.page-link.active{
+    font-weight: 600;
+    color:#fff;
+    background:#da394d;
+    border:1px solid #da394d;
+}
+.txt-align2 .pagination {
+    margin-bottom: 40px;
+}
+/* 모달 */
+.modal, .modal1, .modal2, .modal3{
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+    line-height: 28px;
+}
+.modal-content{
+    overflow: auto;
+    width: 1100px;
+    max-height:80vh;
+    background: #fff;
+    margin: 5vh auto 5vh;
+    margin-top:calc(5vh + 70px)
+}
+.modal-header{
+    position: fixed;
+    top:5vh;
+    width:1100px;
+    height:70px;
+    background:#da294a;
+    color:#fff;
+}
+.modal-header h2{
+    font-size: 18px;
+    line-height: 70px;
+    text-align: center;
+}
+.modal-close,.modal3-close{
+    position:absolute; top:0; right:0;
+    width: 35px;
+    height: 35px;
+    margin: 15px 15px 15px 0;
+    background:url(../img/icon/x-white-ic.svg) center center no-repeat;
+    white-space: nowrap;
+    text-indent: 200%;
+    overflow: hidden;
+}
+.modal-close:hover{
+    cursor: pointer;
+}
+
+.modal-body{
+    width:100%;
+    height:auto;
+    padding:30px 20px;
+}
+/* .modal .goods-detail-table {text-align: center;} */
+.goods-detail-table{
+    width:100%;
+    margin-bottom:20px;
+}
+.goods-detail-table input{
+    border:none;
+    border: 1px solid #b5b5b5;
+    height:25px;
+    padding:0 5px;
+}
+.goods-detail-table tr{
+    height:35px;
+    border:1px solid #dadada;
+}
+.goods-detail-table tr th {
+    border: 1px solid #dadada;
+    text-align: left;
+}
+.goods-detail-table tr td {
+    border: 1px solid #dadada;
+}
+.goods-detail-table tr:nth-of-type(3) span {
+    width: 110px;
+    display: inline-block;
+}
+.goods-detail-table tr:nth-of-type(3) .s-font {
+    font-size: 11px;
+    line-height: 15px;
+    color: #999999;
+}
+.goods-detail-table tr:nth-of-type(1) td input {
+    margin-right: 15px;
+}
+.goods-detail-table td label {
+    margin-right: 15px;
+}
+.goods-detail-table th{
+    background:#ededed;
+}
+.goods-detail-table th, .goods-detail-table td{
+    padding:5px 10px;
+}
+.goods-detail-table select{
+    min-width:120px;
+    height:25px;
+}
+input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
+    width:100%;
+}
+.modal2 tbody input[type='radio'],.modal3 tbody input[type='radio']{
+    vertical-align: -2px;
+}
+.modal2 tbody label,.modal3 tbody label{
+    margin-right: 15px;
+}
+.in-txt-width input{
+    text-align: right;
+}
+.in-txt-width input:nth-of-type(1){
+    width: 100px;
+}
+.btn-red{
+    float: right;
+    background:#da394a;
+    color:#fff;
+    padding:10px 15px;
+    margin-top:9px;
+    margin-right:10px;
+    font-size:14px;
+    border-radius: 5px;
+}
+.point-btn {
+    display:inline-block;
+    background: #fff;
+    border:1px solid;
+    color: #777;
+    width:65px;
+    height:25px;
+    font-size:12px;
+    font-weight:100;
+    line-height:25px;
+    text-align:center;
+    margin-left: 10px;
+}
+.cc{font-weight: 100; margin-left:10px;color:#999;}
+.cc-red{font-weight: 100; margin-left:7px;color:#fd5353}
+.cc-blue{color:#50a1ff}
+.cc2{font-weight: 600;margin-bottom:10px;}
+.modal-body input[type="checkbox"]{
+    vertical-align: -8px;
+}
+.modal-body input[type="radio"]{
+    -webkit-appearance: radio;
+    -moz-appearance: radio;
+    appearance: radio;
+    height:auto;
+}
+input[type="radio"]+label, input[type="checkbox"]+label{
+    margin-right:10px;
+}

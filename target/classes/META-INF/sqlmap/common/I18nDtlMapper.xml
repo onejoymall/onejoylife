@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//END" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="I18nDtlMapper">
+
+<!-- 	<cache type="org.mybatis.caches.ehcache.EhcacheCache" flushInterval="60000"  /> -->
+
+
+	<select id="selectById" parameterType="java.util.HashMap" resultType="com.webapp.common.model.I18nDtl">
+		SELECT 
+		    lang_cd as langCd
+		    , scrn_item_id as scrnItemId
+		    , disp_cont as dispCont
+		FROM display_multi_lang
+		WHERE lang_cd = #{langCd}
+		AND scrn_item_id = #{msgId}
+		
+		UNION ALL
+		
+		SELECT
+	        lang_cd as langCd
+	        , msg_id as scrnItemId
+	        , msg_cont as dispCont
+        FROM msg_multi_lang
+        WHERE lang_cd = #{langCd}
+        AND msg_id = #{msgId}
+	</select>
+</mapper>

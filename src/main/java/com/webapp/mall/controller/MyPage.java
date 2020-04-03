@@ -483,14 +483,16 @@ public class MyPage {
     public String myPageModifyUserInfo(Model model) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12");
+        model.addAttribute("postUrl", "/sign/passcheck");
         return "mypage/mypage-12";
     }
     //회원정보 변경
-    @RequestMapping(value="/MyPage/ModifyUserInfoForm")
+    @RequestMapping(value="/MyPage/mypage-12-1")
     public String myPageModifyUserInfoForm(Model model) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12-1");
-        return "mypage/ModifyUserInfoForm";
+        model.addAttribute("postUrl", "/sign/modifyuser");
+        return "mypage/mypage-12-1";
     }
     //회원정보 탈퇴
     @RequestMapping(value="/MyPage/ModifyUserInfoExit")

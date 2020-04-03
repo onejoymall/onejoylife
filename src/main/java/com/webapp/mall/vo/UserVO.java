@@ -5,6 +5,43 @@ public class UserVO {
     private Integer email_auth_code;
     private String password;
     private String password_cf;
+    private String newpassword;
+    private String renewpassword;
+    private String user_privacy_policy;
+    private String email_privacy_policy;
+
+
+    public String getRenewpassword() {
+        return renewpassword;
+    }
+
+    public void setRenewpassword(String renewpassword) {
+        this.renewpassword = renewpassword;
+    }
+
+    public String getUser_privacy_policy() {
+        return user_privacy_policy;
+    }
+
+    public void setUser_privacy_policy(String user_privacy_policy) {
+        this.user_privacy_policy = user_privacy_policy;
+    }
+
+    public String getEmail_privacy_policy() {
+        return email_privacy_policy;
+    }
+
+    public void setEmail_privacy_policy(String email_privacy_policy) {
+        this.email_privacy_policy = email_privacy_policy;
+    }
+
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
+    }
 
     public String getEmail() {
         return email;

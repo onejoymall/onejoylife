@@ -738,7 +738,7 @@ public class restapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+            //session.setAttribute("email",email);
             //카트번호
             params.put("product_favorites_cd","FV"+numberGender.numberGen(6,1));
             //사용자 아이디 확인 후 전달

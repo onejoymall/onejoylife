@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//END" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="I18nLangMapper">
+
+<!-- 	<cache type="org.mybatis.caches.ehcache.EhcacheCache" flushInterval="360000"  /> -->
+
+	<select id="select" resultType="com.webapp.common.model.I18nLang">
+		SELECT 
+		    lang_cd as langCd
+		FROM display_multi_lang
+		GROUP BY lang_cd
+	</select>
+
+</mapper>

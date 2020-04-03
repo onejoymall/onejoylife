@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.PointMapper">
+
+    <select id="getPointList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *,(select Z.code_name from code Z where Z.code='point_paid_type' and Z.code_value=A.point_paid_type) as point_paid_type_name
+        FROM point_history A  where 1=1
+        ]]>
+
+        <if test="point_id != null"> <![CDATA[AND A.point_id= #{point_id} ]]></if>
+        <if test="point_paid_user_id != null"> <![CDATA[AND A.point_paid_user_id= #{point_paid_user_id} ]]></if>
+        <if test="point_paid_type != null"> <![CDATA[AND A.point_paid_type= #{point_paid_type} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
+        <![CDATA[ order by point_id desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+    </select>
+    <select id="getPointListCount" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM point_history  where 1=1
+        ]]>
+
+        <if test="point_id != null"> <![CDATA[AND point_id= #{point_id} ]]></if>
+        <if test="point_paid_user_id != null"> <![CDATA[AND point_paid_user_id= #{point_paid_user_id} ]]></if>
+        <if test="point_paid_type != null"> <![CDATA[AND point_paid_type= #{point_paid_type} ]]></if>
+        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="point_paid_product_cd != null"> <![CDATA[AND point_paid_product_cd= #{point_paid_product_cd} ]]></if>
+    </select>
+    <select id="getPointAmount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        <![CDATA[
+        select
+         IFNULL((sum(IFNULL (A.point_add,0))-sum(IFNULL (A.point_use,0))),0) from point_history A
+         where 1=1
+        ]]>
+
+        <if test="point_id != null"> <![CDATA[AND A.point_id= #{point_id} ]]></if>
+        <if test="point_paid_user_id != null"> <![CDATA[AND A.point_paid_user_id= #{point_paid_user_id} ]]></if>
+        <if test="point_paid_type != null"> <![CDATA[AND A.point_paid_type= #{point_paid_type} ]]></if>
+        <if test="start_date != null"><![CDATA[AND A.preg_date >= #{start_date} ]]></if>
+        <if test="end_date != null"><![CDATA[AND A.preg_date < #{end_date} ]]></if>
+        <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
+
+    </select>
+    <insert id="insertPoint" parameterType="java.util.Map">
+
+            <![CDATA[
+            insert into point_history(
+            point_amount,
+            point_paid_memo,
+            point_use,
+            point_add,
+            point_paid_user_id,
+            point_paid_type,
+            point_paid_product_cd)
+            VALUES (
+            #{point_amount},
+            #{point_paid_memo},
+            #{point_use},
+            #{point_add},
+            #{point_paid_user_id},
+            #{point_paid_type},
+            #{point_paid_product_cd}
+            )
+            ]]>
+
+    </insert>
+    <update id="updatePoint" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+            <![CDATA[
+            update point_history set
+            epoint=#{item.epoint},point_paid_user_id=#{item.point_paid_user_id},point_paid_type=#{item.point_paid_type},point_paid_product_cd=#{item.point_paid_product_cd}
+            where point_paid_user_id = #{item.point_paid_user_id}
+            ]]>
+        </foreach>
+    </update>
+    <delete id="deletePoint" parameterType="java.util.Map">
+        <foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+        <![CDATA[
+        delete point_history where point_id = #{item.point_id}
+        ]]>
+        </foreach>
+    </delete>
+</mapper>

@@ -126,7 +126,11 @@
                     <div class="buy-wrap">
                         <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button>
                         <button class="buynow" type="submit" >바로구매</button>
-                        <button class="favorite" type="button" data-id="${list.product_cd}"><i class="heart-empty"></i></button>
+                        <button class="favorite" type="button" data-id="${list.product_cd}">
+
+                                <i class="heart-empty  <c:if test="${heart}">heart-full</c:if>"> </i>
+
+                        </button>
                     </div>
                     <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
                 </form>

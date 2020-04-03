@@ -1,0 +1,95 @@
+*{box-sizing: border-box; }
+body{font-family: "noto sans kr"!important;}
+main{overflow: hidden;}
+.page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
+.h1-box {
+    padding: 70px 0 50px;
+    text-align: center;
+    color: #232a32;
+}
+.h1-box > h1 { display: inline-block;}
+.h1-box > h1:nth-child(1) {color: #da394d;}
+/* left-nav */
+.left-nav {
+    width: 186px;
+    float: left;
+}
+.left-tit{
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 30px 0 10px 0;
+    line-height: 28px;
+}
+.outer-ul {
+    background: #f7f7f9;
+    border-style: solid;
+    border-width: 2px 0 1px;
+    border-color: #232a32;
+    
+}
+.outer-li {
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    line-height: 2.5rem;
+    color: #62606b;
+}
+.outer-li > a {
+    color: #62606b;
+}
+.inner-ul {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7rem;
+}
+.inner-ul > li > a {color: #848484;}
+.outer-ul a.active {color: #da394d;font-weight: 600;}
+
+/* right-contain */
+.right-contain {
+    width: calc(914px - 20px);
+    float: left;
+    margin-left: 20px;
+}
+/* sec1 */
+.sec1-h1 {
+    padding-top:10px;
+    margin-bottom:30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 28px;
+}
+.qna-inner{
+    
+}
+.qna-inner .qna-tit{
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding: 10px;
+    color:#da394a;
+}
+.qna-inner .qna-txt-box{
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    line-height: 2rem;
+    padding: 15px;
+    margin-bottom:50px;
+}
+.qna-txt-box p{overflow: hidden; font-size:14px; line-height: 25px;margin-bottom:15px;}
+.qna-txt-box p:last-child{margin:0;}
+.qna-txt-box p > span{
+    display: block;
+    float: left;
+}
+.qna-txt-box p > span:nth-of-type(1){
+    margin-right: 10px;
+    width: 1%;
+}
+.qna-txt-box p > span:nth-of-type(2){
+    width: calc(99% - 10px);
+}
+.under-line{
+    text-decoration: underline;
+    color: #da394d;
+}

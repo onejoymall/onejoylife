@@ -26,7 +26,7 @@
                                     <p class="txt-tit">찜 목록</p>
                                     <div class="txt-right">
                                         <button type="button" id="del-chk-btn" class="commonlistDelete">삭제하기</button>
-    <%--                                    <button type="button" id="cart-chk-btn">장바구니 담기</button>--%>
+<%--                                        <button type="button" id="cart-chk-btn" >장바구니 담기</button>--%>
                                     </div>
                                 </div>
                                 <table class="sec4-lis">
@@ -44,6 +44,7 @@
                                         <td></td>
                                         <th>상품정보</th>
                                         <th>가격</th>
+                                        <th>조회</th>
 
                                     </tr>
                                     </thead>
@@ -63,7 +64,10 @@
     <%--                                            <td><input type="number" value="1" class="num-box"></td>--%>
                                                 <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
                                                     <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
-                                                <td><button class="x" data-id="${list.product_cd}"></button></td>
+<%--                                                <td><button class="x" data-id="${list.product_cd}"></button></td>--%>
+                                                <td>
+                                                    <a href="javascript:void(0);" onclick="addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </c:if>

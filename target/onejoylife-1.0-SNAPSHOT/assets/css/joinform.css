@@ -1,0 +1,135 @@
+*{box-sizing: border-box;}
+body{font-family: 'Noto Sans KR' !important;}
+.wrap{width:100%;margin:0 auto;}
+.joinform{width: 1100px; margin: 0 auto;padding:40px 0;letter-spacing: -0.5px;}
+.path{overflow: hidden;}
+.path > ul > li {
+    float: left;
+    list-style: none;
+    font-size: 0.8rem;
+}
+.path > ul > li > a {color: rgb(136, 136, 136);}
+.path-color{
+    color: #da394d;
+}
+.h2-box {
+    padding: 70px 0 50px;
+    text-align: center;
+    color: #232a32;
+}
+.h2-box > h2 { display: inline-block; font-size:30px;}
+.h2-box > h2 span {color: #da394d;}
+/* form */
+.form-out1 {
+    border-style: solid;
+    border-width: 2px 0 1px 0;
+    border-color: #ccc;
+    padding: 30px 0 60px;
+    margin-bottom:100px;
+
+}
+.form-out2 {
+    width: 651px;
+    margin: 0 auto;
+}
+/* table */
+table{margin: 0 auto;}
+.mem-td {padding-top: 15px;}
+td{overflow: hidden;}
+.mem-id1{
+    float: left;
+    width: 30%;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.7rem;
+    color: #232a32;
+}
+.mem-id2 {
+    float: left;
+    width: 70%;
+}
+.mem-id2 > input {
+    width: 100%;
+    height: 47px;
+    border: 1px solid #ccc;
+    padding: 0 10px;
+}
+.id2-w > input {
+    width: calc(70% - 10px);
+    margin-right: 10px;
+}
+.id2-w > a {
+    display: block;
+    float: right;
+    width: calc(30% - 1px );
+    height: 46px;
+    background: #da394d;
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 2.8rem;
+}
+.er{
+    color: #da394d;
+    height: 30px;
+    font-size: 0.8rem;
+    padding-left: 190px;
+}
+.er-color {
+    color: #232a32;
+}
+.p-none {
+    font-size: 0.8rem;
+    display: none;
+    color: #da394d;
+}
+.p-block {
+    display: block;
+}
+/* checkbox */
+.form-ch {
+    overflow: hidden;
+    font-size: 1rem;
+    margin: 30px 0 0 27px;
+}
+.ch-p-box{margin: -4px 30px 0;word-break: keep-all;}
+.ch-p-box * {
+    color: rgb(119, 119, 119);
+    width: 600px;
+}
+.ch-p-box p > a {
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+}
+.ch-p-box > p {
+    line-height: 1.5rem;
+}
+input[id="ch"] + label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../img/icon/but-1.png)no-repeat center / cover;
+    cursor: pointer;
+}
+input[id="ch"]:checked + label {
+    background: url(../img/icon/but-2.png)no-repeat center / cover;
+}
+input[id="ch"] {
+    display: none;
+}
+/* joni */
+.join-box {
+    clear: both;
+    margin: 50px auto 0;
+    width: 200px;
+    height: 50px;
+    background: #da394d;
+}
+.join-box > a {
+    text-align: center;
+    color: #fff;
+    display: block;
+    line-height: 3rem;
+    font-size:20px;
+    font-weight: 300;
+}
