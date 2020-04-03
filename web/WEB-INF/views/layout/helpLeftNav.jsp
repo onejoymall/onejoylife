@@ -8,11 +8,11 @@
                 <li class="outer-li"><a href="/Help/faqCenter" class="<c:if test="${leftNavOrder == 3}">active</c:if>">FAQ 센터</a></li>
                 <li class="outer-li"><a href="/Board/boardList?bgno=15" class="<c:if test="${leftNavOrder == 3}">active</c:if>">1:1 문의하기</a>
                     <ul class="inner-ul">
-                        <li><a href="/Help/csBoard?bgno=15" class="<c:if test="${leftNavOrder == 4}">active</c:if>">1:1 메일문의 작성</a></li>
+                        <li><a href="/Help/csBoard?bgno=15" class="<c:if test="${leftNavOrder == 4}">active</c:if>">1:1 문의 작성</a></li>
                         <li><a href="/Help/csCenter" class="<c:if test="${leftNavOrder == 5}">active</c:if>">고객센터 전화번호 안내</a></li>
                     </ul>
                 </li>
-                <li class="outer-li"><a href="http://pf.kakao.com/_xcTVyj/chat" target="_blank" class="<c:if test="${leftNavOrder == 6}">active</c:if>">채팅 문의하기</a></li>
+                <li class="outer-li"><a href="http://pf.kakao.com/_xezzxoj" target="_blank" class="<c:if test="${leftNavOrder == 6}">active</c:if>">채팅 문의하기</a></li>
                 <li class="outer-li"><a href="/Board/boardList?bgno=8" class="<c:if test="${leftNavOrder == 8}">active</c:if>">공지사항</a></li>
             </ul>
         </div>

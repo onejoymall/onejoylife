@@ -22,7 +22,7 @@
 
                         <div class="coupon-input">
                             <p>*소지하고 계신 원조이몰 할인쿠폰 번호 15자리를 입력해 주세요.</p>
-                            <input type="text" placeholder="1234">
+                            <input type="text" placeholder="">
                             <button>등록하기</button>
                         </div>
                     </div>
