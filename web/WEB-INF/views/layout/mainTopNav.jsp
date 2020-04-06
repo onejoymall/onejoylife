@@ -66,26 +66,20 @@
         </div>
     </div>
 </header>
-    <div class="out-box todaySlider">
+    <div class="out-box">
         <a href="/MyPage/ShoppingBasket"><p class="out-h">장바구니</p></a>
         <div class="out-in">
             <p>최근 본 상품 <span></span></p>
-            <div id="todaySlider">
-                <div class="out-in-box">
+            <div id="todaySlider" class="out-in-box">
             <c:if test="${not empty todayList}">
                 <c:forEach var="todayList" items="${todayList}" varStatus="status">
-                    <c:set var="lineCut" value="${status.count%3}"></c:set>
                     <div class="img1"><a href="/product/productDetail?product_cd=${todayList.product_cd}"><img src="${todayList.file_1}" onerror="this.src='http://placehold.it/68'" alt=""></a></div>
-                    <c:if test="${lineCut eq 0}">
-                        </div>
-                        <div class="out-in-box">
-                    </c:if>
+
                 </c:forEach>
             </c:if>
-                </div>
             </div>
 
-            <div class="arr-box hidden">
+            <div class="arr-box">
                 <div class="left-ar "></div>
                 <div class="ar-num"><span>1</span>/<span>1</span></div>
                 <div class="right-ar bx-prev"></div>

@@ -56,7 +56,11 @@
                             <c:forEach var="list" items="${list}" varStatus="status">
                                 <tr>
                                     <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.cart_cd}"><label for="body-ck1-${status.index}"></label></td>
-                                    <td><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
+                                    <td>
+                                        <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                            <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
+                                        </a>
+                                    </td>
                                     <td class="p-box">
                                         <p>${list.product_brand}</p>
                                         <p>${list.product_name}</p>
@@ -95,6 +99,7 @@
                             <col style="width: 50px;">
                         </colgroup>
                         <thead>
+
                         <tr class="head-tr">
                             <td>
 <%--                                <input type="checkbox" id="all-chk" name="all-chk">--%>

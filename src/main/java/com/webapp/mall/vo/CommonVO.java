@@ -4,7 +4,15 @@ public class CommonVO {
     private String table_name;
     private String pk;
     private String[] chk;
+    private String[] product_cd_arr;
 
+    public String[] getProduct_cd_arr() {
+        return product_cd_arr;
+    }
+
+    public void setProduct_cd_arr(String[] product_cd_arr) {
+        this.product_cd_arr = product_cd_arr;
+    }
 
     public String getPk() {
         return pk;

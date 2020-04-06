@@ -1,14 +1,19 @@
-
 //오늘본 상품
 $('#todaySlider').bxSlider({
     auto:false,
-    mode:'horizontal',
+    mode:'vertical',
+    moveSlides:3,
+    maxslides:3,
+    minSlides:3,
     infiniteLoop:false,
     hideControlOnEnd:false,
     autoControls:true,
     pager:true,
-    // pagerType:'short',
-    controls:false,
+    pagerType:'short',
+    controls:true,
+    nextSelector:'.right-ar',
+    prevSelector:'.left-ar',
+    pagerCustom:'.ar-num',
     useCSS:false,
     touchEnabled : (navigator.maxTouchPoints > 0),
 });

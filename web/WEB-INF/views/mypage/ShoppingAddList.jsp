@@ -26,7 +26,9 @@
                                     <p class="txt-tit">찜 목록</p>
                                     <div class="txt-right">
                                         <button type="button" id="del-chk-btn" class="commonlistDelete">삭제하기</button>
-<%--                                        <button type="button" id="cart-chk-btn" >장바구니 담기</button>--%>
+<%--                                        <c:forEach var="list" items="${list}">--%>
+                                        <button type="button" id="cart-chk-btn" onclick="addAllShoppingBasket('${product_cd}')">장바구니 담기</button>
+<%--                                        </c:forEach>--%>
                                     </div>
                                 </div>
                                 <table class="sec4-lis">
@@ -53,7 +55,11 @@
                                         <c:forEach var="list" items="${list}" varStatus="status">
                                             <tr>
                                                 <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_favorites_cd}"><label for="body-ck1-${status.index}"></label></td>
-                                                <td><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
+                                                <td>
+                                                    <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                                        <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
+                                                    </a>
+                                                </td>
                                                 <td class="p-box">
                                                     <p>${list.product_brand}</p>
                                                     <p>${list.product_name}</p>
@@ -92,5 +98,64 @@
 
     </div>
 </div>
+
+<script>
+    //장바구니 전체 등록
+    function addAllShoppingBasket(product_cd) {
+        var formData = $('#defaultForm').serialize();
+        var alertType;
+        var showText;
+        jQuery.ajax({
+            type: 'POST',
+            data: formData,
+            url:'/cart/addAllcart',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        // $('#validateError'+index).removeClass('none');
+                        // $('#validateError'+index).html('* '+item);
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: "장바구니 등록 완료",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'success'
+                    });
+                    // loginAuth(data.access_token);
+                    location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    }
+
+    $(function(){
+        $('#tr-ck1-1').click(function(){
+            var chk = $(this).is(':checked');//.attr('checked');
+            if(chk) $('.lis-body input').prop('checked',true);
+            else $('.lis-body input').prop('checked',false);
+        });
+    });
+</script>
 
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
