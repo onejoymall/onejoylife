@@ -5,9 +5,10 @@
   Time: 오전 1:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
     <div class="gnb-section">
         <div class="gnb-inner">
@@ -65,3 +66,39 @@
         </div>
     </div>
 </header>
+    <div class="out-box todaySlider">
+        <a href="/MyPage/ShoppingBasket"><p class="out-h">장바구니</p></a>
+        <div class="out-in">
+            <p>최근 본 상품 <span></span></p>
+            <div id="todaySlider">
+                <div class="out-in-box">
+            <c:if test="${not empty todayList}">
+                <c:forEach var="todayList" items="${todayList}" varStatus="status">
+                    <c:set var="lineCut" value="${status.count%3}"></c:set>
+                    <div class="img1"><a href="/product/productDetail?product_cd=${todayList.product_cd}"><img src="${todayList.file_1}" onerror="this.src='http://placehold.it/68'" alt=""></a></div>
+                    <c:if test="${lineCut eq 0}">
+                        </div>
+                        <div class="out-in-box">
+                    </c:if>
+                </c:forEach>
+            </c:if>
+                </div>
+            </div>
+
+            <div class="arr-box hidden">
+                <div class="left-ar "></div>
+                <div class="ar-num"><span>1</span>/<span>1</span></div>
+                <div class="right-ar bx-prev"></div>
+            </div>
+        </div>
+        <div class="fo-box ">
+            <a href="" class="top-but">
+            <div>TOP</div>
+            <div class="ar-top"></div>
+            </a>
+            <a href="" class="down-but">
+            <div>DOWN</div>
+            <div class="ar-down"></div>
+            </a>
+        </div>
+    </div>

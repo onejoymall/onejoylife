@@ -1,5 +1,6 @@
 package com.webapp.mall.controller;
 
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
@@ -10,6 +11,7 @@ import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,7 +152,7 @@ public class MainController {
         return "mall/main";
     }
     @RequestMapping(value = "/layout/mainTopNav")
-    public String mainTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO,HttpSession session) throws Exception{
+    public String mainTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
         try{
             // 카테고리 출력
             params.put("pd_category_upper_code","T");
@@ -173,6 +177,19 @@ public class MainController {
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
             searchVO.pageCalculate(cartDAO.getCartListCount(params));
+
+            //오늘 본 상품 출력시 적용
+            if(isEmpty((List<String>)session.getAttribute("today"))){
+
+            }else{
+                todayVO.setProduct_cd_array((List<String>)session.getAttribute("today"));
+                List<Map<String,Object>> todayList = productDAO.getProductTodayList(todayVO);
+                model.addAttribute("todayList", todayList);
+            }
+
+//            todayVO.setProduct_cd_array(new String[]{"string1"});
+
+
             model.addAttribute("searchVO", searchVO);
 
         }catch (Exception e){

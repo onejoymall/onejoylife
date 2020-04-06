@@ -1,6 +1,7 @@
 package com.webapp.mall.dao;
 
 import com.webapp.board.common.SearchVO;
+import com.webapp.mall.vo.TodayVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,10 @@ import java.util.Map;
 public class ProductDAO {
     @Autowired
     private SqlSession sql;
-
+    public List<Map<String, Object>> getProductTodayList(TodayVO todayVO) throws SQLException {
+        List<Map<String, Object>> getProductTodayList = sql.selectList("mall.ProductMapper.getProductTodayList",todayVO);
+        return getProductTodayList;
+    }
     public List<Map<String, Object>> getProductList(SearchVO searchVO) throws SQLException {
         List<Map<String, Object>> getProductList = sql.selectList("mall.ProductMapper.getProductList",searchVO);
         return getProductList;
@@ -26,4 +30,5 @@ public class ProductDAO {
         Map<String,Object> getProductViewDetail=sql.selectOne("mall.ProductMapper.getProductViewDetail",params);
         return getProductViewDetail;
     }
+
 }

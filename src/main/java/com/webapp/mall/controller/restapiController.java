@@ -63,6 +63,18 @@ public class restapiController {
     private ProductDAO productDAO;
     @Autowired
     private RefundDAO refundDAO;
+    //장바구니 선택 결재
+    @RequestMapping(value = "/payment/cartorder", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> paymentCartOrder(@RequestParam HashMap params,UserVO userVO) throws Exception{
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+
+        }catch (Exception e){
+
+        }
+        return resultMap;
+    }
     //이메일 인증번호 전송
     @RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 

@@ -184,6 +184,7 @@ public class MyPage {
         }catch (Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("postUrl","/payment/cartorder");
         model.addAttribute("style", "mypage-4");
         model.addAttribute("leftNavOrder", 4);
         return "mypage/ShoppingBasket";

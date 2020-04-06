@@ -7,6 +7,7 @@ import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,8 +75,20 @@ public class ProductController {
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
-    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session) throws Exception {
+    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception {
         try{
+
+            //상품 상세페이지 로드시 최근 본 상품 세션에 적용
+            if(isEmpty((List<String>)session.getAttribute("today"))){
+                todayVO.setProduct_cd_array_string((String)params.get("product_cd"));
+                session.setAttribute("today",todayVO.getProduct_cd_array());
+            }else{
+                todayVO.setProduct_cd_array((List<String>) session.getAttribute("today"));
+                todayVO.setProduct_cd_array_string((String)params.get("product_cd"));
+                session.setAttribute("today",todayVO.getProduct_cd_array());
+            }
+
+
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> list = productDAO.getProductViewDetail(params);

@@ -13,31 +13,7 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
-        <div class="out-box">
-            <a href="mypage-4.html"><p class="out-h">장바구니</p></a>
-            <div class="out-in">
-                <p>최근 본 상품 <span>5</span></p>
-                <div class="out-in-box">
-                    <div class="img1"><img src="../assets/img/my-4-img1.jpg" alt=""></div>
-                    <div class="img1"><img src="../assets/img/my-4-img2.jpg" alt=""></div>
-                    <div class="img1"><img src="../assets/img/my-4-img3.jpg" alt=""></div>
-                </div>
-                <div class="arr-box">
-                    <div class="left-ar"></div>
-                    <div class="ar-num"><span>1</span>/<span>1</span></div>
-                    <div class="right-ar"></div>
-                </div>
-            </div>
-            <div class="fo-box">
-                <a href="#" class="top-but">
-                    <div>TOP</div>
-                    <div class="ar-top"></div>
-                </a>
-                <a href="#" class="down-but">
-                    <div>DOWN</div>
-                    <div class="ar-down"></div>
-                </a>
-            </div>
+
         </div>
         <main class="clearfix">
             <form name="defaultForm" id="defaultForm" method="POST">

@@ -3,7 +3,24 @@
 
 
 <mapper namespace="mall.ProductMapper">
-
+    <select id="getProductTodayList" parameterType="com.webapp.mall.vo.TodayVO" resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                *,
+                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
+                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1
+            FROM product  where 1=1
+        ]]>
+        <if test="product_cd_array != null">
+            and product_cd IN (
+            <foreach item="item" index="index" collection="product_cd_array" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+    </select>
     <select id="getProductList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.Map">
         <![CDATA[
             SELECT
