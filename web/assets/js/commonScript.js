@@ -1,34 +1,4 @@
-//오늘본 상품
-$('#todaySlider').bxSlider({
-    auto:false,
-    mode:'vertical',
-    moveSlides:3,
-    maxslides:3,
-    minSlides:3,
-    infiniteLoop:false,
-    hideControlOnEnd:false,
-    autoControls:true,
-    pager:true,
-    pagerType:'short',
-    controls:true,
-    nextSelector:'.right-ar',
-    prevSelector:'.left-ar',
-    pagerCustom:'.ar-num',
-    useCSS:false,
-    touchEnabled : (navigator.maxTouchPoints > 0),
-});
-$(".top-but").click(function() {
-    $('html, body').animate({
-        scrollTop : 0
-    }, 400);
-    return false;
-});
-$(".down-but").click(function(){
-    $('html, body').animate({
-        scrollTop:($('body').height())
-    }, 400);
-    return false;
-});
+
 //찜
 $('.favorite').click(function(){
     $(this).children('i').toggleClass('heart-full');
