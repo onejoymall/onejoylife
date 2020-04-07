@@ -1,6 +1,7 @@
 package com.webapp.manager.dao;
 
 import com.webapp.manager.vo.MgUserVO;
+import com.webapp.manager.vo.StoreVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,10 @@ public class MgUserDAO {
     public Integer getManagerUserListCount(MgUserVO userVO) throws SQLException{
         Integer getManagerUserListCount =sql.selectOne("mall.MgUserMapper.getManagerUserListCount",userVO);
         return getManagerUserListCount;
+    }
+
+    public Map<String,Object> getUserDetail(MgUserVO mgUserVO) throws SQLException {
+        Map<String,Object> getUserDetail=sql.selectOne("mall.MgUserMapper.getUserDetail", mgUserVO);
+        return getUserDetail;
     }
 }

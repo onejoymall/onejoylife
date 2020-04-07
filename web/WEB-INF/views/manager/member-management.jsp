@@ -120,7 +120,7 @@
                                 <td><fmt:formatNumber value="${list.point_amount}" groupingUsed="true" /></td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>
-                                    <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
+                                    <button type="button" class="goods-list-btn" name="detail1" onclick="defaultModalUSer('${list.email}')">상세보기</button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -144,8 +144,7 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <form name="" id="" method="get">
-
+                <form name="member-management" id="member-management" method="get">
                     <h2>회원등급 목록</h2>
                     <div class="list-sort-wrap">
                         <div class="left">
@@ -220,6 +219,7 @@
     </div>
     <div class="modal1">
         <div class="modal-content">
+            <form name="member-management" id="member-management" method="POST">
             <div class="modal-header">
                <h2>상세보기</h2>
                 <button type="button" class="modal-close">×</button>
@@ -234,32 +234,37 @@
                     <tbody>
                         <tr>
                             <th>회원명</th>
-                            <td>홍길동</td>
+                            <td class="username"></td>
                         </tr>
                         <tr>
                             <th>회원 ID</th>
-                            <td>onejoy12</td>
+                            <td class="user_id"></td>
+                        </tr>
+                        <tr>
+                            <th>이메일</th>
+                            <td class="email"></td>
                         </tr>
                         <tr>
                             <th>회원등급</th>
-                            <td>일반회원</td>
+                            <td class="level_name"></td>
                         </tr>
                         <tr>
                             <th>포인트</th>
-                            <td>0</td>
+                            <td class="point_amount"></td>
                         </tr>
                         <tr>
                             <th>포인트 지급</th>
                             <td><input type="text"><button type="button" class="point-btn">지급</button></td>
                         </tr>
-                        <tr>
+                        <%--<tr>
                             <th>포인트 환수</th>
                             <td><input type="text"><button type="button" class="point-btn">환수</button></td>
-                        </tr>
+                        </tr>--%>
                     </tbody>
                 </table>
                 <button type="button" class="btn-red">저장</button>
             </div>
+            </form>
         </div>
     </div>
     <div class="modal2">
@@ -394,4 +399,5 @@
             </div>
         </div>
     </div>
+
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
