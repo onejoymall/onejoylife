@@ -83,5 +83,6 @@
 <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
 <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 <script src='<c:url value="/assets/js/commonScriptSub.js"/>'></script>
+<script src='<c:url value="/assets/js/commonMgScript.js"/>'></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </html>

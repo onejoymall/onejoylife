@@ -61,23 +61,28 @@
             </div>
             <div class="goods-list-wrap txt-align1">
                 <h4 class="list-tit">회원 리스트</h4>
-                <div class="list-sort-wrap">
-                    <div class="left">
-                        <button type="button" class="goods-list-btn big" name="copy" id="listDelete">선택 삭제</button>
-                        <button type="button" class="goods-list-btn big">
-                        선택 등급
-                         <select name="level" id="grade-change">
-                             <option value="1">일반회원</option>
-                             <option value="10">관리자</option>
-                             <option>특별회원</option>
-                         </select>
-                         으로 변경
-                         </button>
-                    </div>
-                </div>
                 <form name="defaultListForm" id="defaultListForm" method="POST">
+                    <div class="list-sort-wrap">
+                        <div class="left">
+                            <button type="button" class="goods-list-btn big" name="copy" id="listDelete">선택 삭제</button>
+                            <button type="button" class="goods-list-btn big" id="gradeChange">
+                            선택 권한
+                             <select name="user_grant" id="grade-change">
+                            <c:if test="${not empty userGrantlist}">
+                                <c:forEach var="userGrantlist" items="${userGrantlist}">
+                                 <option value="${userGrantlist.user_grant_no}">${userGrantlist.user_grant_name}</option>
+
+                                </c:forEach>
+                            </c:if>
+                             </select>
+                             으로 변경
+                             </button>
+                        </div>
+                    </div>
+
                     <input type="hidden" name="Pk" value="${Pk}">
                     <input type="hidden" name="table_name" value="${table_name}">
+
                     <table>
                         <colgroup>
                             <col width="2%">
@@ -98,6 +103,7 @@
                                 <td>아이디</td>
                                 <td>이메일</td>
                                 <td>등급</td>
+                                <td>권한</td>
                                 <td>성별</td>
                                 <td>생년월일</td>
                                 <td>포인트</td>
@@ -109,12 +115,13 @@
                     <c:if test="${not empty list}">
                         <c:forEach var="list" items="${list}">
                            <tr>
-                                <td><input type="checkbox" id="chk" name="chk"></td>
+                                <td><input type="checkbox" id="chk" name="chk" value="${list.usr_id}"></td>
 
                                 <td>${list.username}</td>
                                 <td>${list.user_id}</td>
                                 <td>${list.email}</td>
                                 <td>${list.level_name}</td>
+                               <td>${list.grant_name}</td>
                                 <td>${list.sex}</td>
                                 <td>${list.birth}</td>
                                 <td><fmt:formatNumber value="${list.point_amount}" groupingUsed="true" /></td>
@@ -144,12 +151,14 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <form name="member-management" id="member-management" method="get">
+                <form name="mgUserGrantList" id="mgUserGrantList" method="POST">
+                    <input type="hidden" name="Pk" value="user_grant_no">
+                    <input type="hidden" name="table_name" value="user_grant">
                     <h2>회원등급 목록</h2>
                     <div class="list-sort-wrap">
                         <div class="left">
-                            <button type="button" class="goods-list-btn">선택 삭제</button>
-                            <button type="button" class="goods-list-btn member-list-btn">선택 수정</button>
+                            <button type="button" class="goods-list-btn" id="mgUserGrantListSubmit">선택 삭제</button>
+
                         </div>
                         <div class="right">
                         </div>
@@ -171,48 +180,33 @@
                             <tr>
                                 <th rowspan="2"><input type="checkbox" id="all-chk2" name="all-chk1"></th>
                                 <th rowspan="2">등급명</th>
-                                <th rowspan="2">혜택 결제조건</th>
                                 <th colspan="2">할인적용</th>
                                 <th colspan="2">포인트 적립</th>
-                                <th colspan="2">차등지급 가격</th>
-                                <th rowspan="2">회원수</th>
+                                <th rowspan="2">관리</th>
                             </tr>
                             <tr>
                                 <th>구매금액(이상)</th>
-                                <th>적용</th>
+                                <th>할인 적용</th>
                                 <th>구매금액(이상)</th>
-                                <th>적립</th>
-                                <th>구매금액(이상)</th>
-                                <th>지급</th>
+                                <th>point 적립</th>
                             </tr>
+                        <c:if test="${not empty userGrantlist}">
+                            <c:forEach var="userGrantlist" items="${userGrantlist}">
                             <tr>
-                                <td><input type="checkbox" id="chk2-2" name="chk2-2"></td>
-                                <td>일반회원</td>
-                                <td>모든결제</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
+                                <td><input type="checkbox" name="chk" value="${userGrantlist.user_grant_no}"></td>
+                                <td>${userGrantlist.user_grant_name}</td>
+                                <td><fmt:formatNumber value="${userGrantlist.payment_limit}" groupingUsed="true" /></td>
+                                <td><fmt:formatNumber value="${userGrantlist.payment_event_amount}" groupingUsed="true" /></td>
+                                <td><fmt:formatNumber value="${userGrantlist.payment_point_limit}" groupingUsed="true" /></td>
+                                <td><fmt:formatNumber value="${userGrantlist.event_point}" groupingUsed="true" /></td>
+                                <td><button type="button" class="goods-list-btn" id="mgUserGrantListUpdateSubmit" data-id="${userGrantlist.user_grant_no}">선택 수정</button></td>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" id="chk2-1" name="chk2-1"></td>
-                                <td>일반회원</td>
-                                <td>모든결제</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>0</td>
-                            </tr>
+                            </c:forEach>
+                        </c:if>
                         </tbody>
                     </table>
-                    <button type="button" class="btn-red member-add">회원등급 추가</button>
-                    <button type="button" class="btn-red">저장하기</button>
+                    <button type="button" class="btn-red member-add" >회원등급 추가</button>
+<%--                    <button type="button" class="btn-red">저장하기</button>--%>
                 </form>
             </div>
         </div>
@@ -277,11 +271,11 @@
     <div class="modal2">
         <div class="modal-content">
             <div class="modal-header">
-               <h2>회원등급 추가</h2>
+               <h2>회원등급</h2>
                 <button type="button" class="modal2-close">×</button>
             </div>
             <div class="modal-body clearfix">
-               <form name="member-management" id="member-management" method="get">
+               <form name="userGrantAdd" id="userGrantAdd" method="POST">
                     <table class="goods-detail-table">
                         <colgroup>
                             <col width="20%">
@@ -291,50 +285,28 @@
                             <tr>
                                 <th>회원 등급명</th>
                                 <td>
-                                    <input type="text">
+                                    <input type="text" name="user_grant_name">
+                                    <input type="hidden" name="user_grant_no">
                                 </td>
                             </tr>
-                            <tr>
-                                <th>회원 등급설명</th>
-                                <td>
-                                    <input type="text">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>혜택 결제 조건</th>
-                                <td>
-                                    <input type="radio" name="use-dc" id="use-dc-F" checked>
-                                    <label for="use-dc-F">모든 결제</label>
-                                    <input type="radio" name="use-dc" id="use-dc-C">
-                                    <label for="use-dc-C">현금 결제(무통장)</label>
-                                    <input type="radio" name="use-dc" id="use-dc-A">
-                                    <label for="use-dc-A">현금 결제 외 모든 결제</label>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <th>할인적용</th>
                                 <td class="in-txt-width">
-                                    <input type="text"> 원 이상 구매시 
-                                    <input type="text" placeholder="원 / %"> 적용
+                                    <input type="text" name="payment_limit"> 원 이상 구매시
+                                    <input type="text" name="payment_event_amount"> 원 할인
                                 </td>
                             </tr>
                             <tr>
                                 <th>포인트 적립</th>
                                 <td class="in-txt-width">
-                                    <input type="text"> 원 이상 구매시  
-                                    <input type="text" placeholder="원 / %"> 적립
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>차등지급 가격</th>
-                                <td class="in-txt-width">
-                                    <input type="text"> 원 이상 구매시  
-                                    <input type="text" placeholder="원 / %"> 지급
+                                    <input type="text" name="payment_point_limit"> 원 이상 구매시
+                                    <input type="text" name="event_point"> Point 적립
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-red">회원등급 추가</button>
+                    <button type="button" name="detail" class="btn-red" id ="userGrantAddSubmit">저장하기</button>
                </form>
                 
             </div>
@@ -347,7 +319,7 @@
                 <button type="button" class="modal3-close">×</button>
             </div>
             <div class="modal-body clearfix">
-               <form name="member-management" id="member-management" method="get">
+               <form name="mgUserGrantListForm" id="mgUserGrantListForm" method="POST">
                     <table class="goods-detail-table">
                         <colgroup>
                             <col width="20%">

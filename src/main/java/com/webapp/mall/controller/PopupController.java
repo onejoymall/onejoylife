@@ -6,6 +6,7 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.UserVO;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,7 +69,7 @@ public class PopupController {
         return "popup/deliverySearch";
     }
     @RequestMapping(value = "/Popup/kakao" , produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
-    public String mallKakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpSession session,Map params) throws Exception{
+    public String mallKakaoLogin(@RequestParam("code") String code, HttpServletRequest request, HttpSession session, Map params, UserVO userVO) throws Exception{
         Object siteUrl = request.getRequestURL().toString().replace(request.getRequestURI(),"");
         Map<String, Object> kakaoMap = CurlPost.getAccessToken(code,siteUrl,kakaoClientId,kakaoRedirectUri);
         try {
@@ -77,6 +78,9 @@ public class PopupController {
                     // 기존에 login이란 세션 값이 존재한다면
                     session.removeAttribute("login"); // 기존값을 제거해 준다.
                     //기존 로그인 세션을 로그아웃후 다시 sns 로그인 할지여부 협의
+                    //로그인 기록 저장
+                    userVO.setLog_type("snslogin");
+                    userDAO.insertUserHistory(userVO);
                 }
                 session.setAttribute("login", true);
                 session.setAttribute("token", kakaoMap.get("token_type")+" "+kakaoMap.get("access_token"));
@@ -88,6 +92,10 @@ public class PopupController {
                     session.setAttribute("email", kakaoUserAccount.get("email"));
                     params.put("email", kakaoUserAccount.get("email"));
                     userDAO.insertSnsUser(params);
+                    //로그인 기록 저장
+                    userVO.setLog_type("snslogin");
+                    userVO.setEmail((String)kakaoUserAccount.get("email"));
+                    userDAO.insertUserHistory(userVO);
                 }
 
 

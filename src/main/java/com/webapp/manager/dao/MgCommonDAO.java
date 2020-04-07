@@ -15,4 +15,5 @@ public class MgCommonDAO {
     public void ListDelete(MgCommonVO mgCommonVO) throws SQLException{
         sql.delete("mall.MgCommonMapper.ListDelete",mgCommonVO);
     }
+
 }

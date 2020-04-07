@@ -13,6 +13,7 @@ import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.PaymentVO;
+import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,8 @@ public class ManagerRestapiController {
     private MgUserDAO mgUserDAO;
     @Autowired
     private MgPointDAO mgPointDAO;
+    @Autowired
+    private MgUserGrantDAO mgUserGrantDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     // 포인트 관리 포인트 추가/Manager/MgPointAdd
@@ -117,7 +120,7 @@ public class ManagerRestapiController {
     }
     //로그인 처리 1
     @RequestMapping(value = "/Manager/ManagerSign/ManagerLoginProc", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> ManagerLoginProc(@RequestParam HashMap params,HttpSession session){
+    public HashMap<String, Object> ManagerLoginProc(@RequestParam HashMap params, HttpSession session, UserVO userVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
@@ -143,6 +146,9 @@ public class ManagerRestapiController {
                         }
                         session.setAttribute("email",email);
                         session.setAttribute("adminLogin", true); //
+                        //로그인 기록 저장
+                        userVO.setLog_type("adminlogin");
+                        userDAO.insertUserHistory(userVO);
                         resultMap.put("redirectUrl", "/Manager/ManagerMain");
                     }else{
                         error.put("Error", messageSource.getMessage("error.notUsrInfo","ko"));
@@ -161,8 +167,8 @@ public class ManagerRestapiController {
         return resultMap;
     }
     //공통 리스트삭제
-    @RequestMapping(value = "/Manager/ListDelete", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> ListDelete(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){
+    @RequestMapping(value = "/Manager/ListUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> ListUpdate(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
@@ -191,6 +197,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
 
     //교환 환불 취소
     @RequestMapping(value = "/Manager/refundCancel", method = RequestMethod.POST, produces = "application/json")
@@ -886,5 +893,76 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //회원 등급 선택
+    @RequestMapping(value = "/Manager/selectUserGrant", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> selectUserGrant(@RequestParam HashMap params,MgUserVO mgUserVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> list = mgUserGrantDAO.getUserGrant(mgUserVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
 
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //회원 등급 추가
+    @RequestMapping(value = "/Manager/userGrantAddProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> managerConfigProc(@RequestParam HashMap params,MgUserVO mgUserVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(mgUserVO.getPayment_limit()==null){
+                error.put(messageSource.getMessage("payment_limit","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgUserVO.getPayment_event_amount()==null){
+                error.put(messageSource.getMessage("payment_event_amount","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgUserVO.getPayment_point_limit()==null){
+                error.put(messageSource.getMessage("payment_point_limit","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgUserVO.getEvent_point()==null){
+                error.put(messageSource.getMessage("event_point","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgUserVO.getUser_grant_name().isEmpty()){
+                error.put(messageSource.getMessage("user_grant_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgUserGrantDAO.insertUserGrant(mgUserVO);
+                resultMap.put("success",true);
+                resultMap.put("redirectUrl","/Manager/member-management");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //회원 등급 변경
+    @RequestMapping(value = "/Manager/userGrantListUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> userGrantListUpdate(@RequestParam HashMap params, HttpSession session,MgUserVO mgUserVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgUserGrantDAO.userGrantListUpdate(mgUserVO);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

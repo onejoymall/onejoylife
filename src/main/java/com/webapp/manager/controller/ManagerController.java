@@ -12,6 +12,7 @@ import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.MgPointVO;
 import com.webapp.manager.vo.MgUserVO;
@@ -65,6 +66,8 @@ public class ManagerController {
     private RefundDAO refundDAO;
     @Autowired
     private MgUserDAO mgUserDAO;
+    @Autowired
+    private MgUserGrantDAO mgUserGrantDAO;
     @Autowired
     private MgPointDAO mgPointDAO;
     @Value("${t_key}")
@@ -686,8 +689,11 @@ public class ManagerController {
             mgUserVO.setStaticRowEnd(10);
             mgUserVO.pageCalculate(mgUserDAO.getManagerUserListCount(mgUserVO));
             List<Map<String,Object>> list = mgUserDAO.getManagerUserList(mgUserVO);
-
             model.addAttribute("list", list);
+            //등급 리스트
+//            mgUserVO.pageCalculate(mgUserGrantDAO.getUserGrantListCount(mgUserVO));
+            List<Map<String,Object>> userGrantlist = mgUserGrantDAO.getUserGrantList(mgUserVO);
+            model.addAttribute("userGrantlist", userGrantlist);
             model.addAttribute("table_name", "user");
             model.addAttribute("Pk", "usr_id");
             model.addAttribute("searchVO", mgUserVO);
@@ -702,17 +708,16 @@ public class ManagerController {
 
     //회원 로그인 이력 관리
     @RequestMapping(value = "/Manager/memberLoginHistory")
-    public String managerMemberLoginHistory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerMemberLoginHistory(@RequestParam HashMap params, ModelMap model, MgUserVO mgUserVO) throws Exception {
         try {
 
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
-//            searchVO.pageCalculate(mgUserDAO.getManagerUserListCount(params));
-            params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
-//            List<Map<String,Object>> list = mgUserDAO.getManagerUserList(params);
-            model.addAttribute("searchVO", searchVO);
-//            model.addAttribute("list", list);
+            mgUserVO.setDisplayRowCount(10);
+            mgUserVO.setStaticRowEnd(10);
+            mgUserVO.pageCalculate(mgUserDAO.getUserHistoryCount(mgUserVO));
+
+            List<Map<String,Object>> list = mgUserDAO.getUserHistory(mgUserVO);
+            model.addAttribute("searchVO", mgUserVO);
+            model.addAttribute("list", list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -771,6 +776,7 @@ public class ManagerController {
     public String myPagePoint(Model model, HttpServletRequest request, HttpSession session, HashMap params,MgPointVO mgPointVO) throws SQLException {
         try{
             mgPointVO.setDisplayRowCount(10);
+            mgPointVO.setStaticRowEnd(10);
             mgPointVO.pageCalculate(mgPointDAO.getMgPointListCount(mgPointVO));
 
             model.addAttribute("searchVO", mgPointVO);
@@ -780,6 +786,8 @@ public class ManagerController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("table_name", "point_history");
+        model.addAttribute("Pk", "point_id");
         model.addAttribute("topNav", 6);
         model.addAttribute("style", "member-management");
         return "manager/MgEPoint";

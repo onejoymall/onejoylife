@@ -26,4 +26,15 @@ public class MgUserDAO {
         Map<String,Object> getUserDetail=sql.selectOne("mall.MgUserMapper.getUserDetail", mgUserVO);
         return getUserDetail;
     }
+
+    public List<Map<String, Object>> getUserHistory(MgUserVO userVO) throws SQLException {
+        List<Map<String, Object>> getUserHistory = sql.selectList("mall.MgUserMapper.getUserHistory",userVO);
+        return getUserHistory;
+    }
+    public Integer getUserHistoryCount(MgUserVO userVO) throws SQLException{
+        Integer getUserHistoryCount =sql.selectOne("mall.MgUserMapper.getUserHistoryCount",userVO);
+        return getUserHistoryCount;
+    }
+
+
 }

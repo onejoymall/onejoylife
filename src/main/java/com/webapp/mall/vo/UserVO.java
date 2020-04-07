@@ -9,7 +9,15 @@ public class UserVO {
     private String renewpassword;
     private String user_privacy_policy;
     private String email_privacy_policy;
+    private String log_type;
 
+    public String getLog_type() {
+        return log_type;
+    }
+
+    public void setLog_type(String log_type) {
+        this.log_type = log_type;
+    }
 
     public String getRenewpassword() {
         return renewpassword;

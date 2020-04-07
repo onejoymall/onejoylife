@@ -7,7 +7,9 @@
     <select id="getMgPointList" parameterType="com.webapp.manager.vo.MgPointVO" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
-            *,(select Z.code_name from code Z where Z.code='point_paid_type' and Z.code_value=A.point_paid_type) as point_paid_type_name
+            A.*,
+            (select Z.email from user Z where Z.usr_id = A.point_paid_user_id) email,
+            (select Z.code_name from code Z where Z.code='point_paid_type' and Z.code_value=A.point_paid_type) as point_paid_type_name
         FROM point_history A  where 1=1
         ]]>
 
@@ -19,7 +21,7 @@
         <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
         <![CDATA[ order by point_id desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
     </select>
-    <select id="getMgPointListCount" resultType="java.util.HashMap" parameterType="com.webapp.manager.vo.MgPointVO">
+    <select id="getMgPointListCount" resultType="Integer" parameterType="com.webapp.manager.vo.MgPointVO">
         <![CDATA[
         SELECT
             count(*) as cnt

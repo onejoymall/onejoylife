@@ -3,6 +3,15 @@
 
 
 <mapper namespace="mall.UserMapper">
+    <insert id="insertUserHistory" parameterType="com.webapp.manager.vo.MgUserVO">
+        insert into user_login_history(
+        email,
+        log_type
+        ) values (
+        #{email},
+        #{log_type}
+        )
+    </insert>
     <select id="getFindUser" resultType="java.util.HashMap">
         <![CDATA[
         SELECT

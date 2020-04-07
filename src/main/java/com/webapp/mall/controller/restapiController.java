@@ -198,6 +198,8 @@ public class restapiController {
             }else{
                 params.put("password", passwordEncoder.encode((String)params.get("password")));
                 userDAO.insertUser(params);
+                userVO.setLog_type("join");
+                userDAO.insertUserHistory(userVO);
                 resultMap.put("redirectUrl", "/sign/signUpDone");
             }
 
@@ -208,7 +210,7 @@ public class restapiController {
     }
     //로그인 처리 1
     @RequestMapping(value = "/sign/loginProc", method = RequestMethod.GET, produces = "application/json")
-    public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo){
+    public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo,UserVO userVO){
         Map<String, Object> postToken = null;
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
@@ -237,6 +239,9 @@ public class restapiController {
                             session.setAttribute("email",email);
                             session.setAttribute("login", true); //
                             session.setAttribute("userInfo",userInfo);
+                            //로그인 기록 저장
+                            userVO.setLog_type("login");
+                            userDAO.insertUserHistory(userVO);
                             resultMap.put("redirectUrl", "/");
                         }
 //                        else { // 로그인에 실패한 경우

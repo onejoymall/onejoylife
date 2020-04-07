@@ -22,6 +22,7 @@
         <![CDATA[
         SELECT
           A.*,
+          (select Z.user_grant_name from user_grant Z where Z.user_grant_no=A.user_grant) grant_name,
           (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name,
           (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
         FROM user A where 1=1
@@ -41,10 +42,64 @@
         SELECT
           A.*,
           (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name,
+          (select Z.user_grant_name from user_grant Z where Z.user_grant_no=A.user_grant) grant_name,
           (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
         FROM user A where A.email = #{email}
         ]]>
     </select>
+    <select id="getUserHistory" resultType="java.util.Map" parameterType="com.webapp.manager.vo.MgUserVO">
+        select
+        A.*,
+        (select Z.code_name from code Z where Z.code='log_type' and Z.code_value = A.log_type) log_type_name
+         from user_login_history A where 1=1
+        <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
+    </select>
+    <select id="getUserHistoryCount" resultType="Integer" parameterType="com.webapp.manager.vo.MgUserVO">
+        select count(*) cnt from user_login_history where 1=1
+        <if test="email != null"> <![CDATA[AND email= #{email} ]]></if>
+    </select>
+    <insert id="insertUserGrant" parameterType="com.webapp.manager.vo.MgUserVO">
+        insert into user_grant
+        (
+        <if test="user_grant_no != null"> user_grant_no,</if>
+            user_grant_name,
+            payment_limit,
+            payment_event_amount,
+            payment_point_limit,
+            event_point
+        )values (
+        <if test="user_grant_no != null"> #{user_grant_no},</if>
+            #{user_grant_name},
+            #{payment_limit},
+            #{payment_event_amount},
+            #{payment_point_limit},
+            #{event_point}
+        )
+        on duplicate KEY update
+            user_grant_no=#{user_grant_no},
+            user_grant_name=#{user_grant_name},
+            payment_limit=#{payment_limit},
+            payment_event_amount=#{payment_event_amount},
+            payment_point_limit=#{payment_point_limit},
+            event_point=#{event_point}
 
+    </insert>
+    <select id="getUserGrantList" parameterType="com.webapp.manager.vo.MgUserVO" resultType="java.util.Map">
+        select * from user_grant
+    </select>
+    <select id="getUserGrantListCount" parameterType="com.webapp.manager.vo.MgUserVO" resultType="Integer">
+        select count(*) cnt from user_grant
+    </select>
+    <select id="getUserGrant" parameterType="com.webapp.manager.vo.MgUserVO" resultType="java.util.Map">
+        select * from user_grant where user_grant_no = #{user_grant_no}
+    </select>
+    <update id="userGrantListUpdate" parameterType="com.webapp.manager.vo.MgUserVO">
+        <![CDATA[
+        update user set user_grant = #{user_grant} where usr_id in
+        ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>
 

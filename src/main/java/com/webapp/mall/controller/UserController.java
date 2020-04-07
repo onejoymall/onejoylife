@@ -5,6 +5,7 @@ import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.UserVO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -40,7 +41,7 @@ public class UserController {
     private UserDAO userDAO;
     // 로그아웃 하는 부분
     @RequestMapping(value="/sign/logout")
-    public String logout(HttpSession session) throws IOException {
+    public String logout(HttpSession session, UserVO userVO) throws IOException {
 
         String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
         HttpClient client = HttpClientBuilder.create().build();
@@ -54,6 +55,9 @@ public class UserController {
                 handler.handleResponse(response);
 
             }
+            userVO.setLog_type("logout");
+            userVO.setEmail((String)session.getAttribute("email"));
+            userDAO.insertUserHistory(userVO);
         }catch (Exception e){
             e.printStackTrace();
         }

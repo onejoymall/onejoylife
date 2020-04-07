@@ -62,4 +62,7 @@ public class UserDAO {
         sql.update("mall.UserMapper.privacy_policy", userVO);
     }
 
+    public void insertUserHistory(UserVO userVO) throws SQLException{
+        sql.insert("mall.UserMapper.insertUserHistory", userVO);
+    }
 }

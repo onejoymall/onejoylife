@@ -137,8 +137,9 @@
                 </li>
                 <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="">회원관리</a>
                     <ul class="gnb-in-ul">
-                        <li><a href="/Manager/member-management">일반 회원관리</a></li>
-                        <li><a href="/Manager/memberLoginHistory">로그인 이력 관리</a></li>
+                        <li><a href="/Manager/member-management">회원관리</a></li>
+                        <li><a href="/Manager/memberLoginHistory">회원 로그인 이력</a></li>
+                        <li><a href="/Manager/MgEPoint">회원 포인트 관리</a></li>
                     </ul>
                 </li>
 <%--                <li <c:if test="${topNav == 7}">class="active" </c:if>><a href="">계정관리</a>--%>
