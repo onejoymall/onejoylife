@@ -12,16 +12,16 @@
             </div>
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
+
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
-                        <button type="button" class="keyword-src-button">검색</button>
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                        <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="src-name" id="src-name">
-                            <label for="src-name">이름</label>
-                            <input type="checkbox" name="src-id" id="src-id">
-                            <label for="src-id">아이디</label>
-                            <input type="checkbox" name="src-age" id="src-age">
-                            <label for="src-age">나이</label>
+                            <input type="checkbox" name="searchType" value="email" id="chk2" checked>
+                            <label for="chk2">email</label>
+                            <input type="checkbox"  name="searchType" value="username" id="chk1">
+                            <label for="chk1">이름</label>
+
                         </div>
                     </div>
                     <table class="keyword-src-table">
@@ -35,30 +35,23 @@
                         </colgroup>
                         <tbody>
                             <tr>
+                                <th></th><td></td>
                                 <th>등급</th>
                                 <td>
                                     <select name="src-grade">
                                         <option value="전체">전체</option>
-                                        <option value="일반회원">일반회원</option>
-                                        <option value="우수회원">우수회원</option>
-                                        <option value="특별회원">특별회원</option>
+                                        <option value="1">일반회원</option>
+                                        <option value="10">관리자</option>
                                     </select>
                                 </td>
-                                <th>지역</th>
-                                <td>
-                                    <select name="src-category">
-                                        <option value="전체">전체</option>
-                                        <option value="서울">서울</option>
-                                        <option value="경기">경기</option>
-                                    </select>
-                                </td>
+
                                 <th>성별</th>
                                 <td class="age-margin">
-                                    <input type="radio" name="age-radio" id="age-all" checked="">
+                                    <input type="radio" name="sex" id="age-all" checked="">
                                     <label for="age-all">전체</label>
-                                    <input type="radio" name="age-radio" id="age-wom">
+                                    <input type="radio" name="sex" id="age-wom" value="여자">
                                     <label for="age-wom">여자</label>
-                                    <input type="radio" name="age-radio" id="age-man">
+                                    <input type="radio" name="asex" id="age-man" value="남자">
                                     <label for="age-man">남자</label>
                                 </td>
                             </tr>
@@ -70,370 +63,77 @@
                 <h4 class="list-tit">회원 리스트</h4>
                 <div class="list-sort-wrap">
                     <div class="left">
-                        <button type="button" class="goods-list-btn big" name="copy">선택 삭제</button>
+                        <button type="button" class="goods-list-btn big" name="copy" id="listDelete">선택 삭제</button>
                         <button type="button" class="goods-list-btn big">
                         선택 등급
-                         <select name="grade-change" id="grade-change">
-                             <option>일반회원</option>
-                             <option>우수회원</option>
+                         <select name="level" id="grade-change">
+                             <option value="1">일반회원</option>
+                             <option value="10">관리자</option>
                              <option>특별회원</option>
                          </select>
                          으로 변경
                          </button>
                     </div>
-                    <div class="right">
-                        <select name="order" class="order-select">
-                            <option value="32">10개씩 보기</option>
-                            <option value="60">50개씩 보기</option>
-                            <option value="92">100개씩 보기</option>
-                        </select>
-                    </div>
                 </div>
-                <table>
-                    <colgroup>
-                        <col width="2%">
-                        <col width="8%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                            <td>등록일</td>
-                            <td>이름</td>
-                            <td>아이디</td>
-                            <td>등급</td>
-                            <td>성별</td>
-                            <td>나이</td>
-                            <td>지역</td>
-                            <td>마일리지</td>
-                            <td>포인트</td>
-                            <td>관리</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       <tr>
-                            <td><input type="checkbox" id="chk10" name="chk10"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk9" name="chk9"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk8" name="chk8"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk7" name="chk7"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk6" name="chk6"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk5" name="chk5"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk4" name="chk4"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk3" name="chk3"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk2" name="chk2"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1" name="chk1"></td>
-                            <td>2020-02-28</td>
-                            <td>홍동길</td>
-                            <td>onejoy12</td>
-                            <td>일반</td>
-                            <td>남자</td>
-                            <td>20</td>
-                            <td>경기</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">8</a></li>
-                    <li class="page-item"><a class="page-link" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                    <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                </ul>
+                <form name="defaultListForm" id="defaultListForm" method="POST">
+                    <input type="hidden" name="Pk" value="${Pk}">
+                    <input type="hidden" name="table_name" value="${table_name}">
+                    <table>
+                        <colgroup>
+                            <col width="2%">
+                            <col width="8%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                                <td>이름</td>
+                                <td>아이디</td>
+                                <td>이메일</td>
+                                <td>등급</td>
+                                <td>성별</td>
+                                <td>생년월일</td>
+                                <td>포인트</td>
+                                <td>등록일</td>
+                                <td>관리</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <c:if test="${not empty list}">
+                        <c:forEach var="list" items="${list}">
+                           <tr>
+                                <td><input type="checkbox" id="chk" name="chk"></td>
+
+                                <td>${list.username}</td>
+                                <td>${list.user_id}</td>
+                                <td>${list.email}</td>
+                                <td>${list.level_name}</td>
+                                <td>${list.sex}</td>
+                                <td>${list.birth}</td>
+                                <td><fmt:formatNumber value="${list.point_amount}" groupingUsed="true" /></td>
+                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+                                <td>
+                                    <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                        </tbody>
+                    </table>
+                </form>
+                <form id="form1" name="form1"  method="post">
+                    <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                </form>
             </div>
-            <div class="goods-list-wrap1 txt-align2">
-                <h4 class="list-tit">회원가입 및 로그관리</h4>
-                <div class="list-sort-wrap">
-                    <div class="left">
-                        <button type="button" class="goods-list-btn" name="copy">선택 삭제</button>
-                    </div>
-                    <div class="right">
-                        <select name="order" class="order-select">
-                            <option value="32">10개씩 보기</option>
-                            <option value="60">50개씩 보기</option>
-                            <option value="92">100개씩 보기</option>
-                        </select>
-                    </div>
-                </div>
-                <table>
-                    <colgroup>
-                        <col width="3%">
-                        <col width="5%">
-                        <col width="7%">
-                        <col width="20%">
-                        <col width="25%">
-                        <col width="20%">
-                        <col width="20%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <td><input type="checkbox" id="all-chk1" name="all-chk1"></td>
-                            <td>번호</td>
-                            <td>관리자</td>
-                            <td>회원아이디</td>
-                            <td>유형</td>
-                            <td>실행내용</td>
-                            <td>일시</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       <tr>
-                            <td><input type="checkbox" id="chk1-10" name="chk1-10"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-9" name="chk1-9"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-8" name="chk1-8"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-7" name="chk1-7"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-6" name="chk1-6"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-5" name="chk1-5"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-4" name="chk1-4"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-3" name="chk1-3"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-2" name="chk1-2"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1-1" name="chk1-1"></td>
-                            <td>1</td>
-                            <td>관리자</td>
-                            <td>onejoy12</td>
-                            <td>-</td>
-                            <td>로그인</td>
-                            <td>2020-02-28</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">8</a></li>
-                    <li class="page-item"><a class="page-link" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                    <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                </ul>
-            </div>
-            
+
         </div>
     </main>
     <!--모달팝업창-->
@@ -444,7 +144,8 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <form name="member-management" id="member-management" method="get">
+                <form name="" id="" method="get">
+
                     <h2>회원등급 목록</h2>
                     <div class="list-sort-wrap">
                         <div class="left">

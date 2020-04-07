@@ -9,16 +9,11 @@ import com.webapp.board.common.SearchVO;
 import com.webapp.board.common.TreeMaker;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.GiveawayDAO;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.RefundDAO;
+import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.manager.dao.CategoryDAO;
-import com.webapp.manager.dao.ConfigDAO;
-import com.webapp.manager.dao.MgProductDAO;
-import com.webapp.manager.dao.MgStoreDAO;
+import com.webapp.manager.dao.*;
+import com.webapp.manager.vo.MgUserVO;
 import com.webapp.manager.vo.ProductVO;
 import com.webapp.manager.vo.StoreVO;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -65,6 +60,8 @@ public class ManagerController {
     private PaymentDAO paymentDAO;
     @Autowired
     private RefundDAO refundDAO;
+    @Autowired
+    private MgUserDAO mgUserDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
@@ -677,18 +674,46 @@ public class ManagerController {
     }
     //회원관리
     @RequestMapping(value = "/Manager/member-management")
-    public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, MgUserVO mgUserVO) throws Exception {
         try {
 
+            mgUserVO.setDisplayRowCount(10);
+            mgUserVO.setStaticRowEnd(10);
+            mgUserVO.pageCalculate(mgUserDAO.getManagerUserListCount(mgUserVO));
+            List<Map<String,Object>> list = mgUserDAO.getManagerUserList(mgUserVO);
 
-
+            model.addAttribute("list", list);
+            model.addAttribute("table_name", "user");
+            model.addAttribute("Pk", "usr_id");
+            model.addAttribute("searchVO", mgUserVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        model.addAttribute("topNav", 5);
+        model.addAttribute("topNav", 6);
         model.addAttribute("style", "member-management");
         model.addAttribute("postUrl", "/Manager/member-management");
         return "/manager/member-management";
+    }
+    //회원 로그인 이력 관리
+    @RequestMapping(value = "/Manager/memberLoginHistory")
+    public String managerMemberLoginHistory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+
+            searchVO.setDisplayRowCount(10);
+            searchVO.setStaticRowEnd(10);
+//            searchVO.pageCalculate(mgUserDAO.getManagerUserListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+//            List<Map<String,Object>> list = mgUserDAO.getManagerUserList(params);
+            model.addAttribute("searchVO", searchVO);
+//            model.addAttribute("list", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 6);
+        model.addAttribute("style", "member-management");
+//        model.addAttribute("postUrl", "/Manager/member-management");
+        return "/manager/memberLoginHistory";
     }
     //회원 마케팅 관리
     @RequestMapping(value = "/Manager/member-marketing")

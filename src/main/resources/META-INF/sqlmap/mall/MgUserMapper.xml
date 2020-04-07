@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgUserMapper">
+    <select id="getManagerUserListCount" resultType="Integer" parameterType="com.webapp.manager.vo.MgUserVO">
+        <![CDATA[
+        SELECT
+          count(*) cnt
+        FROM user A where 1=1
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                AND A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
+        <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
+        <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
+    </select>
+    <select id="getManagerUserList" resultType="java.util.Map" parameterType="com.webapp.manager.vo.MgUserVO">
+        <![CDATA[
+        SELECT
+          A.*,
+          (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name,
+          (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
+        FROM user A where 1=1
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                AND A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
+        <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
+        <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
+    </select>
+
+</mapper>
+
