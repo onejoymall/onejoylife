@@ -358,35 +358,58 @@ input[class='styleClass']:checked + label
     padding: 5px 10px;
     overflow: hidden;
 }
-.out-in-box > div:nth-child(2) {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+.out-in .bx-wrapper{
+    border:none;
+    box-shadow: none;
+    margin-bottom:0;
+}
+.out-in-box > div {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.img1 > img {
-    width: 68px;
-    height: 94px;
-
+.img1 a, .img1 img{
+    width: 68px!important;
+    height: 68px!important;
 }
-.arr-box {
+.img1{
+    width:68px!important;
+    padding:5px 0;
+}
+.arr-box{
+    position:relative;
     overflow: hidden;
     padding: 5px 9px;
 }
-.arr-box > div{float: left;}
+.arr-box > div{float: left}
 .left-ar,
 .right-ar{
+    position:absolute;
     width: 15px;
     height: 15px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
+.left-ar a, .right-ar a{
+    display:block;
+    width:15px;height:15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: 100%;
+}
 .left-ar {
+    top:6px;
+    left:7px;
     background: url(/assets/img/arrow-left.png) no-repeat center / 15px;
 }
 .right-ar {
+    top:6px;
+    right:7px;
     background: url(/assets/img/arrow-right.png) no-repeat center / 15px;
 }
 .ar-num{
+    display:block;
+    width:100%;
+    text-align: center;
     font-size: 0.7rem;
-    margin: 0 12px;
+    margin: 0 0px!important;
 }
 .fo-box {margin-top: 10px;}
 .fo-box > a {

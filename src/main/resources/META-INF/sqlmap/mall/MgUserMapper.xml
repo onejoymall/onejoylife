@@ -11,7 +11,7 @@
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                AND A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+                A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
         <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
@@ -28,7 +28,7 @@
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                AND A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+                A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
         <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
