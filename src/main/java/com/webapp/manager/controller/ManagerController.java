@@ -694,24 +694,7 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/member-management");
         return "/manager/member-management";
     }
-    //회원 상세보기
-    @RequestMapping(value = "/Manager/memberViewDetail", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> managerMeberViewDetail(@RequestParam HashMap params, MgUserVO mgUserVO) throws Exception{
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        HashMap<String, Object> error = new HashMap<String, Object>();
-        try {
-            Map<String,Object> list = mgUserDAO.getUserDetail(mgUserVO);
-            if(!isEmpty(error)){
-                resultMap.put("validateError",error);
-            }else{
-                resultMap.put("list",list);
-            }
-        } catch (Exception e) {
 
-            resultMap.put("e", e);
-        }
-        return resultMap;
-    }
     //회원 로그인 이력 관리
     @RequestMapping(value = "/Manager/memberLoginHistory")
     public String managerMemberLoginHistory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {

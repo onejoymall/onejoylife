@@ -15,6 +15,7 @@ import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.PaymentVO;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.MgCommonVO;
+import com.webapp.manager.vo.MgUserVO;
 import com.webapp.manager.vo.ProductVO;
 import com.webapp.manager.vo.StoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,28 @@ public class ManagerRestapiController {
     PaymentDAO paymentDAO;
     @Autowired
     RefundDAO refundDAO;
+    @Autowired
+    private MgUserDAO mgUserDAO;
     @Value("${downloadPath}")
     private String downloadPath;
+    //회원 상세보기
+    @RequestMapping(value = "/Manager/memberViewDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerMeberViewDetail(@RequestParam HashMap params, MgUserVO mgUserVO) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> list = mgUserDAO.getUserDetail(mgUserVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
     //로그인 처리 1
     @RequestMapping(value = "/Manager/ManagerSign/ManagerLoginProc", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> ManagerLoginProc(@RequestParam HashMap params,HttpSession session){

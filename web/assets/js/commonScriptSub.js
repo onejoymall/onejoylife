@@ -85,7 +85,7 @@ $(function(){
 });
 
 //회원정보 상세보기
-function defaultModalUSer (email){
+function defaultModalUSer(email){
     $(".modal1").attr("style", "display:block");
     jQuery.ajax({
         type: 'POST',
@@ -97,7 +97,7 @@ function defaultModalUSer (email){
             });
         },
         error: function (xhr, status, error) {
-            alert(error);
+            console.log(error,xhr,status );
         },
     });
 }
