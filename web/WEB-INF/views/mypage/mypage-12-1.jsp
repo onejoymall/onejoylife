@@ -141,35 +141,4 @@
     </div>
 
 
-<script>
-    $(function() {
-        $('#ch1').on('change', function () {
-            $(this).parents('.r-sec2').find('input:checkbox').prop('checked', $(this).prop('checked'));
-            if($(this).is(":checked")){
-                $('#ch2').val('Y');
-                $('#ch3').val('Y');
-            } else {
-                $('#ch2').val('N');
-                $('#ch3').val('N');
-            }
-        })
-
-        $('#ch2').click(function () {
-            if($(this).is(":checked")){
-                $(this).val('Y');
-            } else {
-                $(this).val('N');
-            }
-        })
-
-        $('#ch3').click(function () {
-            if($(this).is(":checked")){
-                $(this).val('Y');
-            } else {
-                $(this).val('N');
-            }
-        })
-    })
-</script>
-
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

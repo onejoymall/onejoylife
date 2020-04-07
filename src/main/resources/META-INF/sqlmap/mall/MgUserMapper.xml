@@ -36,5 +36,15 @@
         <if test="email != null"> <![CDATA[AND A.email= #{email} ]]></if>
     </select>
 
+    <select id="getUserDetail" resultType="java.util.Map" parameterType="com.webapp.manager.vo.MgUserVO">
+        <![CDATA[
+        SELECT
+          A.*,
+          (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name,
+          (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
+        FROM user A where A.email = #{email}
+        ]]>
+    </select>
+
 </mapper>
 

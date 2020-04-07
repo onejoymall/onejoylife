@@ -1,6 +1,6 @@
 package com.webapp.mall.controller;
 
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+//import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
