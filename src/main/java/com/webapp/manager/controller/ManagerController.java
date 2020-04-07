@@ -13,6 +13,7 @@ import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.manager.dao.*;
+import com.webapp.manager.vo.MgPointVO;
 import com.webapp.manager.vo.MgUserVO;
 import com.webapp.manager.vo.ProductVO;
 import com.webapp.manager.vo.StoreVO;
@@ -20,6 +21,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +65,8 @@ public class ManagerController {
     private RefundDAO refundDAO;
     @Autowired
     private MgUserDAO mgUserDAO;
+    @Autowired
+    private MgPointDAO mgPointDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
@@ -731,7 +736,7 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/member-marketing");
         return "/manager/member-marketing";
     }
-    //회원 마케팅 관리
+    //회원 상품평
     @RequestMapping(value = "/Manager/cs-review")
     public String managerCsReview(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
@@ -760,5 +765,23 @@ public class ManagerController {
         model.addAttribute("style", "calculate-company");
         model.addAttribute("postUrl", "/Manager/calculate-company");
         return "/manager/calculate-company";
+    }
+    //이포인트
+    @RequestMapping(value="/Manager/MgEPoint")
+    public String myPagePoint(Model model, HttpServletRequest request, HttpSession session, HashMap params,MgPointVO mgPointVO) throws SQLException {
+        try{
+            mgPointVO.setDisplayRowCount(10);
+            mgPointVO.pageCalculate(mgPointDAO.getMgPointListCount(mgPointVO));
+
+            model.addAttribute("searchVO", mgPointVO);
+
+            List<Map<String,Object>> list = mgPointDAO.getMgPointList(mgPointVO);
+            model.addAttribute("list", list);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 6);
+        model.addAttribute("style", "member-management");
+        return "manager/MgEPoint";
     }
 }

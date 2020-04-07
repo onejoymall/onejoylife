@@ -219,13 +219,13 @@
     </div>
     <div class="modal1">
         <div class="modal-content">
-            <form name="member-management" id="member-management" method="POST">
+            <form name="mgPointForm" id="mgPointForm" method="POST">
             <div class="modal-header">
                <h2>상세보기</h2>
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <h3>포인트 정보</h3>
+                <h3>포인트 관리</h3>
                 <table class="goods-detail-table">
                     <colgroup>
                         <col width="20%">
@@ -253,8 +253,15 @@
                             <td class="point_amount"></td>
                         </tr>
                         <tr>
-                            <th>포인트 지급</th>
-                            <td><input type="text"><button type="button" class="point-btn">지급</button></td>
+                            <th>포인트 메모</th>
+                            <td>
+                                <input type="text" name="point_paid_memo">
+                                <input type="hidden" name="point_paid_user_id">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>지급 포인트</th>
+                            <td><input type="number" name="point_add" ><button type="button" class="point-btn" id="mgPointPaid">지급</button></td>
                         </tr>
                         <%--<tr>
                             <th>포인트 환수</th>
@@ -262,7 +269,7 @@
                         </tr>--%>
                     </tbody>
                 </table>
-                <button type="button" class="btn-red">저장</button>
+<%--                <button type="button" class="btn-red">저장</button>--%>
             </div>
             </form>
         </div>

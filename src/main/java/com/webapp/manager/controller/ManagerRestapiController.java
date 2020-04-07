@@ -14,10 +14,7 @@ import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.PaymentVO;
 import com.webapp.manager.dao.*;
-import com.webapp.manager.vo.MgCommonVO;
-import com.webapp.manager.vo.MgUserVO;
-import com.webapp.manager.vo.ProductVO;
-import com.webapp.manager.vo.StoreVO;
+import com.webapp.manager.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,8 +64,39 @@ public class ManagerRestapiController {
     RefundDAO refundDAO;
     @Autowired
     private MgUserDAO mgUserDAO;
+    @Autowired
+    private MgPointDAO mgPointDAO;
     @Value("${downloadPath}")
     private String downloadPath;
+    // 포인트 관리 포인트 추가/Manager/MgPointAdd
+    @RequestMapping(value = "/Manager/MgPointAdd", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> MgPointAdd(@RequestParam HashMap params, MgUserVO mgUserVO, MgPointVO mgPointVO) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+//            if(mgPointVO.getPoint_add()
+            if(mgPointVO.getPoint_add()==null){
+                error.put(messageSource.getMessage("point_add","ko"),messageSource.getMessage("error.required","ko"));
+            }
+            if(mgPointVO.getPoint_paid_memo().isEmpty()){
+                error.put(messageSource.getMessage("point_paid_memo","ko"),messageSource.getMessage("error.required","ko"));
+            }
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgPointVO.setPoint_amount(mgPointDAO.getMgPointAmount(mgPointVO)+ mgPointVO.getPoint_add());
+                mgPointVO.setPoint_paid_type("A");
+                mgPointDAO.insertMgPoint(mgPointVO);
+                resultMap.put("success",true);
+                resultMap.put("redirectUrl","/Manager/member-management");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
     //회원 상세보기
     @RequestMapping(value = "/Manager/memberViewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerMeberViewDetail(@RequestParam HashMap params, MgUserVO mgUserVO) throws Exception{
