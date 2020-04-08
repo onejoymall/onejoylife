@@ -228,34 +228,34 @@
         <div class="special-price-inner">
             <h4 class="main-section-h4">특가상품</h4>
             <p class="special-price-more"><a href="#">특가 상품 더보기<i class="right-arrow"></i></a></p>
-            <div class="category-wrap clearfix" id="special-price-section-cate">
-                <div class="category-row-type2 clearfix">
-                    <div class="category-item active">
-                        <div class="img-box"><img src="assets/img/living-ic-ac.svg" /></div>
-                        <span>가구/리빙/반려</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="img-box"><img src="assets/img/sports-ic.svg" /></div>
-                        <span>스포츠</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="img-box"><img src="assets/img/cloth-ic.svg" /></div>
-                        <span>의류</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="img-box"><img src="assets/img/food-ic.svg" /></div>
-                        <span>식품</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="img-box"><img src="assets/img/digital-ic.svg" /></div>
-                        <span>컴퓨터/디지털</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="img-box"><img src="assets/img/beauty-ic.svg" /></div>
-                        <span>뷰티</span>
-                    </div>
-                </div>
-            </div>
+<%--            <div class="category-wrap clearfix" id="special-price-section-cate">--%>
+<%--                <div class="category-row-type2 clearfix">--%>
+<%--                    <div class="category-item active">--%>
+<%--                        <div class="img-box"><img src="assets/img/living-ic-ac.svg" /></div>--%>
+<%--                        <span>가구/리빙/반려</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="category-item">--%>
+<%--                        <div class="img-box"><img src="assets/img/sports-ic.svg" /></div>--%>
+<%--                        <span>스포츠</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="category-item">--%>
+<%--                        <div class="img-box"><img src="assets/img/cloth-ic.svg" /></div>--%>
+<%--                        <span>의류</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="category-item">--%>
+<%--                        <div class="img-box"><img src="assets/img/food-ic.svg" /></div>--%>
+<%--                        <span>식품</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="category-item">--%>
+<%--                        <div class="img-box"><img src="assets/img/digital-ic.svg" /></div>--%>
+<%--                        <span>컴퓨터/디지털</span>--%>
+<%--                    </div>--%>
+<%--                    <div class="category-item">--%>
+<%--                        <div class="img-box"><img src="assets/img/beauty-ic.svg" /></div>--%>
+<%--                        <span>뷰티</span>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="product-list-type2">
                 <ul class="special-price-list">
                     <c:if test="${not empty productSpList}">

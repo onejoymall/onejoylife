@@ -58,8 +58,8 @@
                         <span class="cart-num">${searchVO.totRow}</span>
                     </a>
                 </div>
-                <form action="" id="main-search-form" name="main-search-form" method="get">
-                    <input type="text" id="main-search" name="main-search" class="input-text">
+                <form action="/product/search-page" id="main-search-form" name="main-search-form" method="get">
+                    <input type="text" id="main-search" name="product_name" class="input-text" value="${param.product_name}">
                     <button id="main-search-btn" type="submit" class="search-btn"></button>
                 </form>
             </div>

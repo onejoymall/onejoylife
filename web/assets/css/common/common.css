@@ -447,3 +447,18 @@ input[class='styleClass']:checked + label
 .modal, .modal1, .modal2, .modal3 {
     z-index: 999!important;
 }
+
+
+.coustomRadio + label
+{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 28px;
+    background: url(/assets/img/icon/but-g-1.png)no-repeat center / 20px;
+    cursor: pointer;
+}
+.coustomRadio:checked + label
+{
+    background: url(/assets/img/icon/but-g-2.png)no-repeat center / 20px;
+}

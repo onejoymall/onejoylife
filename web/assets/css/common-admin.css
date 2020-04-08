@@ -24,6 +24,10 @@ button{
     overflow: hidden;
     width: 0;
     height: 0;}
+.note-modal-backdrop/*썸머노트 모달 충돌 방지*/{
+    z-index:998!important;
+    background: transparent!important;
+}
 .span-1 {width:30px;}/*3.15789473684211%*//*30나누기 950 해서 나온값에 100을 곱한다*/
 .span-2 {width:70px;}/*7.36842105263158%*/
 .span-3 {width:110px;}/*11.57894736842105%*/

@@ -40,6 +40,7 @@
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
         <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
@@ -58,6 +59,7 @@
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
         <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>

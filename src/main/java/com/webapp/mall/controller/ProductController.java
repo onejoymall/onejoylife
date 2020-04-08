@@ -40,6 +40,35 @@ public class ProductController {
     private CategoryDAO categoryDAO;
     @Autowired
     private CartDAO cartDAO;
+    //상품 검색
+    @RequestMapping(value="/product/search-page")
+    public String productSearch(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {
+        try{
+            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
+                searchVO.setDisplayRowCount(12);
+            }
+            // 기본정렬
+            if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
+                searchVO.setOrderByKey("product_id");
+                searchVO.setOrderByValue("DESC");
+            }
+
+            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
+
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            searchVO.setPd_category_id(searchVO.getProduct_ct());
+            List<Map<String,Object>> list = productDAO.getProductList(searchVO);
+            Map<String,Object> categoryRowData = categoryDAO.getCategoryDetail(searchVO);
+            model.addAttribute("list", list);
+            model.addAttribute("categoryRowData",categoryRowData);
+            model.addAttribute("searchVO", searchVO);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "category-sub");
+        return "product/search-page";
+    }
     //상품 목록
     @RequestMapping(value="/product")
     public String productList(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {

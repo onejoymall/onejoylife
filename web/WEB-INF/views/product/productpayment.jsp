@@ -303,18 +303,28 @@
                         <div class="sec5-box">
                             <div class="sec5-p1">결제수단</div>
                             <div class="sec5-p2">
+                                <!--
+                                card(신용카드)
+                                trans(실시간계좌이체)
+                                vbank(가상계좌)
+                                phone(
+                                -->
                                 <p>
-                                    <input type="radio" id="sec5-ra1" name="payment_type_cd" checked value="C">
+                                    <input type="radio" id="sec5-ra1" name="payment_type_cd" checked value="card">
                                     <label for="sec5-ra1"><span class="ra-txt">신용카드</span></label>
                                 </p>
                                 <p>
-                                    <input type="radio" id="sec5-ra2" name="payment_type_cd" value="M">
-                                    <label for="sec5-ra2"><span class="ra-txt">현금결제</span></label>
+                                    <input type="radio" id="sec5-ra2" name="payment_type_cd" value="trans">
+                                    <label for="sec5-ra2"><span class="ra-txt">실시간계좌이체</span></label>
                                 </p>
                                 <p>
-                                    <input type="radio" id="sec5-ra3" name="payment_type_cd" value="H">
-                                    <label for="sec5-ra3"><span class="ra-txt">휴대폰결제</span></label>
+                                    <input type="radio" id="sec5-ra3" name="payment_type_cd" value="vbank">
+                                    <label for="sec5-ra3"><span class="ra-txt">가상계좌</span></label>
                                 </p>
+<%--                                <p>--%>
+<%--                                    <input type="radio" id="sec5-ra4" name="payment_type_cd" value="phone">--%>
+<%--                                    <label for="sec5-ra4"><span class="ra-txt">휴대폰결제</span></label>--%>
+<%--                                </p>--%>
                             </div>
                         </div>
                     </div>
@@ -418,7 +428,7 @@
                         // location.href=data.redirectUrl;
                         IMP.request_pay({ // param
                             pg: "inicis",
-                            pay_method: "card",
+                            pay_method:$('input[name=payment_type_cd]:checked').val(),
                             merchant_uid:$('input[name=order_no]').val(),
                             name: "${detail.product_name}",
                             amount: ${detail.product_payment+detail.product_delivery_payment},
