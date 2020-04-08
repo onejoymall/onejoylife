@@ -64,8 +64,8 @@
                            <tr>
                                 <td><input type="checkbox" id="chk" name="chk" value="${list.product_option_code}"></td>
                                 <td>${list.product_option_code}</td>
-                                <td>${list.product_option_name}</td>
-                                <td>${list.product_option}</td>
+                                <td>${list.product_option_set_name}</td>
+                                <td>${list.product_option_input}</td>
                                 <td>${list.product_option_memo}</td>
                                 <td>${list.product_option_required}</td>
                                 <td>${list.product_option_style}</td>
@@ -110,7 +110,7 @@
                             <tr>
                                 <th>옵션명</th>
                                 <td>
-                                    <input type="text" name="product_option_name">
+                                    <input type="text" name="product_option_set_name">
                                 </td>
                             </tr>
     <%--                        <tr>--%>
@@ -156,7 +156,7 @@
                                 <th>옵션 값</th>
                                 <td>
                                     <p class="cc2">옵션 입력 방식 : 옵션값 명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션값 명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
-                                    <input type="text"  name="product_option" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
+                                    <input type="text"  name="product_option_input" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
                                 </td>
                             </tr>
                             <tr>

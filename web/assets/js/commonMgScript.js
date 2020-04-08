@@ -1,6 +1,38 @@
 /*
 * var formData = $('#   ').serialize();
 * */
+//옵션 리스트
+$(document).on("click","#callOption",function () {
+    var html='' +
+        '<table class="table">' +
+            '<thead><th>옵션코드</th><th>옵션명</th><th>옵션설명</th>' +
+            '</thead>' +
+            '<tbody>';
+    jQuery.ajax({
+        type: 'POST',
+        url: '/Manager/listOption',
+
+        success: function (data) {
+            // console.log(data.list);
+            $('.default-modal').attr('style','display:block');
+            $('.default-modal h2').html('상품 옵션');
+            $.each(data.list, function (key, item) {
+                html+='' +
+                    '<td><button class="btn-default" type="button" id="mgOptionDetail" data-id="'+item.product_option_code+'" onclick="$(\'.default-modal\').attr(\'style\',\'display:block\');">선택</button>'+item.product_option_code+'</td>' +
+                    '<td>'+item.product_option_name+'</td>' +
+                    '<td>'+item.product_option_memo+'</td>' +
+                    '';
+            });
+            html+='' +
+                    '</tbody>' +
+                '</table>';
+            $('.default-modal .modal-body').html(html);
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+    });
+})
 //옵션 상세보기
 $(document).on("click","#mgOptionDetail",function () {
     $(".modal").attr("style", "display:block");

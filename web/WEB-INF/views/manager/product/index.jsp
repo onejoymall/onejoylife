@@ -533,6 +533,7 @@
                         <th>옵션명</th>
                         <td colspan="2">
                             <input type="text" id="product_option_set_name" name="product_option_set_name">
+                            <button class="btn-default" type="button" id="callOption">옵션불러오기</button>
                         </td>
                     </tr>
                     <tr class="option-group hidden">

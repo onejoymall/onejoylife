@@ -13,7 +13,7 @@
       </foreach>
     </if>
 
-    <if test="product_option_name != null and product_option_name !=''"> and A.product_option_name LIKE CONCAT('%', #{product_option_name},'%' )</if>
+    <if test="product_option_set_name != null and product_option_set_name !=''"> and A.product_option_set_name LIKE CONCAT('%', #{product_option_set_name},'%' )</if>
     <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
     order by A.reg_date desc
@@ -28,7 +28,7 @@
       </foreach>
     </if>
 
-    <if test="product_option_name != null and product_option_name !=''"> and A.product_option_name LIKE CONCAT('%', #{product_option_name},'%' )</if>
+    <if test="product_option_set_name != null and product_option_set_name !=''"> and A.product_option_set_name LIKE CONCAT('%', #{product_option_set_name},'%' )</if>
     <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
   </select>
@@ -41,9 +41,9 @@
       insert into product_option
       (
         product_option_code,
-        product_option_name,
+        product_option_set_name,
         product_option_required,
-        product_option,
+        product_option_input,
         product_option_style,
         product_option_color,
         product_option_memo,
@@ -53,9 +53,9 @@
       values
       (
         #{product_option_code},
-        #{product_option_name},
+        #{product_option_set_name},
         #{product_option_required},
-        #{product_option},
+        #{product_option_input},
         #{product_option_style},
         #{product_option_color},
         #{product_option_memo},
@@ -64,9 +64,9 @@
       )
       on duplicate KEY update
         product_option_code=#{product_option_code},
-        product_option_name=#{product_option_name},
+        product_option_set_name=#{product_option_set_name},
         product_option_required=#{product_option_required},
-        product_option=#{product_option},
+        product_option_input=#{product_option_input},
         product_option_style=#{product_option_style},
         product_option_color=#{product_option_color},
         product_option_memo=#{product_option_memo},

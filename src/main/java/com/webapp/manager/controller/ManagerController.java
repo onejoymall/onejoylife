@@ -146,9 +146,9 @@ public class ManagerController {
             ex.printStackTrace();
         }
     }
-
+    //상품관리
     @RequestMapping(value = "/Manager/Product")
-    public String managerProduct(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerProduct(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO) throws Exception {
 
         try {
 
@@ -161,12 +161,11 @@ public class ManagerController {
             params.put("rowStart", searchVO.getRowStart());
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
             List<Map<String, Object>> productList = productDAO.getProductList(searchVO);
+            model.addAttribute("productList", productList);
             model.addAttribute("table_name", "product");
             model.addAttribute("Pk", "product_id");
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "goods");
-            model.addAttribute("productList", productList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

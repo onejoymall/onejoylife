@@ -102,6 +102,7 @@
                                     옵션 선택
                                     <i class="arrow-down"></i>
                                 </button>
+
                                 <ul class="option-list">
         <%--                            <li><a href="#none">Samsung Galaxy S9</a></li>--%>
         <%--                            <li><a href="#none">Samsung Galaxy S9+</a></li>--%>

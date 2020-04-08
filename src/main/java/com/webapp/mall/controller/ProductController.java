@@ -123,7 +123,8 @@ public class ProductController {
             Map<String,Object> list = productDAO.getProductViewDetail(params);
             model.addAttribute("style","goods-view");
             model.addAttribute("list",list);
-
+            //찜한 상품 표기
+            // 비회원 처리 로직 변경필요
             params.put("user_id", userInfo.get("usr_id"));
 
             searchVO.setDisplayRowCount(1);
@@ -148,6 +149,9 @@ public class ProductController {
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
 //            model.addAttribute("productList",productList);
+            //옵션
+            params.put("product_option_input",list.get("product_option_input"));
+            Map<String,Object> option = getOption(params);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -172,6 +176,9 @@ public class ProductController {
             params.put("delivery_payment",detail.get("product_delivery_payment"));
             Map<String,Object> delivery = giveawayDelivery(params);
             model.addAttribute("delivery",delivery );
+            //옵션
+            params.put("product_option_input",detail.get("product_option_input"));
+            Map<String,Object> option = getOption(params);
             if(!isEmpty(userInfo)){
 
                 //최근 배송지 불러오기
@@ -195,7 +202,7 @@ public class ProductController {
         return "product/productpayment";
     }
     //배송정보 출력
-    public Map<String ,Object> giveawayDelivery(HashMap params)throws SQLException {
+    public Map<String ,Object> giveawayDelivery(HashMap params)throws Exception {
 
         //배송방법이 없으면 입력값 고정 출력
         if (params.get("delivery_class").equals("F")) {
@@ -212,6 +219,17 @@ public class ProductController {
             params.put("selector", selector);
         }
 
+        return params;
+    }
+    //옵션
+    public Map<String,Object> getOption(HashMap params)throws Exception{
+        try{
+            String splitString = (String) params.get("product_option_input");//배송방법
+            String[] splitArray =splitString.split("\\{");
+            params.put("selector", splitArray);
+        }catch (Exception e){
+
+        }
         return params;
     }
 }

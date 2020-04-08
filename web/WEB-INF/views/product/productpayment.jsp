@@ -395,79 +395,79 @@
             });
         }else{
 
-            jQuery.ajax({
-                type: "POST",
-                url: "/SaveDeliveInfo",
-                data: $('#defaultForm').serialize(),
-                // enctype: 'multipart/form-data',
-                success: function (data) {
-                    if (data.validateError) {
-                        $('.validateError').empty();
-                        $.each(data.validateError, function (index, item) {
-                            // $('#validateError'+index).removeClass('none');
-                            // $('#validateError'+index).html('* '+item);
-                            if(index == "Error"){//일반에러메세지
-                                alertType = "error";
-                                showText = item;
-                            }else{
-                                alertType = "error";
-                                showText = index + " (은) " + item;
-                            }
+            // loginAuth(data.access_token);
+            // location.href=data.redirectUrl;
+            IMP.request_pay({ // param
+                pg: "inicis",
+                pay_method:$('input[name=payment_type_cd]:checked').val(),
+                merchant_uid:$('input[name=order_no]').val(),
+                name: "${detail.product_name}",
+                amount: ${detail.product_payment+detail.product_delivery_payment},
+                buyer_email: "${sessionScope.email}",
+                buyer_name: $('#order_user_name').val(),
+                buyer_tel: $('#order_user_phone').val(),
+                buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
+                buyer_postcode: $('#postcode').val()
+            }, function (rsp) { // callback
+                var formData = $('#defaultForm').serialize()
+                    +'&payment_class=PRODUCT'
+                    +'&success='+rsp.success
+                    +'&imp_uid='+rsp.imp_uid
+                    +'&merchant_uid='+rsp.merchant_uid
+                    +'&pg_provider='+rsp.pg_provider
+                    +'&pay_method='+rsp.pay_method
+                    +'&pg_type='+rsp.pg_type
+                    +'&error_msg='+rsp.error_msg;
 
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'top-right',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
-                        });
+                var alertType;
+                var showText;
+                if(rsp.success){
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/SavePayment",
+                        data: formData,
+                        success: function (data) {
 
-                    } else {
-                        // loginAuth(data.access_token);
-                        // location.href=data.redirectUrl;
-                        IMP.request_pay({ // param
-                            pg: "inicis",
-                            pay_method:$('input[name=payment_type_cd]:checked').val(),
-                            merchant_uid:$('input[name=order_no]').val(),
-                            name: "${detail.product_name}",
-                            amount: ${detail.product_payment+detail.product_delivery_payment},
-                            buyer_email: "${sessionScope.email}",
-                            buyer_name: $('#order_user_name').val(),
-                            buyer_tel: $('#order_user_phone').val(),
-                            buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
-                            buyer_postcode: $('#postcode').val()
-                        }, function (rsp) { // callback
-                            var formData = $('#defaultForm').serialize()
-                                +'&payment_class=PRODUCT'
-                                +'&success='+rsp.success
-                                +'&imp_uid='+rsp.imp_uid
-                                +'&merchant_uid='+rsp.merchant_uid
-                                +'&pg_provider='+rsp.pg_provider
-                                +'&pay_method='+rsp.pay_method
-                                +'&pg_type='+rsp.pg_type
-                                +'&error_msg='+rsp.error_msg;
+                            if (data.validateError) {
+                                $('.validateError').empty();
+                                $.each(data.validateError, function (index, item) {
+                                    if(index == "Error"){//일반에러메세지
+                                        alertType = "error";
+                                        showText = item;
+                                    }else{
+                                        alertType = "error";
+                                        showText = index + " (은) " + item;
+                                    }
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'top-right',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                });
 
-                            var alertType;
-                            var showText;
-                            if(rsp.success){
+                            } else {
                                 jQuery.ajax({
                                     type: "POST",
-                                    url: "/SavePayment",
-                                    data: formData,
+                                    url: "/SaveDeliveInfo",
+                                    data: $('#defaultForm').serialize(),
+                                    // enctype: 'multipart/form-data',
                                     success: function (data) {
-
                                         if (data.validateError) {
                                             $('.validateError').empty();
                                             $.each(data.validateError, function (index, item) {
-                                                if(index == "Error"){//일반에러메세지
+                                                // $('#validateError'+index).removeClass('none');
+                                                // $('#validateError'+index).html('* '+item);
+                                                if (index == "Error") {//일반에러메세지
                                                     alertType = "error";
                                                     showText = item;
-                                                }else{
+                                                } else {
                                                     alertType = "error";
                                                     showText = index + " (은) " + item;
                                                 }
-                                                // $.toast().reset('all');//토스트 초기화
+
                                                 $.toast({
                                                     text: showText,
                                                     showHideTransition: 'plain', //펴짐
@@ -476,33 +476,30 @@
                                                     icon: 'error'
                                                 });
                                             });
-
-                                        } else {
-                                            // loginAuth(data.access_token);
-                                            location.href=data.redirectUrl;
                                         }
                                     },
                                     error: function (xhr, status, error) {
                                         alert("error");
                                     }
                                 });
-                            }else{
-                                $.toast({
-                                    text: rsp.error_msg,
-                                    showHideTransition: 'plain', //펴짐
-                                    position: 'top-right',
-                                    heading: 'Error',
-                                    icon: 'error'
-                                });
+                                // loginAuth(data.access_token);
+                                location.href=data.redirectUrl;
                             }
-                        });
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert("error");
+                        },
+                        error: function (xhr, status, error) {
+                            alert("error");
+                        }
+                    });
+                }else{
+                    $.toast({
+                        text: rsp.error_msg,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
                 }
             });
-
         }
 
     });

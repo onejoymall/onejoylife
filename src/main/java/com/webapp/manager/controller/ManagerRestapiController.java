@@ -1068,4 +1068,24 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //옵션 목록
+    @RequestMapping(value = "/Manager/listOption", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> listOption(@RequestParam HashMap params,MgOptionVO mgOptionVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            mgOptionVO.setDisplayRowCount(10);
+            mgOptionVO.pageCalculate(mgOptionDAO.getOptionListCount(mgOptionVO));
+            List<Map<String, Object>> optionList = mgOptionDAO.getOptionList(mgOptionVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",optionList);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

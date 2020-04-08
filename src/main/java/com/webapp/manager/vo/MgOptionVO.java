@@ -5,9 +5,9 @@ import com.webapp.board.common.SearchVO;
 public class MgOptionVO extends SearchVO {
 
     private String product_option_code;
-    private String product_option_name;
+    private String product_option_set_name;
     private String product_option_required;
-    private String product_option;
+    private String product_option_input;
     private String product_option_style;
     private String product_option_color;
     private String product_option_memo;
@@ -23,11 +23,11 @@ public class MgOptionVO extends SearchVO {
     }
 
     public String getProduct_option_name() {
-        return product_option_name;
+        return product_option_set_name;
     }
 
     public void setProduct_option_name(String product_option_name) {
-        this.product_option_name = product_option_name;
+        this.product_option_set_name = product_option_name;
     }
 
     public String getProduct_option_required() {
@@ -39,11 +39,11 @@ public class MgOptionVO extends SearchVO {
     }
 
     public String getProduct_option() {
-        return product_option;
+        return product_option_input;
     }
 
     public void setProduct_option(String product_option) {
-        this.product_option = product_option;
+        this.product_option_input = product_option;
     }
 
     public String getProduct_option_style() {
