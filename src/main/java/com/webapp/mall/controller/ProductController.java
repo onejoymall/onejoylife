@@ -150,8 +150,10 @@ public class ProductController {
             model.addAttribute("delivery_type_list", delivery.get("selector"));
 //            model.addAttribute("productList",productList);
             //옵션
+            params.put("product_option_style",list.get("product_option_style"));
             params.put("product_option_input",list.get("product_option_input"));
-            Map<String,Object> option = getOption(params);
+            String option = getOption(params);
+            model.addAttribute("option",option);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -178,7 +180,7 @@ public class ProductController {
             model.addAttribute("delivery",delivery );
             //옵션
             params.put("product_option_input",detail.get("product_option_input"));
-            Map<String,Object> option = getOption(params);
+            String option = getOption(params);
             if(!isEmpty(userInfo)){
 
                 //최근 배송지 불러오기
@@ -222,15 +224,49 @@ public class ProductController {
         return params;
     }
     //옵션
-    public Map<String,Object> getOption(HashMap params)throws Exception{
+    public String getOption(HashMap params)throws Exception{
+        String outText="";
         try{
+//            String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
+//             .replaceAll(" " , "")
+//             .replaceAll("\\p{Z}", "")
+//             .replaceAll(match, "")
+
             String splitString = (String) params.get("product_option_input");//배송방법
-            String[] splitArray =splitString.split("\\{");
-            params.put("selector", splitArray);
+            String[] splitArray =splitString.split("\\/\\/");
+            for(int z=0;z < splitArray.length;z++){
+                String[] splitNextArray =splitArray[z]
+                        .split("\\{");
+                String[] splitThirdArray = splitNextArray[1]
+                        .replaceAll("\\}", "")
+                        .split("\\|");
+                outText += "" +
+                        "<div class=\"option-box\">\n" +
+                        "    <button type=\"button\">\n" +
+                        "        "+splitNextArray[0]+" 선택\n" +
+                        "        <i class=\"arrow-down\"></i>\n" +
+                        "    </button>\n" +
+                        "    <ul class=\"option-list\">\n" ;
+                //오션스타일 에따라 다르게
+                for (int i = 0; i < splitThirdArray.length; i++) {
+                    outText += "" +
+
+                            "   <li><a href=\"#none\">"+splitThirdArray[i]+"</a></li>\n";
+
+                }
+                outText += "" +
+
+                        "    </ul>\n" +
+                        "</div>";
+            }
+
+
+
         }catch (Exception e){
 
         }
-        return params;
+        return outText;
     }
+
 }
 

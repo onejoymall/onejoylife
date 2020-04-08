@@ -18,7 +18,7 @@ $(document).on("click","#callOption",function () {
             $('.default-modal h2').html('상품 옵션');
             $.each(data.list, function (key, item) {
                 html+='' +
-                    '<td><button class="btn-default" type="button" id="mgOptionDetail" data-id="'+item.product_option_code+'" onclick="$(\'.default-modal\').attr(\'style\',\'display:block\');">선택</button>'+item.product_option_code+'</td>' +
+                    '<td><button class="btn-default" type="button" id="mgOptionDetail" data-id="'+item.product_option_code+'" onclick="$(\'.default-modal\').attr(\'style\',\'display:none\');">선택</button>'+item.product_option_code+'</td>' +
                     '<td>'+item.product_option_name+'</td>' +
                     '<td>'+item.product_option_memo+'</td>' +
                     '';

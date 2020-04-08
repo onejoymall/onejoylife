@@ -95,29 +95,16 @@
                         </div>
                     </div>
                     <div class="cart-option-wrap">
-
-
-                            <div class="option-box">
-                                <button type="button">
-                                    옵션 선택
-                                    <i class="arrow-down"></i>
-                                </button>
-
-                                <ul class="option-list">
-        <%--                            <li><a href="#none">Samsung Galaxy S9</a></li>--%>
-        <%--                            <li><a href="#none">Samsung Galaxy S9+</a></li>--%>
-        <%--                            <li><a href="#none">Samsung Galaxy S9 5G</a></li>--%>
-                                </ul>
+                        ${option}
+                        <div class="quantity-box">
+                            <span>구매수량</span>
+                            <div class="total-quantity">
+                                <div class="minus" tabindex="0">-</div>
+                                <input type="hidden" name="payment_order_quantity" value="1">
+                                <div class="number">1</div>
+                                <div class="plus" tabindex="0">+</div>
                             </div>
-                            <div class="quantity-box">
-                                <span>구매수량</span>
-                                <div class="total-quantity">
-                                    <div class="minus" tabindex="0">-</div>
-                                    <input type="hidden" name="payment_order_quantity" value="1">
-                                    <div class="number">1</div>
-                                    <div class="plus" tabindex="0">+</div>
-                                </div>
-                            </div>
+                        </div>
         <%--                    <div class="total-price">--%>
         <%--                        <div class="total-price-title">상품 금액 합계</div>--%>
         <%--                        <div class="total-price-number"><span>2,230,000</span>원</div>--%>
