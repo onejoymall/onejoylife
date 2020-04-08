@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgOptionMapper">
+  <select id="getOptionList" parameterType="com.webapp.manager.vo.MgOptionVO" resultType="java.util.Map">
+    select
+    A.*
+    from product_option A where 1=1
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+
+    <if test="product_option_name != null and product_option_name !=''"> and A.product_option_name LIKE CONCAT('%', #{product_option_name},'%' )</if>
+    <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+    order by A.reg_date desc
+    LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  <select id="getOptionListCount" parameterType="com.webapp.manager.vo.MgOptionVO" resultType="Integer">
+    select IFNULL(count(*),0) as cnt
+    from product_option A where 1=1
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+
+    <if test="product_option_name != null and product_option_name !=''"> and A.product_option_name LIKE CONCAT('%', #{product_option_name},'%' )</if>
+    <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+  </select>
+  <select id="getOption" parameterType="com.webapp.manager.vo.MgOptionVO" resultType="java.util.Map">
+    select *
+    from product_option where product_option_code=#{product_option_code}
+  </select>
+
+  <insert id="insertOption" parameterType="com.webapp.manager.vo.MgOptionVO">
+      insert into product_option
+      (
+        product_option_code,
+        product_option_name,
+        product_option_required,
+        product_option,
+        product_option_style,
+        product_option_color,
+        product_option_memo,
+        product_option_payment_type,
+        product_option_payment
+      )
+      values
+      (
+        #{product_option_code},
+        #{product_option_name},
+        #{product_option_required},
+        #{product_option},
+        #{product_option_style},
+        #{product_option_color},
+        #{product_option_memo},
+        #{product_option_payment_type},
+        #{product_option_payment}
+      )
+      on duplicate KEY update
+        product_option_code=#{product_option_code},
+        product_option_name=#{product_option_name},
+        product_option_required=#{product_option_required},
+        product_option=#{product_option},
+        product_option_style=#{product_option_style},
+        product_option_color=#{product_option_color},
+        product_option_memo=#{product_option_memo},
+        product_option_payment_type=#{product_option_payment_type},
+        product_option_payment=#{product_option_payment}
+    </insert>
+
+</mapper>

@@ -65,18 +65,17 @@
                     <div class="list-sort-wrap">
                         <div class="left">
                             <button type="button" class="goods-list-btn big" name="copy" id="listDelete">선택 삭제</button>
-                            <button type="button" class="goods-list-btn big" id="gradeChange">
-                            선택 권한
-                             <select name="user_grant" id="grade-change">
-                            <c:if test="${not empty userGrantlist}">
-                                <c:forEach var="userGrantlist" items="${userGrantlist}">
-                                 <option value="${userGrantlist.user_grant_no}">${userGrantlist.user_grant_name}</option>
 
-                                </c:forEach>
-                            </c:if>
-                             </select>
-                             으로 변경
-                             </button>
+                                 <select name="user_grant" id="grade-change" class="coustomAdminSelect">
+                                <c:if test="${not empty userGrantlist}">
+                                    <c:forEach var="userGrantlist" items="${userGrantlist}">
+                                    <option value="${userGrantlist.user_grant_no}">${userGrantlist.user_grant_name}</option>
+
+                                    </c:forEach>
+                                </c:if>
+                                 </select>
+
+                            <button type="button" class="goods-list-btn big" id="gradeChange">선택 권한 으로 변경</button>
                         </div>
                     </div>
 

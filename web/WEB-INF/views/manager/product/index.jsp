@@ -529,49 +529,26 @@
                             <label for="goods-option-n">사용 안 함</label>
                         </td>
                     </tr>
-                    <tr class="option-group-1 hidden">
-                        <th>품목 구성 방식</th>
+                    <tr class="option-group hidden">
+                        <th>옵션명</th>
                         <td colspan="2">
-                            <input type="radio" id="goods-compType-t" name="product_option_class" value="T" checked>
-                            <label for="goods-compType-t">조합형</label>
-                            <input type="radio" id="goods-compType-e" name="product_option_class" value="E">
-                            <label for="goods-compType-e">상품연동형</label>
-                            <input type="radio" id="goods-compType-f" name="product_option_class" value="F">
-                            <label for="goods-compType-f">독립선택형</label>
+                            <input type="text" id="product_option_set_name" name="product_option_set_name">
                         </td>
                     </tr>
-                    <tr class="option-group-2 hidden">
-                        <th>옵션 표시 방식</th>
-                        <td colspan="2">
-                            <input type="radio" id="goods-optionType-c" name="product_option_view_type" value="C">
-                            <label for="goods-optionType-c">일체선택형</label>
-                            <input type="radio" id="goods-optionType-s" name="product_option_view_type" value="S">
-                            <label for="goods-optionType-s">분리선택형</label>
-                        </td>
-                    </tr>
-                    <tr class="option-group-3 hidden">
-                        <th>옵션 세트명</th>
-                        <td colspan="2">
-                            <input type="text" id="goods-optionSet-name" name="goods-optionSet-name">
-                        </td>
-                    </tr>
-                    <tr>
+                    <tr class="option-group hidden">
                         <th>옵션 입력</th>
                         <td colspan="2">
-                            <p class="cc2">옵션 입력 방식 : 옵션명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
-                            <input type="text" id="goods-option-detail" name="product_option_input" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
+                            <p class="cc2">옵션 입력 방식 : 옵션 값 명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션 값 명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
+                            <input type="text" class="w100" name="product_option_input" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="option-group hidden">
                         <th>옵션 스타일</th>
-                        <td colspan="2"><p class="cc2">셀렉트박스: S, 미리보기 : P, 텍스트버튼: B, 라디오버튼: R<br>
-                            <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span><br>
-                            <span class="cc">* 빈 값이거나 옵션의 개수보다 적게 입력되었을 경우 남은 순서대로 '셀렉트박스(S)'로 저장됩니다.</span><br>
-                            <span class="cc">* 미리보기(P)로 입력한 옵션은 색상 설정을 필수 입력해야 합니다.</span></p>
+                        <td colspan="2"><p class="cc2">셀렉트박스: S, 텍스트버튼: B, 라디오버튼: R<br>
                             <input type="text" id="goods-option-style" name="product_option_style" placeholder="ex) P,B,S">
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="option-group hidden">
                         <th>색상 설정</th>
                         <td colspan="2">
                             <p class="cc2">옵션 입력 방식 : &#123;색상값a|색상값b|색상값c&#125;//&#123;색상값d|색상값e|색상값f&#125;<br>
@@ -579,12 +556,11 @@
                             <input type="text" id="goods-option-color" name="product_option_color" placeholder="ex) &#123;#ff0000|#0033cc&#125;//&#123;#da294a|#000000|#e9e9e9&#125;">
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="option-group hidden">
                         <th>필수 여부</th>
                         <td colspan="2">
                             <p class="cc2">필수: T, 선택: F<br>
                                 <span class="cc">* 옵션 입력의 옵션명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
-                                <span class="cc">* 품목 구성 방식이 상품연동형, 독립선택형일 경우에만 입력합니다.</span><br>
                             </p>
                             <input type="text" id="goods-option-mandatory" name="product_option_required" placeholder="ex) T|F|T">
                         </td>

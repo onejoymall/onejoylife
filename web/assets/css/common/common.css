@@ -462,3 +462,10 @@ input[class='styleClass']:checked + label
 {
     background: url(/assets/img/icon/but-g-2.png)no-repeat center / 20px;
 }
+.coustomAdminSelect{
+    min-width: 140px;
+    height: 25px;
+}
+.w100{
+    width: 100% !important;
+}

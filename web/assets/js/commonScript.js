@@ -1275,21 +1275,16 @@ function refundCancel(order_no,delivery_status){
         }
     });
     //품목구성방식
-    function initOptionGroup(){
 
-        $('.option-group-1').removeClass('show-table-row');
-        $('.option-group-2').removeClass('show-table-row');
-        $('.option-group-3').removeClass('show-table-row');
-    }
 
     $('.product_option_yn').on('change',function () {
-        initOptionGroup()
+
         var selectValue = $(this).val();
         if(selectValue=="Y"){
-            $('.option-group-1').addClass("show-table-row");
+            $('.option-group').addClass("show-table-row");
         }else{
-            $('.option-group-1').removeClass("show-table-row");
-            $('.option-group-1').addClass("hidden");
+            $('.option-group').removeClass("show-table-row");
+            $('.option-group').addClass("hidden");
         }
     });
     $('input[name=product_option_class]').on("change",function() {
@@ -1587,7 +1582,6 @@ function refundCancel(order_no,delivery_status){
                         $('#'+index).val(item);
                         if(index=="product_html"){
                             $('#summernote').summernote('code', item);
-
                         }
                         if(index=="product_mobile_html"){
                             $('#summernote2').summernote('code', item);
@@ -1603,6 +1597,12 @@ function refundCancel(order_no,delivery_status){
                         }
                         if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
+                        }
+                        if(index=="product_option_yn" && item=="Y"){
+                            $("input[name=product_option_yn]").eq(0).click();
+                        }
+                        if(index=="product_option_yn" && item=="N"){
+                            $("input[name=product_option_yn]").eq(1).click();
                         }
                     });
                     var ele1 =$('input[name^="file_1"]').val();

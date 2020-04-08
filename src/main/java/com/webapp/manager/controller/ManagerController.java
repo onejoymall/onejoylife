@@ -14,10 +14,7 @@ import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.*;
-import com.webapp.manager.vo.MgPointVO;
-import com.webapp.manager.vo.MgUserVO;
-import com.webapp.manager.vo.ProductVO;
-import com.webapp.manager.vo.StoreVO;
+import com.webapp.manager.vo.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,6 +67,10 @@ public class ManagerController {
     private MgUserGrantDAO mgUserGrantDAO;
     @Autowired
     private MgPointDAO mgPointDAO;
+    @Autowired
+    private MgOptionDAO mgOptionDAO;
+    @Autowired
+    MgBrandDAO mgBrandDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
@@ -465,10 +466,17 @@ public class ManagerController {
 
     //옵션관리
     @RequestMapping(value = "/Manager/option-product")
-    public String managerOptionProduct(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerOptionProduct(@RequestParam HashMap params, ModelMap model, MgOptionVO mgOptionVO) throws Exception {
         try {
 
-
+            mgOptionVO.setDisplayRowCount(10);
+//            mgBrandVO.setStaticRowEnd(10);
+            mgOptionVO.pageCalculate(mgOptionDAO.getOptionListCount(mgOptionVO));
+            List<Map<String, Object>> list = mgOptionDAO.getOptionList(mgOptionVO);
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", mgOptionVO);
+            model.addAttribute("table_name", "product_option");
+            model.addAttribute("Pk", "product_option_code");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -500,20 +508,21 @@ public class ManagerController {
 
     //브랜드관리
     @RequestMapping(value = "/Manager/option-brand")
-    public String managerBrand(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerBrand(@RequestParam HashMap params, ModelMap model, MgBrandVO mgBrandVO) throws Exception {
         try {
-
-            Map<String, Object> config = configDAO.getConfigDetail(params);
-            if (isEmpty(config)) {
-                config.put("market_config_value", "");
-            }
-            model.addAttribute("config", config);
-
+            mgBrandVO.setDisplayRowCount(10);
+//            mgBrandVO.setStaticRowEnd(10);
+            mgBrandVO.pageCalculate(mgBrandDAO.getBrandListCount(mgBrandVO));
+            List<Map<String, Object>> list = mgBrandDAO.getBrandList(mgBrandVO);
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", mgBrandVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        model.addAttribute("table_name", "product_brand");
+        model.addAttribute("Pk", "product_brand");
         model.addAttribute("topNav", 2);
-        model.addAttribute("style", "info-setting");
+        model.addAttribute("style", "option-brand");
         model.addAttribute("postUrl", "/Manager/option-brand");
         return "/manager/option-brand";
     }

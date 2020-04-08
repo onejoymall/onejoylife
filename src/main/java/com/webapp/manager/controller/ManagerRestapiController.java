@@ -69,6 +69,10 @@ public class ManagerRestapiController {
     private MgPointDAO mgPointDAO;
     @Autowired
     private MgUserGrantDAO mgUserGrantDAO;
+    @Autowired
+    MgBrandDAO mgBrandDAO;
+    @Autowired
+    private MgOptionDAO mgOptionDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     // 포인트 관리 포인트 추가/Manager/MgPointAdd
@@ -167,7 +171,7 @@ public class ManagerRestapiController {
         return resultMap;
     }
     //공통 리스트삭제
-    @RequestMapping(value = "/Manager/ListUpdate", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/ListDelete", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> ListUpdate(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -659,9 +663,9 @@ public class ManagerRestapiController {
             productVO.setProduct_cd(product_cd);
 
 
-//            if(productVO.getProduct_name().isEmpty()){
-//                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
-//            }
+            if(productVO.getProduct_name().isEmpty()){
+                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
 //            if(productVO.getProduct_name_en().isEmpty()){
 //                error.put(messageSource.getMessage("product_name_en","ko"), messageSource.getMessage("error.required","ko"));
 //            }
@@ -674,9 +678,9 @@ public class ManagerRestapiController {
 //            if(productVO.getProduct_company_payment() == null){
 //                error.put(messageSource.getMessage("product_company_payment","ko"), messageSource.getMessage("error.required","ko"));
 //            }
-//            if(productVO.getProduct_payment() == null){
-//                error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
-//            }
+            if(productVO.getProduct_payment() == null){
+                error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
+            }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -958,6 +962,105 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 mgUserGrantDAO.userGrantListUpdate(mgUserVO);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //브랜드 등록
+
+    @RequestMapping(value = "/Manager/brandAddProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> brandAddProc(@RequestParam HashMap params,MgBrandVO mgBrandVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(mgBrandVO.getProduct_brand().isEmpty()){
+                error.put(messageSource.getMessage("product_brand","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgBrandVO.getProduct_brand_name().isEmpty()){
+                error.put(messageSource.getMessage("product_brand_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgBrandDAO.insertBrand(mgBrandVO);
+                resultMap.put("success",true);
+                resultMap.put("redirectUrl","/Manager/option-brand");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //브랜드 선택
+    @RequestMapping(value = "/Manager/selectBrand", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> selectBrand(@RequestParam HashMap params,MgBrandVO mgBrandVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> list = mgBrandDAO.getBrand(mgBrandVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //옵션 등록
+    @RequestMapping(value = "/Manager/optionAddProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> optionAddProc(@RequestParam HashMap params,MgOptionVO mgOptionVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(mgOptionVO.getProduct_option_code().isEmpty()){
+                mgOptionVO.setProduct_option_code("PD-OPTION-"+numberGender.numberGen(6,1));
+            }
+            if(mgOptionVO.getProduct_option().isEmpty()){
+                error.put(messageSource.getMessage("product_option","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgOptionVO.getProduct_option_color().isEmpty()){
+                error.put(messageSource.getMessage("product_option_color","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgOptionVO.getProduct_option_name().isEmpty()){
+                error.put(messageSource.getMessage("product_option_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(mgOptionVO.getProduct_option_style().isEmpty()){
+                error.put(messageSource.getMessage("product_option_style","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgOptionDAO.insertOption(mgOptionVO);
+                resultMap.put("success",true);
+                resultMap.put("redirectUrl","/Manager/option-product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //옵션 선택
+    @RequestMapping(value = "/Manager/selectOption", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> selectOption(@RequestParam HashMap params,MgOptionVO mgOptionVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> list = mgOptionDAO.getOption(mgOptionVO);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
 

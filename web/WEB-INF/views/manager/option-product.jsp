@@ -12,216 +12,77 @@
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
-                        <button type="button" class="keyword-src-button">검색</button>
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                        <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="src-name">
-                            <label for="src-name">옵션명</label>
-                            <input type="checkbox" name="src-code">
-                            <label for="src-code">옵션코드</label>
+                            <input type="checkbox"  name="searchType" value="product_option_name" id="chk1" checked>
+                            <label for="chk1">옵션 명</label>
+                            <input type="checkbox" name="searchType" value="product_option_code" id="chk2" >
+                            <label for="chk2">옵션 코드</label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="goods-list-wrap">
-                <div class="list-sort-wrap">
-                    <div class="left">
-                        <button type="button" class="btn-default" name="copy">선택 삭제</button>
+                <form name="defaultListForm" id="defaultListForm" method="POST">
+
+                    <div class="list-sort-wrap">
+                        <div class="left">
+                            <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
+                        </div>
                     </div>
-                    <div class="right">
-                        <select name="order" class="order-select">
-                            <option value="32">10개씩 보기</option>
-                            <option value="60">50개씩 보기</option>
-                            <option value="92">100개씩 보기</option>
-                        </select>
-                    </div>
-                </div>
-                <table>
-                    <colgroup>
-                        <col width="2%">
-                        <col width="5%">
-                        <col width="7%">
-                        <col width="9%">
-                        <col width="24%">
-                        <col width="25%">
-                        <col width="6%">
-                        <col width="6%">
-                        <col width="6%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                            <td>번호</td>
-                            <td>옵션코드</td>
-                            <td>옵셥명</td>
-                            <td>옵션값</td>
-                            <td>옵션설명</td>
-                            <td>필수/선택</td>
-                            <td>옵션스타일</td>
-                            <td>등록일자</td>
-                            <td>관리</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       <tr>
-                            <td><input type="checkbox" id="chk10" name="chk10"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>색상</td>
-                            <td>블랙</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk9" name="chk9"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>색상</td>
-                            <td>블랙</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk8" name="chk8"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>색상</td>
-                            <td>블랙</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk7" name="chk7"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>색상</td>
-                            <td>블랙</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk6" name="chk6"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>색상</td>
-                            <td>블랙</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk5" name="chk5"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>사이즈</td>
-                            <td>S, M, L</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk4" name="chk4"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>사이즈</td>
-                            <td>S, M, L</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk3" name="chk3"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>사이즈</td>
-                            <td>S, M, L</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk2" name="chk2"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>사이즈</td>
-                            <td>S, M, L</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1" name="chk1"></td>
-                            <td>01</td>
-                            <td>B000000C</td>
-                            <td>사이즈</td>
-                            <td>S, M, L</td>
-                            <td>옵션설명</td>
-                            <td>필수</td>
-                            <td>셀렉트박스</td>
-                            <td>2020.02.13</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">옵션값 수정</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">8</a></li>
-                    <li class="page-item"><a class="page-link" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                    <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                </ul>
+                    <input type="hidden" name="Pk" value="${Pk}">
+                    <input type="hidden" name="table_name" value="${table_name}">
+                    <table>
+                        <colgroup>
+                            <col width="2%">
+                            <col width="7%">
+                            <col width="9%">
+                            <col width="24%">
+                            <col width="25%">
+                            <col width="6%">
+                            <col width="6%">
+                            <col width="6%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                                <td>옵션코드</td>
+                                <td>옵션명</td>
+                                <td>옵션값</td>
+                                <td>옵션설명</td>
+                                <td>필수/선택</td>
+                                <td>옵션스타일</td>
+                                <td>등록일자</td>
+                                <td>관리</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <c:if test="${not empty list}">
+                        <c:forEach var="list" items="${list}">
+                           <tr>
+                                <td><input type="checkbox" id="chk" name="chk" value="${list.product_option_code}"></td>
+                                <td>${list.product_option_code}</td>
+                                <td>${list.product_option_name}</td>
+                                <td>${list.product_option}</td>
+                                <td>${list.product_option_memo}</td>
+                                <td>${list.product_option_required}</td>
+                                <td>${list.product_option_style}</td>
+                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+                                <td>
+                                    <button type="button" class="goods-list-btn" id="mgOptionDetail" data-id="${list.product_option_code}">옵션값 수정</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                        </tbody>
+                    </table>
+                </form>
+                <form id="form1" name="form1"  method="post">
+                    <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                </form>
             </div>
         </div>
     </main>
@@ -233,109 +94,106 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <form action="" method="GET">
+                <form action="mgOptionAdd" id="mgOptionAdd" method="POST">
                     <h3>상품 옵션 정보</h3>
-                <table class="goods-detail-table">
-                    <colgroup>
-                        <col width="142px">
-                        <col width="800px">
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th>옵션코드</th>
-                            <td>자동생성</td>
-                        </tr>
-                        <tr>
-                            <th>옵션명</th>
-                            <td>
-                                <input type="text" name="" id="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>품목 구성 방식</th>
-                            <td>
-                                <input type="radio" id="goods-compType-t" name="goods-compType" value="T">
-                                <label for="goods-compType-t">조합형</label>
-                                <input type="radio" id="goods-compType-e" name="goods-compType" value="E">
-                                <label for="goods-compType-e">상품연동형</label>
-                                <input type="radio" id="goods-compType-f" name="goods-compType" value="F">
-                                <label for="goods-compType-f">독립선택형</label>
-                            </td>
-                        </tr>
-                        <tr class="goods-compType-t-detail" style="display:none">
-                            <th>옵션 표시 방식</th>
-                            <td>
-                                <input type="radio" id="goods-optionType-c" name="goods-optionType" value="C">
-                                <label for="goods-optionType-c">일체선택형</label>
-                                <input type="radio" id="goods-optionType-s" name="goods-optionType" value="S">
-                                <label for="goods-optionType-s">분리선택형</label>
-                            </td>
-                        </tr>
-                        <tr class="goods-compType-e-detail" style="display:none">
-                            <th>옵션 세트명</th>
-                            <td>
-                                <input type="text" id="goods-optionSet-name" name="goods-optionSet-name">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>옵션 불러오기</th>
-                            <td>
-                                <button type="button" class="option-mo" name="mo-btn">옵션 추가</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>옵션 입력</th>
-                            <td>
-                                <p class="cc2">옵션 입력 방식 : 옵션명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
-                                <input type="text" id="goods-option-detail" name="goods-option-detail" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>옵션 스타일</th>
-                            <td><p class="cc2">셀렉트박스: S, 미리보기 : P, 텍스트버튼: B, 라디오버튼: R<br>
-                                <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span><br>
-                                <span class="cc">* 빈 값이거나 옵션의 개수보다 적게 입력되었을 경우 남은 순서대로 '셀렉트박스(S)'로 저장됩니다.</span><br>
-                                <span class="cc">* 미리보기(P)로 입력한 옵션은 색상 설정을 필수 입력해야 합니다.</span></p>
-                                <input type="text" id="goods-option-style" name="goods-option-style" placeholder="ex) P,B,S">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>색상 설정</th>
-                            <td>
-                                <p class="cc2">옵션 입력 방식 : &#123;색상값a|색상값b|색상값c&#125;//&#123;색상값d|색상값e|색상값f&#125;<br>
-                                <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span></p>
-                                <input type="text" id="goods-option-color" name="goods-option-color" placeholder="ex) &#123;#ff0000|#0033cc&#125;//&#123;#da294a|#000000|#e9e9e9&#125;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>필수 여부</th>
-                            <td>
-                                <p class="cc2">필수: T, 선택: F<br>
-                                <span class="cc">* 옵션 입력의 옵션명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
-                                <span class="cc">* 품목 구성 방식이 상품연동형, 독립선택형일 경우에만 입력합니다.</span><br>
-                                </p>
-                                <input type="text" id="goods-option-mandatory" name="goods-option-mandatory" placeholder="ex) T|F|T">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>가격 노출 관리</th>
-                            <td>
-                                <input type="radio" name="price-rd" id="price-rd1">
-                                <label for="price-rd1">노출</label>
-                                <input type="radio" name="price-rd" id="price-rd2" checked>
-                                <label for="price-rd2">노출 안 함</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>옵션설명</th>
-                            <td>
-                                <p class="cc2"><span class="cc">* 문자, 숫자 200Byte 이내 입력</span></p>
-                                <input type="text" name="" id="">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="button" name="detail" class="btn-red">등록하기</button>
+                    <input type="hidden" name="product_option_code">
+                    <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>옵션코드</th>
+                                <td>자동생성</td>
+                            </tr>
+                            <tr>
+                                <th>옵션명</th>
+                                <td>
+                                    <input type="text" name="product_option_name">
+                                </td>
+                            </tr>
+    <%--                        <tr>--%>
+    <%--                            <th>품목 구성 방식</th>--%>
+    <%--                            <td>--%>
+    <%--                                <input type="radio" id="goods-compType-t" name="goods-compType" value="T">--%>
+    <%--                                <label for="goods-compType-t">조합형</label>--%>
+    <%--                                <input type="radio" id="goods-compType-e" name="goods-compType" value="E">--%>
+    <%--                                <label for="goods-compType-e">상품연동형</label>--%>
+    <%--                                <input type="radio" id="goods-compType-f" name="goods-compType" value="F">--%>
+    <%--                                <label for="goods-compType-f">독립선택형</label>--%>
+    <%--                            </td>--%>
+    <%--                        </tr>--%>
+    <%--                        <tr class="goods-compType-t-detail" style="display:none">--%>
+    <%--                            <th>옵션 표시 방식</th>--%>
+    <%--                            <td>--%>
+    <%--                                <input type="radio" id="goods-optionType-c" name="goods-optionType" value="C">--%>
+    <%--                                <label for="goods-optionType-c">일체선택형</label>--%>
+    <%--                                <input type="radio" id="goods-optionType-s" name="goods-optionType" value="S">--%>
+    <%--                                <label for="goods-optionType-s">분리선택형</label>--%>
+    <%--                            </td>--%>
+    <%--                        </tr>--%>
+    <%--                        <tr class="goods-compType-e-detail" style="display:none">--%>
+    <%--                            <th>옵션 세트명</th>--%>
+    <%--                            <td>--%>
+    <%--                                <input type="text" id="goods-optionSet-name" name="goods-optionSet-name">--%>
+    <%--                            </td>--%>
+    <%--                        </tr>--%>
+    <%--                        <tr>--%>
+    <%--                            <th>옵션 불러오기</th>--%>
+    <%--                            <td>--%>
+    <%--                                <button type="button" class="option-mo" name="mo-btn">옵션 추가</button>--%>
+    <%--                            </td>--%>
+    <%--                        </tr>--%>
+                            <tr>
+                                <th>옵션 스타일</th>
+                                <td><p class="cc2">셀렉트박스: P, 텍스트버튼: B, 라디오버튼: R<br>
+                                    <span class="cc">* 빈 값이거나 옵션의 개수보다 적게 입력되었을 경우 남은 순서대로 '셀렉트박스(S)'로 저장됩니다.</span><br>
+                                    <input type="text" name="product_option_style" placeholder="ex) P,B,R">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>옵션 값</th>
+                                <td>
+                                    <p class="cc2">옵션 입력 방식 : 옵션값 명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션값 명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
+                                    <input type="text"  name="product_option" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>색상 설정</th>
+                                <td>
+                                    <p class="cc2">옵션 입력 방식 : &#123;색상값a|색상값b|색상값c&#125;//&#123;색상값d|색상값e|색상값f&#125;<br>
+                                    <input type="text" name="product_option_color" placeholder="ex) &#123;#ff0000|#0033cc&#125;//&#123;#da294a|#000000|#e9e9e9&#125;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>필수 여부</th>
+                                <td>
+                                    <p class="cc2">필수: T, 선택: F<br>
+                                    <span class="cc">* 옵션 입력의 옵션명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
+                                    <span class="cc">* 품목 구성 방식이 상품연동형, 독립선택형일 경우에만 입력합니다.</span><br>
+                                    </p>
+                                    <input type="text" name="product_option_required" placeholder="ex) T|F|T">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>가격 노출 관리</th>
+                                <td>
+                                    <p class="cc2">-: -1000, +: 1000<br>
+                                        <span class="cc">* 옵션 입력의 옵션 값 명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
+                                    </p>
+                                    <input type="text" name="product_option_payment" placeholder="ex) -1000|1000|-1000">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>옵션설명</th>
+                                <td>
+                                    <input type="text" name="product_option_memo">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" name="detail" class="btn-red" id="mgOptionAddSubmit">등록하기</button>
                 </form>
             </div>
         </div>
