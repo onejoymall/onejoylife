@@ -338,16 +338,16 @@
                                     <p class="in1-font1">총 상품 금액</p>
 <%--                                    <p>VIP 회원할인</p>--%>
 <%--                                    <p>할인쿠폰</p>--%>
-                                    <c:if test="${not empty detail.product_delivery_payment}">
+<%--                                    <c:if test="${not empty detail.product_delivery_payment}">--%>
                                         <p>배송비</p>
-                                    </c:if>
+<%--                                    </c:if>--%>
                                 </div>
                                 <div class="txt-in2">
                                     <p><span class="in1-font2"><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /></span> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-                                    <c:if test="${not empty detail.product_delivery_payment}">
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${detail.product_delivery_payment}" groupingUsed="true" />원</span> 원</p>
+                                    <c:if test="${not empty deliveryPayment}">
+                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" />원</span> 원</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -357,7 +357,7 @@
                                     <p>E-POINT 적립예정</p>
                                 </div>
                                 <div class="txt-in2 in2-color">
-                                    <p><span class="in2-font2"><fmt:formatNumber value="${detail.product_payment+detail.product_delivery_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in2-font2"><fmt:formatNumber value="${detail.product_payment+deliveryPayment}" groupingUsed="true" /></span> 원</p>
                                     <p><span><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>
                                 </div>
                             </div>
@@ -371,9 +371,11 @@
                         <button type="button" id="submitPayment">결제하기</button>
                     </div>
                 </div>
-                <input type="hidden" name="payment" value="${detail.product_payment+detail.product_delivery_payment}">
+                <input type="hidden" name="payment" value="${detail.product_payment+deliveryPayment}">
                 <input type="hidden" name="order_no" value="${order_no}">
                 <input type="hidden" name="product_cd" value="${detail.product_cd}">
+                <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
+
             </form>
         </main>
     </div>
@@ -402,12 +404,21 @@
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: "${detail.product_name}",
-                amount: ${detail.product_payment+detail.product_delivery_payment},
+                amount: ${detail.product_payment+deliveryPayment},
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
                 buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
-                buyer_postcode: $('#postcode').val()
+                buyer_postcode: $('#postcode').val(),
+                escrow:true,
+                kcpProducts : [
+                    {
+                        "orderNumber" : $('input[name=order_no]').val(),
+                        "name" : '${detail.product_name}',
+                        "quantity" : $('input[name=payment_order_quantity]').val(),
+                        "amount" : ${detail.product_payment+deliveryPayment},
+                    },
+                ],
             }, function (rsp) { // callback
                 var formData = $('#defaultForm').serialize()
                     +'&payment_class=PRODUCT'

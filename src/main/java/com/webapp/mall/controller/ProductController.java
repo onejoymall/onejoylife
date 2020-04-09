@@ -125,7 +125,7 @@ public class ProductController {
             model.addAttribute("list",list);
             //찜한 상품 표기
             // 비회원 처리 로직 변경필요
-            params.put("user_id", userInfo.get("usr_id"));
+//            params.put("user_id", userInfo.get("usr_id"));
 
             searchVO.setDisplayRowCount(1);
             searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
@@ -168,6 +168,8 @@ public class ProductController {
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             params.put("product_cd",request.getParameter("product_cd"));
             Map<String,Object> detail = productDAO.getProductViewDetail(params);
+            //상품 금액
+            params.put("product_payment",detail.get("product_payment"));
             //배송정보
             params.put("delivery_class",detail.get("product_delivery_class"));
             //배송밥법
@@ -181,6 +183,11 @@ public class ProductController {
             //옵션
             params.put("product_option_input",detail.get("product_option_input"));
             String option = getOption(params);
+
+            detail.put("payment_order_quantity",params.get("payment_order_quantity"));
+            Integer deliveryPayment = deliveryPayment(detail);
+            model.addAttribute("option",option );
+            model.addAttribute("deliveryPayment",deliveryPayment );
             if(!isEmpty(userInfo)){
 
                 //최근 배송지 불러오기
@@ -203,24 +210,128 @@ public class ProductController {
         }
         return "product/productpayment";
     }
-    //배송정보 출력
-    public Map<String ,Object> giveawayDelivery(HashMap params)throws Exception {
-
+    //배송비
+    public Integer deliveryPayment( Map<String,Object> params)throws SQLException {
+        Integer deliveryPayment=0;
         //배송방법이 없으면 입력값 고정 출력
-        if (params.get("delivery_class").equals("F")) {
-            //관리자가 설정한 기본 배송방법
-            params.put("selector", "기본배송");
-        } else {
+        if(params.get("delivery_class").equals("F") ){
+            deliveryPayment=0;
+        }else {
             //배송방법이 개별이면 사용자 선택
-            String splitString = (String) params.get("delivery_type");//배송방법
-            String[] splitArray = splitString.split("\\|");
+            String splitString = (String)params.get("delivery_type");//배송방법
+            String[] splitArray = splitString.split( "\\|");
             //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
-            params.put("code", "product_delivery_type");
-            params.put("code_values", splitArray);
-            List<Map<String, Object>> selector = selectorDAO.getSelector(params);
-            params.put("selector", selector);
+            params.put("code","product_delivery_type");
+            params.put("code_values",splitArray);
+            List<Map<String,Object>> selector = selectorDAO.getSelector(params);
+            params.put("selector",selector);
         }
 
+        //관리자가 지정한 배송구분별 배송비용을 출력한다.
+        String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
+        String deliveryPutString="";
+        String delivery_payment_class = (String) params.get("delivery_payment_class");
+        Integer product_payment = Integer.parseInt((String)params.get("product_payment"));
+        Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
+        Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+        if ("T".equals(delivery_payment_class)) {
+            deliveryPayment=0;
+        } else if ("R".equals(delivery_payment_class)) {
+            deliveryPayment = Integer.parseInt(splitDeliveryPaymentString);
+        } else if ("M".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
+            if(product_payment>=Integer.parseInt(splitDeliveryTypeM[0])){
+                deliveryPayment = Integer.parseInt(splitDeliveryTypeM[1]);
+            }
+        } else if ("D".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeD.length; i++) {
+                if(product_payment >= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
+                    deliveryPayment += Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2]);
+                }
+            }
+        } else if ("W".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeW.length; i++) {
+                if(product_kg >= Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0]) && product_kg > Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1]) ){
+                    deliveryPayment += Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2]);
+                }
+            }
+
+        } else if ("C".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeC.length; i++) {
+                if(payment_order_quantity >= Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0]) && payment_order_quantity > Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1]) ){
+                    deliveryPayment += Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2]);
+                }
+            }
+        }
+        return deliveryPayment;
+    }
+    //배송정보 출력
+    public Map<String ,Object> giveawayDelivery(HashMap params)throws SQLException {
+
+        //배송방법이 없으면 입력값 고정 출력
+        if(params.get("delivery_class").equals("F") ){
+            params.put("selector","기본배송");
+        }else {
+            //배송방법이 개별이면 사용자 선택
+            String splitString = (String)params.get("delivery_type");//배송방법
+            String[] splitArray = splitString.split( "\\|");
+            //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
+            params.put("code","product_delivery_type");
+            params.put("code_values",splitArray);
+            List<Map<String,Object>> selector = selectorDAO.getSelector(params);
+            params.put("selector",selector);
+        }
+
+        //관리자가 지정한 배송구분별 배송비용을 출력한다.
+        String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
+        String deliveryPutString="";
+        String delivery_payment_class = (String) params.get("delivery_payment_class");
+        if ("T".equals(delivery_payment_class)) {
+            params.put("delivery_payment", "배송비 무료");
+        } else if ("R".equals(delivery_payment_class)) {
+            params.put("delivery_payment", "배송비 " + String.format("%,d", Integer.parseInt(splitDeliveryPaymentString)) + "원");
+        } else if ("M".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
+            params.put("delivery_payment", "결재금액 "
+                    + String.format("%,d", Integer.parseInt(splitDeliveryTypeM[0])) + "원 이하 / 배송비"
+                    + String.format("%,d", Integer.parseInt(splitDeliveryTypeM[1])) + " 원");
+        } else if ("D".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeD.length; i++) {
+                deliveryPutString += "결재금액 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0])) + "원 ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1])) + "원 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
+        } else if ("W".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeW.length; i++) {
+                deliveryPutString += ""
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0])) + "kg ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1])) + "kg 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
+        } else if ("C".equals(delivery_payment_class)) {
+            String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
+
+            for (int i = 0; i < splitDeliveryTypeC.length; i++) {
+                deliveryPutString += ""
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0])) + "ea ~ "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1])) + "ea 미만 / 배송비 "
+                        + String.format("%,d", Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2])) + "원</br>";
+            }
+            params.put("delivery_payment", deliveryPutString);
+        }
         return params;
     }
     //옵션
@@ -231,39 +342,54 @@ public class ProductController {
 //             .replaceAll(" " , "")
 //             .replaceAll("\\p{Z}", "")
 //             .replaceAll(match, "")
-
+            String product_option_style = (String) params.get("product_option_style");
             String splitString = (String) params.get("product_option_input");//배송방법
+            String[] splitStyleArray =product_option_style.split("\\,");
             String[] splitArray =splitString.split("\\/\\/");
+
             for(int z=0;z < splitArray.length;z++){
+
                 String[] splitNextArray =splitArray[z]
                         .split("\\{");
                 String[] splitThirdArray = splitNextArray[1]
                         .replaceAll("\\}", "")
                         .split("\\|");
-                outText += "" +
-                        "<div class=\"option-box\">\n" +
-                        "    <button type=\"button\">\n" +
-                        "        "+splitNextArray[0]+" 선택\n" +
-                        "        <i class=\"arrow-down\"></i>\n" +
-                        "    </button>\n" +
-                        "    <ul class=\"option-list\">\n" ;
-                //오션스타일 에따라 다르게
-                for (int i = 0; i < splitThirdArray.length; i++) {
+                if(splitStyleArray[z].equals("P")){
                     outText += "" +
-
-                            "   <li><a href=\"#none\">"+splitThirdArray[i]+"</a></li>\n";
-
+                            ""+splitNextArray[0]+" 선택\n" +
+                            "<select class=\"w100\">\n" ;
+                    //오션스타일 에따라 다르게
+                    for (int i = 0; i < splitThirdArray.length; i++) {
+                        outText += "" +
+                                "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";
+                    }
+                    outText += "" +
+                            "</select>";
                 }
-                outText += "" +
+                if(splitStyleArray[z].equals("B")){
+                    outText += "" +
+                            ""+splitNextArray[0]+" 선택\n";
 
-                        "    </ul>\n" +
-                        "</div>";
+                    for (int i = 0; i < splitThirdArray.length; i++) {
+                        outText += "" +
+                                "   <button type=\"button\" class=\"select_option_value\" >"+splitThirdArray[i]+"</button>";
+                    }
+                }
+                if(splitStyleArray[z].equals("R")){
+                    outText += "" +
+                            ""+splitNextArray[0]+" 선택\n";
+
+                    for (int i = 0; i < splitThirdArray.length; i++) {
+                        outText += "" +
+                                " <label for=\""+i+"\">"+splitThirdArray[i]+"</label><input type=\"radio\" name=\"select_option_value\" id=\"select_option_value"+i+"\" value=\""+splitThirdArray[i]+"\">";
+                    }
+                }
             }
 
 
 
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return outText;
     }

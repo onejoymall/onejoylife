@@ -77,7 +77,7 @@
                 </form>
                 <form id="form1" name="form1"  method="post">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
-                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+<%--                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">--%>
                 </form>
             </div>
         </div>

@@ -22,12 +22,12 @@ public class MgOptionVO extends SearchVO {
         this.product_option_code = product_option_code;
     }
 
-    public String getProduct_option_name() {
+    public String getProduct_option_set_name() {
         return product_option_set_name;
     }
 
-    public void setProduct_option_name(String product_option_name) {
-        this.product_option_set_name = product_option_name;
+    public void setProduct_option_set_name(String product_option_set_name) {
+        this.product_option_set_name = product_option_set_name;
     }
 
     public String getProduct_option_required() {
@@ -38,12 +38,12 @@ public class MgOptionVO extends SearchVO {
         this.product_option_required = product_option_required;
     }
 
-    public String getProduct_option() {
+    public String getProduct_option_input() {
         return product_option_input;
     }
 
-    public void setProduct_option(String product_option) {
-        this.product_option_input = product_option;
+    public void setProduct_option_input(String product_option_input) {
+        this.product_option_input = product_option_input;
     }
 
     public String getProduct_option_style() {

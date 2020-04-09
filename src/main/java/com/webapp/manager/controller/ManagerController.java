@@ -509,24 +509,27 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/option-brand")
     public String managerBrand(@RequestParam HashMap params, ModelMap model, MgBrandVO mgBrandVO) throws Exception {
         try {
+            //화면에 표시할 개수
             mgBrandVO.setDisplayRowCount(10);
 //            mgBrandVO.setStaticRowEnd(10);
+            //전체 행수
             mgBrandVO.pageCalculate(mgBrandDAO.getBrandListCount(mgBrandVO));
+            //리스트
             List<Map<String, Object>> list = mgBrandDAO.getBrandList(mgBrandVO);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", mgBrandVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //공통 리스트 구현용도
         model.addAttribute("table_name", "product_brand");
         model.addAttribute("Pk", "product_brand");
+
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "option-brand");
         model.addAttribute("postUrl", "/Manager/option-brand");
         return "/manager/option-brand";
     }
-
-
 
     //업체관리
     @RequestMapping(value = "/Manager/company-app")

@@ -1025,14 +1025,14 @@ public class ManagerRestapiController {
             if(mgOptionVO.getProduct_option_code().isEmpty()){
                 mgOptionVO.setProduct_option_code("PD-OPTION-"+numberGender.numberGen(6,1));
             }
-            if(mgOptionVO.getProduct_option().isEmpty()){
-                error.put(messageSource.getMessage("product_option","ko"), messageSource.getMessage("error.required","ko"));
+            if(mgOptionVO.getProduct_option_input().isEmpty()){
+                error.put(messageSource.getMessage("product_option_input","ko"), messageSource.getMessage("error.required","ko"));
             }
             if(mgOptionVO.getProduct_option_color().isEmpty()){
                 error.put(messageSource.getMessage("product_option_color","ko"), messageSource.getMessage("error.required","ko"));
             }
-            if(mgOptionVO.getProduct_option_name().isEmpty()){
-                error.put(messageSource.getMessage("product_option_name","ko"), messageSource.getMessage("error.required","ko"));
+            if(mgOptionVO.getProduct_option_set_name().isEmpty()){
+                error.put(messageSource.getMessage("product_option_set_name","ko"), messageSource.getMessage("error.required","ko"));
             }
             if(mgOptionVO.getProduct_option_style().isEmpty()){
                 error.put(messageSource.getMessage("product_option_style","ko"), messageSource.getMessage("error.required","ko"));
