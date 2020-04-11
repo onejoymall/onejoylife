@@ -19,6 +19,7 @@ import sun.misc.Contended;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -125,8 +126,11 @@ public class ProductController {
             model.addAttribute("list",list);
             //찜한 상품 표기
             // 비회원 처리 로직 변경필요
-//            params.put("user_id", userInfo.get("usr_id"));
-
+            if(isEmpty(userInfo)){
+                params.put("user_id", session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("user_id", userInfo.get("usr_id"));
+            }
             searchVO.setDisplayRowCount(1);
             searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
             params.put("rowStart",searchVO.getRowStart());
@@ -211,64 +215,69 @@ public class ProductController {
         return "product/productpayment";
     }
     //배송비
-    public Integer deliveryPayment( Map<String,Object> params)throws SQLException {
+    public Integer deliveryPayment( Map<String,Object> params)throws IOException {
         Integer deliveryPayment=0;
-        //배송방법이 없으면 입력값 고정 출력
-        if(params.get("delivery_class").equals("F") ){
-            deliveryPayment=0;
-        }else {
-            //배송방법이 개별이면 사용자 선택
-            String splitString = (String)params.get("delivery_type");//배송방법
-            String[] splitArray = splitString.split( "\\|");
-            //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
-            params.put("code","product_delivery_type");
-            params.put("code_values",splitArray);
-            List<Map<String,Object>> selector = selectorDAO.getSelector(params);
-            params.put("selector",selector);
+        try{
+            //배송방법이 없으면 입력값 고정 출력
+            if(params.get("delivery_class").equals("F") ){
+                deliveryPayment=0;
+            }else {
+                //배송방법이 개별이면 사용자 선택
+                String splitString = (String)params.get("delivery_type");//배송방법
+                String[] splitArray = splitString.split( "\\|");
+                //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
+                params.put("code","product_delivery_type");
+                params.put("code_values",splitArray);
+                List<Map<String,Object>> selector = selectorDAO.getSelector(params);
+                params.put("selector",selector);
+            }
+
+            //관리자가 지정한 배송구분별 배송비용을 출력한다.
+            String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
+            String deliveryPutString="";
+            String delivery_payment_class = (String) params.get("delivery_payment_class");
+            Integer product_payment = Integer.parseInt((String)params.get("product_payment"));
+            Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
+            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+            if ("T".equals(delivery_payment_class)) {
+                deliveryPayment=0;
+            } else if ("R".equals(delivery_payment_class)) {
+                deliveryPayment = Integer.parseInt(splitDeliveryPaymentString);
+            } else if ("M".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
+                if(product_payment>=Integer.parseInt(splitDeliveryTypeM[0])){
+                    deliveryPayment = Integer.parseInt(splitDeliveryTypeM[1]);
+                }
+            } else if ("D".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeD.length; i++) {
+                    if(product_payment >= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2]);
+                    }
+                }
+            } else if ("W".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeW.length; i++) {
+                    if(product_kg >= Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0]) && product_kg > Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2]);
+                    }
+                }
+
+            } else if ("C".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeC.length; i++) {
+                    if(payment_order_quantity >= Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0]) && payment_order_quantity > Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2]);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        //관리자가 지정한 배송구분별 배송비용을 출력한다.
-        String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
-        String deliveryPutString="";
-        String delivery_payment_class = (String) params.get("delivery_payment_class");
-        Integer product_payment = Integer.parseInt((String)params.get("product_payment"));
-        Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
-        Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
-        if ("T".equals(delivery_payment_class)) {
-            deliveryPayment=0;
-        } else if ("R".equals(delivery_payment_class)) {
-            deliveryPayment = Integer.parseInt(splitDeliveryPaymentString);
-        } else if ("M".equals(delivery_payment_class)) {
-            String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
-            if(product_payment>=Integer.parseInt(splitDeliveryTypeM[0])){
-                deliveryPayment = Integer.parseInt(splitDeliveryTypeM[1]);
-            }
-        } else if ("D".equals(delivery_payment_class)) {
-            String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
-
-            for (int i = 0; i < splitDeliveryTypeD.length; i++) {
-                if(product_payment >= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
-                    deliveryPayment += Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2]);
-                }
-            }
-        } else if ("W".equals(delivery_payment_class)) {
-            String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
-
-            for (int i = 0; i < splitDeliveryTypeW.length; i++) {
-                if(product_kg >= Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0]) && product_kg > Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1]) ){
-                    deliveryPayment += Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2]);
-                }
-            }
-
-        } else if ("C".equals(delivery_payment_class)) {
-            String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
-
-            for (int i = 0; i < splitDeliveryTypeC.length; i++) {
-                if(payment_order_quantity >= Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0]) && payment_order_quantity > Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1]) ){
-                    deliveryPayment += Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2]);
-                }
-            }
-        }
         return deliveryPayment;
     }
     //배송정보 출력

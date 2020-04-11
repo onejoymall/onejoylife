@@ -46,6 +46,7 @@
     <c:if test="${not empty postUrl}">
         var postUrl = '<c:url value="${postUrl}"/> ';
     </c:if>
+    var isLogin ='<c:out value="${sessionScope.login}"/>';
     </script>
 </head>
 <body>

@@ -104,8 +104,8 @@ function defaultModalUSer(email){
         },
     });
 }
-//포인트 지급
-$('#mgPointPaid').on("click",function () {
+//포인트 지급 및 환수
+$('.mgPointPaid').on("click",function () {
     var formData = $('#mgPointForm').serialize()
     jQuery.ajax({
         type: 'POST',

@@ -45,6 +45,7 @@
                             <td>상품정보</td>
 <%--                            <td>옵션병경</td>--%>
                             <td>수량</td>
+                            <td>소비자가</td>
                             <td>상품가격</td>
 <%--                            <td>배송비</td>--%>
                             <td></td>
@@ -70,6 +71,11 @@
 <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
                                     <td>
                                         <input type="number" name="payment_order_quantity" value="1" class="num-box">
+                                    </td>
+                                    <td>
+                                        <div class="price-number before-price">
+                                            <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원
+                                        </div>
                                     </td>
                                     <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
 <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>

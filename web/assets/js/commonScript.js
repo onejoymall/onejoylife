@@ -1,4 +1,21 @@
-
+//
+$(document).on("click","#paymentSubmit",function () {
+    if(isLogin==''){
+        $.toast({
+            heading: '비회원 주문 중입니다.',
+            text: [
+                '<a href="/sign/join">회원 가입 후 이용</a>',
+                '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+            ],
+            showHideTransition: 'plain', //펴짐
+            position: 'top-right',
+            icon: 'info',
+            hideAfter: false
+        });
+    }else{
+        $('#defaultForm').onsubmit();
+    }
+})
 //찜
 $('.favorite').click(function(){
     $(this).children('i').toggleClass('heart-full');
@@ -532,13 +549,19 @@ $(document).ready(function(){
 
                 } else {
                     $.toast({
-                        text: "장바구니 등록 완료",
+                        heading: '등록 성공!',
+                        text: [
+                            '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                            '<a href="/">쇼핑 계속!</a>',
+                        ],
+
                         showHideTransition: 'plain', //펴짐
                         position: 'top-right',
-                        icon: 'success'
+                        icon: 'success',
+                        hideAfter: false,
                     });
                     // loginAuth(data.access_token);
-                    location.href=data.redirectUrl;
+                    // location.href=data.redirectUrl;
                 }
             },
             error: function (xhr, status, error) {

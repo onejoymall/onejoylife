@@ -252,9 +252,14 @@
                                 <input type="hidden" name="point_paid_user_id">
                             </td>
                         </tr>
+
                         <tr>
                             <th>지급 포인트</th>
-                            <td><input type="number" name="point_add" ><button type="button" class="point-btn" id="mgPointPaid">지급</button></td>
+                            <td><input type="number" name="point_add" ><button type="button" class="point-btn mgPointPaid">지급</button></td>
+                        </tr>
+                        <tr>
+                            <th>환수 포인트</th>
+                            <td><input type="number" name="point_use" ><button type="button" class="point-btn mgPointPaid">환수</button></td>
                         </tr>
                         <%--<tr>
                             <th>포인트 환수</th>

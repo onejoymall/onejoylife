@@ -544,3 +544,7 @@ input[class='styleClass']:checked + label
     border-left: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
 }
+
+.before-price{
+    text-decoration: line-through;
+}

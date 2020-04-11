@@ -75,25 +75,43 @@ public class ManagerRestapiController {
     private MgOptionDAO mgOptionDAO;
     @Value("${downloadPath}")
     private String downloadPath;
-    // 포인트 관리 포인트 추가/Manager/MgPointAdd
+
+
+    // 포인트 관리 포인트 추가 및 환수
     @RequestMapping(value = "/Manager/MgPointAdd", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> MgPointAdd(@RequestParam HashMap params, MgUserVO mgUserVO, MgPointVO mgPointVO) throws Exception{
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
 //            if(mgPointVO.getPoint_add()
-            if(mgPointVO.getPoint_add()==null){
-                error.put(messageSource.getMessage("point_add","ko"),messageSource.getMessage("error.required","ko"));
-            }
+//            if(mgPointVO.getPoint_add()==null){
+//                error.put(messageSource.getMessage("point_add","ko"),messageSource.getMessage("error.required","ko"));
+//            }
+            Integer getPointAmount = mgPointDAO.getMgPointAmount(mgPointVO);
+
+            //지급과 환수를 동시에 할수 없습니다.
+
+            //환수할 포인트가 없습니다.
+
             if(mgPointVO.getPoint_paid_memo().isEmpty()){
                 error.put(messageSource.getMessage("point_paid_memo","ko"),messageSource.getMessage("error.required","ko"));
             }
-
+            if(mgPointVO.getPoint_use()!=null){
+                if(getPointAmount <= 0 ){
+                    error.put("Error",messageSource.getMessage("error.pointExchangeFail","ko"));
+                }
+            }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                mgPointVO.setPoint_amount(mgPointDAO.getMgPointAmount(mgPointVO)+ mgPointVO.getPoint_add());
+
+                if(mgPointVO.getPoint_use()==null){
+                    mgPointVO.setPoint_amount(getPointAmount+ mgPointVO.getPoint_add());
+                }
+                if(mgPointVO.getPoint_add()==null){
+                    mgPointVO.setPoint_amount(getPointAmount - mgPointVO.getPoint_use());
+                }
                 mgPointVO.setPoint_paid_type("A");
                 mgPointDAO.insertMgPoint(mgPointVO);
                 resultMap.put("success",true);
