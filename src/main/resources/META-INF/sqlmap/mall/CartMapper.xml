@@ -43,7 +43,7 @@
         insert into product_cart(cart_cd,product_cd,cart_user_id,member_yn) values (#{cart_cd},#{product_cd},#{cart_user_id},#{member_yn})
     </insert>
 
-    <insert id="addAllcart" parameterType="java.util.Map">
+    <insert id="addAllCart" parameterType="java.util.Map">
         insert into ${table_name}(cart_cd,product_cd,cart_user_id,member_yn) values
         <foreach collection="chk" item="item" open="(" separator="," close=")">
             (#{cart_cd},#{item},#{cart_user_id},#{member_yn})

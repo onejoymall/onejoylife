@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Array;
@@ -149,7 +151,13 @@ public class MainController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return "mall/main";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/index-mobile";
+        } else {
+            return "mall/main";
+        }
     }
     @RequestMapping(value = "/layout/mainTopNav")
     public String mainTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
