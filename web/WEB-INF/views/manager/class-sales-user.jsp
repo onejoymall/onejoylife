@@ -11,8 +11,8 @@
                 <colgroup></colgroup>
                 <tbody>
                     <tr>
-                        <th data-id="/Manager/class-sales" class="list-tab on">카테고리</th>
-                        <th data-id="/Manager/class-sales-user" class="list-tab">고객별</th>
+                        <th data-id="/Manager/class-sales" class="list-tab">카테고리</th>
+                        <th data-id="/Manager/class-sales-user" class="list-tab on">고객별</th>
                         <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th>
                         <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
                         <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
@@ -29,8 +29,10 @@
                                 <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                                 <button type="submit" class="keyword-src-button">검색</button>
                                 <div class="src-filter-wrap">
-		                            <input type="checkbox"  name="searchType" value="category_name" id="chk1" checked>
-		                            <label for="chk1">카테고리 명</label>
+		                            <input type="checkbox"  name="searchType" value="email" id="chk1" checked>
+		                            <label for="chk1">이메일</label>
+		                            <input type="checkbox"  name="searchType" value="username" id="chk1" checked>
+		                            <label for="chk1">이름</label>
 		                        </div>
                             </div>
                             <table class="keyword-src-table">
@@ -41,20 +43,22 @@
                                     <col width="420px">
                                 </colgroup>
                                 <tbody>
-                                    <tr>
-                                        <th>카테고리</th>
-                                        <td>
-                                            <select class="category1" name="category1">
-                                            <option>--</option>
-                                            </select>
-                                            <select class="category2" name="category2">
-                                            <option>--</option>
-                                            </select>
-                                            <select class="category3" name="category3">
-                                            <option>--</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                                	<tr>
+	                                    <th>주문일</th>
+		                                <td>
+		                                    <div class="input-box2">
+		                                        <div class="cla">
+		                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                        <p class="cla-p1"> ~ </p>
+		                                        <div class="cla">
+		                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                    </div>
+		                                </td>
+	                                </tr>
                                 </tbody>
                             </table>
                         </form>
@@ -77,16 +81,19 @@
                                     <col width="9%">
                                     <col width="10%">
                                 </colgroup>
-                                <thead>
+                                 <thead>
                                     <tr>
                                         <td rowspan="2">일자</td>
-                                        <td rowspan="2">카테고리</td>
+                                        <td colspan="3">고객별</td>
                                         <td colspan="4">결제완료 주문</td>
                                         <td rowspan="2">결제합계</td>
                                         <td rowspan="2">환불합계</td>
                                         <td rowspan="2">순매출</td>
                                     </tr>
                                     <tr>
+                                        <td>이메일</td>
+                                        <td>이름</td>
+                                        <td>회원등급</td>
                                         <td>주문수</td>
                                         <td>품목수</td>
                                         <td>상품구매 금액</td>
@@ -101,20 +108,20 @@
                             <c:set var = "total5" value = "0" />
                             <c:set var = "total6" value = "0" />
                             <c:set var = "total7" value = "0" />
-                            <c:set var = "total8" value = "0" />
-                            <c:set var = "total9" value = "0" />
                             <c:if test="${not empty list}">
 		                        <c:forEach var="list" items="${list}">
 			                        <c:set var = "total1" value = "${total1 + list.payment_order_quantity}" />
 		                            <c:set var = "total2" value = "${total2 + list.product_count}" />
 		                            <c:set var = "total3" value = "${total3 + list.product_user_payment}" />
-		                            <c:set var = "total5" value = "${total5 + list.product_discount}" />
-		                            <c:set var = "total7" value = "${total7 + (list.product_user_payment - list.product_discount + list.product_delivery_payment)}" />
-		                            <c:set var = "total8" value = "${total8 + list.cancel_request_amount}" />
-		                            <c:set var = "total9" value = "${total9 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
+		                            <c:set var = "total4" value = "${total4 + list.product_discount}" />
+		                            <c:set var = "total5" value = "${total5 + (list.product_user_payment - list.product_discount + list.product_delivery_payment)}" />
+		                            <c:set var = "total6" value = "${total6 + list.cancel_request_amount}" />
+		                            <c:set var = "total7" value = "${total7 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
 		                           <tr>
 		                                <td>${list.reg_date}</td>
-		                                <td>${list.pd_category_name}</td>
+		                                <td>${list.email}</td>
+		                                <td>${list.username}</td>
+		                                <td>${list.user_grant_name}</td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.payment_order_quantity}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_count}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_user_payment}" /></td>
@@ -128,14 +135,14 @@
                                 </tbody>
                                 <tfoot>
 									<tr>
-										<td colspan="2">합계</td>
+										<td colspan="4">합계</td>
 										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total1}" /></td>
 										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total2}" /></td>
 										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total3}" /></td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total4}" /></td>
 										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total5}" /></td>
+										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total6}" /></td>
 										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total7}" /></td>
-										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total8}" /></td>
-										<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total9}" /></td>
 									</tr>
                                 </tfoot>
                             </table>

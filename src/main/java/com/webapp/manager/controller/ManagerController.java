@@ -70,6 +70,8 @@ public class ManagerController {
     @Autowired
     private MgOptionDAO mgOptionDAO;
     @Autowired
+    private MgSalesDAO mgSalesDAO;
+    @Autowired
     MgBrandDAO mgBrandDAO;
     @Value("${t_key}")
     private String t_key;
@@ -509,27 +511,24 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/option-brand")
     public String managerBrand(@RequestParam HashMap params, ModelMap model, MgBrandVO mgBrandVO) throws Exception {
         try {
-            //화면에 표시할 개수
             mgBrandVO.setDisplayRowCount(10);
 //            mgBrandVO.setStaticRowEnd(10);
-            //전체 행수
             mgBrandVO.pageCalculate(mgBrandDAO.getBrandListCount(mgBrandVO));
-            //리스트
             List<Map<String, Object>> list = mgBrandDAO.getBrandList(mgBrandVO);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", mgBrandVO);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //공통 리스트 구현용도
         model.addAttribute("table_name", "product_brand");
         model.addAttribute("Pk", "product_brand");
-
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "option-brand");
         model.addAttribute("postUrl", "/Manager/option-brand");
         return "/manager/option-brand";
     }
+
+
 
     //업체관리
     @RequestMapping(value = "/Manager/company-app")
@@ -649,9 +648,16 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/class-sales")
     public String managerClassSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
-
+    		searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -659,6 +665,68 @@ public class ManagerController {
         model.addAttribute("style", "class-sales");
         model.addAttribute("postUrl", "/Manager/class-sales");
         return "/manager/class-sales";
+    }
+    //분류별 매출 사용자별
+    @RequestMapping(value = "/Manager/class-sales-user")
+    public String managerClassSalesUser(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+    		searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesUserListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesUserList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "class-sales");
+        model.addAttribute("postUrl", "/Manager/class-sales-user");
+        return "/manager/class-sales-user";
+    }
+    //분류별 매출 협력사별
+    @RequestMapping(value = "/Manager/class-sales-company")
+    public String managerClassSalesCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	try {
+    		searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
+    		
+    		model.addAttribute("list", list);
+    		model.addAttribute("searchVO", searchVO);
+    		model.addAttribute("table_name", "payment");
+    		model.addAttribute("Pk", "payment_cd");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("topNav", 5);
+    	model.addAttribute("style", "class-sales");
+    	model.addAttribute("postUrl", "/Manager/class-sales-company");
+    	return "/manager/class-sales-company";
+    }
+  //분류별 매출 사용자별
+    @RequestMapping(value = "/Manager/class-sales-paymethod")
+    public String managerClassSalesPaymethod(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+    		searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesPaymethodListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesPaymethodList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "class-sales");
+        model.addAttribute("postUrl", "/Manager/class-sales-paymethod");
+        return "/manager/class-sales-paymethod";
     }
 
     //상품별 매출
