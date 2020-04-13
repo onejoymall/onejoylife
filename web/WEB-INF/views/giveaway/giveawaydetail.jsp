@@ -318,7 +318,7 @@
             controls:true,
             useCSS:false,
             pagerCustom: '#bx-pager',
-            touchEnabled : (navigator.maxTouchPoints > 0),
+            touchEnabled : false,
         });
         var relatedgoods = $('.related-goods').bxSlider({
             auto:false,
@@ -333,7 +333,7 @@
             autoControls:true,
             controls:true,
             useCSS:false,
-            touchEnabled : (navigator.maxTouchPoints > 0),
+            touchEnabled : false,
             // 웹접근성 추가
             onSliderLoad: function(){
                 $(".bx-clone").find("a").prop("tabIndex","-1");

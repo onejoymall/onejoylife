@@ -120,7 +120,7 @@
         prevSelector:'.left-ar',
         pagerCustom:'.ar-num',
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     $(".top-but").click(function() {
         $('html, body').animate({

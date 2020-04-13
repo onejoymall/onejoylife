@@ -7,6 +7,7 @@ import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,12 +165,51 @@ public class ProductController {
         return "product/productdetail";
     }
     //결제
-    @RequestMapping(value = "/product/productPayment")
-    public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request,HttpSession session) throws Exception{
-        params.put("email",session.getAttribute("email"));
+    @RequestMapping(value = "/product/productPaymentCart")
+    public String productPaymentCart(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
         try{
-            String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
+            params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            if(commonVO.getChk().length!=0){
+                if(isEmpty(userInfo)){
+                    params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+                }else{
+                    params.put("cart_user_id",userInfo.get("usr_id"));
+                }
+
+                model.addAttribute("searchVO", searchVO);
+                //결제비용
+                Map<String,Object> getCartSum = cartDAO.getCartSum(params);
+                List<Map<String,Object>> cartList = cartDAO.getCartPaymentList(params);
+                model.addAttribute("cartList", cartList);
+                model.addAttribute("getCartSum", getCartSum);
+
+                if(!isEmpty(userInfo)){
+
+                    //최근 배송지 불러오기
+                    params.put("product_cd",null);
+                    params.put("giveaway_cd",null);
+                    params.put("order_user_id",userInfo.get("usr_id"));
+                    params.put("order_no",null);
+                    Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
+                    model.addAttribute("userInfo",userInfo );
+                    model.addAttribute("latestDelivery",latestDelivery );
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style","mypage-4-1-1");
+        return "product/cartpayment";
+    }
+    @RequestMapping(value = "/product/productPayment")
+    public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
+
+        try{
+
+            params.put("email",session.getAttribute("email"));
+            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
             params.put("product_cd",request.getParameter("product_cd"));
             Map<String,Object> detail = productDAO.getProductViewDetail(params);
             //상품 금액
@@ -356,6 +396,16 @@ public class ProductController {
             String[] splitStyleArray =product_option_style.split("\\,");
             String[] splitArray =splitString.split("\\/\\/");
 
+            if(splitArray.length > 0){
+                outText += "" +
+                        "<div class=\"goods-point-row\">\n" +
+                        "   <div class=\"point-title\">옵션선택</div>\n" +
+                        "</div>";
+                outText += "" +
+                        "<div class=\"goods-point-row\">\n" +
+                        "   <div class=\"point-title\">&nbsp;</div>\n" +
+                        "</div>";
+            }
             for(int z=0;z < splitArray.length;z++){
 
                 String[] splitNextArray =splitArray[z]
@@ -363,17 +413,18 @@ public class ProductController {
                 String[] splitThirdArray = splitNextArray[1]
                         .replaceAll("\\}", "")
                         .split("\\|");
-                if(splitStyleArray[z].equals("P")){
+                if(splitStyleArray[z].equals("P") || splitStyleArray[z].isEmpty()){
                     outText += "" +
-                            ""+splitNextArray[0]+" 선택\n" +
-                            "<select class=\"w100\">\n" ;
+                            "<div class=\"w100 clearfix\">" +
+                            "<input type=\"hidden\" name=\"option_name\" value=\""+splitNextArray[0]+"\">\n<div class=\" shipping-title full-left\">"+splitNextArray[0]+"</div>\n" +
+                            "<select name=\"select_option_value\" class=\"productOption full-right\">\n" ;
                     //오션스타일 에따라 다르게
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
                                 "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";
                     }
                     outText += "" +
-                            "</select>";
+                            "</select></div>";
                 }
                 if(splitStyleArray[z].equals("B")){
                     outText += "" +

@@ -21,7 +21,7 @@
     <div class="footer-bottom-section clearfix">
         <div class="footer-bottom-section-inner">
             <div class="footer-left-section">
-                <h5 class="footer-h5">ONEJOY<br>고객지원센터</h5>
+                <h5 class="footer-h5 pointer" onclick="location.href='/Help/csinfo'">ONEJOY<br>고객지원센터</h5>
                 <h6>무엇이든 물어보세요</h6>
                 <p class="footer-callnumber">1811-9590</p>
                 <div class="footer-time-wrap">
@@ -29,12 +29,12 @@
                     <p class="td"><span>오전 10시~오후 6시</span><span>주말, 공휴일 휴무</span><br><span>&#40;점심시간: 12:00~13:00&#41;</span></p>
                 </div>
             </div>
-            <div class="footer-right-section">
-                <h5 class="footer-h5">COMPANY<br>INFORMATION</h5>
+            <div class="footer-right-section ">
+                <h5 class="footer-h5 pointer" onclick="location.href='/Help/csinfo'">COMPANY<br>INFORMATION</h5>
                 <ul>
                     <li>상호 : 주식회사 원조이 / 대표 : 김수현 / 전화 : 1811-9590 / 팩스 : 02-3472-0888</li>
                     <li>사업자 등록번호 : [487-88-01223]</li>
-                    <li>통신판매업신고 2019-서울서초-0844 <a href="#">[사업자정보확인]</a></li>
+                    <li>통신판매업신고 2019-서울서초-0844 <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[사업자정보확인]</a></li>
                     <li>주소 : 06643 서울특별시 서초구 서리풀길 4 (서초동) 영호빌딩 4층</li>
                     <li>개인정보관리책임자 : <a href="mailto:cs@onejoy.co.kr">김수현(cs@onejoy.co.kr)</a></li>
                     <li>Copyright ONEJOYlife. All rights reserved. / hosting by cafe24 심플렉스인터넷(주)</li>

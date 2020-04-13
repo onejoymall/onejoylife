@@ -219,6 +219,30 @@
                                         <p><span>(공통상세)</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input"></p>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>계산서 수신메일</th>
+                                    <td>
+                                        <input type="text" id="tex_email" name="tex_email">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>계좌번호</th>
+                                    <td>
+                                        <input type="text" id="store_bank_account" name="store_bank_account">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>예금주</th>
+                                    <td>
+                                        <input type="text" id="store_bank_holder" name="store_bank_holder">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>은행명</th>
+                                    <td>
+                                        <input type="text" id="store_bank_name" name="store_bank_name">
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     <button type="button" id="formStoreSubmit" class="btn-red">등록하기</button>

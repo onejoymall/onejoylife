@@ -14,7 +14,7 @@
 <div class="wrap">
     <div class="page-box">
 
-        </div>
+
         <main class="clearfix">
             <form name="defaultForm" id="defaultForm" method="POST">
                 <input name="product_cd"  type="hidden" value="<c:out value="${param.product_cd}"/>">
@@ -34,7 +34,7 @@
                             <tbody class="sec1-tbody">
                             <tr>
                                 <td>주문하시는 분</td>
-                                <td><input type="text" name="order_user_name" id="order_user_name" placeholder="홍길동" class="sec1-in1" value="<c:out value="${userInfo.username}"/>"></td>
+                                <td><input type="text" name="order_user_name" id="order_user_name"  class="sec1-in1" value="<c:out value="${userInfo.username}"/>"></td>
                             </tr>
                             <tr>
                                 <td>이메일주소</td>
@@ -45,7 +45,7 @@
                                     <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${userInfo.phone}" />
@@ -83,25 +83,7 @@
                                 <col style="width: 920px;">
                             </colgroup>
                             <tbody class="sec2-tbody">
-                            <tr>
-                                <td>배송 방법</td>
-                                <td class="sel-td">
-                                <c:if test="${delivery_class eq 'F'}">
-                                    ${selector}
-                                </c:if>
-                                <c:if test="${delivery_class eq 'T'}">
-                                    <select name="delivery_type">
-                                        <c:if test="${not empty selector}">
-                                            <c:forEach var="selectorList" items="${selector}" varStatus="status">
-                                                <option value="${selectorList.code_value}">${selectorList.code_name}</option>
-                                            </c:forEach>
-                                        </c:if>
-                                    </select>
-                                </c:if>
 
-
-                                </td>
-                            </tr>
                             <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
@@ -127,7 +109,7 @@
                                 <td>휴대폰 번호 <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${latestDelivery.delivery_user_phone}" />
@@ -157,7 +139,7 @@
                                 <td>전화 번호<!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-                                        <c:set var="phoneNumber" value="010-0000-0000" />
+
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />

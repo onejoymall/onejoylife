@@ -7,6 +7,7 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com.sun.javafx.collections.MappingChange;
+import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
@@ -14,19 +15,18 @@ import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.CommonVO;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.UserVO;
+import com.webapp.mall.vo.*;
 import com.webapp.manager.vo.MgCommonVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -760,7 +760,7 @@ public class restapiController {
         return resultMap;
     }
     //찜
-    @RequestMapping(value = "/cart/addFavorites")
+    @RequestMapping(value = "/cart/addFavorites", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> addaddFavorites(@RequestParam HashMap params,HttpSession session,HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -803,14 +803,15 @@ public class restapiController {
     }
 
     //장바구니 등록
-    @RequestMapping(value = "/cart/addcart")
-    public  HashMap<String, Object> addCart(@RequestParam HashMap params,HttpSession session,HttpServletRequest request){
+    @RequestMapping(value = "/cart/addcart", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> addCart(HttpSession session, HttpServletRequest request,OptionVO optionVO,@RequestParam HashMap params){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
 
+            String  cart_cd = "CR"+numberGender.numberGen(6,1);
             //카트번호
-            params.put("cart_cd","CR"+numberGender.numberGen(6,1));
+            params.put("cart_cd",cart_cd);
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -836,6 +837,11 @@ public class restapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+//                List<OptionVO> optionList = new ArrayList<OptionVO>();
+//                optionVO.setCart_cd(cart_cd);
+//                optionList.add(optionVO);
+//                optionVO.setOptionVOList(optionList);
+//                cartDAO.insertCartOption(optionVO);
                 cartDAO.insertCart(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
@@ -845,7 +851,7 @@ public class restapiController {
         return resultMap;
     }
     //장바구니 삭제
-    @RequestMapping(value = "/cart/deletecart")
+    @RequestMapping(value = "/cart/deletecart", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> deleteCart(@RequestParam HashMap params,HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try{
@@ -856,6 +862,21 @@ public class restapiController {
         }
         return resultMap;
     }
+
+    //장바구니 변경
+    @RequestMapping(value = "/cart/updateCart", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> updateCart(@RequestParam HashMap params,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            cartDAO.updateCart(params);
+            resultMap.put("redirectUrl","/MyPage/ShoppingBasket");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+
     // 상품 결제
     @RequestMapping(value = "/product/paymentProc")
     public  HashMap<String, Object> productPaymentProc(@RequestParam HashMap params,HttpSession session){

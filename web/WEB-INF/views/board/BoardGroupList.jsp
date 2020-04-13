@@ -133,7 +133,7 @@ function addNode(nodeNo, nodeTitle){
 
 				<p>&nbsp;</p>
 				<input name="bgno" id="bgno" type="hidden" value="">
-				<table class="right-table">
+				<table class="right-table rightTable">
 					<colgroup>
 						<col style="width: 160px;">
 						<col style="width: 914px;">
@@ -148,13 +148,13 @@ function addNode(nodeNo, nodeTitle){
 					<tr>
 						<td>관리</td>
 						<td>
-							<a href="" id="showMgBgno">* 관리할 게시판을 선택하세요</a>
+							<a href="" id="showMgBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
 						</td>
 					</tr>
 					<tr>
 						<td>일반</td>
 						<td>
-							<a href="" id="showBgno">* 관리할 게시판을 선택하세요</a>
+							<a href="" id="showBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
 						</td>
 					</tr>
 					<tr class="radio-td">

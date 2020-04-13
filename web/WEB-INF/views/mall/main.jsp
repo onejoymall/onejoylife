@@ -478,7 +478,7 @@
         autoControls:true,
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     $('.special-price-list').bxSlider({
         auto:false,
@@ -495,7 +495,7 @@
         autoControls:true,
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     var categoryList = $('.category-list').bxSlider({
         auto:false,
@@ -512,7 +512,7 @@
         autoControls:true,
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     var selectedList = $('.selected-list').bxSlider({
         auto:false,
@@ -529,7 +529,7 @@
         autoControls:true,
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     $(document).ready(function(){
         $('.notice-list>li').click(function(){
