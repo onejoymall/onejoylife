@@ -1,16 +1,15 @@
 package com.webapp.manager.dao;
 
-import com.webapp.board.common.SearchVO;
-import com.webapp.manager.vo.MgBrandVO;
-import com.webapp.manager.vo.MgUserVO;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.webapp.board.common.SearchVO;
 
 @Repository
 public class MgSalesDAO {
@@ -24,7 +23,20 @@ public class MgSalesDAO {
         Integer getCategorySalesListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesListCount",params);
         return getCategorySalesListCount;
     }
-//    public void insertBrand(MgBrandVO mgBrandVO) throws SQLException{
-//        sql.insert("mall.MgBrandMapper.insertBrand", mgBrandVO);
-//    }
+    public List<Map<String, Object>> getCategorySalesUserList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getCategorySalesUserList = sql.selectList("mall.MgSalesMapper.getCategorySalesUserList",params);
+    	return getCategorySalesUserList;
+    }
+    public Integer getCategorySalesUserListCount(SearchVO params) throws SQLException{
+    	Integer getCategorySalesUserListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesUserListCount",params);
+    	return getCategorySalesUserListCount;
+    }
+    public List<Map<String, Object>> getCategorySalesPaymethodList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getCategorySalesPaymethodList = sql.selectList("mall.MgSalesMapper.getCategorySalesPaymethodList",params);
+    	return getCategorySalesPaymethodList;
+    }
+    public Integer getCategorySalesPaymethodListCount(SearchVO params) throws SQLException{
+    	Integer getCategorySalesPaymethodListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesPaymethodListCount",params);
+    	return getCategorySalesPaymethodListCount;
+    }
 }

@@ -15,13 +15,16 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
-    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
-      </foreach>
+    <if test="searchKeyword != null and searchKeyword != ''">
+    	AND product_ct LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
-    <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-    <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+    <if test='category1 != null and category1 gt 0'>
+    AND (
+    	product_ct LIKE CONCAT('%', #{category1},'%')
+    	OR product_ct LIKE CONCAT('%', #{category2},'%')
+    	OR product_ct LIKE CONCAT('%', #{category3},'%')
+    )
+    </if>
     GROUP BY 1,2) A
   </select>
   <select id="getCategorySalesList" resultType="java.util.HashMap">
@@ -40,14 +43,128 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
-    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+    <if test="searchKeyword != null and searchKeyword != ''">
+    	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
+    </if>
+    <if test='category1 != null and category1 gt 0'>
+    AND (
+    	product_ct LIKE CONCAT('%', #{category1},'%')
+    	OR product_ct LIKE CONCAT('%', #{category2},'%')
+    	OR product_ct LIKE CONCAT('%', #{category3},'%')
+    )
+    </if>
+    GROUP BY 1,2
+	order by A.reg_date desc 
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  <select id="getCategorySalesUserListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+  	SELECT IFNULL(COUNT(*),0) cnt
+    FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+			email
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	LEFT JOIN user B
+	ON A.payment_user_id = B.usr_id
+	LEFT JOIN user_grant D
+	ON B.usr_id = D.user_grant_no
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if>
-    <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-    <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
-    GROUP BY 1,2
-	<![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1,2) A
+  </select>
+  
+  <select id="getCategorySalesUserList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
+  	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+			email,
+			username,
+			D.user_grant_name,
+			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(distinct C.product_id),0) product_count,
+			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	LEFT JOIN user B
+	ON A.payment_user_id = B.usr_id
+	LEFT JOIN user_grant D
+	ON B.usr_id = D.user_grant_no
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1,2
+	order by A.reg_date desc 
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  
+  <select id="getCategorySalesPaymethodList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
+  	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+			B.code_name,
+			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(distinct C.product_id),0) product_count,
+			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	LEFT JOIN code B
+	ON B.code = 'product_payment_type' AND A.payment_type_cd = B.code_value
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1,2
+	order by A.reg_date desc 
+	LIMIT ${rowStart-1}, ${displayRowCount}	
+  </select>
+  
+  <select id="getCategorySalesPaymethodListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+  	SELECT IFNULL(COUNT(*),0) cnt
+    FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+			B.code_name,
+			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(distinct C.product_id),0) product_count,
+			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	LEFT JOIN code B
+	ON B.code = 'product_payment_type' AND A.payment_type_cd = B.code_value
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1,2) A
   </select>
 </mapper>
