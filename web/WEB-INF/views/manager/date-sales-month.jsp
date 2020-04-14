@@ -11,9 +11,9 @@
                 <colgroup></colgroup>
                 <tbody>
                     <tr>
-                        <th data-id="/Manager/date-sales" class="list-tab on">일별 매출</th>
+                        <th data-id="/Manager/date-sales" class="list-tab">일별 매출</th>
                         <th data-id="/Manager/date-sales-week" class="list-tab">주별 매출</th>
-                        <th data-id="/Manager/date-sales-month" class="list-tab">월별 매출</th>
+                        <th data-id="/Manager/date-sales-month" class="list-tab on">월별 매출</th>
                     </tr>
                 </tbody>
             </table>
@@ -21,7 +21,7 @@
                 <div class="in-list-tab on" id="tab-on1">
                     <div class="search-form">
                         <form name="" id="" class="listSrcForm1" method="get">
-                        	<!-- <div class="keyword-src-wrap">
+                            <!-- <div class="keyword-src-wrap">
                                 <input type="text" class="keyword-src" name="keyword-src">
                                 <button type="button" class="keyword-src-button">검색</button>
                             </div> -->

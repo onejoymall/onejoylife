@@ -671,8 +671,8 @@ public class ManagerController {
     public String managerClassSalesUser(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
     		searchVO.setDisplayRowCount(10);
-    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesUserListCount(searchVO));
-    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesUserList(searchVO);
+    		searchVO.pageCalculate(mgSalesDAO.getUserSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getUserSalesList(searchVO);
     		
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
@@ -690,13 +690,13 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/class-sales-company")
     public String managerClassSalesCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
     	try {
-    		searchVO.setDisplayRowCount(10);
-    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
-    		params.put("displayRowCount", searchVO.getDisplayRowCount());
-    		params.put("rowStart", searchVO.getRowStart());
-    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
-    		
-    		model.addAttribute("list", list);
+//    		searchVO.setDisplayRowCount(10);
+//    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
+//    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+//    		params.put("rowStart", searchVO.getRowStart());
+//    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
+//    		
+//    		model.addAttribute("list", list);
     		model.addAttribute("searchVO", searchVO);
     		model.addAttribute("table_name", "payment");
     		model.addAttribute("Pk", "payment_cd");
@@ -713,8 +713,8 @@ public class ManagerController {
     public String managerClassSalesPaymethod(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
     		searchVO.setDisplayRowCount(10);
-    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesPaymethodListCount(searchVO));
-    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesPaymethodList(searchVO);
+    		searchVO.pageCalculate(mgSalesDAO.getPaymethodSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getPaymethodSalesList(searchVO);
     		
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
@@ -730,12 +730,39 @@ public class ManagerController {
     }
 
     //상품별 매출
-    @RequestMapping(value = "/Manager/product-sales")
+    @RequestMapping(value = "/Manager/product-sales-category")
     public String managerProductSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
-
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getTopCategorySalesListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		List<Map<String, Object>> list = mgSalesDAO.getTopCategorySalesList(params);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "product-sales");
+        model.addAttribute("postUrl", "/Manager/product-sales-category");
+        return "/manager/product-sales-category";
+    }
+  //상품별 매출 카테고리
+    @RequestMapping(value = "/Manager/product-sales")
+    public String managerProductSalesCategory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getTopProductSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getTopProductSalesList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -744,13 +771,19 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/product-sales");
         return "/manager/product-sales";
     }
+    
     //날짜별 매출
     @RequestMapping(value = "/Manager/date-sales")
     public String managerDataSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
-
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getDateSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getDateSalesList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -758,6 +791,46 @@ public class ManagerController {
         model.addAttribute("style", "date-sales");
         model.addAttribute("postUrl", "/Manager/date-sales");
         return "/manager/date-sales";
+    }
+  //날짜별 매출 주별
+    @RequestMapping(value = "/Manager/date-sales-week")
+    public String managerDataSalesWeek(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getWeekSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getWeekSalesList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "date-sales");
+        model.addAttribute("postUrl", "/Manager/date-sales-week");
+        return "/manager/date-sales-week";
+    }
+  //날짜별 매출 월별
+    @RequestMapping(value = "/Manager/date-sales-month")
+    public String managerDataSalesMonth(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getMonthSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getMonthSalesList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "date-sales");
+        model.addAttribute("postUrl", "/Manager/date-sales-month");
+        return "/manager/date-sales-month";
     }
     //회원관리
     @RequestMapping(value = "/Manager/member-management")

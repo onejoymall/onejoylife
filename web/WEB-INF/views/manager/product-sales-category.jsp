@@ -14,8 +14,8 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th data-id="/Manager/product-sales" class="list-tab on">판매율 상위 상품</th>
-                        <th data-id="/Manager/product-sales-category" class="list-tab">판매율 상위 카테고리</th>
+                        <th data-id="/Manager/product-sales" class="list-tab">판매율 상위 상품</th>
+                        <th data-id="/Manager/product-sales-category" class="list-tab on">판매율 상위 카테고리</th>
                     </tr>
                 </tbody>
             </table>
@@ -26,9 +26,9 @@
                             <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                             <button type="submit" class="keyword-src-button">검색</button>
                             <div class="src-filter-wrap">
-	                        	<input type="checkbox"  name="searchType" value="product_name" id="chk1" checked>
-	                        	<label for="chk1">상품명</label>
-	                    	</div>
+		                        <input type="checkbox"  name="searchType" value="category_name" id="chk1" checked>
+		                        <label for="chk1">카테고리 명</label>
+	                      	</div>
                         </div>
                         <table class="keyword-src-table">
                             <colgroup>
@@ -39,6 +39,18 @@
                             </colgroup>
                             <tbody>
                                 <tr>
+                                    <th>카테고리</th>
+                                    <td>
+                                        <select class="category1" name="category1">
+                                        <option>--</option>
+                                        </select>
+                                        <select class="category2" name="category2">
+                                        <option>--</option>
+                                        </select>
+                                        <select class="category3" name="category3">
+                                        <option>--</option>
+                                        </select>
+                                    </td>
                                     <th>기간별 선택</th>
 	                                <td>
 	                                    <div class="input-box2">
@@ -76,16 +88,13 @@
                             <thead>
                           		<tr>
 	                                <td rowspan="2">순위</td>
-	                                <td colspan="3">상품정보</td>
+	                                <td rowspan="2">카테고리</td>
 	                                <td colspan="3">결제완료 주문</td>
 	                                <td rowspan="2">결제합계</td>
 	                                <td rowspan="2">환불합계</td>
 	                                <td rowspan="2">순매출</td>
                               	</tr>
                                 <tr>
-                                    <td>상품코드</td>
-                                    <td>상품명</td>
-                                    <td>판매가</td>
                                     <td>주문수</td>
                                     <td>상품 구매금액</td>
                                     <td>할인</td>
@@ -108,9 +117,7 @@
 		                            <c:set var = "total7" value = "${total7 + (list.product_user_payment - list.product_discount - list.cancel_request_amount)}" />
 		                           <tr>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.rank}" /></td>
-		                                <td>${list.product_cd}</td>
-		                                <td>${list.product_name}</td>
-		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.one_product_user_payment}" /></td>
+		                                <td>${list.pd_category_name}</td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.payment_order_quantity}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_user_payment}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_discount}" /></td>
@@ -123,7 +130,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">합계</td>
+                                    <td colspan="2">합계</td>
                                     <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total1}" /></td>
 									<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total3}" /></td>
 									<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${total4}" /></td>
@@ -174,12 +181,12 @@
        	            url: '/Manager/productCategoryList',
        	            data: {"pd_category_upper_code":uppper_code},
        	            success: function (data) {
-      	        			console.log(data.list);
-      	                    var html="<option value='-1'>--</option>"
-      	                    data.list.forEach(function(el){
-      	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
-      	                    });
-      	                    $(".keyword-src-table tbody select:nth-child(2)").html(html);
+  	        			console.log(data.list);
+  	                    var html="<option value='-1'>--</option>"
+  	                    data.list.forEach(function(el){
+  	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+  	                    });
+  	                    $(".keyword-src-table tbody select:nth-child(2)").html(html);
        	            },
        	            error: function (xhr, status, error) {
        	                alert(error);
@@ -187,26 +194,26 @@
        	        });
        	    });
         	$('.keyword-src-table tbody select:nth-child(2)').on("change",function(){
-           	        //소분류 초기화
-           	        $('.keyword-src-table tbody select:nth-child(3)').empty();
-           	        var uppper_code =$(this).val();
-           	        console.log(uppper_code)
-           	        jQuery.ajax({
-           	            type: 'POST',
-           	            url: '/Manager/productCategoryList',
-           	            data: {"pd_category_upper_code":uppper_code},
-           	            success: function (data) {
-          	                    var html="<option value='-1'>--</option>"
-          	                    data.list.forEach(function(el){
-          	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
-          	                    });
-          	                    $(".keyword-src-table tbody select:nth-child(3)").html(html);
-           	            },
-           	            error: function (xhr, status, error) {
-           	                alert(error);
-           	            }
-           	        });
-           	    });
+        	    //소분류 초기화
+       	        $('.keyword-src-table tbody select:nth-child(3)').empty();
+       	        var uppper_code =$(this).val();
+       	        console.log(uppper_code)
+       	        jQuery.ajax({
+       	            type: 'POST',
+       	            url: '/Manager/productCategoryList',
+       	            data: {"pd_category_upper_code":uppper_code},
+       	            success: function (data) {
+   	                    var html="<option value='-1'>--</option>"
+   	                    data.list.forEach(function(el){
+   	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+   	                    });
+   	                    $(".keyword-src-table tbody select:nth-child(3)").html(html);
+       	            },
+       	            error: function (xhr, status, error) {
+       	                alert(error);
+       	            }
+       	        });
+       	    });
         	
         })//로드끝
         </script>
