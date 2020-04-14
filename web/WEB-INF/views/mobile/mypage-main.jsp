@@ -53,7 +53,7 @@
         <header class="header clearfix">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
-                <h1><a href="index-mobile.html">원조이몰</a></h1>
+                <h1><a href="/">원조이몰</a></h1>
                 <div class="h-cart">
                     <a href="#" class="cart-inner">
                         <i class="cart"></i>
@@ -136,6 +136,9 @@
 
         </div>
     </div>
+
+    <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>
+
     <script type="text/javascript">
         $(document).ready(function(){
             $(".back-arr").click(function(){

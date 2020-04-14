@@ -27,6 +27,13 @@
 .main-slider-wrap li a{
     display: block;
 }
+.mainList-big2-text .list-title {
+    width:100%;
+    font-size:18px;
+    font-weight: 900;
+    color:#da394d;
+}
+
 /*회원가입*/
 .error {
     display : none;
