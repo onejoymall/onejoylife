@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -495,6 +494,21 @@
             <li>Copyright ONEJOYlife. All rights reserved.</li>
         </ul>
     </footer>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#" id="nav-cate"><i class="cate-ic">카테고리</i></a></li>
+            <li><a href="#" id="nav-home"><i class="home-ic">홈</i></a></li>
+            <li><a href="#" id="nav-src"><i class="src-ic">검색</i></a></li>
+            <c:if test="${!sessionScope.login}">
+                <li><a href="<c:url value="/sign/login"/>" id="nav-user"><i class="user-ic">마이페이지</i></a></li>
+            </c:if>
+            <c:if test="${sessionScope.login}">
+                <li><a href="<c:url value="/MyPage/DashBoard"/>" id="nav-user"><i class="user-ic">마이페이지</i></a></li>
+            </c:if>
+        </ul>
+    </nav>
+
     <script type="text/javascript">
         //메인 슬라이더
         $(document).ready(function(){
