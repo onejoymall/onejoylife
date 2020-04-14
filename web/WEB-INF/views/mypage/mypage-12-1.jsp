@@ -86,7 +86,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" id="ch2" value="N" name="user_privacy_policy" >
+                                            <input type="checkbox" id="ch2" value="Y" name="user_privacy_policy" >
                                             <label for="ch2">
                                                 <div class="ch-display">
                                                     <div class="cont1-box1">
@@ -108,7 +108,7 @@
                                     </tr>
                                     <tr>
                                         <td class="sec2-td1">
-                                            <input type="checkbox" id="ch3" value="N" name="email_privacy_policy" >
+                                            <input type="checkbox" id="ch3" value="Y" name="email_privacy_policy" >
                                             <label for="ch3">
                                                 <div class="ch-display">
                                                     <span class="c-color">(선택)</span><span>이메일 수신</span>

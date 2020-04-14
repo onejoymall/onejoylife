@@ -34,12 +34,18 @@
         </repository>
     </repositories>
     <dependencies>
+        <!-- 모바일 버전 -->
+        <dependency>
+            <groupId>org.springframework.mobile</groupId>
+            <artifactId>spring-mobile-device</artifactId>
+            <version>1.1.5.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>com.github.iamport</groupId>
             <artifactId>iamport-rest-client-java</artifactId>
             <version>0.2.6</version>
         </dependency>
-    <!-- Spring -->
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -304,23 +310,23 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-<!--    <build>-->
-<!--        <plugins>-->
+    <!--    <build>-->
+    <!--        <plugins>-->
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.6.1</version>-->
-<!--                <configuration>-->
-<!--                    <source>1.8</source>-->
-<!--                    <target>1.8</target>-->
-<!--                    <compilerArgument>-Xlint:all</compilerArgument>-->
-<!--                    <showWarnings>true</showWarnings>-->
-<!--                    <showDeprecation>true</showDeprecation>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>3.6.1</version>-->
+    <!--                <configuration>-->
+    <!--                    <source>1.8</source>-->
+    <!--                    <target>1.8</target>-->
+    <!--                    <compilerArgument>-Xlint:all</compilerArgument>-->
+    <!--                    <showWarnings>true</showWarnings>-->
+    <!--                    <showDeprecation>true</showDeprecation>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
 
-<!--        </plugins>-->
-<!--    </build>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 
 </project>

@@ -16,6 +16,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +70,8 @@ public class UserController {
     @RequestMapping(value = "/sign/login", method = RequestMethod.GET, produces = "application/json")
     public String mallLogin(@RequestParam HashMap params, ModelMap model,HttpServletRequest request) throws Exception {
         String returnString ="mall/login";
+        Device device = DeviceUtils.getCurrentDevice(request);
+
         try{
             Object siteUrl = request.getRequestURL().toString()
                     .replaceAll(" " , "")
@@ -75,18 +79,20 @@ public class UserController {
             HttpSession session = request.getSession();
             Object obj = session.getAttribute("login");
             if ( obj != null ){
-                returnString ="redirect:/";
+                returnString = "redirect:/";
             }
             model.addAttribute("siteUrl", siteUrl);
         }catch(Exception e){
             e.printStackTrace();
         }
-
+        if(device.isMobile()){
+            returnString = "mobile/login";
+        }
         model.addAttribute("style", "login");
         return returnString;
     }
     @RequestMapping(value = "/sign/signup")
-    public String mallSignup(@RequestParam HashMap params, ModelMap model) throws Exception {
+    public String mallSignup(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
 
@@ -97,7 +103,25 @@ public class UserController {
         }
         model.addAttribute("style", "joinform");
         model.addAttribute("postUrl","/sign/signupProc");
-        return "mall/signup";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/join";
+        } else {
+            return "mall/signup";
+        }
+    }
+    @RequestMapping(value = "/mobile/signup")
+    public String mobilejoinform(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
+        try{
+            //
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "joinform");
+        model.addAttribute("postUrl","/sign/signupProc");
+
+        return "mobile/joinform";
     }
     @RequestMapping(value = "/sign/findUserInfo")
     public String findUserInfo( ModelMap model,HttpServletRequest request)throws Exception{
@@ -130,7 +154,12 @@ public class UserController {
     }
     @RequestMapping(value = "/sign/signUpDone")
     public String signUpDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+        Device device = DeviceUtils.getCurrentDevice(request);
         model.addAttribute("style", "mem-com");
-        return "mall/signUpDone";
+        if(device.isMobile()){
+            return "mobile/mem-com";
+        } else {
+            return "mall/signUpDone";
+        }
     }
 }

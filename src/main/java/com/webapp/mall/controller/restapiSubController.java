@@ -123,6 +123,13 @@ public class restapiSubController {
 
             }
 
+            if(userVO.getUser_privacy_policy() == null){
+                userVO.setUser_privacy_policy("N");
+            }
+            if(userVO.getEmail_privacy_policy() == null){
+                userVO.setEmail_privacy_policy("N");
+            }
+
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -142,13 +149,12 @@ public class restapiSubController {
     }
 
     //장바구니 전체 등록
-    @RequestMapping(value = "/cart/addAllcart")
-    public HashMap<String, Object> addCart(@RequestParam HashMap params, CommonVO commonVO, HttpSession session, HttpServletRequest request){
+    @RequestMapping(value = "/cart/addAllCart", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> addAllShoppingBasket(@RequestParam HashMap params, HttpSession session, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
 
-//            for(CommonVO cvo: commonVO.getChk())
             //카트번호
             params.put("cart_cd","CR"+numberGender.numberGen(6,1));
             //사용자 아이디 확인 후 전달
@@ -175,7 +181,7 @@ public class restapiSubController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                cartDAO.insertCart(params);
+                cartDAO.addAllCart(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         }catch (Exception e){

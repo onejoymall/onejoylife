@@ -10,6 +10,8 @@ import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +82,7 @@ public class MyPage {
     }
     //대시보드
     @RequestMapping(value="/MyPage/DashBoard")
-    public String myPageDashBoard( Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO) {
+    public String myPageDashBoard( Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO, HttpServletRequest request) {
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -110,7 +112,12 @@ public class MyPage {
         }
         model.addAttribute("leftNavOrder", 1);
         model.addAttribute("style", "mypage-1");
-        return "mypage/DashBoard";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-main";
+        } else {
+            return "mypage/DashBoard";
+        }
     }
     //이포인트
     @RequestMapping(value="/MyPage/ePoint")
