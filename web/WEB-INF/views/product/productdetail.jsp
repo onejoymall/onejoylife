@@ -94,23 +94,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cart-option-wrap">
-                        ${option}
-                        <div class="quantity-box">
-                            <span>구매수량</span>
-                            <div class="total-quantity">
-                                <div class="minus" tabindex="0">-</div>
-                                <input type="hidden" name="payment_order_quantity" value="1">
-                                <div class="number">1</div>
-                                <div class="plus" tabindex="0">+</div>
-                            </div>
+                    <div class="goods-point-wrap">
+                        <div class="goods-point-row">
+                            <div class="point-title">&nbsp;</div>
                         </div>
-        <%--                    <div class="total-price">--%>
-        <%--                        <div class="total-price-title">상품 금액 합계</div>--%>
-        <%--                        <div class="total-price-number"><span>2,230,000</span>원</div>--%>
-        <%--                    </div>--%>
+                    </div>
+                    <div class="cart-option-wrap">
+
+
+                        ${option}
+
+
+
 
                     </div>
+                    <div class="quantity-box">
+                        <span>구매수량</span>
+                        <div class="total-quantity">
+                            <div class="minus" tabindex="0">-</div>
+                            <input type="hidden" name="payment_order_quantity" value="1">
+                            <div class="number">1</div>
+                            <div class="plus" tabindex="0">+</div>
+                        </div>
+                    </div>
+                    <%--                    <div class="total-price">--%>
+                    <%--                        <div class="total-price-title">상품 금액 합계</div>--%>
+                    <%--                        <div class="total-price-number"><span>2,230,000</span>원</div>--%>
+                    <%--                    </div>--%>
                     <div class="buy-wrap">
                         <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button>
                         <button class="buynow" type="button" id="paymentSubmit">바로구매</button>

@@ -176,7 +176,6 @@ public class MyPage {
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             model.addAttribute("searchVO", searchVO);
             //결제비용
-
             Map<String,Object> getCartSum = cartDAO.getCartSum(params);
             List<Map<String,Object>> list = cartDAO.getCartList(params);
             model.addAttribute("list", list);

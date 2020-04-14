@@ -23,6 +23,7 @@
                 <form name="defaultform" id="defaultForm" method="POST">
                     <input type="hidden" name="table_name" value="product_cart">
                     <input type="hidden" name="pk" value="cart_cd">
+
                     <div class="click-txt">
 <%--                        <p class="txt1">선택 찜하기</p>--%>
                         <p class="txt2 commonlistDelete">선택 삭제</p>
@@ -56,7 +57,10 @@
                         <c:if test="${not empty list}">
                             <c:forEach var="list" items="${list}" varStatus="status">
                                 <tr>
-                                    <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.cart_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td>
+                                        <input type="hidden" name="cart_cd" value="${list.cart_cd}">
+                                        <input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.cart_cd}"><label for="body-ck1-${status.index}"></label>
+                                    </td>
                                     <td>
                                         <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                                             <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
@@ -70,14 +74,14 @@
                                     </td>
 <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
                                     <td>
-                                        <input type="number" name="payment_order_quantity" value="1" class="num-box">
+                                        <input type="number" name="payment_order_quantity" value="${list.payment_order_quantity}" class="num-box payment_order_quantity" data-id="${list.cart_cd}">
                                     </td>
                                     <td>
                                         <div class="price-number before-price">
-                                            <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원
+                                            <fmt:formatNumber value="${list.product_user_payment*list.payment_order_quantity}" groupingUsed="true" />원
                                         </div>
                                     </td>
-                                    <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
+                                    <td><span><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /></span>원</td>
 <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
                                     <td><button class="x" data-id="${list.product_cd}"></button></td>
                                 </tr>
@@ -132,9 +136,9 @@
                     </div>
                     <div class="sum">
                         <div class="sum-in">
-                            <p><span>총 주문금액</span><br><span class="font-s sum-span1"><fmt:formatNumber value="${getCartSum.total_payment}" groupingUsed="true" /></span><span>원</span></p>
+                            <p><span>총 주문금액</span><br><span class="font-s sum-span1"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /></span><span>원</span></p>
                             <div class="sum-icon1"></div>
-                            <p><span>총 할인금액</span><br><span class="font-s sum-span2">0</span><span>원</span></p>
+                            <p><span>총 할인금액</span><br><span class="font-s sum-span2"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /></span><span>원</span></p>
                             <div class="sum-icon2"></div>
                             <p><span>배송비</span><br><span class="font-s sum-span3"><fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /></span><span>원</span></p>
                             <div class="sum-icon3"></div>

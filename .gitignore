@@ -1,0 +1,6 @@
+*.class
+.settings/
+target/
+.project
+MANIFEST.MF
+.classpath

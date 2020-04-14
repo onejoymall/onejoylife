@@ -544,7 +544,37 @@ input[class='styleClass']:checked + label
     border-left: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
 }
-
+/*right table*/
+.rightTable{
+    width:100%;
+    text-align: left;
+    border: 1px solid #dadada;
+    margin-bottom:20px;
+}
+.rightTable tbody td{
+    line-height: 30px;
+    padding:5px;
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
 .before-price{
     text-decoration: line-through;
+}
+.pointer{
+    cursor: pointer;
+}
+.full-right{
+    float: right;
+}
+.full-left{
+    float: left;
+}
+
+.productOption{
+    width: 50%;
+    height: 35px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0 6px;
+    color: rgba(0,0,0,0.6);
 }

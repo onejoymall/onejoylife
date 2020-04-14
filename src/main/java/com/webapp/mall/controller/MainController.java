@@ -26,10 +26,7 @@ import org.springframework.mobile.device.DeviceUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller
@@ -64,6 +61,10 @@ public class MainController {
             model.addAttribute("style", "index");
             model.addAttribute("footerScript", "main");
             model.addAttribute("loginStatus",obj);
+
+
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setProduct_use_yn("Y");
 
             //경품목록
 
@@ -109,6 +110,7 @@ public class MainController {
             //몇번째부터 몇개
             params.put("limitTo",0);
             params.put("limitBe",2);
+            params.put("pd_category_event_end","now()");
             List<Map<String,Object>> categoryEventList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryEventList",categoryEventList);
 
@@ -117,6 +119,7 @@ public class MainController {
             //몇번째부터 몇개
             params.put("limitTo",2);
             params.put("limitBe",3);
+            params.put("pd_category_event_end","now()");
             List<Map<String,Object>> categoryEventListSub = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryEventListSub",categoryEventListSub);
 
@@ -126,6 +129,7 @@ public class MainController {
             //몇번째부터 몇개
             params.put("limitTo",0);
             params.put("limitBe",3);
+            params.put("pd_category_event_end","");
             List<Map<String,Object>> categoryBannerList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryBannerList",categoryBannerList);
 

@@ -11,6 +11,7 @@ public class SearchVO extends PageVO{
     private String searchType = "";            // 검색 필드: 제목, 내용  
     private String[] searchTypeArr;            // 검색 필드를 배열로 변환
     private String product_sale_yn;
+    private String product_use_yn;
     private Integer product_ct;
     private Integer pd_category_id;
     private String mainViewType;
@@ -21,6 +22,14 @@ public class SearchVO extends PageVO{
     private String start_date;
     private String end_date;
     private String product_name;
+
+    public String getProduct_use_yn() {
+        return product_use_yn;
+    }
+
+    public void setProduct_use_yn(String product_use_yn) {
+        this.product_use_yn = product_use_yn;
+    }
 
     public String getProduct_name() {
         return product_name;

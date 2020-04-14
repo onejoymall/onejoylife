@@ -12,6 +12,7 @@ public class PaymentVO extends SearchVO {
     private String payment_status;
     private String success;
 
+
     public String getSuccess() {
         return success;
     }

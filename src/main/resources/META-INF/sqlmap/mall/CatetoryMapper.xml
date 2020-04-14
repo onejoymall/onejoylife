@@ -164,6 +164,9 @@
         FROM product_category_event A  where 1=1
 
         ]]>
+        <if test="pd_category_event_end != null and pd_category_event_end !=''">
+            <![CDATA[AND A.pd_category_event_end >= ${pd_category_event_end}]]>
+        </if>
         <if test="banner_use_yn!=null and banner_use_yn!=''">
             AND A.banner_use_yn = #{banner_use_yn}
         </if>

@@ -8,7 +8,7 @@
         <main class="clearfix">
 
             <div class="right-contain">
-                <form id="form1" name="form1" action="/Board/boardSave" method="post" enctype="multipart/form-data">
+                <form id="form1" name="form1" action="/Manager/boardSave" method="post" enctype="multipart/form-data">
                     <div class="r-sec1">
                         <p class="sec1-h1"><c:out value="${bgInfo.bgname}"/></p>
                         <p class="sec1-p1"><span>·</span>&nbsp;</p>

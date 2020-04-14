@@ -52,7 +52,7 @@
                 <li><a href="/giveaway">경품</a></li>
                 <li><a href="javascript:void(0);" class="ready">특판</a></li>
                 <li><a href="javascript:void(0);" class="ready">여행</a></li>
-                <li><a href="javascript:void(0);" class="ready">라이브 쇼핑</a></li>
+                <li><a href="http://onejoymcm.com">라이브 쇼핑</a></li>
             </ul>
             <div class="search-box">
                 <div class="cart-box">
@@ -120,7 +120,7 @@
         prevSelector:'.left-ar',
         pagerCustom:'.ar-num',
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     $(".top-but").click(function() {
         $('html, body').animate({

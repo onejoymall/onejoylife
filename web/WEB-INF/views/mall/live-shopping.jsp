@@ -303,7 +303,7 @@
         pagerType:'short',
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
+        touchEnabled : false,
     });
 
     //헤더 sticky

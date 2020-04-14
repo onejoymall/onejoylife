@@ -57,7 +57,11 @@
         roadAddress,
         jibunAddress,
         extraAddress,
-        store_approval_status
+        store_approval_status,
+        tex_email,
+        store_bank_account,
+        store_bank_holder,
+        store_bank_name
       )
       values
       (
@@ -76,7 +80,11 @@
         #{roadAddress},
         #{jibunAddress},
         #{extraAddress},
-        #{store_approval_status}
+        #{store_approval_status},
+        #{tex_email),
+        #{store_bank_account),
+        #{store_bank_holder),
+        #{store_bank_name)
       )
     </insert>
   <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">
@@ -94,7 +102,11 @@
          postcode = #{postcode},
          roadAddress = #{roadAddress},
          jibunAddress = #{jibunAddress},
-         extraAddress = #{extraAddress}
+         extraAddress = #{extraAddress},
+         tex_email=#{ tex_email},
+         store_bank_account=#{ store_bank_account},
+         store_bank_holder=#{ store_bank_holder},
+         store_bank_name=#{ store_bank_name}
          where store_id = #{store_id}
     </update>
   <update id="updateStoreApproval" parameterType="com.webapp.manager.vo.StoreVO">
