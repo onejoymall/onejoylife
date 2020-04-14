@@ -281,4 +281,14 @@ main{
     background:#da394d;
     border:1px solid #da394d;
 }
-
+.date-search-btn{
+    background: #da394a;
+    color: #fff;
+    padding: 10px 15px;
+    margin-left: 15px;
+    font-size: 14px;
+}
+.date-input-box{
+	display: flex;
+	align-items: center;
+}

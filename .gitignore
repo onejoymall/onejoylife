@@ -4,3 +4,4 @@ target/
 .project
 MANIFEST.MF
 .classpath
+.idea/

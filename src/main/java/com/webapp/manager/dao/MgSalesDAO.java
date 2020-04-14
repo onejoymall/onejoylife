@@ -23,20 +23,44 @@ public class MgSalesDAO {
         Integer getCategorySalesListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesListCount",params);
         return getCategorySalesListCount;
     }
-    public List<Map<String, Object>> getCategorySalesUserList(SearchVO params) throws SQLException {
-    	List<Map<String, Object>> getCategorySalesUserList = sql.selectList("mall.MgSalesMapper.getCategorySalesUserList",params);
-    	return getCategorySalesUserList;
+    public List<Map<String, Object>> getUserSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getUserSalesList = sql.selectList("mall.MgSalesMapper.getUserSalesList",params);
+    	return getUserSalesList;
     }
-    public Integer getCategorySalesUserListCount(SearchVO params) throws SQLException{
-    	Integer getCategorySalesUserListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesUserListCount",params);
-    	return getCategorySalesUserListCount;
+    public Integer getUserSalesListCount(SearchVO params) throws SQLException{
+    	Integer getUserSalesListCount =sql.selectOne("mall.MgSalesMapper.getUserSalesListCount",params);
+    	return getUserSalesListCount;
     }
-    public List<Map<String, Object>> getCategorySalesPaymethodList(SearchVO params) throws SQLException {
-    	List<Map<String, Object>> getCategorySalesPaymethodList = sql.selectList("mall.MgSalesMapper.getCategorySalesPaymethodList",params);
-    	return getCategorySalesPaymethodList;
+    public List<Map<String, Object>> getPaymethodSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getPaymethodSalesList = sql.selectList("mall.MgSalesMapper.getPaymethodSalesList",params);
+    	return getPaymethodSalesList;
     }
-    public Integer getCategorySalesPaymethodListCount(SearchVO params) throws SQLException{
-    	Integer getCategorySalesPaymethodListCount =sql.selectOne("mall.MgSalesMapper.getCategorySalesPaymethodListCount",params);
-    	return getCategorySalesPaymethodListCount;
+    public Integer getPaymethodSalesListCount(SearchVO params) throws SQLException{
+    	Integer getPaymethodSalesListCount =sql.selectOne("mall.MgSalesMapper.getPaymethodSalesListCount",params);
+    	return getPaymethodSalesListCount;
+    }
+    public List<Map<String, Object>> getDateSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getDateSalesList = sql.selectList("mall.MgSalesMapper.getDateSalesList",params);
+    	return getDateSalesList;
+    }
+    public Integer getDateSalesListCount(SearchVO params) throws SQLException{
+    	Integer getDateSalesListCount =sql.selectOne("mall.MgSalesMapper.getDateSalesListCount",params);
+    	return getDateSalesListCount;
+    }
+    public List<Map<String, Object>> getWeekSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getWeekSalesList = sql.selectList("mall.MgSalesMapper.getWeekSalesList",params);
+    	return getWeekSalesList;
+    }
+    public Integer getWeekSalesListCount(SearchVO params) throws SQLException{
+    	Integer getWeekSalesListCount =sql.selectOne("mall.MgSalesMapper.getWeekSalesListCount",params);
+    	return getWeekSalesListCount;
+    }
+    public List<Map<String, Object>> getMonthSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getMonthSalesList = sql.selectList("mall.MgSalesMapper.getMonthSalesList",params);
+    	return getMonthSalesList;
+    }
+    public Integer getMonthSalesListCount(SearchVO params) throws SQLException{
+    	Integer getMonthSalesListCount =sql.selectOne("mall.MgSalesMapper.getMonthSalesListCount",params);
+    	return getMonthSalesListCount;
     }
 }
