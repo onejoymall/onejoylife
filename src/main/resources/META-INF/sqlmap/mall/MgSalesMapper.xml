@@ -16,13 +16,13 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
     <if test="searchKeyword != null and searchKeyword != ''">
-    	AND product_ct LIKE CONCAT('%', #{searchKeyword},'%')
+    	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
     <if test='category1 != null and category1 gt 0'>
     AND (
-    	product_ct LIKE CONCAT('%', #{category1},'%')
-    	OR product_ct LIKE CONCAT('%', #{category2},'%')
-    	OR product_ct LIKE CONCAT('%', #{category3},'%')
+    	FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
     )
     </if>
     GROUP BY 1,2) A
@@ -48,9 +48,9 @@
     </if>
     <if test='category1 != null and category1 gt 0'>
     AND (
-    	product_ct LIKE CONCAT('%', #{category1},'%')
-    	OR product_ct LIKE CONCAT('%', #{category2},'%')
-    	OR product_ct LIKE CONCAT('%', #{category3},'%')
+    	FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
     )
     </if>
     GROUP BY 1,2
@@ -256,7 +256,7 @@
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
 	order by A.reg_date desc 
-	LIMIT ${rowStart-1}, ${displayRowCount}	
+	LIMIT ${rowStart-1}, ${displayRowCount}
   </select>
   
   <select id="getMonthSalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
@@ -268,6 +268,116 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1) A
+  </select>
+  
+  <select id="getTopCategorySalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
+  	select *
+  	from (select *,@num:=@num+1 rank 
+	from (SELECT  D.pd_category_name,
+			ifnull(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(distinct C.product_id),0) product_count,
+			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	left JOIN product_category D
+	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
+	where 1=1
+	<if test="searchKeyword != null and searchKeyword != ''">
+    	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
+    </if>
+    <if test='category1 != null and category1 gt 0'>
+    AND (
+    	FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
+    )
+    </if>
+	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1
+   	ORDER BY sum(payment_order_quantity) desc) ori, (select @num:=0 from dual) sub) wrap
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  
+  <select id="getTopCategorySalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+  	SELECT IFNULL(COUNT(*),0) cnt
+ 	FROM (SELECT 	D.pd_category_name
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	left JOIN product_category D
+	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
+	where 1=1
+	<if test="searchKeyword != null and searchKeyword != ''">
+    	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
+    </if>
+    <if test='category1 != null and category1 gt 0'>
+    AND (
+    	FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+    	OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
+    )
+    </if>
+	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1) A
+  </select>
+  
+  <select id="getTopProductSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
+  	select *
+  	from (select *,@num:=@num+1 rank 
+	from (SELECT  C.product_cd,
+  			C.product_name,
+			C.product_user_payment one_product_user_payment,
+			ifnull(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(distinct C.product_id),0) product_count,
+			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	GROUP BY 1
+    ORDER BY sum(payment_order_quantity) desc) ori, (select @num:=0 from dual) sub) wrap
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  
+  <select id="getTopProductSalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+  	SELECT IFNULL(COUNT(*),0) cnt
+ 	FROM (SELECT  C.product_cd
+	FROM payment A
+	LEFT JOIN payment_refund E
+	ON A.order_no = E.order_id
+	left JOIN product C
+	ON A.product_CD = C.product_CD
+	left JOIN product_category D
+	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1)
+	where 1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A

@@ -15,6 +15,7 @@ import com.webapp.board.common.SearchVO;
 public class MgSalesDAO {
     @Autowired
     private SqlSession sql;
+    
     public List<Map<String, Object>> getCategorySalesList(HashMap params) throws SQLException {
         List<Map<String, Object>> getCategorySalesList = sql.selectList("mall.MgSalesMapper.getCategorySalesList",params);
         return getCategorySalesList;
@@ -62,5 +63,21 @@ public class MgSalesDAO {
     public Integer getMonthSalesListCount(SearchVO params) throws SQLException{
     	Integer getMonthSalesListCount =sql.selectOne("mall.MgSalesMapper.getMonthSalesListCount",params);
     	return getMonthSalesListCount;
+    }
+    public List<Map<String, Object>> getTopCategorySalesList(HashMap params) throws SQLException {
+        List<Map<String, Object>> getTopCategorySalesList = sql.selectList("mall.MgSalesMapper.getTopCategorySalesList",params);
+        return getTopCategorySalesList;
+    }
+    public Integer getTopCategorySalesListCount(HashMap params) throws SQLException{
+        Integer getTopCategorySalesListCount =sql.selectOne("mall.MgSalesMapper.getTopCategorySalesListCount",params);
+        return getTopCategorySalesListCount;
+    }
+    public List<Map<String, Object>> getTopProductSalesList(SearchVO params) throws SQLException {
+    	List<Map<String, Object>> getTopProductSalesList = sql.selectList("mall.MgSalesMapper.getTopProductSalesList",params);
+    	return getTopProductSalesList;
+    }
+    public Integer getTopProductSalesListCount(SearchVO params) throws SQLException{
+    	Integer getTopProductSalesListCount =sql.selectOne("mall.MgSalesMapper.getTopProductSalesListCount",params);
+    	return getTopProductSalesListCount;
     }
 }

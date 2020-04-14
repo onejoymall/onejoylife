@@ -730,12 +730,39 @@ public class ManagerController {
     }
 
     //상품별 매출
-    @RequestMapping(value = "/Manager/product-sales")
+    @RequestMapping(value = "/Manager/product-sales-category")
     public String managerProductSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
-
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getTopCategorySalesListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		List<Map<String, Object>> list = mgSalesDAO.getTopCategorySalesList(params);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "product-sales");
+        model.addAttribute("postUrl", "/Manager/product-sales-category");
+        return "/manager/product-sales-category";
+    }
+  //상품별 매출 카테고리
+    @RequestMapping(value = "/Manager/product-sales")
+    public String managerProductSalesCategory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgSalesDAO.getTopProductSalesListCount(searchVO));
+    		List<Map<String, Object>> list = mgSalesDAO.getTopProductSalesList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -744,6 +771,7 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/product-sales");
         return "/manager/product-sales";
     }
+    
     //날짜별 매출
     @RequestMapping(value = "/Manager/date-sales")
     public String managerDataSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
