@@ -1421,43 +1421,92 @@ function refundCancel(order_no,delivery_status){
         }
         $('#product_tex_class').val(objValue)
     })
+    /**
+     * 이미지 파일 업로드
+     */
+    function uploadSummernoteImageFile(file, editor) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data : data,
+            type : "POST",
+            url : "/Manager/uploadSummernoteImageFile",
+            contentType : false,
+            processData : false,
+            success : function(data) {
+                console.log(data)
+                //항상 업로드된 파일의 url이 있어야 한다.
+                $(editor).summernote('insertImage', data.url);
+            }
+        });
+    }
     //에디터
     $(document).ready(function (){
         $('#summernote').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 320,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR', // default: 'en-US'
+            callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
         });
         $('#summernote2').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 320,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
         });
         $('#editor3').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 120,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            } // default: 'en-US'
         });
         $('#editor4').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 120,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
         });
         $('#editor5').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 120,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
         });
         $('#editor6').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
             height: 120,
-            lang: 'ko-KR' // default: 'en-US'
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
         });
     });
     function categoryProc(){
@@ -1673,8 +1722,15 @@ function refundCancel(order_no,delivery_status){
                 data: {"product_cd":product_cd},
                 success: function (data) {
                     console.log(data.list)
+
                     $.each(data.list, function (index, item) {
                         $('input[name^="'+index+'"]').val(item);
+                        $("input[name=product_option_yn]").eq(0).val("Y");
+                        $("input[name=product_option_yn]").eq(1).val("N");
+                        $("input[name=product_sale_yn]").eq(0).val("Y");
+                        $("input[name=product_sale_yn]").eq(1).val("N");
+                        $("input[name=product_use_yn]").eq(0).val("Y");
+                        $("input[name=product_use_yn]").eq(1).val("N");
                         $('#'+index).val(item);
                         if(index=="product_html"){
                             $('#summernote').summernote('code', item);

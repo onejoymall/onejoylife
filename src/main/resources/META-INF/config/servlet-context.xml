@@ -22,6 +22,9 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!--	<resources mapping="/resources/**" location="/resources/" />-->
 	<resources mapping="/assets/**" location="/assets/" />
+	<resources mapping="/product/editorUploads/**" location="file:///${downloadEditorFile}/" />
+	<resources mapping="/fileupload/**" location="file:///${fileUploadPath}/" />
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -40,7 +43,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/MyPage/**" />
 			<mvc:exclude-mapping path="/" />                                     <!-- Interceptor에 예외를 적용 할 패턴 -->
-
+			<mvc:exclude-mapping path="/fileupload" />
 			<mvc:exclude-mapping path="/cart/**" />
 			<mvc:exclude-mapping path="/sign/**" />
 			<mvc:exclude-mapping path="/assets/**" />

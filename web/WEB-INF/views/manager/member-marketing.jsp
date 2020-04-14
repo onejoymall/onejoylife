@@ -787,17 +787,32 @@
             $('#summernote').summernote({
                 tabsize: 2,
                 height: 150,
-                lang: 'ko-KR' // default: 'en-US'
+                lang: 'ko-KR',
+                callbacks: {
+                    onImageUpload : function(files) {
+                        uploadSummernoteImageFile(files[0],this);
+                    }
+                }
             });
             $('#summernote2').summernote({
                 tabsize: 2,
                 height: 150,
-                lang: 'ko-KR' // default: 'en-US'
+                lang: 'ko-KR',
+                callbacks: {
+                    onImageUpload : function(files) {
+                        uploadSummernoteImageFile(files[0],this);
+                    }
+                }
             });
             $('#summernote3').summernote({
                 tabsize: 2,
                 height: 150,
-                lang: 'ko-KR' // default: 'en-US'
+                lang: 'ko-KR',
+                callbacks: {
+                    onImageUpload : function(files) {
+                        uploadSummernoteImageFile(files[0],this);
+                    }
+                }
             });
         });
     </script>
