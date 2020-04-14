@@ -17,6 +17,10 @@ public class CartDAO {
         List<Map<String, Object>> getCartList = sql.selectList("mall.CartMapper.getCartList",params);
         return getCartList;
     }
+    public List<Map<String, Object>> getCartPaymentList(Map<String, Object> params) throws SQLException {
+        List<Map<String, Object>> getCartPaymentList = sql.selectList("mall.CartMapper.getCartPaymentList",params);
+        return getCartPaymentList;
+    }
     public Integer getCartListCount(Map<String, String> params) throws SQLException {
         Integer getCartListCount=sql.selectOne("mall.CartMapper.getCartListCount",params);
         return getCartListCount;
@@ -24,8 +28,15 @@ public class CartDAO {
     public void insertCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.insertCart",params);
     }
+    public void addAllCart(Map<String, String> params) throws Exception {
+        sql.insert("mall.CartMapper.addAllShoppingBasket", params);
+    }
     public void deleteCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.deleteCart",params);
+    }
+
+    public void updateCart(Map<String, String> params) throws Exception{
+        sql.update("mall.CartMapper.updateCart",params);
     }
     public Map<String,Object> getCartSum(Map<String, Object> params) throws SQLException{
         Map<String,Object> getCartSum = sql.selectOne("mall.CartMapper.getCartSum",params);
