@@ -87,7 +87,8 @@ public class ProductController {
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");
             }
-
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setProduct_use_yn("Y");
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
 
             params.put("rowStart",searchVO.getRowStart());

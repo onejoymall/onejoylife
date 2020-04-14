@@ -60,6 +60,10 @@ public class MainController {
             model.addAttribute("footerScript", "main");
             model.addAttribute("loginStatus",obj);
 
+
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setProduct_use_yn("Y");
+
             //경품목록
 
             giveawayVO.setDisplayRowCount(3);

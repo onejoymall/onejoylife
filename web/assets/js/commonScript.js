@@ -1700,6 +1700,18 @@ function refundCancel(order_no,delivery_status){
                         if(index=="product_option_yn" && item=="N"){
                             $("input[name=product_option_yn]").eq(1).click();
                         }
+                        if(index=="product_sale_yn" && item=="Y"){
+                            $("input[name=product_sale_yn]").eq(0).click();
+                        }
+                        if(index=="product_sale_yn" && item=="N"){
+                            $("input[name=product_sale_yn]").eq(1).click();
+                        }
+                        if(index=="product_use_yn" && item=="Y"){
+                            $("input[name=product_use_yn]").eq(0).click();
+                        }
+                        if(index=="product_use_yn" && item=="N"){
+                            $("input[name=product_use_yn]").eq(1).click();
+                        }
                     });
                     var ele1 =$('input[name^="file_1"]').val();
                     var ele2 =$('input[name^="file_2"]').val();
