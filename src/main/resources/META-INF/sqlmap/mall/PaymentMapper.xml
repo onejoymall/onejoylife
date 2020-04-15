@@ -19,6 +19,7 @@
         giveaway_cd,
         payment,
         payment_type_cd,
+        payment_status,
         password
         )values (
          #{success},
@@ -35,6 +36,7 @@
         #{giveaway_cd},
         #{payment},
         #{payment_type_cd},
+        #{payment_status},
         #{password}
         )
     </insert>

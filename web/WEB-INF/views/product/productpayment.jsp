@@ -300,8 +300,14 @@
 <%--                    </div>--%>
                     <div class="sec5">
                         <p class="sec-h1">결제 정보</p>
+                        <div class="ck-box">
+                            <input type="checkbox" id="escrow">
+                            <label for="escrow"><span class="le-ck-txt"> 에스크로 사용</span></label>
+                        </div>
                         <div class="sec5-box">
-                            <div class="sec5-p1">결제수단</div>
+                            <div class="sec5-p1">
+                                결제수단
+                            </div>
                             <div class="sec5-p2">
                                 <!--
                                 card(신용카드)
@@ -327,6 +333,7 @@
 <%--                                </p>--%>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="right-box">
@@ -410,7 +417,7 @@
                 buyer_tel: $('#order_user_phone').val(),
                 buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
                 buyer_postcode: $('#postcode').val(),
-                escrow:true,
+                escrow:$('#escrow').is(":checked"),
                 kcpProducts : [
                     {
                         "orderNumber" : $('input[name=order_no]').val(),

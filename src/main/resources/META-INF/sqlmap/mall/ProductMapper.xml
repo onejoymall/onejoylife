@@ -71,6 +71,7 @@
     <select id="getProductViewDetail" parameterType="java.util.Map" resultType="java.util.Map">
         select
          *,
+            (select IFNULL(product_point_rate,0)) as product_point_rate,
             (select code.code_name from code where code.code='product_brand' and code.code_value =product.product_brand) as product_brand_name,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,

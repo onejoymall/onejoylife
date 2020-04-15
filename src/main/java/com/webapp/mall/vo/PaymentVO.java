@@ -10,7 +10,7 @@ public class PaymentVO extends SearchVO {
     private String refund_bank;
     private String refund_account;
     private String payment_status;
-    private String success;
+    private Boolean success;
     private String pay_method;
 
     public String getPay_method() {
@@ -21,11 +21,11 @@ public class PaymentVO extends SearchVO {
         this.pay_method = pay_method;
     }
 
-    public String getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(String success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
     }
 
