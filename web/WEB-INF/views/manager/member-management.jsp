@@ -218,7 +218,6 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <h3>포인트 관리</h3>
                 <table class="goods-detail-table">
                     <colgroup>
                         <col width="20%">
@@ -239,7 +238,17 @@
                         </tr>
                         <tr>
                             <th>회원등급</th>
-                            <td class="level_name"></td>
+                            <td>
+                            	<div class="level_name"></div>
+                            	<div>
+                            		<select name="level_name">
+                            			<option value="1">사용자</option>
+                            			<option value="9">매니저</option>
+                            			<option value="10">관리자</option>
+                            		</select>
+                            		<button class="modal-level-btn" type="button">회원등급 설정</button>
+                            	</div>
+                           	</td>
                         </tr>
                         <tr>
                             <th>포인트</th>
@@ -261,6 +270,21 @@
                             <th>환수 포인트</th>
                             <td><input type="number" name="point_use" ><button type="button" class="point-btn mgPointPaid">환수</button></td>
                         </tr>
+                        <c:if test="${sessionScope.adminLogin == 'admin'}">
+                        <tr>
+                        	<th>사용가능 메뉴</th>
+                        	<td>
+                        	<c:if test="${not empty depthList}">
+                        		<div class="menu-depth-all"><input type="checkbox" name="enable_menu_all"/> <b>전체선택</b></div>
+                        		<hr>
+		                        <c:forEach var="list" items="${depthList}">
+		                        <div class="menu-depth"><input type="checkbox" name="enable_menu" value="${list.menu_id}"/> ${list.menu_name}</div>
+		                        </c:forEach>
+		                        <button class="modal-enable-menu-btn" type="button">사용메뉴 설정</button>
+	                        </c:if>
+                        	</td>
+                        </tr>
+                        </c:if>
                         <%--<tr>
                             <th>포인트 환수</th>
                             <td><input type="text"><button type="button" class="point-btn">환수</button></td>
@@ -382,5 +406,11 @@
             </div>
         </div>
     </div>
-
+<script type="text/javascript">
+$(function(){
+	$('input[name=enable_menu_all]').click(function() {
+	  $('input[name=enable_menu]').prop('checked',this.checked);
+	});
+});
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

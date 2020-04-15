@@ -1,14 +1,15 @@
 package com.webapp.manager.dao;
 
-import com.webapp.manager.vo.MgUserVO;
-import com.webapp.manager.vo.StoreVO;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import com.webapp.manager.vo.MgUserVO;
 @Repository
 public class MgUserDAO {
     @Autowired
@@ -35,6 +36,14 @@ public class MgUserDAO {
         Integer getUserHistoryCount =sql.selectOne("mall.MgUserMapper.getUserHistoryCount",userVO);
         return getUserHistoryCount;
     }
-
+    public void userLevelUpdate(HashMap params) throws SQLException{
+        sql.selectOne("mall.MgUserMapper.userLevelUpdate",params);
+    }
+    public List<Map<String, Object>> getMenuDepth() throws SQLException{
+    	return sql.selectList("mall.MgUserMapper.getMenuDepth");
+    }
+    public void userEnableMenuUpdate(HashMap params) throws SQLException{
+        sql.selectOne("mall.MgUserMapper.userEnableMenuUpdate",params);
+    }
 
 }

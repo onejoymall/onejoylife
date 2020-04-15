@@ -214,8 +214,6 @@ main{
 #tab-on1 .goods-list-wrap tbody td{text-align: right;}
 #tab-on1 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
 #tab-on1 .goods-list-wrap tbody td:nth-child(2){text-align: left;}
-#tab-on1 .goods-list-wrap tbody td:nth-child(3){text-align: left;}
-#tab-on1 .goods-list-wrap tbody td:nth-child(4){text-align: left;}
 
 #tab-on2 .goods-list-wrap tbody td{text-align: right;}
 #tab-on2 .goods-list-wrap tbody td:nth-child(1){text-align: center;}

@@ -840,6 +840,8 @@ public class ManagerController {
             mgUserVO.setDisplayRowCount(10);
             mgUserVO.setStaticRowEnd(10);
             mgUserVO.pageCalculate(mgUserDAO.getManagerUserListCount(mgUserVO));
+            List<Map<String,Object>> depthList = mgUserDAO.getMenuDepth();
+            model.addAttribute("depthList", depthList);
             List<Map<String,Object>> list = mgUserDAO.getManagerUserList(mgUserVO);
             model.addAttribute("list", list);
             //등급 리스트

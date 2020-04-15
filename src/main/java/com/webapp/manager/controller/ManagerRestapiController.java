@@ -1,38 +1,56 @@
 package com.webapp.manager.controller;
 
-import com.webapp.board.app.BoardVO;
-import com.webapp.board.common.FileUtil;
-import com.webapp.board.common.FileVO;
-import com.webapp.board.common.SearchVO;
-import com.webapp.common.security.model.UserInfo;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
-import com.webapp.common.support.MailSender;
-import com.webapp.common.support.MessageSource;
-import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.PaymentVO;
-import com.webapp.mall.vo.UserVO;
-import com.webapp.manager.dao.*;
-import com.webapp.manager.vo.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.util.CollectionUtils.isEmpty;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.webapp.board.app.BoardVO;
+import com.webapp.board.common.FileUtil;
+import com.webapp.board.common.FileVO;
+import com.webapp.board.common.SearchVO;
+import com.webapp.common.support.MessageSource;
+import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.dao.RefundDAO;
+import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.ConfigDAO;
+import com.webapp.manager.dao.MgBrandDAO;
+import com.webapp.manager.dao.MgCommonDAO;
+import com.webapp.manager.dao.MgGiveawayDAO;
+import com.webapp.manager.dao.MgOptionDAO;
+import com.webapp.manager.dao.MgPointDAO;
+import com.webapp.manager.dao.MgProductDAO;
+import com.webapp.manager.dao.MgStoreDAO;
+import com.webapp.manager.dao.MgUserDAO;
+import com.webapp.manager.dao.MgUserGrantDAO;
+import com.webapp.manager.vo.MgBrandVO;
+import com.webapp.manager.vo.MgCommonVO;
+import com.webapp.manager.vo.MgOptionVO;
+import com.webapp.manager.vo.MgPointVO;
+import com.webapp.manager.vo.MgUserVO;
+import com.webapp.manager.vo.ProductVO;
+import com.webapp.manager.vo.StoreVO;
 
 @RestController
 public class ManagerRestapiController {
@@ -122,6 +140,43 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //회원등급설정 사용자,매니저,관리자
+    @Transactional
+    @RequestMapping(value = "/Manager/MgUserLevelUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> MgUserLevelUpdate(@RequestParam HashMap params, MgUserVO mgUserVO, MgPointVO mgPointVO) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+        	mgUserDAO.userLevelUpdate(params);
+    		resultMap.put("success",true);
+            resultMap.put("redirectUrl","/Manager/member-management");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+  //매니저,관리자 사용메뉴설정
+    @Transactional
+    @RequestMapping(value = "/Manager/MgUserEnableMenuUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> MgUserEnableMenuUpdate(@RequestParam HashMap params, MgUserVO mgUserVO, MgPointVO mgPointVO) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        System.out.println(params);
+        if(params.get("enable_menu") == null || ((String)params.get("enable_menu")).equals("")) {
+        	error.put(messageSource.getMessage("mg_enable_menu","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        try {
+        	 if(!isEmpty(error)){
+                 resultMap.put("validateError",error);
+             }else{
+	        	mgUserDAO.userEnableMenuUpdate(params);
+	    		resultMap.put("success",true);
+	            resultMap.put("redirectUrl","/Manager/member-management");
+             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
     //회원 상세보기
     @RequestMapping(value = "/Manager/memberViewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerMeberViewDetail(@RequestParam HashMap params, MgUserVO mgUserVO) throws Exception{
@@ -167,7 +222,9 @@ public class ManagerRestapiController {
                             session.removeAttribute("adminLogin"); // 기존값을 제거해 준다.
                         }
                         session.setAttribute("email",email);
-                        session.setAttribute("adminLogin", true); //
+                        if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
+                        else 										  session.setAttribute("adminLogin", "manager");
+                        session.setAttribute("menuList", loginUserList.get("enable_mg_menu_id"));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);
