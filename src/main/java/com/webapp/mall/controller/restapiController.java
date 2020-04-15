@@ -569,6 +569,10 @@ public class restapiController {
             params.put("payment_cd","PM"+numberGender.numberGen(6,1));
 
             params.put("email",session.getAttribute("email"));
+            //가상계좌결제시 미결제로 상태변경
+            if(deliveryInfoVO.getPay_method().equals("vbank")){
+                deliveryInfoVO.setPayment_status("M");
+            }
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             if(isEmpty(userInfo)){

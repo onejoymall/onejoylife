@@ -937,8 +937,11 @@ $(document).ready(function(){
                     if(index=="delivery_t_invoice"){
                         $('input[name=delivery_t_invoice]').val(item);
                     }
-                    if(index=="payment_status" && item=="W"){
-                        html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
+                    if(index=="payment_status" && item=="W" || item=="D" || item=="I"){
+                        html='' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'I\')">상품준비중</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'D\')">배송준비중</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="R"){
@@ -958,54 +961,55 @@ $(document).ready(function(){
             },
         });
     }
-//교환 반품 취소
-function refundCancel(order_no,delivery_status){
-    var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;
-    $.ajax({
-        type: 'POST',
-        data: formData,
-        url:'/Manager/refundCancel',
-        success: function (data) {
-            if (data.validateError) {
-                $('.validateError').empty();
-                $.each(data.validateError, function (index, item) {
-                    if(index == "Error"){//일반에러메세지
-                        alertType = "error";
-                        showText = item;
-                    }else{
-                        alertType = "error";
-                        showText = index + " (은) " + item;
-                    }
-                    // $.toast().reset('all');//토스트 초기화
+
+    //교환 반품 취소
+    function refundCancel(order_no,delivery_status){
+        var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;
+        $.ajax({
+            type: 'POST',
+            data: formData,
+            url:'/Manager/refundCancel',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
                     $.toast({
-                        text: showText,
+                        text: data.success,
                         showHideTransition: 'plain', //펴짐
                         position: 'top-right',
-                        heading: 'Error',
-                        icon: 'error'
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                            location.href=data.redirectUrl;
+                        }
                     });
-                });
-
-            } else {
-                $.toast({
-                    text: data.success,
-                    showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
-                    icon: 'success',
-                    hideAfter: 2000,
-                    afterHidden: function () {
-                        location.href=data.redirectUrl;
-                    }
-                });
-                // loginAuth(data.access_token);
-                // location.href=data.redirectUrl;
-            }
-        },
-        error: function (xhr, status, error) {
-            alert(error);
-        },
-    })
-}
+                    // loginAuth(data.access_token);
+                    // location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        })
+    }
     //배송정보 저장
     function deliverySave(order_no,delivery_status){
         var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;

@@ -11,7 +11,15 @@ public class PaymentVO extends SearchVO {
     private String refund_account;
     private String payment_status;
     private String success;
+    private String pay_method;
 
+    public String getPay_method() {
+        return pay_method;
+    }
+
+    public void setPay_method(String pay_method) {
+        this.pay_method = pay_method;
+    }
 
     public String getSuccess() {
         return success;

@@ -400,7 +400,7 @@
             // loginAuth(data.access_token);
             // location.href=data.redirectUrl;
             IMP.request_pay({ // param
-                pg: "inicis",
+                pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: "${detail.product_name}",

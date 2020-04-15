@@ -11,10 +11,7 @@ import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.PaymentVO;
-import com.webapp.mall.vo.UserVO;
+import com.webapp.mall.vo.*;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.*;
 import org.apache.commons.io.FileUtils;
@@ -220,8 +217,6 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
-
     //교환 환불 취소
     @RequestMapping(value = "/Manager/refundCancel", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> refundCancel(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
@@ -245,9 +240,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
     //교환신청 선택
-
     @RequestMapping(value = "/Manager/selectDeliveryRefund", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> selectDeliveryRefund(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -268,7 +261,6 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
     //주문내역 선택
     @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
@@ -283,6 +275,32 @@ public class ManagerRestapiController {
                 resultMap.put("list",list);
 //                resultMap.put("deliveryInfoVO",deliveryInfoVO);
 //                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //주문상태 일괄 처리
+    @RequestMapping(value = "/Manager/paymentStatusUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> paymentStatusUpdate(@RequestParam HashMap params, MgCommonVO mgCommonVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            mgCommonVO.setTable_name("payment");
+            mgCommonVO.setColumn("payment_status");
+            mgCommonVO.setPk("order_no");
+            mgCommonVO.setUpdate_value((String)params.get("payment_status"));
+            if(mgCommonVO.getChk() ==null){
+                error.put("Error", messageSource.getMessage("error.selectModify","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.listUpdate(mgCommonVO);
+                resultMap.put("redirectUrl","/Manager/order");
             }
         } catch (Exception e) {
 

@@ -60,6 +60,7 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
+        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
@@ -75,7 +76,7 @@
             count(*) as cnt
         FROM payment A  where 1=1
         ]]>
-
+        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>

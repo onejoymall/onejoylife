@@ -15,5 +15,10 @@
 		</foreach>
 
 	</select>
-
+	<select id="getSelectorList" resultType="java.util.HashMap">
+		SELECT
+		    *
+		FROM code
+		where code =#{code}
+	</select>
 </mapper>

@@ -30,23 +30,17 @@
                         </colgroup>
                         <tbody>
                             <tr>
-<%--                                <th>주문 상태</th>--%>
-<%--                                <td>--%>
-<%--                                    <select name="src-orderState">--%>
-<%--                                       <option value="전체">전체</option>--%>
-<%--                                       <option value="입금 전">입금 전</option>--%>
-<%--                                       <option value="결제완료">결제완료</option>--%>
-<%--                                       <option value="배송대기">배송대기</option>--%>
-<%--                                       <option value="배송중">배송중</option>--%>
-<%--                                       <option value="배송완료">배송완료</option>--%>
-<%--                                       <option value="취소처리중">취소처리중</option>--%>
-<%--                                       <option value="취소">취소</option>--%>
-<%--                                       <option value="교환처리중">교환처리중</option>--%>
-<%--                                       <option value="교환">교환</option>--%>
-<%--                                       <option value="반품처리중">반품처리중</option>--%>
-<%--                                       <option value="반품">반품</option>--%>
-<%--                                   </select>--%>
-<%--                                </td>--%>
+                                <th>주문 상태</th>
+                                <td>
+                                    <select name="payment_status" >
+                                        <c:if test="${not empty getSelectorList}">
+                                            <option value="">선택</option>
+                                            <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                                            <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
+                                            </c:forEach>
+                                        </c:if>
+                                    </select>
+                                </td>
                                 <th>주문일</th>
                                 <td>
                                     <div class="input-box2">
@@ -61,6 +55,10 @@
                                         </div>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td></td>
                                 <th>배송일</th>
                                 <td>
                                     <div class="input-box2">
@@ -135,11 +133,13 @@
                 </form>
             </div>
             <div class="goods-list-wrap">
-<%--                <div class="list-sort-wrap">--%>
-<%--                    <div class="left">--%>
+                <div class="list-sort-wrap">
+                    <div class="left">
 <%--                        <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
-<%--                        <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>--%>
-<%--                    </div>--%>
+
+                        <button type="button" class="btn-default" name="copy" id="productReadySubmit">상품준비중 처리</button>
+                        <button type="button" class="btn-default" name="copy" id="deliveryReadySubmit">배송준비중 처리</button>
+                   </div>
 <%--                    <div class="right">--%>
 <%--                        <select name="order" class="order-select">--%>
 <%--                            <option value="32">10개씩 보기</option>--%>
@@ -147,61 +147,63 @@
 <%--                            <option value="92">100개씩 보기</option>--%>
 <%--                        </select>--%>
 <%--                    </div>--%>
-<%--                </div>--%>
-                <table>
-                    <colgroup>
-                        <col width="3%">
-                        <col width="5%">
-                        <col width="6%">
-                        <col width="8%">
-                        <col width="6%">
-                        <col width="7%">
-                        <col width="7%">
-                        <col width="33%">
-                        <col width="5%">
-                        <col width="8%">
-                        <col width="6%">
-                        <col width="6%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                            <td>주문번호</td>
-                            <td>주문일</td>
-                            <td>주문자</td>
-                            <td>배송등록일</td>
-                            <td>운송장번호</td>
-                            <td>공급사</td>
-                            <td>상품명/옵션</td>
-                            <td>수량</td>
-                            <td>결제금액</td>
-                            <td>상태</td>
-                            <td>관리</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <c:if test="${not empty list}">
-                        <c:forEach var="list" items="${list}" varStatus="status">
-                       <tr>
-                            <td><input type="checkbox" id="chk10" name="chk10"></td>
-                            <td>${list.order_no}</td>
-                            <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
-                            <td>${list.email}</td>
-                            <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
-                            <td>${list.delivery_t_invoice}</td>
-                            <td>${list.product_made_company_name}</td>
-                            <td>${list.product_name}</td>
-                            <td>1</td>
-                            <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
-                            <td>${list.payment_status_name}</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.order_no}')">상세보기</button>
-                            </td>
-                        </tr>
-                        </c:forEach>
-                    </c:if>
-                    </tbody>
-                </table>
+                </div>
+                <form id="defaultListForm" name="defaultListForm" method="POST">
+                    <table>
+                        <colgroup>
+                            <col width="3%">
+                            <col width="5%">
+                            <col width="6%">
+                            <col width="8%">
+                            <col width="6%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="33%">
+                            <col width="5%">
+                            <col width="8%">
+                            <col width="6%">
+                            <col width="6%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                                <td>주문번호</td>
+                                <td>주문일</td>
+                                <td>주문자</td>
+                                <td>배송등록일</td>
+                                <td>운송장번호</td>
+                                <td>공급사</td>
+                                <td>상품명/옵션</td>
+                                <td>수량</td>
+                                <td>결제금액</td>
+                                <td>상태</td>
+                                <td>관리</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <c:if test="${not empty list}">
+                            <c:forEach var="list" items="${list}" varStatus="status">
+                           <tr>
+                                <td><input type="checkbox" name="chk" value="${list.order_no}"></td>
+                                <td>${list.order_no}</td>
+                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+                                <td>${list.email}</td>
+                                <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
+                                <td>${list.delivery_t_invoice}</td>
+                                <td>${list.product_made_company_name}</td>
+                                <td>${list.product_name}</td>
+                                <td>1</td>
+                                <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
+                                <td>${list.payment_status_name}</td>
+                                <td>
+                                    <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.order_no}')">상세보기</button>
+                                </td>
+                            </tr>
+                            </c:forEach>
+                        </c:if>
+                        </tbody>
+                    </table>
+                </form>
                 <form id="form1" name="form1"  method="post">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
