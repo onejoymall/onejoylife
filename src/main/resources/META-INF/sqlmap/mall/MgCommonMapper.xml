@@ -11,5 +11,12 @@
              #{item}
         </foreach>
     </delete>
-
+    <update id="listUpdate" parameterType="com.webapp.manager.vo.MgCommonVO">
+        <![CDATA[
+        update ${table_name} set ${column} = #{update_value} where ${pk} in
+        ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

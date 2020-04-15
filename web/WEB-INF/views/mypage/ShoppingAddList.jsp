@@ -26,9 +26,7 @@
                                     <p class="txt-tit">찜 목록</p>
                                     <div class="txt-right">
                                         <button type="button" id="del-chk-btn" class="commonlistDelete">삭제하기</button>
-<%--                                        <c:forEach var="list" items="${list}">--%>
-                                        <button type="button" id="cart-chk-btn" onclick="addAllShoppingBasket('${product_cd}')">장바구니 담기</button>
-<%--                                        </c:forEach>--%>
+                                        <button type="button" id="cart-chk-btn" class="addAllCart">장바구니 담기</button>
                                     </div>
                                 </div>
                                 <table class="sec4-lis">

@@ -93,7 +93,8 @@ public class ManagerRestapiController {
     private MgOptionDAO mgOptionDAO;
     @Value("${downloadPath}")
     private String downloadPath;
-
+    @Value("${downloadEditorPath}")
+    private String downloadEditorPath;
 
     // 포인트 관리 포인트 추가 및 환수
     @RequestMapping(value = "/Manager/MgPointAdd", method = RequestMethod.POST, produces = "application/json")
@@ -276,8 +277,6 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
-
     //교환 환불 취소
     @RequestMapping(value = "/Manager/refundCancel", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> refundCancel(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
@@ -301,9 +300,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
     //교환신청 선택
-
     @RequestMapping(value = "/Manager/selectDeliveryRefund", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> selectDeliveryRefund(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -324,7 +321,6 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-
     //주문내역 선택
     @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
@@ -339,6 +335,32 @@ public class ManagerRestapiController {
                 resultMap.put("list",list);
 //                resultMap.put("deliveryInfoVO",deliveryInfoVO);
 //                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //주문상태 일괄 처리
+    @RequestMapping(value = "/Manager/paymentStatusUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> paymentStatusUpdate(@RequestParam HashMap params, MgCommonVO mgCommonVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            mgCommonVO.setTable_name("payment");
+            mgCommonVO.setColumn("payment_status");
+            mgCommonVO.setPk("order_no");
+            mgCommonVO.setUpdate_value((String)params.get("payment_status"));
+            if(mgCommonVO.getChk() ==null){
+                error.put("Error", messageSource.getMessage("error.selectModify","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.listUpdate(mgCommonVO);
+                resultMap.put("redirectUrl","/Manager/order");
             }
         } catch (Exception e) {
 
@@ -424,7 +446,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"giveaway");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/giveaway/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/giveaway/"+ft.format(new Date())+"/");
             //
             String product_cd = "G"+numberGender.numberGen(7,2);
             productVO.setGiveaway_cd(product_cd);
@@ -472,7 +494,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"giveaway");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/giveaway/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/giveaway/"+ft.format(new Date())+"/");
             //
 //            String product_cd = "P"+numberGender.numberGen(7,2);
 //            productVO.setProduct_cd(product_cd);
@@ -547,7 +569,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"category");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/category/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/category/"+ft.format(new Date())+"/");
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -636,7 +658,7 @@ public class ManagerRestapiController {
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"category");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"category");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/category/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/category/"+ft.format(new Date())+"/");
 
             if(params.get("pd_category_id")==""){
                 error.put("카테고리 선택", messageSource.getMessage("error.required","ko"));
@@ -677,7 +699,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/product/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
 //            String product_cd = "P"+numberGender.numberGen(7,2);
 //            productVO.setProduct_cd(product_cd);
@@ -722,6 +744,37 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //상품등록 에디터 이미지 업로드
+    @RequestMapping(value="/Manager/uploadSummernoteImageFile", method = RequestMethod.POST, produces = "application/json")
+//    @ResponseBody
+    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        JsonObject jsonObject = new JsonObject();
+
+        String fileRoot = downloadEditorPath;	//저장될 외부 파일 경로
+        String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+
+        String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+
+        File targetFile = new File(fileRoot + savedFileName);
+
+        try {
+            InputStream fileStream = multipartFile.getInputStream();
+            FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+            resultMap.put("url", "/product/editorUploads/"+savedFileName);
+            resultMap.put("responseCode", "success");
+
+        } catch (IOException e) {
+            FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+            resultMap.put("responseCode", "error");
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
     //상품등록
     @RequestMapping(value = "/Manager/productAddProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerProductAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
@@ -732,7 +785,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/product/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
             String product_cd = "P"+numberGender.numberGen(7,2);
             productVO.setProduct_cd(product_cd);
@@ -801,7 +854,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"store");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/store/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/store/"+ft.format(new Date())+"/");
             //
 
             if(storeVO.getStore_id().isEmpty()){
@@ -889,7 +942,7 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-            fileVO.setFilepath("/assets/fileupload/product/"+ft.format(new Date())+"/");
+            fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
 
 
             if(!isEmpty(error)){

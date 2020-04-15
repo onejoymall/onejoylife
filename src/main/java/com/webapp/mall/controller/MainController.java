@@ -233,6 +233,7 @@ public class MainController {
                 searchVO.setOrderByValue("DESC");
             }
             searchVO.setProduct_sale_yn("Y");
+            searchVO.setProduct_use_yn("Y");
             searchVO.setMainViewType("product_sp_class");
             searchVO.setPd_category_id(searchVO.getProduct_ct());
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));

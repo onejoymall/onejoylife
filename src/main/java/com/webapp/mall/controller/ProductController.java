@@ -11,6 +11,8 @@ import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -54,7 +56,8 @@ public class ProductController {
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");
             }
-
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setProduct_use_yn("Y");
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
 
             params.put("rowStart",searchVO.getRowStart());
@@ -107,7 +110,7 @@ public class ProductController {
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
-    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception {
+    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request) throws Exception {
         try{
 
             //상품 상세페이지 로드시 최근 본 상품 세션에 적용
@@ -163,7 +166,12 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "product/productdetail";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/goods-view";
+        } else {
+            return "product/productdetail";
+        }
     }
     //결제
     @RequestMapping(value = "/product/productPaymentCart")

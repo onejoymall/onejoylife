@@ -2,48 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>onejoy life</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="assets/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/mobile/common-mobile.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/mobile/commonSub.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
-    <link href="assets/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-    <script src="assets/js/jquery.bxslider.min.js"></script>
-</head>
-<body class="pt-83">
-    <header class="h-main">
-        <div class="top-inner">
-            <h1 class="main-logo"><a href="/">원조이몰</a></h1>
-            <form name="search" action="" class="src-form">
-                <div class="src-inner">
-                    <input type="text" class="src-input" name="src-input">
-                    <button type="button" class="src-btn"><span>검색</span></button>
-                </div>
-            </form>
-            <div class="h-cart">
-                <a href="#" class="cart-inner">
-                    <i class="cart"></i>
-                    <span class="cart-num">100</span>
-                </a>
-            </div>
-        </div>
-        <ul class="submenu">
-            <li class="active"><a href="#">오늘의 특가</a></li>
-            <li><a href="#">이벤트</a></li>
-            <li><a href="#">라이브 쇼핑</a></li>
-        </ul>
-    </header>
+<%@ include file="/WEB-INF/views/mobile/layout/main-header.jsp" %>
+
     <div class="main-slider mt-1">
         <ul class="main-slider-wrap">
             <c:if test="${not empty categoryBannerList}">
@@ -355,7 +315,7 @@
     <div>
         <ul class="flexaround border-n">
             <li>
-                <a href="<c:url value="/sign/signup"/>" class="link-a"><i class="icon faq i-big"></i>회원가입</a>
+                <a href="<c:url value="/sign/signup"/>" class="link-a"><i class="icon join i-big"></i>회원가입</a>
             </li>
             <li>
                 <a href="#"><i class="icon epoint i-big"></i>E-POINT 안내</a>
@@ -365,33 +325,10 @@
             </li>
         </ul>
     </div>
-    <footer class="pb-5 bg_grey2">
-        <ul class="submenu bg_red">
-            <li><a href="#">고객센터</a></li>
-            <li><a href="#">쇼핑몰 입점/제휴문의</a></li>
-        </ul>
-        <ul class="submenu">
-            <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">이용약관</a></li>
-        </ul>
-        <ul class="wrap">
-            <li>주식회사 원조이</li>
-            <li>대표 : 김수현</li>
-            <li>전화 : 1811-9590 / 팩스 : 02-3472-0888</li>
-            <li>06643 서울특별시 서초구 서리풀길 4 (서초동) 영호빌딩 4층</li>
-            <li>사업자 등록번호 : 487-88-01223</li>
-            <li>통신판매업신고 2019-서울서초-0844 <a href="#">[사업자정보확인]</a></li>
-            <li>개인정보관리책임자 : <a href="mailto:cs@onejoy.co.kr">김수현(cs@onejoy.co.kr)</a></li>
-            <li>고객센터 : 1811-9590 / onejoy@onejoy.co.kr</li>
-            <li>Copyright ONEJOYlife. All rights reserved.</li>
-        </ul>
-    </footer>
 
+<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
 
-    <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>
-
-    <script type="text/javascript">
-        //메인 슬라이더
+<script type="text/javascript">
         $(document).ready(function(){
             $('.main-slider-wrap').bxSlider({
                 auto:true,
@@ -405,43 +342,5 @@
                 useCSS:false,
                 touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
             });
-            
-            $(".back-arr").click(function(){
-                window.history.back();
-            });
-            
-            var scroll;
-            var lastScrollTop = 0;
-            var delta = 5;
-            var navbarHeight = $('.header, .h-main').outerHeight();
-            
-            $(window).scroll(function(event){
-                scroll = true;
-            });
-            setInterval(function(){
-                if(scroll){
-                  hasScrolled();
-                    scroll = false;
-                }
-            }, 250);
-            function hasScrolled(){
-                var st=$(this).scrollTop();
-                if(Math.abs(lastScrollTop - st) <= delta) return;
-                
-                if (st > lastScrollTop && st > navbarHeight){
-                    // Scroll Down
-                    $('.header, .h-main').removeClass('nav-down').addClass('nav-up'); }
-                else {
-                        // Scroll Up
-                    if(st + $(window).height() < $(document).height()) {
-                        $('.header, .h-main').removeClass('nav-up').addClass('nav-down');
-                    }
-                }
-                lastScrollTop = st;
-            }
         });
-
-
     </script>
-</body>
-</html>

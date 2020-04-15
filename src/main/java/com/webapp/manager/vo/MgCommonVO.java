@@ -7,7 +7,24 @@ public class MgCommonVO {
     private String table_name;
     private String pk;
     private String[] chk;
+    private String column;
+    private String update_value;
 
+    public String getColumn() {
+        return column;
+    }
+
+    public void setColumn(String column) {
+        this.column = column;
+    }
+
+    public String getUpdate_value() {
+        return update_value;
+    }
+
+    public void setUpdate_value(String update_value) {
+        this.update_value = update_value;
+    }
 
     public String getPk() {
         return pk;

@@ -29,7 +29,7 @@ public class CartDAO {
         sql.insert("mall.CartMapper.insertCart",params);
     }
     public void addAllCart(Map<String, String> params) throws Exception {
-        sql.insert("mall.CartMapper.addAllShoppingBasket", params);
+        sql.insert("mall.CartMapper.addAllCart", params);
     }
     public void deleteCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.deleteCart",params);

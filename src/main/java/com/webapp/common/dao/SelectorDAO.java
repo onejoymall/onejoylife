@@ -15,4 +15,8 @@ public class SelectorDAO{
         List<Map<String, Object>> getSelector=sql.selectList("common.CommonMapper.getSelector",params);
         return getSelector;
     }
+    public List<Map<String,Object>> getSelectorList(Map<String,Object> params) throws SQLException {
+        List<Map<String, Object>> getSelectorList=sql.selectList("common.CommonMapper.getSelectorList",params);
+        return getSelectorList;
+    }
 }

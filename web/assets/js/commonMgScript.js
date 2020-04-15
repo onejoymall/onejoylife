@@ -1,6 +1,67 @@
 /*
 * var formData = $('#   ').serialize();
+*
+* $(document).on("click","",function () {
+
+})
+*
 * */
+function commonAjaxCall(type,url,formData){
+    jQuery.ajax({
+        type: type,
+        url: url,
+        data:formData,
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+    });
+}
+//선택 상품준비중처리
+$(document).on("click","#productReadySubmit",function () {
+    var formData = $('#defaultListForm').serialize()+'&payment_status=I';
+    commonAjaxCall("post","/Manager/paymentStatusUpdate",formData)
+})
+//선택 배송준비중처리
+$(document).on("click","#deliveryReadySubmit",function () {
+    var formData = $('#defaultListForm').serialize()+'&payment_status=D';
+    commonAjaxCall("post","/Manager/paymentStatusUpdate",formData)
+})
 //옵션 리스트
 $(document).on("click","#callOption",function () {
     var html='' +

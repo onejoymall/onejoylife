@@ -7,6 +7,7 @@ import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.board.common.TreeMaker;
+import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
@@ -41,6 +42,8 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Controller
 public class ManagerController {
+    @Autowired
+    SelectorDAO selectorDAO;
     @Autowired
     ProductDAO productDAO;
     @Autowired
@@ -585,6 +588,11 @@ public class ManagerController {
                     "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
+
+            //코드 목록
+            params.put("code", "payment_status");
+            List<Map<String, Object>> getSelectorList = selectorDAO.getSelectorList(params);
+            model.addAttribute("getSelectorList", getSelectorList);
             model.addAttribute("companyList", company);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);

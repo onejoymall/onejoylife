@@ -20,7 +20,7 @@
 <body>
     <div class="wrap">
         <div class="mo-main login-main clearfix">
-            <div class="mo-logo"><a href="">onejoy life</a></div>
+            <div class="mo-logo"><a href="/">onejoy life</a></div>
             <div class="mo-login-form">
                 <form name="defaultLoginForm" id="defaultLoginForm">
                     <input type="text" for="id-input" name="email" class="id-la" placeholder="아이디(이메일)">
