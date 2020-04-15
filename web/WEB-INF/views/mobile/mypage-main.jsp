@@ -2,66 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>onejoy life</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/mobile/common-mobile.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/mobile/m-header.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/mobile/m-login.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function(){
-        setTimeout(loaded, 100);
 
-        }, false);
-
-        function loaded(){
-        window.scrollTo(0, 1);
-        }
-        
-        function handleFirstTab(e) {
-          if (e.keyCode === 9) {
-            document.body.classList.add('user-is-tabbing');
-
-            window.removeEventListener('keydown', handleFirstTab);
-            window.addEventListener('mousedown', handleMouseDownOnce);
-          }
-        }
-
-        function handleMouseDownOnce() {
-          document.body.classList.remove('user-is-tabbing');
-
-          window.removeEventListener('mousedown', handleMouseDownOnce);
-          window.addEventListener('keydown', handleFirstTab);
-        }
-
-        window.addEventListener('keydown', handleFirstTab);
-    </script>
-</head>
-<body>
-    <div class="pt-48 pb-5">
-        <header class="header clearfix">
-            <div class="top-inner">
-                <button class="back-arr"><i class="back-ic"></i></button>
-                <h1><a href="/">원조이몰</a></h1>
-                <div class="h-cart">
-                    <a href="#" class="cart-inner">
-                        <i class="cart"></i>
-                        <span class="cart-num">100</span>
-                    </a>
-                </div>
-            </div>
-        </header>
         <section class="subheader">
             <div class="subTitle clearfix">마이페이지</div>
             <div class="point-box clearfix">
@@ -137,14 +80,6 @@
         </div>
     </div>
 
-    <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".back-arr").click(function(){
-                window.history.back();
-            });
-        });
-    </script>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+

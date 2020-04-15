@@ -13,7 +13,7 @@ $('.addAllCart').on("click",function(){
     jQuery.ajax({
         type: 'POST',
         url: '/cart/addAllCart',
-        // data: formData,
+        data: formData,
         success: function (data) {
             if (data.validateError) {
                 $('.validateError').empty();
@@ -36,12 +36,17 @@ $('.addAllCart').on("click",function(){
 
             } else {
                 $.toast({
-                    text: "장바구니 등록 완료",
+                    heading: '등록 성공!',
+                    text: [
+                        '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                        '<a href="/">쇼핑 계속!</a>',
+                    ],
+
                     showHideTransition: 'plain', //펴짐
                     position: 'top-right',
-                    icon: 'success'
+                    icon: 'success',
+                    hideAfter: false,
                 });
-                location.href=data.redirectUrl;
             }
         },
         error: function (xhr, status, error) {

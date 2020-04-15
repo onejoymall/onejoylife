@@ -150,7 +150,7 @@ public class restapiSubController {
 
     //장바구니 전체 등록
     @RequestMapping(value = "/cart/addAllCart", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> addAllShoppingBasket(@RequestParam HashMap params, HttpSession session, HttpServletRequest request){
+    public HashMap<String, Object> addAllCart(@RequestParam HashMap params, HttpSession session, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
