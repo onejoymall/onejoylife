@@ -101,5 +101,41 @@
             #{item}
         </foreach>
     </update>
+    <update id="userLevelUpdate">
+    	<![CDATA[
+    	UPDATE user SET
+		LEVEL = #{level_name}
+		WHERE usr_id = #{point_paid_user_id}
+		]]>
+    </update>
+    <select id="getMenuDepth" resultType="java.util.Map">
+    	SELECT concat(depth1, IF(depth2 IS NOT NULL,' > ',''), IFNULL(depth2,''), IF(depth3 IS NOT NULL,' > ',''), IFNULL(depth3,'')) menu_name,
+		 		if(depth3 IS NOT NULL,C.menu_id,if(depth2 IS NOT NULL,B.menu_id,A.menu_id)) menu_id
+		FROM (SELECT menu_name depth1, menu_id
+			  FROM user_manager_menu
+			  WHERE menu_upper_id = 0) A
+		LEFT JOIN (SELECT menu_name depth2, menu_id, menu_upper_id
+			  FROM user_manager_menu
+			  WHERE menu_upper_id IN (SELECT menu_id
+									  FROM user_manager_menu
+									  WHERE menu_upper_id = 0)) B
+		ON B.menu_upper_id = A.menu_id
+		LEFT JOIN (SELECT menu_name depth3, menu_id, menu_upper_id
+				   FROM user_manager_menu
+				   WHERE menu_upper_id IN (SELECT menu_id
+										   FROM user_manager_menu
+										   WHERE menu_upper_id IN (SELECT menu_id
+																   FROM user_manager_menu
+																   WHERE menu_upper_id = 0))) C
+		ON C.menu_upper_id = B.menu_id
+		ORDER BY A.menu_id,B.menu_id,C.menu_id
+    </select>
+    <update id="userEnableMenuUpdate">
+    	<![CDATA[
+    	UPDATE user SET
+		enable_mg_menu_id = #{enable_menu}
+		WHERE usr_id = #{point_paid_user_id}
+		]]>
+    </update>
 </mapper>
 

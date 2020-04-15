@@ -43,10 +43,10 @@
             <a href="/Manager/ManagerMain"><h1 class="header-logo"><span>onejoylife</span></h1></a>
             <div class="header-snb-right">
                 <ul class="header-snb-nav">
-                    <c:if test="${!sessionScope.adminLogin}">
+                    <c:if test="${sessionScope.adminLogin == null}">
                         <li><a href="/Manager/ManagerSign/ManagerLogin">로그인</a></li>
                     </c:if>
-                    <c:if test="${sessionScope.adminLogin}">
+                    <c:if test="${sessionScope.adminLogin != null}">
                         <li><a href="/Manager/ManagerSign/ManagerLogOut">로그아웃</a></li>
                         <li><a href="">비밀번호 변경</a></li>
                     </c:if>
@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <c:if test="${!sessionScope.adminLogin}">
+    <c:if test="${sessionScope.adminLogin != null}">
     <div class="header-in">
         <div class="header-gnb">
             <ul class="gnb-out-ul">

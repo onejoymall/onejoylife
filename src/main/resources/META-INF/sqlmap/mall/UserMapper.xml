@@ -25,7 +25,8 @@
           A.*
         FROM user A where email =#{email}
         ]]>
-        <if test="level != null"> <![CDATA[AND A.level= #{level} ]]></if>
+        <if test="level == 10"> <![CDATA[AND A.level >= 9 ]]></if>
+        <if test="level != null and level != 10"> <![CDATA[AND A.level= #{level} ]]></if>
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>

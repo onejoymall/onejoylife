@@ -388,3 +388,26 @@ input[name="goods-name"], #goods-search, #goods-detail-info, #goods-shipping{
 input[type="radio"]+label, input[type="checkbox"]+label{
     margin-right:10px;
 }
+/*동현 start*/
+.modal-level-btn, .modal-enable-menu-btn{
+    background: #da394a;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.menu-depth{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.menu-depth input{
+	margin-right: 5px;
+}
+.menu-depth-all{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	zoom: 1.5;
+}
+/*동현 end*/
