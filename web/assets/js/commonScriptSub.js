@@ -67,6 +67,7 @@ $(function(){
 //회원정보 상세보기
 function defaultModalUSer(email){
     $(".modal1").attr("style", "display:block");
+    $('#menuGrant').addClass('hidden');
     jQuery.ajax({
         type: 'POST',
         url: '/Manager/memberViewDetail',
