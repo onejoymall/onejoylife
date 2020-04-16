@@ -104,10 +104,6 @@
 
                         ${option}
 
-
-
-
-                    </div>
                     <div class="quantity-box">
                         <span>구매수량</span>
                         <div class="total-quantity">
@@ -121,6 +117,10 @@
                     <%--                        <div class="total-price-title">상품 금액 합계</div>--%>
                     <%--                        <div class="total-price-number"><span>2,230,000</span>원</div>--%>
                     <%--                    </div>--%>
+
+
+                    </div>
+
                     <div class="buy-wrap">
                         <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button>
                         <button class="buynow" type="button" id="paymentSubmit">바로구매</button>
@@ -1703,11 +1703,15 @@
     });
 
     $(document).ready(function(){
-        $('.option-box').click(function(){
+     /*   $('.option-box').click(function(){
 //               $('.bnr-header').css('display','none');
             $('.arrow-down').toggleClass('arrow-up');
             $('.option-list').toggleClass('display-block')
-        });
+        });*/
+        $('.optionBtn').click(function(){
+            $(this).siblings('.optionBtn').removeClass('on');
+            $(this).addClass('on');
+        })
 
         $('.favorite').click(function(){
             $(this).children('i').toggleClass('heart-full');

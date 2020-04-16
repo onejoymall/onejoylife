@@ -15,10 +15,8 @@
         <%--<select class="width-100">
             <option value="" selected>상품선택</option>
         </select>--%>
-            <select class="width-100 my-1">
-                <option value="" selected>옵션선택</option>
-                ${option}
-            </select>
+            ${option}
+
             <div class="purchaseBox mb-1">
                 <div class="item-delete">
                     <i class="ri-close-line"></i>
@@ -52,12 +50,12 @@
                 </ul>
             </div>--%>
             <ul class="flexbetween mt-2 mb-5">
-                <li>
+                <%--<li>
                     <h3>총 합계금액</h3>
                 </li>
                 <li>
                     <h2 class="red">4,500<span class="text-sm">원</span></h2>
-                </li>
+                </li>--%>
             </ul>
         </div>
         <ul class="footerBtns">
@@ -465,6 +463,10 @@ $(document).ready(function(){
 //        pager:false,
 //        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
 //    });
+    $('.optionBtn').click(function(){
+            $(this).siblings('.optionBtn').removeClass('on');
+            $(this).addClass('on');
+        })
     $('.goodsQna').on('click',function(){
         $(this).addClass('active');
         $('.goodsQna').not($(this)).removeClass('active');

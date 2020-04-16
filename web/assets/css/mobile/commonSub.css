@@ -86,3 +86,8 @@ input[type="password"]::placeholder{
 .bottomBtns {
     bottom: 45px!important;
 }
+
+/*결제페이지*/
+.width-30{
+    width: 30.45% !important;
+}

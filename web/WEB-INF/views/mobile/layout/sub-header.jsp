@@ -84,16 +84,15 @@
         });
     });
 </script>
-<body>
-    <div class="pt-48 pb-5">
+<body class="pt-48 pb-5">
         <header class="header clearfix">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
                 <h1><a href="/">원조이몰</a></h1>
                 <div class="h-cart">
-                    <a href="mypage-4.html" class="cart-inner">
+                    <a href="/MyPage/ShoppingBasket" class="cart-inner">
                         <i class="cart"></i>
-                        <span class="cart-num">100</span>
+                        <span class="cart-num">${searchVO.totRow}</span>
                     </a>
                 </div>
             </div>

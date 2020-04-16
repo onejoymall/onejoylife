@@ -35,7 +35,7 @@
                         <a href="/product/productDetail?product_cd=${productSpList.product_cd}">
                             <div class="img-box">
                                 <img src='${productSpList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
-                                <p class="saleBox">35%</p>
+<%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <div class="mainList-big-text">
@@ -83,7 +83,7 @@
                         <a href="/product/productDetail?product_cd=${productList.product_cd}">
                             <div class="img-box">
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'">
-                                <p class="saleBox">35%</p>
+<%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <div class="mainList-sm-text">
@@ -170,7 +170,7 @@
                         <li>
                             <div class="img-box">
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" >
-                                <p class="saleBox">35%</p>
+<%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">

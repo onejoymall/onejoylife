@@ -8,16 +8,17 @@
         <div class="subTitle">장바구니</div>
         <ul class="taps">
             <li><a href="#" class="active">일반 (${searchVO.totRow})</a></li>
-            <li><a href="#">경품 (5)</a></li>
+<%--            <li><a href="#">경품 (5)</a></li>--%>
         </ul>
     </section>
     <section class="wrap">
         <form name="defaultform" id="defaultForm" method="POST">
             <input type="hidden" name="table_name" value="product_cart">
             <input type="hidden" name="pk" value="cart_cd">
+
             <ul class="btns">
     <%--            <li><a href="#" class="active">선택 찜하기</a></li>--%>
-                <li><a href="#" class="commonlistDelete">선택 삭제</a></li>
+                <li><a href="" class="commonlistDelete">선택 삭제</a></li>
             </ul>
             <hr>
 
@@ -47,7 +48,7 @@
                             </ul>
                             <h2><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
     <%--                        <button class="btn-black btn">옵션변경</button>--%>
-                            <button class="btn commonlistDelete">삭제</button>
+                            <button class="btn x" data-id="${list.product_cd}">삭제</button>
                             <select name="payment_order_quantity" value="${list.payment_order_quantity}" class="half payment_order_quantity" data-id="${list.cart_cd}">
                                 <option value="1" selected>1</option>
                                 <option value="2">2</option>
@@ -61,11 +62,9 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty list}">
-                <tr>
-                    <td colspan="8">
-                        표시할 내용이 없습니다.
-                    </td>
-                </tr>
+                <ul class="basket">
+                    <li>표시할 내용이 없습니다.</li>
+                </ul>
 
             </c:if>
             <%--<ul class="basket">
@@ -126,5 +125,7 @@
            <li><a href="#" id="selectOrder">전체 주문하기</a></li>
         </ul>
     </div>
+
+
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
