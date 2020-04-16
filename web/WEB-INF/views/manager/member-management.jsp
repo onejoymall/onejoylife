@@ -272,8 +272,8 @@
                             <th>환수 포인트</th>
                             <td><input type="number" name="point_use" ><button type="button" class="point-btn mgPointPaid">환수</button></td>
                         </tr>
-                        <c:if test="${sessionScope.adminLogin == 'admin'}">
-                        <tr>
+                        <c:if test="${sessionScope.adminLogin}">
+                        <tr id="menuGrant" class="hidden">
                         	<th>사용가능 메뉴</th>
                         	<td>
                         	<c:if test="${not empty depthList}">

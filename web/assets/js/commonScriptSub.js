@@ -74,6 +74,10 @@ function defaultModalUSer(email){
         success: function (data) {
             $("input[name=enable_menu]").prop("checked",false);
             $.each(data.list, function (index, item) {
+                //매니저 이상만 메뉴변경 기능 노출
+                if(index =='level' && item >= 9){
+                    $('#menuGrant').removeClass('hidden');
+                }
         	if(index=="enable_mg_menu_id" && data.list.level != 1){
                     item.split("|").forEach(function(el){
                 	$("input[name=enable_menu]:checkbox[value="+el+"]").prop("checked",true);
