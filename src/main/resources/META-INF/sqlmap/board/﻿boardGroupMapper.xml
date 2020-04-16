@@ -13,24 +13,24 @@
         <selectKey resultType="String" keyProperty="bgno" order="BEFORE">
             SELECT IFNULL(MAX(BGNO),0)+1 FROM TBL_BOARDGROUP
         </selectKey>    
-        INSERT INTO TBL_BOARDGROUP(BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY, BGPARENT, BGDELETEFLAG, BGDATE)
-        VALUES (#{bgno}, #{bgname}, #{bgused}, #{bgreply}, #{bgreadonly}, #{bgparent}, 'N', NOW() )
+        INSERT INTO TBL_BOARDGROUP(BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY, BGPARENT, BGDELETEFLAG, BGDATE,BGTYPE)
+        VALUES (#{bgno}, #{bgname}, #{bgused}, #{bgreply}, #{bgreadonly}, #{bgparent}, 'N', NOW() ,#{bgtype})
     </insert>
     
     <update id="updateBoardGroup" parameterType="com.webapp.board.app.BoardGroupVO">
         UPDATE TBL_BOARDGROUP
-           SET BGNAME=#{bgname}, BGUSED=#{bgused}, BGREPLY=#{bgreply}, BGREADONLY=#{bgreadonly}
+           SET BGNAME=#{bgname}, BGUSED=#{bgused}, BGREPLY=#{bgreply}, BGREADONLY=#{bgreadonly} ,BGTYPE=#{bgtype}
          WHERE BGNO=#{bgno}
     </update> 
         
     <select id="selectBoardGroupOne" parameterType="String" resultType="com.webapp.board.app.BoardGroupVO">
-        SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY
+        SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY,BGTYPE
           FROM TBL_BOARDGROUP
          WHERE BGDELETEFLAG='N' AND BGNO=#{bgno} 
     </select> 
 
     <select id="selectBoardGroupOne4Used" parameterType="String" resultType="com.webapp.board.app.BoardGroupVO">
-        SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY
+        SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY,BGTYPE
           FROM TBL_BOARDGROUP
          WHERE BGDELETEFLAG='N' AND BGNO=#{bgno} 
     </select>  

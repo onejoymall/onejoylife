@@ -10,7 +10,16 @@ public class BoardGroupVO {
     private String bgused; 
     private String bgreply; 
     private String bgreadonly; 
-    private String bgdate; 
+    private String bgdate;
+    private String bgtype;
+
+    public String getBgtype() {
+        return bgtype;
+    }
+
+    public void setBgtype(String bgtype) {
+        this.bgtype = bgtype;
+    }
 
     public String getBgno() {
         return bgno;

@@ -113,7 +113,7 @@ input[class='styleClass'] + label
     background: url(/assets/img/icon/but-g-1.png)no-repeat center / 20px;
     cursor: pointer;
 }
-.radio-td label:nth-of-type(2){
+.radio-td label:not(:nth-of-type(1)) {
     margin-left: 35px;
 }
 input[class='styleClass']:checked + label

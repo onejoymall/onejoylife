@@ -32,33 +32,32 @@ import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.security.model.UserInfo;
+
+import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.dao.RefundDAO;
-import com.webapp.mall.dao.UserDAO;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.UserVO;
-import com.webapp.manager.dao.CategoryDAO;
-import com.webapp.manager.dao.ConfigDAO;
-import com.webapp.manager.dao.MgBrandDAO;
-import com.webapp.manager.dao.MgCommonDAO;
-import com.webapp.manager.dao.MgGiveawayDAO;
-import com.webapp.manager.dao.MgOptionDAO;
-import com.webapp.manager.dao.MgPointDAO;
-import com.webapp.manager.dao.MgProductDAO;
-import com.webapp.manager.dao.MgStoreDAO;
-import com.webapp.manager.dao.MgUserDAO;
-import com.webapp.manager.dao.MgUserGrantDAO;
-import com.webapp.manager.vo.MgBrandVO;
-import com.webapp.manager.vo.MgCommonVO;
-import com.webapp.manager.vo.MgOptionVO;
-import com.webapp.manager.vo.MgPointVO;
-import com.webapp.manager.vo.MgUserVO;
-import com.webapp.manager.vo.ProductVO;
-import com.webapp.manager.vo.StoreVO;
+import com.webapp.mall.dao.*;
+import com.webapp.mall.vo.*;
+import com.webapp.manager.dao.*;
+import com.webapp.manager.vo.*;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @RestController
 public class ManagerRestapiController {
@@ -233,7 +232,7 @@ public class ManagerRestapiController {
                         session.setAttribute("email",email);
                         if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
                         else 										  session.setAttribute("adminLogin", "manager");
-                        session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
+                        session.setAttribute("menuList", loginUserList.get("enable_mg_menu_id"));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);

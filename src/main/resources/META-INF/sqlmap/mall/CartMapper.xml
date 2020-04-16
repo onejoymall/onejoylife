@@ -3,7 +3,17 @@
 
 
 <mapper namespace="mall.CartMapper">
-
+    <select id="getCartPaymentList" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select
+            A.*,
+            B.*,
+            (select code.code_name from code where code.code='product_delivery_type' and code.code_value =B.product_delivery_type) as product_delivery_type_name,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
+        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
+        ]]>
+        order by A.reg_date DESC
+    </select>
     <select id="getCartList" parameterType="java.util.Map" resultType="java.util.Map">
         <![CDATA[
         select
@@ -31,18 +41,27 @@
     </select>
 
     <select id="getCartSum" parameterType="java.util.Map" resultType="java.util.Map">
-        <![CDATA[
+
         select
-            sum(B.product_payment) as total_payment,sum(B.product_delivery_payment) as total_delivery_payment
+            ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
+            ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
+            ifnull(sum(B.product_delivery_payment * A.payment_order_quantity),0) as total_delivery_payment,
+            ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
-        ]]>
-        order by A.reg_date DESC LIMIT ${rowStart-1}, ${staticRowEnd}
+
     </select>
 
     <insert id="insertCart" parameterType="java.util.Map">
-        insert into product_cart(cart_cd,product_cd,cart_user_id,member_yn) values (#{cart_cd},#{product_cd},#{cart_user_id},#{member_yn})
+        insert into product_cart(cart_cd,product_cd,cart_user_id,member_yn,payment_order_quantity,select_option_value,option_name)
+        values (#{cart_cd},#{product_cd},#{cart_user_id},#{member_yn},#{payment_order_quantity},#{select_option_value},#{option_name})
     </insert>
-
+    <insert id="insertCartOption" parameterType="com.webapp.mall.vo.OptionVO">
+        insert into product_cart_option(cart_cd,option_name,select_option_value)
+        <foreach collection="optionVOList" item="item" separator=" , ">
+            (#{item.cart_cd}, #{item.option_name}, #{item.select_option_value})
+        </foreach>
+        values (#{cart_cd},#{option_name},#{select_option_value})
+    </insert>
     <insert id="addAllcart" parameterType="java.util.Map">
         insert into ${table_name}(cart_cd,product_cd,cart_user_id,member_yn) values
         <foreach collection="chk" item="item" open="(" separator="," close=")">
@@ -53,7 +72,9 @@
     <delete id="deleteCart" parameterType="com.webapp.manager.vo.ProductVO">
         delete from product_cart where product_cd=#{product_cd}
     </delete>
-
+    <update id="updateCart" parameterType="java.util.Map">
+        update product_cart set payment_order_quantity=#{payment_order_quantity} where cart_cd = #{cart_cd}
+    </update>
     <select id="getFavoritesList" parameterType="java.util.Map" resultType="java.util.Map">
         <![CDATA[
         select

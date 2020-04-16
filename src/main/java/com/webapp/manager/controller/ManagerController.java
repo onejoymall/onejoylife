@@ -842,7 +842,7 @@ public class ManagerController {
     }
     //회원관리
     @RequestMapping(value = "/Manager/member-management")
-    public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, MgUserVO mgUserVO) throws Exception {
+    public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, MgUserVO mgUserVO, HttpSession session) throws Exception {
         try {
             mgUserVO.setDisplayRowCount(10);
             mgUserVO.setStaticRowEnd(10);

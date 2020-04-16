@@ -23,7 +23,7 @@ function TreenodeActivate(node) {
 }
 
 function receiveData(data){
-
+	console.log(data)
     $("#bgno").val(data.bgno);
     $("#bgname").val(data.bgname);
     $('#showBgno').attr("href","<c:url value="/Board/boardList?bgno="/>"+data.bgno);
@@ -33,6 +33,7 @@ function receiveData(data){
 	$('input:radio[name="bgused"][value="' + data.bgused + '"]').prop('checked', true);
 	$('input:radio[name="bgreadonly"][value="' + data.bgreadonly + '"]').prop('checked', true);
 	$('input:radio[name="bgreply"][value="' + data.bgreply + '"]').prop('checked', true);
+	$('input:radio[name="bgtype"][value="' + data.bgtype + '"]').prop('checked', true);
 }
 
 function fn_groupNew(){
@@ -41,6 +42,7 @@ function fn_groupNew(){
 	$('input:radio[name="bgused"][value="Y"]').prop('checked', true);
 	$('input:radio[name="bgreadonly"][value="N"]').prop('checked', true);
 	$('input:radio[name="bgreply"][value="Y"]').prop('checked', true);
+
 }
 
 function fn_groupDelete(value){
@@ -82,10 +84,7 @@ function fn_groupSave(){
     	url: "/Manager/boardGroupSave",
     	cache: false,
     	type: "POST",
-    	data: { bgno:$("#bgno").val(), bgname:$("#bgname").val(), bgparent: pid,
-    			bgused : $("input:radio[name=bgused]:checked").val(), 
-    			bgreadonly : $("input:radio[name=bgreadonly]:checked").val(), 
-    			bgreply : $("input:radio[name=bgreply]:checked").val()}    	
+    	data: $('#defaultForm').serialize()
     }).done(receiveData4Save);
 }
 
@@ -132,57 +131,67 @@ function addNode(nodeNo, nodeTitle){
 				<div class="right"><button class="btn-default" onclick="fn_groupNew()" >추가</button></div>
 
 				<p>&nbsp;</p>
-				<input name="bgno" id="bgno" type="hidden" value="">
-				<table class="right-table rightTable">
-					<colgroup>
-						<col style="width: 160px;">
-						<col style="width: 914px;">
-					</colgroup>
-					<tbody class="sec1-tbody">
-					<tr>
-						<td>그룹명</td>
-						<td>
-							<input name="bgname" id="bgname" style="width: 300px;" type="text" maxlength="100" value="">
-						</td>
-					</tr>
-					<tr>
-						<td>관리</td>
-						<td>
-							<a href="" id="showMgBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
-						</td>
-					</tr>
-					<tr>
-						<td>일반</td>
-						<td>
-							<a href="" id="showBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
-						</td>
-					</tr>
-					<tr class="radio-td">
-						<td>사용여부</td>
-						<td class="radio-td">
-							<input name="bgused" id="bgusedY" type="radio" checked="checked" value="Y" class="styleClass">
-							<label for="bgusedY"><span>사용</span></label>
-							<input name="bgused" id="bgusedN" type="radio" value="N" class="styleClass">
-							<label for="bgusedN"><span>사용중지</span></label>
-						</td>
-					</tr>
-					<tr class="radio-td">
-						<td>등록가능</td>
-						<td>
-							<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N" class="styleClass"><label for="bgreadonlyN"><span>사용</span></label>
-							<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y" class="styleClass"><label for="bgreadonlyY"><span>사용중지</span></label>
-						</td>
-					</tr>
-					<tr class="radio-td">
-						<td>댓글</td>
-						<td>
-							<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y" class="styleClass"><label for="bgreplyY"><span>사용</span></label>
-							<input name="bgreply" id="bgreplyN" type="radio" value="N" class="styleClass"><label for="bgreplyN"><span>사용중지</span></label>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-				<p>&nbsp;</p>
+				<form name="defalutForm" id="defaultForm" method="POST">
+					<input name="bgno" id="bgno" type="hidden" value="">
+					<table class="right-table rightTable">
+						<colgroup>
+							<col style="width: 160px;">
+							<col style="width: 914px;">
+						</colgroup>
+						<tbody class="sec1-tbody">
+						<tr>
+							<td>그룹명</td>
+							<td>
+								<input name="bgname" id="bgname" style="width: 300px;" type="text" maxlength="100" value="">
+							</td>
+						</tr>
+						<tr>
+							<td>관리</td>
+							<td>
+								<a href="" id="showMgBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
+							</td>
+						</tr>
+						<tr>
+							<td>일반</td>
+							<td>
+								<a href="" id="showBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
+							</td>
+						</tr>
+						<tr class="radio-td">
+							<td>사용여부</td>
+							<td class="radio-td">
+								<input name="bgused" id="bgusedY" type="radio" checked="checked" value="Y" class="styleClass">
+								<label for="bgusedY"><span>사용</span></label>
+								<input name="bgused" id="bgusedN" type="radio" value="N" class="styleClass">
+								<label for="bgusedN"><span>사용중지</span></label>
+							</td>
+						</tr>
+						<tr class="radio-td">
+							<td>등록가능</td>
+							<td>
+								<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N" class="styleClass"><label for="bgreadonlyN"><span>사용</span></label>
+								<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y" class="styleClass"><label for="bgreadonlyY"><span>사용중지</span></label>
+							</td>
+						</tr>
+						<tr class="radio-td">
+							<td>댓글</td>
+							<td>
+								<input name="bgtype" id="board" type="radio" checked="checked" value="board" class="styleClass"><label for="board"><span>게시판</span></label>
+								<input name="bgtype" id="faq" type="radio" value="faq" class="styleClass"><label for="faq"><span>FAQ</span></label>
+								<input name="bgtype" id="1:1" type="radio" value="1:1" class="styleClass"><label for="1:1"><span>1:1 문의</span></label>
+							</td>
+						</tr>
+						<tr class="radio-td">
+							<td>게시판 종류</td>
+							<td>
+								<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y" class="styleClass"><label for="bgreplyY"><span>사용</span></label>
+								<input name="bgreply" id="bgreplyN" type="radio" value="N" class="styleClass"><label for="bgreplyN"><span>사용중지</span></label>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<p>&nbsp;</p>
+				</form>
 				<div style="text-align: right;">
 					<button class="btn-default" onclick="fn_groupSave()" href="#">저장</button>
 					<button class="btn-default" onclick="fn_groupDelete()" href="#">삭제</button>
