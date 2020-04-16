@@ -241,12 +241,14 @@
                             <td>
                             	<div class="level_name"></div>
                             	<div>
+                            		<c:if test="${sessionScope.adminLogin == 'admin'}">
                             		<select name="level_name">
                             			<option value="1">사용자</option>
                             			<option value="9">매니저</option>
                             			<option value="10">관리자</option>
                             		</select>
                             		<button class="modal-level-btn" type="button">회원등급 설정</button>
+                            		</c:if>
                             	</div>
                            	</td>
                         </tr>

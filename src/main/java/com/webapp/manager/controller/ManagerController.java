@@ -844,7 +844,6 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/member-management")
     public String managerMemberManagement(@RequestParam HashMap params, ModelMap model, MgUserVO mgUserVO) throws Exception {
         try {
-
             mgUserVO.setDisplayRowCount(10);
             mgUserVO.setStaticRowEnd(10);
             mgUserVO.pageCalculate(mgUserDAO.getManagerUserListCount(mgUserVO));

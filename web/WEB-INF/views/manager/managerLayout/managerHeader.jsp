@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -65,49 +66,91 @@
     <c:if test="${sessionScope.adminLogin != null}">
     <div class="header-in">
         <div class="header-gnb">
+        <c:if test="${not empty menuList}">
             <ul class="gnb-out-ul">
+         		<c:if test="${afn:contains(menuList, '9') || afn:contains(menuList, '10')}">
                 <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/info-join">운영관리</a>
                     <ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '9')}">
                         <li><a href="/Manager/info-join">기본 관리</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '10')}">
                         <li><a href="/Manager/boardGroupList">게시판관리</a> </li>
+                        </c:if>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '29') ||
+                			  afn:contains(menuList, '30') ||
+                			  afn:contains(menuList, '31') ||
+                			  afn:contains(menuList, '32') ||
+                			  afn:contains(menuList, '33') ||
+                			  afn:contains(menuList, '34') ||
+                			  afn:contains(menuList, '35') ||
+                			  afn:contains(menuList, '36') ||
+                			  afn:contains(menuList, '37')}">
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '29') || afn:contains(menuList, '30')}">
                         <li><a href="/Manager/Product">상품관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '29')}">
                                 <li><a href="/Manager/Product">상품리스트</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '30')}">
                                 <li><a href="/Manager/ProductAdd">상품등록</a></li>
+                                </c:if>
 <%--                                <li><a href="">업체가격 수정승인</a></li>--%>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '31') || afn:contains(menuList, '32')}">
                         <li><a href="/Manager/Giveaway">경품관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '31')}">
                                 <li><a href="/Manager/Giveaway">경품리스트</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '32')}">
                                 <li><a href="/Manager/GiveawayAdd">경품등록</a></li>
+                                </c:if>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '33')}">
                         <li><a href="/Manager/promotion-coupon">프로모션관리</a>
                             <ul>
                                 <li><a href="/Manager/promotion-coupon">쿠폰 등록 및 관리</a></li>
 <%--                                <li><a href="">메인페이지, 기획전/이벤트 관리</a></li>--%>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '34') || afn:contains(menuList, '35') || afn:contains(menuList, '36')}">
                         <li><a href="/Manager/option-product">상품속성관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '34')}">
                                 <li><a href="/Manager/option-product">상품옵션설정</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '35')}">
                                 <li><a href="/Manager/market-config-partner">서비스 안내관리</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '36')}">
                                 <li><a href="/Manager/option-brand">브랜드등록</a></li>
+                                </c:if>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '37')}">
                         <li><a href="/Manager/Category">카테고리관리</a>
                             <ul>
                                 <li><a href="/Manager/Category">관리분류</a></li>
 <%--                                <li><a href="">전시분류</a></li>--%>
                             </ul>
                         </li>
+                        </c:if>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '38')}">
                 <li <c:if test="${topNav == 3}">class="active" </c:if>><a href="">업체관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/company-app">업체관리</a>
@@ -118,36 +161,60 @@
 <%--                        <li><a href="">공지사항관리</a></li>--%>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '39') || afn:contains(menuList, '40')}">
                 <li <c:if test="${topNav == 4}">class="active" </c:if>><a href="">주문관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/order">주문관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '39')}">
                                 <li><a href="/Manager/order">주문현황관리</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '40')}">
                                 <li><a href="/Manager/returned">교환/반품처리</a></li>
+                                </c:if>
                             </ul>
                         </li>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '18') || afn:contains(menuList, '19') || afn:contains(menuList, '20')}">
                 <li <c:if test="${topNav == 5}">class="active" </c:if>><a href="">매출관리</a>
                     <ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '18')}">
                         <li><a href="/Manager/class-sales">분류별 매출현황</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '19')}">
                         <li><a href="/Manager/product-sales">상품별 매출현황</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '20')}">
                         <li><a href="/Manager/date-sales">날짜별 매출현황</a></li>
+                        </c:if>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '22') || afn:contains(menuList, '23') || afn:contains(menuList, '24')}">
                 <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="">회원관리</a>
                     <ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '22')}">
                         <li><a href="/Manager/member-management">회원관리</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '23')}">
                         <li><a href="/Manager/memberLoginHistory">회원 로그인 이력</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '24')}">
                         <li><a href="/Manager/MgEPoint">회원 포인트 관리</a></li>
+                        </c:if>
                     </ul>
                 </li>
+                </c:if>
 <%--                <li <c:if test="${topNav == 7}">class="active" </c:if>><a href="">계정관리</a>--%>
 <%--                    <ul class="gnb-in-ul">--%>
 <%--                        <li><a href="">사용권한 설정</a></li>--%>
 <%--                        <li><a href="">사용자 계정관리</a></li>--%>
 <%--                    </ul>--%>
 <%--                </li>--%>
+				<c:if test="${afn:contains(menuList, '24')}">
                 <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="">정산관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/calculate-company">업체별 정산내역</a>
@@ -159,21 +226,44 @@
 <%--                        <li><a href="">경품관리</a></li>--%>
                     </ul>
                 </li>
+                </c:if>
+                <c:if test="${afn:contains(menuList, '25') ||
+                			  afn:contains(menuList, '41') ||
+                			  afn:contains(menuList, '42') ||
+                			  afn:contains(menuList, '43') ||
+                			  afn:contains(menuList, '27') ||
+                			  afn:contains(menuList, '28')}">
                 <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="">CS관리</a>
                     <ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '24')}">
                         <li><a href="/Manager/boardList?bgno=16">상품 QA</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '41') || afn:contains(menuList, '42') || afn:contains(menuList, '43')}">
                         <li><a href="/Manager/boardList?bgno=15">상담관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '41')}">
                                 <li><a href="/Manager/boardList?bgno=15">1:1 메일문의 게시판</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '42')}">
                                 <li><a href="/Manager/company-app">입점 및 제휴문의</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '43')}">
                                 <li><a href="/Manager/boardList?bgno=8">공지사항</a></li>
+                                </c:if>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '27')}">
                         <li><a href="/Manager/cs-review">상풍평관리</a></li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '28')}">
                         <li><a href="/Manager/boardList?bgno=16">FAQ</a></li>
+                        </c:if>
                     </ul>
                 </li>
+                </c:if>
             </ul>
+        </c:if>
         </div>
     </div>
     </c:if>

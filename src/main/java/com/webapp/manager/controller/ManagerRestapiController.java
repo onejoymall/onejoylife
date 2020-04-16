@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -232,7 +233,7 @@ public class ManagerRestapiController {
                         session.setAttribute("email",email);
                         if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
                         else 										  session.setAttribute("adminLogin", "manager");
-                        session.setAttribute("menuList", loginUserList.get("enable_mg_menu_id"));
+                        session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);
