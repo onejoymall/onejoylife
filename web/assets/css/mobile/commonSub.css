@@ -81,3 +81,8 @@ input[type="password"]::placeholder{
 .btn.btn_bottom{
     bottom:45px!important;
 }
+
+/*마이페이지*/
+.bottomBtns {
+    bottom: 45px!important;
+}

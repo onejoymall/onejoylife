@@ -261,7 +261,12 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "product/productpayment";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4-1-1";
+        } else {
+            return "product/productpayment";
+        }
     }
     //배송비
     public Integer deliveryPayment( Map<String,Object> params)throws IOException {
