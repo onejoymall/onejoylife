@@ -455,16 +455,17 @@ public class ProductController {
                 }
                 if(splitStyleArray[z].equals("R")){
                     outText += "" +
-                            "<div class=\"option-box2 mb-1\">\n" +
+                            "<div class=\"option-box2 mb-1\">" +
                             " <div class=\"point-title text-gray\">" +
-                            ""+splitNextArray[0]+" 선택 </div>\n";
+                            ""+splitNextArray[0]+" 선택 </div>"
+                            + "<div class=\"optionBtn-wrap\">\n";
 
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
                             "<input type=\"radio\" id=\"rdOption"+i+"\" name=\"rdOption\"><label for=\"rdOption"+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
                     }
                     outText += "" +
-                                "</div>\n" ;
+                                "</div></div>\n" ;
                 }
             }
 
