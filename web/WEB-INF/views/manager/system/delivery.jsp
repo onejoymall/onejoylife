@@ -57,9 +57,9 @@
                                 <th>배송비 선결제 설정<span class="cc-red">&#40;필수&#41;</span></th>
                                 <td>
                                     <select name="product_delivery_payment_type">
-                                       <option value="C">착불</option>
-                                       <option value="P">선결제</option>
-                                       <option value="B">선결제/착불</option>
+                                       <option value="C" <c:if test="${detail.product_delivery_payment_type eq 'C' }">selected</c:if>>착불</option>
+                                       <option value="P" <c:if test="${detail.product_delivery_payment_type eq 'P' }">selected</c:if>>선결제</option>
+                                       <option value="B" <c:if test="${detail.product_delivery_payment_type eq 'B' }">selected</c:if>>선결제/착불</option>
                                    </select>
                                 </td>
                             </tr>
