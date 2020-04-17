@@ -978,4 +978,29 @@ public class restapiController {
         }
         return resultMap;
     }
+    
+  //기본배송지 설정
+    @Transactional
+    @RequestMapping(value = "/MyPage/DefaultDeliveryAddressUpdate", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageDefaultDeliveryAddressUpdate(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request, HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+        	if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	HashMap<String, Object> defaultN = new HashMap<String, Object>();
+            	defaultN.put("defaultYn","N");
+            	defaultN.put("email",session.getAttribute("email"));
+                deliveryDAO.updateDefaultDelivery(defaultN);
+                params.put("defaultYn","Y");
+                deliveryDAO.updateDefaultDelivery(params);
+                resultMap.put("redirectUrl","/MyPage/DeliveryAddress");
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

@@ -33,6 +33,9 @@ public class DeliveryDAO {
     public void deleteDelivery(Map<String,Object> paramas) throws SQLException {
     	sql.update("mall.DeliveryMapper.deleteDelivery",paramas);
     }
+    public void updateDefaultDelivery(Map<String,Object> paramas) throws SQLException {
+    	sql.update("mall.DeliveryMapper.updateDefaultDelivery",paramas);
+    }    
     public Map<String,Object> getDeliveryLatest(Map<String,Object> paramas) throws SQLException{
         Map<String,Object> getDeliveryLatest=sql.selectOne("mall.DeliveryMapper.getDeliveryLatest",paramas);
         return getDeliveryLatest;

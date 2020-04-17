@@ -75,8 +75,8 @@
                         <p style="cursor: pointer;" id="deleteDeliveryInfo">선택주소지 삭제</p>
                     </div>
                     <div class="r-sec3">
-                        <button type="button">새 배송지 등록</button>
-                        <button type="button">기존배송지로 설정</button>
+                        <button type="button" id="addDeliveryInfo">새 배송지 등록</button>
+                        <button type="button" id="updateDefaultDeliveryInfo">기본배송지로 설정</button>
                     </div>
                 </form>
             </div>

@@ -116,6 +116,17 @@
 		delivery_visible_yn = 'N'
 		WHERE order_no = #{orderNo}
     </update>
+    <update id="updateDefaultDelivery" parameterType="java.util.Map">
+        UPDATE delivery_info SET
+		default_delivery_info_yn = #{defaultYn}
+		WHERE 1=1
+		<if test="orderNo != null and orderNo != ''">
+		and order_no = #{orderNo}
+		</if>
+		<if test="email != null and email != ''">
+		and order_user_email = #{email}
+		</if>
+    </update>
     <update id="updateDeliveryManager" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update delivery_info set
         delivery_status = #{delivery_status},
