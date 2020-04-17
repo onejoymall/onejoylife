@@ -221,3 +221,51 @@ $('.modal-enable-menu-btn').on("click",function () {
         },
     });
 })
+
+//배송지 선택삭제
+$('#deleteDeliveryInfo').on("click",function () {
+    var formData = $('#myDeliveryForm').serialize();
+    jQuery.ajax({
+        type: 'POST',
+        url: '/MyPage/DeliveryAddressDelete',
+        data: formData,
+        success: function (data) {
+            if (data.validateError) {//toast 오류처리
+                $.each(data.validateError, function (index, item) {
+                    if (index == "Error") {//
+                        alertType = "error";
+                        showText = item;
+                    } else {
+                        alertType = "error";
+                        showText = index + "는 (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+            }else{
+
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 2000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+
+            }
+        },
+        error: function (xhr, status, error) {
+            //
+            console.log(error,xhr,status );
+        },
+    });
+})

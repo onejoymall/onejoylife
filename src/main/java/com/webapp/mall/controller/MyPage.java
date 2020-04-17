@@ -1,13 +1,15 @@
 package com.webapp.mall.controller;
 
-import autovalue.shaded.com.google$.common.collect.$ForwardingObject;
-import com.webapp.board.common.SearchVO;
-import com.webapp.common.dao.SelectorDAO;
-import com.webapp.common.support.CurlPost;
-import com.webapp.common.support.MessageSource;
-import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.DeliveryInfoVO;
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -17,14 +19,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import static org.springframework.util.CollectionUtils.isEmpty;
+import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
+import com.webapp.common.support.CurlPost;
+import com.webapp.common.support.MessageSource;
+import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.CartDAO;
+import com.webapp.mall.dao.CouponDAO;
+import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.dao.PointDAO;
+import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
 @Controller
 public class MyPage {
     @Autowired
@@ -609,7 +617,45 @@ public class MyPage {
     }
     //배송지 변경
     @RequestMapping(value="/MyPage/DeliveryAddress")
-    public String myPageDeliveryAddress(Model model, HttpServletRequest request) {
+    public String myPageDeliveryAddress(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+    	 try {
+    		Map<String, Object> params = new HashMap<String, Object>();
+    		params.put("email", session.getAttribute("email"));
+    		params.put("international", 'A');
+     		List<Map<String, Object>> list = deliveryDAO.getUserDeliveryList(params);
+
+             model.addAttribute("list", list);
+             model.addAttribute("searchVO", searchVO);
+             model.addAttribute("table_name", "payment");
+             model.addAttribute("Pk", "payment_cd");
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+        model.addAttribute("leftNavOrder", 13);
+        model.addAttribute("style", "mypage-13");
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13";
+        } else {
+            return "mypage/DeliveryAddress";
+        }
+    }
+  //배송지 변경
+    @RequestMapping(value="/MyPage/DeliveryAddressForeign")
+    public String myPageDeliveryAddressForeign(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+    	 try {
+    		Map<String, Object> params = new HashMap<String, Object>();
+    		params.put("email", session.getAttribute("email"));
+    		params.put("international", 'C');
+     		List<Map<String, Object>> list = deliveryDAO.getUserDeliveryList(params);
+
+             model.addAttribute("list", list);
+             model.addAttribute("searchVO", searchVO);
+             model.addAttribute("table_name", "payment");
+             model.addAttribute("Pk", "payment_cd");
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
         model.addAttribute("leftNavOrder", 13);
         model.addAttribute("style", "mypage-13");
         Device device = DeviceUtils.getCurrentDevice(request);
