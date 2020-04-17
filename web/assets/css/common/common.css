@@ -155,16 +155,7 @@ input[class='styleClass']:checked + label
     font-size:12px;
     border-radius: 5px;
 }
-.table {
-    width: 100%;
-    text-align: center;
-    border: 1px solid #dadada;
-}
-.table tbody td {
-    padding: 5px;
-    border-left: 1px solid #dadada;
-    border-bottom: 1px solid #dadada;
-}
+
 
 /*.sec1-tbody > tr {*/
 /*    width:100%;*/
@@ -525,6 +516,18 @@ input[class='styleClass']:checked + label
 }
 
 /*table*/
+.border-none{
+    border: none !important;
+}
+.border-none thead th{
+    border-bottom: 1px solid #dadada;
+}
+.border-none thead th{
+    border-left: none !important;
+}
+.border-none tbody td{
+    border-left: none !important;
+}
 .table{
     width:100%;
     text-align: center;

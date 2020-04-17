@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgSystemMapper">
+
+  <insert id="insertSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO">
+      insert into store_delivery
+      (
+        store_id,
+        product_delivery_class,
+        product_delivery_type,
+        product_delivery_International_type,
+        product_delivery_locale,
+        product_delivery_payment_type,
+        product_delivery_date,
+        product_delivery_payment_class,
+        product_delivery_payment,
+        product_delivery_store_pickup
+      )
+      values
+      (
+        #{store_id},
+        #{product_delivery_class},
+        #{product_delivery_type},
+        #{product_delivery_International_type},
+        #{product_delivery_locale},
+        #{product_delivery_payment_type},
+        #{product_delivery_date},
+        #{product_delivery_payment_class},
+        #{product_delivery_payment},
+        #{product_delivery_store_pickup}
+      )
+      on duplicate KEY update
+        store_id=#{store_id},
+        product_delivery_class=#{product_delivery_class},
+        product_delivery_type=#{product_delivery_type},
+        product_delivery_International_type=#{product_delivery_International_type},
+        product_delivery_locale=#{product_delivery_locale},
+        product_delivery_payment_type=#{product_delivery_payment_type},
+        product_delivery_date=#{product_delivery_date},
+        product_delivery_payment_class=#{product_delivery_payment_class},
+        product_delivery_payment=#{product_delivery_payment},
+        product_delivery_store_pickup=#{product_delivery_store_pickup}
+    </insert>
+
+    <select id="getSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">
+        select * from store_delivery where store_id = #{store_id}
+    </select>
+
+</mapper>

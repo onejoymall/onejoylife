@@ -77,6 +77,9 @@
                         <c:if test="${afn:contains(menuList, '10')}">
                         <li><a href="/Manager/boardGroupList">게시판관리</a> </li>
                         </c:if>
+                        <c:if test="${afn:contains(menuList, '43')}">
+                            <li><a href="/Manager/Delivery">배송관리</a> </li>
+                        </c:if>
                     </ul>
                 </li>
                 </c:if>
