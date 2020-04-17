@@ -121,8 +121,8 @@
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" id="allOrder">선택 주문하기</a></li>
-           <li><a href="#" id="selectOrder">전체 주문하기</a></li>
+           <li><a href="#" id="selectOrder" class="cartPaymentOrder" data-id="selectCheck">선택 주문하기</a></li>
+           <li><a href="#" id="allOrder" class="cartPaymentOrder" data-id="allCheck">전체 주문하기</a></li>
         </ul>
     </div>
 
