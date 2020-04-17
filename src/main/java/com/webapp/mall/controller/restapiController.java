@@ -497,6 +497,7 @@ public class restapiController {
 
                 }else{
                     error.put("Error", messageSource.getMessage("error.giveawayMaxPoint","ko"));
+//                    resultMap.put("redirectUrl",request.getHeader("Referer"));
                 }
             }
         } catch (Exception e) {
