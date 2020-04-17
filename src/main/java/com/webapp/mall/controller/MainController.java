@@ -218,6 +218,7 @@ public class MainController {
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
+    	Device device = DeviceUtils.getCurrentDevice(request);
         try{
 
             //카테고리 목록
@@ -233,6 +234,9 @@ public class MainController {
             if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 16){
                 searchVO.setDisplayRowCount(16);
             }
+            if(device.isMobile()){
+            	searchVO.setDisplayRowCount(1000);
+            } 
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");
@@ -251,7 +255,11 @@ public class MainController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return "mall/today";
+        if(device.isMobile()){
+            return "mobile/today";
+        } else {
+            return "mall/today";
+        }
     }
     @RequestMapping(value = "/mall/live-shopping", method = RequestMethod.GET, produces = "application/json")
     public String mallLiveShopping(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
