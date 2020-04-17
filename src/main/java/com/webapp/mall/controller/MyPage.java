@@ -479,7 +479,7 @@ public class MyPage {
     }
     //경품담청내역
     @RequestMapping(value="/MyPage/GiveawayWinningList")
-    public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session) throws SQLException {
+    public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session, HttpServletRequest request) throws SQLException {
 
         params.put("email",session.getAttribute("email"));
         Map<String, Object> userInfo = userDAO.getLoginUserList(params);
@@ -496,7 +496,13 @@ public class MyPage {
         model.addAttribute("searchVO", searchVO);
         model.addAttribute("leftNavOrder", 11);
         model.addAttribute("style", "mypage-11");
-        return "mypage/GiveawayWinningList";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-11";
+        } else {
+            return "mypage/GiveawayWinningList";
+        }
     }
     //경품 참여 정보입력
     @RequestMapping(value="/MyPage/giveawayform")

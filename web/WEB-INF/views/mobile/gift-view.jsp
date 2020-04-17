@@ -128,7 +128,7 @@
     <section class="subheader">
         <div class="goods-slider-wrap">
             <ul class="goods-slider">
-                <<li><img src='${detail.file_1}' onerror="this.src='http://placehold.it/550'" ></li>
+                <li><img src='${detail.file_1}' onerror="this.src='http://placehold.it/550'" ></li>
                 <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
             </ul>
             <div class="share-list">
