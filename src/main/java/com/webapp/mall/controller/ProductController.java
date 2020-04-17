@@ -223,7 +223,14 @@ public class ProductController {
             e.printStackTrace();
         }
         model.addAttribute("style","mypage-4-1-1");
-        return "product/productCartPayment";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4-1-1";
+        } else {
+            return "product/productCartPayment";
+        }
+
     }
     //상품결제
     @RequestMapping(value = "/product/productPayment")
