@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -949,6 +950,26 @@ public class restapiController {
             }else{
                 commonDAO.commonListDelete(commonVO);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+  //배송지 삭제
+    @Transactional
+    @RequestMapping(value = "/MyPage/DeliveryAddressDelete", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageDeliveryAddressDelete(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+        	if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                deliveryDAO.deleteDelivery(params);
+                resultMap.put("redirectUrl","/MyPage/DeliveryAddress");
             }
         } catch (Exception e) {
 

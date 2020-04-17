@@ -29,6 +29,17 @@
         <if test="delivery_status != null"> <![CDATA[AND A.delivery_status= #{delivery_status} ]]></if>
 
     </select>
+    <select id="getUserDeliveryList" resultType="java.util.Map" parameterType="java.util.Map">
+	   	SELECT *
+		FROM delivery_info A
+		WHERE A.delivery_visible_yn = 'Y' 
+		AND A.order_user_email = #{email}
+		<if test="international != null and international != ''">
+		AND product_delivery_International_type = #{international}
+		</if>
+		ORDER BY A.default_delivery_info_yn = 'Y' DESC, A.reg_date desc
+		LIMIT 5
+    </select>
     <insert id="insertDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into delivery_info(
         giveaway_play_cd,
@@ -99,6 +110,11 @@
         update delivery_info set
         delivery_status = #{delivery_status}
         where order_no=#{merchant_uid}
+    </update>
+    <update id="deleteDelivery" parameterType="java.util.Map">
+        UPDATE delivery_info SET
+		delivery_visible_yn = 'N'
+		WHERE order_no = #{orderNo}
     </update>
     <update id="updateDeliveryManager" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update delivery_info set

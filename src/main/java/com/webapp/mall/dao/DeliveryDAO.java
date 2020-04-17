@@ -30,6 +30,9 @@ public class DeliveryDAO {
     public void updateDeliveryManager(DeliveryInfoVO deliveryInfoVO) throws SQLException {
         sql.update("mall.DeliveryMapper.updateDeliveryManager",deliveryInfoVO);
     }
+    public void deleteDelivery(Map<String,Object> paramas) throws SQLException {
+    	sql.update("mall.DeliveryMapper.deleteDelivery",paramas);
+    }
     public Map<String,Object> getDeliveryLatest(Map<String,Object> paramas) throws SQLException{
         Map<String,Object> getDeliveryLatest=sql.selectOne("mall.DeliveryMapper.getDeliveryLatest",paramas);
         return getDeliveryLatest;
@@ -37,6 +40,10 @@ public class DeliveryDAO {
     public Map<String,Object> getDeliveryDetail(Map<String, String> params) throws SQLException{
         Map<String,Object> getDeliveryDetail = sql.selectOne("mall.DeliveryMapper.getDeliveryDetail",params);
         return getDeliveryDetail;
+    }
+    public List<Map<String,Object>> getUserDeliveryList(Map<String,Object> paramas) throws SQLException{
+        List<Map<String,Object>> getUserDeliveryList = sql.selectList("mall.DeliveryMapper.getUserDeliveryList",paramas);
+        return getUserDeliveryList;
     }
 
 }
