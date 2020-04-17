@@ -1,4 +1,52 @@
-//
+
+function commonAjaxCall(type,url,formData){
+    jQuery.ajax({
+        type: type,
+        url: url,
+        data:formData,
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+    });
+}
+
+//비회원 결제
 $(document).on("click","#paymentSubmit",function () {
     if(isLogin==''){
         $.toast({
@@ -606,6 +654,42 @@ $(document).ready(function(){
         }
 
     })
+    $(document).on("click",".cartPaymentOrder",function () {
+
+        if($(this).attr("data-id") =='allCheck'){
+            $('input[name=chk]').prop("checked",true);
+        }
+        if($('input[name=chk]:checked').length <= 0){
+
+            $.toast({
+                heading: '결제 할 상품을 선택하세요.',
+                // text: [
+                //     '<a href="/sign/signup">회원 가입 후 이용</a>',
+                //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                // ],
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                icon: 'info',
+            });
+        }else{
+            if(isLogin==''){
+                $.toast({
+                    heading: '비회원 주문 중입니다.',
+                    text: [
+                        '<a href="/sign/signup">회원 가입 후 이용</a>',
+                        '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                    ],
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'info',
+                    hideAfter: false
+                });
+            }else{
+                $('#defaultForm').attr("action","/product/productPaymentCart");
+                $('#defaultForm').submit();
+            }
+        }
+    });
     //장바구니 수량변경
     $('.payment_order_quantity').on("change",function(){
         var payment_order_quantity= $(this).val();
@@ -1437,6 +1521,15 @@ $(document).ready(function(){
             objValue= $(this).val()
         }
         $('#product_tex_class').val(objValue)
+    });
+    //상품등록 과세율 수정
+    $(document).on("onkeyup","input[name=goods-taxation-detail]",function () {
+        var selectTex=$('input:radio[name=goods-tax]').val();
+
+        if(selectTex=="A"){
+            objValue =selectTex+"|"+$(this).val();
+        }
+        $(this).val(objValue);
     })
     /**
      * 이미지 파일 업로드
@@ -1742,13 +1835,8 @@ $(document).ready(function(){
 
                     $.each(data.list, function (index, item) {
                         $('input[name^="'+index+'"]').val(item);
-                        $("input[name=product_option_yn]").eq(0).val("Y");
-                        $("input[name=product_option_yn]").eq(1).val("N");
-                        $("input[name=product_sale_yn]").eq(0).val("Y");
-                        $("input[name=product_sale_yn]").eq(1).val("N");
-                        $("input[name=product_use_yn]").eq(0).val("Y");
-                        $("input[name=product_use_yn]").eq(1).val("N");
-                        $('#'+index).val(item);
+                        $('input:radio[name^="'+index+'"][value="' + item + '"]').prop('checked',true);
+
                         if(index=="product_html"){
                             $('#summernote').summernote('code', item);
                         }
@@ -1767,24 +1855,7 @@ $(document).ready(function(){
                         if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
                         }
-                        if(index=="product_option_yn" && item=="Y"){
-                            $("input[name=product_option_yn]").eq(0).click();
-                        }
-                        if(index=="product_option_yn" && item=="N"){
-                            $("input[name=product_option_yn]").eq(1).click();
-                        }
-                        if(index=="product_sale_yn" && item=="Y"){
-                            $("input[name=product_sale_yn]").eq(0).click();
-                        }
-                        if(index=="product_sale_yn" && item=="N"){
-                            $("input[name=product_sale_yn]").eq(1).click();
-                        }
-                        if(index=="product_use_yn" && item=="Y"){
-                            $("input[name=product_use_yn]").eq(0).click();
-                        }
-                        if(index=="product_use_yn" && item=="N"){
-                            $("input[name=product_use_yn]").eq(1).click();
-                        }
+
                     });
                     var ele1 =$('input[name^="file_1"]').val();
                     var ele2 =$('input[name^="file_2"]').val();

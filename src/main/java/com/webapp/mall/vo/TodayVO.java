@@ -5,6 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 public class TodayVO {
+    private String product_sale_yn;
+
+    public String getProduct_sale_yn() {
+        return product_sale_yn;
+    }
+
+    public void setProduct_sale_yn(String product_sale_yn) {
+        this.product_sale_yn = product_sale_yn;
+    }
+
     List<String> product_cd_array= new ArrayList<String>();
 
     public List<String> getProduct_cd_array() {

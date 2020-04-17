@@ -15,6 +15,7 @@
 
         <main class="clearfix">
             <form name="defaultForm" id="defaultForm" method="POST">
+                <input type="hidden" name="order_no" value="${order_no}">
                 <h2 class="head-h2">주문/결제</h2>
                 <div class="left-box">
                     <div class="sec1">
@@ -100,25 +101,6 @@
                                 <col style="width: 620px;">
                             </colgroup>
                             <tbody class="sec2-tbody">
-<%--                            <tr>--%>
-<%--                                <td>배송 방법</td>--%>
-<%--                                <td class="sel-td">--%>
-<%--                                    <c:if test="${delivery.delivery_class eq 'F'}">--%>
-<%--                                        ${delivery.selector}--%>
-<%--                                    </c:if>--%>
-<%--                                    <c:if test="${delivery.delivery_class eq 'T'}">--%>
-<%--                                        <select name="delivery_type">--%>
-<%--                                            <c:if test="${not empty delivery.selector}">--%>
-<%--                                                <c:forEach var="selectorList" items="${delivery.selector}" varStatus="status">--%>
-<%--                                                    <option value="${selectorList.code_value}">${selectorList.code_name}</option>--%>
-<%--                                                </c:forEach>--%>
-<%--                                            </c:if>--%>
-<%--                                        </select>--%>
-<%--                                    </c:if>--%>
-
-
-<%--                                </td>--%>
-<%--                            </tr>--%>
                             <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
@@ -230,78 +212,74 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="sec3">
+                    <div class="box on">
                         <p class="sec-h1">주문상품 정보</p>
-                        <table class="box1-table">
+                        <table class="table border-none">
                             <colgroup>
-                                <col style="width: 150px;">
-                                <col style="width: 390px;">
-                                <col style="width: 130px;">
-                                <col style="width: 130px;">
-<%--                                <col style="width: 130px;">--%>
+
+                                <col style="width: 20%">
+                                <col style="width: 30%">
+                                <col style="width: 10%">
+                                <col style="width: 20%">
+                                <col style="width: 20%">
                             </colgroup>
                             <thead>
                             <tr class="head-tr">
-                                <td></td>
-                                <td>상품정보</td>
-                                <td>상품가격</td>
+
+                                <td colspan="2">상품정보</td>
+                                <%--                            <td>옵션병경</td>--%>
                                 <td>수량</td>
-<%--                                <td>당첨번호</td>--%>
+                                <td>소비자가</td>
+                                <td>상품가격</td>
                             </tr>
                             </thead>
-                            <tbody class="body-tr">
-                            <tr >
-                                <td><img src='${detail.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
-                                <td class="p-box">
-                                    <p>${detail.product_made_company_name}</p>
-                                    <p>${detail.product_name}</p>
-                                    <p>${detail.product_model}</p>
-<%--                                    <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
-                                </td>
-                                <td><span><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /></span>원</td>
-                                <td><span>1</span></td>
-<%--                                <td><span>123456</span></td>--%>
-                            </tr>
+                            <tbody>
+                            <c:if test="${not empty cartPaymentList}">
+                                <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
+                                    <tr>
+                                        <td>
+                                            <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                                <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                                <p>${cartPaymentList.product_name}</p>
+                                            </a>
+                                        </td>
+                                        <td>
+                                                ${cartPaymentList.payment_order_quantity}
+                                            <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                                        </td>
+                                        <td>
+                                            <div class="price-number before-price">
+                                                <fmt:formatNumber value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" />원
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /></span>원
+                                            <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
+                                            <input type="hidden" name="product_name" value="${cartPaymentList.product_payment}">
+                                            <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
+                                            <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+
                             </tbody>
                         </table>
                     </div>
-<%--                    <div class="sec4">--%>
-<%--                        <p class="sec-h1">주문상품 정보</p>--%>
-<%--                        <table class="sec4-table">--%>
-<%--                            <colgroup>--%>
-<%--                                <col style="width: 180px;">--%>
-<%--                                <col style="width: 620px;">--%>
-<%--                            </colgroup>--%>
-<%--                            <tbody class="sec4-tbody">--%>
-<%--                            <tr>--%>
-<%--                                <td>총 상품 금액</td>--%>
-<%--                                <td><span>3,099,000</span>원</td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="bor-none">--%>
-<%--                                <td>할인쿠폰</td>--%>
-<%--                                <td class="sec4-sel">--%>
-<%--                                    <div class="sel-box">--%>
-<%--                                        <select name="" id="">--%>
-<%--                                            <option value="">첫 구매 고객 특별할이 20% ( ~ 2020.04.30)</option>--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                        <select name="" id="" class="sel-none">--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                        <select name="" id="" class="sel-none">--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                    <p>보유 쿠폰 <span>3</span>장</p>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
-<%--                    </div>--%>
                     <div class="sec5">
                         <p class="sec-h1">결제 정보</p>
+                        <div class="ck-box">
+                            <input type="checkbox" id="escrow">
+                            <label for="escrow"><span class="le-ck-txt"> 에스크로 사용</span></label>
+                        </div>
                         <div class="sec5-box">
-                            <div class="sec5-p1">결제수단</div>
+                            <div class="sec5-p1">
+                                결제수단
+                            </div>
                             <div class="sec5-p2">
                                 <!--
                                 card(신용카드)
@@ -327,6 +305,7 @@
 <%--                                </p>--%>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="right-box">
@@ -338,17 +317,17 @@
                                     <p class="in1-font1">총 상품 금액</p>
 <%--                                    <p>VIP 회원할인</p>--%>
 <%--                                    <p>할인쿠폰</p>--%>
-<%--                                    <c:if test="${not empty detail.product_delivery_payment}">--%>
+                                    <c:if test="${not empty getCartSum.total_delivery_payment}">
                                         <p>배송비</p>
-<%--                                    </c:if>--%>
+                                    </c:if>
                                 </div>
                                 <div class="txt-in2">
                                     <p><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /></span> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /></span> 원</p>
-
+                                    <c:if test="${not empty getCartSum.total_delivery_payment}">
+                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /></span>원</span> 원</p>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="num-box2">
@@ -358,7 +337,7 @@
                                 </div>
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /></span> 원</p>
-<%--                                    <p><span><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>--%>
+                                    <p><span><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>
                                 </div>
                             </div>
                         </div>
@@ -371,11 +350,6 @@
                         <button type="button" id="submitPayment">결제하기</button>
                     </div>
                 </div>
-                <input type="hidden" name="payment" value="${detail.product_payment+deliveryPayment}">
-                <input type="hidden" name="order_no" value="${order_no}">
-                <input type="hidden" name="product_cd" value="${detail.product_cd}">
-                <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
-
             </form>
         </main>
     </div>
@@ -386,6 +360,15 @@
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
+    //여러건의 결제
+    var product_name ='';
+    var orderSize = $('input[name=product_cd]').length;
+    if(orderSize >= 0){
+        product_name = $('input[name=product_name]').val()+"외 "+orderSize+" 건";
+    }else{
+        product_name = $('input[name=product_name]').val();
+    }
+
     $("#submitPayment").on("click",function() {
         if(!$('#le-ck').is(":checked")){
             $.toast({
@@ -400,7 +383,7 @@
             // loginAuth(data.access_token);
             // location.href=data.redirectUrl;
             IMP.request_pay({ // param
-                pg: "inicis",
+                pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: "${detail.product_name}",
@@ -410,7 +393,7 @@
                 buyer_tel: $('#order_user_phone').val(),
                 buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
                 buyer_postcode: $('#postcode').val(),
-                escrow:true,
+                escrow:$('#escrow').is(":checked"),
                 kcpProducts : [
                     {
                         "orderNumber" : $('input[name=order_no]').val(),
@@ -433,74 +416,7 @@
                 var alertType;
                 var showText;
                 if(rsp.success){
-                    jQuery.ajax({
-                        type: "POST",
-                        url: "/SavePayment",
-                        data: formData,
-                        success: function (data) {
-
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'top-right',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
-
-                            } else {
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "/SaveDeliveInfo",
-                                    data: $('#defaultForm').serialize(),
-                                    // enctype: 'multipart/form-data',
-                                    success: function (data) {
-                                        if (data.validateError) {
-                                            $('.validateError').empty();
-                                            $.each(data.validateError, function (index, item) {
-                                                // $('#validateError'+index).removeClass('none');
-                                                // $('#validateError'+index).html('* '+item);
-                                                if (index == "Error") {//일반에러메세지
-                                                    alertType = "error";
-                                                    showText = item;
-                                                } else {
-                                                    alertType = "error";
-                                                    showText = index + " (은) " + item;
-                                                }
-
-                                                $.toast({
-                                                    text: showText,
-                                                    showHideTransition: 'plain', //펴짐
-                                                    position: 'top-right',
-                                                    heading: 'Error',
-                                                    icon: 'error'
-                                                });
-                                            });
-                                        }
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("error");
-                                    }
-                                });
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
+                    commonAjaxCall("POST","/Save/PaymentOrders",formData)
                 }else{
                     $.toast({
                         text: rsp.error_msg,
