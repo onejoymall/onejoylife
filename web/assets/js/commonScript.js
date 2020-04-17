@@ -582,6 +582,7 @@ $(document).ready(function(){
     //장바구니 등록
     function addShoppingBasket(product_cd) {
         var formData = $('#defaultForm').serialize()+'&product_cd='+product_cd;
+        var filter = "win16|win32|win64|macintel|mac|";
         jQuery.ajax({
             type: 'POST',
             data: formData,
@@ -599,7 +600,6 @@ $(document).ready(function(){
                             alertType = "error";
                             showText = index + " (은) " + item;
                         }
-                        var filter = "win16|win32|win64|macintel|mac|";
                         if(navigator.platform){
                             if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
                                 // $.toast().reset('all');//토스트 초기화
@@ -624,18 +624,34 @@ $(document).ready(function(){
                     });
 
                 } else {
-                    $.toast({
-                        heading: '등록 성공!',
-                        text: [
-                            '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                            '<a href="/">쇼핑 계속!</a>',
-                        ],
 
-                        showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
-                        icon: 'success',
-                        hideAfter: false,
-                    });
+                    if(filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                        $.toast({
+                            heading: '등록 성공!',
+                            text: [
+                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                '<a href="/">쇼핑 계속!</a>',
+                            ],
+
+                            showHideTransition: 'plain', //펴짐
+                            position: 'mid-center',
+                            icon: 'success',
+                            hideAfter: false,
+                        });
+                    } else {
+                        $.toast({
+                            heading: '등록 성공!',
+                            text: [
+                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                '<a href="/">쇼핑 계속!</a>',
+                            ],
+
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            icon: 'success',
+                            hideAfter: false,
+                        });
+                    }
                     // loginAuth(data.access_token);
                     // location.href=data.redirectUrl;
                 }
@@ -669,35 +685,66 @@ $(document).ready(function(){
 
     })
     $(document).on("click",".cartPaymentOrder",function () {
+        var filter = "win16|win32|win64|mac|macintel";
 
         if($(this).attr("data-id") =='allCheck'){
             $('input[name=chk]').prop("checked",true);
         }
         if($('input[name=chk]:checked').length <= 0){
 
-            $.toast({
-                heading: '결제 할 상품을 선택하세요.',
-                // text: [
-                //     '<a href="/sign/signup">회원 가입 후 이용</a>',
-                //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-                // ],
-                showHideTransition: 'plain', //펴짐
-                position: 'top-right',
-                icon: 'info',
-            });
-        }else{
-            if(isLogin==''){
+            if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+
                 $.toast({
-                    heading: '비회원 주문 중입니다.',
-                    text: [
-                        '<a href="/sign/signup">회원 가입 후 이용</a>',
-                        '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-                    ],
+                    heading: '결제 할 상품을 선택하세요.',
+                    // text: [
+                    //     '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                    // ],
+                    showHideTransition: 'plain', //펴짐
+                    position: 'mid-center',
+                    icon: 'info',
+                });
+            } else {
+
+                $.toast({
+                    heading: '결제 할 상품을 선택하세요.',
+                    // text: [
+                    //     '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                    // ],
                     showHideTransition: 'plain', //펴짐
                     position: 'top-right',
                     icon: 'info',
-                    hideAfter: false
                 });
+            }
+        }else{
+            if(isLogin==''){
+                if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                    $.toast({
+                        heading: '비회원 주문 중입니다.',
+                        text: [
+                            '<a href="/sign/signup">회원 가입 후 이용</a>',
+                            '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                        ],
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'info',
+                        hideAfter: false
+                    });
+                } else {
+                    $.toast({
+                        heading: '비회원 주문 중입니다.',
+                        text: [
+                            '<a href="/sign/signup">회원 가입 후 이용</a>',
+                            '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                        ],
+                        showHideTransition: 'plain', //펴짐
+                        position: 'mid-center',
+                        icon: 'info',
+                        hideAfter: false
+                    });
+                }
+
             }else{
                 $('#defaultForm').attr("action","/product/productPaymentCart");
                 $('#defaultForm').submit();

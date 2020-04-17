@@ -25,9 +25,9 @@
              </div>
              <ul class="cate-hdBtm">
                  <li><a href="<c:url value="/MyPage/DashBoard"/>"><i class="user-ic"></i><p>마이페이지</p></a></li>
-                 <li><a href="sub/mobile/mypage-6.html"><i class="ship-ic"></i><p>주문/배송</p></a></li>
-                 <li><a href="sub/mobile/mypage-5.html"><i class="heart-ic"></i><p>위시리스트</p></a></li>
-                 <li><a href="sub/mobile/help-4-2.html"><i class="call-ic"></i><p>고객센터</p></a></li>
+                 <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>"><i class="ship-ic"></i><p>주문/배송</p></a></li>
+                 <li><a href="<c:url value="/MyPage/ShoppingAddList"/>"><i class="heart-ic"></i><p>위시리스트</p></a></li>
+                 <li><a href="<c:url value="/Help/csinfo"/>"><i class="call-ic"></i><p>고객센터</p></a></li>
              </ul>
          </header>
     <div class="cate-body">
