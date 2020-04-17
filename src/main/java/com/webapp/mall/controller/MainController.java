@@ -207,7 +207,12 @@ public class MainController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "layout/mainTopNav";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/layout/footer-left-Nav";
+        } else {
+            return "layout/mainTopNav";
+        }
     }
     @RequestMapping(value = "/mall/today", method = RequestMethod.GET, produces = "application/json")
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {

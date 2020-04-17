@@ -78,6 +78,7 @@ public class ProductController {
     //상품 목록
     @RequestMapping(value="/product")
     public String productList(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {
+    	Device device = DeviceUtils.getCurrentDevice(request);
         try{
             //사용자 아이디 확인 후 전달
 //            params.put("email",session.getAttribute("email"));
@@ -85,6 +86,9 @@ public class ProductController {
 //            params.put("point_paid_user_id",userInfo.get("usr_id"));
             if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
                 searchVO.setDisplayRowCount(12);
+            }
+            if(device.isMobile()){
+            	searchVO.setDisplayRowCount(1000);
             }
             // 기본정렬
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
@@ -107,7 +111,12 @@ public class ProductController {
             e.printStackTrace();
         }
         model.addAttribute("style", "category-sub");
-        return "product/productList";
+        
+        if(device.isMobile()){
+            return "mobile/m-beauty-category-1";
+        } else {
+            return "product/productList";
+        }
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
