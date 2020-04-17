@@ -75,6 +75,8 @@ public class ManagerController {
     @Autowired
     private MgSalesDAO mgSalesDAO;
     @Autowired
+    private MgSystemDAO mgSystemDAO;
+    @Autowired
     MgBrandDAO mgBrandDAO;
     @Value("${t_key}")
     private String t_key;
@@ -211,9 +213,16 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/Manager/ProductAdd")
-    public String managerProductAdd(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerProductAdd(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,MgDeliveryVO mgDeliveryVO,HttpSession session) throws Exception {
         try {
+            Object adminLogin = session.getAttribute("adminLogin");
             params.put("pd_category_upper_code", "T");
+            if(adminLogin == "admin"){
+                mgDeliveryVO.setStore_id("admin");
+            }
+            Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
+            model.addAttribute("detail", detail);
+
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
             model.addAttribute("topNav", 2);

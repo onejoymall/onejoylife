@@ -32,6 +32,7 @@
             </div>
             <div class="goods-info-wrap">
                 <form name="defaultForm" id="defaultForm" method="POST" action="/product/productPayment">
+                    <input type="hidden" name="product_delivery_payment" value="${deliveryPayment}">
                     <div class="goods-name-wrap">
                         <p class="goods-name">
 <%--                            <span class="tag-sale">세일</span>--%>

@@ -7,6 +7,7 @@ import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
@@ -127,7 +128,7 @@ public class ProductController {
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> list = productDAO.getProductViewDetail(params);
-            model.addAttribute("style","goods-view");
+
             model.addAttribute("list",list);
             //찜한 상품 표기
             // 비회원 처리 로직 변경필요
@@ -157,7 +158,8 @@ public class ProductController {
 
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
-//            model.addAttribute("productList",productList);
+            Integer deliveryPayment = deliveryPayment(list);
+            model.addAttribute("deliveryPayment",deliveryPayment);
             //옵션
             params.put("product_option_style",list.get("product_option_style"));
             params.put("product_option_input",list.get("product_option_input"));
@@ -169,48 +171,52 @@ public class ProductController {
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
             return "mobile/goods-view";
+
         } else {
+            model.addAttribute("style","goods-view");
             return "product/productdetail";
         }
     }
-    //결제
+    //장바구니 결제
     @RequestMapping(value = "/product/productPaymentCart")
-    public String productPaymentCart(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
+    public String productPaymentCart(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CartPaymentVO cartPaymentVO) throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-            if(commonVO.getChk().length!=0){
-                if(isEmpty(userInfo)){
-                    params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
-                }else{
-                    params.put("cart_user_id",userInfo.get("usr_id"));
-                }
+            //주문번호생성
+            String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
+            model.addAttribute("order_no",order_no);
 
-                model.addAttribute("searchVO", searchVO);
-                //결제비용
-                Map<String,Object> getCartSum = cartDAO.getCartSum(params);
-                List<Map<String,Object>> cartList = cartDAO.getCartPaymentList(params);
-                model.addAttribute("cartList", cartList);
-                model.addAttribute("getCartSum", getCartSum);
-
-                if(!isEmpty(userInfo)){
-
-                    //최근 배송지 불러오기
-                    params.put("product_cd",null);
-                    params.put("giveaway_cd",null);
-                    params.put("order_user_id",userInfo.get("usr_id"));
-                    params.put("order_no",null);
-                    Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
-                    model.addAttribute("userInfo",userInfo );
-                    model.addAttribute("latestDelivery",latestDelivery );
-                }
+            if(isEmpty(userInfo)){
+                cartPaymentVO.setCart_user_id((Integer) session.getAttribute("nonMembersUserId"));
+            }else{
+                cartPaymentVO.setCart_user_id((Integer) userInfo.get("usr_id"));
             }
+
+            //결제비용
+            Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
+            List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
+            model.addAttribute("cartPaymentList", cartPaymentList);
+            model.addAttribute("getCartSum", getCartSum);
+
+            if(!isEmpty(userInfo)){
+                //최근 배송지 불러오기
+                params.put("product_cd",null);
+                params.put("giveaway_cd",null);
+                params.put("order_user_id",userInfo.get("usr_id"));
+                params.put("order_no",null);
+                Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
+                model.addAttribute("userInfo",userInfo );
+                model.addAttribute("latestDelivery",latestDelivery );
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
         model.addAttribute("style","mypage-4-1-1");
-        return "product/cartpayment";
+        return "product/productCartPayment";
     }
+    //상품결제
     @RequestMapping(value = "/product/productPayment")
     public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
 
@@ -231,6 +237,8 @@ public class ProductController {
             params.put("delivery_payment_class",detail.get("product_delivery_payment_class"));
             //배송비 구분별 값
             params.put("delivery_payment",detail.get("product_delivery_payment"));
+
+
             Map<String,Object> delivery = giveawayDelivery(params);
             model.addAttribute("delivery",delivery );
             //옵션
@@ -273,11 +281,11 @@ public class ProductController {
         Integer deliveryPayment=0;
         try{
             //배송방법이 없으면 입력값 고정 출력
-            if(params.get("delivery_class").equals("F") ){
+            if(params.get("product_delivery_class").equals("F") ){
                 deliveryPayment=0;
             }else {
                 //배송방법이 개별이면 사용자 선택
-                String splitString = (String)params.get("delivery_type");//배송방법
+                String splitString = (String)params.get("product_delivery_type");//배송방법
                 String[] splitArray = splitString.split( "\\|");
                 //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
                 params.put("code","product_delivery_type");
@@ -287,12 +295,11 @@ public class ProductController {
             }
 
             //관리자가 지정한 배송구분별 배송비용을 출력한다.
-            String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
-            String deliveryPutString="";
-            String delivery_payment_class = (String) params.get("delivery_payment_class");
-            Integer product_payment = Integer.parseInt((String)params.get("product_payment"));
+            String splitDeliveryPaymentString=(String)params.get("product_delivery_payment");//구분별 배송비
+            String delivery_payment_class = (String) params.get("product_delivery_payment_class");
+            Integer product_payment =(Integer)params.get("product_payment");
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
-            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+            Integer payment_order_quantity = (Integer)params.get("payment_order_quantity");
             if ("T".equals(delivery_payment_class)) {
                 deliveryPayment=0;
             } else if ("R".equals(delivery_payment_class)) {

@@ -3,17 +3,33 @@
 
 
 <mapper namespace="mall.CartMapper">
-    <select id="getCartPaymentList" parameterType="java.util.Map" resultType="java.util.Map">
+    <select id="getCartPaymentList" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
         <![CDATA[
         select
             A.*,
             B.*,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =B.product_delivery_type) as product_delivery_type_name,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
-        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
+        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
         ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         order by A.reg_date DESC
     </select>
+    <select id="getPaymentCartSum" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
+
+        select
+            ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
+            ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
+            ifnull(sum(A.product_delivery_payment * A.payment_order_quantity),0) as total_delivery_payment,
+            ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
+        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <select id="getCartList" parameterType="java.util.Map" resultType="java.util.Map">
         <![CDATA[
         select
@@ -52,8 +68,24 @@
     </select>
 
     <insert id="insertCart" parameterType="java.util.Map">
-        insert into product_cart(cart_cd,product_cd,cart_user_id,member_yn,payment_order_quantity,select_option_value,option_name)
-        values (#{cart_cd},#{product_cd},#{cart_user_id},#{member_yn},#{payment_order_quantity},#{select_option_value},#{option_name})
+        insert into product_cart(
+        cart_cd,
+        product_cd,
+        cart_user_id,
+        member_yn,
+        payment_order_quantity,
+        select_option_value,
+        product_delivery_payment,
+        option_name)
+        values (
+        #{cart_cd},
+        #{product_cd},
+        #{cart_user_id},
+        #{member_yn},
+        #{payment_order_quantity},
+        #{select_option_value},
+        #{product_delivery_payment},
+        #{option_name})
     </insert>
     <insert id="insertCartOption" parameterType="com.webapp.mall.vo.OptionVO">
         insert into product_cart_option(cart_cd,option_name,select_option_value)
@@ -63,7 +95,12 @@
         values (#{cart_cd},#{option_name},#{select_option_value})
     </insert>
     <insert id="addAllcart" parameterType="java.util.Map">
-        insert into ${table_name}(cart_cd,product_cd,cart_user_id,member_yn) values
+        insert into ${table_name}(
+        cart_cd,
+        product_cd,
+        cart_user_id,
+        member_yn
+        ) values
         <foreach collection="chk" item="item" open="(" separator="," close=")">
             (#{cart_cd},#{item},#{cart_user_id},#{member_yn})
         </foreach>

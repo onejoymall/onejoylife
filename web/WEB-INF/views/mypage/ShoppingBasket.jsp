@@ -146,92 +146,11 @@
                         </div>
                     </div>
                     <div class="but-box">
-                        <button type="button" class="but1" id="allOrder">전체 주문하기</button>
-                        <button type="button" class="but2" id="selectOrder">선택 주문하기</button>
+                        <button type="button" class="but1 cartPaymentOrder" data-id="allCheck">전체 주문하기</button>
+                        <button type="button" class="but2 cartPaymentOrder" data-id="selectCheck">선택 주문하기</button>
                     </div>
                 </form>
             </div>
-<%--            <div class="box" id="t-box2">--%>
-<%--                <form action="">--%>
-<%--                    <table class="box1-table">--%>
-<%--                        <colgroup>--%>
-<%--                            <col style="width: 50px;">--%>
-<%--                            <col style="width: 150px;">--%>
-<%--                            <col style="width: 370px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                        </colgroup>--%>
-<%--                        <thead>--%>
-<%--                        <tr class="head-tr">--%>
-<%--                            <td><input type="checkbox" id="tr-ck2-1"><label for="tr-ck2-1" class="tr-icon"></label></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td>상품정보</td>--%>
-<%--                            <td>상품가격</td>--%>
-<%--                            <td>배송정보</td>--%>
-<%--                            <td>선택</td>--%>
-<%--                        </tr>--%>
-<%--                        </thead>--%>
-<%--                        <tbody class="body-t">--%>
-<%--                        <tr>--%>
-<%--                            <td><input type="checkbox" id="body-ck2-1"><label for="body-ck2-1"></label></td>--%>
-<%--                            <td><div class="img-01"></div></td>--%>
-<%--                            <td class="p-box">--%>
-<%--                                <p>브라운</p>--%>
-<%--                                <p>쿠쿠 10인용 IH전기압력밥솥</p>--%>
-<%--                                <p>VR25G66G98UWS</p>--%>
-<%--                                <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
-<%--                            </td>--%>
-<%--                            <td><span>3,999,000</span>원</td>--%>
-<%--                            <td><span>국내배송 (배송비 상이)</span></td>--%>
-<%--                            <td><a href=""><p class="op-td2">경품신청</p></a></td>--%>
-<%--                        </tr>--%>
-<%--                        <tr>--%>
-<%--                            <td><input type="checkbox" id="body-ck2-1"><label for="body-ck2-1"></label></td>--%>
-<%--                            <td><div class="img-01"></div></td>--%>
-<%--                            <td class="p-box">--%>
-<%--                                <p>브라운</p>--%>
-<%--                                <p>쿠쿠 10인용 IH전기압력밥솥</p>--%>
-<%--                                <p>VR25G66G98UWS</p>--%>
-<%--                                <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
-<%--                            </td>--%>
-<%--                            <td><span>3,999,000</span>원</td>--%>
-<%--                            <td><span>국내배송 (배송비 상이)</span></td>--%>
-<%--                            <td><a href=""><p class="op-td2">경품신청</p></a></td>--%>
-<%--                        </tr>--%>
-<%--                        </tbody>--%>
-<%--                    </table>--%>
-<%--                    <table class="box1-table table-none">--%>
-<%--                        <colgroup>--%>
-<%--                            <col style="width: 50px;">--%>
-<%--                            <col style="width: 150px;">--%>
-<%--                            <col style="width: 370px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                            <col style="width: 176px;">--%>
-<%--                        </colgroup>--%>
-<%--                        <thead>--%>
-<%--                        <tr class="head-tr">--%>
-<%--                            <td><input type="checkbox" id="tr-ck"><label for="tr-ck" class="tr-icon"></label></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td>상품정보</td>--%>
-<%--                            <td>상품가격</td>--%>
-<%--                            <td>배송정보</td>--%>
-<%--                            <td>선택</td>--%>
-<%--                        </tr>--%>
-<%--                        </thead>--%>
-<%--                        <tbody class="body-t">--%>
-<%--                        <tr>--%>
-<%--                            <td colspan="6">아직 당첨된 경품이 없습니다.</td>--%>
-<%--                        </tr>--%>
-<%--                        </tbody>--%>
-<%--                    </table>--%>
-<%--                    <div class="but-box">--%>
-<%--                        <button type="submit" class="but1">더 많은 경품 구경하기</button>--%>
-<%--                        <button type="submit" class="but2">배송정보 입력하기</button>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
-<%--            </div>--%>
         </main>
 
     </div>
