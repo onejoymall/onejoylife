@@ -55,4 +55,26 @@ $(document).ready(function(){
             $(this).next('ul').slideUp();
         }  
     });
+
+    $('.filter-a').click(function(e){
+        e.preventDefault();
+        $('.inner-left').addClass('on');
+        $('body').attr('style', 'overflow:hidden')
+    });
+    $('.cate-close, .cate-bg').click(function(e){
+        e.preventDefault();
+        $('.inner-left').removeClass('on');
+        $('body').attr('style', '')
+    });
+    $('.inner-filter1>ul>li>a, .out-ul>li>a').click(function(e){
+        e.preventDefault();
+        if($(this).next('ul').css('display') == 'none'){
+            $(this).addClass('on');
+            $(this).next('ul').slideDown();
+        }else{
+            $(this).removeClass('on');
+            $(this).next('ul').slideUp();
+        }  
+    });
 });
+

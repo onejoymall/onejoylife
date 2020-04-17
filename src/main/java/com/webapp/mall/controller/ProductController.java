@@ -261,7 +261,12 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "product/productpayment";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4-1-1";
+        } else {
+            return "product/productpayment";
+        }
     }
     //배송비
     public Integer deliveryPayment( Map<String,Object> params)throws IOException {
@@ -424,34 +429,42 @@ public class ProductController {
                         .split("\\|");
                 if(splitStyleArray[z].equals("P") || splitStyleArray[z].isEmpty()){
                     outText += "" +
-                            "<div class=\"w100 clearfix\">" +
-                            "<input type=\"hidden\" name=\"option_name\" value=\""+splitNextArray[0]+"\">\n<div class=\" shipping-title full-left\">"+splitNextArray[0]+"</div>\n" +
-                            "<select name=\"select_option_value\" class=\"productOption full-right\">\n" ;
+                            "<select name=\"select_option_value\" class=\"option-box width-100 my-1\">"
+                            + "<option selected>옵션 선택</option>";
                     //오션스타일 에따라 다르게
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
                                 "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";
                     }
                     outText += "" +
-                            "</select></div>";
+                            "</select>";
                 }
                 if(splitStyleArray[z].equals("B")){
                     outText += "" +
-                            ""+splitNextArray[0]+" 선택\n";
+                            "<div class=\"option-box2 mb-1\">" +
+                            "<div class=\"point-title text-gray\">" + splitNextArray[0] + " 선택 </div>\n" +
+                            "<div class=\"optionBtn-wrap\">\n";
 
                     for (int i = 0; i < splitThirdArray.length; i++) {
-                        outText += "" +
-                                "   <button type=\"button\" class=\"select_option_value\" >"+splitThirdArray[i]+"</button>";
+                        outText += ""  +
+                                "   <button type=\"button\" class=\"optionBtn\" >"+splitThirdArray[i]+"</button>";
                     }
+                    outText += "" +
+                                "</div>\n" +
+                            " </div>";
                 }
                 if(splitStyleArray[z].equals("R")){
                     outText += "" +
-                            ""+splitNextArray[0]+" 선택\n";
+                            "<div class=\"option-box2 mb-1\">\n" +
+                            " <div class=\"point-title text-gray\">" +
+                            ""+splitNextArray[0]+" 선택 </div>\n";
 
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
-                                " <label for=\""+i+"\">"+splitThirdArray[i]+"</label><input type=\"radio\" name=\"select_option_value\" id=\"select_option_value"+i+"\" value=\""+splitThirdArray[i]+"\">";
+                            "<input type=\"radio\" id=\"rdOption"+i+"\" name=\"rdOption\"><label for=\"rdOption"+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
                     }
+                    outText += "" +
+                                "</div>\n" ;
                 }
             }
 

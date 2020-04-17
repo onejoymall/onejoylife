@@ -10,53 +10,54 @@
         <div class="closeBox">
             <button class="closeBtn"></button>
         </div>
+
+        <div class="scroll">
         <%--<select class="width-100">
             <option value="" selected>상품선택</option>
         </select>--%>
-        <select class="width-100 my-1">
-            <option value="" selected>옵션선택</option>
             ${option}
-        </select>
-        <div class="purchaseBox mb-1">
-            <div class="item-delete">
-                <i class="ri-close-line"></i>
+
+            <div class="purchaseBox mb-1">
+                <div class="item-delete">
+                    <i class="ri-close-line"></i>
+                </div>
+                <h4>${list.product_name}</h4>
+                <ul class="flexbetween">
+                    <li class="width-35">
+                        <div class="number-group">
+                           <button class="button number-minus"></button>
+                           <input type="number" name="number" value="1">
+                           <button class="button number-plus"></button>
+                        </div>
+                    </li>
+                    <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">원</span></h3></li>
+                </ul>
             </div>
-            <h4>${list.product_name}</h4>
-            <ul class="flexbetween">
-                <li class="width-35">
-                    <div class="number-group">
-                       <button class="button number-minus"></button>
-                       <input type="number" name="number" value="1">
-                       <button class="button number-plus"></button>
-                    </div>
+            <%--<div class="purchaseBox mb-1">
+                <div class="item-delete">
+                    <i class="ri-close-line"></i>
+                </div>
+                <h4>컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수</h4>
+                <ul class="flexbetween">
+                    <li class="width-35">
+                        <div class="number-group">
+                           <button class="button number-minus"></button>
+                           <input type="number" value="1">
+                           <button class="button number-plus"></button>
+                        </div>
+                    </li>
+                    <li><h3>1,500<span class="text-sm">원</span></h3></li>
+                </ul>
+            </div>--%>
+            <ul class="flexbetween mt-2 mb-5">
+                <%--<li>
+                    <h3>총 합계금액</h3>
                 </li>
-                <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">원</span></h3></li>
+                <li>
+                    <h2 class="red">4,500<span class="text-sm">원</span></h2>
+                </li>--%>
             </ul>
         </div>
-        <%--<div class="purchaseBox mb-1">
-            <div class="item-delete">
-                <i class="ri-close-line"></i>
-            </div>
-            <h4>컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수컵누들 쌀국수</h4>
-            <ul class="flexbetween">
-                <li class="width-35">
-                    <div class="number-group">
-                       <button class="button number-minus"></button>
-                       <input type="number" value="1">
-                       <button class="button number-plus"></button>
-                    </div>
-                </li>
-                <li><h3>1,500<span class="text-sm">원</span></h3></li>
-            </ul>
-        </div>--%>
-        <ul class="flexbetween mt-2 mb-5">
-            <li>
-                <h3>총 합계금액</h3>
-            </li>
-            <li>
-                <h2 class="red">4,500<span class="text-sm">원</span></h2>
-            </li>
-        </ul>
         <ul class="footerBtns">
             <li><a href="#" onclick="addShoppingBasket('${list.product_cd}')">장바구니</a></li>
             <li><a href="#" id="paymentSubmit">바로구매</a></li>
@@ -462,6 +463,10 @@ $(document).ready(function(){
 //        pager:false,
 //        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
 //    });
+    $('.optionBtn').click(function(){
+            $(this).siblings('.optionBtn').removeClass('on');
+            $(this).addClass('on');
+        })
     $('.goodsQna').on('click',function(){
         $(this).addClass('active');
         $('.goodsQna').not($(this)).removeClass('active');

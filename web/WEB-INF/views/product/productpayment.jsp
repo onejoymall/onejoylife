@@ -354,7 +354,7 @@
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
                                     <c:if test="${not empty deliveryPayment}">
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" />원</span> 원</p>
+                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> 원</p>
                                     </c:if>
                                 </div>
                             </div>

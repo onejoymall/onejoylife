@@ -8,6 +8,8 @@ import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,8 +102,12 @@ public class GiveawayController {
             e.printStackTrace();
         }
 
-
-        return "giveaway/giveawaydetail";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/gift-view";
+        } else {
+            return "giveaway/giveawaydetail";
+        }
     }
 
     //배송정보 출력

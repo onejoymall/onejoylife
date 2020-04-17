@@ -164,7 +164,7 @@ public class MyPage {
     }
     //장바구니
     @RequestMapping(value="/MyPage/ShoppingBasket")
-    public String myPageShoppingBasket(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+    public String myPageShoppingBasket(Model model,HashMap params,HttpSession session,SearchVO searchVO, HttpServletRequest request) throws Exception{
         //사용자 아이디 확인 후 전달
         params.put("email",session.getAttribute("email"));
         Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -193,7 +193,13 @@ public class MyPage {
         model.addAttribute("postUrl","/payment/cartorder");
         model.addAttribute("style", "mypage-4");
         model.addAttribute("leftNavOrder", 4);
-        return "mypage/ShoppingBasket";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4";
+        } else {
+            return "mypage/ShoppingBasket";
+        }
     }
     //찜 목록
     @RequestMapping(value="/MyPage/ShoppingAddList")
