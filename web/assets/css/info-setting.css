@@ -41,7 +41,6 @@ body{
 .info-tab{border-left: 1px solid #dadcdd;}
 .info-tab li {
     float: left;
-    min-width: 160px;
     height: 39px;
     border-top: 1px solid #dadcdd;
     border-right: 1px solid #dadcdd;
@@ -50,6 +49,7 @@ body{
 .info-tab li > a {
     display:block;
     width: 100%;
+    padding:0 12px;
     font-size: 14px;
     line-height: 38px;
     text-align: center;
@@ -57,7 +57,11 @@ body{
 }
 .info-tab > li .active{
     color: #da394d;
+    border-top:2px solid #da304d;
+    line-height: 34px;
+    height:40px;
 }
+/*
 .info-tab > li .active:before {
     content: "";
     display: block;
@@ -66,6 +70,7 @@ body{
     margin: -1px 0;
     background-color: #da394d;
 }
+*/
 .info-tab > li .active::after {
     content: "";
     display: block;

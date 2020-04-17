@@ -41,10 +41,10 @@
     <header class="h-main">
         <div class="top-inner">
             <h1 class="main-logo"><a href="/">원조이몰</a></h1>
-            <form name="search" action="" class="src-form">
+            <form action="/product/search-page" id="main-search-form" name="main-search-form" method="get" class="src-form">
                 <div class="src-inner">
-                    <input type="text" class="src-input" name="src-input">
-                    <button type="button" class="src-btn"><span>검색</span></button>
+                    <input type="text" id="main-search" name="product_name" class="src-input" value="${param.product_name}">
+                    <button type="submit" class="src-btn"><span>검색</span></button>
                 </div>
             </form>
             <div class="h-cart">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <ul class="submenu">
-            <li class="active"><a href="/mall/today">오늘의 특가</a></li>
+            <li><a href="/mall/today">오늘의 특가</a></li>
             <li><a href="/giveaway">경품</a></li>
             <li><a href="javascript:void(0);" class="ready">특판</a></li>
             <li><a href="avascript:void(0);" class="ready">여행</a></li>

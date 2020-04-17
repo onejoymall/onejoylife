@@ -48,9 +48,13 @@ public class ProductController {
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {
+    	Device device = DeviceUtils.getCurrentDevice(request);
         try{
             if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
                 searchVO.setDisplayRowCount(12);
+            }
+            if(device.isMobile()){
+            	searchVO.setDisplayRowCount(1000);
             }
             // 기본정렬
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
@@ -73,7 +77,11 @@ public class ProductController {
             e.printStackTrace();
         }
         model.addAttribute("style", "category-sub");
-        return "product/search-page";
+        if(device.isMobile()){
+            return "mobile/m-search-page";
+        } else {
+            return "product/search-page";
+        }
     }
     //상품 목록
     @RequestMapping(value="/product")
