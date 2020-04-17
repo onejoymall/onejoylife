@@ -55,7 +55,7 @@ public class MyPage {
     private String t_url;
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
-    public String RightHeader(Model model, HashMap params, HttpSession session) throws SQLException {
+    public String RightHeader(Model model, HashMap params, HttpSession session, HttpServletRequest request) throws SQLException {
 
         try{
             params.put("email",session.getAttribute("email"));
@@ -78,7 +78,44 @@ public class MyPage {
             e.printStackTrace();
         }
         model.addAttribute("style", "mypage-1");
-        return "layout/MyPageRightHeader";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/layout/MyPageRightHeader";
+        } else {
+            return "layout/MyPageRightHeader";
+        }
+    }
+  //MyPage 해더 서브
+    @RequestMapping(value="/MyPage/RightHeaderSub")
+    public String RightHeaderSub(Model model, HashMap params, HttpSession session, HttpServletRequest request) throws SQLException {
+
+        try{
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
+            params.put("point_paid_user_id",userInfo.get("usr_id"));
+            params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+            params.put("order_user_id",userInfo.get("usr_id"));
+            //배송중
+            params.put("delivery_status","D");
+
+            Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
+            Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
+            model.addAttribute("getDeliveryListCount",getDeliveryListCount);
+            model.addAttribute("giveawayCnt",giveawayCnt);
+            model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
+            model.addAttribute("point_amount",pointDAO.getPointAmount(params));
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "mypage-1");
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/layout/MyPageRightHeaderSub";
+        } else {
+            return "layout/MyPageRightHeader";
+        }
     }
     //대시보드
     @RequestMapping(value="/MyPage/DashBoard")
@@ -141,11 +178,16 @@ public class MyPage {
         }
         model.addAttribute("leftNavOrder", 2);
         model.addAttribute("style", "mypage-2");
-        return "mypage/ePoint";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-2";
+        } else {
+            return "mypage/ePoint";
+        }
     }
     //쿠폰
     @RequestMapping(value="/MyPage/Coupon")
-    public String myPageCoupon(HttpSession session, Model model, HashMap params) {
+    public String myPageCoupon(HttpSession session, Model model, HashMap params,HttpServletRequest request) {
 
         try{
             //사용자 아이디 확인 후 전달
@@ -160,7 +202,12 @@ public class MyPage {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "mypage/Coupon";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-3";
+        } else {
+            return "mypage/Coupon";
+        }
     }
     //장바구니
     @RequestMapping(value="/MyPage/ShoppingBasket")
@@ -203,7 +250,7 @@ public class MyPage {
     }
     //찜 목록
     @RequestMapping(value="/MyPage/ShoppingAddList")
-    public String myPageShoppingAddList(Model model,HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+    public String myPageShoppingAddList(Model model,HashMap params,HttpSession session,SearchVO searchVO,HttpServletRequest request) throws Exception{
         //사용자 아이디 확인 후 전달
         params.put("email",session.getAttribute("email"));
         Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -232,11 +279,16 @@ public class MyPage {
         }
         model.addAttribute("style", "mypage-5");
         model.addAttribute("leftNavOrder", 5);
-        return "mypage/ShoppingAddList";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-5";
+        } else {
+            return "mypage/ShoppingAddList";
+        }
     }
     //주문배송조회
     @RequestMapping(value="/MyPage/OrderAndDelivery")
-    public String myPageOrderAndDelivery(Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO) throws Exception{
+    public String myPageOrderAndDelivery(Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO,HttpServletRequest request) throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -262,11 +314,16 @@ public class MyPage {
         }
         model.addAttribute("style", "mypage-6");
         model.addAttribute("leftNavOrder", 6);
-        return "mypage/OrderAndDelivery";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-6";
+        } else {
+            return "mypage/OrderAndDelivery";
+        }
     }
     //주문상세
     @RequestMapping(value="/MyPage/OrderAndDeliveryDetail")
-    public String myPageOrderAndDeliveryDetail(Model model,@RequestParam HashMap params) {
+    public String myPageOrderAndDeliveryDetail(Model model,@RequestParam HashMap params, HttpServletRequest request) {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
@@ -277,7 +334,12 @@ public class MyPage {
         }
         model.addAttribute("leftNavOrder", 6);
         model.addAttribute("style", "mypage-6-1");
-        return "mypage/OrderAndDeliveryDetail";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-6-1";
+        } else {
+            return "mypage/OrderAndDeliveryDetail";
+        }
     }
     //주문상세
     @RequestMapping(value="/MyPage/OrderDetailGuest")
@@ -309,7 +371,12 @@ public class MyPage {
         model.addAttribute("postUrl","/SavePaymentCancel");
         model.addAttribute("leftNavOrder", 6);
         model.addAttribute("style", "mypage-6-1-1");
-        return "mypage/mypage-6-1-1";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-6-1-1";
+        } else {
+            return "mypage/mypage-6-1-1";
+        }
     }
     //주문상세 무통장
     @RequestMapping(value="/MyPage/OrderAndDeliveryDetailVA")
@@ -339,7 +406,12 @@ public class MyPage {
         model.addAttribute("postUrl","/SaveOrderChange");
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-1");
-        return "mypage/OrderChange";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-7-1";
+        } else {
+            return "mypage/OrderChange";
+        }
     }
     //반품신청
 //    @RequestMapping(value="/MyPage/OrderCancel")
@@ -377,7 +449,12 @@ public class MyPage {
         model.addAttribute("postUrl","/SaveOrderRollback");
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7-2");
-        return "mypage/mypage-7-2";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-7-2";
+        } else {
+            return "mypage/mypage-7-2";
+        }
     }
     //리뷰
     @RequestMapping(value="/MyPage/Reviews")
@@ -493,19 +570,29 @@ public class MyPage {
     }
     //회원정보 변경 비번확인
     @RequestMapping(value="/MyPage/mypage-12")
-    public String myPageModifyUserInfo(Model model) {
+    public String myPageModifyUserInfo(Model model, HttpServletRequest request) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12");
         model.addAttribute("postUrl", "/sign/passcheck");
-        return "mypage/mypage-12";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-12";
+        } else {
+            return "mypage/mypage-12";
+        }
     }
     //회원정보 변경
     @RequestMapping(value="/MyPage/mypage-12-1")
-    public String myPageModifyUserInfoForm(Model model) {
+    public String myPageModifyUserInfoForm(Model model, HttpServletRequest request) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12-1");
         model.addAttribute("postUrl", "/sign/modifyuser");
-        return "mypage/mypage-12-1";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-12-1";
+        } else {
+            return "mypage/mypage-12-1";
+        }
     }
     //회원정보 탈퇴
     @RequestMapping(value="/MyPage/ModifyUserInfoExit")
@@ -516,10 +603,15 @@ public class MyPage {
     }
     //배송지 변경
     @RequestMapping(value="/MyPage/DeliveryAddress")
-    public String myPageDeliveryAddress(Model model) {
+    public String myPageDeliveryAddress(Model model, HttpServletRequest request) {
         model.addAttribute("leftNavOrder", 13);
         model.addAttribute("style", "mypage-13");
-        return "mypage/DeliveryAddress";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13";
+        } else {
+            return "mypage/DeliveryAddress";
+        }
     }
     //교환권 상세
     @RequestMapping(value="/MyPage/OrderChangeDetail")
