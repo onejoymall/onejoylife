@@ -9,7 +9,7 @@
 
 <footer class="pb-5 bg_grey2">
     <ul class="ftmenu bg_red">
-        <li><a href="#">고객센터</a></li>
+        <li><a href="<c:url value="/Help/csinfo"/>">고객센터</a></li>
         <li><a href="#">쇼핑몰 입점/제휴문의</a></li>
     </ul>
     <ul class="ftmenu">
