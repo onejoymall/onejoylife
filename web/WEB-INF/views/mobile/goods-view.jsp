@@ -181,7 +181,7 @@
            <li><a href="javascript:move(5)">배송/환불</a></li>
        </ul>        
         <div class="my-1" id="content01">
-           ${list.product_html}
+           <c:out value="${list.product_html}" escapeXml="false"/>
         </div>
     </section>
     <section class="wrap">
