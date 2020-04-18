@@ -581,3 +581,9 @@ input[class='styleClass']:checked + label
     padding: 0 6px;
     color: rgba(0,0,0,0.6);
 }
+
+
+/*상품 상세*/
+#content01 img{
+    width:100%!important;
+}

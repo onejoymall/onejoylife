@@ -637,6 +637,46 @@ public class restapiController {
         }
         return resultMap;
     }
+    //장바구니 결제
+    @RequestMapping(value = "/Save/PaymentOrders" )
+    public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(deliveryInfoVO.getReason().isEmpty()){
+                error.put(messageSource.getMessage("reason","ko"), messageSource.getMessage("error.required","ko"));
+            }
+
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                //비회원
+            }else{
+
+            }
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                //결제상태 업데이트
+                deliveryInfoVO.setPayment_status("F");
+                deliveryInfoVO.setDelivery_status("F");
+                deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
+                deliveryDAO.updateDelivery(deliveryInfoVO);
+                paymentDAO.updatePayment(deliveryInfoVO);
+                refundDAO.insertDeliveryRefund(deliveryInfoVO);
+                //교환정보 저장
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
     //교환
     @RequestMapping(value = "/SaveOrderChange", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> SaveOrderChange(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){

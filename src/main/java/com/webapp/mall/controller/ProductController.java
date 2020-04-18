@@ -3,14 +3,15 @@ package com.webapp.mall.controller;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.CartDAO;
-import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
+import com.webapp.mall.vo.SearchFilterVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.MgBrandDAO;
+import com.webapp.manager.vo.MgBrandVO;
+import com.webapp.manager.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -45,41 +46,70 @@ public class ProductController {
     private CategoryDAO categoryDAO;
     @Autowired
     private CartDAO cartDAO;
+    @Autowired
+    private MgBrandDAO mgBrandDAO;
+    @Autowired
+    private SearchDAO searchDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
-    public String productSearch(Model model, HttpSession session, HashMap params, SearchVO searchVO,HttpServletRequest request) throws Exception {
+    public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
     	Device device = DeviceUtils.getCurrentDevice(request);
         try{
-            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
-                searchVO.setDisplayRowCount(12);
+//            product_delivery_International_type
+//            product_delivery_payment_class T
+//            product_brand
+//            product_option_color
+//            product_score
+//            product_payment
+
+            mgBrandVO.setRowStart(1);
+            mgBrandVO.setDisplayRowCount(5);
+            mgBrandVO.setProduct_brand(null);
+            List<Map<String, Object>> brandList = mgBrandDAO.getBrandList(mgBrandVO);
+            model.addAttribute("brandList", brandList);
+
+            if(searchFilterVO.getDisplayRowCount()==null || searchFilterVO.getDisplayRowCount() < 12){
+                searchFilterVO.setDisplayRowCount(12);
             }
             if(device.isMobile()){
-            	searchVO.setDisplayRowCount(1000);
+                searchFilterVO.setDisplayRowCount(1000);
             }
             // 기본정렬
-            if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
-                searchVO.setOrderByKey("product_id");
-                searchVO.setOrderByValue("DESC");
+            if(searchFilterVO.getOrderByValue()==null || searchFilterVO.getOrderByKey()==null){
+                searchFilterVO.setOrderByKey("product_id");
+                searchFilterVO.setOrderByValue("DESC");
             }
-            searchVO.setProduct_sale_yn("Y");
-            searchVO.setProduct_use_yn("Y");
-            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
+            searchFilterVO.setProduct_sale_yn("Y");
+            searchFilterVO.setProduct_use_yn("Y");
+            searchFilterVO.pageCalculate(searchDAO.getSearchProductListCount(searchFilterVO));
 
-            params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            searchVO.setPd_category_id(searchVO.getProduct_ct());
-            List<Map<String,Object>> list = productDAO.getProductList(searchVO);
-            Map<String,Object> categoryRowData = categoryDAO.getCategoryDetail(searchVO);
+            params.put("rowStart",searchFilterVO.getRowStart());
+            params.put("staticRowEnd",searchFilterVO.getStaticRowEnd());
+            searchFilterVO.setPd_category_id(searchFilterVO.getProduct_ct());
+            List<Map<String,Object>> list = searchDAO.getSearchProductList(searchFilterVO);
+
             model.addAttribute("list", list);
-            model.addAttribute("categoryRowData",categoryRowData);
-            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("searchVO", searchFilterVO);
+
+            //카테고리출력
+            params.put("pd_category_upper_code","T");
+            params.put("pd_category_main_view","Y");
+            List<Map<String,Object>> categoryList = categoryDAO.getCategoryList(params);
+            params.put("pd_category_upper_code",null);
+            List<Map<String,Object>> subList = categoryDAO.getCategorySubList(params);
+            List<Map<String,Object>> thirdList = categoryDAO.getCategoryThirdList(params);
+            model.addAttribute("categoryList",categoryList);
+            model.addAttribute("subList",subList);
+            model.addAttribute("thirdList",thirdList);
+
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "category-sub");
+
         if(device.isMobile()){
             return "mobile/m-search-page";
         } else {
+            model.addAttribute("style", "search-page");
             return "product/search-page";
         }
     }

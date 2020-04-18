@@ -17,7 +17,7 @@
     <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
     order by reg_date desc
-    LIMIT ${rowStart-1}, ${displayRowCount}
+    <if test="rowStart != null">LIMIT ${rowStart-1}, ${displayRowCount}</if>
   </select>
   <select id="getBrandListCount" parameterType="com.webapp.manager.vo.MgBrandVO" resultType="Integer">
     select IFNULL(count(*),0) as cnt

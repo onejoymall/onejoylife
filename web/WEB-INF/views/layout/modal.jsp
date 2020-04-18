@@ -8,7 +8,10 @@
                     <h2></h2>
                     <button type="button" class="modal-close" rel="modal:close">×</button>
                 </div>
-                ${infoMain.market_config_value}
+                <div class="modal-body">
+                    <c:out value="${infoMain.market_config_value}" escapeXml="false"/>
+                </div>
+
             </div>
         </div>
         <div class="main_modal" id="modal-info-privacy" >
@@ -17,7 +20,10 @@
                     <h2></h2>
                     <button type="button" class="modal-close" rel="modal:close">×</button>
                 </div>
-                ${infoPrivacy.market_config_value}
+                <div class="modal-body">
+                    <c:out value="${infoPrivacy.market_config_value}" escapeXml="false"/>
+                </div>
+<%--                ${infoPrivacy.market_config_value}--%>
             </div>
         </div>
         <div class="main_modal" id="default-modal">
@@ -26,7 +32,7 @@
                     <h2></h2>
                     <button type="button" class="modal-close" rel="modal:close">×</button>
                 </div>
-                ${infoPrivacy.market_config_value}
+<%--                ${infoPrivacy.market_config_value}--%>
             </div>
         </div>
         <!-- 업체신청 모달 -->

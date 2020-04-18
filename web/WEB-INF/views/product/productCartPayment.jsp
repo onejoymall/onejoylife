@@ -259,7 +259,7 @@
                                         <td>
                                             <span><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /></span>원
                                             <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
-                                            <input type="hidden" name="product_name" value="${cartPaymentList.product_payment}">
+                                            <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
                                         </td>
@@ -364,9 +364,9 @@
     var product_name ='';
     var orderSize = $('input[name=product_cd]').length;
     if(orderSize >= 0){
-        product_name = $('input[name=product_name]').val()+"외 "+orderSize+" 건";
+        product_name = $('input[name=product_name]').eq(1).val()+"외 "+orderSize+" 건";
     }else{
-        product_name = $('input[name=product_name]').val();
+        product_name = $('input[name=product_name]').eq(0).val();
     }
 
     $("#submitPayment").on("click",function() {
@@ -386,8 +386,8 @@
                 pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
-                name: "${detail.product_name}",
-                amount: ${detail.product_payment+deliveryPayment},
+                name: product_name,
+                amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
