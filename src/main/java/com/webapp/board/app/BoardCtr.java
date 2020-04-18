@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,27 +30,34 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-    public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request                                           ) {
-        
-        BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
-        if (bgInfo == null) {
-            return "board/BoardGroupFail";
-        }
-        if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
-            searchVO.setDisplayRowCount(10);
-        }
-        searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+     public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request ) {
 
-        List<?> listview  = boardSvc.selectBoardList(searchVO);
-        
-        modelMap.addAttribute("listview", listview);
-        modelMap.addAttribute("searchVO", searchVO);
-        modelMap.addAttribute("bgInfo", bgInfo);
-        modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
-        modelMap.addAttribute("style", "help-7");
-        return "board/BoardList";
-    }
-    
+         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
+         if (bgInfo == null) {
+             return "board/BoardGroupFail";
+         }
+         if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
+             searchVO.setDisplayRowCount(10);
+         }
+         searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+
+         List<?> listview  = boardSvc.selectBoardList(searchVO);
+
+         modelMap.addAttribute("listview", listview);
+         modelMap.addAttribute("searchVO", searchVO);
+         modelMap.addAttribute("bgInfo", bgInfo);
+         modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
+         modelMap.addAttribute("style", "help-7");
+
+         Device device = DeviceUtils.getCurrentDevice(request);
+         if(device.isMobile()){
+             return "mobile/help-7";
+         } else {
+             return "board/BoardList";
+         }
+
+     }
+
     /** 
      * 글 쓰기. 
      */
