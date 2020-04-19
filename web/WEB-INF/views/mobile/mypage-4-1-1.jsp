@@ -165,12 +165,12 @@
             </ul>
             <ul class="options">
                 <li>수량</li>
-                <li>1 <span>개</span></li>
+                <li><span>${param.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}"></span><span>개</span></li>
             </ul>
             <hr class="grey my-1">
             <ul class="options mb-1">
                 <li>주문금액</li>
-                <li>3,099,000 <span>원</span></li>
+                <li><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </ul>
         
@@ -228,7 +228,7 @@
         <hr class="grey my-1">
         <ul class="calculator pb-1">
             <li>최종 결제 금액</li>
-            <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
         </ul>
         <ul class="calculator pb-1">
             <li>E-POINT 적립예정</li>
@@ -244,7 +244,7 @@
         </ul>
     </div>
 
-    <input type="hidden" name="payment" value="${detail.product_payment+deliveryPayment}">
+    <input type="hidden" name="payment" value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}">
         <input type="hidden" name="order_no" value="${order_no}">
         <input type="hidden" name="product_cd" value="${detail.product_cd}">
         <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">

@@ -26,7 +26,7 @@
                     <li class="width-35">
                         <div class="number-group">
                            <button class="button number-minus"></button>
-                           <input type="number" name="number" value="1">
+                           <input type="number" name="payment_order_quantity" value="1">
                            <button class="button number-plus"></button>
                         </div>
                     </li>
