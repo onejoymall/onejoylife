@@ -1895,26 +1895,32 @@ $(document).ready(function(){
                     console.log(data.list)
 
                     $.each(data.list, function (index, item) {
-                        $('input[name^="'+index+'"]').val(item);
-                        $('input:radio[name^="'+index+'"][value="' + item + '"]').prop('checked',true);
+                         $('input:text[name^="'+index+'"]').val(item);
+                        $('select[name='+index+']').val(item);
 
                         if(index=="product_html"){
                             $('#summernote').summernote('code', item);
-                        }
-                        if(index=="product_mobile_html"){
+                        }else if(index=="product_mobile_html"){
                             $('#summernote2').summernote('code', item);
-                        }
-                        if(index=="product_payment_info"){
+                        }else if(index=="product_payment_info"){
                             $('#editor3').summernote('code', item);
-                        }
-                        if(index=="product_delivery_info"){
+                        }else if(index=="product_delivery_info"){
                             $('#editor4').summernote('code', item);
                         }
-                        if(index=="product_change_info"){
+                        else if(index=="product_change_info"){
                             $('#editor5').summernote('code', item);
                         }
-                        if(index=="product_service_info"){
+                        else if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
+                        }else{
+                            $('input:radio[name='+index+'][value="' + item + '"]').prop('checked',true);
+                        }
+                        if(index=="product_delivery_class" && item=="T"){
+                            $('.shippingFee-detail-wrap').remove();
+                        }
+                        if(index=="product_delivery_payment_class"){
+
+                            callDelivery(item);
                         }
 
                     });
@@ -1937,6 +1943,49 @@ $(document).ready(function(){
                 }
             });
         }
+        $('#changeDeliveryPaymentClass').on("change",function () {
+            callDelivery($(this).val());
+        });
+    function callDelivery(product_delivery_payment_class) {
+        var shipR = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
+        var shipM = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
+        var shipD = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>';
+        var shipW = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+        var shipC = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+        var shipN = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" id="product_delivery_payment" name="product_delivery_payment">원을 부과함.</td></tr>';
+
+        $('.changeDeliveryTr').remove();
+        if (product_delivery_payment_class== "R") {
+
+            $('.shipping-fee-tr').after(shipR);
+
+
+        } else if (product_delivery_payment_class == "M") {
+
+            $('.shipping-fee-tr').after(shipM);
+
+        } else if (product_delivery_payment_class == "D") {
+
+            $('.shipping-fee-tr').after(shipD);
+
+        } else if (product_delivery_payment_class == "W") {
+
+            $('.shipping-fee-tr').after(shipW);
+
+        } else if (product_delivery_payment_class == "C") {
+
+            $('.shipping-fee-tr').after(shipC);
+
+        } else if (product_delivery_payment_class == "N") {
+
+            $('.shipping-fee-tr').after(shipN);
+
+        } else if (product_delivery_payment_class == "T") {
+
+
+        }
+        // $('.shippingFee-detail-wrap').attr('style','display:table-row');
+    }
     //경품상세보기
     function defaultModalGiveaway (giveaway_cd){
         var file_link='';
@@ -2105,9 +2154,9 @@ $(document).ready(function(){
             }
         });
     });
-    function fn_formSubmit(){
-        document.form1.submit();
-    }
+    // function fn_formSubmit(){
+    //     document.form1.submit();
+    // }
 
     $('.ready').on("click",function () {
         $.toast().reset('all');//토스트 초기화
@@ -2180,7 +2229,7 @@ $(document).ready(function(){
             }
         }).open();
     });
-$("#daumMapCall2").on("click",function () {
+    $("#daumMapCall2").on("click",function () {
     //다음 지도
     new daum.Postcode({
         oncomplete: function(data) {
@@ -2244,3 +2293,110 @@ $("#daumMapCall2").on("click",function () {
 
         child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });
+
+
+    $('input[name=product_delivery_International_type]').on("click",function () {
+        $('#main-search-form input[name=product_delivery_International_type]').remove();
+        var value = '';
+        $('input[name=product_delivery_International_type]:checked').each(function (key){
+            if(key > 0){
+                value +="^"
+            }
+            value +=$(this).val();
+        })
+        $('#main-search-form').append(
+            '<input type="hidden" name="product_delivery_International_type" value="'+value+'">'
+        )
+    })
+    // $('input[name=product_delivery_International_type]').on("click",function () {
+    //     $('#main-search-form input[name=product_delivery_International_type]').remove();
+    //
+    //     $('input[name=product_delivery_International_type]:checked').each(function (){
+    //         $('#main-search-form').append(
+    //             '<input type="hidden" name="product_delivery_International_type" value="'+$(this).val()+'">'
+    //         )
+    //     });
+    // })
+    $('input[name=product_delivery_payment_class]').on("click",function () {
+        $('#main-search-form input[name=product_delivery_payment_class]').remove();
+        var value = '';
+        $('input[name=product_delivery_payment_class]:checked').each(function (key){
+            if(key > 0){
+                value +="^"
+            }
+            value +=$(this).val();
+        })
+        $('#main-search-form').append(
+            '<input type="hidden" name="product_delivery_payment_class" value="'+value+'">'
+        )
+    })
+    $('input[name=product_brand]').on("click",function () {
+        $('#main-search-form input[name=product_brand]').remove();
+        var value = '';
+        $('input[name=product_brand]:checked').each(function (key){
+            if(key > 0){
+                value +="^"
+            }
+            value +=$(this).val();
+        })
+        $('#main-search-form').append(
+            '<input type="hidden" name="product_brand" value="'+value+'">'
+        )
+    })
+    $('input[name=product_option_color]').on("click",function () {
+        $('#main-search-form input[name=product_option_color]').remove();
+        var value = '';
+        $('input[name=product_option_color]:checked').each(function (key){
+            if(key > 0){
+                value +="^"
+            }
+            value +=$(this).val();
+        })
+        $('#main-search-form').append(
+            '<input type="hidden" name="product_option_color" value="'+value+'">'
+        )
+    })
+    $('input[name=product_score]').on("click",function () {
+        $('#main-search-form input[name=product_score]').remove();
+        var value = '';
+        $('input[name=product_score]:checked').each(function (key){
+            if(key > 0){
+                value +="^"
+            }
+            value +=$(this).val();
+        })
+        $('#main-search-form').append(
+            '<input type="hidden" name="product_score" value="'+value+'">'
+        )
+    })
+    function setPaymentfilter(to,be) {
+        var dataId = $('this').attr('data-id');
+        $('#main-search-form input[name=searchToPayment]').remove();
+        $('#main-search-form input[name=searchBePayment]').remove();
+            $('#main-search-form').append(
+                '<input type="hidden" name="searchToPayment" value="'+to+'">' +
+                '<input type="hidden" name="searchBePayment" value="'+be+'">'
+            )
+            $('#searchToPayment').val(to);
+            $('#searchBePayment').val(be);
+    }
+
+    $('.back-arr').on("click",function () {
+        window.history.back();
+    })
+    //게시판글쓰기
+    function chkInputValue(id, msg){
+        if ( $.trim($(id).val()) == "") {
+            alert(msg+" 입력해주세요.");
+            $(id).focus();
+            return false;
+        }
+        return true;
+    }
+    function fn_formSubmit(){
+        if ( ! chkInputValue("#brdwriter", "작성자 이름을")) return;
+        if ( ! chkInputValue("#brdtitle", "제목을")) return;
+        if ( ! chkInputValue("#brdmemo", "내용을")) return;
+        if ( ! chkInputValue("#password", "비밀번호")) return;
+        $("#form1").submit();
+    }

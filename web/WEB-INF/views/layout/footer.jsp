@@ -42,10 +42,10 @@
             </div>
             <div class="footer-bottom-bottom">
                 <div class="authentication">
-                    <div><img src="<c:url value="/assets/img/kisac.png" />" alt="kisa"/></div>
-                    <div><img src="<c:url value="/assets/img/kcp.png" />" alt="kcp"/></div>
-                    <div><img src="<c:url value="/assets/img/kcp2.png" />" alt="kcp2"/></div>
-                    <div><img src="<c:url value="/assets/img/ftc.png" />" alt="공정거래위원회"/></div>
+                    <div class="point" onclick="location.href='https://www.kisa.or.kr/main.jsp'"><img src="<c:url value="/assets/img/kisac.png" />" alt="kisa"/></div>
+                    <div onclick="window.open('http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp?site_cd=IP0GE','_blank','width=500, height=500')"><img src="<c:url value="/assets/img/kcp.png" />" alt="kcp"/></div>
+                    <div onclick="location.href='http://www.kcp.co.kr'"><img src="<c:url value="/assets/img/kcp2.png" />" alt="kcp2"/></div>
+                    <div onclick="location.href='http://www.ftc.go.kr'"><img src="<c:url value="/assets/img/ftc.png" />" alt="공정거래위원회"/></div>
                 </div>
                 <div class="sns-list">
                     <div><img src="<c:url value="/assets/img/instagram.png" />" alt="인스타그램"/></div>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgDownloadMapper">
+
+  <select id="getProductDtoList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+    <![CDATA[
+            SELECT
+                *,
+                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =A.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.product_made_company_cd) as product_made_company_name,
+                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =A.product_sale_yn) as product_sale_yn_name,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
+            FROM product A  where 1=1
+        ]]>
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    <if test="product_name != null"> <![CDATA[AND A.product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+  </select>
+</mapper>

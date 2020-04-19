@@ -71,7 +71,7 @@
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
-</select>
+    </select>
     <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
         <![CDATA[
         SELECT

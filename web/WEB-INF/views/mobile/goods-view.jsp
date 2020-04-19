@@ -26,7 +26,7 @@
                     <li class="width-35">
                         <div class="number-group">
                            <button class="button number-minus"></button>
-                           <input type="number" name="number" value="1">
+                           <input type="number" name="payment_order_quantity" value="1">
                            <button class="button number-plus"></button>
                         </div>
                     </li>
@@ -181,7 +181,7 @@
            <li><a href="javascript:move(5)">배송/환불</a></li>
        </ul>        
         <div class="my-1" id="content01">
-           ${list.product_html}
+           <c:out value="${list.product_html}" escapeXml="false"/>
         </div>
     </section>
     <section class="wrap">

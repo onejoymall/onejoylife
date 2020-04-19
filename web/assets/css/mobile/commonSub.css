@@ -84,7 +84,7 @@ input[type="password"]::placeholder{
 
 /*상품 상세*/
 #content01 img{
-    width:100%;
+    width:100%!important;
 }
 .btn.btn_bottom{
     bottom:45px!important;

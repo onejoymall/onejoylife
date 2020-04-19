@@ -16,14 +16,15 @@
     
     <section class="wrap" id="write">
         <form id="form1" name="form1" action="/Board/boardSave" method="post" enctype="multipart/form-data">
-        <ul class="flexstart pb-2">
-            <li>이름</li>
-            <li><c:out value="${boardInfo.brdwriter}"/></li>
-        </ul>
-        <p class="text-md mb-05">이메일 *</p>
-        <input type="text" class="width-100" id="email" name="email">
+
+        <p class="text-md mb-05 mt-05">이름 *</p>
+        <input type="text" class="width-100 mt-05" id="brdwriter" name="brdwriter">
+        <p class="text-md mb-05 mt-05">비밀번호 *</p>
+        <input type="password" class="width-100 mt-05" id="password" name="password">
+        <p class="text-md mb-05 mt-05">이메일 *</p>
+        <input type="text" class="width-100 mt-05" id="email" name="email">
         <input type="checkbox" id="reply" class="b8">
-        <p class="text-md mt-2 mb-05">휴대폰 번호</p>
+        <p class="text-md mt-2 mb-05 mt-05">휴대폰 번호</p>
         <select class="width-25 mt-05 mb-05" name="phoneNum-1" id="phoneNum-1">
             <option value="010" selected>010</option>
             <option value="011">011</option>
@@ -36,8 +37,9 @@
 <%--        <label for="replysns">답변 여부를 SMS로 받으시겠습니까?</label>--%>
 <%--        <input type="checkbox" id="replysns" class="b8 mt-1">--%>
         <p class="text-md mt-2 mb-05">문의 유형 * </p>
-        <select class="width-100" name="sort" id="sort">
+        <select class="width-100" name="question_type" id="question_type">
             <option value="선택" selected>선택</option>
+            <option value="대량주문">대량주문</option>
             <option value="주문결제">주문/결제</option>
             <option value="교환반품환불">교환/반품/환불</option>
             <option value="이벤트">이벤트</option>
@@ -59,7 +61,7 @@
         <p class="text-md mt-2 mb-05">이미지 첨부</p>
         <div class="fileBox">
             <input type="text" class="width-100 mb-05 fileName" id="fileName" name="fileName" readonly="readonly">
-            <button for="uploadBtn" class="btn btn-black width-50">파일찾기</button>
+            <button for="uploadBtn" type="button" class="btn btn-black width-50" onclick="$('.uploadBtn').click()">파일찾기</button>
             <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
             <span class="ml-1 text-sm grey">1개 / 5MB 이하만 가능</span>
         </div>
@@ -68,7 +70,7 @@
             <li>쇼핑몰 관련 1:1 문의하기 페이지입니다.
 매장 이용 관련 불편사항은 고객지원센터(1811-9590)를 이용해주세요.</li>
         </ul>
-        <button class="btn btn-lg btn-redcover width-100 mb-3" onclick="fn_formSubmit();">접수</button>
+        <button class="btn btn-lg btn-redcover width-100 mb-3" type="button" onclick="fn_formSubmit();">접수</button>
         <input type="hidden" name="bgno" value="<c:out value="${bgno}"/>">
         <input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
         </form>
@@ -156,21 +158,7 @@ $('.phoneNum').on("keyup", function () {
    $('#phoneNum-1').on("change", function () {
        $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
    })
-   function chkInputValue(id, msg){
-       if ( $.trim($(id).val()) == "") {
-           alert(msg+" 입력해주세요.");
-           $(id).focus();
-           return false;
-       }
-       return true;
-   }
-   function fn_formSubmit(){
-       if ( ! chkInputValue("#brdwriter", "작성자를")) return;
-       if ( ! chkInputValue("#brdtitle", "글 제목을")) return;
-       if ( ! chkInputValue("#brdmemo", "글 내용을")) return;
 
-       $("#form1").submit();
-   }
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

@@ -1595,6 +1595,7 @@ body.black ul.product ul.options li:last-child, body.black ul.product ul.options
     width: 110px;
 }
 .wrap ul.basket li ul li:first-child img{
+    width: 90px;
     border: 1px solid #eee;
     box-sizing: border-box;
 }

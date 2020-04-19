@@ -161,21 +161,7 @@ $('.phoneNum').on("keyup", function () {
    $('#phoneNum-1').on("change", function () {
        $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
    })
-   function chkInputValue(id, msg){
-       if ( $.trim($(id).val()) == "") {
-           alert(msg+" 입력해주세요.");
-           $(id).focus();
-           return false;
-       }
-       return true;
-   }
-   function fn_formSubmit(){
-       if ( ! chkInputValue("#brdwriter", "작성자를")) return;
-       if ( ! chkInputValue("#brdtitle", "글 제목을")) return;
-       if ( ! chkInputValue("#brdmemo", "글 내용을")) return;
 
-       $("#form1").submit();
-   }
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

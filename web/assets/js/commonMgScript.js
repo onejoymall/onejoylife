@@ -352,26 +352,34 @@ $(document).on("change","#shipping-fee",function(){
     if($('select[name=product_delivery_payment_class]').val() == "R"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipR);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "M"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipM);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "D"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipD);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "W"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipW);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "C"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipC);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "N"){
         $('.shippingFee-detail-wrap').remove();
         $('.shipping-fee-tr').after(shipN);
+
     }else if($('select[name=product_delivery_payment_class]').val() == "T"){
         $('.shippingFee-detail-wrap').remove();
+
     }
-    $('.shippingFee-detail-wrap').removeClass("shippingFee-detail-wrap");
+    $('.shippingFee-detail-wrap').attr('style','display:table-row');
 });
+
 //배송비
 $(document).on("click",'.goods-shipping',function(){
     if($(this).val() == "T"){

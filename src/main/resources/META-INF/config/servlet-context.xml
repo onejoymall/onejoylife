@@ -25,10 +25,15 @@
 	<resources mapping="/product/editorUploads/**" location="file:///${downloadEditorFile}/" />
 	<resources mapping="/fileupload/**" location="file:///${fileUploadPath}/" />
 
+	<beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"></beans:property>
 	</beans:bean>
 
 	<!-- 모바일 버전 -->
@@ -42,7 +47,9 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/MyPage/**" />
-			<mvc:exclude-mapping path="/" />                                     <!-- Interceptor에 예외를 적용 할 패턴 -->
+			<mvc:exclude-mapping path="/" />
+			<!-- Interceptor에 예외를 적용 할 패턴 -->
+			<mvc:exclude-mapping path="/downloadExcelFile/**" />
 			<mvc:exclude-mapping path="/fileupload" />
 			<mvc:exclude-mapping path="/cart/**" />
 			<mvc:exclude-mapping path="/sign/**" />
@@ -62,7 +69,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/Manager/**" />
-			<mvc:exclude-mapping path="/Manager/**" />
+
 			<mvc:exclude-mapping path="/Manager/ManagerSign/**" />
 			<mvc:exclude-mapping path="/Manager/productAddProc" />
 			<mvc:exclude-mapping path="/Manager/productAdd" />
@@ -79,6 +86,9 @@
 	<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 		<beans:property name="paramName" value="lang" />
 	</beans:bean>
+	<beans:bean id="excelDownloadView" class="com.webapp.common.controller.ExcelDownloadView"/>
+
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="200000000" />

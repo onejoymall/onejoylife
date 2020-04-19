@@ -21,6 +21,24 @@ public class BoardVO {
     private String phone;
     private String question_type;
     private String order_no;
+    private String bgtype;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getBgtype() {
+        return bgtype;
+    }
+
+    public void setBgtype(String bgtype) {
+        this.bgtype = bgtype;
+    }
 
     public String getEmail() {
         return email;
