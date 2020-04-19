@@ -278,5 +278,31 @@
             </div>
         </article>
     </section>
+    <script>
+        //검색 필터
+        $(document).ready(function(){
+            $(".out-ul").hide();
+            $(".category ul li a").click(function(){
+                event.preventDefault();
+                $(this).next().slideToggle(300);
+            });
+        });
+        $(function(){
+            $('.category ul li>a').click(function(){
+                $('.inner-filter1 li>a').removeClass('active');
+                $(this).addClass('active');
+                //검색필터 담기
+                var dataId=  $(this).attr("data-id");
+                if(dataId){
+                    $('input[name=product_ct]').remove();
+                    $('#main-search-form').append(
+                        '<input type="hidden" name="product_ct" value="'+$(this).attr('data-id')+'">'
+                    )
+                }else{
+                    $('input[name=product_ct]').remove();
+                }
 
+            });
+        })
+    </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
