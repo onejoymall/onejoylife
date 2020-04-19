@@ -48,15 +48,17 @@
 							<c:url var="link" value="/Board/boardRead">
 								<c:param name="brdno" value="${listview.brdno}" />
 							</c:url>
-							<li class="notice-data-item" tabindex="0">
-								<div class="main-title-box" tabindex="0">
+							<li class="notice-data-item" tabindex="0" >
+								<div class="main-title-box" tabindex="0" onclick="readBoard('${listview.bgtype}',${listview.brdno},$(this))">
 									<div class="notice-sort">
 										<span class="notice-number"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></span>
 									</div>
 									<div class="notice-title">
 <%--										<a href="${link}"><c:out value="${listview.brdtitle}"/></a>--%>
-										<span><c:out value="${listview.brdtitle}"/></span>
+										<span><c:out value="${listview.brdtitle}"/> </span>
 									</div>
+									<div class="notice-date"><c:out value="${listview.question_type}"/></div>
+									<div class="notice-date"><c:out value="${listview.brdwriter}"/></div>
 									<div class="notice-date"><c:out value="${listview.brddate}"/></div>
 								</div>
 								<div class="content-box">
@@ -65,7 +67,7 @@
 <%--									</div>--%>
 									<div class="notice-content-body">
 										<div class="notice-content-body-a">
-											<p><c:out value="${listview.brdmemo}"/></p>
+											<p id="boardMemoPrint">123123</p>
 										</div>
 									</div>
 								</div>
@@ -91,9 +93,28 @@
 	</div>
 </div>
 <script>
-    $('.main-title-box').click(function(){
-        $(this).parent($('.notice-data-box')).toggleClass('active');
-    })
+
+    function readBoard(bgtype,brdno,objectThis){
+
+		var userInput = prompt("비밀번호입력?"+"");
+		$.ajax({
+			url: "/Board/PasswordCheck",
+			type:"post",
+			data : {password:userInput,brdno:brdno},
+			success: function(data){
+				if(data.status=="false"){
+					alert(data.memo);
+				}else{
+					objectThis.parent($('.notice-data-box')).toggleClass('active');
+					$('#boardMemoPrint').html(data.memo);
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log(xhr + status + error);
+			}
+		})
+    }
+
     $('.notice-sort-item a').click(function(){
         event.preventDefault();
         $(this).parents($('.notice-sort-list')).find($('a')).removeClass('active');

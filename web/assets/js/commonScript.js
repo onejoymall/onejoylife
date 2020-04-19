@@ -2154,9 +2154,9 @@ $(document).ready(function(){
             }
         });
     });
-    function fn_formSubmit(){
-        document.form1.submit();
-    }
+    // function fn_formSubmit(){
+    //     document.form1.submit();
+    // }
 
     $('.ready').on("click",function () {
         $.toast().reset('all');//토스트 초기화
@@ -2293,31 +2293,7 @@ $(document).ready(function(){
 
         child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });
-    //검색 필터
-    $(document).ready(function(){
-        $(".out-ul").hide();
-        $(".category ul li a").click(function(){
-            event.preventDefault();
-            $(this).next().slideToggle(300);
-        });
-    });
-    $(function(){
-        $('.category ul li>a').click(function(){
-            $('.inner-filter1 li>a').removeClass('active');
-            $(this).addClass('active');
-            //검색필터 담기
-            var dataId=  $(this).attr("data-id");
-            if(dataId){
-                $('input[name=product_ct]').remove();
-                $('#main-search-form').append(
-                    '<input type="hidden" name="product_ct" value="'+$(this).attr('data-id')+'">'
-                )
-            }else{
-                $('input[name=product_ct]').remove();
-            }
 
-        });
-    })
 
     $('input[name=product_delivery_International_type]').on("click",function () {
         $('#main-search-form input[name=product_delivery_International_type]').remove();
@@ -2403,4 +2379,24 @@ $(document).ready(function(){
             )
             $('#searchToPayment').val(to);
             $('#searchBePayment').val(be);
+    }
+
+    $('.back-arr').on("click",function () {
+        window.history.back();
+    })
+    //게시판글쓰기
+    function chkInputValue(id, msg){
+        if ( $.trim($(id).val()) == "") {
+            alert(msg+" 입력해주세요.");
+            $(id).focus();
+            return false;
+        }
+        return true;
+    }
+    function fn_formSubmit(){
+        if ( ! chkInputValue("#brdwriter", "작성자 이름을")) return;
+        if ( ! chkInputValue("#brdtitle", "제목을")) return;
+        if ( ! chkInputValue("#brdmemo", "내용을")) return;
+        if ( ! chkInputValue("#password", "비밀번호")) return;
+        $("#form1").submit();
     }

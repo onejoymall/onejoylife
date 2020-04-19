@@ -9,9 +9,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardSvc;
+import com.webapp.board.app.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +48,10 @@ import com.webapp.mall.vo.UserVO;
 
 @RestController
 public class restapiController {
+    @Autowired
+    private BoardSvc boardSvc;
+    @Autowired
+    private BoardGroupSvc boardGroupSvc;
     @Autowired
     MessageSource messageSource;
     @Autowired
@@ -1040,6 +1048,37 @@ public class restapiController {
         } catch (Exception e) {
 
             resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    /**
+     * 글 읽기 패스워드 확인
+     */
+    @RequestMapping(value = "/Board/PasswordCheck", method = RequestMethod.POST, produces = "application/json")
+    public Map<String,Object> boardPasswordCheck(HttpServletRequest request, ModelMap modelMap) throws  Exception{
+        String brdno = request.getParameter("brdno");
+        String password = request.getParameter("password");
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try{
+            BoardVO boardInfo = boardSvc.selectBoardOne(brdno);
+            if(boardInfo.getBgtype()==null){
+                resultMap.put("memo",boardInfo.getBrdmemo());
+            }else if(boardInfo.getBgtype().equals("1:1")){
+                if(boardInfo.getPassword()==null){
+                    resultMap.put("memo","글을 읽을 수 없습니다. 관리자에게 문의하세요");
+                    resultMap.put("status","false");
+                }else {
+                    if (boardInfo.getPassword().equals(password)) {
+                        resultMap.put("memo",boardInfo.getBrdmemo());
+                    } else {
+                        resultMap.put("memo","비밀번호를 확인하세요");
+                        resultMap.put("status","false");
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return resultMap;
     }

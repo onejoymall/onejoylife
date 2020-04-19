@@ -1,7 +1,9 @@
 package com.webapp.board.app;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller 
 public class BoardCtr {
@@ -125,7 +128,8 @@ public class BoardCtr {
         
         return "board/BoardRead";
     }
-    
+
+
     /**
      * 글 삭제.
      */
