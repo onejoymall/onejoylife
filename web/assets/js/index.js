@@ -70,16 +70,16 @@ $(document).ready(function(){
         $(".date_pick").datepicker();                    
     });
     //file upload
-    var uploadFile = $('.fileBox .uploadBtn');
-
-    uploadFile.on('change', function(){
-        if(window.FileReader){
-            var filename = $(this)[0].files[0].name;
-        } else {
-            var filename = $(this).val().split('/').pop().split('\\').pop();
-        }
-        $(this).siblings('.fileName').val(filename);
-    });
+    // var uploadFile = $('.fileBox .uploadBtn');
+    //
+    // uploadFile.on('change', function(){
+    //     if(window.FileReader){
+    //         var filename = $(this)[0].files[0].name;
+    //     } else {
+    //         var filename = $(this).val().split('/').pop().split('\\').pop();
+    //     }
+    //     $(this).siblings('.fileName').val(filename);
+    // });
 
     var uploadFile2 = $('.fileBox2 .uploadBtn2');
     uploadFile2.on('change', function(){

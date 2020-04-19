@@ -79,10 +79,10 @@
                                 <col style="width: 80%;">
                             </colgroup>
                             <tbody>
-<%--                            <tr>--%>
-<%--                                <td>담당자명</td>--%>
-<%--                                <td><input type="text"></td>--%>
-<%--                            </tr>--%>
+                            <tr>
+                                <td>담당자명</td>
+                                <td><input type="text" name="manager_name"></td>
+                            </tr>
                             <tr>
                                 <td>상품수</td>
                                 <td><span id="product_cnt"></span> 개 <%--(하위 카테고리 포함)--%></td>
@@ -136,7 +136,7 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <td>기획전</td>
+                                <td>기획전 노출</td>
                                 <td class="radio-td">
                                     <input type="radio" id="pd_category_event_use_y" name="pd_category_event_use_yn" class="styleClass" value="Y">
                                     <label for="pd_category_event_use_y"><span>표시함</span></label>
@@ -145,14 +145,24 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>배너 이미지 등록</td>
-                                <td><p>* PC버전 가로 500px / 세로 255xp, 모바일버전 가로 500px / 세로 255xp</p>
-                                    <img src="" onerror="this.src='http://placehold.it/300'" width="300" class="file_link"/>
+                                <td>상세 화면 상단 이미지</td>
+                                <td><p>* 가로 1000px / 세로 400xp</p>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link" />
                                     <div class="fileBox">
-
-                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
-                                        <label for="uploadBtn" class="btn_file">파일찾기</label>
-                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="searchDetailTopImg" class="btn_file">파일찾기</label>
+                                        <input type="file" id="searchDetailTopImg" name="uploadfile3" class="uploadBtn">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>메인 화면 목록 이미지</td>
+                                <td><p>* 가로 600px / 세로 400px</p>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3"/>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="mainListImg" class="btn_file">파일찾기</label>
+                                        <input type="file" id="mainListImg" name="uploadfile" class="uploadBtn">
                                     </div>
                                 </td>
                             </tr>
@@ -201,12 +211,12 @@
                             </tr>
                             <tr>
                                 <td>배너 이미지 등록</td>
-                                <td><p>* PC버전 가로 500px / 세로 255xp, 모바일버전 가로 500px / 세로 255xp</p>
-                                    <img src="" onerror="this.src='http://placehold.it/300'" width="300" class="file_link2"/>
-                                    <div class="fileBox2">
-                                        <input type="text" class="fileName2" id="fileName2" name="fileName2" readonly="readonly">
-                                        <label for="uploadBtn2" class="btn_file2">파일찾기</label>
-                                        <input type="file" id="uploadBtn2" name="uploadfile2" class="uploadBtn2">
+                                <td><p>* 가로 1920px / 세로 460px</p>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="mainBanner" class="btn_file">파일찾기</label>
+                                        <input type="file" id="mainBanner" name="uploadfile2" class="uploadBtn">
                                     </div>
                                 </td>
                             </tr>
@@ -238,7 +248,72 @@
                         </table>
                     </div>
                 </div>
-<%--                <div class="main-right-4">--%>
+                <div class="main-right-4">
+                    <div class="main-right-sec">
+                        <table class="right-table">
+                            <colgroup>
+                                <col style="width: 20%;">
+                                <col style="width: 80%;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>이벤트 노출</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="event_use_y" name="event_use_yn" class="styleClass" value="Y">
+                                    <label for="event_use_y"><span>표시함</span></label>
+                                    <input type="radio" id="event_use_n" name="event_use_yn" class="styleClass" value="N">
+                                    <label for="event_use_n"><span>표시안함</span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이벤트 메인 베너 이미지</td>
+                                <td><p>* 가로 1000px / 세로 400xp</p>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link4" />
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="eventMainBannerImg" class="btn_file">파일찾기</label>
+                                        <input type="file" id="eventMainBannerImg" name="uploadfile4" class="uploadBtn">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>이벤트 목록 이미지</td>
+                                <td><p>* 가로 600px / 세로 400px</p>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link5"/>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="eventList" class="btn_file">파일찾기</label>
+                                        <input type="file" id="eventList" name="uploadfile5" class="uploadBtn">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td><input type="text" class="text-width" name="event_title"></td>
+                            </tr>
+                            <tr class="day-none">
+                                <td>기간</td>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text"  class="date_pick" name="event_start_date">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text"  class="date_pick" name="event_end_date">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>간단 설명</td>
+                                <td><input type="text" class="text-width" name="event_memo"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 <%--                    <div class="main-right-sec">--%>
 <%--                        <table class="right-table-4">--%>
 <%--                            <colgroup>--%>
@@ -327,27 +402,8 @@
 <%--                            </tbody>--%>
 <%--                        </table>--%>
 <%--                    </div>--%>
-<%--                    <ul class="pagination2">--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">≪</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">＜</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link active" href="#">1</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">2</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">3</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">4</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">5</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">6</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">7</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">8</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">9</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">10</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">＞</a></li>--%>
-<%--                        <li class="page-item"><a class="page-link" href="#">≫</a></li>--%>
-<%--                    </ul>--%>
-<%--                </div>--%>
-
-
+                </div>
             </div>
-
             </form>
         </div>
     </div>

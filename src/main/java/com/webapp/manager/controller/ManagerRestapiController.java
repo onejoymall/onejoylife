@@ -664,6 +664,9 @@ public class ManagerRestapiController {
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"category");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"category");
+            List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"category");
+            List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"category");
+            List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"category");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/category/"+ft.format(new Date())+"/");
 
@@ -675,16 +678,34 @@ public class ManagerRestapiController {
                 categoryDAO.updateCategory(params);
                 if(!isEmpty(filelist)){
                     fileVO.setFileorder(1);
-                    params.put("file_order",1);
-                    categoryDAO.deleteCategoryFile(params);
+                    categoryDAO.deleteCategoryFile(filelist,fileVO);
                     categoryDAO.insertCategoryFile(filelist,fileVO);
                 }
+                //기획전 상단
+                if(!isEmpty(filelist3)){
+                    fileVO.setFileorder(3);
+                    categoryDAO.deleteCategoryFile(filelist3,fileVO);
+                    categoryDAO.insertCategoryFile(filelist3,fileVO);
+                }
+                //매인베너
                 if(!isEmpty(filelist2)){
                     fileVO.setFileorder(2);
-                    params.put("file_order",2);
-                    categoryDAO.deleteCategoryFile(params);
+                    categoryDAO.deleteCategoryFile(filelist2,fileVO);
                     categoryDAO.insertCategoryFile(filelist2,fileVO);
                 }
+                //이벤트 목록
+                if(!isEmpty(filelist4)){
+                    fileVO.setFileorder(4);
+                    categoryDAO.deleteCategoryFile(filelist4,fileVO);
+                    categoryDAO.insertCategoryFile(filelist4,fileVO);
+                }
+                //이벤트 상단
+                if(!isEmpty(filelist5)){
+                    fileVO.setFileorder(5);
+                    categoryDAO.deleteCategoryFile(filelist5,fileVO);
+                    categoryDAO.insertCategoryFile(filelist5,fileVO);
+                }
+
                 categoryDAO.insertCategoryEvent(params);
                 resultMap.put("redirectUrl","/Manager/Category");
 
@@ -744,7 +765,8 @@ public class ManagerRestapiController {
 //                mgProductDAO.updateProduct();
                 mgProductDAO.updateProduct(productVO);
 //                mgProductDAO.updasteProduct(productVO);
-                resultMap.put("redirectUrl","/Manager/Product");
+                String Referer =request.getHeader("Referer");
+                resultMap.put("redirectUrl",Referer+"?page="+params.get("page"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -1105,15 +1127,14 @@ public class ManagerRestapiController {
         return resultMap;
     }
     //브랜드 등록
-
     @RequestMapping(value = "/Manager/brandAddProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> brandAddProc(@RequestParam HashMap params,MgBrandVO mgBrandVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try{
-            if(mgBrandVO.getProduct_brand().isEmpty()){
-                error.put(messageSource.getMessage("product_brand","ko"), messageSource.getMessage("error.required","ko"));
+            if(mgBrandVO.getProduct_brand_name().isEmpty()) {
+                mgBrandVO.setProduct_brand("B"+numberGender.numberGen(7,2));
             }
             if(mgBrandVO.getProduct_brand_name().isEmpty()){
                 error.put(messageSource.getMessage("product_brand_name","ko"), messageSource.getMessage("error.required","ko"));

@@ -46,27 +46,23 @@ public class CategoryDAO {
     public  void deleteCategory(Map<String, String> params) throws SQLException{
         sql.delete("mall.CategoryMapper.deleteCategory",params);
     }
-    public void insertCategoryFileMultiFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
-        int i=0;
-        for (FileVO f : filelist) {
-            i++;
-            f.setParentPK(fileVO.getParentPK());
-            f.setFilelink(fileVO.getFilepath()+f.getRealname());
-            f.setFileorder(i);
-            sql.insert("mall.CategoryMapper.insertCategoryFile", f);
-        }
-    }
+
     public void insertCategoryFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
-        int i=0;
         for (FileVO f : filelist) {
-            i++;
             f.setParentPK(fileVO.getParentPK());
             f.setFilelink(fileVO.getFilepath()+f.getRealname());
             f.setFileorder(fileVO.getFileorder());
             sql.insert("mall.CategoryMapper.insertCategoryFile", f);
         }
     }
-    public  void deleteCategoryFile(Map<String, String> params) throws SQLException{
-        sql.delete("mall.CategoryMapper.deleteCategoryFile",params);
+    public  void deleteCategoryFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
+
+        for (FileVO f : filelist) {
+            f.setParentPK(fileVO.getParentPK());
+            f.setFilelink(fileVO.getFilepath()+f.getRealname());
+            f.setFileorder(fileVO.getFileorder());
+            sql.delete("mall.CategoryMapper.deleteCategoryFile",f);
+        }
+
     }
 }

@@ -363,30 +363,16 @@
             <h4 class="main-section-h4">이벤트</h4>
             <p class="special-price-more"><a href="#">이벤트 더보기<i class="right-arrow"></i></a></p>
             <ul class="event-list">
+        <c:if test="${not empty eventList}">
+            <c:forEach var="eventList" items="${eventList}" varStatus="status">
                 <li>
-                    <a href="#">
-                        <div class="img-box"><img src="assets/img/event1.png" /></div>
-                        <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
+                    <a href="/product?product_ct=${eventList.pd_category_id}">
+                        <div class="img-box"><img src="${eventList.file_link5}" /></div>
+                        <p class="event-title">${eventList.event_title}</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <div class="img-box"><img src="assets/img/event2.png" /></div>
-                        <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="img-box"><img src="assets/img/event3.png" /></div>
-                        <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="img-box"><img src="assets/img/event4.png" /></div>
-                        <p class="event-title">미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                    </a>
-                </li>
+            </c:forEach>
+        </c:if>
             </ul>
         </div>
     </article>
