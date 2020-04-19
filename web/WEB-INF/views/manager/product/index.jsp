@@ -687,40 +687,35 @@
                     <tr>
                         <th>제조사</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 제조사 관리&#93;에 등록한 유효한 제조사 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>공급사</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 공급사 관리&#93;에 등록한 유효한 공급사 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>브랜드</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 브랜드 관리&#93;에 등록한 유효한 브랜드 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-b" name="product_brand" placeholder="ex) B00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>트렌드</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 트렌드 관리&#93;에 등록한 유효한 트렌드 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-t" name="product_trend" placeholder="ex) T00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>자체 분류</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 자체분류 관리&#93;에 등록한 유효한 자체 분류 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-c" name="product_self_class_cd" placeholder="ex) C00000000">
                         </td>
                     </tr>

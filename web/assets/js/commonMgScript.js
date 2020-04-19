@@ -395,3 +395,28 @@ $(document).on("click","#systemDeliveryFormSubmit",function () {
     var formData = $('#defaultForm').serialize();
     commonAjaxCall("POST","/Save/systemDelivery",formData);
 })
+
+//선택 이미지 출력 및 파일명 노출
+//부모의 형제 parent().siblings()
+//형제 siblings()
+$('.uploadBtn').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    console.log(object.target);
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    filesArr.forEach(function (f) {
+        if(!f.type.match("image.*")){
+            alert("이미지파일만 등록 가능합니다.");
+            return;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            thisObject.parent().siblings('img').attr("src",e.target.result);
+            thisObject.siblings('.fileName').val(filename)
+        }
+        reader.readAsDataURL(f);
+    })
+});

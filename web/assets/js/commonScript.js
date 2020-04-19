@@ -220,42 +220,18 @@ $(document).ready(function(){
                 $('input[name=pd_category_name_add]').attr('placeholder',categorySelect.pd_category_name+' 하위 분류')
 
                 $('#product_cnt').html(categorySelect.product_cnt);
-                if(categorySelect.pd_category_use_yn =='Y'){
-                    $('input:radio[name=pd_category_use_yn]').eq(0).click();
-                }else{
-                    $('input:radio[name=pd_category_use_yn]').eq(1).click();
-                }
-                if(categorySelect.pd_category_main_view =='Y'){
-                    $('input:radio[name=pd_category_main_view]').eq(0).click();
-                }else{
-                    $('input:radio[name=pd_category_main_view]').eq(1).click();
-                }
-                if(categorySelect.pd_category_event_use_yn =='Y'){
-                    $('input:radio[name=pd_category_event_use_yn]').eq(0).click();
-                }else{
-                    $('input:radio[name=pd_category_event_use_yn]').eq(1).click();
-                }
-                if(categorySelect.pd_category_main_view_sp =='Y'){
-                    $('input:radio[name=pd_category_main_view_sp]').eq(0).click();
-                }else{
-                    $('input:radio[name=pd_category_main_view_sp]').eq(1).click();
-                }
-                if(categorySelect.banner_use_yn =='Y'){
-                    $('input:radio[name=banner_use_yn]').eq(0).click();
-                }else{
-                    $('input:radio[name=banner_use_yn]').eq(1).click();
-                }
+                $.each(data.categorySelect,function (key,value) {
+                    console.log(key,value);
+                    $('input:radio[name='+key+'][value=\''+value+'\']').prop("checked",true);
+                    $('input:text[name='+key+']').val(value);
+                })
+
                 $('.file_link').attr('src',categorySelect.file_link);
                 $('.file_link2').attr('src',categorySelect.file_link2);
-                $('input[name=pd_category_event_title]').val(categorySelect.pd_category_event_title);
-                $('input[name=pd_category_event_memo]').val(categorySelect.pd_category_event_memo);
-                $('input[name=pd_category_event_start]').val(categorySelect.pd_category_event_start);
-                $('input[name=pd_category_event_end]').val(categorySelect.pd_category_event_end);
+                $('.file_link3').attr('src',categorySelect.file_link3);
+                $('.file_link4').attr('src',categorySelect.file_link4);
+                $('.file_link5').attr('src',categorySelect.file_link5);
 
-                $('input[name=banner_title]').val(categorySelect.banner_title);
-                $('input[name=banner_memo]').val(categorySelect.banner_memo);
-                $('input[name=banner_start_date]').val(categorySelect.banner_start_date);
-                $('input[name=banner_end_date]').val(categorySelect.banner_end_date);
             },
             error: function (xhr, status, error) {
                 alert("error");
@@ -843,6 +819,8 @@ $(document).ready(function(){
     //상품수정
     $(document).on("click","#productUpdate",function () {
         var formData = new FormData($('#defaultForm')[0]);
+        //수정중인 페이징 기억
+        formData.append("page", $('input[name=page]').val());
         jQuery.ajax({
             type: 'POST',
             enctype: 'multipart/form-data',

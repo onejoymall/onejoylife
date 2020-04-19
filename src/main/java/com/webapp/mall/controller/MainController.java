@@ -123,6 +123,8 @@ public class MainController {
             List<Map<String,Object>> categoryEventListSub = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryEventListSub",categoryEventListSub);
 
+
+
             //매인 배너
             params.put("pd_category_event_use_yn","");
             params.put("banner_use_yn","Y");
@@ -132,6 +134,18 @@ public class MainController {
             params.put("pd_category_event_end","");
             List<Map<String,Object>> categoryBannerList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryBannerList",categoryBannerList);
+
+
+            //이벤트 목록
+            params.put("pd_category_event_use_yn","");
+            params.put("banner_use_yn","");
+            params.put("event_use_yn","Y");
+            params.put("limitTo",0);
+            params.put("limitBe",4);
+            List<Map<String,Object>> eventList = categoryDAO.getCategoryEventList(params);
+            model.addAttribute("eventList",eventList);
+
+
 
             params.put("market_config_code","info-main");
             Map<String,Object> configMain = configDAO.getConfigDetail(params);
