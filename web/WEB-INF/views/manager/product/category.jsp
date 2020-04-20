@@ -146,8 +146,8 @@
                             </tr>
                             <tr>
                                 <td>상세 화면 상단 이미지</td>
-                                <td><p>* 가로 1000px / 세로 400xp</p>
-                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link" />
+                                <td>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3" />
                                     <div class="fileBox">
                                         <input type="text" class="fileName" name="fileName" readonly="readonly">
                                         <label for="searchDetailTopImg" class="btn_file">파일찾기</label>
@@ -157,8 +157,8 @@
                             </tr>
                             <tr>
                                 <td>메인 화면 목록 이미지</td>
-                                <td><p>* 가로 600px / 세로 400px</p>
-                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3"/>
+                                <td>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link"/>
                                     <div class="fileBox">
                                         <input type="text" class="fileName" name="fileName" readonly="readonly">
                                         <label for="mainListImg" class="btn_file">파일찾기</label>
@@ -211,7 +211,7 @@
                             </tr>
                             <tr>
                                 <td>배너 이미지 등록</td>
-                                <td><p>* 가로 1920px / 세로 460px</p>
+                                <td>
                                     <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
                                     <div class="fileBox">
                                         <input type="text" class="fileName" name="fileName" readonly="readonly">
@@ -267,7 +267,7 @@
                             </tr>
                             <tr>
                                 <td>이벤트 메인 베너 이미지</td>
-                                <td><p>* 가로 1000px / 세로 400xp</p>
+                                <td>
                                     <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link4" />
                                     <div class="fileBox">
                                         <input type="text" class="fileName" name="fileName" readonly="readonly">
@@ -278,7 +278,7 @@
                             </tr>
                             <tr>
                                 <td>이벤트 목록 이미지</td>
-                                <td><p>* 가로 600px / 세로 400px</p>
+                                <td>
                                     <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link5"/>
                                     <div class="fileBox">
                                         <input type="text" class="fileName" name="fileName" readonly="readonly">

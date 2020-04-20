@@ -316,17 +316,17 @@
                                 <div class="txt-in1">
                                     <p class="in1-font1">총 상품 금액</p>
 <%--                                    <p>VIP 회원할인</p>--%>
-<%--                                    <p>할인쿠폰</p>--%>
+                                    <p>할인 금액</p>
                                     <c:if test="${not empty getCartSum.total_delivery_payment}">
                                         <p>배송비</p>
                                     </c:if>
                                 </div>
                                 <div class="txt-in2">
-                                    <p><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-<%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
+                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /></span> 원</p>
                                     <c:if test="${not empty getCartSum.total_delivery_payment}">
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /></span>원</span> 원</p>
+                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> 원</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -337,7 +337,7 @@
                                 </div>
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /></span> 원</p>
-                                    <p><span><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>
+                                    <p><span><fmt:formatNumber value="${getCartSum.point_add}" groupingUsed="true" /> </span></span>원</p>
                                 </div>
                             </div>
                         </div>

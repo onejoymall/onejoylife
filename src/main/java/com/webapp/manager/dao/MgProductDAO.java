@@ -24,12 +24,11 @@ public class MgProductDAO {
         sql.insert("mall.ProductMapper.insertProduct",productVO);
     }
     public void insertProductFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
-        int i=0;
+
         for (FileVO f : filelist) {
-            i++;
             f.setParentPK(fileVO.getParentPK());
             f.setFilelink(fileVO.getFilepath()+f.getRealname());
-            f.setFileorder(i);
+            f.setFileorder(fileVO.getFileorder());
             sql.insert("mall.ProductMapper.insertProductFile", f);
         }
     }
@@ -42,7 +41,15 @@ public class MgProductDAO {
     public void updateProduct(ProductVO productVO) throws SQLException{
         sql.update("mall.ProductMapper.updateProduct",productVO);
     }
-    public void deleteProductFile(ProductVO productVO) throws SQLException{
-        sql.delete("mall.ProductMapper.deleteProductFile",productVO);
+
+    public  void deleteProductFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
+
+        for (FileVO f : filelist) {
+            f.setParentPK(fileVO.getParentPK());
+            f.setFilelink(fileVO.getFilepath()+f.getRealname());
+            f.setFileorder(fileVO.getFileorder());
+            sql.delete("mall.ProductMapper.deleteProductFile",f);
+        }
+
     }
 }

@@ -22,7 +22,7 @@
         select
             ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
             ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
-            ifnull(sum(A.product_delivery_payment * A.payment_order_quantity),0) as total_delivery_payment,
+            ifnull(sum(A.product_delivery_payment),0) as total_delivery_payment,
             ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
         <foreach collection="chk" item="item" open="(" separator="," close=")">
@@ -61,7 +61,7 @@
         select
             ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
             ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
-            ifnull(sum(B.product_delivery_payment * A.payment_order_quantity),0) as total_delivery_payment,
+            ifnull(sum(A.product_delivery_payment),0) as total_delivery_payment,
             ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
 

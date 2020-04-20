@@ -414,9 +414,30 @@ $('.uploadBtn').on('change', function(object){
         sel_file = f;
         var reader = new FileReader();
         reader.onload = function (e) {
-            thisObject.parent().siblings('img').attr("src",e.target.result);
-            thisObject.siblings('.fileName').val(filename)
+            var imgDisplayType ='copy';
+            // if(imgDisplayType =="copy"){
+            //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+            //     $('.uploadBtn').siblings('.fileName').val(filename);
+            // }else{
+                thisObject.parent().siblings('img').attr("src",e.target.result);
+                thisObject.siblings('.fileName').val(filename);
+            // }
+
         }
         reader.readAsDataURL(f);
     })
+});
+$(".basicNoToolbar").summernote({
+    height: 100,
+    toolbar: false,
+    placeholder: 'type with apple, orange, watermelon and lemon',
+    hint: {
+        words: ['apple', 'orange', 'watermelon', 'lemon'],
+        match: /\b(\w{1,})$/,
+        search: function (keyword, callback) {
+            callback($.grep(this.words, function (item) {
+                return item.indexOf(keyword) === 0;
+            }));
+        }
+    }
 });

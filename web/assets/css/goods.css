@@ -258,6 +258,7 @@ body{
 }
 
 .modal-body{
+    position: relative;
     width:100%;
     height:auto;
     padding:30px 20px;

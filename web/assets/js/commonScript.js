@@ -52,6 +52,7 @@ $(document).on("click","#paymentSubmit",function () {
         $.toast({
             heading: '비회원 주문 중입니다.',
             text: [
+                '<a href="/sign/login">로그인 후 이용</a>',
                 '<a href="/sign/signup">회원 가입 후 이용</a>',
                 '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
             ],
@@ -854,7 +855,18 @@ $(document).ready(function(){
 
                 } else {
                     // loginAuth(data.access_token);
-                    location.href=data.redirectUrl;
+                    // location.href=data.redirectUrl;
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'success',
+                        hideAfter: 1000,
+                        afterHidden: function () {
+                            // location.href = data.redirectUrl;
+                            $(".modal-close").click();
+                        }
+                    });
                 }
             },
             error: function (xhr, status, error) {
@@ -990,7 +1002,7 @@ $(document).ready(function(){
                 }
             },
             error: function (xhr, status, error) {
-                alert("error");
+                console.log(xhr, status, error);
             }
         });
     })
@@ -1742,7 +1754,7 @@ $(document).ready(function(){
             "<tr id='ctid"+selectCtCode+"'>" +
             "<td>"+
                 $('#category1t').text() + $('#category2t').text() + $('#category3t').text() +
-                "<input type='hidden' name='selectCtCodeList[]' id='selectCtCodeList' class='selectCtCodeList' value='"+selectCtCode+"'>" +
+                "<input type='hidden' name='selectCtCodeList[]'  class='selectCtCodeList' value='"+selectCtCode+"'>" +
             "</td>" +
             "<td>" +
                 // "<label for='pa1'> <input type='checkbox' name='defaultPa' id='pa1'>일반상품 영역</label><br>" +
@@ -1861,17 +1873,27 @@ $(document).ready(function(){
 
     });
     //modal
+    //특수문자 태그변환
+    function ConvertSystemSourcetoHtml(str){
+        str = str.replace(/</g,"&lt;");
+        str = str.replace(/>/g,"&gt;");
+        str = str.replace(/\"/g,"&quot;");
+        str = str.replace(/\'/g,"&#39;");
+        str = str.replace(/\n/g,"<br />");
+        return str;
+    }
     //상품상세보기
     function defaultModal (product_cd){
             var file_link='';
             $(".modal").attr("style", "display:block");
+            var resultData;
             jQuery.ajax({
                 type: 'POST',
                 url: '/Manager/viewDetail',
                 data: {"product_cd":product_cd},
                 success: function (data) {
                     console.log(data.list)
-
+                    resultData=data.list;
                     $.each(data.list, function (index, item) {
                          $('input:text[name^="'+index+'"]').val(item);
                         $('select[name='+index+']').val(item);
@@ -1891,8 +1913,9 @@ $(document).ready(function(){
                         else if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
                         }else{
-                            $('input:radio[name='+index+'][value="' + item + '"]').prop('checked',true);
+                            $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
                         }
+
                         if(index=="product_delivery_class" && item=="T"){
                             $('.shippingFee-detail-wrap').remove();
                         }
@@ -1902,17 +1925,12 @@ $(document).ready(function(){
                         }
 
                     });
-                    var ele1 =$('input[name^="file_1"]').val();
-                    var ele2 =$('input[name^="file_2"]').val();
-                    var ele3 =$('input[name^="file_3"]').val();
-                    var ele4 =$('input[name^="file_4"]').val();
-                    var ele5 =$('input[name^="file_5"]').val();
+                    $('.file_link1').attr("src",resultData.file_1);
+                    $('.file_link2').attr("src",resultData.file_2);
+                    $('.file_link3').attr("src",resultData.file_3);
+                    $('.file_link4').attr("src",resultData.file_4);
+                    $('.file_link5').attr("src",resultData.file_5);
 
-                    $('.product_detail_image').attr('src',ele1.replace(/(<([^>]+)>)/ig,""));
-                    $('.product_list_image').attr('src',ele2.replace(/(<([^>]+)>)/ig,""));
-                    $('.product_list_image_sm').attr('src',ele3.replace(/(<([^>]+)>)/ig,""));
-                    $('.product_list_image_response').attr('src',ele4.replace(/(<([^>]+)>)/ig,""));
-                    $('.product_add_image').attr('src',ele5.replace(/(<([^>]+)>)/ig,""));
 
                     $('input[name^="product_cd"]').val(product_cd)
                 },
@@ -2378,3 +2396,12 @@ $(document).ready(function(){
         if ( ! chkInputValue("#password", "비밀번호")) return;
         $("#form1").submit();
     }
+//동적 최소높이
+$(document).ready(function(){
+    var dp1Height = $('.gnb-submenu').height();
+    $('.gnb-submenu-2dp').css({'min-height':+dp1Height+'px'});
+    $('.gnb-submenu>li').mouseover(function(){
+        var dp2Height = $(this).find($('.gnb-submenu-2dp')).height();
+        $(this).find($('.gnb-submenu-3dp')).css({'min-height':+dp2Height+'px'});
+    });
+});

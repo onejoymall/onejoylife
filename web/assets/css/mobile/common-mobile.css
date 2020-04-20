@@ -2372,7 +2372,7 @@ body.black .header.live h1 a{
 }
 .h-main h1, .h-src h1{
     float:left;
-    width:50px;
+    width:90px;
     height:40px;
     margin-right:10px;
 }
@@ -2390,7 +2390,7 @@ body.black .header.live h1 a{
 }
 .src-form{
     float:left;
-    width:calc(100% - 60px - 60px);
+    width:calc(100% - 100px - 60px);
     padding:2px 0;
 }
 .h-src .src-form{

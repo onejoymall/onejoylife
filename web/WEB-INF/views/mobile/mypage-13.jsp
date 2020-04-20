@@ -59,8 +59,6 @@
             <button type="button" id="updateDefaultDeliveryInfo">기존배송지로 등록</button>
         </div>
     </section>
-    </form>
-
 <script>
 $(document).ready(function(){
     $('#write').show();

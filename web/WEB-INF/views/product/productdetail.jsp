@@ -11,17 +11,21 @@
             <div class="goods-slider-wrap">
                 <ul class="goods-slider">
                     <li><img src='${list.file_1}'  ></li>
+                <c:if test="${not empty list.file_5}">
                     <li><img src='${list.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
+                </c:if>
 <%--                    <li><img src='${productList.file_6}' onerror="this.src='http://placehold.it/550'" class="product_list_image_sm"></li>--%>
 <%--                    <li><img src='${productList.file_7}' onerror="this.src='http://placehold.it/550'" class="product_list_image_sm"></li>--%>
 <%--                    <li><img src='${productList.file_8}' onerror="this.src='http://placehold.it/550'" class="product_list_image_sm"></li>--%>
                 </ul>
                 <div id="bx-pager">
                     <a data-slide-index="0" href=""><img src='${list.file_1}' onerror="this.src='http://placehold.it/80'" ></a>
+                    <c:if test="${not empty list.file_5}">
                     <a data-slide-index="1" href=""><img src='${list.file_5}' onerror="this.src='http://placehold.it/80'" ></a>
 <%--                    <a data-slide-index="2" href=""><img src='${productList.file_3}' onerror="this.src='http://placehold.it/80'" class="product_list_image_sm"></a>--%>
 <%--                    <a data-slide-index="2" href=""><img src='${productList.file_4}' onerror="this.src='http://placehold.it/80'" class="product_list_image_sm"></a>--%>
 <%--                    <a data-slide-index="2" href=""><img src='${productList.file_5}' onerror="this.src='http://placehold.it/80'" class="product_list_image_sm"></a>--%>
+                    </c:if>
                 </div>
 
                 <div class="share-list">

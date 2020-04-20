@@ -143,37 +143,42 @@
          
          <h2 class="pb-1 mt-4">주문상품 정보</h2>
          <hr>
+
+<c:if test="${not empty cartPaymentList}">
+    <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
          <ul class="product pt-1 pb-0">
-            <%--<ul class="options">
-                <li>당첨번호</li>
-                <li class="red">123456</li>
-            </ul>--%>
             <ul class="py-0">
-                <li><img src='${detail.file_1}' onerror="this.src='http://placehold.it/80'"></li>
                 <li>
-                    <p>${detail.product_made_company_name}</p>
-                    <h5>${detail.product_name}</h5>
-                    <p class="grey">${detail.product_model}</p>
-                   <%-- <p class="option"><span>구성품</span> <br>
-                    · 30mm 1.4 여친렌즈 <br>
-                    · 추가배터리</p>--%>
+                    <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                        <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
+                    </a>
+                </li>
+                <li>
+                    <p>${cartPaymentList.product_made_company_name}</p>
+                    <h5>${cartPaymentList.product_name}</h5>
+                    <p class="grey">${cartPaymentList.product_model}</p>
                 </li>
             </ul>
             <ul class="options">
                 <li>상품금액</li>
-                <li><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /> <span>원</span></li>
+                <li><fmt:formatNumber value="${cartPaymentList.product_payment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
             <ul class="options">
                 <li>수량</li>
-                <li><span>${param.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}"></span><span>개</span></li>
+                <li><span>${cartPaymentList.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}"></span><span>개</span></li>
             </ul>
             <hr class="grey my-1">
             <ul class="options mb-1">
                 <li>주문금액</li>
-                <li><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+                <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </ul>
-        
+        <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
+        <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
+        <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
+        <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+    </c:forEach>
+</c:if>
         <%--<h2 class="mt-4">할인 정보</h2>
         <hr class="my-1">
         <ul class="calculator">
@@ -209,30 +214,31 @@
         <hr>
         <ul class="calculator pt-2 pb-1">
             <li class="text-lg">총 상품 금액</li>
-            <li><fmt:formatNumber value="${detail.product_user_payment *param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+            <li><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /> <span>원</span></li>
         </ul>
        <ul class="calculator pb-1">
-            <li>할인금액</li>
-            <li>- <fmt:formatNumber value="${(detail.product_user_payment - detail.product_payment) * param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+            <li>할인</li>
+            <li>- <span class="in1-font3"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /><span>원</span></li>
         </ul>
 <%--        <ul class="calculator pb-1">--%>
 <%--            <li>할인쿠폰</li>--%>
 <%--            <li>- 9,000 <span>원</span></li>--%>
 <%--        </ul>--%>
-        <ul class="calculator pb-1">
-            <li>배송비</li>
-            <c:if test="${not empty deliveryPayment}">
-                <li><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
-            </c:if>
-        </ul>
+        <c:if test="${not empty getCartSum.total_delivery_payment}">
+            <ul class="calculator pb-1">
+                <li>배송비</li>
+                <li><fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+            </ul>
+        </c:if>
+
         <hr class="grey my-1">
         <ul class="calculator pb-1">
             <li>최종 결제 금액</li>
-            <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-lg red"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
         </ul>
         <ul class="calculator pb-1">
             <li>E-POINT 적립예정</li>
-            <li class="text-md red"><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-md red"><fmt:formatNumber value="${getCartSum.point_add}" groupingUsed="true" /> <span>원</span></li>
         </ul>
         <hr class="my-1">
         <input type="checkbox" id="replysns" class="b8 mb-2">
@@ -244,10 +250,8 @@
         </ul>
     </div>
 
-    <input type="hidden" name="payment" value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}">
-        <input type="hidden" name="order_no" value="${order_no}">
-        <input type="hidden" name="product_cd" value="${detail.product_cd}">
-        <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
+    <input type="hidden" name="payment" value="${getCartSum.total_payment+getCartSum.total_delivery_payment}">
+    <input type="hidden" name="order_no" value="${order_no}">
 
     </form>
 
@@ -292,12 +296,21 @@ function show(num){
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
+    //여러건의 결제
+    var product_name ='';
+    var orderSize = $('input[name=product_cd]').length;
+    if(orderSize >= 0){
+        product_name = $('input[name=product_name]').eq(1).val()+"외 "+orderSize+" 건";
+    }else{
+        product_name = $('input[name=product_name]').eq(0).val();
+    }
+
     $("#submitPayment").on("click",function() {
         if(!$('#replysns').is(":checked")){
             $.toast({
                 text: "이용약관 동의 는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
-                position: 'mid-center',
+                position: 'top-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -309,8 +322,8 @@ function show(num){
                 pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
-                name: "${detail.product_name}",
-                amount: ${detail.product_payment+deliveryPayment},
+                name: product_name,
+                amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
@@ -325,7 +338,6 @@ function show(num){
                         "amount" : ${detail.product_payment+deliveryPayment},
                     },
                 ],
-                m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",
             }, function (rsp) { // callback
                 var formData = $('#defaultForm').serialize()
                     +'&payment_class=PRODUCT'
@@ -340,79 +352,12 @@ function show(num){
                 var alertType;
                 var showText;
                 if(rsp.success){
-                    jQuery.ajax({
-                        type: "POST",
-                        url: "/SavePayment",
-                        data: formData,
-                        success: function (data) {
-
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'mid-center',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
-
-                            } else {
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "/SaveDeliveInfo",
-                                    data: $('#defaultForm').serialize(),
-                                    // enctype: 'multipart/form-data',
-                                    success: function (data) {
-                                        if (data.validateError) {
-                                            $('.validateError').empty();
-                                            $.each(data.validateError, function (index, item) {
-                                                // $('#validateError'+index).removeClass('none');
-                                                // $('#validateError'+index).html('* '+item);
-                                                if (index == "Error") {//일반에러메세지
-                                                    alertType = "error";
-                                                    showText = item;
-                                                } else {
-                                                    alertType = "error";
-                                                    showText = index + " (은) " + item;
-                                                }
-
-                                                $.toast({
-                                                    text: showText,
-                                                    showHideTransition: 'plain', //펴짐
-                                                    position: 'mid-center',
-                                                    heading: 'Error',
-                                                    icon: 'error'
-                                                });
-                                            });
-                                        }
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("error");
-                                    }
-                                });
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
+                    commonAjaxCall("POST","/Save/PaymentOrders",formData)
                 }else{
                     $.toast({
                         text: rsp.error_msg,
                         showHideTransition: 'plain', //펴짐
-                        position: 'mid-center',
+                        position: 'top-right',
                         heading: 'Error',
                         icon: 'error'
                     });

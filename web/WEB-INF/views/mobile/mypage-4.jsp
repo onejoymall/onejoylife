@@ -50,12 +50,12 @@
     <%--                        <button class="btn-black btn">옵션변경</button>--%>
                             <button class="btn x" data-id="${list.product_cd}">삭제</button>
                             <select name="payment_order_quantity" value="${list.payment_order_quantity}" class="half payment_order_quantity" data-id="${list.cart_cd}">
-                                <option value="1" selected>1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
+                                <option value="1" <c:if test="${list.payment_order_quantity eq '1'}"> selected</c:if>>1</option>
+                                <option value="2" <c:if test="${list.payment_order_quantity eq '2'}"> selected</c:if>>2</option>
+                                <option value="3" <c:if test="${list.payment_order_quantity eq '3'}"> selected</c:if>>3</option>
+                                <option value="4" <c:if test="${list.payment_order_quantity eq '4'}"> selected</c:if>>4</option>
+                                <option value="5" <c:if test="${list.payment_order_quantity eq '5'}"> selected</c:if>>5</option>
+                                <option value="6" <c:if test="${list.payment_order_quantity eq '6'}"> selected</c:if>>6</option>
                             </select>
                         </li>
                     </ul>

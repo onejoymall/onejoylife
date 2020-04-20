@@ -72,7 +72,7 @@ public class ProductController {
                 searchFilterVO.setDisplayRowCount(12);
             }
             if(device.isMobile()){
-                searchFilterVO.setDisplayRowCount(1000);
+                searchFilterVO.setDisplayRowCount(12);
             }
             // 기본정렬
             if(searchFilterVO.getOrderByValue()==null || searchFilterVO.getOrderByKey()==null){
@@ -85,7 +85,9 @@ public class ProductController {
 
             params.put("rowStart",searchFilterVO.getRowStart());
             params.put("staticRowEnd",searchFilterVO.getStaticRowEnd());
-            searchFilterVO.setPd_category_id(searchFilterVO.getProduct_ct());
+            if(searchFilterVO.getProduct_ct()!=null){
+                searchFilterVO.setPd_category_id(Integer.parseInt(searchFilterVO.getProduct_ct()));
+            }
             List<Map<String,Object>> list = searchDAO.getSearchProductList(searchFilterVO);
 
             model.addAttribute("list", list);
@@ -139,7 +141,7 @@ public class ProductController {
 
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            searchVO.setPd_category_id(searchVO.getProduct_ct());
+            searchVO.setPd_category_id(Integer.parseInt(searchVO.getProduct_ct()));
             List<Map<String,Object>> list = productDAO.getProductList(searchVO);
             Map<String,Object> categoryRowData = categoryDAO.getCategoryDetail(searchVO);
             model.addAttribute("list", list);
@@ -205,6 +207,8 @@ public class ProductController {
 
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
+            //상품을 처음 볼뗀 구매수량이 1
+            list.put("payment_order_quantity","1");
             Integer deliveryPayment = deliveryPayment(list);
             model.addAttribute("deliveryPayment",deliveryPayment);
             //옵션
@@ -264,7 +268,7 @@ public class ProductController {
 
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
-            return "mobile/mypage-4-1-1";
+            return "mobile/mypage-4-1-1-s";
         } else {
             return "product/productCartPayment";
         }
@@ -353,21 +357,21 @@ public class ProductController {
             String delivery_payment_class = (String) params.get("product_delivery_payment_class");
             Integer product_payment =(Integer)params.get("product_payment");
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
-            Integer payment_order_quantity = (Integer)params.get("payment_order_quantity");
+            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
             if ("T".equals(delivery_payment_class)) {
                 deliveryPayment=0;
             } else if ("R".equals(delivery_payment_class)) {
                 deliveryPayment = Integer.parseInt(splitDeliveryPaymentString);
             } else if ("M".equals(delivery_payment_class)) {
                 String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
-                if(product_payment>=Integer.parseInt(splitDeliveryTypeM[0])){
+                if(product_payment <= Integer.parseInt(splitDeliveryTypeM[0])){
                     deliveryPayment = Integer.parseInt(splitDeliveryTypeM[1]);
                 }
             } else if ("D".equals(delivery_payment_class)) {
                 String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
 
                 for (int i = 0; i < splitDeliveryTypeD.length; i++) {
-                    if(product_payment >= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
+                    if(product_payment <= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
                         deliveryPayment += Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2]);
                     }
                 }
