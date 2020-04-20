@@ -1595,7 +1595,6 @@ body.black ul.product ul.options li:last-child, body.black ul.product ul.options
     width: 110px;
 }
 .wrap ul.basket li ul li:first-child img{
-    width: 90px;
     border: 1px solid #eee;
     box-sizing: border-box;
 }
@@ -2749,7 +2748,7 @@ ul.submenu a{
     min-height:calc(100vh - 207px);
     padding-bottom:40px;
 }
-.cateList a{
+.cateList>li>a, .cateList-2dp>li>a, .cateList-3dp>li>a{
     display:block;
     margin:0 auto;
     width:90%;
@@ -2758,12 +2757,15 @@ ul.submenu a{
     line-height: 40px;
     border-bottom:1px solid #e9e9e9;
 }
-.cateList a.on{
+.cateList li.on>a{
     color:#da394d;
     font-weight: 600;
 }
 ul.cateList-2dp, ul.cateList-3dp{
     display:none;
+}
+ul.cateList li,ul.cateList-2dp li{
+    position:relative;
 }
 ul.cateList-2dp li a{
     padding-left:20px;
@@ -2772,18 +2774,27 @@ ul.cateList-3dp li a{
     padding-left:30px;
     font-size: 13px;
 }
+ul.cateList li button, ul.cateList-2dp li button{
+    position:absolute;
+    top:0;
+    right:15px;
+    width:60px;
+    height:40px;
+}
 ul.cateList-3dp li a::before{
     content: '·　'
 }
-ul.cateList>li>a,ul.cateList-2dp>li>a{
+ul.cateList>li>button,ul.cateList-2dp>li>button{
     background:url(../../img/arrow-down-bk.png) center right no-repeat
 }
-ul.cateList>li>a.on,ul.cateList-2dp>li>a.on{
+ul.cateList>li.on>button,ul.cateList-2dp>li.on>button{
     background:url(../../img/arrow-up.png) center right no-repeat
 }
+/*
 ul.cateList a.noDp{
     background:none;
 }
+*/
 .logoutWrap{
     width:100%;
     height:40px;
@@ -2817,10 +2828,10 @@ body.black .cateList{
 body.black .cateList a{
     border-bottom:1px solid #343434;
 }
-body.black ul.cateList>li>a, body.black ul.cateList-2dp>li>a {
-    background: url(http://127.0.0.1:1834/assets/css/mobile/../../img/arrow-down.png) center right no-repeat;
+body.black ul.cateList>li>button, body.black ul.cateList-2dp>li>button {
+    background: url(../../img/arrow-down.png) center right no-repeat;
 }
-body.black ul.cateList>li>a.on,body.black ul.cateList-2dp>li>a.on{
+body.black ul.cateList>li.on >button,body.black ul.cateList-2dp>li.on >button{
     background:url(../../img/arrow-up.png) center right no-repeat
 }
 body.black ul.cateList a.noDp{
@@ -4704,4 +4715,44 @@ select#list-sort{
     height: 35px;
     background: #2D2E43;
     color: #fff;
+}
+
+/* 배송지 */
+.btn-box .btn-red{
+    width: calc(50% - 5px);
+    height: 45px;
+    border: 1px solid #da394d;
+    background: #fff;
+    color: #da394d;
+}
+.btn-box .btn-redcover{
+    width: 50%;
+    height: 45px;
+    border: 1px solid #da394d;
+    background: #da394d;
+    color: #fff;
+}
+/* 우편번호 */
+.head-tr .head-th1 {
+    text-align: center;
+}
+.head-tr .head-th2 {
+    text-align: center;
+}
+.lis-body td{
+    border: none;
+}
+.lis-body .lis-td1 p{
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    text-align: center;
+    padding: 2px;
+    color: #aaa;
+}
+.lis-body .lis-td2 {
+    text-align: left;
+}
+.input-group .btn.btn-black{
+    height: 40px;
+    line-height: 40px;
 }

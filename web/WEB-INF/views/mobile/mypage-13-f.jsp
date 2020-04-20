@@ -5,12 +5,12 @@
 <%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
 	<form action="" method="POST" id="myDeliveryForm">
     <section class="subheader">
-    <input type="hidden" name="product_delivery_International_type" value="A"/>
+    <input type="hidden" name="product_delivery_International_type" value="C"/>
         <div class="subTitle">배송지 관리</div>
         
         <ul class="taps">
-            <li><a href="/MyPage/DeliveryAddress" id="tap1" class="active">국내 배송주소</a></li>
-            <li><a href="/MyPage/DeliveryAddressForeign" id="tap2">해외 배송주소</a></li>
+            <li><a href="/MyPage/DeliveryAddress" id="tap1">국내 배송주소</a></li>
+            <li><a href="/MyPage/DeliveryAddressForeign" id="tap2" class="active">해외 배송주소</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
@@ -23,7 +23,7 @@
             <thead class="lis-head">
                 <tr>
                     <th colspan="2" class="c-btn">
-                        <button type="submit" formaction="/MyPage/DeliveryAddressUpdate" >선택주소지 수정</button>
+                        <button type="submit" formaction="/MyPage/DeliveryAddressUpdateForeign" >선택주소지 수정</button>
                         <button type="button" id="deleteDeliveryInfo">선택주소지 삭제</button>
                     </th>
                 </tr>
@@ -55,10 +55,12 @@
         </table>
         
         <div class="fot-btn">
-            <button type="button" onclick="location.href='/MyPage/DeliveryAddressInsert'">새 배송지 등록</button>
+            <button type="button" onclick="location.href='/MyPage/DeliveryAddressInsertForeign'">새 배송지 등록</button>
             <button type="button" id="updateDefaultDeliveryInfo">기존배송지로 등록</button>
         </div>
     </section>
+    </form>
+
 <script>
 $(document).ready(function(){
     $('#write').show();
