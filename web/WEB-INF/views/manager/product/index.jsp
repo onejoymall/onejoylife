@@ -209,9 +209,9 @@
                     <tr>
                         <th>판매</th>
                         <td>
-                            <input type="radio" id="goods-sale" name="product_sale_yn" value="Y" checked>
+                            <input type="radio" id="goods-sale" name="product_sale_yn" value="Y" >
                             <label for="goods-sale">판매</label>
-                            <input type="radio" id="goods-notsale" name="product_sale_yn" value="N">
+                            <input type="radio" id="goods-notsale" name="product_sale_yn" value="N" checked>
                             <label for="goods-notsale">판매 안 함</label>
                         </td>
                     </tr>
@@ -226,16 +226,16 @@
                     <%--                            <label for="goods-exposure-ch">중국</label>--%>
                     <%--                        </td>--%>
                     <%--                    </tr>--%>
-                    <%--                    <tr>--%>
-                    <%--                        <th>회원 전용 상품</th>--%>
-                    <%--                        <td>--%>
-                    <%--                            <input type="radio" id="goods-member-only1" name="goods-member-only" value="Y" checked>--%>
-                    <%--                            <label for="goods-member-only1">회원 전용</label>--%>
-                    <%--                            <input type="radio" id="goods-member-only2" name="goods-member-only" value="N">--%>
-                    <%--                            <label for="goods-member-only2">제한 없음</label>--%>
-                    <%--                            <span class="cc">* 회원 전용 상품으로 설정 시 회원에게만 노출됩니다.</span>--%>
-                    <%--                        </td>--%>
-                    <%--                    </tr>--%>
+                    <tr>
+                        <th>회원 전용 상품</th>
+                        <td>
+                            <input type="radio" id="goods-member-only1" name="product_use_member_yn" value="Y" checked>
+                            <label for="goods-member-only1">회원 전용</label>
+                            <input type="radio" id="goods-member-only2" name="product_use_member_yn" value="N">
+                            <label for="goods-member-only2">제한 없음</label>
+                            <span class="cc">* 회원 전용 상품으로 설정 시 회원에게만 노출됩니다.</span>
+                        </td>
+                    </tr>
 
                     <tr>
                         <th>상품 분류 선택</th>
@@ -468,13 +468,12 @@
                 <table class="goods-detail-table">
                     <colgroup>
                         <col width="142px">
-                        <col width="120px">
-                        <col width="680px">
+                        <col width="800px">
                     </colgroup>
                     <tbody>
                     <tr>
                         <th>주문 수량 제한 기준</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="limited-quantity-p" name="product_order_limit_quantity" value="P">
                             <label for="limited-quantity-p">상품</label>
                             <input type="radio" id="limited-quantity-o" name="product_order_limit_quantity" value="O" checked>
@@ -483,20 +482,20 @@
                     </tr>
                     <tr>
                         <th>주문 수량 제한</th>
-                        <td colspan="2">
+                        <td >
                             최소 <input type="number" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="number" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
                         </td>
                     </tr>
                     <tr>
                         <th>적립금</th>
-                        <td colspan="2">
+                        <td >
                             <input type="number" id="goods-savings" name="product_point_rate">
                             <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
                         </td>
                     </tr>
                     <tr>
                         <th>적립금 구분</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-savings-p" name="product_point_class" value="P" checked>
                             <label for="goods-savings-p">상품 금액에 비례</label>
                             <input type="radio" id="goods-savings-w" name="product_point_class" value="W">
@@ -505,7 +504,7 @@
                     </tr>
                     <tr>
                         <th>공통 이벤트 정보</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-event-y" name="product_go_event_yn" value="Y" checked>
                             <label for="goods-event-y">표시함</label>
                             <input type="radio" id="goods-event-n" name="product_go_event_yn" value="N">
@@ -514,7 +513,7 @@
                     </tr>
                     <tr>
                         <th>성인 인증</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-adult-y" name="product_adult_yn" value="Y">
                             <label for="goods-adult-y">사용함</label>
                             <input type="radio" id="goods-adult-n" name="product_adult_yn" value="N" checked>
@@ -523,7 +522,7 @@
                     </tr>
                     <tr>
                         <th>옵션 사용</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-option-y" name="product_option_yn" class="product_option_yn" value="Y">
                             <label for="goods-option-y">상품 옵션 사용함</label>
                             <input type="radio" id="goods-option-n" name="product_option_yn" class="product_option_yn" value="N" checked>
@@ -532,27 +531,27 @@
                     </tr>
                     <tr class="option-group hidden">
                         <th>옵션명</th>
-                        <td colspan="2">
+                        <td >
                             <input type="text" id="product_option_set_name" name="product_option_set_name">
                             <button class="btn-default" type="button" id="callOption">옵션불러오기</button>
                         </td>
                     </tr>
                     <tr class="option-group hidden">
                         <th>옵션 입력</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">옵션 입력 방식 : 옵션 값 명A&#123;옵션값a|옵션값b|옵션값c&#125;//옵션 값 명B&#123;옵션값d|옵션값e|옵션값f&#125;</p>
                             <input type="text" class="w100" name="product_option_input" placeholder="ex) 색상&#123;빨강|파랑|초록&#125;//사이즈&#123;55|66|77&#125;">
                         </td>
                     </tr>
                     <tr class="option-group hidden">
                         <th>옵션 스타일</th>
-                        <td colspan="2"><p class="cc2">셀렉트박스: S, 텍스트버튼: B, 라디오버튼: R<br>
+                        <td ><p class="cc2">셀렉트박스: S, 텍스트버튼: B, 라디오버튼: R<br>
                             <input type="text" id="goods-option-style" name="product_option_style" placeholder="ex) P,B,S">
                         </td>
                     </tr>
                     <tr class="option-group hidden">
                         <th>색상 설정</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">옵션 입력 방식 : &#123;색상값a|색상값b|색상값c&#125;//&#123;색상값d|색상값e|색상값f&#125;<br>
                                 <span class="cc">* '옵션입력'의 미리보기 옵션 순서대로 값이 저장됩니다.</span></p>
                             <input type="text" id="goods-option-color" name="product_option_color" placeholder="ex) &#123;#ff0000|#0033cc&#125;//&#123;#da294a|#000000|#e9e9e9&#125;">
@@ -560,7 +559,7 @@
                     </tr>
                     <tr class="option-group hidden">
                         <th>필수 여부</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">필수: T, 선택: F<br>
                                 <span class="cc">* 옵션 입력의 옵션명 개수만큼 bar(|)형태로 구분해 입력합니다.</span><br>
                             </p>
@@ -569,7 +568,7 @@
                     </tr>
                     <tr>
                         <th>품절 표시 문구</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">품목생성형 옵션 품절 시 표시할 문구를 입력합니다.<br>
                                 <span class="cc">* 빈 값인 경우 '품절'로 표시됩니다.</span><br>
                                 <span class="cc">* 최대 250byte까지만 등록됩니다.</span><br>
@@ -579,7 +578,7 @@
                     </tr>
                     <tr>
                         <th>추가 입력 옵션</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-addInput-y" name="product_add_option" value="Y">
                             <label for="goods-addInput-y">사용함</label>
                             <input type="radio" id="goods-addInput-n" name="product_add_option" value="N" checked>
@@ -589,7 +588,7 @@
                     </tr>
                     <tr class="product_add_option_name hidden" >
                         <th>추가 입력 옵션 명칭</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">
                                 <span class="cc">* 추가 입력 옵션 명칭을 원하는 개수만큼 bar(|)로 구분해 입력합니다.</span><br>
                                 <span class="cc">* 최대 250byte까지만 등록됩니다.</span>
@@ -599,7 +598,7 @@
                     </tr>
                     <tr class="product_add_option_required hidden" >
                         <th>추가 입력 옵션 선택/필수 여부</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">필수: T, 선택: F<br>
                                 <span class="cc">* '추가 입력 옵션 명칭' 개수만큼 순서대로 bar(|)로 구분해 입력합니다.</span><br>
                                 <span class="cc">* 최대 250byte까지만 등록됩니다.</span><br>
@@ -609,7 +608,7 @@
                     </tr>
                     <tr class="product_add_option_max_lang hidden" >
                         <th>추가 입력 옵션 글자수(자)</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">
                                 <span class="cc">* '추가 입력 옵션 명칭' 개수만큼 순서대로 bar(|)로 구분해 제한입력 글자수를 입력합니다.</span>
                             </p>
@@ -619,109 +618,103 @@
                     <tr>
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
-                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-                            <%--                            </p>--%>
-                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_detail_image">
-
-                        </td>
-                        <td>
-                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link1"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg1" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg1" name="uploadfile" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;목록&#41;</th>
                         <td>
-                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-                            <%--                            </p>--%>
-                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image">
-                        </td>
-                        <td>
-                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg2" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg2" name="uploadfile2" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;작은목록&#41;</th>
                         <td>
-                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-                            <%--                            </p>--%>
-                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image_sm">
-                        </td>
-                        <td>
-                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg3" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg3" name="uploadfile3" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;축소&#41;</th>
                         <td>
-                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-                            <%--                            </p>--%>
-                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_list_image_response">
-                        </td>
-                        <td>
-                            <input type="file" name="uploadfile" placeholder="ex) sample1.jpg">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link4"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg4" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg4" name="uploadfile4" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;추가&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
-<%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
-<%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
-<%--                            </p>--%>
-                            <img src='http://placehold.it/80x80' onerror="this.src='http://placehold.it/80x80'" height="80" class="product_add_image">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link5"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg5" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg5" name="uploadfile5" class="uploadBtn">
+                            </div>
                         </td>
-                        <td>
-                            <input type="file"  name="uploadfile" placeholder="ex) sample1.jpg">
-                        </td>
-<%--                        <td>--%>
-<%--                            <input type="text" id="goods-imgExtra" name="product_add_image" placeholder="ex) sample1.jpg|sample2.png|sample3.jpg">--%>
-<%--                        </td>--%>
                     </tr>
 <%--                    <tr>--%>
 <%--                        <th>재고 현황</th>--%>
-<%--                        <td colspan="2">--%>
+<%--                        <td >--%>
 <%--                            <input type="number" id="goods-stock" name="goods-stock">--%>
 <%--                            <span class="cc">* 현재 재고 갯수를 숫자로 적어주세요.</span>--%>
 <%--                        </td>--%>
 <%--                    </tr>--%>
                     <tr>
                         <th>제조사</th>
-                        <td colspan="2">
+                        <td >
 
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>공급사</th>
-                        <td colspan="2">
+                        <td >
 
                             <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>브랜드</th>
-                        <td colspan="2">
+                        <td >
 
                             <input type="text" id="goods-b" name="product_brand" placeholder="ex) B00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>트렌드</th>
-                        <td colspan="2">
+                        <td >
 
                             <input type="text" id="goods-t" name="product_trend" placeholder="ex) T00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>자체 분류</th>
-                        <td colspan="2">
+                        <td >
 
                             <input type="text" id="goods-c" name="product_self_class_cd" placeholder="ex) C00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>제조일자</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
                             </p>
                             <input type="text" id="goods-mDate" name="product_create_date" placeholder="ex) 2020-02-28">
@@ -729,7 +722,7 @@
                     </tr>
                     <tr>
                         <th>출시일자</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
                             </p>
                             <input type="text" id="goods-rDate" name="product_release_date" placeholder="ex) 2020-02-28">
@@ -737,7 +730,7 @@
                     </tr>
                     <tr>
                         <th>유효 기간 사용 여부</th>
-                        <td colspan="2">
+                        <td >
                             <input type="radio" id="goods-validity-y" name="product_validity_yn" value="Y">
                             <label for="goods-validity-y">사용함</label>
                             <input type="radio" id="goods-validity-n" name="product_validity_yn" value="N" checked>
@@ -747,7 +740,7 @@
                     </tr>
                     <tr class="goods-validity-detail hidden">
                         <th>유효 기간</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD~YYYY-MM-DD&#41;으로 입력합니다.<br>
                                 <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
                             </p>
@@ -756,15 +749,15 @@
                     </tr>
                     <tr>
                         <th>원산지</th>
-                        <td colspan="2">
-                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a>를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.
+                        <td >
+                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a><%--를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.--%>
                             </p>
                             <input type="text" id="goods-origin" name="product_origin" placeholder="ex) 1575">
                         </td>
                     </tr>
                     <tr>
                         <th>상품부피&#40;cm&#41;</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2"><span class="cc">* 가로, 세로, 높이 값을 bar&#40;|&#41;로 구분해서 입력합니다</span><br>
                                 <span class="cc">* 소수점 첫째 자리까지 입력가능하며 최대 10,000단위까지만 입력할 수 있습니다.</span><br>
                                 <span class="cc">* 빈 값인 경우 '사용 안 함'으로 저장됩니다.</span>
@@ -774,28 +767,28 @@
                     </tr>
                     <tr>
                         <th>상품 결제 안내</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
                             <textarea name="product_payment_info" id="editor3"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>상품 배송 안내</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
                             <textarea name="product_delivery_info" id="editor4"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>교환/반품 안내</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
                             <textarea name="product_change_info" id="editor5"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>서비스 문의/안내</th>
-                        <td colspan="2">
+                        <td >
                             <p class="cc2"><span class="cc">* 빈 값인 경우 '기본설정'으로 저장됩니다.</span></p>
                             <textarea name="product_service_info" id="editor6"></textarea>
                         </td>

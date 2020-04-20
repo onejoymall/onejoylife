@@ -7,7 +7,11 @@
             <div class="main-header">
                 <h2 name="detail">브랜드 등록</h2>
                 <div class="main-hd-btn-wrap">
+<%--                    <button type="button" name="detail">제조사 등록</button>--%>
+<%--                    <button type="button" name="detail">공급사 등록</button>--%>
                     <button type="button" name="detail">브랜드 등록</button>
+<%--                    <button type="button" name="detail">트랜드 등록</button>--%>
+<%--                    <button type="button" name="detail">자체분류 등록</button>--%>
                 </div>
             </div>
             <div class="search-form">
@@ -107,7 +111,7 @@
                             </tr>
                             <tr>
                                 <th>브랜드코드</th>
-                                <td><input type="text"  name="product_brand" value="" placeholder=""></td>
+                                <td><input type="hidden"  name="product_brand" value="" placeholder="">자동등록</td>
                             </tr>
                             <tr>
                                 <th>사용여부</th>

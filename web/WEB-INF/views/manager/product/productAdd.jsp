@@ -66,16 +66,16 @@
 <%--                            <label for="goods-exposure-ch">중국</label>--%>
 <%--                        </td>--%>
 <%--                    </tr>--%>
-<%--                    <tr>--%>
-<%--                        <th>회원 전용 상품</th>--%>
-<%--                        <td>--%>
-<%--                            <input type="radio" id="goods-member-only1" name="goods-member-only" value="Y" checked>--%>
-<%--                            <label for="goods-member-only1">회원 전용</label>--%>
-<%--                            <input type="radio" id="goods-member-only2" name="goods-member-only" value="N">--%>
-<%--                            <label for="goods-member-only2">제한 없음</label>--%>
-<%--                            <span class="cc">* 회원 전용 상품으로 설정 시 회원에게만 노출됩니다.</span>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                    <tr>
+                        <th>회원 전용 상품</th>
+                        <td>
+                            <input type="radio" id="goods-member-only1" name="product_use_member_yn" value="Y" >
+                            <label for="goods-member-only1">회원 전용</label>
+                            <input type="radio" id="goods-member-only2" name="product_use_member_yn" value="N" checked>
+                            <label for="goods-member-only2">제한 없음</label>
+                            <span class="cc">* 회원 전용 상품으로 설정 시 회원에게만 노출됩니다.</span>
+                        </td>
+                    </tr>
 
                     <tr>
                         <th>상품 분류 선택</th>
@@ -458,45 +458,64 @@
                     <tr>
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg" value="1">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link1"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg1" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg1" name="uploadfile" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;목록&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg" value="2">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg2" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg2" name="uploadfile2" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;작은목록&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg" value="3">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg3" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg3" name="uploadfile3" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;축소&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link4"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg4" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg4" name="uploadfile4" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;추가&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
-<%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
-<%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link5"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg5" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg5" name="uploadfile5" class="uploadBtn">
+                            </div>
                         </td>
                     </tr>
+<%--                    <tr>--%>
+<%--                        <th>이미지 등록&#40;추가&#41;</th>--%>
+<%--                        <td>--%>
+<%--                            <div class="basicNoToolbar"></div>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
 <%--                    <tr>--%>
 <%--                        <th>재고 현황</th>--%>
 <%--                        <td>--%>
@@ -576,7 +595,7 @@
                     <tr>
                         <th>원산지</th>
                         <td>
-                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a>를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.
+                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a><%--를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.--%>
                             </p>
                             <input type="text" id="goods-origin" name="product_origin" placeholder="ex) 1575">
                         </td>

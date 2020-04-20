@@ -100,6 +100,42 @@ public class ProductVO extends SearchVO {
     String product_sp_class;
     Integer searchToPayment;
     Integer searchBePayment;
+    String product_live_type;
+    String product_youtube_id;
+    String product_payment_class_value;
+    String product_use_member_yn;
+
+    public String getProduct_live_type() {
+        return product_live_type;
+    }
+
+    public void setProduct_live_type(String product_live_type) {
+        this.product_live_type = product_live_type;
+    }
+
+    public String getProduct_youtube_id() {
+        return product_youtube_id;
+    }
+
+    public void setProduct_youtube_id(String product_youtube_id) {
+        this.product_youtube_id = product_youtube_id;
+    }
+
+    public String getProduct_payment_class_value() {
+        return product_payment_class_value;
+    }
+
+    public void setProduct_payment_class_value(String product_payment_class_value) {
+        this.product_payment_class_value = product_payment_class_value;
+    }
+
+    public String getProduct_use_member_yn() {
+        return product_use_member_yn;
+    }
+
+    public void setProduct_use_member_yn(String product_use_member_yn) {
+        this.product_use_member_yn = product_use_member_yn;
+    }
 
     public Integer getSearchToPayment() {
         return searchToPayment;

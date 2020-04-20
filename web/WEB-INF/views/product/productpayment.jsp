@@ -344,15 +344,15 @@
                                 <div class="txt-in1">
                                     <p class="in1-font1">총 상품 금액</p>
 <%--                                    <p>VIP 회원할인</p>--%>
-<%--                                    <p>할인쿠폰</p>--%>
+                                    <p>할인금액</p>
 <%--                                    <c:if test="${not empty detail.product_delivery_payment}">--%>
                                         <p>배송비</p>
 <%--                                    </c:if>--%>
                                 </div>
                                 <div class="txt-in2">
-                                    <p><span class="in1-font2"><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in1-font2"><fmt:formatNumber value="${detail.product_user_payment}" groupingUsed="true" /></span> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-<%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
+                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${detail.product_user_payment - detail.product_payment}" groupingUsed="true" /></span> 원</p>
                                     <c:if test="${not empty deliveryPayment}">
                                         <p>+<span class="in1-font3"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> 원</p>
                                     </c:if>

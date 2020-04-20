@@ -9,12 +9,10 @@
         <div class="subTitle">FAQ</div>
     </section>
     <section class="wrap">
-      <div class="input-group mb-1">
-          <form action="" id="faq-search-form" name="faq-search-form" method="get">
-            <input type="text" id="faq-search" name="faq-search" class="input-text">
-            <button id="faq-search-btn" type="button" class="search-btn">검색</button>
-          </form>
-      </div>
+    <div class="input-group mb-1">
+        <input type="text">
+        <button>검색</button>
+    </div>
        
     <ul class="flexaround">
         <li>

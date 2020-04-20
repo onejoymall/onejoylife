@@ -452,6 +452,10 @@ public class ManagerRestapiController {
 
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"giveaway");
+            List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"giveaway");
+            List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"giveaway");
+            List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"giveaway");
+            List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"giveaway");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/giveaway/"+ft.format(new Date())+"/");
             //
@@ -482,7 +486,31 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 fileVO.setParentPK(productVO.getGiveaway_cd());
-                mgGiveawayDAO.insertProductFile(filelist,fileVO);
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist2)){
+                    fileVO.setFileorder(2);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist3)){
+                    fileVO.setFileorder(3);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist4)){
+                    fileVO.setFileorder(4);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist5)){
+                    fileVO.setFileorder(5);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
                 mgGiveawayDAO.insertGiveaway(productVO);
                 resultMap.put("redirectUrl","/Manager/GiveawayAdd");
             }
@@ -500,6 +528,10 @@ public class ManagerRestapiController {
 
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"giveaway");
+            List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"giveaway");
+            List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"giveaway");
+            List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"giveaway");
+            List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"giveaway");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/giveaway/"+ft.format(new Date())+"/");
             //
@@ -530,8 +562,30 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 fileVO.setParentPK(giveawayVO.getGiveaway_cd());
+                fileVO.setParentPK(productVO.getProduct_cd());
                 if(!isEmpty(filelist)){
-                    mgProductDAO.deleteProductFile(productVO);
+                    fileVO.setFileorder(1);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist2)){
+                    fileVO.setFileorder(2);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist3)){
+                    fileVO.setFileorder(3);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist4)){
+                    fileVO.setFileorder(4);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist5)){
+                    fileVO.setFileorder(5);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
                     mgProductDAO.insertProductFile(filelist,fileVO);
                 }
 
@@ -726,6 +780,10 @@ public class ManagerRestapiController {
 
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
+            List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
+            List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
+            List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
+            List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -757,8 +815,29 @@ public class ManagerRestapiController {
             }else{
                 fileVO.setParentPK(productVO.getProduct_cd());
                 if(!isEmpty(filelist)){
-                    mgProductDAO.deleteProductFile(productVO);
+                    fileVO.setFileorder(1);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
                     mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist2)){
+                    fileVO.setFileorder(2);
+                    mgProductDAO.deleteProductFile(filelist2,fileVO);
+                    mgProductDAO.insertProductFile(filelist2,fileVO);
+                }
+                if(!isEmpty(filelist3)){
+                    fileVO.setFileorder(3);
+                    mgProductDAO.deleteProductFile(filelist3,fileVO);
+                    mgProductDAO.insertProductFile(filelist3,fileVO);
+                }
+                if(!isEmpty(filelist4)){
+                    fileVO.setFileorder(4);
+                    mgProductDAO.deleteProductFile(filelist4,fileVO);
+                    mgProductDAO.insertProductFile(filelist5,fileVO);
+                }
+                if(!isEmpty(filelist5)){
+                    fileVO.setFileorder(5);
+                    mgProductDAO.deleteProductFile(filelist5,fileVO);
+                    mgProductDAO.insertProductFile(filelist5,fileVO);
                 }
 
 //                mgProductDAO.insertProduct(productVO);
@@ -766,7 +845,7 @@ public class ManagerRestapiController {
                 mgProductDAO.updateProduct(productVO);
 //                mgProductDAO.updasteProduct(productVO);
                 String Referer =request.getHeader("Referer");
-                resultMap.put("redirectUrl",Referer+"?page="+params.get("page"));
+                resultMap.put("redirectUrl",Referer);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -813,6 +892,10 @@ public class ManagerRestapiController {
 
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
+            List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
+            List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
+            List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
+            List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -843,7 +926,31 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 fileVO.setParentPK(productVO.getProduct_cd());
-                mgProductDAO.insertProductFile(filelist,fileVO);
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+                if(!isEmpty(filelist2)){
+                    fileVO.setFileorder(2);
+                    mgProductDAO.deleteProductFile(filelist2,fileVO);
+                    mgProductDAO.insertProductFile(filelist2,fileVO);
+                }
+                if(!isEmpty(filelist3)){
+                    fileVO.setFileorder(3);
+                    mgProductDAO.deleteProductFile(filelist3,fileVO);
+                    mgProductDAO.insertProductFile(filelist3,fileVO);
+                }
+                if(!isEmpty(filelist4)){
+                    fileVO.setFileorder(4);
+                    mgProductDAO.deleteProductFile(filelist4,fileVO);
+                    mgProductDAO.insertProductFile(filelist5,fileVO);
+                }
+                if(!isEmpty(filelist5)){
+                    fileVO.setFileorder(5);
+                    mgProductDAO.deleteProductFile(filelist5,fileVO);
+                    mgProductDAO.insertProductFile(filelist5,fileVO);
+                }
                 mgProductDAO.insertProduct(productVO);
                 resultMap.put("redirectUrl","/Manager/Product");
             }
@@ -1133,7 +1240,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try{
-            if(mgBrandVO.getProduct_brand_name().isEmpty()) {
+            if(mgBrandVO.getProduct_brand().isEmpty()) {
                 mgBrandVO.setProduct_brand("B"+numberGender.numberGen(7,2));
             }
             if(mgBrandVO.getProduct_brand_name().isEmpty()){

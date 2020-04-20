@@ -258,7 +258,10 @@ public class MainController {
             searchVO.setProduct_sale_yn("Y");
             searchVO.setProduct_use_yn("Y");
             searchVO.setMainViewType("product_sp_class");
-            searchVO.setPd_category_id(searchVO.getProduct_ct());
+            if(searchVO.getProduct_ct()!=null){
+                searchVO.setPd_category_id(Integer.parseInt(searchVO.getProduct_ct()));
+            }
+
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
@@ -295,7 +298,7 @@ public class MainController {
             }
             searchVO.setProduct_sale_yn("Y");
             searchVO.setMainViewType("product_sp_class");
-            searchVO.setPd_category_id(searchVO.getProduct_ct());
+            searchVO.setPd_category_id(Integer.parseInt(searchVO.getProduct_ct()));
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());

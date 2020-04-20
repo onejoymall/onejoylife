@@ -12,7 +12,7 @@ public class SearchVO extends PageVO{
     private String[] searchTypeArr;            // 검색 필드를 배열로 변환
     private String product_sale_yn;
     private String product_use_yn;
-    private Integer product_ct;
+    private String product_ct;
     private Integer pd_category_id;
     private String mainViewType;
     private String orderByKey;
@@ -103,11 +103,11 @@ public class SearchVO extends PageVO{
         this.pd_category_id = pd_category_id;
     }
 
-    public Integer getProduct_ct() {
+    public String getProduct_ct() {
         return product_ct;
     }
 
-    public void setProduct_ct(Integer product_ct) {
+    public void setProduct_ct(String product_ct) {
         this.product_ct = product_ct;
     }
 

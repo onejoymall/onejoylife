@@ -309,7 +309,11 @@
         product_point_class,
         product_point_rate,
         product_point_rate_cash,
-        product_sp_class
+        product_sp_class,
+        product_live_type,
+        product_youtube_id,
+        product_payment_class_value,
+        product_use_member_yn
        )values(
         #{product_cd},
         #{product_market_cd},
@@ -402,7 +406,11 @@
         #{product_point_class},
         #{product_point_rate},
         #{product_point_rate_cash},
-        #{product_sp_class}
+        #{product_sp_class},
+        #{product_live_type},
+        #{product_youtube_id},
+        #{product_payment_class_value},
+        #{product_use_member_yn}
        )
 
     </insert>
@@ -692,7 +700,11 @@
         product_point_class=#{ product_point_class},
         product_point_rate=#{ product_point_rate},
         product_point_rate_cash=#{ product_point_rate_cash},
-        product_sp_class = #{product_sp_class}
+        product_sp_class = #{product_sp_class},
+        product_live_type=#{product_live_type},
+        product_youtube_id=#{product_youtube_id},
+        product_payment_class_value=#{product_payment_class_value},
+        product_use_member_yn=#{product_use_member_yn}
         where product_cd =#{product_cd}
         ]]>
     </update>
@@ -710,7 +722,7 @@
         ]]>
         </foreach>
     </delete>
-    <delete id="deleteProductFile" parameterType="com.webapp.manager.vo.ProductVO">
-        delete from product_file where key_id=#{product_cd}
+    <delete id="deleteProductFile" parameterType="com.webapp.board.common.FileVO">
+        delete from product_file  where key_id = #{parentPK} and file_order = #{fileorder}
     </delete>
 </mapper>

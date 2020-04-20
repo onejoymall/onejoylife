@@ -182,7 +182,7 @@
         <ul>
             <li><a href="#" id="nav-cate"><i class="cate-ic">카테고리</i></a></li>
             <li><a href="../../index-mobile.html" id="nav-home"><i class="home-ic">홈</i></a></li>
-            <li><a href="search" id="nav-src"><i class="src-ic">검색</i></a></li>
+            <li><a href="/product/search-page" id="nav-src"><i class="src-ic">검색</i></a></li>
             <li><a href="mypage-main.html" id="nav-user"><i class="user-ic">마이페이지</i></a></li>
         </ul>
     </nav>
