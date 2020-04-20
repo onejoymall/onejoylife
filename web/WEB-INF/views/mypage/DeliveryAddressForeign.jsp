@@ -14,12 +14,12 @@
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
                 <form action="" method="POST" id="myDeliveryForm">
-                <input type="hidden" name="product_delivery_International_type" value="A"/>
+                <input type="hidden" name="product_delivery_International_type" value="C"/>
                     <p class="sec1-h1">배송지 관리</p>
                     <div class="r-sec1">
                         <div class="sec1-ck">
-                            <p class="ck-p on" data-id="/MyPage/DeliveryAddress">국내 배송주소</p>
-                            <p class="ck-p" data-id="/MyPage/DeliveryAddressForeign">해외 배송주소</p>
+                            <p class="ck-p" data-id="/MyPage/DeliveryAddress">국내 배송주소</p>
+                            <p class="ck-p on" data-id="/MyPage/DeliveryAddressForeign">해외 배송주소</p>
                         </div>
                         <p class="sec1-p">상품 구매 시 사용하실 배송지 정보를 관리하실 수 있습니다.</p>
                         <table class="tab on" id="sec-ck1">
@@ -110,7 +110,7 @@
                         <td  class="body-td2">
                             <input type="text" name="delivery_user_name"/>
                             <input type="hidden" name="order_no"/>
-                            <input type="hidden" name="product_delivery_International_type" value="A"/>
+                            <input type="hidden" name="product_delivery_International_type" value="C"/>
                         </td>
                     </tr>
                     <tr class="body-tr">
@@ -292,7 +292,8 @@
 $(function(){
 	$(".close").click(function(){
         $(".modal").attr("style", "display:none");
-	});
+        $(".modal2").attr("style", "display:none");
+    });
 	
 	$(".ck-p").click(function(){
         location.href=$(this).attr("data-id");

@@ -640,7 +640,47 @@ public class MyPage {
             return "mypage/DeliveryAddress";
         }
     }
-  //배송지 변경
+  //새 배송지 등록 모바일
+    @RequestMapping(value="/MyPage/DeliveryAddressInsert")
+    public String myPageDeliveryAddressInsert(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13-1";
+        } else {
+            return "/";
+        }
+    }
+  //새 배송지 등록 모바일 해외
+    @RequestMapping(value="/MyPage/DeliveryAddressInsertForeign")
+    public String myPageDeliveryAddressInsertForeign(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13-f-1";
+        } else {
+            return "/";
+        }
+    }
+  //배송지 수정 모바일
+    @RequestMapping(value="/MyPage/DeliveryAddressUpdate")
+    public String myPageDeliveryAddressUpdate(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13-2";
+        } else {
+            return "/";
+        }
+    }
+  //배송지 수정 모바일 해외
+    @RequestMapping(value="/MyPage/DeliveryAddressUpdateForeign")
+    public String myPageDeliveryAddressUpdateForeign(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-13-f-2";
+        } else {
+            return "/";
+        }
+    }
+  //배송지 변경해외
     @RequestMapping(value="/MyPage/DeliveryAddressForeign")
     public String myPageDeliveryAddressForeign(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
     	 try {
@@ -660,9 +700,9 @@ public class MyPage {
         model.addAttribute("style", "mypage-13");
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
-            return "mobile/mypage-13";
+            return "mobile/mypage-13-f";
         } else {
-            return "mypage/DeliveryAddress";
+            return "mypage/DeliveryAddressForeign";
         }
     }
     //교환권 상세

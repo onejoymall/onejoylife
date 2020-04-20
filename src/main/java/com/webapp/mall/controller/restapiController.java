@@ -1018,7 +1018,8 @@ public class restapiController {
                 resultMap.put("validateError",error);
             }else{
                 deliveryDAO.deleteDelivery(params);
-                resultMap.put("redirectUrl","/MyPage/DeliveryAddress");
+                String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
+                resultMap.put("redirectUrl", redirect);
             }
         } catch (Exception e) {
 
@@ -1043,7 +1044,113 @@ public class restapiController {
                 deliveryDAO.updateDefaultDelivery(defaultN);
                 params.put("defaultYn","Y");
                 deliveryDAO.updateDefaultDelivery(params);
-                resultMap.put("redirectUrl","/MyPage/DeliveryAddress");
+                String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
+                resultMap.put("redirectUrl", redirect);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+  //배송지정보
+    @Transactional
+    @RequestMapping(value = "/MyPage/getDeliveryDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageGetDeliveryDetail(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request, HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        try {
+        	if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("deliveryInfo", deliveryDAO.getDeliveryDetail(params));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+  //배송지 수정
+    @Transactional
+    @RequestMapping(value = "/MyPage/updateDeliveryAddress", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageUpdateDeliveryAddress(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request, HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            if(params.get("delivery_user_name").equals(null) || params.get("delivery_user_name").equals("")){
+                error.put("받으시는분", messageSource.getMessage("error.required","ko"));
+            }
+            if(params.get("postcode").equals(null) || params.get("postcode").equals("")){
+                error.put("주소", messageSource.getMessage("error.required","ko"));
+            }
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	String phone = params.get("delivery_user_phone_a")+"-"+params.get("delivery_user_phone_b")+"-"+params.get("delivery_user_phone_c");
+            	String tel = params.get("delivery_user_tel_a")+"-"+params.get("delivery_user_tel_b")+"-"+params.get("delivery_user_tel_c");
+            	params.put("delivery_user_phone", phone);
+            	params.put("delivery_user_tel", tel);
+            	deliveryDAO.updateDeliveryAddress(params);
+            	if(params.get("defaultYn") != null && params.get("defaultYn").equals("Y")) {
+            		HashMap<String, Object> defaultN = new HashMap<String, Object>();
+                	defaultN.put("defaultYn","N");
+                	defaultN.put("email",session.getAttribute("email"));
+                    deliveryDAO.updateDefaultDelivery(defaultN);
+                    params.put("defaultYn","Y");
+                    params.put("orderNo",params.get("order_no"));
+                    deliveryDAO.updateDefaultDelivery(params);
+            	}
+            	String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
+                resultMap.put("redirectUrl", redirect);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+  //배송지 등록
+    @Transactional
+    @RequestMapping(value = "/MyPage/insertDeliveryAddress", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageInsertDeliveryAddress(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request, HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            if(params.get("delivery_user_name").equals(null) || params.get("delivery_user_name").equals("")){
+                error.put("받으시는분", messageSource.getMessage("error.required","ko"));
+            }
+            if(params.get("postcode").equals(null) || params.get("postcode").equals("")){
+                error.put("주소", messageSource.getMessage("error.required","ko"));
+            }
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	String phone = params.get("delivery_user_phone_a")+"-"+params.get("delivery_user_phone_b")+"-"+params.get("delivery_user_phone_c");
+            	String tel = params.get("delivery_user_tel_a")+"-"+params.get("delivery_user_tel_b")+"-"+params.get("delivery_user_tel_c");
+            	params.put("delivery_user_phone", phone);
+            	params.put("order_user_phone", phone);
+            	params.put("delivery_user_tel", tel);
+            	params.put("order_no", "PD-MYPAGE-"+numberGender.numberGen(6,2));
+            	params.put("order_user_name", params.get("delivery_user_name"));
+            	params.put("order_user_email",session.getAttribute("email"));
+            	deliveryDAO.insertDeliveryAddress(params);
+            	
+            	if(params.get("defaultYn") != null && params.get("defaultYn").equals("Y")) {
+            		HashMap<String, Object> defaultN = new HashMap<String, Object>();
+                	defaultN.put("defaultYn","N");
+                	defaultN.put("email",session.getAttribute("email"));
+                    deliveryDAO.updateDefaultDelivery(defaultN);
+                    params.put("defaultYn","Y");
+                    params.put("orderNo",params.get("order_no"));
+                    deliveryDAO.updateDefaultDelivery(params);
+            	}
+            	String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
+                resultMap.put("redirectUrl", redirect);
             }
         } catch (Exception e) {
 
