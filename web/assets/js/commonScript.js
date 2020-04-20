@@ -1034,11 +1034,11 @@ $(document).ready(function(){
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="F"){
-                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환수락</button>';
+                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환완료</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="H"){
-                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품수락</button>';
+                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품완료</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="delivery_start_date" || index=="reg_date"){
@@ -1046,7 +1046,7 @@ $(document).ready(function(){
 
                     }
 
-                    $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
+                    // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },
             error: function (xhr, status, error) {
@@ -1089,7 +1089,7 @@ $(document).ready(function(){
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
                     }
-                    $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
+                    // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },
             error: function (xhr, status, error) {

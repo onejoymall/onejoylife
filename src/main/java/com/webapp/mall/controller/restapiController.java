@@ -767,7 +767,7 @@ public class restapiController {
                 paymentDAO.updatePayment(deliveryInfoVO);
                 refundDAO.insertDeliveryRefund(deliveryInfoVO);
                 //교환정보 저장
-
+                resultMap.put("redirectUrl","/MyPage/OrderAndDelivery");
             }
 
         }catch (Exception e){
