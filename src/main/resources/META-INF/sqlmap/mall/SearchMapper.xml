@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.SearchMapper">
+
+    <select id="getSearchProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                *,
+                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
+                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 2) as file_2,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 3) as file_3,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
+            FROM product  where 1=1
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="product_delivery_International_type != null">
+            AND product_delivery_International_type in
+            <foreach item="item" index="index" collection="product_delivery_International_type_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_delivery_payment_class != null">
+            AND product_delivery_payment_class in
+            <foreach item="item" index="index" collection="product_delivery_payment_class_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_brand != null">
+            AND product_brand in
+            <foreach item="item" index="index" collection="product_brand_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_option_color != null">
+            AND product_option_color in
+            <foreach item="item" index="index" collection="product_option_color_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="searchToPayment != null"> <![CDATA[AND product_payment >= #{searchToPayment} ]]></if>
+        <if test="searchBePayment != null"> <![CDATA[AND product_payment <= #{searchBePayment} ]]></if>
+        <if test="rowStart != null">LIMIT ${rowStart-1}, ${displayRowCount}</if>
+    </select>
+    <select id="getSearchProductListCount" parameterType="com.webapp.manager.vo.ProductVO" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product  where 1=1
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="product_delivery_International_type != null">
+            AND product_delivery_International_type in
+            <foreach item="item" index="index" collection="product_delivery_International_type_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_delivery_payment_class != null">
+            AND product_delivery_payment_class in
+            <foreach item="item" index="index" collection="product_delivery_payment_class_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_brand != null">
+            AND product_brand in
+            <foreach item="item" index="index" collection="product_brand_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="product_option_color != null">
+            AND product_option_color in
+            <foreach item="item" index="index" collection="product_option_color_arr" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        <if test="searchToPayment != null"> <![CDATA[AND product_payment >= #{searchToPayment} ]]></if>
+        <if test="searchBePayment != null"> <![CDATA[AND product_payment <= #{searchBePayment} ]]></if>
+    </select>
+</mapper>

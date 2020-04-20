@@ -27,7 +27,7 @@
 	</ul>
 
 
-	<input type="hidden" name="page" id="page" value="" />
+	<input type="hidden" name="page" id="page" value="${searchVO.page}" />
 
 	<script type="text/javascript">
 		function fnSubmitForm(page){

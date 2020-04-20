@@ -6,6 +6,15 @@ import java.util.Map;
 
 public class TodayVO {
     private String product_sale_yn;
+    private String product_use_yn;
+
+    public String getProduct_use_yn() {
+        return product_use_yn;
+    }
+
+    public void setProduct_use_yn(String product_use_yn) {
+        this.product_use_yn = product_use_yn;
+    }
 
     public String getProduct_sale_yn() {
         return product_sale_yn;

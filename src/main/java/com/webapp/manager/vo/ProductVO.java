@@ -1,99 +1,129 @@
 package com.webapp.manager.vo;
 
-public class ProductVO {
-String product_id;
-String product_cd;
-String product_market_cd;
-String product_use_yn;
-String product_sale_yn;
-String product_ct;
-String product_new_class;
-String product_md_class;
-String product_name;
-String product_name_en;
-String product_name_mg;
-String product_supply_pd_name;
-String product_model_name;
-String product_summary_memo;
-String product_brief_memo;
-String product_html;
-String product_mobile_memo_config;
-String product_mobile_html;
-String product_keyword;
-String product_tex_class;
-Integer product_user_payment;
-Integer product_company_payment;
-Integer product_payment;
-String product_payment_empty_yn;
-String product_payment_memo;
-String product_order_limit_quantity;
-Integer product_min_limit;
-Integer product_max_limit;
-Double product_point_rate;
-String product_go_event_yn;
-String product_adult_yn;
-String product_option_yn;
-String product_option_class;
-String product_option_view_type;
-String product_option_set_name;
-String product_option_input;
-String product_option_style;
-String product_option_button_img;
-String product_option_color;
-String product_option_required;
-String product_sold_out_memo;
-String product_add_option;
-String product_add_option_name;
-String product_add_option_required;
-String product_add_option_max_lang;
-String product_detail_image;
-String product_list_image;
-String product_list_image_sm;
-String product_list_image_response;
-String product_add_image;
-String product_made_company_cd;
-String product_supplier;
-String product_brand;
-String product_trend;
-String product_influencer;
-String product_self_class_cd;
-String product_create_date;
-String product_release_date;
-String product_validity_yn;
-String product_validity;
-String product_origin;
-String product_cm;
-String product_payment_info;
-String product_delivery_info;
-String product_change_info;
-String product_service_info;
-String product_delivery_class;
-String product_delivery_type;
-String product_delivery_International_type;
-String product_delivery_locale;
-String product_delivery_payment_type;
-String product_delivery_date;
-String product_delivery_payment_class;
-String product_delivery_payment;
-String product_delivery_store_pickup;
-String product_kg;
-String product_global_hs_code;
-String product_global_clearance;
-String product_material;
-String product_material_en;
-String product_fabric;
-String product_seo_yn;
-String product_seo_title;
-String product_seo_author;
-String product_seo_description;
-String product_seo_keywords;
-String product_seo_alt;
-String product_payment_type;
-String product_delivery_type_code;
-String product_memo;
-String product_point_class;
-Integer product_point_rate_cash;
-String product_sp_class;
+import com.webapp.board.common.SearchVO;
+
+import java.util.List;
+
+public class ProductVO extends SearchVO {
+    String product_score;
+    String product_id;
+    String product_cd;
+    String product_market_cd;
+    String product_use_yn;
+    String product_sale_yn;
+    String product_new_class;
+    String product_md_class;
+    String product_name;
+    String product_name_en;
+    String product_name_mg;
+    String product_supply_pd_name;
+    String product_model_name;
+    String product_summary_memo;
+    String product_brief_memo;
+    String product_html;
+    String product_mobile_memo_config;
+    String product_mobile_html;
+    String product_keyword;
+    String product_tex_class;
+    Integer product_user_payment;
+    Integer product_company_payment;
+    Integer product_payment;
+    String product_payment_empty_yn;
+    String product_payment_memo;
+    String product_order_limit_quantity;
+    Integer product_min_limit;
+    Integer product_max_limit;
+    Double product_point_rate;
+    String product_go_event_yn;
+    String product_adult_yn;
+    String product_option_yn;
+    String product_option_class;
+    String product_option_view_type;
+    String product_option_set_name;
+    String product_option_input;
+    String product_option_style;
+    String product_option_button_img;
+    String product_option_color;
+    String product_option_required;
+    String product_sold_out_memo;
+    String product_add_option;
+    String product_add_option_name;
+    String product_add_option_required;
+    String product_add_option_max_lang;
+    String product_detail_image;
+    String product_list_image;
+    String product_list_image_sm;
+    String product_list_image_response;
+    String product_add_image;
+    String product_made_company_cd;
+    String product_supplier;
+    String product_brand;
+    String product_trend;
+    String product_influencer;
+    String product_self_class_cd;
+    String product_create_date;
+    String product_release_date;
+    String product_validity_yn;
+    String product_validity;
+    String product_origin;
+    String product_cm;
+    String product_payment_info;
+    String product_delivery_info;
+    String product_change_info;
+    String product_service_info;
+    String product_delivery_class;
+    String product_delivery_type;
+    String product_delivery_International_type;
+    String product_delivery_locale;
+    String product_delivery_payment_type;
+    String product_delivery_date;
+    String product_delivery_payment_class;
+    String product_delivery_payment;
+    String product_delivery_store_pickup;
+    String product_kg;
+    String product_global_hs_code;
+    String product_global_clearance;
+    String product_material;
+    String product_material_en;
+    String product_fabric;
+    String product_seo_yn;
+    String product_seo_title;
+    String product_seo_author;
+    String product_seo_description;
+    String product_seo_keywords;
+    String product_seo_alt;
+    String product_payment_type;
+    String product_delivery_type_code;
+    String product_memo;
+    String product_point_class;
+    Integer product_point_rate_cash;
+    String product_sp_class;
+    Integer searchToPayment;
+    Integer searchBePayment;
+
+    public Integer getSearchToPayment() {
+        return searchToPayment;
+    }
+
+    public void setSearchToPayment(Integer searchToPayment) {
+        this.searchToPayment = searchToPayment;
+    }
+
+    public Integer getSearchBePayment() {
+        return searchBePayment;
+    }
+
+    public void setSearchBePayment(Integer searchBePayment) {
+        this.searchBePayment = searchBePayment;
+    }
+
+    public String getProduct_score() {
+        return product_score;
+    }
+
+    public void setProduct_score(String product_score) {
+        this.product_score = product_score;
+    }
 
     public String getProduct_sp_class() {
         return product_sp_class;
@@ -141,14 +171,6 @@ String product_sp_class;
 
     public void setProduct_sale_yn(String product_sale_yn) {
         this.product_sale_yn = product_sale_yn;
-    }
-
-    public String getProduct_ct() {
-        return product_ct;
-    }
-
-    public void setProduct_ct(String product_ct) {
-        this.product_ct = product_ct;
     }
 
     public String getProduct_new_class() {

@@ -86,8 +86,9 @@
                     <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
 <%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
 <%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
-                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>다운로드</button>
+                    <button type="button" class="btn-default" name="copy" onclick="location.href='/downloadExcelFile'"><i class="exel-ic"></i>다운로드</button>
                 </div>
+
 <%--                <div class="right">--%>
 <%--                    <select name="order" class="order-select">--%>
 <%--                        <option value="32">10개씩 보기</option>--%>
@@ -686,40 +687,35 @@
                     <tr>
                         <th>제조사</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 제조사 관리&#93;에 등록한 유효한 제조사 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>공급사</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 공급사 관리&#93;에 등록한 유효한 공급사 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>브랜드</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 브랜드 관리&#93;에 등록한 유효한 브랜드 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-b" name="product_brand" placeholder="ex) B00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>트렌드</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 트렌드 관리&#93;에 등록한 유효한 트렌드 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-t" name="product_trend" placeholder="ex) T00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>자체 분류</th>
                         <td colspan="2">
-                            <p class="cc2">&#91;판매분류관리 &#62; 자체분류 관리&#93;에 등록한 유효한 자체 분류 코드를 입력합니다.
-                            </p>
+
                             <input type="text" id="goods-c" name="product_self_class_cd" placeholder="ex) C00000000">
                         </td>
                     </tr>
@@ -822,7 +818,7 @@
                             <label for="goods-shipping-f">기본 설정 사용</label><a href="/Manager/Delivery">[보기 > ]</a>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail hidden">
+                    <tr class="shipping-t-detail ">
                         <th>배송 방법</th>
                         <td>
                             <select name="product_delivery_type">
@@ -837,7 +833,7 @@
                             </select>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail hidden">
+                    <tr class="shipping-t-detail ">
                         <th>국내/해외 배송<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <select name="product_delivery_International_type">
@@ -848,7 +844,7 @@
                             <span class="cc">* 국내 배송을 포함하지 않은 단독 해외 배송은 해외 쇼핑몰에서만 사용할 수 있습니다.</span>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail hidden">
+                    <tr class="shipping-t-detail ">
                         <th>배송 지역</th>
                         <td>
                             <input type="text" name="product_delivery_locale" id="shipping-area2" value="${detail.product_delivery_locale}"/>
@@ -856,7 +852,7 @@
                             <span class="cc">* 최대 40byte까지만 등록됩니다.</span>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail hidden" >
+                    <tr class="shipping-t-detail " >
                         <th>배송비 선결제 설정<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <select name="product_delivery_payment_type">
@@ -866,17 +862,17 @@
                             </select>
                         </td>
                     </tr>
-                    <tr class="shipping-t-detail hidden" >
+                    <tr class="shipping-t-detail " >
                         <th>배송 기간</th>
                         <td>
                             <p class="cc2">1부터 99까지의 숫자를 사용해 입력합니다.</p>
                             <input type="text" id="shipping-period" name="product_delivery_date" value="${detail.product_delivery_date}" placeholder="ex) 배송 기간이 2~4일 걸릴 경우 '2|4'라고 입력">
                         </td>
                     </tr>
-                    <tr class="shipping-fee-tr shipping-t-detail hidden" >
+                    <tr class="shipping-fee-tr shipping-t-detail " >
                         <th>배송비 구분</th>
                         <td>
-                            <select name="product_delivery_payment_class" id="shipping-fee">
+                            <select name="product_delivery_payment_class" id="changeDeliveryPaymentClass">
                                 <option value="T" <c:if test="${detail.product_delivery_payment_class eq 'T' }">selected</c:if>>배송비 무료</option>
                                 <option value="R" <c:if test="${detail.product_delivery_payment_class eq 'R' }">selected</c:if>>고정 배송비 사용</option>
                                 <option value="M" <c:if test="${detail.product_delivery_payment_class eq 'M' }">selected</c:if>>구매 금액에 따른 부과</option>
@@ -888,25 +884,7 @@
                             <span class="cc">* 옵션을 새로 선택하면 상세 설정 내역이 초기화됩니다.</span>
                         </td>
                     </tr>
-                    <tr class="shippingFee-detail-wrap shipping-t-detail hidden"><th>배송비 상세 설정</th><td><input type="text" name="product_delivery_payment" > </td></tr>'
-                    <c:if test="${detail.product_delivery_payment_class eq 'R' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden"><th>배송비 상세 설정</th><td>배송비 <input type="text" name="product_delivery_payment" value="${detail.product_delivery_payment}"> 원을 고정적으로 부과함.</td></tr>'
-                    </c:if>
-                    <c:if test="${detail.product_delivery_payment_class eq 'M' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="product_delivery_payment" placeholder="ex) 30000|2500"  value="${detail.product_delivery_payment}"></td></tr>
-                    </c:if>
-                    <c:if test="${detail.product_delivery_payment_class eq 'D' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text"  name="product_delivery_payment" placeholder="ex) 20000|30000|2000//30000|50000|1000" value="${detail.product_delivery_payment}"></td></tr>
-                    </c:if>
-                    <c:if test="${detail.product_delivery_payment_class eq 'W' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text"  name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000" value="${detail.product_delivery_payment}"></td></tr>
-                    </c:if>
-                    <c:if test="${detail.product_delivery_payment_class eq 'C' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" i name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000" value="${detail.product_delivery_payment}"></td></tr>
-                    </c:if>
-                    <c:if test="${detail.product_delivery_payment_class eq 'N' }">
-                        <tr class="shippingFee-detail-wrap shipping-t-detail hidden"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" name="product_delivery_payment" value="${detail.product_delivery_payment}">원을 부과함.</td></tr>
-                    </c:if>
+
                     <tr class="shipping-f-detail">
                         <th>스토어픽업 설정</th>
                         <td>

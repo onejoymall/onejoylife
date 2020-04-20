@@ -173,6 +173,7 @@ public class ManagerController {
             model.addAttribute("Pk", "product_id");
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "goods");
+            model.addAttribute("searchVO",searchVO);
         } catch (Exception e) {
             e.printStackTrace();
         }

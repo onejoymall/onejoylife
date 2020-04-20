@@ -35,6 +35,12 @@
                                     <input type="text" id="email" name="email">
                                 </td>
                             </tr>
+                            <tr class="name-box">
+                                <td>비밀번호 *</td>
+                                <td>
+                                    <input type="password" id="password" name="password">
+                                </td>
+                            </tr>
                             <tr class="phone-box">
                                 <td>휴대폰 번호</td>
                                 <td>
@@ -61,8 +67,9 @@
                             <tr class="sort-box">
                                 <td>문의 유형 *</td>
                                 <td>
-                                    <select name="sort" id="sort">
+                                    <select name="question_type" id="question_type">
                                         <option value="선택">선택</option>
+                                        <option value="대량주문">대량주문</option>
                                         <option value="주문결제">주문/결제</option>
                                         <option value="교환반품환불">교환/반품/환불</option>
                                         <option value="이벤트">이벤트</option>
@@ -125,21 +132,7 @@
     $('#phoneNum-1').on("change", function () {
         $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
     })
-    function chkInputValue(id, msg){
-        if ( $.trim($(id).val()) == "") {
-            alert(msg+" 입력해주세요.");
-            $(id).focus();
-            return false;
-        }
-        return true;
-    }
-    function fn_formSubmit(){
-        if ( ! chkInputValue("#brdwriter", "작성자를")) return;
-        if ( ! chkInputValue("#brdtitle", "글 제목을")) return;
-        if ( ! chkInputValue("#brdmemo", "글 내용을")) return;
 
-        $("#form1").submit();
-    }
 </script>
 
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

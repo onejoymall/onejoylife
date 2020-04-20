@@ -38,7 +38,7 @@ public class GiveawayController {
     private CategoryDAO categoryDAO;
     //경품 목록
     @RequestMapping(value="/giveaway")
-    public String giveawayList(Model model, HttpSession session, HashMap params, GiveawayVO giveawayVO) {
+    public String giveawayList(Model model, HttpSession session, HashMap params, GiveawayVO giveawayVO,HttpServletRequest request) {
         try{
             //사용자 아이디 확인 후 전달
 //            params.put("email",session.getAttribute("email"));
@@ -64,8 +64,15 @@ public class GiveawayController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "epoint-gift");
-        return "giveaway/giveawaylist";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/epoint-gift";
+        } else {
+            model.addAttribute("style", "epoint-gift");
+            return "giveaway/giveawaylist";
+        }
+
+
     }
     //경품 상세333
     @RequestMapping(value="/giveaway/giveawaydetail",method = RequestMethod.GET)

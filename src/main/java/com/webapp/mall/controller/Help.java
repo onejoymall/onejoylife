@@ -5,6 +5,8 @@ import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
 import com.webapp.board.common.SearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,24 +21,43 @@ public class Help {
     private BoardGroupSvc boardGroupSvc;
     //회원정보 변경
     @RequestMapping(value="/Help/csinfo")
-    public String helpCsInfo(Model model) {
+    public String helpCsInfo(Model model, HttpServletRequest request) {
         model.addAttribute("style", "help-1");
         model.addAttribute("leftNavOrder", "1");
-        return "help/csinfo";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-1";
+        } else {
+            return "help/csinfo";
+        }
     }
     //포인트 사용안내
     @RequestMapping(value="/Help/usePointGuid")
-    public String helpUsePointGuid(Model model) {
+    public String helpUsePointGuid(Model model, HttpServletRequest request) {
         model.addAttribute("style", "help-2");
         model.addAttribute("leftNavOrder", "2");
-        return "help/usePointGuid";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-2";
+        } else {
+            return "help/usePointGuid";
+        }
     }
-    //포인트 사용안내
+    //FAQ
     @RequestMapping(value="/Help/faqCenter")
-    public String helpFaqCenter(Model model) {
+    public String helpFaqCenter(Model model, HttpServletRequest request) {
         model.addAttribute("style", "help-3");
         model.addAttribute("leftNavOrder", "3");
-        return "help/faqCenter";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-3";
+        } else {
+            return "help/faqCenter";
+        }
+
     }
     //1:1 문의
     @RequestMapping(value="/Help/csBoard")
@@ -52,7 +73,12 @@ public class Help {
 
         modelMap.addAttribute("style", "help-4");
         modelMap.addAttribute("leftNavOrder", "4");
-        return "help/csboard";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-4-2";
+        } else {
+            return "help/csboard";
+        }
     }
     //1:1 문의 완료
     @RequestMapping(value="/Help/csBoardDone")
@@ -63,9 +89,15 @@ public class Help {
     }
     //고객센터 전화번호 안내
     @RequestMapping(value="/Help/csCenter")
-    public String helpCsCenter(Model model) {
+    public String helpCsCenter(Model model, HttpServletRequest request) {
         model.addAttribute("style", "help-5");
         model.addAttribute("leftNavOrder", "5");
-        return "help/cscenter";
+
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-5";
+        } else {
+            return "help/cscenter";
+        }
     }
 }

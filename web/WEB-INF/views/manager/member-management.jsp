@@ -7,7 +7,7 @@
             <div class="main-header">
                 <h2 name="detail">일반 회원관리</h2>
                 <div class="main-hd-btn-wrap">
-                    <button type="button" name="detail">회원등급 설정</button>
+                    <button type="button" name="detail">회원권한 설정</button>
                 </div>
             </div>
             <div class="search-form">

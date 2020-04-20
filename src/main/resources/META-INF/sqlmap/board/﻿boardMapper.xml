@@ -18,10 +18,12 @@
     </select> 
     
     <select id="selectBoard8List" resultType="com.webapp.board.app.BoardVO" parameterType="com.webapp.board.common.SearchVO">
-        SELECT BRDNO, BRDTITLE, BRDWRITER, DATE_FORMAT(BRDDATE,'%Y-%m-%d') BRDDATE, BRDHIT
-             , (SELECT COUNT(*) FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT
-             , (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
-             , BRDMEMO
+        SELECT
+            BRDNO, BRDTITLE, BRDWRITER, DATE_FORMAT(BRDDATE,'%Y-%m-%d') BRDDATE, BRDHIT,
+                (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
+                (SELECT COUNT(*) FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT,
+                (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT,
+                BRDMEMO
 
           FROM TBL_BOARD TB
          <include refid="includeBoard"/>
@@ -34,8 +36,8 @@
         </selectKey>
 
         INSERT INTO TBL_BOARD(
-        BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no)
-        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N', #{email}, #{phone}, #{question_type}, #{order_no} )
+        BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no,password)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N', #{email}, #{phone}, #{question_type}, #{order_no}, #{password} )
     </insert>
 
     <insert id="insertBoard8" parameterType="com.webapp.board.app.BoardVO" >
@@ -43,8 +45,8 @@
             SELECT IFNULL(MAX(BRDNO),0)+1 FROM TBL_BOARD
         </selectKey>
     
-        INSERT INTO TBL_BOARD(BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG)
-        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N' )
+        INSERT INTO TBL_BOARD(BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no,password)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N',#{email}, #{phone}, #{question_type}, #{order_no},#{password})
     </insert>
     
     <update id="updateBoard8" parameterType="com.webapp.board.app.BoardVO">
@@ -57,8 +59,9 @@
     </update> 
         
     <select id="selectBoard8One" parameterType="String" resultType="com.webapp.board.app.BoardVO">
-        SELECT BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d') BRDDATE
-          FROM TBL_BOARD
+        SELECT (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
+                BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email, phone, question_type, order_no,password
+          FROM TBL_BOARD TB
          WHERE BRDDELETEFLAG='N'
            AND BRDNO=#{brdno}
     </select> 
