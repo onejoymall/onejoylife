@@ -33,7 +33,7 @@
                         </a>
                         </li>
 	                    <li>
-	                        <p${list.product_brand}</p>
+	                        <p>${list.product_brand}</p>
 	                        <h5>${list.product_name}</h5>
 	                        <p class="grey">${list.product_model_name}</p>
 	                    </li>
