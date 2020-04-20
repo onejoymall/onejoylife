@@ -270,7 +270,7 @@ $('#deleteDeliveryInfo').on("click",function () {
     });
 })
 
-//배송지 선택삭제
+//기본배송지 설정
 $('#updateDefaultDeliveryInfo').on("click",function () {
     var formData = $('#myDeliveryForm').serialize();
     jQuery.ajax({
@@ -317,3 +317,127 @@ $('#updateDefaultDeliveryInfo').on("click",function () {
         },
     });
 })
+
+//새배송지 등록
+$("#addDeliveryInfo").click(function(){
+    event.preventDefault();
+    $(".modal").attr("style", "display:block");
+});
+
+//배송지 수정 모달
+$("#updateDeliveryInfo").click(function(){
+    event.preventDefault();
+    $(".modal2").attr("style", "display:block");
+    var formData = $('#myDeliveryForm').serialize();
+    jQuery.ajax({
+        type: 'POST',
+        url: '/MyPage/getDeliveryDetail',
+        data: formData,
+        success: function (data) {
+        	$.each(data.deliveryInfo,function(index, item){
+        		$(`input[name=${index}]`).val(item);
+        		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
+        			var number = item.split("-");
+        			['a','b','c'].forEach(function(el,idx){
+        				$(`input[name=${index}_${el}]`).val(number[idx]);
+        			});
+        		}
+        	});
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+    });
+});
+//배송지 수정
+$("#updateDeliveryBtn").click(function(){
+    var formData = $('#form2').serialize();
+    jQuery.ajax({
+        type: 'POST',
+        url: '/MyPage/updateDeliveryAddress',
+        data: formData,
+        success: function (data) {
+        	if (data.validateError) {//toast 오류처리
+                $.each(data.validateError, function (index, item) {
+                    if (index == "Error") {//
+                        alertType = "error";
+                        showText = item;
+                    } else {
+                        alertType = "error";
+                        showText = index + "는 (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+            }else{
+
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 2000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+    });
+});
+//배송지 등록
+$("#newDeliveryBtn").click(function(){
+    var formData = $('#form1').serialize();
+    jQuery.ajax({
+        type: 'POST',
+        url: '/MyPage/insertDeliveryAddress',
+        data: formData,
+        success: function (data) {
+        	if (data.validateError) {//toast 오류처리
+                $.each(data.validateError, function (index, item) {
+                    if (index == "Error") {//
+                        alertType = "error";
+                        showText = item;
+                    } else {
+                        alertType = "error";
+                        showText = index + "는 (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+            }else{
+
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 2000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+    });
+});

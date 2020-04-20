@@ -97,6 +97,50 @@
         jibunAddress=#{jibunAddress},
         delivery_message=#{delivery_message}
     </insert>
+    
+    <insert id="insertDeliveryAddress" parameterType="java.util.Map">
+        insert into delivery_info(
+        order_no,
+        order_user_name,
+        order_user_email,
+        order_user_phone,
+        delivery_user_name,
+        delivery_user_phone,
+        delivery_user_tel,
+        postcode,
+        roadAddress,
+        extraAddress,
+        jibunAddress,
+        product_delivery_International_type
+        )values(
+        #{order_no},
+        #{order_user_name},
+        #{order_user_email},
+        #{order_user_phone},
+        #{delivery_user_name},
+        #{delivery_user_phone},
+        #{delivery_user_tel},
+        #{postcode},
+        #{roadAddress},
+        #{extraAddress},
+        #{jibunAddress},
+        #{product_delivery_International_type}
+        )
+        on duplicate KEY update
+
+        order_no = #{order_no},
+		order_user_name = #{order_user_name},
+		order_user_email = #{order_user_email},
+		order_user_phone = #{order_user_phone},
+		delivery_user_name = #{delivery_user_name},
+		delivery_user_phone = #{delivery_user_phone},
+		delivery_user_tel = #{delivery_user_tel},
+		postcode = #{postcode},
+		roadAddress = #{roadAddress},
+		extraAddress = #{extraAddress},
+		jibunAddress = #{jibunAddress},
+		product_delivery_International_type = #{product_delivery_International_type}
+    </insert>
 
     <select id="getDeliveryDetail" resultType="java.util.Map" parameterType="java.util.Map">
         select A.*
@@ -105,6 +149,7 @@
         <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="orderNo != null"> <![CDATA[AND A.order_no= #{orderNo} ]]></if>
     </select>
     <update id="updateDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update delivery_info set
@@ -126,6 +171,18 @@
 		<if test="email != null and email != ''">
 		and order_user_email = #{email}
 		</if>
+    </update>
+    <update id="updateDeliveryAddress" parameterType="java.util.Map">
+        UPDATE delivery_info SET
+		delivery_user_name = #{delivery_user_name},
+		delivery_user_phone = #{delivery_user_phone},
+		delivery_user_tel = #{delivery_user_tel},
+		postcode = #{postcode},
+		roadAddress = #{roadAddress},
+		extraAddress = #{extraAddress},
+		jibunAddress = #{jibunAddress}
+		WHERE 1=1
+		and order_no = #{order_no}
     </update>
     <update id="updateDeliveryManager" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update delivery_info set

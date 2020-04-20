@@ -45,13 +45,13 @@ $(document).ready(function(){
         $('.category').removeClass('on');
         $('body').attr('style', '')
     });
-    $('.cateList>li>a, .cateList-2dp>li>a').click(function(e){
+    $('.cateList>li>button, .cateList-2dp>li>button').click(function(e){
         e.preventDefault();
         if($(this).next('ul').css('display') == 'none'){
-            $(this).addClass('on');
+            $(this).closest('li').addClass('on');
             $(this).next('ul').slideDown();
         }else{
-            $(this).removeClass('on');
+            $(this).closest('li').removeClass('on');
             $(this).next('ul').slideUp();
         }  
     });
@@ -75,6 +75,18 @@ $(document).ready(function(){
             $(this).removeClass('on');
             $(this).next('ul').slideUp();
         }  
+    });
+
+    $(function() { 
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd',
+            showMonthAfterYear:true,
+            monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            numberOfMonths: [1,1],
+        });
+        $(".date_pick").datepicker();                    
     });
 });
 
