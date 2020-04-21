@@ -29,6 +29,7 @@ $(function(){
     });
 });
 
+
 // //file upload
 // var uploadFile = $('.fileBox .uploadBtn');
 // uploadFile.on('change', function(){

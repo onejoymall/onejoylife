@@ -18,11 +18,16 @@
             <div class="goods-slider-wrap">
                 <ul class="goods-slider">
                     <li><img src='${detail.file_1}'  ></li>
-                    <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
+                    <c:if test="${detail.file_5}">
+                        <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
+                    </c:if>
+
                 </ul>
                 <div id="bx-pager">
                     <a data-slide-index="0" href=""><img src='${detail.file_1}'  ></a>
+                    <c:if test="${detail.file_5}">
                     <a data-slide-index="1" href=""><img src='${detail.file_5}' onerror="this.src='http://placehold.it/80'" ></a>
+                    </c:if>
                 </div>
 
                 <div class="share-list">
@@ -89,10 +94,18 @@
                         <div class="total-price-number"><span><fmt:formatNumber value="${detail.giveaway_payment}" groupingUsed="true" /></span>point</div>
                     </div>
                 </div>
+                <c:if test="${not empty detail.email}">
+                <div class="winner-wrap">
+                    <h3><i class="win-icon"></i></h3>
+                    <p class="winner">${detail.email}</p>
+                </div>
+                </c:if>
+                <c:if test="${empty detail.email}">
                 <div class="buy-wrap">
                     <button class="buynow" type="button" id="formSubmit">바로 응모하기</button>
                     <button class="favorite ready" type="button"><i class="heart-empty" ></i></button>
                 </div>
+                </c:if>
             </div>
         </div>
     </article>

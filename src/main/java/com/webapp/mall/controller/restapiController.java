@@ -497,7 +497,9 @@ public class restapiController {
                         Integer giveawayPlayCount = giveawayDAO.getUserGiveawayPlayListCount(params);
                         //당첨자가 없으면 진행
                         if(giveawayPlayCount <= 0 ){
-                            params.put("giveaway_play_id",giveawayDAO.getGiveawayPlayUserRandId(params));
+                            Integer winnerUserId = (Integer) giveawayDAO.getGiveawayPlayUserRandId(params);
+                            params.put("giveaway_play_id",winnerUserId);
+                            params.put("giveaway_winner_user_id",winnerUserId);
                             giveawayDAO.updateWinnerUser(params);
                             giveawayDAO.insertGiveawayWinner(params);
                         }
@@ -645,16 +647,16 @@ public class restapiController {
         }
         return resultMap;
     }
-    //장바구니 결제
+    //장바구니 결제 처리
     @RequestMapping(value = "/Save/PaymentOrders" )
     public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try{
-            if(deliveryInfoVO.getReason().isEmpty()){
-                error.put(messageSource.getMessage("reason","ko"), messageSource.getMessage("error.required","ko"));
-            }
+//            if(deliveryInfoVO.getReason().isEmpty()){
+//                error.put(messageSource.getMessage("reason","ko"), messageSource.getMessage("error.required","ko"));
+//            }
 
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -669,15 +671,7 @@ public class restapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                //결제상태 업데이트
-                deliveryInfoVO.setPayment_status("F");
-                deliveryInfoVO.setDelivery_status("F");
-                deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
-                deliveryDAO.updateDelivery(deliveryInfoVO);
-                paymentDAO.updatePayment(deliveryInfoVO);
-                refundDAO.insertDeliveryRefund(deliveryInfoVO);
-                //교환정보 저장
-
+                resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
             }
 
         }catch (Exception e){

@@ -210,12 +210,14 @@
                             <input type="text" name="searchToPayment" id="searchToPayment" value="${param.searchToPayment}">
                             <span> ~ </span>
                             <input type="text" name="searchBePayment" id="searchBePayment" value="${param.searchBePayment}">
-                            <button>검색</button>
+<%--                            <button>검색</button>--%>
                         </div>
                     </div>
                 </div>
                 <div class="inner-right">
                     <form id="form1" name="form1"  method="post">
+
+
                         <p class="gift-amount"><span>${param.product_name}</span> 에 대한 검색 결과 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span> 건</p>
                         <div class="sort-tab">
                             <div class="sort-tab-left">
@@ -298,6 +300,7 @@
                     $('#main-search-form').append(
                         '<input type="hidden" name="product_ct" value="'+$(this).attr('data-id')+'">'
                     )
+                    $('#main-search-form').submit();
                 }else{
                     $('input[name=product_ct]').remove();
                 }

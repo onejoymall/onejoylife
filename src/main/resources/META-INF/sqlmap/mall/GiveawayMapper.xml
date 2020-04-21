@@ -17,6 +17,17 @@
             (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 5) as file_5,
             ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) as parti_rate,
             ifnull((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) sum_play_point,
+            (select ZZ.giveaway_winner_user_id from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd) giveaway_winner_user_id,
+                        (select ZZ.giveaway_winner_user_id from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd) giveaway_winner_user_id,
+                CONCAT(
+                    left(
+                        SUBSTRING_INDEX(
+                            (select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', 1)
+                    ,length(
+                        SUBSTRING_INDEX(
+                            (select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', 1))-1),
+            '***','@',
+            SUBSTRING_INDEX((select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', -1)) email,
             ifnull((select count(1) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) player_count
         FROM giveaway A  where 1=1
         ]]>
@@ -30,6 +41,16 @@
             ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) as parti_rate,
             ifnull((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) sum_play_point,
             ifnull((select count(1) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) player_count,
+            (select ZZ.giveaway_winner_user_id from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd) giveaway_winner_user_id,
+                CONCAT(
+                    left(
+                        SUBSTRING_INDEX(
+                            (select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', 1)
+                    ,length(
+                        SUBSTRING_INDEX(
+                            (select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', 1))-1),
+            '***','@',
+            SUBSTRING_INDEX((select (select UU.email from user UU where UU.usr_id =ZZ.giveaway_winner_user_id) from giveaway_winner ZZ where ZZ.giveaway_cd=A.giveaway_cd),'@', -1)) email,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =A.giveaway_delivery_type) as giveaway_delivery_type_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.giveaway_made_company_cd) as giveaway_made_company_name,
             (select code.code_name from code where code.code='product_sale_yn' and code.code_value =A.giveaway_sale_yn) as giveaway_sale_yn_name,
@@ -46,6 +67,8 @@
         <if test="giveaway_use_yn != null"> <![CDATA[AND A.giveaway_use_yn= #{giveaway_use_yn} ]]></if>
         <if test="giveaway_sale_yn != null"> <![CDATA[AND A.giveaway_sale_yn= #{giveaway_sale_yn} ]]></if>
         <if test="giveaway_name != null"> <![CDATA[AND A.giveaway_name like CONCAT('%',#{giveaway_name},'%') ]]></if>
+        <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
+        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
         <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
         <if test="orderByKey == null"> order by giveaway_id DESC </if>
         LIMIT ${rowStart-1}, ${staticRowEnd}
@@ -54,13 +77,15 @@
         <![CDATA[
         SELECT
             count(*)
-        FROM giveaway  where 1=1
+        FROM giveaway A  where 1=1
         ]]>
         <if test="giveaway_id != null"> <![CDATA[AND A.giveaway_id= #{giveway_id} ]]></if>
         <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_use_yn != null"> <![CDATA[AND A.giveaway_use_yn= #{giveaway_use_yn} ]]></if>
         <if test="giveaway_sale_yn != null"> <![CDATA[AND A.giveaway_sale_yn= #{giveaway_sale_yn} ]]></if>
         <if test="giveaway_name != null"> <![CDATA[AND A.giveaway_name like CONCAT('%',#{giveaway_name},'%') ]]></if>
+        <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
+        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
     </select>
     <select id="getUserGiveawayPlayList" resultType="java.util.HashMap">
         <![CDATA[
@@ -626,7 +651,7 @@
         <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
     </select>
     <select id="getGiveawayPlayUserRandId" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select IFNULL(giveaway_play_id,0) from giveaway_play_history where giveaway_play_status !='W' and giveaway_cd=#{giveaway_cd} order by rand() limit 1
+        select IFNULL(giveaway_play_user_id,0) from giveaway_play_history where giveaway_play_status !='W' and giveaway_cd=#{giveaway_cd} order by rand() limit 1
     </select>
     <update id="updateWinnerUser" parameterType="java.util.Map">
         update giveaway_play_history set giveaway_play_status = 'W' where giveaway_play_id=#{giveaway_play_id} and giveaway_cd=#{giveaway_cd}
