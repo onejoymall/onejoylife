@@ -5,11 +5,11 @@
 <%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
 
 
-    <section class="subheader">
-        <div class="subTitle">주문/결제</div>
-    </section>
-    
-    <section class="wrap">
+<section class="subheader">
+    <div class="subTitle">주문/결제</div>
+</section>
+
+<section class="wrap">
     <form name="defaultForm" id="defaultForm" method="POST">
         <h2 class="pb-1">주문자 정보</h2>
         <hr>
@@ -19,7 +19,7 @@
         <input type="text" class="width-100 mb-05" name="order_user_email" id="order_user_email" value="<c:if test="${not empty sessionScope.email}">${sessionScope.email}</c:if>">
 
         <p class="text-md mt-2 mb-05">휴대폰 번호
-        <!-- Map 선언 -->
+            <!-- Map 선언 -->
             <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
 
             <c:if test="${empty userInfo.phone}">
@@ -34,29 +34,34 @@
                 <%--                                        ${phoneMap.key+status.count}/${item}<br>--%>
             </c:forEach>
         </p>
-            <select name="order_user_phone_a" id="order_user_phone_a" class="width-30 mb-05">
+        <select name="order_user_phone_a" id="order_user_phone_a" class="width-30 mb-05">
             <option value="010" <c:if test="${phoneMap.key1 eq \"010\"}">selected</c:if> >010</option>
             <option value="011" <c:if test="${phoneMap.key1 eq \"011\"}">selected</c:if>>011</option>
             <option value="016" <c:if test="${phoneMap.key1 eq \"016\"}">selected</c:if>>016</option>
             <option value="017" <c:if test="${phoneMap.key1 eq \"017\"}">selected</c:if>>017</option>
             <option value="018" <c:if test="${phoneMap.key1 eq \"018\"}">selected</c:if>>018</option>
             <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
-            </select>
-            <span> - </span>
-            <input type="text" class="width-30 mb-05" name="order_user_phone_b" id="order_user_phone_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
-            <span> - </span>
-            <input type="text" class="width-30 mb-05" name="order_user_phone_c" id="order_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
-            <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
+        </select>
+        <span> - </span>
+        <input type="text" class="width-30 mb-05" name="order_user_phone_b" id="order_user_phone_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
+        <span> - </span>
+        <input type="text" class="width-30 mb-05" name="order_user_phone_c" id="order_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
+        <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
+
+        <c:if test="${detail.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
+        <p class="text-md mt-2 mb-05">통관고유번호</p>
+        <input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
+        </c:if>
 
         <c:if test="${empty sessionScope.email}">
-            <p class="text-md mt-2 mb-05">비밀번호 입력</p>
-                <input type="password" name="password" class="sec1-in1">
-                <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
-            <p class="text-md mt-2 mb-05">비밀번호 입력 확인</p>
-                <input type="password"  name="password_cf" class="sec1-in1">
-                <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
+        <p class="text-md mt-2 mb-05">비밀번호 입력</p>
+        <input type="password" name="password" class="sec1-in1">
+        <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
+        <p class="text-md mt-2 mb-05">비밀번호 입력 확인</p>
+        <input type="password"  name="password_cf" class="sec1-in1">
+        <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
         </c:if>
-        
+
         <h2 class="pb-1 mt-4">배송지 정보</h2>
         <hr>
         <p class="text-md mt-2 mb-05">배송지 선택</p>
@@ -67,20 +72,20 @@
         </div>
         <p class="text-md mt-2 mb-05">받으시는 분</p>
         <input type="text" class="width-100 mb-05"  name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>">
-        
+
         <p class="text-md mt-2 mb-05">휴대폰 번호
-        <!-- Map 선언 -->
-        <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
-        <c:if test="${empty userInfo.phone}">
-            <c:set var="phoneNumber" value="" />
-        </c:if>
-        <c:if test="${not empty userInfo.phone}">
-            <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />
-        </c:if>
-        <c:forEach items="${fn:split(phoneNumber, '-') }" var="item" varStatus="status">
-            <c:set target="${phoneMap}" property="key${status.count}" value="${item}" />
-            <%--                                        ${phoneMap.key+status.count}/${item}<br>--%>
-        </c:forEach>
+            <!-- Map 선언 -->
+            <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
+            <c:if test="${empty userInfo.phone}">
+                <c:set var="phoneNumber" value="" />
+            </c:if>
+            <c:if test="${not empty userInfo.phone}">
+                <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />
+            </c:if>
+            <c:forEach items="${fn:split(phoneNumber, '-') }" var="item" varStatus="status">
+                <c:set target="${phoneMap}" property="key${status.count}" value="${item}" />
+                <%--                                        ${phoneMap.key+status.count}/${item}<br>--%>
+            </c:forEach>
         </p>
 
         <select name="delivery_user_tel_a" id="delivery_user_tel_a" class="width-30 mb-05">
@@ -98,7 +103,7 @@
         <input type="hidden" name="delivery_user_tel" id="delivery_user_tel" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.delivery_user_tel}</c:if>">
 
         <p class="text-md mt-2 mb-05">전화 번호
-        <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
+            <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
             <c:if test="${empty userInfo.phone}">
                 <c:set var="phoneNumber" value="" />
             </c:if>
@@ -128,22 +133,22 @@
         <div class="input-group mb-05">
             <input type="text" name="postcode" id="postcode" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
             <button type="button" id="daumMapCall" class="grey">우편번호 찾기</button>
-         </div>
-         <input type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
-         <input type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
+        </div>
+        <input type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
+        <input type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
         <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
-         
-         <p class="text-md mt-2 mb-05">배송시 요청사항</p>
-         <select class="full mt-05 mb-05" name="delivery_message_select" id="delivery_message_select" >
-             <option value="" disabled selected>요청사항</option>
-             <option value="">직접 받고 부재 시 문 앞</option>
-                          <option value="self">직접입력</option>
-         </select>
+
+        <p class="text-md mt-2 mb-05">배송시 요청사항</p>
+        <select class="full mt-05 mb-05" name="delivery_message_select" id="delivery_message_select" >
+            <option value="" disabled selected>요청사항</option>
+            <option value="">직접 받고 부재 시 문 앞</option>
+            <option value="self">직접입력</option>
+        </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
-         
-         <h2 class="pb-1 mt-4">주문상품 정보</h2>
-         <hr>
-         <ul class="product pt-1 pb-0">
+
+        <h2 class="pb-1 mt-4">주문상품 정보</h2>
+        <hr>
+        <ul class="product pt-1 pb-0">
             <%--<ul class="options">
                 <li>당첨번호</li>
                 <li class="red">123456</li>
@@ -154,9 +159,9 @@
                     <p>${detail.product_made_company_name}</p>
                     <h5>${detail.product_name}</h5>
                     <p class="grey">${detail.product_model}</p>
-                   <%-- <p class="option"><span>구성품</span> <br>
-                    · 30mm 1.4 여친렌즈 <br>
-                    · 추가배터리</p>--%>
+                    <%-- <p class="option"><span>구성품</span> <br>
+                     · 30mm 1.4 여친렌즈 <br>
+                     · 추가배터리</p>--%>
                 </li>
             </ul>
             <ul class="options">
@@ -173,7 +178,7 @@
                 <li><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </ul>
-        
+
         <%--<h2 class="mt-4">할인 정보</h2>
         <hr class="my-1">
         <ul class="calculator">
@@ -188,7 +193,7 @@
             <li>보유 쿠폰</li>
             <li>3 <span>장</span></li>
         </ul>--%>
-        
+
         <h2 class="pb-1 mt-4">결제 정보</h2>
         <hr>
         <div class="ck-box">
@@ -202,54 +207,54 @@
             <input type="radio" id="purchase03" name="payment_type_cd" value="vbank"><label for="purchase03">가상계좌</label>
             <%--<input type="radio" id="purchase03" name="purchase"><label for="purchase03">휴대폰결제</label>--%>
         </div>
-    </section>
+</section>
+<hr>
+<section class="wrap bg_grey">
+    <h1 class="pb-1">최종 결제 금액 확인</h1>
     <hr>
-    <section class="wrap bg_grey">
-        <h1 class="pb-1">최종 결제 금액 확인</h1>
-        <hr>
-        <ul class="calculator pt-2 pb-1">
-            <li class="text-lg">총 상품 금액</li>
-            <li><fmt:formatNumber value="${detail.product_user_payment *param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
-        </ul>
-       <ul class="calculator pb-1">
-            <li>할인금액</li>
-            <li>- <fmt:formatNumber value="${(detail.product_user_payment - detail.product_payment) * param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
-        </ul>
-<%--        <ul class="calculator pb-1">--%>
-<%--            <li>할인쿠폰</li>--%>
-<%--            <li>- 9,000 <span>원</span></li>--%>
-<%--        </ul>--%>
-        <ul class="calculator pb-1">
-            <li>배송비</li>
-            <c:if test="${not empty deliveryPayment}">
-                <li><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
-            </c:if>
-        </ul>
-        <hr class="grey my-1">
-        <ul class="calculator pb-1">
-            <li>최종 결제 금액</li>
-            <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
-        </ul>
-        <ul class="calculator pb-1">
-            <li>E-POINT 적립예정</li>
-            <li class="text-md red"><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> <span>원</span></li>
-        </ul>
-        <hr class="my-1">
-        <input type="checkbox" id="replysns" class="b8 mb-2">
-        <label for="replysns"><span class="red text-bold">필수</span> 주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?</label>
-    </section>
-    <div class="bottomBtns">
-        <ul>
-           <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
-        </ul>
-    </div>
+    <ul class="calculator pt-2 pb-1">
+        <li class="text-lg">총 상품 금액</li>
+        <li><fmt:formatNumber value="${detail.product_user_payment *param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+    </ul>
+    <ul class="calculator pb-1">
+        <li>할인금액</li>
+        <li>- <fmt:formatNumber value="${(detail.product_user_payment - detail.product_payment) * param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+    </ul>
+    <%--        <ul class="calculator pb-1">--%>
+    <%--            <li>할인쿠폰</li>--%>
+    <%--            <li>- 9,000 <span>원</span></li>--%>
+    <%--        </ul>--%>
+    <ul class="calculator pb-1">
+        <li>배송비</li>
+        <c:if test="${not empty deliveryPayment}">
+            <li><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+        </c:if>
+    </ul>
+    <hr class="grey my-1">
+    <ul class="calculator pb-1">
+        <li>최종 결제 금액</li>
+        <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+    </ul>
+    <ul class="calculator pb-1">
+        <li>E-POINT 적립예정</li>
+        <li class="text-md red"><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> <span>원</span></li>
+    </ul>
+    <hr class="my-1">
+    <input type="checkbox" id="replysns" class="b8 mb-2">
+    <label for="replysns"><span class="red text-bold">필수</span> 주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?</label>
+</section>
+<div class="bottomBtns">
+    <ul>
+        <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
+    </ul>
+</div>
 
-    <input type="hidden" name="payment" value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}">
-        <input type="hidden" name="order_no" value="${order_no}">
-        <input type="hidden" name="product_cd" value="${detail.product_cd}">
-        <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
+<input type="hidden" name="payment" value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}">
+<input type="hidden" name="order_no" value="${order_no}">
+<input type="hidden" name="product_cd" value="${detail.product_cd}">
+<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
 
-    </form>
+</form>
 
 
 <c:set var="req" value="${pageContext.request}" />
@@ -258,209 +263,209 @@
 <c:set var="noParamUrl" value="${baseURL}${requestPath}"/>
 
 <script>
-$(document).ready(function(){
-    $('#write').show();
-    $('#list').hide();
-    $('.qna').on('click',function(){
-        $(this).addClass('active');
-        $('.qna').not($(this)).removeClass('active');
-    })
-    $('#date li a').on('click',function(){
-        $(this).addClass('active');
-        $('#date li a').not($(this)).removeClass('active');
-    })
-});
-/**
- * 탭 function
- */
-function show(num){
-    if(num == 1){
-        $('#write').show();
-        $('#list').hide();
-        $('#tap1').addClass('active');
-        $('#tap2').removeClass('active');
-    } else if (num == 2) {
-        $('#write').hide();
-        $('#list').show();
-        $('#tap1').removeClass('active');
-        $('#tap2').addClass('active');
-    }
-}
+	$(document).ready(function(){
+		$('#write').show();
+		$('#list').hide();
+		$('.qna').on('click',function(){
+			$(this).addClass('active');
+			$('.qna').not($(this)).removeClass('active');
+		})
+		$('#date li a').on('click',function(){
+			$(this).addClass('active');
+			$('#date li a').not($(this)).removeClass('active');
+		})
+	});
+	/**
+	 * 탭 function
+	 */
+	function show(num){
+		if(num == 1){
+			$('#write').show();
+			$('#list').hide();
+			$('#tap1').addClass('active');
+			$('#tap2').removeClass('active');
+		} else if (num == 2) {
+			$('#write').hide();
+			$('#list').show();
+			$('#tap1').removeClass('active');
+			$('#tap2').addClass('active');
+		}
+	}
 </script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-    var IMP = window.IMP; // 생략해도 괜찮습니다.
-    IMP.init("imp78484974");
-    var formData = $('#defaultForm').serialize();
-    $("#submitPayment").on("click",function() {
-        if(!$('#replysns').is(":checked")){
-            $.toast({
-                text: "이용약관 동의 는 필수 항목입니다.",
-                showHideTransition: 'plain', //펴짐
-                position: 'mid-center',
-                heading: 'Error',
-                icon: 'error'
-            });
-        }else{
+	var IMP = window.IMP; // 생략해도 괜찮습니다.
+	IMP.init("imp78484974");
+	var formData = $('#defaultForm').serialize();
+	$("#submitPayment").on("click",function() {
+		if(!$('#replysns').is(":checked")){
+			$.toast({
+				text: "이용약관 동의 는 필수 항목입니다.",
+				showHideTransition: 'plain', //펴짐
+				position: 'top-right',
+				heading: 'Error',
+				icon: 'error'
+			});
+		}else{
 
-            // loginAuth(data.access_token);
-            // location.href=data.redirectUrl;
-            IMP.request_pay({ // param
-                pg: "kcp",
-                pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid:$('input[name=order_no]').val(),
-                name: "${detail.product_name}",
-                amount: ${detail.product_payment+deliveryPayment},
-                buyer_email: "${sessionScope.email}",
-                buyer_name: $('#order_user_name').val(),
-                buyer_tel: $('#order_user_phone').val(),
-                buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
-                buyer_postcode: $('#postcode').val(),
-                escrow:$('#escrow').is(":checked"),
-                kcpProducts : [
-                    {
-                        "orderNumber" : $('input[name=order_no]').val(),
-                        "name" : '${detail.product_name}',
-                        "quantity" : $('input[name=payment_order_quantity]').val(),
-                        "amount" : ${detail.product_payment+deliveryPayment},
-                    },
-                ],
-                m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",
-            }, function (rsp) { // callback
-                var formData = $('#defaultForm').serialize()
-                    +'&payment_class=PRODUCT'
-                    +'&success='+rsp.success
-                    +'&imp_uid='+rsp.imp_uid
-                    +'&merchant_uid='+rsp.merchant_uid
-                    +'&pg_provider='+rsp.pg_provider
-                    +'&pay_method='+rsp.pay_method
-                    +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg;
+			// loginAuth(data.access_token);
+			// location.href=data.redirectUrl;
+			IMP.request_pay({ // param
+				pg: "kcp",
+				pay_method:$('input[name=payment_type_cd]:checked').val(),
+				merchant_uid:$('input[name=order_no]').val(),
+				name: "${detail.product_name}",
+				amount: ${detail.product_payment+deliveryPayment},
+				buyer_email: "${sessionScope.email}",
+				buyer_name: $('#order_user_name').val(),
+				buyer_tel: $('#order_user_phone').val(),
+				buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
+				buyer_postcode: $('#postcode').val(),
+				escrow:$('#escrow').is(":checked"),
+				kcpProducts : [
+					{
+						"orderNumber" : $('input[name=order_no]').val(),
+						"name" : '${detail.product_name}',
+						"quantity" : $('input[name=payment_order_quantity]').val(),
+						"amount" : ${detail.product_payment+deliveryPayment},
+					},
+				],
+				m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",
+			}, function (rsp) { // callback
+				var formData = $('#defaultForm').serialize()
+					+'&payment_class=PRODUCT'
+					+'&success='+rsp.success
+					+'&imp_uid='+rsp.imp_uid
+					+'&merchant_uid='+rsp.merchant_uid
+					+'&pg_provider='+rsp.pg_provider
+					+'&pay_method='+rsp.pay_method
+					+'&pg_type='+rsp.pg_type
+					+'&error_msg='+rsp.error_msg;
 
-                var alertType;
-                var showText;
-                if(rsp.success){
-                    jQuery.ajax({
-                        type: "POST",
-                        url: "/SavePayment",
-                        data: formData,
-                        success: function (data) {
+				var alertType;
+				var showText;
+				if(rsp.success){
+					jQuery.ajax({
+						type: "POST",
+						url: "/SavePayment",
+						data: formData,
+						success: function (data) {
 
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'mid-center',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
+							if (data.validateError) {
+								$('.validateError').empty();
+								$.each(data.validateError, function (index, item) {
+									if(index == "Error"){//일반에러메세지
+										alertType = "error";
+										showText = item;
+									}else{
+										alertType = "error";
+										showText = index + " (은) " + item;
+									}
+									// $.toast().reset('all');//토스트 초기화
+									$.toast({
+										text: showText,
+										showHideTransition: 'plain', //펴짐
+										position: 'top-right',
+										heading: 'Error',
+										icon: 'error'
+									});
+								});
 
-                            } else {
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "/SaveDeliveInfo",
-                                    data: $('#defaultForm').serialize(),
-                                    // enctype: 'multipart/form-data',
-                                    success: function (data) {
-                                        if (data.validateError) {
-                                            $('.validateError').empty();
-                                            $.each(data.validateError, function (index, item) {
-                                                // $('#validateError'+index).removeClass('none');
-                                                // $('#validateError'+index).html('* '+item);
-                                                if (index == "Error") {//일반에러메세지
-                                                    alertType = "error";
-                                                    showText = item;
-                                                } else {
-                                                    alertType = "error";
-                                                    showText = index + " (은) " + item;
-                                                }
+							} else {
+								jQuery.ajax({
+									type: "POST",
+									url: "/SaveDeliveInfo",
+									data: $('#defaultForm').serialize(),
+									// enctype: 'multipart/form-data',
+									success: function (data) {
+										if (data.validateError) {
+											$('.validateError').empty();
+											$.each(data.validateError, function (index, item) {
+												// $('#validateError'+index).removeClass('none');
+												// $('#validateError'+index).html('* '+item);
+												if (index == "Error") {//일반에러메세지
+													alertType = "error";
+													showText = item;
+												} else {
+													alertType = "error";
+													showText = index + " (은) " + item;
+												}
 
-                                                $.toast({
-                                                    text: showText,
-                                                    showHideTransition: 'plain', //펴짐
-                                                    position: 'mid-center',
-                                                    heading: 'Error',
-                                                    icon: 'error'
-                                                });
-                                            });
-                                        }
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("error");
-                                    }
-                                });
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
-                }else{
-                    $.toast({
-                        text: rsp.error_msg,
-                        showHideTransition: 'plain', //펴짐
-                        position: 'mid-center',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                }
-            });
-        }
+												$.toast({
+													text: showText,
+													showHideTransition: 'plain', //펴짐
+													position: 'top-right',
+													heading: 'Error',
+													icon: 'error'
+												});
+											});
+										}
+									},
+									error: function (xhr, status, error) {
+										alert("error");
+									}
+								});
+								// loginAuth(data.access_token);
+								location.href=data.redirectUrl;
+							}
+						},
+						error: function (xhr, status, error) {
+							alert("error");
+						}
+					});
+				}else{
+					$.toast({
+						text: rsp.error_msg,
+						showHideTransition: 'plain', //펴짐
+						position: 'top-right',
+						heading: 'Error',
+						icon: 'error'
+					});
+				}
+			});
+		}
 
-    });
+	});
 
-    $(".order_user_phone").on("focusout",function () {
-        var phoneA = $("#order_user_phone_a").val();
-        var phoneB = $("#order_user_phone_b").val();
-        var phoneC = $("#order_user_phone_c").val();
-        $("#order_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
-    })
-    $(".delivery_user_phone").on("focusout",function () {
-        var phoneA = $("#delivery_user_phone_a").val();
-        var phoneB = $("#delivery_user_phone_b").val();
-        var phoneC = $("#delivery_user_phone_c").val();
-        $("#delivery_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
-        console.log(phoneA+"-"+phoneB+"-"+phoneC)
-    })
-    $(".delivery_user_tel").on("focusout",function () {
-        var phoneA = $("#delivery_user_tel_a").val();
-        var phoneB = $("#delivery_user_tel_b").val();
-        var phoneC = $("#delivery_user_tel_c").val();
-        $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
-        console.log(phoneA+"-"+phoneB+"-"+phoneC)
-    })
+	$(".order_user_phone").on("focusout",function () {
+		var phoneA = $("#order_user_phone_a").val();
+		var phoneB = $("#order_user_phone_b").val();
+		var phoneC = $("#order_user_phone_c").val();
+		$("#order_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
+	})
+	$(".delivery_user_phone").on("focusout",function () {
+		var phoneA = $("#delivery_user_phone_a").val();
+		var phoneB = $("#delivery_user_phone_b").val();
+		var phoneC = $("#delivery_user_phone_c").val();
+		$("#delivery_user_phone").val(phoneA+"-"+phoneB+"-"+phoneC);
+		console.log(phoneA+"-"+phoneB+"-"+phoneC)
+	})
+	$(".delivery_user_tel").on("focusout",function () {
+		var phoneA = $("#delivery_user_tel_a").val();
+		var phoneB = $("#delivery_user_tel_b").val();
+		var phoneC = $("#delivery_user_tel_c").val();
+		$("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
+		console.log(phoneA+"-"+phoneB+"-"+phoneC)
+	})
 
-    var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
-    //패스워드 체크
-    $(document).on('keyup','input[name=password]',function () {
-        if(!$(this).val().match(mathPassword)){
-            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
-            $("#passwordValidation").removeClass("text-success");
-        }else{
-            $("#passwordValidation").addClass("text-success");
-        }
-    })
-    $(document).on('keyup','input[name=password_cf]',function () {
-        if(!$(this).val().match($('input[name=password]').val())){
-            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
-            $("#password_cfValidation").removeClass("text-success");
-        }else{
-            $("#password_cfValidation").addClass("text-success");
-        }
-    })
+	var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+	//패스워드 체크
+	$(document).on('keyup','input[name=password]',function () {
+		if(!$(this).val().match(mathPassword)){
+			$("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
+			$("#passwordValidation").removeClass("text-success");
+		}else{
+			$("#passwordValidation").addClass("text-success");
+		}
+	})
+	$(document).on('keyup','input[name=password_cf]',function () {
+		if(!$(this).val().match($('input[name=password]').val())){
+			$("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
+			$("#password_cfValidation").removeClass("text-success");
+		}else{
+			$("#password_cfValidation").addClass("text-success");
+		}
+	})
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

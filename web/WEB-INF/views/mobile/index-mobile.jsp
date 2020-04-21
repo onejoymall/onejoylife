@@ -28,9 +28,9 @@
             <h2 class="red">오늘의 특가 <i class="ri-arrow-right-s-line"></i></h2>
             <h4 class="mt-05">오늘의 특가 상품 구매시 E-POINT 적립 2배!</h4>
         </div>
-        <ul class="mainList-big">
+        <ul class="mainList-sm">
             <c:if test="${not empty productSpList}">
-                <c:forEach var="productSpList" items="${productSpList}" varStatus="status" end="1">
+                <c:forEach var="productSpList" items="${productSpList}" varStatus="status" end="5">
                     <li>
                         <a href="/product/productDetail?product_cd=${productSpList.product_cd}">
                             <div class="img-box">
@@ -38,27 +38,13 @@
 <%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
-                            <div class="mainList-big-text">
+                            <div class="mainList-sm-text">
                                 <p class="list-title">${productSpList.product_name}</p>
                                 <p><ins><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</del></p>
                                 <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
                             </div>
                         </a>
                     </li>
-            <%--<li>
-                <div class="img-box">
-                    <a href="#">
-                       <img src="assets/img/m-lists.png" alt="">
-                    </a>
-                    <p class="saleBox">35%</p>
-                    <a href="#" class="share-ic"></a>
-                </div>
-                <a href="#" class="mainList-big-text">
-                    <p class="list-title">[간편즉석] 육개장600G+갈비탕600G+설렁탕600G+소내장탕600G</p>
-                    <p><ins>15,080원</ins><del>23,200원</del></p>
-                    <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
-                </a>
-            </li>--%>
                 </c:forEach>
             </c:if>
             <c:if test="${empty productSpList}">
@@ -98,20 +84,6 @@
             <c:if test="${empty productList}">
                 <li>표시할 내용이 없습니다.</li>
             </c:if>
-            <%--<li>
-                <div class="img-box">
-                    <a href="#">
-                       <img src="assets/img/m-list-sm.png" alt="">
-                    </a>
-                    <p class="saleBox">35%</p>
-                    <a href="#" class="share-ic"></a>
-                </div>
-                <a href="#" class="mainList-sm-text">
-                    <p class="list-title">[간편즉석] 육개장600G+갈비탕600G+설렁탕600G+소내장탕600G</p>
-                    <p><ins>15,080원</ins><del>23,200원</del></p>
-                    <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
-                </a>
-            </li>--%>
         </ul>
     </div>
     <div class="mt-1">
@@ -185,20 +157,6 @@
             <c:if test="${empty productList}">
                 <li>표시할 내용이 없습니다.</li>
             </c:if>
-            <%--<li>
-                <div class="img-box">
-                    <a href="#">
-                       <img src="assets/img/m-list-sm.png" alt="">
-                    </a>
-                    <p class="saleBox">35%</p>
-                    <a href="#" class="share-ic"></a>
-                </div>
-                <a href="#" class="mainList-sm-text">
-                    <p class="list-title">[간편즉석] 육개장600G+갈비탕600G+설렁탕600G+소내장탕600G</p>
-                    <p><ins>15,080원</ins><del>23,200원</del></p>
-                    <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
-                </a>
-            </li>--%>
         </ul>
     </div>
     <div class="mt-1 bg_grey2 clearfix">
@@ -238,18 +196,6 @@
                     </li>
                 </c:forEach>
             </c:if>
-            <%--<li>
-                <a href="#">
-                   <div class="img-box">
-                        <img src="assets/img/event3.png" alt="">
-                    </div>
-                </a>
-                <div class="mainList-big2-text">
-                    <p class="list-title"><a href="#">달달한게 먹고싶어</a></p>
-                    <p class="info-date">2020/04/01~2020/05/01</p>
-                    <p>100개 패션 브랜드의 최대 95% 연말 세일</p>
-                </div>
-            </li>--%>
         </ul>
     </div>
     <div class="mainList-wrap mt-1 clearfix">
@@ -257,17 +203,17 @@
             <h2 class="red">경품 추첨 <i class="ri-arrow-right-s-line"></i></h2>
             <h4 class="mt-05">E-POINT 행운의 주인공이 되어 보세요!</h4>
         </div>
-        <ul class="mainList-big">
+        <ul class="mainList-sm">
             <c:if test="${not empty giveawaylist}">
-                <c:forEach var="list" items="${giveawaylist}" varStatus="status" end="2">
-                    <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
-                        <li>
+                <c:forEach var="list" items="${giveawaylist}" varStatus="status" end="5">
+                    <li>
+                        <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
                             <div class="img-box">
                                    <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'">
             <!--                    <p class="saleBox">35%</p>-->
                                 <a href="#" class="share-ic"></a>
                             </div>
-                            <div class="mainList-big-text">
+                            <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>
                                 <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</ins></p>
                                 <div class="progress-wrap">
@@ -278,33 +224,13 @@
                                     <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중</p>
                                 </div>
                             </div>
-                        </li>
-                    </a>
+                        </a>
+                    </li>
                 </c:forEach>
             </c:if>
             <c:if test="${empty giveawaylist}">
                 <li>표시할 내용이 없습니다.</li>
             </c:if>
-            <%--<li>
-                <div class="img-box">
-                    <a href="#">
-                       <img src="assets/img/m-lists.png" alt="">
-                    </a>
-<!--                    <p class="saleBox">35%</p>-->
-                    <a href="#" class="share-ic"></a>
-                </div>
-                <a href="#" class="mainList-big-text">
-                    <p class="list-title">[간편즉석] 육개장600G+갈비탕600G+설렁탕600G+소내장탕600G</p>
-                    <p><ins>15,080원</ins></p>
-                    <div class="progress-wrap">
-                        <p class="progress-now">참여율 <b class="red">80%</b></p>
-                        <div class="progress-bar">
-                            <div class="progress-bar-active" style="width:80%"></div>
-                        </div>
-                        <p class="parti"><span>150</span>명 참여 중</p>
-                    </div>
-                </a>
-            </li>--%>
         </ul>
     </div>
     <div class="mt-1">

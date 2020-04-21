@@ -37,6 +37,7 @@ public class DeliveryInfoVO extends PaymentVO {
     private String return_user_phone;
     private String refund_user_name;
     private String refund_user_phone;
+    private String customs_clearance_number;
 
     //반품
     private String refund_bank_name;
@@ -46,6 +47,11 @@ public class DeliveryInfoVO extends PaymentVO {
     private String refund_send_date;
     private String refund_delivery_t_code;
     private String refund_delivery_t_invoice;
+
+
+    public void setCustoms_clearance_number(String customs_clearance_number) {
+        this.customs_clearance_number = customs_clearance_number;
+    }
 
     public String getRefund_delivery_t_code() {
         return refund_delivery_t_code;
