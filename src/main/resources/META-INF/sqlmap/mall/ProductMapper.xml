@@ -212,6 +212,36 @@
         <if test="pd_payment_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_cd} ]]></if>
         <if test="pd_payment_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_class_cd} ]]></if>
     </select>
+    <select id="getFavoritesProductList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+    	SELECT A.product_id, 
+				(select Z.code_name from code Z where Z.code='product_brand' and Z.code_value =B.product_brand) as product_brand_name,
+				ifnull(B.product_payment,0) product_payment,
+				(select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
+				B.*,
+				(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
+		FROM product_payment_history A
+		LEFT JOIN product B
+		ON A.product_id = B.product_id
+		LEFT JOIN user C
+		ON A.pd_payment_user_id = C.usr_id
+		WHERE C.email = #{email}
+		GROUP BY A.product_id
+		HAVING COUNT(A.product_id) > 1
+		ORDER BY COUNT(A.product_id) desc
+		LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    <select id="getFavoritesProductListCount" resultType="Integer" parameterType="java.util.HashMap">
+    	SELECT ifnull(count(*),0)		
+		FROM( SELECT A.product_id
+		FROM product_payment_history A
+		LEFT JOIN product B
+		ON A.product_id = B.product_id
+		LEFT JOIN user C
+		ON A.pd_payment_user_id = C.usr_id
+		WHERE C.email = #{email}
+		GROUP BY A.product_id
+		HAVING COUNT(A.product_id) > 1) tmp
+    </select>
     <insert id="insertProductFile" parameterType="com.webapp.board.common.FileVO" >
         INSERT INTO product_file (key_id, file_name, real_name, file_size,file_link,file_order)
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
