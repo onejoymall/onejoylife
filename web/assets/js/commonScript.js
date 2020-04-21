@@ -2309,6 +2309,16 @@ $(document).ready(function(){
 
         child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });
+    
+    $('#review-write').click(function () {
+        var child;
+        var order_no=$(this).attr("data-id");
+        if(child != undefined){
+            child.close()
+        }
+
+        child = window.open('/Popup/review-write?order_no='+order_no,'_blank','width=750, height=900');
+    });
 
 
     $('input[name=product_delivery_International_type]').on("click",function () {

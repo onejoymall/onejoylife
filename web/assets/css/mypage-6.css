@@ -274,7 +274,7 @@ main{overflow: hidden;}
 .lis-txt-box1-3{border: 1px solid #4159d3;}
 .lis-txt-box > span {display: block;}
 .lis-txt-box1-1 > span,
-.lis-txt-box1-4 > span {color: #da394d;}
+.lis-txt-box1-4 > a {color: #da394d;}
 .lis-txt-box1-2 > span {color: #62606b;}
 .lis-txt-box1-3 > a {color: #4159d3;}
 .pointer > div > span {

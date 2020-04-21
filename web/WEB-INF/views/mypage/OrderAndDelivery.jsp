@@ -74,7 +74,7 @@
                                     <tr>
                                         <td class="my-lis-1">
                                             <p><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></p>
-                                            <p><a href="">${paymentList.order_no}</a></p>
+                                            <p><a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}">${paymentList.order_no}</a></p>
                                         </td>
                                         <td class="my-lis-2">
                                             <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
@@ -106,10 +106,12 @@
                                                     <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.order_no}">배송조회</a>
                                                 </div>
                                             </c:if>
-
-                                            <div class="lis-txt-box lis-txt-box1-4 dis-none">
-                                                <span>상품평작성</span>
+											
+											<c:if test="${paymentList.payment_status != 'O'}">
+                                            <div class="lis-txt-box lis-txt-box1-4">
+                                                <a href="#" id="review-write" data-id="${paymentList.order_no}"><span>상품평작성</span></a>
                                             </div>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

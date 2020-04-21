@@ -4,6 +4,7 @@ import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
 import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.UserVO;
@@ -36,6 +37,9 @@ public class PopupController {
     UserDAO userDAO;
     @Autowired
     DeliveryDAO deliveryDAO;
+    @Autowired
+    PaymentDAO PaymentDAO;
+    
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         deliveryInfoVO.setDelivery_t_key(t_key);
@@ -104,5 +108,16 @@ public class PopupController {
             e.printStackTrace();
         }
        return "popup/kakaologin";
+    }
+    
+    @RequestMapping("/Popup/review-write")
+    public String writeReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO) throws Exception {
+    	try {
+    		model.addAttribute("productDetail",PaymentDAO.getPaymentDetail(params));
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	model.addAttribute("style", "write-review");
+    	return "popup/review-write";
     }
 }
