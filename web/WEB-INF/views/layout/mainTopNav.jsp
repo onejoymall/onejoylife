@@ -64,6 +64,27 @@
                 <form action="/product/search-page" id="main-search-form" name="main-search-form" method="get">
                     <input type="text" id="main-search" name="product_name" class="input-text" value="${param.product_name}">
                     <button id="main-search-btn" type="submit" class="search-btn"></button>
+                <c:if test="${not empty param.product_ct}">
+                    <input type="hidden" name="product_ct" value="${param.product_ct}">
+                </c:if>
+                <c:if test="${not empty param.product_delivery_International_type}">
+                    <input type="hidden" name="product_delivery_International_type" value="${param.product_delivery_International_type}">
+                </c:if>
+                <c:if test="${not empty param.product_delivery_payment_class}">
+                    <input type="hidden" name="product_delivery_payment_class" value="${param.product_delivery_payment_class}">
+                </c:if>
+                <c:if test="${not empty param.product_brand}">
+                    <input type="hidden" name="product_brand" value="${param.product_brand}">
+                </c:if>
+                <c:if test="${not empty param.product_option_color}">
+                    <input type="hidden" name="product_option_color" value="${param.product_option_color}">
+                </c:if>
+                <c:if test="${not empty param.product_score}">
+                    <input type="hidden" name="product_score" value="${param.product_score}">
+                </c:if>
+                <c:if test="${not empty param.product_score}">
+                    <input type="hidden" name="product_score" value="${param.product_score}">
+                </c:if>
                 </form>
             </div>
         </div>

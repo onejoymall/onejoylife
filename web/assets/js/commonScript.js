@@ -2303,6 +2303,7 @@ $(document).ready(function(){
         $('#main-search-form').append(
             '<input type="hidden" name="product_delivery_International_type" value="'+value+'">'
         )
+        $('#main-search-form').submit();
     })
     // $('input[name=product_delivery_International_type]').on("click",function () {
     //     $('#main-search-form input[name=product_delivery_International_type]').remove();
@@ -2324,7 +2325,8 @@ $(document).ready(function(){
         })
         $('#main-search-form').append(
             '<input type="hidden" name="product_delivery_payment_class" value="'+value+'">'
-        )
+        );
+        $('#main-search-form').submit();
     })
     $('input[name=product_brand]').on("click",function () {
         $('#main-search-form input[name=product_brand]').remove();
@@ -2337,7 +2339,8 @@ $(document).ready(function(){
         })
         $('#main-search-form').append(
             '<input type="hidden" name="product_brand" value="'+value+'">'
-        )
+        );
+        $('#main-search-form').submit();
     })
     $('input[name=product_option_color]').on("click",function () {
         $('#main-search-form input[name=product_option_color]').remove();
@@ -2350,7 +2353,8 @@ $(document).ready(function(){
         })
         $('#main-search-form').append(
             '<input type="hidden" name="product_option_color" value="'+value+'">'
-        )
+        );
+        $('#main-search-form').submit();
     })
     $('input[name=product_score]').on("click",function () {
         $('#main-search-form input[name=product_score]').remove();
@@ -2363,7 +2367,8 @@ $(document).ready(function(){
         })
         $('#main-search-form').append(
             '<input type="hidden" name="product_score" value="'+value+'">'
-        )
+        );
+        $('#main-search-form').submit();
     })
     function setPaymentfilter(to,be) {
         var dataId = $('this').attr('data-id');
@@ -2375,6 +2380,7 @@ $(document).ready(function(){
             )
             $('#searchToPayment').val(to);
             $('#searchBePayment').val(be);
+        $('#main-search-form').submit();
     }
 
     $('.back-arr').on("click",function () {
