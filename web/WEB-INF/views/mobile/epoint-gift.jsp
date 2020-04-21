@@ -8,6 +8,7 @@
     </section>
     <section class="wrap category-wrap">
         <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">1,017</span>개의 상품이 등록되어 있습니다.</p>
+
         <article class="epoint-gift-wrap">
             <div class="inner clearfix">
                 <div class="sort-tab clearfix">

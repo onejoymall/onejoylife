@@ -45,7 +45,43 @@ function commonAjaxCall(type,url,formData){
         }
     });
 }
+function commonAjaxListCall(type,url,formData){
 
+    var dataList = $.ajax({
+        type: type,
+        url: url,
+        data:formData,
+        async: false,
+        success: function (data) {
+
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+    }).responseText;
+    return JSON.parse(dataList);
+}
 //비회원 결제
 $(document).on("click","#paymentSubmit",function () {
     if(isLogin==''){
@@ -1885,7 +1921,7 @@ $(document).ready(function(){
     //상품상세보기
     function defaultModal (product_cd){
             var file_link='';
-            $(".modal").attr("style", "display:block");
+            $("#modelDetail").attr("style", "display:block");
             var resultData;
             jQuery.ajax({
                 type: 'POST',
@@ -2411,3 +2447,69 @@ $(document).ready(function(){
         $(this).find($('.gnb-submenu-3dp')).css({'min-height':+dp2Height+'px'});
     });
 });
+
+//상품코드정보 조회 모달
+$(".codeSrc").click(function(e){
+    $('.dataListView').html();
+    e.preventDefault();
+    $(".codeSrcModal").attr("style", "display:block");
+    $('body').css("overflow", "hidden");
+    $(".srcButton").attr("data-id",$(this).attr("data-id"));
+    var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":$(this).attr("data-id")});
+    var html;
+    $.each(dataList.getProductCodeList,function (key,value) {
+        html +='' +
+            '<tr data-id="'+value.product_class_code+'">' +
+            '<td><div class="codeRadio"></div></td>' +
+            '<td>'+value.product_class_code+'</td>' +
+            '<td>'+value.product_class_name+'</td>' +
+            '<td>'+value.product_class_code_type_name+'</td>' +
+            '</tr>';
+    })
+    $('.dataListView').html(html);
+
+    callTableTrStyle($(this).attr("data-id"))
+});
+//상품코드등록
+$(".srcButton").click(function(e){
+    commonAjaxListCall('POST','/Save/codeInsert',{"product_class_code_type":$(this).attr("data-id"),"product_class_name":$('input[name=product_class_name]').val()});
+    // commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":$(this).attr("data-id")});
+    var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":$(this).attr("data-id")});
+    var html;
+    $.each(dataList.getProductCodeList,function (key,value) {
+        html +='' +
+            '<tr data-id="'+value.product_class_code+'">' +
+            '<td><div class="codeRadio"></div></td>' +
+            '<td>'+value.product_class_code+'</td>' +
+            '<td>'+value.product_class_name+'</td>' +
+            '<td>'+value.product_class_code_type_name+'</td>' +
+            '</tr>';
+    })
+    $('.dataListView').html(html);
+    callTableTrStyle($(this).attr("data-id"))
+});
+
+function callTableTrStyle(type){
+    $(".codeSrcTable tbody tr").on("click",function(){
+        $(".codeSrcTable tbody tr").removeClass('active');
+        $(this).addClass('active');
+        if(type == "O"){
+            $('input[name=product_origin]').val( $(this).attr("data-id"));
+        }
+        if(type == "B"){
+            $('input[name=product_brand]').val( $(this).attr("data-id"));
+        }
+        if(type == "M"){
+            $('input[name=product_made_company_cd]').val( $(this).attr("data-id"));
+        }
+        if(type == "T"){
+            $('input[name=product_trend]').val( $(this).attr("data-id"));
+        }
+        if(type == "S"){
+            $('input[name=product_supplier]').val( $(this).attr("data-id"));
+        }
+
+        $(".codeSrcModal").attr("style", "display:none");
+    });
+
+}

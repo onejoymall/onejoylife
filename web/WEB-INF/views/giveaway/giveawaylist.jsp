@@ -21,6 +21,7 @@
                 <div class="sort-tab">
                     <div class="sort-tab-left">
                         <button type="button" class="sort-tab-item <c:if test="${empty searchVO.sortOrder}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/giveaway"/>'">ALL</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 1}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=DESC&sortOrder=1&parti_rate=100"/>'">추첨완료</button>
                         <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=ASC&sortOrder=2"/>'">낮은가격순</button>
                         <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=DESC&sortOrder=3"/>'">높은가격순</button>
                     </div>

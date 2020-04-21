@@ -189,16 +189,16 @@ input[type="radio"] {
     line-height: 1.7rem;
     color: #6a747d;
 }
-input[id="sec2-ra"] + label
+input[name="payment_type_cd"] + label
 {
     float: left;
     display: block;
-    width: 20px;
+    width: 200px;
     height: 28px;
     background: url(../img/icon/but-g-1.png)no-repeat center / 20px;
     cursor: pointer;
 }
-input[id="sec2-ra"]:checked + label
+input[id="payment_type_cd"]:checked + label
 {
     background: url(../img/icon/but-g-2.png)no-repeat center / 20px;
 }
