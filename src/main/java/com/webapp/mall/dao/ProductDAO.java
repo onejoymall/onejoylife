@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,14 @@ public class ProductDAO {
     public Integer getProductListCount(SearchVO searchVO) throws SQLException {
         Integer getProductListCount=sql.selectOne("mall.ProductMapper.getProductListCount",searchVO);
         return getProductListCount;
+    }
+    public List<Map<String, Object>> getFavoritesProductList(Map<String,Object> params) throws SQLException {
+    	List<Map<String, Object>> getFavoritesProductList = sql.selectList("mall.ProductMapper.getFavoritesProductList",params);
+    	return getFavoritesProductList;
+    }
+    public Integer getFavoritesProductListCount(Map<String,Object> params) throws SQLException {
+    	Integer getFavoritesProductListCount=sql.selectOne("mall.ProductMapper.getFavoritesProductListCount",params);
+    	return getFavoritesProductListCount;
     }
     public Map<String,Object> getProductViewDetail(Map<String,Object> params) throws SQLException {
         Map<String,Object> getProductViewDetail=sql.selectOne("mall.ProductMapper.getProductViewDetail",params);

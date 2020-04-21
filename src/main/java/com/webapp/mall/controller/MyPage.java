@@ -2,6 +2,7 @@ package com.webapp.mall.controller;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +35,7 @@ import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.manager.vo.MgUserVO;
 @Controller
 public class MyPage {
     @Autowired
@@ -231,8 +234,8 @@ public class MyPage {
                 params.put("cart_user_id",userInfo.get("usr_id"));
             }
             //페이징
-            searchVO.setDisplayRowCount(5);
-            searchVO.setStaticRowEnd(5);
+            searchVO.setDisplayRowCount(1000);
+            searchVO.setStaticRowEnd(1000);
             searchVO.pageCalculate(cartDAO.getCartListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
@@ -270,8 +273,8 @@ public class MyPage {
                 params.put("user_id",userInfo.get("usr_id"));
             }
             //페이징
-            searchVO.setDisplayRowCount(5);
-            searchVO.setStaticRowEnd(5);
+            searchVO.setDisplayRowCount(1000);
+            searchVO.setStaticRowEnd(1000);
             searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
@@ -473,10 +476,50 @@ public class MyPage {
     }
     //자주 구매하는 상품
     @RequestMapping(value="/MyPage/Favorites")
-    public String myPageFavorites(Model model) {
+    public String myPageFavorites(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, HttpServletRequest request) throws Exception {
+        try {
+        	params.put("email", session.getAttribute("email"));
+        	searchVO.setDisplayRowCount(10);
+        	searchVO.setStaticRowEnd(10);
+        	Integer favCnt = productDAO.getFavoritesProductListCount(params);
+        	List<Map<String,Object>> list = null;
+        	if(favCnt > 0) {
+        		searchVO.pageCalculate(favCnt);
+        		params.put("displayRowCount", searchVO.getDisplayRowCount());
+        		params.put("rowStart", searchVO.getRowStart());
+                list = productDAO.getFavoritesProductList(params);
+        	}else {
+        		//상품목록
+
+                searchVO.setDisplayRowCount(8);
+                searchVO.setStaticRowEnd(8);
+
+                searchVO.pageCalculate(1);
+                searchVO.setProduct_sale_yn("Y");
+                List<Map<String,Object>> productList = productDAO.getProductList(searchVO);
+                model.addAttribute("productList", productList);
+                model.addAttribute("searchVO", searchVO);
+        	}
+
+            for(Map<String,Object> map : list) {
+            	Integer deliveryPayment = deliveryPayment(map);
+                map.put("deliveryPayment",deliveryPayment);
+            }
+            model.addAttribute("list", list);
+            model.addAttribute("table_name", "product_payment_history");
+            model.addAttribute("Pk", "product_cd");
+            model.addAttribute("searchVO", searchVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         model.addAttribute("leftNavOrder", 9);
         model.addAttribute("style", "mypage-9");
-        return "mypage/Favorites";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-9";
+        } else {
+            return "mypage/Favorites";
+        }
     }
     //경품 체험
     @RequestMapping(value="/MyPage/GiveawayExperience")
@@ -731,5 +774,70 @@ public class MyPage {
         }
 
         return params;
+    }
+  //배송비
+    public Integer deliveryPayment( Map<String,Object> params)throws IOException {
+        Integer deliveryPayment=0;
+        try{
+            //배송방법이 없으면 입력값 고정 출력
+            if(params.get("product_delivery_class").equals("F") ){
+                deliveryPayment=0;
+            }else {
+                //배송방법이 개별이면 사용자 선택
+                String splitString = (String)params.get("product_delivery_type");//배송방법
+                String[] splitArray = splitString.split( "\\|");
+                //관리자가 지정한 배송방법을 출력해준다 경품 상품 모두 동일한 코드사용
+                params.put("code","product_delivery_type");
+                params.put("code_values",splitArray);
+                List<Map<String,Object>> selector = selectorDAO.getSelector(params);
+                params.put("selector",selector);
+            }
+
+            //관리자가 지정한 배송구분별 배송비용을 출력한다.
+            String splitDeliveryPaymentString=(String)params.get("product_delivery_payment");//구분별 배송비
+            String delivery_payment_class = (String) params.get("product_delivery_payment_class");
+            Integer product_payment =(Integer)params.get("product_payment");
+            Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
+            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+            if ("T".equals(delivery_payment_class)) {
+                deliveryPayment=0;
+            } else if ("R".equals(delivery_payment_class)) {
+                deliveryPayment = Integer.parseInt(splitDeliveryPaymentString);
+            } else if ("M".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeM = splitDeliveryPaymentString.split("\\|");
+                if(product_payment <= Integer.parseInt(splitDeliveryTypeM[0])){
+                    deliveryPayment = Integer.parseInt(splitDeliveryTypeM[1]);
+                }
+            } else if ("D".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeD = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeD.length; i++) {
+                    if(product_payment <= Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[0]) && product_payment > Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeD[i].split("\\|")[2]);
+                    }
+                }
+            } else if ("W".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeW = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeW.length; i++) {
+                    if(product_kg >= Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[0]) && product_kg > Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeW[i].split("\\|")[2]);
+                    }
+                }
+
+            } else if ("C".equals(delivery_payment_class)) {
+                String[] splitDeliveryTypeC = splitDeliveryPaymentString.split("\\//");
+
+                for (int i = 0; i < splitDeliveryTypeC.length; i++) {
+                    if(payment_order_quantity >= Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[0]) && payment_order_quantity > Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[1]) ){
+                        deliveryPayment += Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2]);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return deliveryPayment;
     }
 }

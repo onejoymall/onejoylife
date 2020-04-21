@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -20,10 +21,14 @@
                     <div class="sec4-txt">
                         <p class="txt-tit">자주 구매하는 상품</p>
                         <div class="txt-right">
-                            <button type="button" id="del-chk-btn">삭제하기</button>
-<%--                            <button type="button" id="cart-chk-btn">장바구니 담기</button>--%>
+                        <c:if test="${not empty list}">
+                            <!-- <button type="button" id="del-chk-btn " class="cartPaymentOrder txt-color2">바로결제</button> -->
+                            <button type="button" id="" class="txt-color3 addChkFavorites">찜하기</button>
+                            <button type="button" id="cart-chk-btn" class="txt-color1 addChkCart">장바구니 담기</button>
+                        </c:if>
                         </div>
                     </div>
+                    
                     <table class="sec4-lis">
                         <colgroup>
                             <col style="width: 125px;">
@@ -34,8 +39,7 @@
                         <thead class="lis-head">
                         <tr>
                             <th>
-                                <input type="checkbox" id="tr-chk" name="tr-chk">
-                                <label for="tr-chk"></label>
+                                <c:if test="${not empty list}"><input type="checkbox" id="tr-ck1-1"><label for="tr-ck1-1" class="tr-icon"></label></c:if>
                             </th>
                             <th>상품정보</th>
                             <th>가격</th>
@@ -46,19 +50,28 @@
                         <c:if test="${not empty list}">
                             <c:forEach var="list" items="${list}" varStatus="status">
                                 <tr>
-                                    <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.cart_cd}"><label for="body-ck1-${status.index}"></label></td>
-                                    <td><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
-                                    <td class="p-box">
-                                        <p>${list.product_brand}</p>
-                                        <p>${list.product_name}</p>
-                                        <p>${list.product_model_name}</p>
-                                            <%--                                        <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
+                                    <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td class="my-lis-2">
+                                    	<a href="/product/productDetail?product_cd=${list.product_cd}">
+	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
+	                                        <div class="my-lis-txt">
+		                                        <p>${list.product_made_company_name}</p>
+		                                        <p class="lis-font-w">${list.product_name}</p>
+		                                        <p>${list.product_model_name}</p>
+                                      		</div>
+                                        </a>
                                     </td>
-                                        <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
-                                    <td><input type="number" value="1" class="num-box"></td>
-                                    <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
-                                        <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
-                                    <td><button class="x" data-id="${list.product_cd}"></button></td>
+                                    <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원</span></td>
+                                    <td>
+                                    	<form name="" class="" method="POST" action="/product/productPayment">
+				                            <input type="hidden" name="product_delivery_payment" value="${list.product_delivery_payment}">
+				                            <input type="hidden" name="payment_order_quantity" value="1">
+				                            <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
+			                            </form>
+                                        <a href="javascript:void(0)" class="favoriteSubmit"><p class="lis-txt-box txt-color2">바로결제</p></a>
+                                        <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
+                                        <a href="javascript:addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </c:if>
@@ -72,19 +85,67 @@
                         </c:if>
                         </tbody>
                     </table>
-                    <div class="num-box">
-                        <div class="num-box-in">
-                            <div class="left-box"><a href=""></a></div>
-                            <div class="num">
-                                <span><a href="">1</a></span>
-                                <span><a href="">2</a></span>
-                                <span><a href="">3</a></span>
-                                <span><a href="">4</a></span>
-                                <span><a href="">5</a></span>
-                            </div>
-                            <div class="right-box"><a href=""></a></div>
+                    
+                    <c:if test="${not empty productList}">
+                    <div class="sec4-txt">
+                        <p class="txt-tit">추천 상품</p>
+                        <div class="txt-right">
+                            <!-- <button type="button" id="del-chk-btn " class="cartPaymentOrder txt-color2">바로결제</button> -->
+                            <button type="button" id="" class="txt-color3 addChkFavorites">찜하기</button>
+                            <button type="button" id="cart-chk-btn" class="txt-color1 addChkCart">장바구니 담기</button>
                         </div>
                     </div>
+                    
+                    <table class="sec4-lis">
+                        <colgroup>
+                            <col style="width: 125px;">
+                            <col style="width: 510px;">
+                            <col style="width: 120px;">
+                            <col style="width: 139px;">
+                        </colgroup>
+                        <thead class="lis-head">
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="tr-ck1-2"><label for="tr-ck1-2" class="tr-icon"></label>
+                            </th>
+                            <th>상품정보</th>
+                            <th>가격</th>
+                            <th>조회</th>
+                        </tr>
+                        </thead>
+                        <tbody class="lis-body">
+                            <c:forEach var="list" items="${productList}" varStatus="status">
+                                <tr>
+                                    <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td class="my-lis-2">
+                                    	<a href="/product/productDetail?product_cd=${list.product_cd}">
+	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
+	                                        <div class="my-lis-txt">
+		                                        <p>${list.product_made_company_name}</p>
+		                                        <p class="lis-font-w">${list.product_name}</p>
+		                                        <p>${list.product_model_name}</p>
+                                      		</div>
+                                        </a>
+                                    </td>
+                                    <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원</span></td>
+                                    <td>
+                                    	<form name="" class="" method="POST" action="/product/productPayment">
+				                            <input type="hidden" name="product_delivery_payment" value="${list.product_delivery_payment}">
+				                            <input type="hidden" name="payment_order_quantity" value="1">
+				                            <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
+			                            </form>
+                                        <a href="javascript:void(0)" class="favoriteSubmit"><p class="lis-txt-box txt-color2">바로결제</p></a>
+                                        <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
+                                        <a href="javascript:addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                    </td>
+                                </tr>
+                                </c:forEach>
+                        </tbody>
+                    </table>
+                    </c:if>
+                    
+                    <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
+                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
                 </div>
             </div>
             </div>

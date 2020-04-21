@@ -46,6 +46,26 @@ function commonAjaxCall(type,url,formData){
     });
 }
 
+//자주구매하는 상품 결제
+$(document).on("click",".favoriteSubmit",function () {
+    if(isLogin==''){
+        $.toast({
+            heading: '비회원 주문 중입니다.',
+            text: [
+                '<a href="/sign/login">로그인 후 이용</a>',
+                '<a href="/sign/signup">회원 가입 후 이용</a>',
+                '<a href="#" onclick="$(this).prev().submit();">비 회원 주문</a>',
+            ],
+            showHideTransition: 'plain', //펴짐
+            position: 'top-right',
+            icon: 'info',
+            hideAfter: false
+        });
+    }else{
+    	$(this).prev().submit();
+    }
+})
+
 //비회원 결제
 $(document).on("click","#paymentSubmit",function () {
     if(isLogin==''){
@@ -558,7 +578,7 @@ $(document).ready(function(){
     });
     //장바구니 등록
     function addShoppingBasket(product_cd) {
-        var formData = $('#defaultForm').serialize()+'&product_cd='+product_cd;
+        var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
         var filter = "win16|win32|win64|macintel|mac|";
         jQuery.ajax({
             type: 'POST',
