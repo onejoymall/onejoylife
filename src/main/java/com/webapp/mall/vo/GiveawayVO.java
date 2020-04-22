@@ -115,6 +115,7 @@ public class GiveawayVO extends SearchVO {
         this.parti_rate = parti_rate;
     }
 
+
     public Integer getPoint() {
         return point;
     }

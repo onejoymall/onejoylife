@@ -14,7 +14,7 @@
         <button>검색</button>
     </div>
        
-    <ul class="flexaround">
+    <ul class="faqsub clearfix">
         <li>
             <a href="#" class="active"><i class="icon faq"></i>자주하는질문</a>
         </li>
@@ -28,7 +28,7 @@
             <a href="#"><i class="icon refund"></i>교환/반품/환불</a>
         </li>
     </ul>
-    <ul class="flexaround mb-2">
+    <ul class="faqsub clearfix mb-2">
         <li>
             <a href="#" class="border-top-none"><i class="icon shipping"></i>배송/설치/AS</a>
         </li>

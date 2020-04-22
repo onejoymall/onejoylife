@@ -61,6 +61,14 @@
         <li><a href="/MyPage/ShoppingBasket">장바구니</a></li>
         <li><a href="/MyPage/OrderAndDelivery">주문배송</a></li>
         <li><a href="/Help/csinfo">고객센터</a></li>
+        <li class="language-nav"><a href="">국가선택</a>
+            <ul>
+                <li><a href="">한국</a></li>
+                <li><a href="">미국</a></li>
+                <li><a href="">중국</a></li>
+                <li><a href="">일본</a></li>
+            </ul>
+        </li>
 
     </c:if>
     <c:if test="${sessionScope.login}">
@@ -69,6 +77,14 @@
         <li><a href="/MyPage/DashBoard">MyPage</a></li>
         <li><a href="/Help/csinfo">고객센터</a></li>
         <li><a href="/sign/logout">로그아웃</a></li>
+        <li class="language-nav"><a href="">국가선택</a>
+            <ul>
+                <li><a href="">한국</a></li>
+                <li><a href="">미국</a></li>
+                <li><a href="">중국</a></li>
+                <li><a href="">일본</a></li>
+            </ul>
+        </li>
     </c:if>
 
             </ul>
