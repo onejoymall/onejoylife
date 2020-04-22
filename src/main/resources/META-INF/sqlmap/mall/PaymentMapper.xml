@@ -20,6 +20,7 @@
         payment,
         payment_type_cd,
         payment_status,
+        customs_clearance_number,
         password
         )values (
          #{success},
@@ -37,9 +38,13 @@
         #{payment},
         #{payment_type_cd},
         #{payment_status},
+        #{customs_clearance_number},
         #{password}
         )
     </insert>
+
+
+
     <update id="updateGiveawayDeliveryStatus" parameterType="java.util.Map">
         update giveaway_play_history set giveaway_payment_status = #{giveaway_payment_status} where giveaway_play_cd=#{giveaway_play_cd}
     </update>

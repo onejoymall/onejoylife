@@ -47,5 +47,32 @@
     <select id="getSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">
         select * from store_delivery where store_id = #{store_id}
     </select>
+  <select id="getProductCodeList" parameterType="com.webapp.manager.vo.MgProductCodeVO" resultType="java.util.Map">
+    select
+    *,(select code_name from code where code.code='product_class_code' and code_value=product_class_code.product_class_code_type) product_class_code_type_name
+    from product_class_code where 1=1
+    <if test="product_class_code_type != null and product_class_code_type !=''"> and product_class_code_type =#{product_class_code_type}</if>
+    <if test="product_class_name != null and product_class_name !=''"> and product_class_name =#{product_class_name}</if>
+    order by reg_date desc
+  </select>
+  <insert id="insertProductCode" parameterType="com.webapp.manager.vo.MgProductCodeVO">
+    insert into product_class_code
+    (
+      product_class_code_type,
+      product_class_code,
+      product_class_name,
+      product_class_use_yn
+    )values(
+      #{product_class_code_type},
+      #{product_class_code},
+      #{product_class_name},
+      #{product_class_use_yn}
+    )
+    on duplicate KEY update
+    product_class_code_type=#{product_class_code_type},
+    product_class_code=#{product_class_code},
+    product_class_name=#{product_class_name},
+    product_class_use_yn=#{product_class_use_yn}
 
+  </insert>
 </mapper>

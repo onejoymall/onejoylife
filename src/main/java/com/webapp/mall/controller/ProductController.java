@@ -289,6 +289,7 @@ public class ProductController {
                 cartPaymentVO.setCart_user_id((Integer) userInfo.get("usr_id"));
             }
 
+            Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
             //결제비용
             Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
             List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);

@@ -105,6 +105,16 @@ public class GiveawayVO extends SearchVO {
     public Integer giveaway_play_min_point;
     public Integer giveaway_play_winner_point;
     public Integer giveaway_play_max_point;
+    public Integer parti_rate;
+
+    public Integer getParti_rate() {
+        return parti_rate;
+    }
+
+    public void setParti_rate(Integer parti_rate) {
+        this.parti_rate = parti_rate;
+    }
+
 
     public Integer getPoint() {
         return point;

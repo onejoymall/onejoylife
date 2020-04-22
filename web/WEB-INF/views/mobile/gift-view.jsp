@@ -177,6 +177,10 @@
            <li>응모 E-point</li>
            <li class="text-lg text-bold red"><fmt:formatNumber value="${detail.giveaway_payment}" groupingUsed="true" /><span class="text-sm"> point</span></li>
        </ul>
+        <ul class="winner-wrap flexbetween py-05">
+            <li><h3><i class="win-icon"></i></h3></li>
+            <li><p class="winner">${detail.email}</p></li>
+        </ul>
     </section>
     <section class="subheader">
         <ul class="shareBtns">

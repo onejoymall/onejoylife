@@ -150,7 +150,7 @@
                             <td>${productList.product_sale_yn_name}</td>
                             <td>
                                 <button type="button" class="goods-list-btn" name="copy" onclick="productCopy('${productList.product_cd}')">복사 등록</button>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="defaultModal('${productList.product_cd}')" >상세보기</button>
+                                <button type="button" class="goods-list-btn" name="" onclick="defaultModal('${productList.product_cd}')" >상세보기</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -167,7 +167,7 @@
     </div>
 </main>
 <!--모달팝업창-->
-<div class="modal">
+<div class="modal" id="modelDetail">
     <div class="modal-content">
         <div class="modal-header">
             <h2>상품 정보 수정</h2>
@@ -679,29 +679,33 @@
 <%--                    </tr>--%>
                     <tr>
                         <th>제조사</th>
-                        <td >
-
+                        <td>
+                            <p class="cc2"><a href="#" class="codeSrc" data-id ="M">&#91;상품 코드정보조회&#93;</a>
+                            </p>
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>공급사</th>
-                        <td >
-
+                        <td>
+                            <p class="cc2"><a href="#" class="codeSrc" data-id ="S">&#91;상품 코드정보조회&#93;</a>
+                            </p>
                             <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>브랜드</th>
-                        <td >
-
+                        <td>
+                            <p class="cc2"><a href="#" class="codeSrc" data-id ="B">&#91;상품 코드정보조회&#93;</a>
+                            </p>
                             <input type="text" id="goods-b" name="product_brand" placeholder="ex) B00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>트렌드</th>
-                        <td >
-
+                        <td>
+                            <p class="cc2"><a href="#" class="codeSrc" data-id ="T">&#91;상품 코드정보조회&#93;</a>
+                            </p>
                             <input type="text" id="goods-t" name="product_trend" placeholder="ex) T00000000">
                         </td>
                     </tr>
@@ -749,8 +753,8 @@
                     </tr>
                     <tr>
                         <th>원산지</th>
-                        <td >
-                            <p class="cc2"><a href="#">&#91;상품 코드정보조회&#93;</a><%--를 통해 검색하거나 <a href="#">&#91;전체 코드정보다운로드&#93;</a>를 통해 확인된 유효한 원산지 코드를 입력합니다.--%>
+                        <td>
+                            <p class="cc2"><a href="#" class="codeSrc" data-id ="O">&#91;상품 코드정보조회&#93;</a>
                             </p>
                             <input type="text" id="goods-origin" name="product_origin" placeholder="ex) 1575">
                         </td>
@@ -1067,6 +1071,42 @@
                 <input type="hidden" name="file_5">
                 <input type="hidden" name="product_cd">
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal codeSrcModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>분류코드 정보조회</h2>
+            <button type="button" class="modal-close">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="src-wrap clearfix">
+                <input type="text" name="product_class_name" class="srcInput" >
+
+                <button type="button" type="button" class="srcButton" data-id="O">등록</button>
+
+            </div>
+            <div class="wrap">
+                <table class="codeSrcTable">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="70%">
+                        <col width="15%">
+                    </colgroup>
+                    <thead>
+                    <td></td>
+                    <td>분류코드</td>
+                    <td>분류코드명</td>
+                    <td>종류</td>
+                    </thead>
+                    <tbody class="dataListView">
+
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-red mr-10" id="code-com">입력하기</button>
         </div>
     </div>
 </div>

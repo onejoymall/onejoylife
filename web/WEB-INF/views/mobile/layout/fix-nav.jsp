@@ -37,7 +37,39 @@
         <div class="logoutWrap">
            <hr>
             <a href="<c:url value="/sign/logout"/>" class="logout">로그아웃 <i class="ri-logout-box-r-line"></i></a>
+            <button type="button" class="language">국가선택</button>
         </div>
          </div>
      </div>
+    <div class="languagePop" id="language-m">
+        <div class="content clearfix">
+            <header>
+            <h3>국가선택</h3>
+            <button class="popClose">
+                <i class="ri-close-line"></i>
+            </button>
+        </header>
+        <content>
+            <ul class="language-ul">
+                <li><button type="button">한국</button></li>
+                <li><button type="button">미국</button></li>
+                <li><button type="button">중국</button></li>
+                <li><button type="button">영국</button></li>
+            </ul>
+        </content>
+    </div>
+
+    </div>
  </div>
+
+    <script>
+    $(function(){
+
+    $('.language').on('click',function(){
+    $('#language-m').addClass('on');
+    })
+    $('.popClose').on('click',function(){
+    $('#language-m').removeClass('on');
+    })
+    });
+    </script>

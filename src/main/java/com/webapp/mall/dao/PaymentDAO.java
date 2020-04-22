@@ -17,6 +17,9 @@ public class PaymentDAO {
     public void insertPayment(Map<String,Object> params) throws SQLException {
         sql.insert("mall.PaymentMapper.insertPayment",params);
     }
+    public void insertCartPayment(Map<String,Object> params) throws SQLException {
+        sql.insert("mall.PaymentMapper.insertCartPayment",params);
+    }
     public void updateGiveawayDeliveryStatus(Map<String,Object> params) throws SQLException {
         sql.update("mall.PaymentMapper.updateGiveawayDeliveryStatus",params);
     }

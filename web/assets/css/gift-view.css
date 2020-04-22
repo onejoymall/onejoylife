@@ -999,3 +999,31 @@ button{
     border-left:none;
     border-right:none;
 }
+
+/*당첨자 확인페이지*/
+.winner-wrap h3{
+    font-size:20px;
+    text-align: left;
+    margin: 20px 0 20px;
+    color:#da394d;
+}
+.winner-wrap h3{
+    width:30%;
+    float:left;
+}
+.win-icon {
+    display:inline-block;
+    width:50px;
+    height:50px;
+    background: url(../img/icon/eve-icon.png) no-repeat left center / contain;
+}
+.winner{
+    float:right;
+    width:70%;
+    margin: 20px 0 20px 0;
+    line-height: 50px;
+    font-size:18px;
+    text-align: right;
+    font-weight: 900;
+}
+

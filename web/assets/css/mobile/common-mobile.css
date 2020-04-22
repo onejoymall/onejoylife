@@ -1745,6 +1745,36 @@ ul.flexaround li a.active{
 ul.flexaround li:last-child a{
     border-right: 1px solid rgba(0,0,0,0.2);
 }
+ul.faqsub{
+    display:block;
+    width:100%;
+}
+ul.faqsub li{
+    float:left;
+    width:25%;
+    height:70px;
+    text-align: center;
+}
+ul.faqsub li a{
+    display: block;
+    font-size: 11px;
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-right: none;
+}
+@media only screen and (min-width: 380px) {
+    ul.faqsub li a{
+        font-size:12px;
+    }
+}
+ul.faqsub li a.active{
+    color: #da394a;
+}
+ul.faqsub li:last-child a{
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
 ul.information{
     display: block;
     width: 100%;
@@ -2808,10 +2838,20 @@ ul.cateList a.noDp{
 }
 .logout{
     display:block;
+    float: left;
     text-align: center;
-    width:100%;
+    width:50%;
     height:40px;
     line-height: 40px;
+}
+.language{
+    display:block;
+    float: left;
+    width:50%;
+    height:40px;
+    line-height: 40px;
+    font-size: 14px;
+    border-left: 1px solid #ccc;
 }
 .logout i{
     vertical-align: bottom;
@@ -3435,6 +3475,13 @@ body.black .btn-login{
     margin: 0 auto;
     transform: translateY(calc(-50% - 35px));
 }
+.language-modal .modal-content {
+    position:relative;
+    top:50%;
+    width: 90%;
+    background: #fff;
+    margin: 0 auto;
+}
 .modal-header{
     position: absolute;
     top:0;
@@ -3463,12 +3510,123 @@ body.black .btn-login{
     padding: 20px;
 }
 .btn-area{margin-top:30px;text-align: center;}
+.btn-l{padding: 30px; margin: 0;}
 .md-btn-default{
     width:200px;
     height:45px;
     color:#fff;
     background:#da394a;
     font-size:16px;
+}
+.modal-content .language-body .modal-body-wrap { padding: 0;}
+.language-ul li{
+    width: 100%;
+    /* height: 40px; */
+    /* padding: 5px 0 5px 20px; */
+    border-bottom: 1px solid #e1e1e1;
+}
+.language-ul li button {
+    width: 100%;
+    text-align: left;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 5px 0 5px 20px;
+
+}
+.lan-btn{
+    width:200px;
+    height:40px;
+    color:#fff;
+    background:#da394a;
+    font-size:16px;
+}
+.md-btn-default{
+    width:200px;
+    height:45px;
+    color:#fff;
+    background:#da394a;
+    font-size:16px;
+}
+/*국가설정*/
+.languagePop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 9990;
+    transition: .3s;
+}
+.languagePop.on{
+    visibility: visible;
+    opacity: 1;
+}
+.languagePop.on::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    transition: .3s;
+}
+.languagePop .content{
+    position: fixed;
+    transform: translateY(0);
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 1550;
+    transition: .3s;
+}
+.languagePop.on .content{
+    width: 100%;
+    bottom: 0px;
+    height: fit-content;
+    transition: .3s;
+}
+.languagePop .content header{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    padding: 1em;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+    top: 0;
+    left: 0;
+}
+.languagePop .content header h3{
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    transform: translateY(-50%);
+}
+.languagePop .content header .popClose{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: none;
+    background: #fff;
+}
+.languagePop .content header .popClose i{
+    display: block;
+    font-size: 2em;
+}
+.languagePop .content content{
+    display: block;
+    position: relative;
+    width: 100%;
+    max-height: calc(75vh - 100px);
+    margin-top: 50px;
+    padding: 0 1em 1em 1em;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 /* 마이페이지 메인 */
 .point-box {
@@ -3868,7 +4026,6 @@ input[type="password"] {
 
 .gift-amount{
     width:100%;
-    height:30px;
     margin:10px 0;
     font-size:16px;
     font-weight: 400;
@@ -3997,6 +4154,7 @@ select.order-select{
 .point-product-item{
     float:left;
     width: calc(50% - 5px);
+    height:85vw;
     position:relative;
     margin-bottom:20px;
     margin-right: 10px;
@@ -4005,9 +4163,20 @@ select.order-select{
 .point-product-item:nth-of-type(even) {
     margin-right: 0;
 }
+@media only screen and (min-width: 380px) {
+    .point-product-item{
+        height:75vw;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .point-product-item{
+        height:70vw;
+    }
+}
 @media only screen and (min-width: 768px) {
     .point-product-item{
         width: calc(33% - 4.2px);
+        height:48vw;
     }
     .point-product-item:nth-of-type(even) {
         margin-right: 10px;
@@ -4252,9 +4421,10 @@ select.order-select{
     margin-top: 10px;
 }
 .input-search input{
-    width: 45px;
+    width: 87px;
     height: 25px;
     border: 1px solid #aaa;
+    padding:0 5px;
 }
 .input-search button {
     width: 43px;
@@ -4436,7 +4606,18 @@ select.order-select{
 .mainList-big .img-box {
     position: relative;
 }
-
+.more-btn {
+    text-align: center;
+    display: block;
+    height: 35px;
+    border: 1px solid #da394d;
+    padding: 0 10px;
+    color: #da394d;
+    border-radius: 18px;
+    margin: 0 0 10px auto;
+    width: 130px;
+    line-height: 35px;
+}
 /*라이브쇼핑 메인*/
 .live-shopping-wrap .bx-wrapper{background:transparent; margin-bottom:0px;}
 .live-shopping-wrap .bx-wrapper .bx-controls-direction{
@@ -4761,4 +4942,24 @@ select#list-sort{
 .input-group .btn.btn-black{
     height: 40px;
     line-height: 40px;
+}
+/*당첨자 확인페이지*/
+.winner-wrap h3{
+    font-size:20px;
+    text-align: left;
+    color:#da394d;
+}
+.win-icon {
+    display:inline-block;
+    width:50px;
+    height:50px;
+    background: url(../../img/icon/eve-icon.png) no-repeat left center / contain;
+    margin-top: 10px;
+}
+.winner{
+    width:100%;
+    line-height: 50px;
+    font-size:18px;
+    text-align: right;
+    font-weight: 900;
 }
