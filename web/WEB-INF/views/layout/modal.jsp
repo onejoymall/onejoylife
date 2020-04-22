@@ -32,7 +32,7 @@
                     <h2></h2>
                     <button type="button" class="modal-close" rel="modal:close">×</button>
                 </div>
-<%--                ${infoPrivacy.market_config_value}--%>
+                ${infoJoin.market_config_value}
             </div>
         </div>
         <!-- 업체신청 모달 -->

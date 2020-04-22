@@ -50,27 +50,43 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="l-sec2">
-                        <p class="sec-h1">주문상품 정보</p>
+                    <div class="l-sec1">
+                        <p class="sec-h1">결제 정보</p>
                         <div class="sec2-box">
                             <div class="sec2-p1">결제수단</div>
                             <div class="sec2-p2">
-                                <p>
-                                    <input type="radio" id="sec2-ra1" name="payment_type_cd" checked value="card">
-                                    <label for="sec2-ra1"><span class="ra-txt">신용카드</span></label>
-                                </p>
-                                <p>
-                                    <input type="radio" id="sec5-ra2" name="payment_type_cd" value="trans">
-                                    <label for="sec5-ra2"><span class="ra-txt">실시간계좌이체</span></label>
-                                </p>
-                                <p>
-                                    <input type="radio" id="sec5-ra3" name="payment_type_cd" value="vbank">
-                                    <label for="sec5-ra3"><span class="ra-txt">가상계좌</span></label>
-                                </p>
+                                <input type="radio" id="sec2-ra" name="payment_type_cd" value="card">
+                                <label for="sec2-ra"><span class="ra-txt">신용카드</span></label>
+                                <input type="radio" id="sec2-ra2" name="payment_type_cd" value="trans">
+                                <label for="sec2-ra2"><span class="ra-txt">실시간 계좌이체</span></label>
+                                <input type="radio" id="sec2-ra3" name="payment_type_cd" value="vbank">
+                                <label for="sec2-ra3"><span class="ra-txt">가상계좌</span></label>
+<%--                                <input type="radio" id="sec2-ra4" name="payment_type_cd">--%>
+<%--                                <label for="sec2-ra4"><span class="ra-txt">예시4</span></label>--%>
+<%--                                <input type="radio" id="sec2-ra5" name="payment_type_cd">--%>
+<%--                                <label for="sec2-ra5"><span class="ra-txt">예시5</span></label>--%>
                             </div>
                         </div>
                     </div>
-                    <input type="text" name="reg_no">
+                    <div class="l-sec2">
+                        <p class="sec-h1">당첨자 정보</p>
+                        <table>
+                            <colgroup>
+                                <col style="width: 180px;">
+                                <col style="width: 620px;">
+                            </colgroup>
+                            <tbody class="sec2-tbody">
+                            <tr>
+                                <td>주민등록번호</td>
+                                <td>
+                                    <input type="number" class="sec2-in1"> <span>-</span>
+                                    <input type="number" class="sec2-in1">
+                                    <input type="hidden" name="reg_no">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="right-box">
                     <div class="right-line">
@@ -136,7 +152,7 @@
         }else{
             IMP.request_pay({ // param
                 pg: "inicis",
-                pay_method: "card",
+                pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid: "${delivery.order_user_id}",
                 name: "${detail.giveaway_name}",
                 amount: ${detail.giveaway_delivery_payment+texSum},

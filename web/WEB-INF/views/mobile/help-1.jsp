@@ -21,9 +21,10 @@
                 <hr>
             </li>
             <li>
-                1:1 문의하기
+                1:1 문의
                 <hr>
                 <ul class="in-ul">
+                    <li><a href="<c:url value="/Board/boardList?bgno=15"/>">1:1 문의</a></li>
                     <li><a href="<c:url value="/Help/csBoard?bgno=15"/>">1:1 문의 작성</a></li>
                     <li><a href="<c:url value="/Help/csCenter"/>">고객센터 전화번호 안내</a></li>
                 </ul>

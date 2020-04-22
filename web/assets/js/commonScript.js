@@ -2451,11 +2451,15 @@ $(document).ready(function(){
         }
         return true;
     }
-    function fn_formSubmit(){
+    function fn_formSubmit(login){
+
         if ( ! chkInputValue("#brdwriter", "작성자 이름을")) return;
         if ( ! chkInputValue("#brdtitle", "제목을")) return;
         if ( ! chkInputValue("#brdmemo", "내용을")) return;
-        if ( ! chkInputValue("#password", "비밀번호")) return;
+        if(!login){
+            if ( ! chkInputValue("#password", "비밀번호")) return;
+        }
+
         $("#form1").submit();
     }
 //동적 최소높이

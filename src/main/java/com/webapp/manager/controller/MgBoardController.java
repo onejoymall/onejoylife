@@ -24,25 +24,41 @@ public class MgBoardController {
      * 리스트.
      */
     @RequestMapping(value = "/Manager/boardList")
-    public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request                                           ) {
+    public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request) throws Exception{
+        String returnString="";
+        try{
 
-        BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
-        if (bgInfo == null) {
-            return "manager/mgboard/BoardGroupFail";
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
+            if (bgInfo == null) {
+                return "manager/mgboard/BoardGroupFail";
+            }
+            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
+                searchVO.setDisplayRowCount(10);
+            }
+            searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+
+            List<?> listview  = boardSvc.selectBoardList(searchVO);
+
+            modelMap.addAttribute("listview", listview);
+            modelMap.addAttribute("searchVO", searchVO);
+            modelMap.addAttribute("bgInfo", bgInfo);
+            modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
+            modelMap.addAttribute("style", "cs-qna");
+            if(bgInfo.getBgtype().isEmpty()){
+                returnString = "manager/mgboard/BoardList";
+            }
+            if(bgInfo.getBgtype().equals("1:1")){
+                returnString = "manager/cs-qna";
+
+            }else{
+                returnString = "manager/mgboard/BoardList";
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
-            searchVO.setDisplayRowCount(10);
-        }
-        searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
 
-        List<?> listview  = boardSvc.selectBoardList(searchVO);
-
-        modelMap.addAttribute("listview", listview);
-        modelMap.addAttribute("searchVO", searchVO);
-        modelMap.addAttribute("bgInfo", bgInfo);
-        modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
-        modelMap.addAttribute("style", "company-anno");
-        return "manager/mgboard/BoardList";
+        return returnString;
     }
 
     /**
@@ -157,7 +173,7 @@ public class MgBoardController {
                 response.getWriter().print(mapper.writeValueAsString("OK"));
             }
         } catch (IOException ex) {
-            System.out.println("오류: 댓글 삭제에 문제가 발생했습니다.");
+            System.out.println("오류: 답변 삭제에 문제가 발생했습니다.");
         }
     }
 }

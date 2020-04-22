@@ -13,7 +13,7 @@ function chkInputValue(id, msg){
 	} 
 	return true;
 }
-function fn_formSubmit(){
+function fn_SafeFormSubmit(){
 	if ( ! chkInputValue("#rewriter1", "작성자를")) return;
 	if ( ! chkInputValue("#rememo1", "글 내용을")) return;
 	
@@ -48,7 +48,7 @@ function fn_replyDelete(reno){
 				$("#replyItem"+reno).remove();
 				alert("삭제되었습니다.");
 			} else{
-				alert("댓글이 있어서 삭제할 수 없습니다.");
+				alert("답변이 있어서 삭제할 수 없습니다.");
 			}
 		}
 	})
@@ -191,7 +191,7 @@ function fn_replyReplySave(){
 				<form id="form1" name="form1">
 					<input type="hidden" id="brdno1" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
 					작성자: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
-					<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
+					<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="답변을 달아주세요."></textarea>
 					<a href="#" onclick="fn_formSubmit()">저장</a>
 				</form>
 			</div>
@@ -204,7 +204,7 @@ function fn_replyReplySave(){
 					<c:out value="${replylist.rewriter}"/> <c:out value="${replylist.redate}"/>
 					<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.reno}"/>')">삭제</a>
 					<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.reno}"/>')">수정</a>
-					<a href="#" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">댓글</a>
+					<a href="#" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">답변</a>
 					<br/>
 					<div id="reply<c:out value="${replylist.reno}"/>"><c:out value="${replylist.rememo}"/></div>
 				</div><br/>

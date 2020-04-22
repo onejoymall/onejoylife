@@ -17,8 +17,8 @@
             <div class="right-contain">
                 <form id="form1" name="form1" action="/Board/boardSave" method="post" enctype="multipart/form-data">
                     <div class="r-sec1">
-                        <p class="sec1-h1">1:1 문의하기</p>
-<%--                        <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변은 질문 시 등록하신 이메일에서 확인하실 수 있습니다.</p>--%>
+                        <p class="sec1-h1">1:1 문의</p>
+                        <p class="sec1-p1"><span>·문의 하기</span></p>
                         <table>
                             <colgroup>
                                 <col style="width: 160px;">
@@ -26,21 +26,24 @@
                             </colgroup>
                             <tbody class="sec1-tbody">
                             <tr class="name-box">
-                                <td>이름</td>
+                                <td>이름 *</td>
                                 <td><input type="text" id="brdwriter" name="brdwriter" size="20" maxlength="20" value="<c:out value="${boardInfo.brdwriter}"/>"></td>
                             </tr>
                             <tr class="name-box">
                                 <td>이메일 *</td>
                                 <td>
-                                    <input type="text" id="email" name="email">
+                                    <input type="text" id="email" name="email" value="${sessionScope.email}">
                                 </td>
                             </tr>
-                            <tr class="name-box">
-                                <td>비밀번호 *</td>
-                                <td>
-                                    <input type="password" id="password" name="password">
-                                </td>
-                            </tr>
+                            <c:if test="${empty sessionScope.login}">
+                                <tr class="name-box">
+                                    <td>비밀번호 *</td>
+                                    <td>
+                                        <input type="password" id="password" name="password">
+                                    </td>
+                                </tr>
+                            </c:if>
+
                             <tr class="phone-box">
                                 <td>휴대폰 번호</td>
                                 <td>
@@ -68,13 +71,13 @@
                                 <td>문의 유형 *</td>
                                 <td>
                                     <select name="question_type" id="question_type">
-                                        <option value="선택">선택</option>
-                                        <option value="대량주문">대량주문</option>
-                                        <option value="주문결제">주문/결제</option>
-                                        <option value="교환반품환불">교환/반품/환불</option>
-                                        <option value="이벤트">이벤트</option>
-                                        <option value="배송">배송</option>
-                                        <option value="기타">기타</option>
+                                        <option value="">선택</option>
+                                        <option value="S">대량주문</option>
+                                        <option value="O">주문/결제</option>
+                                        <option value="C">교환/반품/환불</option>
+                                        <option value="E">이벤트</option>
+                                        <option value="D">배송</option>
+                                        <option value="G">기타</option>
                                     </select>
                                 </td>
                             </tr>
@@ -96,25 +99,25 @@
                                     <p class="txt-counting">&#40;<span>0</span>/1000&#41;</p>
                                 </td>
                             </tr>
-                            <tr class="imagefile-box">
-                                <td>이미지 첨부</td>
-                                <td>
-                                    <div class="fileBox">
-                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
-                                        <label for="uploadBtn" class="btn_file">파일찾기</label>
-                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
-                                        <span class="ex">이미지 첨부는 1개만 가능합니다. 5Mbyte 이하로 올려주세요.</span>
-                                    </div>
+<%--                            <tr class="imagefile-box">--%>
+<%--                                <td>이미지 첨부</td>--%>
+<%--                                <td>--%>
+<%--                                    <div class="fileBox">--%>
+<%--                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">--%>
+<%--                                        <label for="uploadBtn" class="btn_file">파일찾기</label>--%>
+<%--                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">--%>
+<%--                                        <span class="ex">이미지 첨부는 1개만 가능합니다. 5Mbyte 이하로 올려주세요.</span>--%>
+<%--                                    </div>--%>
 
-                                </td>
-                            </tr>
+<%--                                </td>--%>
+<%--                            </tr>--%>
 
                             </tbody>
                         </table>
                         <p class="ex"><span class="bullet-point">·</span><span>쇼핑몰 관련 1:1 문의하기 입니다.<br>매장 이용관련 불편사항은<a href="">[원조이몰 고객지원센터]</a>를 이용하여 글을 남겨주세요.</span></p>
                     </div>
                     <div class="button-box">
-                        <button type="button" onclick="fn_formSubmit();">접수</button>
+                        <button type="button" onclick="fn_formSubmit(${sessionScope.login});">접수</button>
                         <button type="button">취소</button>
                     </div>
                     <input type="hidden" name="bgno" value="<c:out value="${bgno}"/>">

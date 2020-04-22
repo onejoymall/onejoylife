@@ -343,11 +343,14 @@ public class MainController {
         try{
 
             params.put("market_config_code","info-main");
-            Map<String,Object> configMain = configDAO.getConfigDetail(params);
-            model.addAttribute("infoMain", configMain);
+            Map<String,Object> infoMain = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain", infoMain);
             params.put("market_config_code","info-privacy");
-            Map<String,Object> configMain2 = configDAO.getConfigDetail(params);
-            model.addAttribute("infoPrivacy", configMain2);
+            Map<String,Object> infoPrivacy = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy", infoPrivacy);
+            params.put("market_config_code","info-join");
+            Map<String,Object> infoJoin = configDAO.getConfigDetail(params);
+            model.addAttribute("infoJoin", infoJoin);
 
         }catch(Exception e){
             e.printStackTrace();
