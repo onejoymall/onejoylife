@@ -5,12 +5,15 @@ import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.UserVO;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +42,8 @@ public class PopupController {
     DeliveryDAO deliveryDAO;
     @Autowired
     PaymentDAO PaymentDAO;
+    @Autowired
+    ReviewDAO reviewDAO;
     
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
@@ -118,6 +123,33 @@ public class PopupController {
     		e.printStackTrace();
 		}
     	model.addAttribute("style", "write-review");
-    	return "popup/review-write";
+    	Device device = DeviceUtils.getCurrentDevice(request);
+    	if(device.isMobile()){
+            return "mobile/popup/review-write";
+        } else {
+        	return "popup/review-write";
+        }
+    }
+    
+    @RequestMapping("/Popup/review-update")
+    public String updateReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                params.put("usr_id",userInfo.get("usr_id"));
+            }
+    		model.addAttribute("review",reviewDAO.getReviewDetail(params));
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	model.addAttribute("style", "write-review");
+    	Device device = DeviceUtils.getCurrentDevice(request);
+    	if(device.isMobile()){
+            return "mobile/popup/review-update";
+        } else {
+        	return "popup/review-update";
+        }
     }
 }

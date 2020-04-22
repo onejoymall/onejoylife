@@ -505,7 +505,6 @@ $("#newDeliveryBtn").click(function(){
                     });
                 });
             }else{
-
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
@@ -516,7 +515,6 @@ $("#newDeliveryBtn").click(function(){
                         location.href = data.redirectUrl;
                     }
                 });
-
             }
         },
         error: function (xhr, status, error) {

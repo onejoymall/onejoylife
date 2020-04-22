@@ -59,7 +59,8 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
+            (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
         <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>

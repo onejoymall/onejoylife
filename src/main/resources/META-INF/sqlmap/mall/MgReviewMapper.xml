@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgReviewMapper">
+    <select id="getReviewList" parameterType="com.webapp.board.common.SearchVO" resultType="hashmap">
+		SELECT A.*,
+			 B.*,
+			(select Z.file_link from product_file Z where Z.key_id=A.product_cd and Z.file_order =1) as file_1,
+			(select Z.email from user Z where Z.usr_id=A.usr_id) as email,
+			(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
+		FROM product_review A
+		left JOIN product B
+		on A.product_cd = B.product_cd
+		LEFT JOIN user C
+		ON A.usr_id = C.usr_id
+		WHERE 1=1
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
+	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+	</select>
+	<select id="getReviewListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+		SELECT ifnull(count(*),0)
+		FROM product_review A
+		left JOIN product B
+		on A.product_cd = B.product_cd
+		LEFT JOIN user C
+		ON A.usr_id = C.usr_id
+		WHERE 1=1
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
+	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	</select>
+	<select id="getReviewDetail" parameterType="hashmap" resultType="hashmap">
+		SELECT DATE_FORMAT(A.reg_date,'%Y.%m.%d (%H:%i:%s)') reg_date,
+				A.*,
+				B.*,
+				(select Z.email from user Z where Z.usr_id=A.usr_id) as email
+		FROM product_review A
+		LEFT JOIN product B
+		on A.product_cd = B.product_cd
+		WHERE A.review_id = #{review_id}
+	</select>
+	<update id="updateAnswer" parameterType="hashmap">
+		UPDATE product_review SET
+		review_answer = #{review_answer},
+		answer_date = CURRENT_TIMESTAMP()
+		WHERE review_id = #{review_id}
+	</update>
+</mapper>
+

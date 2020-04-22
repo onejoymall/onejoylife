@@ -33,6 +33,7 @@ import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.manager.vo.MgUserVO;
@@ -58,6 +59,8 @@ public class MyPage {
     CartDAO cartDAO;
     @Autowired
     PaymentDAO paymentDAO;
+    @Autowired
+    ReviewDAO reviewDAO;
     @Autowired
     private NumberGender numberGender;
     @Value("${t_key}")
@@ -469,18 +472,51 @@ public class MyPage {
     }
     //리뷰
     @RequestMapping(value="/MyPage/Reviews")
-    public String myPageReviews(Model model) {
+    public String myPageReviews(@RequestParam HashMap params, Model model, SearchVO searchVO, HttpServletRequest request, HttpSession session) {
+    	Device device = DeviceUtils.getCurrentDevice(request);
+    	try{
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("usr_id",userInfo.get("usr_id"));
+            if(params.get("end_date") != null && !params.get("end_date").equals("")) {
+            	params.put("end_date",params.get("end_date")+" 23:59:59");
+            }
+            //페이징
+            searchVO.setDisplayRowCount(10);
+            searchVO.setStaticRowEnd(10);
+            searchVO.pageCalculate(reviewDAO.getReviewListCount(params));
+            
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("displayRowCount", searchVO.getDisplayRowCount());
+            List<Map<String,Object>> list = reviewDAO.getReviewList(params);
+
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("leftNavOrder", 8);
         model.addAttribute("style", "mypage-8");
-        return "mypage/Reviews";
+
+        if(device.isMobile()){
+            return "mobile/mypage-8";
+        } else {
+        	return "mypage/Reviews";
+        }
     }
     //자주 구매하는 상품
     @RequestMapping(value="/MyPage/Favorites")
     public String myPageFavorites(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, HttpServletRequest request) throws Exception {
+    	Device device = DeviceUtils.getCurrentDevice(request);
         try {
         	params.put("email", session.getAttribute("email"));
         	searchVO.setDisplayRowCount(10);
         	searchVO.setStaticRowEnd(10);
+        	if(device.isMobile()) {
+        		searchVO.setDisplayRowCount(1000);
+            	searchVO.setStaticRowEnd(1000);	
+        	}
         	Integer favCnt = productDAO.getFavoritesProductListCount(params);
         	List<Map<String,Object>> list = null;
         	if(favCnt > 0) {
@@ -514,7 +550,7 @@ public class MyPage {
         }
         model.addAttribute("leftNavOrder", 9);
         model.addAttribute("style", "mypage-9");
-        Device device = DeviceUtils.getCurrentDevice(request);
+        
         if(device.isMobile()){
             return "mobile/mypage-9";
         } else {

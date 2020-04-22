@@ -107,9 +107,14 @@
                                                 </div>
                                             </c:if>
 											
-											<c:if test="${paymentList.payment_status != 'O'}">
+											<c:if test="${paymentList.payment_status == 'O'}">
                                             <div class="lis-txt-box lis-txt-box1-4">
-                                                <a href="#" id="review-write" data-id="${paymentList.order_no}"><span>상품평작성</span></a>
+                                            	<c:if test="${paymentList.review_id == null}">
+                                                <a href="#" class="review-write" data-id="${paymentList.order_no}"><span>상품평작성</span></a>
+                                                </c:if>
+                                                <c:if test="${paymentList.review_id != null}">
+                                                <a href="/MyPage/Reviews"><span>상품평보기</span></a>
+                                                </c:if>
                                             </div>
                                             </c:if>
                                         </td>

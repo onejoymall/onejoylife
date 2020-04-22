@@ -2310,7 +2310,7 @@ $(document).ready(function(){
         child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });
     
-    $('#review-write').click(function () {
+    $('.review-write').click(function () {
         var child;
         var order_no=$(this).attr("data-id");
         if(child != undefined){
@@ -2318,6 +2318,46 @@ $(document).ready(function(){
         }
 
         child = window.open('/Popup/review-write?order_no='+order_no,'_blank','width=750, height=900');
+    });
+    
+    $('.review-update').click(function () {
+        var child;
+        var order_no=$(this).attr("data-id");
+        if(child != undefined){
+            child.close()
+        }
+
+        child = window.open('/Popup/review-update?order_no='+order_no,'_blank','width=750, height=900');
+    });
+    
+    $('.review-delete').click(function () {
+    	if(confirm("삭제하시겠습니까?")){
+    		var order_no = $(this).attr("data-id");
+    		jQuery.ajax({
+    	        type: 'POST',
+    	        data: "order_no="+order_no,
+    	        url:'/MyPage/deleteReview',
+    	        success: function (data) {
+    	        	if(data.success){
+    	                $.toast({
+    	                    text: 'success',
+    	                    showHideTransition: 'plain', //펴짐
+    	                    position: 'top-right',
+    	                    icon: 'success',
+    	                    hideAfter: 2000,
+    	                    afterHidden: function () {
+    	                        location.reload();
+    	                    }
+    	                });
+    	            }
+    	        },
+    	        error: function (xhr, status, error) {
+    	            alert("error");
+    	        }
+    	    });
+    	}else{
+    		return false;
+    	}
     });
 
 

@@ -77,6 +77,8 @@ public class ManagerController {
     @Autowired
     private MgSystemDAO mgSystemDAO;
     @Autowired
+    private MgReviewDAO mgReviewDAO;
+    @Autowired
     MgBrandDAO mgBrandDAO;
     @Value("${t_key}")
     private String t_key;
@@ -916,9 +918,14 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/cs-review")
     public String managerCsReview(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
-
+        	searchVO.setDisplayRowCount(10);
+    		searchVO.pageCalculate(mgReviewDAO.getReviewListCount(searchVO));
+    		List<Map<String, Object>> list = mgReviewDAO.getReviewList(searchVO);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "product_review");
+            model.addAttribute("Pk", "review_id");
         } catch (Exception e) {
             e.printStackTrace();
         }
