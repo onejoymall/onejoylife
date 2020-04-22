@@ -254,7 +254,8 @@
             <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>
             <h3>kc마크HU07310-17049C</h3>
         </div>
-        <div class="mt-4 mb-2" id="content03">
+        <c:import url="/product/productDetailReview"/>
+        <!-- <div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">
                <li><h3>평가 및 리뷰<span class="red text-md ml-1">65</span></h3></li>
                <li><button class="btn btn-black" id="btn_review">작성하기</button></li>
@@ -322,7 +323,7 @@
                 <li><a href="#">3</a></li>
                 <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
             </ul>
-        </div>
+        </div> -->
         <div class="mt-4 mb-2" id="content04">
            <ul class="flexbetween mb-1">
                <li><h3>상품 Q&A<span class="red text-md ml-1">65</span></h3></li>

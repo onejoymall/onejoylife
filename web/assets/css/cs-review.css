@@ -387,3 +387,7 @@ input[type="checkbox"] {
 input[type="radio"]+label, input[type="checkbox"]+label{
     margin-right:10px;
 }
+.review_answer{
+	width: 100%;
+	height: 100px;
+}

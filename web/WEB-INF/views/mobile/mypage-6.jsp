@@ -10,14 +10,14 @@
     <section class="wrap">
         <h2 class="pb-1">주문현황</h2>
         <ul class="btns">
-            <li><a href="#" class="active">오늘</a></li>
-            <li><a href="#">1주일</a></li>
-            <li><a href="#">1개월</a></li>
-            <li><a href="#">3개월</a></li>
-            <li><a href="#">기간설정</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
         </ul>
         <div class="date-box">
             <div class="input-box2">
+            <form>
                 <div class="cla">
                     <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
                     <!-- <div class="cla-img1"></div> -->
@@ -28,7 +28,8 @@
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="button" onclick="$('#form1').submit();" class="date-btn">조회</button>
+            <button type="submit" class="date-btn">조회</button>
+            </form>
         </div>
         <h2 class="py-1">주문상품</h2>
         <hr>
@@ -59,19 +60,20 @@
                 <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
             <ul class="options bg_grey p-1">
-                <li>
-                	<p class="lis-font-w dis-none">주문접수</p>
-                    <p class="lis-font-w ">${paymentList.payment_status_name}</p>
-                    <p class="lis-font-w dis-none">상품준비중</p>
-                    <p class="lis-font-w dis-none">배송중</p>
-                    <p class="lis-font-w dis-none">배송완료</p>
-				</li>
+                <li>${paymentList.payment_status_name}</li>
                 <li>
                 	<button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
                 	<c:if test="${paymentList.payment_status eq 'R'}">
                 		<button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >배송조회</button>
                		</c:if>
-               		상품평작성
+               		<c:if test="${paymentList.payment_status == 'O'}">
+                    	<c:if test="${paymentList.review_id == null}">
+                    	<button type="button" class="btn btn-red review-write" data-id="${paymentList.order_no}" >상품평작성</button>
+                        </c:if>
+                        <c:if test="${paymentList.review_id != null}">
+                        <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">상품평보기</button>
+                        </c:if>
+                    </c:if>
                 </li>
             </ul>
         </ul>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.ReviewMapper">
+	<select id="getReviewDetail" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,
+				B.*,
+				(select Z.file_name from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_name
+		FROM product_review A
+		LEFT JOIN product B
+		on A.product_cd = B.product_cd
+		WHERE A.usr_id = #{usr_id}
+		AND A.order_no = #{order_no}
+	</select>
+	<select id="getReviewListCount" parameterType="hashmap" resultType="int">
+		SELECT ifnull(count(*),0)
+		FROM product_review A
+		WHERE A.usr_id = #{usr_id}
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+	</select>
+	<select id="getReviewList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,
+			 B.*,
+			(select Z.file_link from product_file Z where Z.key_id=A.product_cd and Z.file_order =1) as file_1,
+			(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
+		FROM product_review A
+		left JOIN product B
+		on A.product_cd = B.product_cd
+		WHERE A.usr_id = #{usr_id}
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+	</select>
+	<select id="getReviewForProductListCount" parameterType="hashmap" resultType="int">
+		SELECT ifnull(count(*),0)
+		FROM product_review A
+		WHERE A.product_cd = #{product_cd}
+	</select>
+	<select id="getReviewForProductList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,
+			 B.*,
+			(select Z.file_link from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_1,
+			(select Z.email from user Z where Z.usr_id=A.usr_id) as email,
+			(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
+		FROM product_review A
+		left JOIN product B
+		on A.product_cd = B.product_cd
+		WHERE A.product_cd = #{product_cd}
+		AND A.review_visible_yn = 'Y'
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+	</select>
+	<insert id="insertReview" parameterType="hashmap">
+		<selectKey keyProperty="pk" resultType="int" order="BEFORE">  
+	        SELECT IFNULL(MAX(A.review_id)+1,1) FROM product_review A
+	     </selectKey>
+		INSERT INTO product_review(
+			review_id,
+			order_no,
+			product_cd,
+			usr_id,
+			review_title,
+			review_content,
+			review_score
+		)VALUES(
+			#{pk},
+			#{order_no},
+			#{product_cd},
+			#{usr_id},
+			#{review_title},
+			#{review_content},
+			#{review_score}
+		)
+	</insert>
+	<insert id="insertReviewFile" parameterType="com.webapp.board.common.FileVO" >
+        INSERT INTO product_review_file (review_id, file_name, real_name, file_size,file_link,file_order)
+        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
+    </insert>
+    <update id="updateReview" parameterType="hashmap">
+    	update product_review SET
+			review_title = #{review_title},
+			review_content = #{review_content},
+			review_score = #{review_score}
+   		where review_id = #{review_id}
+   		AND usr_id = #{usr_id}
+    </update>
+	<delete id="deleteReviewFile" parameterType="com.webapp.board.common.FileVO">
+        delete from product_review_file  where review_id = #{parentPK} and file_order = #{fileorder}
+    </delete>
+	<delete id="deleteReviewFileOne" parameterType="com.webapp.board.common.FileVO">
+        delete from product_review_file  where review_id = #{parentPK} and file_order = #{fileorder}
+    </delete>
+    <delete id="deleteReview" parameterType="hashmap">
+    	delete from product_review where order_no = #{order_no} and usr_id = #{usr_id}
+    </delete>
+</mapper>

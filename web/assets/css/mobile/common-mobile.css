@@ -1278,6 +1278,12 @@ ul.btns li a.active{
     border: 1px solid #2D2E43;
     background: #2D2E43;
 }
+ul.btns li a.on{
+    font-weight: 400;
+    color: #fff;
+    border: 1px solid #2D2E43;
+    background: #2D2E43;
+}
 
 body.black ul.shareBtns{
     display: flex;

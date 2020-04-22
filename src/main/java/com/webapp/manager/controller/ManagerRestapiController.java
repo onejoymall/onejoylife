@@ -98,6 +98,8 @@ public class ManagerRestapiController {
     MgBrandDAO mgBrandDAO;
     @Autowired
     private MgOptionDAO mgOptionDAO;
+    @Autowired
+    private MgReviewDAO mgReviewDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -1348,6 +1350,35 @@ public class ManagerRestapiController {
         } catch (Exception e) {
 
             resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+    //상품평 디테일
+    @RequestMapping(value = "/Manager/reviewDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> reviewDetail(@RequestParam HashMap params,MgOptionVO mgOptionVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        try {
+        	resultMap.put("review", mgReviewDAO.getReviewDetail(params));
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+  //상품평 답변
+    @RequestMapping(value = "/Manager/reviewAnswer", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> reviewAnswer(@RequestParam HashMap params,MgOptionVO mgOptionVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        try {
+        	mgReviewDAO.updateAnswer(params);
+        	resultMap.put("success", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return resultMap;
     }
