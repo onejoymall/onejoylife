@@ -5,7 +5,7 @@ import com.webapp.mall.vo.GiveawayVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class SearchVO extends PageVO{
-
+    private Integer usr_id;
     private String bgno;                       // 게시판 그룹
     private String searchKeyword = "";         // 검색 키워드
     private String searchType = "";            // 검색 필드: 제목, 내용  
@@ -22,6 +22,14 @@ public class SearchVO extends PageVO{
     private String start_date;
     private String end_date;
     private String product_name;
+
+    public Integer getUsr_id() {
+        return usr_id;
+    }
+
+    public void setUsr_id(Integer usr_id) {
+        this.usr_id = usr_id;
+    }
 
     public String getProduct_use_yn() {
         return product_use_yn;

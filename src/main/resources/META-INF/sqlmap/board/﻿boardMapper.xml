@@ -6,14 +6,15 @@
         WHERE BGNO=#{bgno} AND BRDDELETEFLAG='N'
          <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
               <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                     ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+                     TB.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
               </foreach>
-        </if>               
+        </if>
+
     </sql>
 
     <select id="selectBoard8Count" resultType="Integer" parameterType="com.webapp.board.common.SearchVO">
         SELECT COUNT(*)
-          FROM TBL_BOARD
+          FROM TBL_BOARD TB
          <include refid="includeBoard"/>
     </select> 
     
@@ -23,10 +24,20 @@
                 (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
                 (SELECT COUNT(*) FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT,
                 (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT,
-                BRDMEMO
+                (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
+                (SELECT REMEMO FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) rememo,
+                (SELECT REWRITER FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REWRITER,
+                question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
+                email,phone,password,BRDMEMO,usr_id
 
           FROM TBL_BOARD TB
          <include refid="includeBoard"/>
+        <if test="usr_id != null and usr_id !=''">
+            AND TB.usr_id=#{usr_id}
+        </if>
+        <if test="usr_id == null">
+            AND TB.usr_id is null
+        </if>
          ORDER BY BRDNO DESC 
          LIMIT ${rowStart-1}, 10
     </select>
@@ -45,8 +56,8 @@
             SELECT IFNULL(MAX(BRDNO),0)+1 FROM TBL_BOARD
         </selectKey>
     
-        INSERT INTO TBL_BOARD(BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no,password)
-        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N',#{email}, #{phone}, #{question_type}, #{order_no},#{password})
+        INSERT INTO TBL_BOARD(BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, BRDDATE, BRDHIT, BRDDELETEFLAG, email, phone, question_type, order_no,password,usr_id)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{brdwriter}, #{brdmemo}, NOW(), 0, 'N',#{email}, #{phone}, #{question_type}, #{order_no},#{password},#{usr_id})
     </insert>
     
     <update id="updateBoard8" parameterType="com.webapp.board.app.BoardVO">
@@ -59,8 +70,14 @@
     </update> 
         
     <select id="selectBoard8One" parameterType="String" resultType="com.webapp.board.app.BoardVO">
-        SELECT (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
-                BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email, phone, question_type, order_no,password
+        SELECT
+            (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
+            (select Z.REMEMO from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rememo,
+            (select Z.REWRITER from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rewriter,
+            (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
+            question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
+            BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email, phone,
+            order_no,password,usr_id
           FROM TBL_BOARD TB
          WHERE BRDDELETEFLAG='N'
            AND BRDNO=#{brdno}

@@ -57,7 +57,9 @@
 <%--										<a href="${link}"><c:out value="${listview.brdtitle}"/></a>--%>
 										<span><c:out value="${listview.brdtitle}"/> </span>
 									</div>
-									<div class="notice-date"><c:out value="${listview.question_type}"/></div>
+									<c:if test="${not empty listview.question_type_name}">
+									<div class="notice-date"><c:out value="${listview.question_type_name}"/></div>
+									</c:if>
 									<div class="notice-date"><c:out value="${listview.brdwriter}"/></div>
 									<div class="notice-date"><c:out value="${listview.brddate}"/></div>
 								</div>
@@ -94,26 +96,9 @@
 </div>
 <script>
 
-    function readBoard(bgtype,brdno,objectThis){
-
-		var userInput = prompt("비밀번호입력?"+"");
-		$.ajax({
-			url: "/Board/PasswordCheck",
-			type:"post",
-			data : {password:userInput,brdno:brdno},
-			success: function(data){
-				if(data.status=="false"){
-					alert(data.memo);
-				}else{
-					objectThis.parent($('.notice-data-box')).toggleClass('active');
-					$('#boardMemoPrint').html(data.memo);
-				}
-			},
-			error: function (xhr, status, error) {
-				console.log(xhr + status + error);
-			}
-		})
-    }
+	$('.main-title-box').click(function(){
+		$(this).parent($('.notice-data-item')).toggleClass('active');
+	});
 
     $('.notice-sort-item a').click(function(){
         event.preventDefault();

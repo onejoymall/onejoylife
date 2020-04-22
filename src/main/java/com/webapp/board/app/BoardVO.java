@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.webapp.board.common.utiletc;
 
 public class BoardVO {
-
+    private Integer usr_id;
     private String bgno;
     private String brdno;
     private String brdtitle;
@@ -20,15 +20,59 @@ public class BoardVO {
     private String email;
     private String phone;
     private String question_type;
+    private String question_type_name;
     private String order_no;
     private String bgtype;
     private String password;
+    private String redate;
+    private String rememo;
+    private String rewriter;
     /* 첨부파일 */
     private List<MultipartFile> uploadfile;
     private List<MultipartFile> uploadfile2;
     private List<MultipartFile> uploadfile3;
     private List<MultipartFile> uploadfile4;
     private List<MultipartFile> uploadfile5;
+
+    public Integer getUsr_id() {
+        return usr_id;
+    }
+
+    public void setUsr_id(Integer usr_id) {
+        this.usr_id = usr_id;
+    }
+
+    public String getQuestion_type_name() {
+        return question_type_name;
+    }
+
+    public void setQuestion_type_name(String question_type_name) {
+        this.question_type_name = question_type_name;
+    }
+
+    public String getRewriter() {
+        return rewriter;
+    }
+
+    public void setRewriter(String rewriter) {
+        this.rewriter = rewriter;
+    }
+
+    public String getRememo() {
+        return rememo;
+    }
+
+    public void setRememo(String rememo) {
+        this.rememo = rememo;
+    }
+
+    public String getRedate() {
+        return redate;
+    }
+
+    public void setRedate(String redate) {
+        this.redate = redate;
+    }
 
     public String getBgno() {
         return bgno;

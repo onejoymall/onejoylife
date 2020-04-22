@@ -174,7 +174,7 @@ function addNode(nodeNo, nodeTitle){
 							</td>
 						</tr>
 						<tr class="radio-td">
-							<td>댓글</td>
+							<td>답변</td>
 							<td>
 								<input name="bgtype" id="board" type="radio" checked="checked" value="board" class="styleClass"><label for="board"><span>게시판</span></label>
 								<input name="bgtype" id="faq" type="radio" value="faq" class="styleClass"><label for="faq"><span>FAQ</span></label>

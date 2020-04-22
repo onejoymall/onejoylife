@@ -651,7 +651,7 @@
         <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
     </select>
     <select id="getGiveawayPlayUserRandId" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select IFNULL(giveaway_play_user_id,0) from giveaway_play_history where giveaway_play_status !='W' and giveaway_cd=#{giveaway_cd} order by rand() limit 1
+        select IFNULL(giveaway_play_id,0) from giveaway_play_history where giveaway_play_status !='W' and giveaway_cd=#{giveaway_cd} order by rand() limit 1
     </select>
     <update id="updateWinnerUser" parameterType="java.util.Map">
         update giveaway_play_history set giveaway_play_status = 'W' where giveaway_play_id=#{giveaway_play_id} and giveaway_cd=#{giveaway_cd}

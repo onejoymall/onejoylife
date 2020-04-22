@@ -13,7 +13,7 @@
             <div class="inner clearfix">
                 <div class="sort-tab clearfix">
                     <div class="sort-tab-left">
-
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 1}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=DESC&sortOrder=1&parti_rate=100"/>'">추첨완료</button>
                         <button type="button" class="sort-tab-item <c:if test="${empty searchVO.sortOrder}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/giveaway"/>'">ALL</button>
                         <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=ASC&sortOrder=2"/>'">낮은가격순</button>
                         <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/giveaway?product_ct=${param.product_ct}&orderByKey=giveaway_payment&orderByValue=DESC&sortOrder=3"/>'">높은가격순</button>
@@ -42,7 +42,7 @@
                                 <div class="progress-wrap">
                                     <p class="progress-now">참여율 <b class="red">${list.parti_rate}%</b></p>
                                     <div class="progress-bar">
-                                        <div class="progress-bar-active" style="width:80%"></div>
+                                        <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
                                     </div>
                                     <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중</p>
                                 </div>

@@ -1192,6 +1192,9 @@ public class restapiController {
                 }else {
                     if (boardInfo.getPassword().equals(password)) {
                         resultMap.put("memo",boardInfo.getBrdmemo());
+                        resultMap.put("rememo",boardInfo.getRememo());
+                        resultMap.put("redate",boardInfo.getRedate());
+                        resultMap.put("rewriter",boardInfo.getRewriter());
                     } else {
                         resultMap.put("memo","비밀번호를 확인하세요");
                         resultMap.put("status","false");

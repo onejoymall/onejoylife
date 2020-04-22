@@ -6,7 +6,7 @@
 	<c:out value="${replyInfo.rewriter}"/> <c:out value="${replyInfo.redate}"/>
 	<a href="#" onclick="fn_replyDelete('<c:out value="${replyInfo.reno}"/>')">삭제</a>
 	<a href="#" onclick="fn_replyUpdate('<c:out value="${replyInfo.reno}"/>')">수정</a>
-	<a href="#" onclick="fn_replyReply('<c:out value="${replyInfo.reno}"/>')">댓글</a>
+	<a href="#" onclick="fn_replyReply('<c:out value="${replyInfo.reno}"/>')">답변</a>
 	<br/>
 	<div id="reply<c:out value="${replyInfo.reno}"/>"><c:out value="${replyInfo.rememo}"/></div>
 </div><br/>

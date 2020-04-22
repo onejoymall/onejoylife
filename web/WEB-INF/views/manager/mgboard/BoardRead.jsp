@@ -13,7 +13,7 @@ function chkInputValue(id, msg){
 	} 
 	return true;
 }
-function fn_formSubmit(){
+function fn_SafeFormSubmit(){
 	if ( ! chkInputValue("#rewriter1", "작성자를")) return;
 	if ( ! chkInputValue("#rememo1", "글 내용을")) return;
 	
@@ -48,7 +48,7 @@ function fn_replyDelete(reno){
 				$("#replyItem"+reno).remove();
 				alert("삭제되었습니다.");
 			} else{
-				alert("댓글이 있어서 삭제할 수 없습니다.");
+				alert("답변이 있어서 삭제할 수 없습니다.");
 			}
 		}
 	})
@@ -161,18 +161,32 @@ function fn_replyReplySave(){
 							<col style="width: 914px;">
 						</colgroup>
 						<tbody class="sec1-tbody">
+
+							<tr>
+								<td>제목</td>
+								<td><c:out value="${boardInfo.brdtitle}"/></td>
+							</tr>
 							<tr class="name-box">
+								<td>문의 유형</td>
+								<td><c:out value="${boardInfo.question_type_name}" escapeXml="false"/></td>
+							</tr>
+							<tr>
 								<td>작성자</td>
 								<td><c:out value="${boardInfo.brdwriter}"/></td>
 							</tr>
 							<tr>
-								<td>제목</td>
-								<td><c:out value="${boardInfo.brdtitle}"/></td>
+								<td>전화번호</td>
+								<td><c:out value="${boardInfo.phone}" escapeXml="false"/></td>
+							</tr>
+							<tr>
+								<td>이메일</td>
+								<td><c:out value="${boardInfo.email}" escapeXml="false"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
 								<td><c:out value="${boardInfo.brdmemo}" escapeXml="false"/></td>
 							</tr>
+
 							<tr>
 								<td>첨부</td>
 								<td>
@@ -185,19 +199,18 @@ function fn_replyReplySave(){
 						</tbody>
 					</table>
 					<p>&nbsp;</p>
-
 					<a class="btn-default" href="/Manager/boardList?bgno=<c:out value="${boardInfo.bgno}"/>">돌아가기</a>
 					<a class="btn-default" href="/Manager/boardDelete?bgno=<c:out value="${boardInfo.bgno}"/>&brdno=<c:out value="${boardInfo.brdno}"/>">삭제</a>
 					<a class="btn-default" href="/Manager/boardForm?brdno=<c:out value="${boardInfo.brdno}"/>">수정</a>
 					<p>&nbsp;</p>
 
 					<c:if test="${bgInfo.bgreply=='Y'}">
-						<div style="border: 1px solid; width: 600px; padding: 5px">
+						<div style="border: 1px solid; width: 100%; padding: 5px">
 							<form id="form1" name="form1">
 								<input type="hidden" id="brdno1" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
 								작성자: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
-								<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
-								<a href="#" onclick="fn_formSubmit()">저장</a>
+								<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="답변을 달아주세요."></textarea>
+								<button type="button" class="btn-default" onclick="fn_SafeFormSubmit()">저장</button>
 							</form>
 						</div>
 					</c:if>
@@ -205,11 +218,11 @@ function fn_replyReplySave(){
 					<div id="replyList">
 						<c:forEach var="replylist" items="${replylist}" varStatus="status">
 							<div id="replyItem<c:out value="${replylist.reno}"/>"
-										style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*replylist.redepth}"/>px; display: inline-block">
+										style="border: 1px solid gray; width: 100%; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*replylist.redepth}"/>px; display: inline-block">
 								<c:out value="${replylist.rewriter}"/> <c:out value="${replylist.redate}"/>
-								<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.reno}"/>')">삭제</a>
-								<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.reno}"/>')">수정</a>
-								<a href="#" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">댓글</a>
+								<button type="button" class="btn-default" onclick="fn_replyDelete('<c:out value="${replylist.reno}"/>')">삭제</button>
+								<button type="button" class="btn-default" onclick="fn_replyUpdate('<c:out value="${replylist.reno}"/>')">수정</button>
+								<button type="button" class="btn-default" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">답변</button>
 								<br/>
 								<div id="reply<c:out value="${replylist.reno}"/>"><c:out value="${replylist.rememo}"/></div>
 							</div><br/>
@@ -221,8 +234,8 @@ function fn_replyReplySave(){
 							<input type="hidden" id="brdno2" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
 							<input type="hidden" id="reno2" name="reno">
 							<textarea id="rememo2" name="rememo" rows="3" cols="60" maxlength="500"></textarea>
-							<a href="#" onclick="fn_replyUpdateSave()">저장</a>
-							<a href="#" onclick="fn_replyUpdateCancel()">취소</a>
+							<button class="btn-default" type="button" onclick="fn_replyUpdateSave()">저장</button>
+							<button class="btn-default" type="button" onclick="fn_replyUpdateCancel()">취소</button>
 						</form>
 					</div>
 
@@ -233,8 +246,8 @@ function fn_replyReplySave(){
 				<input type="hidden" id="reparent3" name="reparent"> 
 				작성자: <input type="text" id="rewriter3" name="rewriter" size="20" maxlength="20"> <br/>
 				<textarea id="rememo3" name="rememo" rows="3" cols="60" maxlength="500"></textarea>
-				<a href="#" onclick="fn_replyReplySave()">저장</a>
-				<a href="#" onclick="fn_replyReplyCancel()">취소</a>
+				<button type="button" class="button" href="#" onclick="fn_replyReplySave()">저장</button>
+				<button type="button" class="button" href="#" onclick="fn_replyReplyCancel()">취소</button>
 			</form>
 		</div>
 				</div>

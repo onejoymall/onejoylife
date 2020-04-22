@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.dao.UserDAO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
@@ -20,10 +22,11 @@ import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller 
 public class BoardCtr {
-
+    @Autowired
+    private UserDAO userDAO;
     @Autowired
     private BoardSvc boardSvc;
     @Autowired
@@ -33,32 +36,54 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-     public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request ) {
+     public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request,HashMap params,HttpSession session )throws Exception {
+        String returnString="";
+        try{
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
+            if(!isEmpty(userInfo)){
+                if(bgInfo.getBgtype().equals("1:1")) {
+                    searchVO.setUsr_id((Integer) userInfo.get("usr_id"));
+                }
+            }
+            if (bgInfo == null) {
+                return "board/BoardGroupFail";
+            }
+            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
+                searchVO.setDisplayRowCount(10);
+            }
+            searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
 
-         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
-         if (bgInfo == null) {
-             return "board/BoardGroupFail";
-         }
-         if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
-             searchVO.setDisplayRowCount(10);
-         }
-         searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+            List<?> listview  = boardSvc.selectBoardList(searchVO);
 
-         List<?> listview  = boardSvc.selectBoardList(searchVO);
+            modelMap.addAttribute("listview", listview);
+            modelMap.addAttribute("searchVO", searchVO);
+            modelMap.addAttribute("bgInfo", bgInfo);
+            modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
 
-         modelMap.addAttribute("listview", listview);
-         modelMap.addAttribute("searchVO", searchVO);
-         modelMap.addAttribute("bgInfo", bgInfo);
-         modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
-         modelMap.addAttribute("style", "help-7");
-
-         Device device = DeviceUtils.getCurrentDevice(request);
-         if(device.isMobile()){
-             return "mobile/help-7";
-         } else {
-             return "board/BoardList";
-         }
-
+            if(bgInfo.getBgtype().equals("1:1")){
+                if(isEmpty(userInfo)) {
+                    returnString = "help/help-4-2";
+                }else{
+                    returnString = "help/help-4-2-u";
+                }
+                modelMap.addAttribute("style", "help-4-2");
+            }else{
+                returnString ="board/BoardList";
+                modelMap.addAttribute("style", "help-7");
+            }
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isMobile()){
+                returnString ="mobile/help-7";
+            } else {
+                returnString =returnString;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return returnString;
      }
 
     /** 
@@ -93,14 +118,19 @@ public class BoardCtr {
      * 글 저장.
      */
     @RequestMapping(value = "/Board/boardSave")
-    public String boardSave(HttpServletRequest request, BoardVO boardInfo) {
-        String[] fileno = request.getParameterValues("fileno");
-        
-        FileUtil fs = new FileUtil();
-        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
-
-        boardSvc.insertBoard(boardInfo, filelist, fileno);
-
+    public String boardSave(HttpServletRequest request, BoardVO boardInfo, HttpSession session,HashMap params)throws Exception{
+        try{
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            boardInfo.setUsr_id((Integer)userInfo.get("usr_id"));
+            String[] fileno = request.getParameterValues("fileno");
+            FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
+            boardSvc.insertBoard(boardInfo, filelist, fileno);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "redirect:/Board/boardList?bgno=" + boardInfo.getBgno();
     }
 
@@ -174,7 +204,7 @@ public class BoardCtr {
                 response.getWriter().print(mapper.writeValueAsString("OK"));
             }
         } catch (IOException ex) {
-            System.out.println("오류: 댓글 삭제에 문제가 발생했습니다.");
+            System.out.println("오류: 답변 삭제에 문제가 발생했습니다.");
         }
     }
    
