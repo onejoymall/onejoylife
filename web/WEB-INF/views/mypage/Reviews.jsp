@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box">
@@ -18,26 +19,27 @@
                     <div class="r-input-box">
                         <p class="r-input-tit" style="width:100%">나의 상품평 보기</p>
                         <div class="r-in-box">
-                            <div class="input-box1">
-                                <p class="ra-num on" data-id="con1">오늘</p>
-                                <p class="ra-num" data-id="con2">1주일</p>
-                                <p class="ra-num" data-id="con3">1개월</p>
-                                <p class="ra-num" data-id="con4">3개월</p>
-                            </div>
-                            <div class="input-box2">
-                                <div class="cla">
-                                    <input type="text" id="from_date" class="date_pick">
-                                    <div class="cla-img1"></div>
-                                </div>
-                                <p class="cla-p1"> ~ </p>
-                                <div class="cla">
-                                    <input type="text" id="to_date" class="date_pick">
-                                    <div class="cla-img1"></div>
-                                </div>
-                                <p class="cla-p2"><a href="">조회</a></p>
-                            </div>
-                        </div>
-                        <p class="r-in-p2">조회일자를 설정하시면 최대 3개월 간의 주문내역을 조회하실 수 있습니다.</p>
+	                        <div class="input-box1">
+	                            <p class="ra-num on" data-id="con1">오늘</p>
+	                            <p class="ra-num" data-id="con2">1주일</p>
+	                            <p class="ra-num" data-id="con3">1개월</p>
+	                            <p class="ra-num" data-id="con4">3개월</p>
+	                        </div>
+	                        <div class="input-box2">
+	                        <form id="form2">
+	                            <div class="cla">
+	                                <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+	                                <div class="cla-img1"></div>
+	                            </div>
+	                            <p class="cla-p1"> ~ </p>
+	                            <div class="cla">
+	                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+	                                <div class="cla-img1"></div>
+	                            </div>
+	                            <p class="cla-p2"><a href="#" onclick="$('#form2').submit();">조회</a></p>
+                            </form>
+	                        </div>
+	                    </div>
                     </div>
                     <div class="con on" id="con1">
                         <div class="r-sec4">
@@ -55,219 +57,56 @@
                                 </tr>
                                 </thead>
                                 <tbody class="lis-body">
+                                <c:if test="${not empty list}">
+                                <c:forEach var="list" items="${list}">
                                 <tr>
                                     <td class="my-lis-1">
-                                        <p>2019.04.10</p>
-                                        <p><a href="">123456789121</a></p>
+                                        <p><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/><br><fmt:formatDate value="${list.reg_date}" pattern="HH:mm"/></p>
+                                        <p><a href="/MyPage/OrderAndDeliveryDetail?order_no=${list.order_no}">${list.order_no}</a></p>
                                     </td>
                                     <td class="my-lis-2">
-                                        <a href="mypage-6-1.html">
-                                            <div class="my-lis-img1"></div>
+                                        <a href="/product/productDetail?product_cd=${list.product_cd}">
+                                            <div style="width: 22%;height: 90px;background: url(${list.file_1}) no-repeat center / cover;"></div>
                                             <div class="my-lis-txt">
-                                                <p>브라운</p>
-                                                <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                                <p>VR20H9050UWS</p>
+                                                <p>${list.product_made_company_name}</p>
+                                                <p class="lis-font-w">${list.product_name}</p>
+                                                <p>${list.product_model}</p>
                                             </div>
                                         </a>
                                         <div class="review-box clearfix">
                                             <div class="star-box">
+                                            	<c:forEach var="i" begin="1" end="${list.review_score}">
                                                 <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
+                                                </c:forEach>
                                             </div>
                                             <div class="review-txt">
-                                                <p class="review-tit">굉장히 만족스럽습니다.</p>
+                                                <p class="review-tit">${list.review_title}</p>
                                                 <p class="review-arti">
-                                                    카메라 잘받았습니다.
+                                                    ${list.review_content}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#">수정하기</a>
+                                            <a href="#" class="review-update" data-id="${list.order_no}">수정하기</a>
                                         </div>
                                         <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#">삭제하기</a>
+                                            <a href="#" class="review-delete" data-id="${list.order_no}">삭제하기</a>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10</p>
-                                        <p><a href="">123456789121</a></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <a href="mypage-6-1.html">
-                                            <div class="my-lis-img1"></div>
-                                            <div class="my-lis-txt">
-                                                <p>브라운</p>
-                                                <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                                <p>VR20H9050UWS</p>
-                                            </div>
-                                        </a>
-                                        <div class="review-box clearfix">
-                                            <div class="star-box">
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                            </div>
-                                            <div class="review-txt">
-                                                <p class="review-tit">굉장히 만족스럽습니다.</p>
-                                                <p class="review-arti">
-                                                    카메라 잘받았습니다. 보증서도 이상없이 있고, 무엇보다 질문답게시판에 3번정도의 질문을했는데 판매자님께서 친절히 답해주셔서 감사하구요, 아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^감사합니다.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#">수정하기</a>
-                                        </div>
-                                        <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#">삭제하기</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10</p>
-                                        <p><a href="">123456789121</a></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <a href="mypage-6-1.html">
-                                            <div class="my-lis-img1"></div>
-                                            <div class="my-lis-txt">
-                                                <p>브라운</p>
-                                                <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                                <p>VR20H9050UWS</p>
-                                            </div>
-                                        </a>
-                                        <div class="review-box clearfix">
-                                            <div class="star-box">
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                            </div>
-                                            <div class="review-txt">
-                                                <p class="review-tit">굉장히 만족스럽습니다.</p>
-                                                <p class="review-arti">
-                                                    카메라 잘받았습니다. 보증서도 이상없이 있고, 감사합니다.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#">수정하기</a>
-                                        </div>
-                                        <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#">삭제하기</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10</p>
-                                        <p><a href="">123456789121</a></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <a href="mypage-6-1.html">
-                                            <div class="my-lis-img1"></div>
-                                            <div class="my-lis-txt">
-                                                <p>브라운</p>
-                                                <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                                <p>VR20H9050UWS</p>
-                                            </div>
-                                        </a>
-                                        <div class="review-box clearfix">
-                                            <div class="star-box">
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                            </div>
-                                            <div class="review-txt">
-                                                <p class="review-tit">굉장히 만족스럽습니다.</p>
-                                                <p class="review-arti">
-                                                    성능도 좋고 품질도 맘에들어요<br>잘쓸게요
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#">수정하기</a>
-                                        </div>
-                                        <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#">삭제하기</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p>2019.04.10</p>
-                                        <p><a href="">123456789121</a></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <a href="mypage-6-1.html">
-                                            <div class="my-lis-img1"></div>
-                                            <div class="my-lis-txt">
-                                                <p>브라운</p>
-                                                <p class="lis-font-w">쿠쿠 10인용 IH전기압력밥솥</p>
-                                                <p>VR20H9050UWS</p>
-                                            </div>
-                                        </a>
-                                        <div class="review-box clearfix">
-                                            <div class="star-box">
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                                <i class="y-star-full"></i>
-                                            </div>
-                                            <div class="review-txt">
-                                                <p class="review-tit">굉장히 만족스럽습니다.</p>
-                                                <p class="review-arti">
-                                                    카메라 잘받았습니다. 보증서도 이상없이 있고, 무엇보다 질문답게시판에 3번정도의 질문을했는데 판매자님께서 친절히 답해주셔서 감사하구요, 아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^감사합니다.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#">수정하기</a>
-                                        </div>
-                                        <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#">삭제하기</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                </c:forEach>
+                                </c:if>
                                 </tbody>
                             </table>
-                            <div class="num-box">
-                                <div class="num-box-in">
-                                    <div class="left-box"><a href=""></a></div>
-                                    <div class="num">
-                                        <span><a href="">1</a></span>
-                                        <span><a href="">2</a></span>
-                                        <span><a href="">3</a></span>
-                                        <span><a href="">4</a></span>
-                                        <span><a href="">5</a></span>
-                                    </div>
-                                    <div class="right-box"><a href=""></a></div>
-                                </div>
-                            </div>
+                            <form id="form1" name="form1"  method="post">
+	                            <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
+	                            <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                            </form>
+                            
                         </div>
                     </div>
-
             </div>
         </main>
 

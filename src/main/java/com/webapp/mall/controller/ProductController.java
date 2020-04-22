@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,8 @@ public class ProductController {
     private MgBrandDAO mgBrandDAO;
     @Autowired
     private SearchDAO searchDAO;
+    @Autowired
+    private ReviewDAO reviewDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
@@ -216,6 +219,8 @@ public class ProductController {
             params.put("product_option_input",list.get("product_option_input"));
             String option = getOption(params);
             model.addAttribute("option",option);
+            //리뷰
+//            model.addAllAttributes("reviews",reviewDAO.get)
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -227,6 +232,46 @@ public class ProductController {
             model.addAttribute("style","goods-view");
             return "product/productdetail";
         }
+    }
+    //상품 상세 리뷰
+    @RequestMapping(value = "/product/productDetailReview")
+    public String ProductDetailReview(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request) throws Exception {
+    	Device device = DeviceUtils.getCurrentDevice(request);
+    	try{
+    		//페이징
+            searchVO.setDisplayRowCount(10);
+            searchVO.setStaticRowEnd(10);
+            if(device.isMobile()){
+            	searchVO.setDisplayRowCount(1000);
+                searchVO.setStaticRowEnd(1000);
+            }
+            searchVO.pageCalculate(reviewDAO.getReviewForProductListCount(params));
+            
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("displayRowCount", searchVO.getDisplayRowCount());
+            
+            List<Map<String,Object>> list = reviewDAO.getReviewForProductList(params);
+            
+            int[] scoreArr = new int[list.size()];
+            for(int i=0; i<list.size(); i++) {
+            	scoreArr[i] = (int)list.get(i).get("review_score");
+            }
+            
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("scoreAvg", Arrays.stream(scoreArr).average().getAsDouble());            
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+
+    	if(device.isMobile()){
+    		return "mobile/goods-view-review";
+    		
+    	} else {
+    		model.addAttribute("style","goods-view");
+    		return "product/product-review";
+    	}
     }
     //장바구니 결제
     @RequestMapping(value = "/product/productPaymentCart")

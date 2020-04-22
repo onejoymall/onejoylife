@@ -181,3 +181,12 @@ button {
     padding:20px 0;
     text-align: center;
 }
+/* 라디오버튼 */
+input[type="radio"]{display:none;}
+.ra-icon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    background-size:20px auto;}
+.ra-icon{background: url(../img/icon/but-g-1.png)no-repeat center / 20px;}
+input:checked + label.ra-icon{background:url(../img/icon/but-g-2.png)no-repeat center / 20px;}

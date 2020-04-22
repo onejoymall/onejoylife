@@ -2,6 +2,8 @@ package com.webapp.mall.controller;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -25,6 +28,8 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.webapp.board.common.FileUtil;
+import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
@@ -39,12 +44,14 @@ import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.RefundDAO;
+import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.OptionVO;
 import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.vo.ProductVO;
 
 @RestController
 public class restapiController {
@@ -80,6 +87,13 @@ public class restapiController {
     private ProductDAO productDAO;
     @Autowired
     private RefundDAO refundDAO;
+    @Autowired
+    private ReviewDAO reviewDAO;
+    @Value("${downloadPath}")
+    private String downloadPath;
+    @Value("${downloadEditorPath}")
+    private String downloadEditorPath;
+    
     //장바구니 선택 결재
     @RequestMapping(value = "/payment/cartorder", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> paymentCartOrder(@RequestParam HashMap params,UserVO userVO) throws Exception{
@@ -1186,6 +1200,118 @@ public class restapiController {
             }
         }catch (Exception e){
             e.printStackTrace();
+        }
+        return resultMap;
+    }
+  //상품평 등록
+    @Transactional
+    @RequestMapping(value = "/MyPage/insertReview", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageInsertReview(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+        	FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"review");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/review/"+ft.format(new Date())+"/");
+            
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	params.put("email",session.getAttribute("email"));
+            	//로그인 확인
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                if(!isEmpty(userInfo)){
+                    params.put("usr_id",userInfo.get("usr_id"));
+                }
+            	reviewDAO.insertReview(params);
+            	
+            	fileVO.setParentPK(params.get("pk")+"");
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    reviewDAO.deleteReviewFile(filelist,fileVO);
+                    reviewDAO.insertReviewFile(filelist,fileVO);
+                }
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+  //상품평 수정
+    @Transactional
+    @RequestMapping(value = "/MyPage/updateReview", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageUpdateReview(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+        	FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"review");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/review/"+ft.format(new Date())+"/");
+            
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	params.put("email",session.getAttribute("email"));
+            	//로그인 확인
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                if(!isEmpty(userInfo)){
+                    params.put("usr_id",userInfo.get("usr_id"));
+                }
+            	reviewDAO.updateReview(params);
+            	
+            	fileVO.setParentPK(params.get("review_id")+"");
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    reviewDAO.deleteReviewFile(filelist,fileVO);
+                    reviewDAO.insertReviewFile(filelist,fileVO);
+                }
+                if(params.get("fileName") == null || params.get("fileName").equals("")) {
+                	fileVO.setFileorder(1);
+                    reviewDAO.deleteReviewFile(fileVO);
+                }
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/MyPage/Reviews");
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+  //상품평 삭제
+    @Transactional
+    @RequestMapping(value = "/MyPage/deleteReview", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageDeleteReview(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        try {
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	params.put("email",session.getAttribute("email"));
+            	//로그인 확인
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                if(!isEmpty(userInfo)){
+                    params.put("usr_id",userInfo.get("usr_id"));
+                }
+            	reviewDAO.deleteReview(params);
+            	
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/MyPage/Reviews");
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
         }
         return resultMap;
     }
