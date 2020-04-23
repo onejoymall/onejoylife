@@ -1150,6 +1150,7 @@ $(document).ready(function(){
                     }
                     if(index=="payment_status" && item=="R"){
                         html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송정보수정</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'O\')">배송완료</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>';
                         $('#setButton').html(html);
                     }

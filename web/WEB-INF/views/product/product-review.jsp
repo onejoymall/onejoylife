@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="total-review">
     <h5>평가 및 리뷰</h5>
@@ -35,7 +37,7 @@
 	                        </div>
 	                        <div class="review-title"><span>${list.review_title}</span><c:if test="${not empty list.file_1}"><i class="pic-ic"></i></c:if></div>
 	                        <div class="review-author"><span>${list.email}</span></div>
-	                        <div class="review-date"><span>${list.reg_date}</span></div>
+	                        <div class="review-date"><span><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></span></div>
 	                    </div>
 	                    <div class="content-box">
 	                        <div class="review-setting-box">

@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 		<div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">
                <li><h3>평가 및 리뷰<span class="red text-md ml-1">${searchVO.totRow}</span></h3></li>
@@ -20,7 +22,7 @@
             <c:forEach var="list" items="${list}">
             <ul class="product pb-0">
                <ul class="options pb-0">
-                    <li><h5>${list.reg_date} <br>${list.email}</h5></li>
+                    <li><h5><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/> <br>${list.email}</h5></li>
                     <li>
                     	<c:forEach var="i" begin="1" end="${list.review_score}">
                        	<i class="ri-star-fill red"></i>

@@ -216,44 +216,44 @@
                 </a>
         </div>
         </div>
-        <div class="my-1" id="content02">
-            <h3 class="mb-1">상품 필수정보</h3>
-            <hr class="mb-1">
-            <h2 class="mb-05">SM-G05-ZR/SS</h2>
-            <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>
-        </div>
-        <div class="my-1 bg_grey p-2">
-            <p class="grey pb-05">정격전압 (v)</p>
-            <h3>220</h3>
-            <p class="grey pt-2 pb-05">소비전력 (W)</p>
-            <h3>420</h3>
-            <p class="grey pt-2 pb-05">에너지소비효율등급</p>
-            <h3>3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음</h3>
-            <p class="grey pt-2 pb-05">동일모델 출시년월</p>
-            <h3>2017년 10월</h3>
-            <p class="grey pt-2 pb-05">품질보증기준</p>
-            <h3>관련법 및 소비자 분쟁해결 기준에 따름</h3>
-            <p class="grey pt-2 pb-05">크기 (mm)</p>
-            <h3>가로 : 630, 세로 : 690, 높이 : 1050</h3>
-            <p class="grey pt-2 pb-05">무게 (kg)</p>
-            <h3>47</h3>
-            <p class="grey pt-2 pb-05">색상</p>
-            <h3>실버</h3>
-            <p class="grey pt-2 pb-05">제조사</p>
-            <h3>삼성전자</h3>
-            <p class="grey pt-2 pb-05">제조국가</p>
-            <h3>태국</h3>
-            <p class="grey pt-2 pb-05">수입자</p>
-            <h3>삼성전자</h3>
-            <p class="grey pt-2 pb-05">A / S 책임자 (전화번호)</p>
-            <h3>삼성전자 (1588-3366)</h3>
-            <p class="grey pt-2 pb-05">사양</p>
-            <h3>태국</h3>
-            <p class="grey pt-2 pb-05">KC 전파적합성 인증</p>
-            <h3>kc마크MSIP-REI-WAF700SD</h3>
-            <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>
-            <h3>kc마크HU07310-17049C</h3>
-        </div>
+<%--        <div class="my-1 " id="content02">--%>
+<%--            <h3 class="mb-1">상품 필수정보</h3>--%>
+<%--            <hr class="mb-1">--%>
+<%--            <h2 class="mb-05">SM-G05-ZR/SS</h2>--%>
+<%--            <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>--%>
+<%--        </div>--%>
+<%--        <div class="my-1 bg_grey p-2 ">--%>
+<%--            <p class="grey pb-05">정격전압 (v)</p>--%>
+<%--            <h3>220</h3>--%>
+<%--            <p class="grey pt-2 pb-05">소비전력 (W)</p>--%>
+<%--            <h3>420</h3>--%>
+<%--            <p class="grey pt-2 pb-05">에너지소비효율등급</p>--%>
+<%--            <h3>3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음</h3>--%>
+<%--            <p class="grey pt-2 pb-05">동일모델 출시년월</p>--%>
+<%--            <h3>2017년 10월</h3>--%>
+<%--            <p class="grey pt-2 pb-05">품질보증기준</p>--%>
+<%--            <h3>관련법 및 소비자 분쟁해결 기준에 따름</h3>--%>
+<%--            <p class="grey pt-2 pb-05">크기 (mm)</p>--%>
+<%--            <h3>가로 : 630, 세로 : 690, 높이 : 1050</h3>--%>
+<%--            <p class="grey pt-2 pb-05">무게 (kg)</p>--%>
+<%--            <h3>47</h3>--%>
+<%--            <p class="grey pt-2 pb-05">색상</p>--%>
+<%--            <h3>실버</h3>--%>
+<%--            <p class="grey pt-2 pb-05">제조사</p>--%>
+<%--            <h3>삼성전자</h3>--%>
+<%--            <p class="grey pt-2 pb-05">제조국가</p>--%>
+<%--            <h3>태국</h3>--%>
+<%--            <p class="grey pt-2 pb-05">수입자</p>--%>
+<%--            <h3>삼성전자</h3>--%>
+<%--            <p class="grey pt-2 pb-05">A / S 책임자 (전화번호)</p>--%>
+<%--            <h3>삼성전자 (1588-3366)</h3>--%>
+<%--            <p class="grey pt-2 pb-05">사양</p>--%>
+<%--            <h3>태국</h3>--%>
+<%--            <p class="grey pt-2 pb-05">KC 전파적합성 인증</p>--%>
+<%--            <h3>kc마크MSIP-REI-WAF700SD</h3>--%>
+<%--            <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>--%>
+<%--            <h3>kc마크HU07310-17049C</h3>--%>
+<%--        </div>--%>
         <c:import url="/product/productDetailReview"/>
         <!-- <div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">

@@ -758,21 +758,24 @@ public class restapiController {
             }else{
 
             }
+            //환불을위한 토큰발급
+            IamportClient client;
+            String test_api_key = "7152058542143411";
+            String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+            client = new IamportClient(test_api_key, test_api_secret);
+            String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
+            CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+            //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
 
+            IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+            if(payment_response.getResponse()==null){
+                error.put("Error", payment_response.getMessage());
+            }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                //환불을위한 토큰발급
-                IamportClient client;
-                String test_api_key = "7152058542143411";
-                String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
-                client = new IamportClient(test_api_key, test_api_secret);
-                String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
-                CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
-                //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
 
-                IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
                 //결제상태 업데이트
                 deliveryInfoVO.setPayment_status("H");
                 deliveryInfoVO.setDelivery_status("H");
