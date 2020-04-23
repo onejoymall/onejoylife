@@ -33,6 +33,10 @@ public class CartDAO {
         sql.insert("mall.CartMapper.deleteCart",params);
     }
 
+    public void deletePayment(Map<String, String> params) throws Exception{
+        sql.insert("mall.CartMapper.deletePayment",params);
+    }
+
     public void updateCart(Map<String, String> params) throws Exception{
         sql.update("mall.CartMapper.updateCart",params);
     }

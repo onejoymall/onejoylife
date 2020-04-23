@@ -72,9 +72,9 @@
                                     <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
                                 </td>
                             </tr>
-<%--                            <c:if test="${detail.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
+                            <%--<c:if test="${cartPaymentList.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
                                 <tr>
-                                    <td>통관고유번호${detail.product_delivery_International_type}</td>
+                                    <td>통관고유번호${cartPaymentList.product_delivery_International_type}</td>
                                     <td><input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
                                 </tr>
                             </c:if>--%>
@@ -226,8 +226,9 @@
                                 <col style="width: 20%">
                                 <col style="width: 30%">
                                 <col style="width: 10%">
-                                <col style="width: 20%">
-                                <col style="width: 20%">
+                                <col style="width: 15%">
+                                <col style="width: 15%">
+                                <col style="width: 10%">
                             </colgroup>
                             <thead>
                             <tr class="head-tr">
@@ -237,19 +238,21 @@
                                 <td>수량</td>
                                 <td>소비자가</td>
                                 <td>상품가격</td>
+                                <td></td>
                             </tr>
                             </thead>
                             <tbody>
                             <c:if test="${not empty cartPaymentList}">
                                 <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
+                                    <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
                                     <tr>
                                         <td>
-                                            <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                            <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
                                                 <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                                            <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
                                                 <p>${cartPaymentList.product_name}</p>
                                             </a>
                                         </td>
@@ -260,14 +263,20 @@
                                         <td>
                                             <div class="price-number before-price">
                                                 <fmt:formatNumber value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" />원
+                                                <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
                                             </div>
                                         </td>
                                         <td>
                                             <span><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /></span>원
+                                            <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
+                                            <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
                                             <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
                                             <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                                        </td>
+                                        <td>
+                                            <button class="del"></button>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -328,11 +337,11 @@
                                     </c:if>
                                 </div>
                                 <div class="txt-in2">
-                                    <p><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /> 원</p>
+                                    <p><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /></span>  원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p>-<span class="in1-font3 discount"> <fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /></span> 원</p>
                                     <c:if test="${not empty getCartSum.total_delivery_payment}">
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> 원</p>
+                                        <p>+<span class="in1-font3 delivery"> <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /></span>  원</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -342,7 +351,7 @@
                                     <p>E-POINT 적립예정</p>
                                 </div>
                                 <div class="txt-in2 in2-color">
-                                    <p><span class="in2-font2"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in2-font2 total"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /></span> 원</p>
                                     <p><span><fmt:formatNumber value="${getCartSum.point_add}" groupingUsed="true" /> </span></span>원</p>
                                 </div>
                             </div>
@@ -355,6 +364,7 @@
                     <div class="but-box">
                         <button type="button" id="submitPayment">결제하기</button>
                     </div>
+                    <input type="hidden" name="product_payment_pg" value="sumtotal">
                 </div>
             </form>
         </main>
@@ -363,6 +373,35 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	//주문페이지 상품 삭제
+	var allprice = ${getCartSum.total_ori_payment};
+	var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
+	var alldelivery = ${getCartSum.total_delivery_payment};
+    var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+	$(document).on("click","button.del",function(){
+		$(this).parent().parent().remove();
+        sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+        var before_price = $(this).parent().prev().prev().children().children('input[name=allprice]').val();
+        var totalprice = allprice - before_price;
+        var price = $(this).parent().prev().children('input[name=price]').val();
+        var discount = before_price - price;
+        var totaldiscount = alldiscount - discount;
+        var delivery = $(this).parent().prev().children('input[name=delivery]').val();
+        var totaldelivery = alldelivery - delivery;
+        allprice = totalprice;
+        alldiscount = totaldiscount;
+        alldelivery = totaldelivery;
+        sumtotal = totalprice - totaldiscount + totaldelivery;
+        $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.total').text(sumtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$('input[name=product_payment_pg]').attr('value', sumtotal);
+	})
+	sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+	$('input[name=product_payment_pg]').attr('value', sumtotal);
+
+
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
@@ -378,7 +417,7 @@
     $("#submitPayment").on("click",function() {
         if(!$('#le-ck').is(":checked")){
             $.toast({
-                text: "이용약관 동의 는 필수 항목입니다.",
+                text: "이용약관 동의는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
                 position: 'top-right',
                 heading: 'Error',
@@ -393,7 +432,8 @@
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: product_name,
-                amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},
+                amount: $('input[name=product_payment_pg]').val(),
+<%--                ${getCartSum.total_payment+getCartSum.total_delivery_payment},--%>
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
