@@ -43,6 +43,10 @@
         )
     </insert>
 
+    <insert id="paymentOrders" parameterType="java.util.Map">
+
+    </insert>
+
 
 
     <update id="updateGiveawayDeliveryStatus" parameterType="java.util.Map">
