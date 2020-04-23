@@ -42,7 +42,16 @@
 		SELECT A.*,
 			 B.*,
 			(select Z.file_link from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_1,
-			(select Z.email from user Z where Z.usr_id=A.usr_id) as email,
+			 CONCAT(
+                left(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', 1),
+                length(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', 1))-1),
+               '***','@',
+               left(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', -1),'.', 1),
+                   length(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', -1),'.', 1))-2),
+               '***',
+               '.',
+               SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'.', -1)
+           ) email,
 			(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
 		FROM product_review A
 		left JOIN product B

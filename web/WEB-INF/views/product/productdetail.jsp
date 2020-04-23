@@ -241,7 +241,7 @@
                     </a></li>
                 </ul>
             </div>
-            <div class="goods-detail-wrap" id="goods-information">
+            <div class="goods-detail-wrap hidden" id="goods-information">
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information" class="active"><span>상품정보</span></a></li>
@@ -249,7 +249,7 @@
                     <li><a href="goods-qna"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
-                <div class="goods-information-wrap">
+                <div class="goods-information-wrap ">
                     <h5>상품 필수정보</h5>
                     <p class="goods-name">SM-G05-ZR/SS</p>
                     <p class="goods-subtitle">일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>
@@ -321,88 +321,18 @@
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review" class="active"><span>상품평&#40;<span class="review-count">65</span>&#41;</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
+                    <li><a href="goods-review" class="active"><span>상품평</span></a></li>
+                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
                 <c:import url="/product/productDetailReview"/>
-                <%-- <div class="total-review">
-                    <h5>평가 및 리뷰</h5>
-                    <div class="total-review-box">
-                        <div class="total-star">
-                            <div class="total-star-left">
-                                <div class="star-box">
-                                    <i class="y-star-full"></i>
-                                    <i class="y-star-full"></i>
-                                    <i class="y-star-full"></i>
-                                    <i class="y-star-half"></i>
-                                    <i class="y-star-empty"></i>
-                                </div>
-                                <p><span>225</span>개의 상품평이 있습니다.</p>
-                            </div>
-                            <div class="total-star-right">
-                                <div class="score-box">
-                                    <p class="score">4.5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-list">
-                        <div class="review-data-container">
-                            <div class="review-data-option-box">
-                                    <span class="all active">
-                                        <a href="#none">전체&#40;<span>24</span>&#41;</a>
-                                    </span>
-                                <span class="pic-only">
-                                        <a href="#none"><i class="pic-ic"></i>사진 상품평&#40;<span>5</span>&#41;</a>
-                                    </span>
-                                <span class="vid-only">
-                                        <a href="#none"><i class="vid-ic"></i>동영상 상품평&#40;<span>2</span>&#41;</a>
-                                    </span>
-                            <ul class="review-data-list">
-                                <li class="review-data-item">
-                                    <div class="main-title-box" tabindex="0">
-                                        <div class="star-box">
-                                            <i class="y-star-full"></i>
-                                            <i class="y-star-full"></i>
-                                            <i class="y-star-full"></i>
-                                            <i class="y-star-full"></i>
-                                            <i class="y-star-full"></i>
-                                        </div>
-                                        <div class="review-title"><span>굉장히 만족스럽습니다.</span><i class="pic-ic"></i></div>
-                                        <div class="review-author"><span>김*주</span></div>
-                                        <div class="review-date"><span>2020.01.12</span></div>
-                                    </div>
-                                    <div class="content-box">
-                                        <div class="review-setting-box">
-                                            <button type="button" class="report">신고하기</button>
-                                            <button type="button" class="modify">수정</button>
-                                            <button type="button" class="delete">삭제</button>
-                                        </div>
-                                        <div class="review-content-body">
-                                            카메라 잘받았습니다. 보증서도 이상없이 있고, 무엇보다 질문답게시판에 3번정도의 질문을했는데 판매자님께서<br>
-                                            친절히 답해주셔서 감사하구요,<br>
-                                            아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
-                                            감사합니다
-                                            <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-						<jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-                        <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
-                    </div>
-                </div>
-            </div> --%>
+
             <div class="goods-detail-wrap" id="goods-qna">
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평&#40;<span class="review-count">65</span>&#41;</span></a></li>
-                    <li><a href="goods-qna" class="active"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
+                    <li><a href="goods-review"><span>상품평</span></a></li>
+                    <li><a href="goods-qna" class="active"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
                 <div class="qna-wrap">
