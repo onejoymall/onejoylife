@@ -240,7 +240,7 @@
                     <tr>
                         <th>쿠폰명 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="goods-name1" name="coupon_name" value="" placeholder="쿠폰명">
+                            <input type="text" id="coupon_name" name="coupon_name" value="" placeholder="쿠폰명">
                         </td>
                     </tr>
                     <tr>
@@ -248,16 +248,26 @@
                         <td>
                             <p class="cc2">&#91;판매분류관리 &gt; 공급사 관리&#93;에 등록한 유효한 공급사 코드를 입력합니다.
                             </p>
-                            <input type="text" id="goods-s1" name="supplier_cd" placeholder="ex) S00000000">
+                            <input type="text" id="supplier_cd" name="supplier_cd" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
-                            <input type="file" name="uploadfile" placeholder="ex) sample1.jpg">
+                            <input type="file" name="uploadfile">
                         </td>
                     </tr>
-
+					 <tr>
+                        <th>국가별 공급</th>
+                        <td>
+                            <input type="checkbox" name="nation1-check" id="nation1-ck1" checked>
+                            <label for="nation1-ck1">한국</label>
+                            <input type="checkbox" name="nation1-check" id="nation1-ck2">
+                            <label for="nation1-ck2">미국</label>
+                            <input type="checkbox" name="nation1-check" id="nation1-ck3">
+                            <label for="nation1-ck3">중국</label>
+                        </td>
+                    </tr>
                     <tr>
                         <th>혜택구분 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>

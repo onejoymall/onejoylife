@@ -522,3 +522,46 @@ $("#newDeliveryBtn").click(function(){
         },
     });
 });
+//배송지정보 불러오기
+$(".sec2-ov>p>label").click(function(){
+	var deliverytype = ''; 
+	if($(this).attr("for") == 'ra1-3'){
+		$("input[name=delivery_user_name]").val('');
+		$("select[name=delivery_user_phone_a]").val('010');
+		$("input[name=delivery_user_phone_b]").val('');
+		$("input[name=delivery_user_phone_c]").val('');
+		$("select[name=delivery_user_tel_a]").val('010');
+		$("input[name=delivery_user_tel_b]").val('');
+		$("input[name=delivery_user_tel_c]").val('');
+		$("input[name=postcode]").val('');
+		$("input[name=roadAddress]").val('');
+		$("input[name=extraAddress]").val('');
+		$("input[name=jibunAddress]").val('');
+		return;
+	}else if($(this).attr("for") == 'ra1-1'){
+		deliverytype = 'default';
+	}else if($(this).attr("for") == 'ra1-2'){
+		deliverytype = 'last';
+	}
+	
+	jQuery.ajax({
+        type: 'POST',
+        url: '/payment/getDeliveryAddress',
+        data: "deliveryType="+deliverytype,
+        success: function (data) {
+        	$.each(data.delivery,function(index, item){
+        		$(`input[name=${index}]`).val(item);
+        		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
+        			var number = item.split("-");
+        			['a','b','c'].forEach(function(el,idx){
+        				$(`input[name=${index}_${el}]`).val(number[idx]);
+        			});
+        		}
+        	});
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+    });
+});
+$(".sec2-ov>p>label:eq(0)").trigger("click");

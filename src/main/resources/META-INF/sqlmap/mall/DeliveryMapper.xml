@@ -156,6 +156,21 @@
         delivery_status = #{delivery_status}
         where order_no=#{merchant_uid}
     </update>
+    <select id="getLastDelivery" parameterType="hashmap" resultType="hashmap">
+	    SELECT *
+		FROM delivery_info A
+		WHERE A.order_user_email = #{email}
+		ORDER BY A.reg_date DESC
+		LIMIT 1
+    </select>
+    <select id="getDefaultDelivery" parameterType="hashmap" resultType="hashmap">
+    	SELECT *
+		FROM delivery_info A
+		WHERE A.order_user_email = #{email}
+		AND A.default_delivery_info_yn = 'Y'
+		ORDER BY A.reg_date DESC
+		LIMIT 1
+    </select>
     <update id="deleteDelivery" parameterType="java.util.Map">
         UPDATE delivery_info SET
 		delivery_visible_yn = 'N'
