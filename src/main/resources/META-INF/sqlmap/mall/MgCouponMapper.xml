@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MgCouponMapper">
+    <select id="getCouponList" parameterType="com.webapp.manager.vo.CouponVO" resultType="hashmap">
+    </select>
+    <insert id="insertCoupon" parameterType="com.webapp.manager.vo.CouponVO">
+    	insert into coupon(
+			coupon_cd,
+			coupon_ct,
+			supplier_cd,
+			coupon_name,
+			coupon_use_type,
+			coupon_sale_payment,
+			coupon_sale_rate,
+			country_supply,
+			coupon_condition,
+			coupon_issue_time,
+			coupon_anniversary_before,
+			coupon_issue_date,
+			coupon_issue_oder_end,
+			coupon_min_amount,
+			coupon_review_condition,
+			coupon_buy_count_condition,
+			coupon_min_buy_count,
+			coupon_none_buy_month,
+			coupon_use_range,
+			coupon_use_min_amount,
+			coupon_sale_cal_condition,
+			coupon_dup_yn,
+			coupon_type,
+			coupon_use_payment_class,
+			coupon_img_path,
+			coupon_alert_class,
+			coupon_valid_date_start,
+			coupon_valid_date_end,
+			coupon_issued_target_id,
+			coupon_payment,
+			coupon_payment_condition,
+			coupon_class,
+			coupon_use_yn,
+			login_alert_yn,
+			sms_alert_yn,
+			email_alert_yn
+    	)values(
+			#{coupon_cd},
+			#{coupon_ct},
+			#{supplier_cd},
+			#{coupon_name},
+			#{coupon_use_type},
+			#{coupon_sale_payment},
+			#{coupon_sale_rate},
+			#{country_supply},
+			#{coupon_condition},
+			#{coupon_issue_time},
+			#{coupon_anniversary_before},
+			#{coupon_issue_date},
+			#{coupon_issue_oder_end},
+			#{coupon_min_amount},
+			#{coupon_review_condition},
+			#{coupon_buy_count_condition},
+			#{coupon_min_buy_count},
+			#{coupon_none_buy_month},
+			#{coupon_use_range},
+			#{coupon_use_min_amount},
+			#{coupon_sale_cal_condition},
+			#{coupon_dup_yn},
+			#{coupon_type},
+			#{coupon_use_payment_class},
+			#{coupon_img_path},
+			#{coupon_alert_class},
+			#{coupon_valid_date_start},
+			#{coupon_valid_date_end},
+			#{coupon_issued_target_id},
+			#{coupon_payment},
+			#{coupon_payment_condition},
+			#{coupon_class},
+			#{coupon_use_yn},
+			#{login_alert_yn},
+			#{sms_alert_yn},
+			#{email_alert_yn}
+    	)
+    </insert>
+</mapper>
+

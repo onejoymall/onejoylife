@@ -100,6 +100,8 @@ public class ManagerRestapiController {
     private MgOptionDAO mgOptionDAO;
     @Autowired
     private MgReviewDAO mgReviewDAO;
+    @Autowired
+    private MgCouponDAO mgCouponDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -1379,6 +1381,62 @@ public class ManagerRestapiController {
         	resultMap.put("success", "success");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+  //상품평 수정
+    @Transactional
+    @RequestMapping(value = "/manager/insertCoupon", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> mypageUpdateReview(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        if(couponVO.getCoupon_name() == null || couponVO.getCoupon_name().equals("")){
+            error.put(messageSource.getMessage("coupon_name","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        
+        try {
+        	if(couponVO.getCoupon_condition1().equals("next2")) {
+        		couponVO.setCoupon_condition(couponVO.getCoupon_condition2());
+        	}else if(couponVO.getCoupon_condition1().equals("next3")) {
+        		couponVO.setCoupon_condition(couponVO.getCoupon_condition3());
+        	}else {
+        		couponVO.setCoupon_condition(couponVO.getCoupon_condition1());
+        	}
+        	couponVO.setCoupon_condition1(null);
+        	couponVO.setCoupon_condition2(null);
+        	couponVO.setCoupon_condition3(null);
+
+        	if(couponVO.getCountry_supply() != null && !couponVO.getCountry_supply().equals("")) {
+        		couponVO.setCountry_supply(couponVO.getCountry_supply().replace(",", "|"));
+        	}
+        	
+//        	FileUtil fs = new FileUtil();
+//            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"review");
+//            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+//            fileVO.setFilepath("/fileupload/review/"+ft.format(new Date())+"/");
+//            
+//            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+
+//            	fileVO.setParentPK(params.get("review_id")+"");
+//                if(!isEmpty(filelist)){
+//                    fileVO.setFileorder(1);
+//                    reviewDAO.deleteReviewFile(filelist,fileVO);
+//                    reviewDAO.insertReviewFile(filelist,fileVO);
+//                }
+//                if(params.get("fileName") == null || params.get("fileName").equals("")) {
+//                	fileVO.setFileorder(1);
+//                    reviewDAO.deleteReviewFile(fileVO);
+//                }
+                mgCouponDAO.insertCoupon(couponVO);
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/MyPage/Reviews");
+            } 
+        } catch (Exception e) {
+            resultMap.put("e", e);
         }
         return resultMap;
     }

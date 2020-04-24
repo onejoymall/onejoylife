@@ -565,3 +565,52 @@ $(".sec2-ov>p>label").click(function(){
     });
 });
 $(".sec2-ov>p>label:eq(0)").trigger("click");
+
+//관리자 쿠폰 등록
+$("#coupon-insert-btn").click(function(){
+	var formData = new FormData($("#insertForm")[0]);
+	jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/manager/insertCoupon',
+        success: function (data) {
+        	if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                $.toast({
+                    heading: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: false,
+                });
+            }
+        	if(data.e){
+        		alert("error");
+        	}
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
