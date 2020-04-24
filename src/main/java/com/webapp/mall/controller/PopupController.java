@@ -99,6 +99,7 @@ public class PopupController {
                 if(!isEmpty(kakaoUserMap)){
                     Map<String,Object> kakaoUserAccount = (Map<String,Object>)kakaoUserMap.get("kakao_account");
                     session.setAttribute("email", kakaoUserAccount.get("email"));
+
                     params.put("email", kakaoUserAccount.get("email"));
                     userDAO.insertSnsUser(params);
                     //로그인 기록 저장
