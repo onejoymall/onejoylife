@@ -1,4 +1,4 @@
-
+//결과 후 페이지 이동시
 function commonAjaxCall(type,url,formData){
     jQuery.ajax({
         type: type,
@@ -45,6 +45,7 @@ function commonAjaxCall(type,url,formData){
         }
     });
 }
+//목록형또는 결과만 사용할경우
 function commonAjaxListCall(type,url,formData){
     var dataList = $.ajax({
         type: type,
@@ -888,7 +889,7 @@ $(document).ready(function(){
             contentType: false, // 필수
             url:'/Manager/productUpdateProc',
             success: function (data) {
-                console.log(data.validateError)
+                console.log(data)
                 if (data.validateError) {
                     $('.validateError').empty();
                     $.each(data.validateError, function (index, item) {
@@ -928,7 +929,7 @@ $(document).ready(function(){
                 }
             },
             error: function (xhr, status, error) {
-                alert("error");
+                console.log("xhr >> "+xhr+" status >> "+ status+" error >> "+ error)
             }
         });
     })
@@ -1531,6 +1532,7 @@ $(document).ready(function(){
     $('.code-wrap-button').click(function(){
         $('.code-wrap').toggleClass('active');
     });
+    //배송비 구분 변경에따라
     $('select[name=product_delivery_payment_class]').change(function(){
         var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
         var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
@@ -2016,15 +2018,55 @@ $(document).ready(function(){
         $('#changeDeliveryPaymentClass').on("change",function () {
             callDelivery($(this).val());
         });
-    function callDelivery(product_delivery_payment_class) {
-        var shipR = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
-        var shipM = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
-        var shipD = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>';
-        var shipW = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
-        var shipC = '<tr class="changeDeliveryTr shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
-        var shipN = '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" id="product_delivery_payment" name="product_delivery_payment">원을 부과함.</td></tr>';
+    //관리자 > 상품 상세보기 > 기본 배송비 구분에따른 출력
+    function callDelivery(product_delivery_payment_class,product_delivery_payment) {
+        var shipR = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail">' +
+            '<th>배송비 상세 설정</th>' +
+                '<td>배송비 ' +
+                    '<input type="text" id="product_delivery_payment" name="product_delivery_payment" value="'+product_delivery_payment+'"> 원을 고정적으로 부과함.' +
+                '</td>' +
+            '</tr>';
+        var shipM = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail">' +
+                '<th>배송비 상세 설정</th>' +
+                '<td>' +
+                '<p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p>' +
+                    '<input type="text" id="shippingFee-detail" name="product_delivery_payment" value="'+product_delivery_payment+'" placeholder="ex) 30000|2500">' +
+                '</td>' +
+            '</tr>';
+        var shipD = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail long">' +
+                '<th>배송비 상세 설정</th>' +
+                '<td>' +
+                    '<p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p>' +
+                    '<input type="text" id="product_delivery_payment" name="product_delivery_payment" value="'+product_delivery_payment+'" placeholder="ex) 20000|30000|2000//30000|50000|1000">' +
+                '</td>' +
+            '</tr>';
+        var shipW = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail long">' +
+                '<th>배송비 상세 설정</th>' +
+                '<td>' +
+                    '<p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p>' +
+                    '<input type="text" id="product_delivery_payment" name="product_delivery_payment" value="'+product_delivery_payment+'" placeholder="ex) 3|5|2000//5|7|7000">' +
+                '</td>' +
+            '</tr>';
+        var shipC = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail long">' +
+                '<th>배송비 상세 설정</th>' +
+                '<td>' +
+                    '<p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p>' +
+                    '<input type="text" id="product_delivery_payment" name="product_delivery_payment" value="'+product_delivery_payment+'" placeholder="ex) 3|5|2000//5|7|7000">' +
+                '</td>' +
+            '</tr>';
+        var shipN = '' +
+            '<tr class="changeDeliveryTr shipping-t-detail"><th>배송비 상세 설정</th>' +
+            '<td>주문 금액에 상관 없이 수량에 따라 배송료 ' +
+                '<input type="text" id="product_delivery_payment" name="product_delivery_payment" value="'+product_delivery_payment+'">원을 부과함.' +
+            '</td>' +
+            '</tr>';
 
-        $('.changeDeliveryTr').remove();
+        // $('.changeDeliveryTr').remove();
         if (product_delivery_payment_class== "R") {
 
             $('.shipping-fee-tr').after(shipR);
