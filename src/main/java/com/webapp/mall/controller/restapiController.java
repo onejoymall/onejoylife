@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -511,7 +512,9 @@ public class restapiController {
                         Integer giveawayPlayCount = giveawayDAO.getUserGiveawayPlayListCount(params);
                         //당첨자가 없으면 진행
                         if(giveawayPlayCount <= 0 ){
-                            params.put("giveaway_play_id",giveawayDAO.getGiveawayPlayUserRandId(params));
+                            Integer winnerUserId = (Integer) giveawayDAO.getGiveawayPlayUserRandId(params);
+                            params.put("giveaway_play_id",winnerUserId);
+                            params.put("giveaway_winner_user_id",winnerUserId);
                             giveawayDAO.updateWinnerUser(params);
                             giveawayDAO.insertGiveawayWinner(params);
                         }
@@ -659,40 +662,64 @@ public class restapiController {
         }
         return resultMap;
     }
-    //장바구니 결제
+    //장바구니 결제 처리
     @RequestMapping(value = "/Save/PaymentOrders" )
     public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try{
-            if(deliveryInfoVO.getReason().isEmpty()){
-                error.put(messageSource.getMessage("reason","ko"), messageSource.getMessage("error.required","ko"));
-            }
+            //결제번호생성
+            params.put("payment_cd","PM"+numberGender.numberGen(6,1));
 
             params.put("email",session.getAttribute("email"));
+            //실제 결제승인이 이뤄졌거나, 가상계좌 발급이 성공된 경우, true
+            if(deliveryInfoVO.getSuccess()){
+                params.put("payment_status","W");
+                //가상계좌결제시 미결제로 상태변경
+                if(deliveryInfoVO.getPay_method().equals("vbank")){
+                    params.put("payment_status","M");
+                }
+            }
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             if(isEmpty(userInfo)){
-                //비회원
+                //비회원 주문시 사용자아이디 임시 저장
+                params.put("payment_user_id",numberGender.numberGen(6,1));
+                resultMap.put("redirectUrl", "/MyPage/OrderDetailGuest?order_no="+deliveryInfoVO.getOrder_no());
             }else{
+                params.put("payment_user_id",userInfo.get("usr_id"));
+                params.put("point_paid_user_id",userInfo.get("usr_id"));
+                //회원인 경우 보유포인트 확인
 
+
+                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
+                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
+                //상품결제 시 포인트 배율 확인 및 지급
+                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
+                if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
+                    BigDecimal payment = new BigDecimal(getPaymentString);//구매금액
+                    BigDecimal productPointRate = new BigDecimal((String)productInfo.get("product_point_rate"));//포인트배율
+                    BigDecimal hPersent = new BigDecimal("100");//백분율
+                    if(productPointRate.compareTo(BigDecimal.ZERO) == 1){
+
+                        BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
+                        params.put("point_amount",userPoint.add(pointMultiply));
+                        params.put("point_paid_memo",productInfo.get("product_name"));
+                        params.put("point_add",pointMultiply);
+                        params.put("point_paid_user_id",userInfo.get("usr_id"));
+                        params.put("point_paid_type","P");
+                        params.put("point_paid_product_cd",productInfo.get("product_cd"));
+                        params.put("order_no",deliveryInfoVO.getOrder_no());
+                        pointDAO.insertPoint(params);
+                    }
+                }
+                resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
             }
 
-
-            if(!isEmpty(error)){
-                resultMap.put("validateError",error);
-            }else{
-                //결제상태 업데이트
-                deliveryInfoVO.setPayment_status("F");
-                deliveryInfoVO.setDelivery_status("F");
-                deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
-                deliveryDAO.updateDelivery(deliveryInfoVO);
-                paymentDAO.updatePayment(deliveryInfoVO);
-                refundDAO.insertDeliveryRefund(deliveryInfoVO);
-                //교환정보 저장
-
-            }
+            paymentDAO.paymentOrders(params);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -945,6 +972,7 @@ public class restapiController {
         }
         return resultMap;
     }
+
 
     //장바구니 변경
     @RequestMapping(value = "/cart/updateCart", method = RequestMethod.POST, produces = "application/json")

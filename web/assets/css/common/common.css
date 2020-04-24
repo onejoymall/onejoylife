@@ -587,3 +587,10 @@ input[class='styleClass']:checked + label
 #content01 img{
     width:100%!important;
 }
+
+.del {
+    width: 20px;
+    height: 20px;
+    background: url(../../img/x-red.png)no-repeat center / cover;
+    margin: 0 auto;
+}
