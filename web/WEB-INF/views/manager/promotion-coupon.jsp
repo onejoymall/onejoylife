@@ -216,7 +216,7 @@
 	                            <input type="radio" name="coupon_issue_time" id="option1-rd2" value="S">
 	                            <label for="option1-rd2">지정한 시점에 발급</label>
 	                            <div id="option1-rd2-txt" style="display: none;">
-	                                <input type="text" name="coupon_issue_date" placeholder="ex) 2020-02-28">
+	                                <input type="text" name="coupon_issue_date" class="date_pick" placeholder="ex) 2020-02-28">
 	                            </div>
                             </div>
                             <div class="option2-box3">
@@ -224,7 +224,7 @@
 	                            <label for="iss1">기념일 당일 발급</label>
 	                            <input type="radio" id="iss2" name="coupon_issue_time" value="B">
 	                            <label for="iss2">사용</label>
-	                            <span><input type="text" value="3" name="coupon_anniversary_before" class="txt-right num-width1"> 일 전 선 발행</span>
+	                            <span><input type="text" value="3" name="coupon_anniversary_before" class="txt-right num-width1" disabled="disabled"> 일 전 선 발행</span>
                             </div>
                         </td>
                     </tr>
@@ -394,7 +394,7 @@
                             <span>
                                          <!-- <input type="text"  placeholder="ex) 2020-02-24"  name="day-iss1">
                                          <span> ~ </span> -->
-                                         <input type="text"  placeholder="ex) 2020-03-24"  name="coupon_issue_order_end">
+                                         <input type="text"  placeholder="ex) 2020-03-24" class="date_pick" name="coupon_issue_order_end">
                                          <span> 까지</span>
                                      </span>
                         </td>
@@ -798,7 +798,7 @@
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.<br>
                                 <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
                             </p>
-                            <input type="text" id="goods-validity-start" name="coupon_valid_date_start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-validity-end" name="coupon_valid_date_end" placeholder="ex) 2020-02-28">
+                            <input type="text" id="goods-validity-start" name="coupon_valid_date_start" class="date_pick" placeholder="ex) 2020-02-28"> ~ <input type="text" class="date_pick" id="goods-validity-end" name="coupon_valid_date_end" placeholder="ex) 2020-02-28">
                         </td>
                     </tr>
                     <tr>

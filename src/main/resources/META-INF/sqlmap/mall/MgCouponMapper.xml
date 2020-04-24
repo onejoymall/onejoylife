@@ -5,13 +5,22 @@
 <mapper namespace="mall.MgCouponMapper">
     <select id="getCouponList" parameterType="com.webapp.manager.vo.CouponVO" resultType="hashmap">
     </select>
+    <select id="checkDupCouponCD" parameterType="string" resultType="int">
+    	select ifnull(count(*),0)
+    	from coupon
+    	where coupon_cd = #{value}
+    </select>
     <insert id="insertCoupon" parameterType="com.webapp.manager.vo.CouponVO">
+   		<selectKey keyProperty="coupon_id" resultType="Integer" order="BEFORE">  
+	        SELECT IFNULL(MAX(A.coupon_id)+1,1) FROM coupon A
+	    </selectKey>
     	insert into coupon(
+    		coupon_id,
 			coupon_cd,
 			coupon_ct,
 			supplier_cd,
 			coupon_name,
-			coupon_use_type,
+			coupon_sale_type,
 			coupon_sale_payment,
 			coupon_sale_rate,
 			country_supply,
@@ -19,7 +28,7 @@
 			coupon_issue_time,
 			coupon_anniversary_before,
 			coupon_issue_date,
-			coupon_issue_oder_end,
+			coupon_issue_order_end,
 			coupon_min_amount,
 			coupon_review_condition,
 			coupon_buy_count_condition,
@@ -44,11 +53,12 @@
 			sms_alert_yn,
 			email_alert_yn
     	)values(
+    		#{coupon_id},
 			#{coupon_cd},
 			#{coupon_ct},
 			#{supplier_cd},
 			#{coupon_name},
-			#{coupon_use_type},
+			#{coupon_sale_type},
 			#{coupon_sale_payment},
 			#{coupon_sale_rate},
 			#{country_supply},
@@ -56,7 +66,7 @@
 			#{coupon_issue_time},
 			#{coupon_anniversary_before},
 			#{coupon_issue_date},
-			#{coupon_issue_oder_end},
+			#{coupon_issue_order_end},
 			#{coupon_min_amount},
 			#{coupon_review_condition},
 			#{coupon_buy_count_condition},
@@ -82,5 +92,15 @@
 			#{email_alert_yn}
     	)
     </insert>
+    <insert id="insertCouponFile" parameterType="com.webapp.board.common.FileVO" >
+        INSERT INTO coupon_file (key_id, file_name, real_name, file_size, file_link, file_order)
+        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
+    </insert>
+	<delete id="deleteCouponFile" parameterType="com.webapp.board.common.FileVO">
+        delete from coupon_file  where key_id = #{parentPK} and file_order = #{fileorder}
+    </delete>
+    <delete id="deleteReviewFileOne" parameterType="com.webapp.board.common.FileVO">
+        delete from coupon_file  where key_id = #{parentPK} and file_order = #{fileorder}
+    </delete>
 </mapper>
 
