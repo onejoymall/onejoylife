@@ -284,9 +284,9 @@ public class ProductController {
             model.addAttribute("order_no",order_no);
 
             if(isEmpty(userInfo)){
-                cartPaymentVO.setCart_user_id((Integer) session.getAttribute("nonMembersUserId"));
+                cartPaymentVO.setCart_user_id((String) session.getAttribute("nonMembersUserId"));
             }else{
-                cartPaymentVO.setCart_user_id((Integer) userInfo.get("usr_id"));
+                cartPaymentVO.setCart_user_id((String) userInfo.get("usr_id"));
             }
 
             //결제비용
