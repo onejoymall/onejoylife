@@ -23,6 +23,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import static org.springframework.util.CollectionUtils.isEmpty;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -68,15 +70,17 @@ public class UserController {
         return "redirect:/sign/login"; // 로그아웃 후 로그인화면으로 이동
     }
     @RequestMapping(value = "/sign/login", method = RequestMethod.GET, produces = "application/json")
-    public String mallLogin(@RequestParam HashMap params, ModelMap model,HttpServletRequest request) throws Exception {
+    public String mallLogin(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
         String returnString ="mall/login";
         Device device = DeviceUtils.getCurrentDevice(request);
 
         try{
+            session.setAttribute("RefererUrl",request.getHeader("Referer"));
+
             Object siteUrl = request.getRequestURL().toString()
                     .replaceAll(" " , "")
                     .replace(request.getRequestURI(),"");
-            HttpSession session = request.getSession();
+
             Object obj = session.getAttribute("login");
             if ( obj != null ){
                 returnString = "redirect:/";

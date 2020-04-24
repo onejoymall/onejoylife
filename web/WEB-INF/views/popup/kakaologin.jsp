@@ -12,5 +12,10 @@
 ${data}
 <script>
     close();
+    <c:if test="${not empty sessionScope.RefererUrl}">
+        opener.location.href = '${sessionScope.RefererUrl}';
+    </c:if>
+    <c:if test="${empty sessionScope.RefererUrl}">
     opener.location.href = '/';
+    </c:if>
 </script>
