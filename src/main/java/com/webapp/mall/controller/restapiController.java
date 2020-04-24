@@ -1349,4 +1349,33 @@ public class restapiController {
         }
         return resultMap;
     }
+  //결제화면 배송지정보불러오기
+    @Transactional
+    @RequestMapping(value = "/payment/getDeliveryAddress", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> getDeliveryAddress(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        try {
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	params.put("email",session.getAttribute("email"));
+            	//로그인 확인
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                if(!isEmpty(userInfo)){
+                    params.put("usr_id",userInfo.get("usr_id"));
+                }
+                if(params.get("deliveryType").equals("default")) {
+                	resultMap.put("delivery",deliveryDAO.getDefaultDelivery(params));
+                }else if(params.get("deliveryType").equals("last")) {
+                	resultMap.put("delivery",deliveryDAO.getLastDelivery(params));
+                }
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

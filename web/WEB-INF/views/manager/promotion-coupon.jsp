@@ -27,24 +27,24 @@
         </div>
         <div class="goods-list-wrap">
             <div class="list-sort-wrap">
-                <div class="left">
+               <%--  <div class="left">
                     <button type="button" class="btn-default" name="copy">선택 삭제</button>
-<%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
-<%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
-<%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>--%>
-                </div>
+                   <button type="button" class="btn-default" name="copy">선택 복사 등록</button>
+                   <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>
+                   <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>
+                </div><!-- 
                 <div class="right">
                     <select name="order" class="order-select">
                         <option value="32">10개씩 보기</option>
                         <option value="60">50개씩 보기</option>
                         <option value="92">100개씩 보기</option>
                     </select>
-                </div>
+                </div> --> --%>
             </div>
             <table>
                 <colgroup>
-                    <col width="2%">
-                    <col width="5%">
+                    <%-- <col width="2%">
+                    <col width="5%"> --%>
                     <col width="33%">
                     <col width="10%">
                     <col width="10%">
@@ -55,8 +55,8 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                    <td name="detail">번호</td>
+                    <!-- <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                    <td name="detail">번호</td> -->
                     <td name="detail">쿠폰명</td>
                     <td>발급수</td>
                     <td>쿠폰사용 매출액</td>
@@ -68,8 +68,8 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input type="checkbox" id="chk10" name="chk10"></td>
-                    <td>01</td>
+                    <!-- <td><input type="checkbox" id="chk10" name="chk10"></td>
+                    <td>01</td> -->
                     <td>신규 가입 회원 3,000원 할인 적용</td>
                     <td>0</td>
                     <td>0원</td>
@@ -81,8 +81,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" id="chk9" name="chk9"></td>
-                    <td>01</td>
+                    <!-- <td><input type="checkbox" id="chk9" name="chk9"></td>
+                    <td>01</td> -->
                     <td>신규 가입 회원 3,000원 할인 적용</td>
                     <td>0</td>
                     <td>0원</td>
@@ -91,137 +91,21 @@
                     <td>2020-02-18 00:00:00</td>
                     <td>
                         <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk8" name="chk8"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk7" name="chk7"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk6" name="chk6"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk5" name="chk5"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk4" name="chk4"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk3" name="chk3"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>30%</td>
-                    <td>발급중지</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail2">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk2" name="chk2"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>30%</td>
-                    <td>발급중지</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail2">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" id="chk1" name="chk1"></td>
-                    <td>01</td>
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>30%</td>
-                    <td>발급중지</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail2">상세보기</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                <li class="page-item"><a class="page-link" href="#">8</a></li>
-                <li class="page-item"><a class="page-link" href="#">9</a></li>
-                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                <li class="page-item"><a class="page-link" href="#">≫</a></li>
-            </ul>
+            <form id="form1" name="form1"  method="post">
+                <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+            </form>
         </div>
     </div>
 </main>
 <!--모달팝업창-->
 <div class="modal">
     <div class="modal-content">
-        <form action="" method="POST">
+        <form id="insertForm" method="POST">
             <div class="modal-header">
                 <h2>쿠폰 등록</h2>
                 <button type="button" class="modal-close">×</button>
@@ -240,7 +124,7 @@
                     <tr>
                         <th>쿠폰명 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="goods-name1" name="coupon_name" value="" placeholder="쿠폰명">
+                            <input type="text" id="coupon_name" name="coupon_name" value="" placeholder="쿠폰명">
                         </td>
                     </tr>
                     <tr>
@@ -248,22 +132,33 @@
                         <td>
                             <p class="cc2">&#91;판매분류관리 &gt; 공급사 관리&#93;에 등록한 유효한 공급사 코드를 입력합니다.
                             </p>
-                            <input type="text" id="goods-s1" name="supplier_cd" placeholder="ex) S00000000">
+                            <input type="text" id="supplier_cd" name="supplier_cd" placeholder="ex) S00000000">
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
-                            <input type="file" name="uploadfile" placeholder="ex) sample1.jpg">
+                        	<input type="text" class="fileName" name="fileName" readonly="readonly">
+                            <input type="file" name="uploadfile" class="uploadBtn">
                         </td>
                     </tr>
-
+					 <tr>
+                        <th>국가별 공급</th>
+                        <td>
+                            <input type="checkbox" name="country_supply" value="korea" id="nation1-ck1" checked>
+                            <label for="nation1-ck1">한국</label>
+                            <input type="checkbox" name="country_supply" value="usa" id="nation1-ck2">
+                            <label for="nation1-ck2">미국</label>
+                            <input type="checkbox" name="country_supply" value="china" id="nation1-ck3">
+                            <label for="nation1-ck3">중국</label>
+                        </td>
+                    </tr>
                     <tr>
                         <th>혜택구분 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="radio" id="discount-radio1" name="discount-radio" value="one"  checked>
+                            <input type="radio" id="discount-radio1" name="coupon_sale_type" value="amount"  checked>
                             <label for="discount-radio1">할인금액</label>
-                            <input type="radio" id="discount-radio2" name="discount-radio" value="two">
+                            <input type="radio" id="discount-radio2" name="coupon_sale_type" value="percentage">
                             <label for="discount-radio2">할인율</label>
                         </td>
                     </tr>
@@ -282,24 +177,24 @@
                     <tr>
                         <th>발급 구분</th>
                         <td>
-                            <select class="option-box" name="coupon_condition">
-                                <option value="option1">대상자 지정 발급</option>
-                                <option value="option2">조건부 자동 발급</option>
-                                <option value="option3">고객 다운로드 발급</option>
+                            <select class="option-box" name="coupon_condition1">
+                                <option data-id="option1" value="T">대상자 지정 발급</option>
+                                <option data-id="option2" value="next2">조건부 자동 발급</option>
+                                <option data-id="option3" value="next3">고객 다운로드 발급</option>
                             </select>
 
                             <select class="option-select" name="coupon_condition2" id="option2-select" style="display: none;">
-                                <option value="option2-1" selected="selected">회원가입</option>
-                                <option value="option2-2">배송완료시</option>
-                                <option value="option2-3">기념일(생일)</option>
-                                <option value="option2-4">상품 후기 작성</option>
-                                <option value="option2-5">주문 완료 시</option>
-                                <option value="option2-6">첫 구매 고객</option>
-                                <option value="option2-7">구매 수량 충족시</option>
+                                <option data-id="option2-1" value="J" selected="selected">회원가입</option>
+                                <option data-id="option2-2" value="D">배송완료시</option>
+                                <option data-id="option2-3" value="B">기념일(생일)</option>
+                                <option data-id="option2-4" value="R">상품 후기 작성</option>
+                                <option data-id="option2-5" value="C">주문 완료 시</option>
+                                <option data-id="option2-6" value="F">첫 구매 고객</option>
+                                <option data-id="option2-7" value="S">구매 수량 충족시</option>
                             </select>
                             <select class="option-select" name="coupon_condition3" id="option3-select" style="display: none;">
-                                <option value="option3-1">회원 대상</option>
-                                <option value="option3-2">일정기간 미구매 회원 대상</option>
+                                <option data-id="option3-1" value="L" value="option3-1">회원 대상</option>
+                                <option data-id="option3-2" value="M" value="option3-2">일정기간 미구매 회원 대상</option>
                             </select>
                         </td>
                     </tr>
@@ -315,12 +210,21 @@
                     <tr>
                         <th>발급시점</th>
                         <td>
-                            <input type="radio" name="option1-radio" id="option1-rd1" checked>
-                            <label for="option1-rd1">즉시 발급</label>
-                            <input type="radio" name="option1-radio" id="option1-rd2" value="option1-rd2-click">
-                            <label for="option1-rd2">지정한 시점에 발급</label>
-                            <div id="option1-rd2-txt" style="display: none;">
-                                <input type="text" name="option1-rd2-txt-input" placeholder="ex) 2020-02-28">
+                        	<div class="option1-box1">
+	                            <input type="radio" name="coupon_issue_time" id="option1-rd1" value="N" checked>
+	                            <label for="option1-rd1">즉시 발급</label>
+	                            <input type="radio" name="coupon_issue_time" id="option1-rd2" value="S">
+	                            <label for="option1-rd2">지정한 시점에 발급</label>
+	                            <div id="option1-rd2-txt" style="display: none;">
+	                                <input type="text" name="coupon_issue_date" placeholder="ex) 2020-02-28">
+	                            </div>
+                            </div>
+                            <div class="option2-box3">
+	                            <input type="radio" id="iss1" name="coupon_issue_time" value="A"/>
+	                            <label for="iss1">기념일 당일 발급</label>
+	                            <input type="radio" id="iss2" name="coupon_issue_time" value="B">
+	                            <label for="iss2">사용</label>
+	                            <span><input type="text" value="3" name="coupon_anniversary_before" class="txt-right num-width1"> 일 전 선 발행</span>
                             </div>
                         </td>
                     </tr>
@@ -334,7 +238,7 @@
                     <tbody>
                     <!-- 조건부 자동 발급 -->
                     <!-- 회원가입 -->
-                    <tr class="option2-box1" style="display: table-row;">
+                    <!-- <tr class="option2-box1" style="display: table-row;">
                         <th>발급 대상자 설정 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="checkbox" name="join-radio" id="join-radio1" checked>
@@ -349,9 +253,9 @@
                                 <option value="메일">이메일 수신동의</option>
                             </select>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 배송 완료 시 -->
-                    <tr class="option2-box2">
+                    <!-- <tr class="option2-box2">
                         <th>주문경로 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="checkbox" name="pc-mo1" id="pc-mo1-1" checked>
@@ -359,21 +263,21 @@
                             <input type="checkbox" name="pc-mo1" id="pc-mo1-2" checked>
                             <label for="pc-mo1-2">모바일쇼핑몰</label>
                         </td>
-                    </tr>
-                    <tr class="option2-box2">
+                    </tr> -->
+                    <tr class="option2-box2 option2-box2-1">
                         <th>발급 가능 구매 금액</th>
                         <td>
                             <select name="" id="">
                                 <option value="">주문 금액기준</option>
-                                <option value="">실결제 금액기준</option>
+                                <!-- <option value="">실결제 금액기준</option> -->
                             </select>
                             <select name="box2-out-select1" id="box2-out-select1">
                                 <option value="box2-in1-1">제한없음</option>
                                 <option value="box2-in1-2">최소금액</option>
-                                <option value="box2-in1-3">금액 범위</option>
+                                <!-- <option value="box2-in1-3">금액 범위</option> -->
                             </select>
                             <span class="box2-span box2-txt1">
-                                         <input type="text" class="txt-right num-width2">
+                                         <input type="text" class="txt-right num-width2" name="coupon_min_amount">
                                          <span> 원</span>
                                      </span>
                             <span class="box2-span box2-txt2">
@@ -384,7 +288,23 @@
                                      </span>
                         </td>
                     </tr>
-                    <tr class="option2-box2">
+                    <tr class="option2-box7">
+                        <th>수량 판단 기준</th>
+                        <td>
+                            <input type="radio" id="num1-1" name="coupon_buy_count_condition" value="P" checked>
+                            <label for="num1-1">상품 수량 기준</label>
+                            <input type="radio" id="num1-2" name="coupon_buy_count_condition" value="O">
+                            <label for="num1-2">주문 수량 기준</label>
+                        </td>
+                    </tr>
+                    <tr class="option2-box7">
+                        <th>최소 구매 수량 <span class="cc1">&#40;필수&#41;</span></th>
+                        <td>
+                            <input type="text" value="1" class="txt-right num-width1" name="coupon_min_buy_count">
+                            <span>개</span>
+                        </td>
+                    </tr>
+                    <!-- <tr class="option2-box2">
                         <th>1회 발급 수량</th>
                         <td>
                             <input type="radio" id="iss-num1" name="iss-num" value="I1">
@@ -424,7 +344,7 @@
                             </select>
                         </td>
                     </tr>
-                    <!-- 발급단위 상품 -->
+                    발급단위 상품
                     <tr class="option2-box2-in2" style="display: none;">
                         <th>발급 대상 상품</th>
                         <td>
@@ -463,8 +383,8 @@
                             <label for="iss-yn2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn-span"> 매</span>
                         </td>
-                    </tr>
-                    <tr class="option2-box2">
+                    </tr> -->
+                    <tr class="option2-box2 option2-box2-2">
                         <th>발급대상 주문기간 설정</th>
                         <td>
                             <input type="radio" id="iss-day1" name="iss-day" value="D1">
@@ -472,15 +392,15 @@
                             <input type="radio" id="iss-day2" name="iss-day" checked>
                             <label for="iss-day2">설정함</label>
                             <span>
-                                         <input type="text"  placeholder="ex) 2020-02-24"  name="day-iss1">
-                                         <span> ~ </span>
-                                         <input type="text"  placeholder="ex) 2020-03-24"  name="day-iss1">
+                                         <!-- <input type="text"  placeholder="ex) 2020-02-24"  name="day-iss1">
+                                         <span> ~ </span> -->
+                                         <input type="text"  placeholder="ex) 2020-03-24"  name="coupon_issue_order_end">
                                          <span> 까지</span>
                                      </span>
                         </td>
                     </tr>
                     <!-- 기념일(생일) -->
-                    <tr class="option2-box3">
+                    <!-- <tr class="option2-box3">
                         <th>기념일 정보</th>
                         <td>
                             <input type="radio" id="birthday-radio1" name="birthday-radio" checked>
@@ -499,29 +419,29 @@
                             <input type="radio" id="iss-mem2" name="iss-mem">
                             <label for="iss-mem2">일반회원</label>
                         </td>
-                    </tr>
-                    <tr class="option2-box3">
+                    </tr> -->
+                    <!-- <tr class="option2-box3">
                         <th>발급시점</th>
                         <td>
-                            <input type="radio" id="iss1" name="iss" value="IS">
+                            <input type="radio" id="iss1" name="coupon_issue_time" value="E" checked/>
                             <label for="iss1">기념일 당일 발급</label>
-                            <input type="radio" id="iss2" name="iss" checked>
+                            <input type="radio" id="iss2" name="coupon_issue_time" value="S">
                             <label for="iss2">사용</label>
-                            <span><input type="text" value="3" name="IS-ck" class="txt-right num-width1"> 일 전 선 발행</span>
+                            <span><input type="text" value="3" name="coupon_anniversary_before" class="txt-right num-width1"> 일 전 선 발행</span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 상품 후기 작성 -->
                     <tr class="option2-box4">
                         <th>후기작성 조건 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             상품사용후기
-                            <input type="text" value="1" class="txt-right num-width1"> 개 이상 작성시
-                            <span>
+                            <input type="text" value="1" class="txt-right num-width1" name="coupon_review_condition"> 개 이상 작성시
+                            <!-- <span>
                                          ( <input type="checkbox"> 이미지 필수등록 )
-                                     </span>
+                                     </span> -->
                         </td>
                     </tr>
-                    <tr class="option2-box4">
+                    <!-- <tr class="option2-box4">
                         <th>발급대상 회원등급</th>
                         <td>
                             <input type="radio" id="iss-mem1-1" name="iss-mem1" checked>
@@ -549,9 +469,9 @@
                             <label for="iss-yn-2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn1-span"> 매</span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 주문 완료 시 -->
-                    <tr class="option2-box5">
+                    <!-- <tr class="option2-box5">
                         <th>주문경로 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="checkbox" name="pc-mo2" id="pc-mo2-1" checked>
@@ -559,8 +479,8 @@
                             <input type="checkbox" name="pc-mo2" id="pc-mo2-2" checked>
                             <label for="pc-mo2-2">모바일쇼핑몰</label>
                         </td>
-                    </tr>
-                    <tr class="option2-box5">
+                    </tr> -->
+                    <!-- <tr class="option2-box5">
                         <th>발급 가능 구매 금액</th>
                         <td>
                             <select name="" id="">
@@ -573,7 +493,7 @@
                                 <option value="box5-in1-3">금액 범위</option>
                             </select>
                             <span class="box5-span box5-txt1">
-                                         <input type="text" class="txt-right num-width2">
+                                         <input type="text" class="txt-right num-width2" name="coupon_min_amount">
                                          <span> 원</span>
                                      </span>
                             <span class="box5-span box5-txt2">
@@ -583,8 +503,8 @@
                                          <span> 원 까지</span>
                                      </span>
                         </td>
-                    </tr>
-                    <tr class="option2-box5">
+                    </tr> -->
+                    <!-- <tr class="option2-box5">
                         <th>1회 발급 수량</th>
                         <td>
                             <input type="radio" id="iss-num1-1" name="iss-num1" value="I2">
@@ -624,7 +544,7 @@
                             </select>
                         </td>
                     </tr>
-                    <!-- 발급단위 상품 -->
+                    발급단위 상품
                     <tr class="option2-box5-in2">
                         <th>발급 대상 상품</th>
                         <td>
@@ -663,8 +583,8 @@
                             <label for="iss-yn2-2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn2-span"> 매</span>
                         </td>
-                    </tr>
-                    <tr class="option2-box5">
+                    </tr> -->
+                    <!-- <tr class="option2-box5">
                         <th>발급대상 주문기간 설정</th>
                         <td>
                             <input type="radio" id="iss-day1-1" name="iss-day1" value="D2">
@@ -674,13 +594,13 @@
                             <span>
                                 <input type="text" placeholder="ex) 2020-02-24" name="day-iss2">
                                 <span> ~ </span>
-                                <input type="text" placeholder="ex) 2020-03-24" name="day-iss2">
+                                <input type="text" placeholder="ex) 2020-03-24" name="coupon_issue_order_end">
                                 <span> 까지</span>
                             </span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 첫 구매 고객 -->
-                    <tr class="option2-box6">
+                    <!-- <tr class="option2-box6">
                         <th>주문경로 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="checkbox" name="pc-mo3" id="pc-mo3-1" checked>
@@ -688,8 +608,8 @@
                             <input type="checkbox" name="pc-mo3" id="pc-mo3-2" checked>
                             <label for="pc-mo3-2">모바일쇼핑몰</label>
                         </td>
-                    </tr>
-                    <tr class="option2-box6">
+                    </tr> -->
+                    <!-- <tr class="option2-box6">
                         <th>발급대상 주문기간 설정</th>
                         <td>
                             <input type="radio" id="iss-day2-1" name="iss-day2" value="D3">
@@ -699,13 +619,13 @@
                             <span>
                                  <input type="text" placeholder="ex) 2020-02-24" name="day-iss3">
                                  <span> ~ </span>
-                                 <input type="text" placeholder="ex) 2020-03-24" name="day-iss3">
+                                 <input type="text" placeholder="ex) 2020-03-24" name="coupon_issue_order_end">
                                  <span> 까지</span>
                              </span>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 구매 수량 충족시 -->
-                    <tr class="option2-box7">
+                    <!-- <tr class="option2-box7">
                         <th>주문경로 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="checkbox" name="pc-mo4" id="pc-mo4-1" checked>
@@ -713,24 +633,24 @@
                             <input type="checkbox" name="pc-mo4" id="pc-mo4-2" checked>
                             <label for="pc-mo4-2">모바일쇼핑몰</label>
                         </td>
-                    </tr>
-                    <tr class="option2-box7">
+                    </tr> -->
+                    <!-- <tr class="option2-box7">
                         <th>수량 판단 기준</th>
                         <td>
-                            <input type="radio" id="num1-1" name="num-1" checked>
+                            <input type="radio" id="num1-1" name="coupon_buy_count_condition" checked>
                             <label for="num1-1">상품 수량 기준</label>
-                            <input type="radio" id="num1-2" name="num-1">
+                            <input type="radio" id="num1-2" name="coupon_buy_count_condition">
                             <label for="num1-2">주문 수량 기준</label>
                         </td>
                     </tr>
                     <tr class="option2-box7">
                         <th>최소 구매 수량 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" value="1" class="txt-right num-width1">
+                            <input type="text" value="1" class="txt-right num-width1" name="coupon_min_buy_count">
                             <span>개</span>
                         </td>
-                    </tr>
-                    <tr class="option2-box7">
+                    </tr> -->
+                    <!-- <tr class="option2-box7">
                         <th>발급대상 회원등급</th>
                         <td>
                             <select name="" id="">
@@ -748,8 +668,8 @@
                             <label for="iss-yn3-2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn3-span"> 매</span>
                         </td>
-                    </tr>
-                    <tr class="option2-box7">
+                    </tr> -->
+                    <!-- <tr class="option2-box7">
                         <th>발급대상 주문기간 설정</th>
                         <td>
                             <input type="radio" id="iss-day3-1" name="iss-day3" value="D4">
@@ -759,11 +679,11 @@
                             <span>
                                          <input type="text" placeholder="ex) 2020-02-24" name="day-iss4">
                                          <span> ~ </span>
-                                         <input type="text" placeholder="ex) 2020-03-24" name="day-iss4">
+                                         <input type="text" placeholder="ex) 2020-03-24" name="coupon_issue_oder_end">
                                          <span> 까지</span>
                                      </span>
                         </td>
-                    </tr>
+                    </tr> -->
                     </tbody>
                 </table>
                 <table class="goods-detail-table option3-box option-wrap">
@@ -774,7 +694,7 @@
                     <tbody>
                     <!-- 고객 다운로드 발급 -->
                     <!-- 회원 대상 -->
-                    <tr class="option3-box1">
+                    <!-- <tr class="option3-box1">
                         <th>발급대상 회원등급</th>
                         <td>
                             <select name="" id="">
@@ -802,17 +722,17 @@
                             <label for="iss-yn4-2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn4-span"> 매</span>
                         </td>
-                    </tr>
-                    <tr class="option3-box1">
+                    </tr> -->
+                    <!-- <tr class="option3-box1">
                         <th>발급시점</th>
                         <td>
-                            <input type="radio" id="iss1-1" name="iss1" checked>
-                            <label for="iss1-1">기념일 당일 발급</label>
-                            <input type="radio" id="iss1-2" name="iss1" value="iss-val">
+                            <input type="radio" id="iss1-1" name="coupon_issue_time" value="N" checked>
+                            <label for="iss1-1">즉시 발급</label>
+                            <input type="radio" id="iss1-2" name="coupon_issue_time" value="S">
                             <label for="iss1-2">지정한 시점에 발급</label>
-                            <div id="option3-rd2-txt" style="display: none;"><input type="text" name="option1-rd2-txt-input" placeholder="ex) 2020-02-28"></div>
+                            <div id="option3-rd2-txt" style="display: none;"><input type="text" name="option1-rd2-txt-input" name="coupon_issue_date" placeholder="ex) 2020-02-28"></div>
                         </td>
-                    </tr>
+                    </tr> -->
                     <!-- 일정기간 미구매 회원 대상 -->
                     <tr class="option3-box2">
                         <th>미구매 기간</th>
@@ -834,7 +754,7 @@
                             <span> 개월</span>
                         </td>
                     </tr>
-                    <tr class="option3-box2">
+                    <!-- <tr class="option3-box2">
                         <th>발급대상 회원등급</th>
                         <td>
                             <select name="" id="">
@@ -862,7 +782,7 @@
                             <label for="iss-yn5-2">가능</label>
                             <span>추가수량 최대 <input type="text" class="txt-right num-width1" name="iss-yn5-span"> 매</span>
                         </td>
-                    </tr>
+                    </tr> -->
                     </tbody>
                 </table>
                 <h3>사용 정보</h3>
@@ -878,15 +798,15 @@
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.<br>
                                 <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
                             </p>
-                            <input type="text" id="goods-validity-start" name="goods-validity-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-validity-end" name="goods-validity-end" placeholder="ex) 2020-02-28">
+                            <input type="text" id="goods-validity-start" name="coupon_valid_date_start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-validity-end" name="coupon_valid_date_end" placeholder="ex) 2020-02-28">
                         </td>
                     </tr>
                     <tr>
                         <th>적용 범위</th>
                         <td>
-                            <input type="radio" name="apply-radio" id="apply-rd1">
+                            <input type="radio" name="coupon_use_range" id="apply-rd1" value="P">
                             <label for="apply-rd1">상품 쿠폰</label>
-                            <input type="radio" name="apply-radio" id="apply-rd2" checked>
+                            <input type="radio" name="coupon_use_range" id="apply-rd2" value="O" checked>
                             <label for="apply-rd2">주문서 쿠폰</label>
                         </td>
                     </tr>
@@ -897,7 +817,7 @@
                                 <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
                                 <span class="cc">* 상품 분류의 분류URL이 /product/list.html?cale_no=7 이라면 7을 입력합니다.</span><br>
                                 <span class="cc">* 분류 개수가 많은 경우는 10|20|21 등으로 입력합니다.</span><br></p>
-                            <input type="text" id="goods-cate2" name="goods-cate2" placeholder="ex) 24|29|30">
+                            <input type="text" id="goods-cate2" name="coupon_ct" placeholder="ex) 24|29|30">
                         </td>
                     </tr>
                     <tr>
@@ -907,14 +827,14 @@
                             <label for="goods-validity1">제한 없음</label>
                             <input type="radio" id="goods-validity2" name="goods-validity" value="Y">
                             <label for="goods-validity2">주문 금액 기준</label>
-                            <input type="radio" id="goods-validity3" name="goods-validity" value="N">
-                            <label for="goods-validity3">상품 금액 기준</label>
+                            <!-- <input type="radio" id="goods-validity3" name="goods-validity" value="N">
+                            <label for="goods-validity3">상품 금액 기준</label> -->
                         </td>
                     </tr>
                     <tr class="goods-validity-detail1" style="display:none">
                         <th>주문 금액 기준</th>
                         <td>
-                            <input type="text" id="goods-validity-start1" name="goods-validity-start1" placeholder="" class="txt-right"> 원 이상
+                            <input type="text" id="goods-validity-start1" name="coupon_use_min_amount" placeholder="" class="txt-right"> 원 이상
                         </td>
                     </tr>
                     <tr class="goods-validity-detail2" style="display:none">
@@ -926,9 +846,9 @@
                     <tr>
                         <th>적용 계산 기준</th>
                         <td>
-                            <select name="coupon-date">
-                                <option value="할인(쿠폰 제외) 적용 전 결제 금액">할인(쿠폰 제외) 적용 전 결제 금액</option>
-                                <option value="할인(쿠폰 제외) 적용 후 결제 금액">할인(쿠폰 제외) 적용 후 결제 금액</option>
+                            <select name="coupon_sale_cal_condition">
+                                <option value="B">할인(쿠폰 제외) 적용 전 결제 금액</option>
+                                <option value="A">할인(쿠폰 제외) 적용 후 결제 금액</option>
                             </select>
                         </td>
                     </tr>
@@ -939,19 +859,19 @@
                                 무통장입금: cash, 카드결제: card, 적립금: mileage, 실시간 계좌이체: tcash, 가상계좌: icash, 휴대폰결제: cell, 케이페이: kpay, 페이나우: paynow, 페이코: payco, 카카오페이: kakaopay, 스마일페이: smilepay, 네이버페이: naverpay<br>
                                 <span class="cc">* 결제 수단이 여러 개인 경우 쉼표&#40;,&#41;로 구분합니다.</span>
                             </p>
-                            <input type="text" id="goods-payment" name="goods-payment" placeholder="ex) cash, mileage">
+                            <input type="text" id="goods-payment" name="coupon_use_payment_class" placeholder="ex) cash, mileage">
                         </td>
                     </tr>
                     <tr>
                         <th>중복적용</th>
                         <td>
-                            <input type="radio" name="coupon1-radio" id="coupon1-rd1">
+                            <input type="radio" name="coupon_dup_yn" id="coupon1-rd1" value="Y">
                             <label for="coupon1-rd1">중복사용 가능</label>
-                            <input type="radio" name="coupon1-radio" id="coupon1-rd2" checked>
+                            <input type="radio" name="coupon_dup_yn" id="coupon1-rd2" value="N" checked>
                             <label for="coupon1-rd2">중복사용 불가능</label>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>사용가능 회원</th>
                         <td>
                             <input type="radio" name="member-radio" id="member-rd1">
@@ -959,13 +879,13 @@
                             <input type="radio" name="member-radio" id="member-rd2" checked>
                             <label for="member-rd2">회원만 사용 가능</label>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>쿠폰 종류</th>
                         <td>
-                            <input type="radio" name="kind-radio" id="kind-rd1">
+                            <input type="radio" name="coupon_type" id="kind-rd1" value="S">
                             <label for="kind-rd1">시리얼 쿠폰</label>
-                            <input type="radio" name="kind-radio" id="kind-rd2" checked>
+                            <input type="radio" name="coupon_type" id="kind-rd2" value="N" checked>
                             <label for="kind-rd2">일반 온라인 쿠폰</label>
                         </td>
                     </tr>
@@ -981,27 +901,27 @@
                     <tr>
                         <th>로그인시 쿠폰발급 알림</th>
                         <td>
-                            <input type="radio" name="login-coupon-radio" id="login-coupon-rd1" checked>
+                            <input type="radio" name="login_alert_yn" id="login-coupon-rd1" value="Y" checked>
                             <label for="login-coupon-rd1">사용함</label>
-                            <input type="radio" name="login-coupon-radio" id="login-coupon-rd2">
+                            <input type="radio" name="login_alert_yn" id="login-coupon-rd2" value="N">
                             <label for="login-coupon-rd2">사용안함</label>
                         </td>
                     </tr>
                     <tr>
                         <th>쿠폰발급 SMS 발송</th>
                         <td>
-                            <input type="radio" name="sms-coupon-radio1" id="sms-coupon-rd1" checked>
+                            <input type="radio" name="sms_alert_yn" id="sms-coupon-rd1" value="Y" checked>
                             <label for="sms-coupon-rd1">사용함</label>
-                            <input type="radio" name="sms-coupon-radio1" id="sms-coupon-rd2">
+                            <input type="radio" name="sms_alert_yn" id="sms-coupon-rd2" value="N">
                             <label for="sms-coupon-rd2">사용안함</label>
                         </td>
                     </tr>
                     <tr>
                         <th>쿠폰발급 이메일 발송</th>
                         <td>
-                            <input type="radio" name="email-coupon-radio1" id="email-coupon-rd1" checked>
+                            <input type="radio" name="email_alert_yn" id="email-coupon-rd1" value="Y" checked>
                             <label for="email-coupon-rd1">사용함</label>
-                            <input type="radio" name="email-coupon-radio1" id="email-coupon-rd2">
+                            <input type="radio" name="email_alert_yn" id="email-coupon-rd2" value="N">
                             <label for="email-coupon-rd2">사용안함</label>
                         </td>
                     </tr>
@@ -1017,14 +937,14 @@
 
                     </tbody>
                 </table>
-                <button type="button" name="detail" class="btn-red">저장하기</button>
+                <button type="button" name="" class="btn-red" id="coupon-insert-btn">등록하기</button>
             </div>
         </form>
     </div>
-</div>
+</div><!-- 등록 끝 -->
 <div class="modal1">
     <div class="modal-content">
-        <form action="" method="POST">
+        <form method="POST">
             <div class="modal-header">
                 <h2>쿠폰 상세보기</h2>
                 <button type="button" class="modal-close">×</button>
@@ -1765,7 +1685,7 @@
                             <label for="coupon1-2-rd2">중복사용 불가능</label>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>사용가능 회원</th>
                         <td>
                             <input type="radio" name="member1-radio" id="member1-rd1">
@@ -1773,7 +1693,7 @@
                             <input type="radio" name="member1-radio" id="member1-rd2" checked>
                             <label for="member1-rd2">회원만 사용 가능</label>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>쿠폰 종류</th>
                         <td>
@@ -1831,13 +1751,13 @@
 
                     </tbody>
                 </table>
-                <button type="button" name="detail" class="btn-red">저장하기</button>
+                <button type="button" name="detail" class="btn-red" id="coupon-insert-btn">등록하기</button>
                 <button type="button" name="detail" class="btn-border-red">발급중단</button>
             </div>
         </form>
     </div>
-</div>
-<div class="modal2">
+</div><!-- 상세보기 끝 -->
+<%-- <div class="modal2">
     <div class="modal-content">
         <form action="" method="POST">
             <div class="modal-header">
@@ -2650,7 +2570,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> --%>
 <script type="text/javascript" src="/assets/js/promotion-coupon.js"></script>
 
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

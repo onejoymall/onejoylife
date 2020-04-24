@@ -1,9 +1,5 @@
 package com.webapp.board.common;
 
-
-import com.webapp.mall.vo.GiveawayVO;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class SearchVO extends PageVO{
     private Integer usr_id;
     private String bgno;                       // 게시판 그룹

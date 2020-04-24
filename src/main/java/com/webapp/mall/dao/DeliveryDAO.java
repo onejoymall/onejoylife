@@ -54,5 +54,13 @@ public class DeliveryDAO {
         List<Map<String,Object>> getUserDeliveryList = sql.selectList("mall.DeliveryMapper.getUserDeliveryList",paramas);
         return getUserDeliveryList;
     }
+    public Map<String,Object> getDefaultDelivery(Map<String, String> params) throws SQLException{
+        Map<String,Object> getDefaultDelivery = sql.selectOne("mall.DeliveryMapper.getDefaultDelivery",params);
+        return getDefaultDelivery;
+    }
+    public Map<String,Object> getLastDelivery(Map<String, String> params) throws SQLException{
+    	Map<String,Object> getLastDelivery = sql.selectOne("mall.DeliveryMapper.getLastDelivery",params);
+    	return getLastDelivery;
+    }
 
 }
