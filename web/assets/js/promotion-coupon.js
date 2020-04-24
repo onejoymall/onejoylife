@@ -3,7 +3,7 @@ $(function(){
     $("button[name='detail']").click(function(){
         $(".modal").attr("style", "display:block");
     });
-    $("button[name='detail']").trigger("click");
+
     $(".modal-close").click(function(){
         $(".modal").attr("style", "display:none");
     });
@@ -48,10 +48,12 @@ $(function(){
         if(state1ii == 3){
         	$('.option1-box').show(); 
         	$(".option1-box1").hide();
+        	$("input[name=coupon_issue_time]:radio[value='A']").prop("checked",true);
         }else{
         	$('.option1-box').hide(); 
         	$(".option1-box1").show();
         	$(".option2-box3").hide();
+        	$("input[name=coupon_issue_time]:radio[value='N']").prop("checked",true);
         }
         if(state1ii == 5) state1ii = 2;
         if(state1ii == 6) state1ii = 2;
@@ -131,8 +133,8 @@ $(function(){
         }
     });
 
-    $('input[name=option1-radio]').click(function(){
-        if($('input[name=option1-radio]:checked').val() == "option1-rd2-click"){
+    $('input[name=coupon_issue_time]').click(function(){
+        if($('input[name=coupon_issue_time]:checked').val() == "S"){
             $('#option1-rd2-txt').attr('style','display:table-row');
         }else{
             $('#option1-rd2-txt').attr('style','display:none');
@@ -241,10 +243,10 @@ $(function(){
     // 주문기간 설정
     $('input:radio[name=iss-day]').on('click', function(){
         if($("input[name=iss-day]:checked").val() == "D1"){
-            $("input[name=coupon_issue_oder_end]").attr("disabled",true);
+            $("input[name=coupon_issue_order_end]").attr("disabled",true);
             
         }else{
-        	$("input[name=coupon_issue_oder_end]").attr("disabled",false);
+        	$("input[name=coupon_issue_order_end]").attr("disabled",false);
         }
     });
     $('input:radio[name=iss-day1]').on('click', function(){
@@ -398,11 +400,11 @@ $(function(){
             $('#option2-rd2-txt1').attr('style','display:none');
         }
     })
-    $('input:radio[name=iss1-1]').on('click', function(){
-        if($("input[name=iss1-1]:checked").val() == "IS1"){
-            $("input:text[name=IS-ck1]").attr("disabled",true);
+    $('input:radio[name=coupon_issue_time]').on('change', function(){
+        if($("input[name=coupon_issue_time]:checked").val() == "A"){
+            $("input:text[name=coupon_anniversary_before]").attr("disabled",true);
             
-        }else{$("input:text[name=IS-ck1]").attr("disabled",false);
+        }else{$("input:text[name=coupon_anniversary_before]").attr("disabled",false);
         }
     });
     $('input[name=iss1-2]').click(function(){

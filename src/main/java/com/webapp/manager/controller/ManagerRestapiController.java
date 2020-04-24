@@ -1410,30 +1410,33 @@ public class ManagerRestapiController {
         	if(couponVO.getCountry_supply() != null && !couponVO.getCountry_supply().equals("")) {
         		couponVO.setCountry_supply(couponVO.getCountry_supply().replace(",", "|"));
         	}
+        	couponVO.setCoupon_cd(NumberGender.alphabetNumberGen(15, 1));
+        	while(mgCouponDAO.checkDupCouponCD(couponVO.getCoupon_cd())){
+        		couponVO.setCoupon_cd(NumberGender.alphabetNumberGen(15, 1));
+        	}
         	
-//        	FileUtil fs = new FileUtil();
-//            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"review");
-//            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-//            fileVO.setFilepath("/fileupload/review/"+ft.format(new Date())+"/");
-//            
-//            
+        	FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"coupon");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/coupon/"+ft.format(new Date())+"/");
+            
+            
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-
-//            	fileVO.setParentPK(params.get("review_id")+"");
-//                if(!isEmpty(filelist)){
-//                    fileVO.setFileorder(1);
-//                    reviewDAO.deleteReviewFile(filelist,fileVO);
-//                    reviewDAO.insertReviewFile(filelist,fileVO);
-//                }
-//                if(params.get("fileName") == null || params.get("fileName").equals("")) {
-//                	fileVO.setFileorder(1);
-//                    reviewDAO.deleteReviewFile(fileVO);
-//                }
+            	fileVO.setParentPK(couponVO.getCoupon_cd()+"");
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    mgCouponDAO.deleteCouponFile(filelist,fileVO);
+                    mgCouponDAO.insertCouponFile(filelist,fileVO);
+                }
+                if(params.get("fileName") == null || params.get("fileName").equals("")) {
+                	fileVO.setFileorder(1);
+                	mgCouponDAO.deleteCouponFile(fileVO);
+                }
                 mgCouponDAO.insertCoupon(couponVO);
                 resultMap.put("success", "success");
-                resultMap.put("redirectUrl", "/MyPage/Reviews");
+                resultMap.put("redirectUrl", "/MyPage/ Reviews");
             } 
         } catch (Exception e) {
             resultMap.put("e", e);

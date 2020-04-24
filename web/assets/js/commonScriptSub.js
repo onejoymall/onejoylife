@@ -597,12 +597,15 @@ $("#coupon-insert-btn").click(function(){
                 });
 
             } else {
-                $.toast({
-                    heading: 'success',
+            	$.toast({
+                    text: 'success',
                     showHideTransition: 'plain', //펴짐
                     position: 'top-right',
                     icon: 'success',
-                    hideAfter: false,
+                    hideAfter: 2000,
+                    afterHidden: function () {
+                        location.reload();
+                    }
                 });
             }
         	if(data.e){
