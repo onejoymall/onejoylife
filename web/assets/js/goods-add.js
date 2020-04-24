@@ -126,17 +126,17 @@ $('input[name=goods-addInput]').click(function(){
 });
 
 //배송비
-$('input[name=goods-shipping]').click(function(){
-    if($('input[name=goods-shipping]:checked').val() == "T"){
-        $('tr.shipping-t-detail').attr('style','display:table-row');
-        $('tr.shipping-f-detail').attr('style','display:none');
-        $('tr.shipping-f-detail input').val('');
-    }else{
-        $('tr.shipping-t-detail').attr('style','display:none');
-        $('tr.shipping-f-detail').attr('style','display:table-row');
-        $('tr.shipping-t-detail input').val('');
-    }
-});
+// $('input[name=goods-shipping]').click(function(){
+//     if($('input[name=goods-shipping]:checked').val() == "T"){
+//         $('tr.shipping-t-detail').attr('style','display:table-row');
+//         $('tr.shipping-f-detail').attr('style','display:none');
+//         $('tr.shipping-f-detail input').val('');
+//     }else{
+//         $('tr.shipping-t-detail').attr('style','display:none');
+//         $('tr.shipping-f-detail').attr('style','display:table-row');
+//         $('tr.shipping-t-detail input').val('');
+//     }
+// });
 
 $('select[name=shipping-fee]').change(function(){
     var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="shippingFee-detail" name="shippingFee-detail"> 원을 고정적으로 부과함.</td></tr>';

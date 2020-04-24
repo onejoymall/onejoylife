@@ -11,6 +11,7 @@ import com.webapp.manager.vo.MgDeliveryVO;
 import com.webapp.manager.vo.MgProductCodeVO;
 import com.webapp.manager.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,30 @@ public class MgSystemRestController {
     MessageSource messageSource;
     @Autowired
     private NumberGender numberGender;
+    //관리자 > 상품등록 > 기본배송지 불러오기
+    @Transactional
+    @RequestMapping(value = "/Manager/getDefaultDelivery", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> getDefaultDelivery(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,MgDeliveryVO mgDeliveryVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(adminLogin == "admin"){
+                mgDeliveryVO.setStore_id("admin");
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
+                //리디렉션 없는 페이지경우 success : true 반환
+                resultMap.put("list",detail);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
     //기본 배송정보 등록
     @RequestMapping(value = "/Save/systemDelivery", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> systemDelivery(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgDeliveryVO mgDeliveryVO){

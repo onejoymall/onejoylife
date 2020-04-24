@@ -340,7 +340,7 @@ $(document).on("click","#gradeChange",function () {
     });
 })
 
-//기본배송관련 스크립트
+//배송비 구분 선택 박스 변경 시
 $(document).on("change","#shipping-fee",function(){
     var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
     var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
@@ -379,15 +379,27 @@ $(document).on("change","#shipping-fee",function(){
     }
     $('.shippingFee-detail-wrap').attr('style','display:table-row');
 });
-
-//배송비
+//기본 배송 설정 클릭
 $(document).on("click",'.goods-shipping',function(){
+    if($(this).val()=="F"){
+        var data = commonAjaxListCall("post","/Manager/getDefaultDelivery","");
+        var product_delivery_payment =data.list.product_delivery_payment;
+        var product_delivery_payment_class = data.list.product_delivery_payment_class;
+        $('.changeDeliveryTr').remove();
+
+        $.each(data.list,function (key,value) {
+            $('input:text[name="'+key+'"]').val(value);
+            $('input:radio[name="'+key+'"][value=\''+value+'\']').prop('checked',true);
+            $('select[name='+key+']').val(value);
+        })
+        callDelivery(product_delivery_payment_class,product_delivery_payment);
+    }
     if($(this).val() == "T"){
         $('tr.shipping-t-detail').removeClass('hidden');
         $('tr.shipping-f-detail input').val('');
     }else{
-        $('tr.shipping-t-detail').addClass('hidden');
-        $('tr.shipping-t-detail input').val('');
+        // $('tr.shipping-t-detail').addClass('hidden');
+        // $('tr.shipping-t-detail input').val('');
     }
 });
 //기본배송 정보 저장
