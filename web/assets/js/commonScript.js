@@ -47,6 +47,9 @@ function commonAjaxCall(type,url,formData){
 }
 //목록형또는 결과만 사용할경우
 function commonAjaxListCall(type,url,formData){
+    var alertType;
+    var showText;
+    var hideAfterType;
     var dataList = $.ajax({
         type: type,
         url: url,
@@ -61,6 +64,10 @@ function commonAjaxListCall(type,url,formData){
                     if(index == "Error"){//일반에러메세지
                         alertType = "error";
                         showText = item;
+                    }else if(index == "Info"){
+                        alertType = "info";
+                        showText = index + " (은) " + item;
+                        hideAfterType=false;
                     }else{
                         alertType = "error";
                         showText = index + " (은) " + item;
@@ -71,7 +78,8 @@ function commonAjaxListCall(type,url,formData){
                         showHideTransition: 'plain', //펴짐
                         position: 'top-right',
                         heading: 'Error',
-                        icon: 'error'
+                        icon: alertType,
+                        hideAfterType: hideAfterType,
                     });
                 });
             }
@@ -82,7 +90,6 @@ function commonAjaxListCall(type,url,formData){
     }).responseText;
     return JSON.parse(dataList);
 }
-
 //자주구매하는 상품 결제
 $(document).on("click",".favoriteSubmit",function () {
     if(isLogin==''){
@@ -2572,7 +2579,7 @@ $(document).ready(function(){
 
         $("#form1").submit();
     }
-//동적 최소높이
+    //동적 최소높이
 $(document).ready(function(){
     var dp1Height = $('.gnb-submenu').height();
     $('.gnb-submenu-2dp').css({'min-height':+dp1Height+'px'});
@@ -2646,4 +2653,154 @@ function callTableTrStyle(type){
         $(".codeSrcModal").attr("style", "display:none");
     });
 
+}
+//저장 후 결과만
+function commonAjaxSaveCall(type,url,formData,popup=false){
+    var alertType;
+    var showText;
+    var hideAfterType;
+    var heading;
+    var dataList = $.ajax({
+        type: type,
+        url: url,
+        data:formData,
+        async: false,
+        success: function (data) {
+
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Info"){
+                        if(!data.isLogin){
+                            alertType = "info";
+                            // heading = "<button type='button' class='btn-default' id='toastLoginLink'>로그인</button>"
+                            heading = "Info"
+                            showText = item
+                            hideAfterType=false;
+                        }
+                    }else if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                        heading = "Error";
+                        hideAfterType=2000;
+                    }else{
+                        alertType = "error";
+                        showText = item;
+                        heading = "Error"
+                        showText = index + " (은) " + item;
+                        hideAfterType=2000;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: heading,
+                        icon: alertType,
+                        hideAfter: hideAfterType,
+                    });
+                });
+            }else{
+
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter:2000,
+                    afterHidden: function () {
+                        if(popup){
+                            window.close()
+                        }
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+    }).responseText;
+    return JSON.parse(dataList);
+}
+//Q&A 등록
+$('#qnaWriteSubmit').on("click",function () {
+    var formData = $('#defaultForm').serialize()
+    commonAjaxSaveCall("POST","/Save/writeQna",formData,true)
+    opener.parent.callQnalist($('input[name=product_cd]').val(),1);
+})
+$(document).on("click",'#toastLoginLink',function () {
+    opener.location.href='/sign/login';
+    window.close();
+})
+//상품 문의 ajaxPaging 구현필요
+function callQnalist(product_cd,page=1) {
+    var formData = {"product_cd":product_cd,"page":page};
+    var dataList = commonAjaxListCall("POST","/product/listQna",formData);
+    var html='';
+    var qnaAnswer='';
+    var lock='';
+    var paging ='';
+    $('.qna-data-list').html('');
+
+    $.each(dataList.list,function (key,value) {
+
+        if(value.qna_rewriter_id != null){
+            qnaAnswer = '<span class="waiting">답변완료</span>';
+        }else{
+            qnaAnswer = '<span class="complete">답변대기</span>';
+        }
+        if(value.qna_open_type=="T"){
+            lock='<i class="lock-ic"></i>'
+        }else{
+            lock='';
+        }
+        html +='' +
+            '<li class="qna-data-item">' +
+                '<div class="main-title-box" tabindex="0">' +
+                    '<div class="qna-sort"><span>'+value.qna_type_name+'</span></div>' +
+                    '<div class="qna-title"><span>'+value.qna_title+'</span>'+lock+'</div>' +
+                    '<div class="qna-answer">'+qnaAnswer+'</div>' +
+                    '<div class="qna-author"><span>'+value.email+'</span></div>' +
+                    '<div class="qna-date"><span>'+value.reg_date+'</span></div>' +
+                '</div>' +
+
+            '</li>';
+    });
+
+    $('.qna-data-option-box .all a span').html(dataList.listCnt);
+    $('.qna-data-list').append(html);
+    $('.pagination').html('');
+    $('.pagination').append(ajaxPaging(dataList.pageVO,product_cd))
+}
+$('#secret').on("change",function () {
+    if($(this).is(":checked")){
+        $('input[name=qna_open_type]').val("T");
+    }else{
+        $('input[name=qna_open_type]').val("F");
+    }
+})
+function ajaxPaging(pageVO,key){
+    var html='';
+    var active='';
+    html +='' +
+
+        '    <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callQnalist(\''+key+'\',1)">≪</a></li>\n' +
+        '    <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callQnalist(\''+key+'\','+(pageVO.page-1)+')">＜</a></li>\n';
+    for(var i=pageVO.pageStart;i<=pageVO.pageEnd;i++){
+
+        if(i == pageVO.page){
+            active='active';
+        }else{
+            active='';
+        }
+        html +='' +
+            '    <li class="page-item"><a class="page-link '+active+'" href="javascript:void(0)" onclick="callQnalist(\''+key+'\','+i+')">'+i+'</a></li>\n';
+    }
+
+    html +='' +
+        '    <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callQnalist(\''+key+'\','+(pageVO.page+1)+')">＞</a></li>\n' +
+        '    <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="callQnalist(\''+key+'\','+(pageVO.totPage)+')">≫</a></li>\n';
+        '    <li class="page-item"><a class="page-link" href="#">＞</a></li>\n' +
+        '    <li class="page-item"><a class="page-link" href="#">≫</a></li>\n';
+    return html;
 }

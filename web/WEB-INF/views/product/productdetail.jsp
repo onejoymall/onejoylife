@@ -193,8 +193,8 @@
                 <ul class="detail-nav">
                     <li><a href="#goods-description" class="active"><span>상품설명</span></a></li>
                     <li><a href="#goods-information"><span>상품정보</span></a></li>
-                    <li><a href="#goods-review"><span>상품평&#40;<span class="review-count">65</span>&#41;</span></a></li>
-                    <li><a href="#goods-qna"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
+                    <li><a href="#goods-review"><span>상품평</span></a></li>
+                    <li><a href="#goods-qna"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
                 <div class="description-img">
@@ -245,8 +245,8 @@
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information" class="active"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평&#40;<span class="review-count">65</span>&#41;</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
+                    <li><a href="goods-review"><span>상품평</span></a></li>
+                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
                 <div class="goods-information-wrap ">
@@ -343,357 +343,21 @@
                                     <a href="#none">전체&#40;<span>24</span>&#41;</a>
                                 </span>
                             <div class="qna-data-option-box-right">
-                                <select name="order" class="order-select">
-                                    <option value="all">전체</option>
-                                    <option value="goods">상품</option>
-                                    <option value="shipping">배송</option>
-                                    <option value="refund">반품/환불/취소</option>
-                                    <option value="etc">기타</option>
-                                </select>
-                                <button type="button" class="write-review" onclick="window.open('write-qna.html','상품평 작성하기','width=700, height=550,loaction=no,status=no,scrollbars=yes');">작성하기</button>
+<%--                                <select name="order" class="order-select">--%>
+<%--                                    <option value="all">전체</option>--%>
+<%--                                    <option value="goods">상품</option>--%>
+<%--                                    <option value="shipping">배송</option>--%>
+<%--                                    <option value="refund">반품/환불/취소</option>--%>
+<%--                                    <option value="etc">기타</option>--%>
+<%--                                </select>--%>
+                                <button type="button" class="write-review" onclick="window.open('/Popup/write-qna?product_cd=${param.product_cd}','상품 문의','width=720, height=600,loaction=no,status=no,scrollbars=yes');">작성하기</button>
                             </div>
                         </div>
                         <ul class="qna-data-list">
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        상품
-                                    </div>
-                                    <div class="qna-title"><span>지금 구매시 제품 제조일 알수있을까요?</span></div>
-                                    <div class="qna-answer"><span class="waiting">답변대기</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        기타
-                                    </div>
-                                    <div class="qna-title"><span>최신 시리얼 번호 제품으로 부탁 드립니다.</span></div>
-                                    <div class="qna-answer"><span class="waiting">답변대기</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        반품/환불/취소
-                                    </div>
-                                    <div class="qna-title"><span>반품문의</span><i class="lock-ic"></i></div>
-                                    <div class="qna-answer"><span class="waiting">답변대기</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        상품
-                                    </div>
-                                    <div class="qna-title"><span>상품문의 질문</span><i class="lock-ic"></i></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        배송
-                                    </div>
-                                    <div class="qna-title"><span>상품문의</span></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        반품/환불/취소
-                                    </div>
-                                    <div class="qna-title"><span>지금 구매시 제품 제조일 알수있을까요?</span></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        배송
-                                    </div>
-                                    <div class="qna-title"><span>최신 시리얼 번호 제품으로 부탁 드립니다.</span></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        상품
-                                    </div>
-                                    <div class="qna-title"><span>반품문의</span><i class="lock-ic"></i></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        상품
-                                    </div>
-                                    <div class="qna-title"><span>상품문의 질문</span></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="qna-data-item">
-                                <div class="main-title-box" tabindex="0">
-                                    <div class="qna-sort">
-                                        상품
-                                    </div>
-                                    <div class="qna-title"><span>지금 구매시 제품 제조일 알수있을까요?</span><i class="lock-ic"></i></div>
-                                    <div class="qna-answer"><span class="complete">답변완료</span></div>
-                                    <div class="qna-author"><span>김*주</span></div>
-                                    <div class="qna-date"><span>2020.01.12</span></div>
-                                </div>
-                                <div class="content-box">
-                                    <div class="qna-setting-box">
-                                        <button type="button" class="modify">수정</button>
-                                        <button type="button" class="delete">삭제</button>
-                                    </div>
-                                    <div class="qna-content-body">
-                                        <div class="qna-content-body-q">
-                                            <p class="q-sort">Q</p>
-                                            <p>
-                                                매장에서 봤는데<br>
-                                                화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요??<br>
-                                            </p>
-                                        </div>
-                                        <div class="qna-content-body-a">
-                                            <p class="a-sort">A</p>
-                                            <p>
-                                                안녕하세요, 고객님. 원조이라이프 고객센터입니다.<br>
-                                                문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.<br>
-                                                감사합니다.
-                                            </p>
-                                        </div>
-                                        <p class="answer-date">답변일 : 2020.01.12</p>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                        <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                        <li class="page-item"><a class="page-link" href="#">8</a></li>
-                        <li class="page-item"><a class="page-link" href="#">9</a></li>
-                        <li class="page-item"><a class="page-link" href="#">10</a></li>
-                        <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                        <li class="page-item"><a class="page-link" href="#">≫</a></li>
+
                     </ul>
                 </div>
 
@@ -742,8 +406,8 @@
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평&#40;<span class="review-count">65</span>&#41;</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A&#40;<span class="review-count">26</span>&#41;</span></a></li>
+                    <li><a href="goods-review"><span>상품평</span></a></li>
+                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping" class="active"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
                 <div class="shipping-wrap">
@@ -767,6 +431,8 @@
 </section>
 <script>
     $(document).ready(function(){
+        callQnalist('${param.product_cd}',1);
+
         $('.goods-slider').bxSlider({
             // auto:false,
             // autoHover:true,
