@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.QnaMapper">
+    <select id="getQnaList" parameterType="com.webapp.mall.vo.QnaVO" resultType="com.webapp.mall.vo.QnaVO">
+        <![CDATA[
+        select
+             A.qna_id,
+             A.product_cd,
+             A.qna_title,
+             A.qna_memo,
+             A.qna_type,
+             A.qna_open_type,
+             A.qna_writer,
+             A.qna_writer_id,
+             A.qna_rewrite_id,
+             A.qna_rewrite_memo,
+             A.qna_rewrite_reg_date,
+             DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+
+            CONCAT(
+                    left(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1),
+                    length(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1))-1),
+                   '***','@',
+                   left(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', -1),'.', 1),
+                       length(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', -1),'.', 1))-2),
+                   '***',
+                   '.',
+                   SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'.', -1)
+               ) email,
+            (select Z.store_name from  store Z where Z.store_id=A.qna_rewrite_id) rewriter_name,
+            (select Z.product_name from  product Z where Z.product_cd=A.product_cd) product_name,
+            (select Z.code_name from code Z where Z.code='question_type' and Z.code_value=A.qna_type) qna_type_name
+            from product_qna A
+            where 1=1
+        ]]>
+        <if test="product_cd != null and product_cd !=''"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
+        order by A.reg_date DESC
+        limit ${rowStart-1},${displayRowCount}
+    </select>
+    <select id="getQnaDetail" parameterType="com.webapp.mall.vo.QnaVO" resultType="java.util.Map">
+        <![CDATA[
+        select
+             A.qna_id,
+             A.product_cd,
+             A.qna_title,
+             A.qna_memo,
+             A.qna_type,
+             A.qna_open_type,
+             A.qna_writer,
+             A.qna_writer_id,
+             A.qna_rewrite_id,
+             A.qna_rewrite_memo,
+             A.qna_rewrite_reg_date,
+             DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+
+            CONCAT(
+                    left(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1),
+                    length(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1))-1),
+                   '***','@',
+                   left(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', -1),'.', 1),
+                       length(SUBSTRING_INDEX(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', -1),'.', 1))-2),
+                   '***',
+                   '.',
+                   SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'.', -1)
+               ) email,
+            (select Z.store_name from  store Z where Z.store_id=A.qna_rewrite_id) rewriter_name,
+            (select Z.product_name from  product Z where Z.product_cd=A.product_cd) product_name,
+            (select Z.code_name from code Z where Z.code='question_type' and Z.code_value=A.qna_type) qna_type_name
+            from product_qna A
+            where qna_id=#{qna_id}
+        ]]>
+        <if test="product_cd != null and product_cd !=''"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
+    </select>
+    <select id="getQnaListCount" parameterType="com.webapp.mall.vo.QnaVO" resultType="Integer">
+        <![CDATA[
+            select
+            count(*) cnt
+            from product_qna A
+            where 1=1
+        ]]>
+        <if test="product_cd != null and product_cd !=''"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
+    </select>
+    <insert id="insertQna" parameterType="com.webapp.mall.vo.QnaVO">
+        insert into product_qna(
+            product_cd,
+            qna_title,
+            qna_memo,
+            qna_type,
+            qna_open_type,
+            qna_writer,
+            qna_writer_id
+        )
+        values (
+            #{product_cd},
+            #{qna_title},
+            #{qna_memo},
+            #{qna_type},
+            #{qna_open_type},
+            #{qna_writer},
+            #{qna_writer_id}
+        )
+    </insert>
+    <update id="updateQna" parameterType="com.webapp.mall.vo.QnaVO">
+        update product_qna set
+        qna_rewrite_reg_date=now(),
+        qna_rewrite_id=#{qna_rewrite_id},
+        qna_rewrite_memo=#{qna_rewrite_memo}
+        where qna_id=#{qna_id}
+    </update>
+</mapper>

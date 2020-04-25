@@ -65,6 +65,8 @@ public class ManagerRestapiController {
     @Autowired
     MessageSource messageSource;
     @Autowired
+    QnaDAO qnaDAO;
+    @Autowired
     private UserDAO userDAO;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -1436,7 +1438,7 @@ public class ManagerRestapiController {
                 }
                 mgCouponDAO.insertCoupon(couponVO);
                 resultMap.put("success", "success");
-                resultMap.put("redirectUrl", "/MyPage/ Reviews");
+                resultMap.put("redirectUrl", "/MyPage/Reviews");
             } 
         } catch (Exception e) {
             resultMap.put("e", e);
@@ -1444,4 +1446,43 @@ public class ManagerRestapiController {
         return resultMap;
     }
 
+    //qna detail
+    @RequestMapping(value = "Manager/qnaDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> qnaDetail(@RequestParam HashMap params,QnaVO qnaVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            Map<String,Object>detail =qnaDAO.getQnaDetail(qnaVO);
+            resultMap.put("detail", detail);
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //qna 답변
+    @RequestMapping(value = "/Manager/qnaRewrite", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> qnaRewrite(@RequestParam HashMap params,QnaVO qnaVO,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(qnaVO.getQna_rewrite_memo().isEmpty()){
+                error.put(messageSource.getMessage("rewrite_memo","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(adminLogin == "admin"){
+                qnaVO.setQna_rewrite_id("admin");
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                qnaDAO.updateQna(qnaVO);
+                resultMap.put("redirectUrl", "/Manager/listQna");
+            }
+
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
+import com.webapp.mall.vo.*;
+import com.webapp.manager.dao.QnaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,11 +49,6 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
-import com.webapp.mall.vo.CommonVO;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.OptionVO;
-import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.vo.ProductVO;
 
 @RestController
@@ -90,6 +87,8 @@ public class restapiController {
     private RefundDAO refundDAO;
     @Autowired
     private ReviewDAO reviewDAO;
+    @Autowired
+    private QnaDAO qnaDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -1376,6 +1375,73 @@ public class restapiController {
                 }else if(params.get("deliveryType").equals("last")) {
                 	resultMap.put("delivery",deliveryDAO.getLastDelivery(params));
                 }
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+    //Q&A 저장
+    @RequestMapping(value = "/Save/writeQna", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> writeQna(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                params.put("usr_id",userInfo.get("usr_id"));
+                qnaVO.setQna_writer_id((Integer)userInfo.get("usr_id"));
+            }else{
+                resultMap.put("isLogin", false);
+                error.put("Info", messageSource.getMessage("error.noLoginInfo","ko"));
+            }
+            if(qnaVO.getQna_title().isEmpty() || qnaVO.getQna_title().equals("")){
+                error.put(messageSource.getMessage("qna_title","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(qnaVO.getQna_memo().isEmpty() || qnaVO.getQna_memo().equals("")){
+                error.put(messageSource.getMessage("qna_memo","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                qnaDAO.insertQna(qnaVO);
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //Q&A 목록
+    @RequestMapping(value = "/product/listQna", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> listQna(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                resultMap.put("usr_id",userInfo.get("usr_id"));
+            }
+            Integer listCnt = qnaDAO.getQnaListCount(qnaVO);
+            qnaVO.setDisplayRowCount(10);
+            qnaVO.pageCalculate(listCnt);
+            List<Map<String,Object>>list =qnaDAO.getQnaList(qnaVO);
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
+                resultMap.put("listCnt",listCnt);
+                resultMap.put("pageVO",qnaVO);
             }
         } catch (Exception e) {
 

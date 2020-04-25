@@ -239,7 +239,7 @@
                 <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="">CS관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '24')}">
-                        <li><a href="/Manager/boardList?bgno=16">상품 QA</a></li>
+                        <li><a href="/Manager/listQna">상품 QA</a></li>
                         </c:if>
                         <c:if test="${afn:contains(menuList, '41') || afn:contains(menuList, '42') || afn:contains(menuList, '43')}">
                         <li><a href="/Manager/boardList?bgno=15">상담관리</a>

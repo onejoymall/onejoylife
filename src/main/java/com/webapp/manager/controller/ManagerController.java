@@ -13,6 +13,7 @@ import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.*;
 import com.webapp.manager.vo.*;
@@ -42,6 +43,8 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Controller
 public class ManagerController {
+    @Autowired
+    QnaDAO qnaDAO;
     @Autowired
     SelectorDAO selectorDAO;
     @Autowired
@@ -969,5 +972,35 @@ public class ManagerController {
         model.addAttribute("topNav", 6);
         model.addAttribute("style", "member-management");
         return "manager/MgEPoint";
+    }
+
+    //Q&A 목록
+    @RequestMapping(value = "/Manager/listQna")
+    public String managerListQna(@RequestParam HashMap params, Model model,HttpServletRequest request, HttpSession session, QnaVO qnaVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            Integer listCnt = qnaDAO.getQnaListCount(qnaVO);
+            qnaVO.setDisplayRowCount(10);
+            qnaVO.pageCalculate(listCnt);
+            List<Map<String,Object>>list =qnaDAO.getQnaList(qnaVO);
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                model.addAttribute("list",list);
+                model.addAttribute("searchVO",qnaVO);
+                model.addAttribute("table_name","product_qna");
+                model.addAttribute("Pk","qna_id");
+
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        model.addAttribute("style","qna");
+        return "manager/qna";
     }
 }

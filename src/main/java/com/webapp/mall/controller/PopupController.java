@@ -115,7 +115,19 @@ public class PopupController {
         }
        return "popup/kakaologin";
     }
-    
+    //상품문의 작성 팝업
+    @RequestMapping("/Popup/write-qna")
+    public String writerQna(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
+        try {
+//            model.addAttribute("productDetail",PaymentDAO.getPaymentDetail(params));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "write-qna");
+        Device device = DeviceUtils.getCurrentDevice(request);
+        return "popup/write-qna";
+    }
+
     @RequestMapping("/Popup/review-write")
     public String writeReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO) throws Exception {
     	try {
