@@ -2744,7 +2744,7 @@ function callQnalist(product_cd,page=1) {
 
     $.each(dataList.list,function (key,value) {
 
-        if(value.qna_rewriter_id != null){
+        if(value.rewriter_name != null){
             qnaAnswer = '<span class="waiting">답변완료</span>';
         }else{
             qnaAnswer = '<span class="complete">답변대기</span>';
@@ -2762,8 +2762,56 @@ function callQnalist(product_cd,page=1) {
                     '<div class="qna-answer">'+qnaAnswer+'</div>' +
                     '<div class="qna-author"><span>'+value.email+'</span></div>' +
                     '<div class="qna-date"><span>'+value.reg_date+'</span></div>' +
-                '</div>' +
-
+                '</div>';
+        //비공개 시 글쓴이만 열람 가능
+        html +='' +
+                '<div class="content-box">\n';
+        if(value.qna_writer_id == dataList.usr_id){
+            html +='' +
+                '    <div class="qna-setting-box">\n' +
+                '        <button type="button" class="modify">수정</button>\n' +
+                '        <button type="button" class="delete" onclick="deleteSelectQna()">삭제</button>\n' +
+                '    </div>\n';
+        }
+        //공개
+        if(value.qna_open_type == "F"){
+            html +='' +
+                '    <div class="qna-content-body">\n' +
+                '       <div class="qna-content-body-q">\n' +
+                '            <p class="q-sort">Q</p>\n' +
+                '            <p>\n' + value.qna_memo +'</p>\n' +
+                '       </div>\n' +
+                '       <div class="qna-content-body-a">\n' +
+                '            <p class="a-sort">A</p>\n' +
+                '            <p>\n' +value.qna_rewrite_memo +'</p>\n' +
+                '    </div>\n' +
+                '    <p class="answer-date">답변일 : '+value.qna_rewrite_reg_date+'</p>';
+        //비공개
+        }else{
+            if(value.qna_writer_id == dataList.usr_id){
+                html +='' +
+                    '    <div class="qna-content-body">\n' +
+                    '       <div class="qna-content-body-q">\n' +
+                    '            <p class="q-sort">Q</p>\n' +
+                    '            <p>\n' + value.qna_memo +'</p>\n' +
+                    '       </div>\n' +
+                    '       <div class="qna-content-body-a">\n' +
+                    '            <p class="a-sort">A</p>\n' +
+                    '            <p>\n' +value.qna_rewrite_memo +'</p>\n' +
+                    '    </div>\n' +
+                    '    <p class="answer-date">답변일 : '+value.qna_rewrite_reg_date+'</p>';
+            }else{
+                html +='' +
+                    '    <div class="qna-content-body">\n' +
+                    '       <div class="qna-content-body-q">\n' +
+                    '            <p>비공개 글입니다.</p>\n' +
+                    '       </div>\n'+
+                    '    </div>\n';
+            }
+        }
+        html +='' +
+                '</div>\n';
+        html +='' +
             '</li>';
     });
 

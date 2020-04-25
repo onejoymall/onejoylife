@@ -1424,6 +1424,12 @@ public class restapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
+            params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                resultMap.put("usr_id",userInfo.get("usr_id"));
+            }
             Integer listCnt = qnaDAO.getQnaListCount(qnaVO);
             qnaVO.setDisplayRowCount(10);
             qnaVO.pageCalculate(listCnt);

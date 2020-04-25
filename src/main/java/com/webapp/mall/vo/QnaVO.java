@@ -3,17 +3,62 @@ package com.webapp.mall.vo;
 import com.webapp.board.common.SearchVO;
 
 public class QnaVO extends SearchVO {
-private String product_cd;
-private String qna_title;
-private String qna_memo;
-private String qna_type;
-private String qna_open_type;
-private String qna_writer;
-private Integer qna_writer_id;
-private String email;
-private String qna_type_name;
-private String rewriter_name;
-private String reg_date;
+    private Integer qna_id;
+    private String product_cd;
+    private String qna_title;
+    private String qna_memo;
+    private String qna_type;
+    private String qna_open_type;
+    private String qna_writer;
+    private Integer qna_writer_id;
+    private String email;
+    private String product_name;
+    private String qna_type_name;
+    private String rewriter_name;
+    private String qna_rewrite_reg_date;
+    private String qna_rewrite_id;
+    private String reg_date;
+    private String qna_rewrite_memo;
+
+    public String getQna_rewrite_memo() {
+        return qna_rewrite_memo;
+    }
+
+    public void setQna_rewrite_memo(String qna_rewrite_memo) {
+        this.qna_rewrite_memo = qna_rewrite_memo;
+    }
+
+    public String getQna_rewrite_id() {
+        return qna_rewrite_id;
+    }
+
+    public void setQna_rewrite_id(String qna_rewrite_id) {
+        this.qna_rewrite_id = qna_rewrite_id;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public Integer getQna_id() {
+        return qna_id;
+    }
+
+    public void setQna_id(Integer qna_id) {
+        this.qna_id = qna_id;
+    }
+
+    public String getQna_rewrite_reg_date() {
+        return qna_rewrite_reg_date;
+    }
+
+    public void setQna_rewrite_reg_date(String qna_rewrite_reg_date) {
+        this.qna_rewrite_reg_date = qna_rewrite_reg_date;
+    }
 
     public String getQna_open_type() {
         return qna_open_type;

@@ -19,7 +19,10 @@ public class QnaDAO {
         List<Map<String, Object>> getQnaList = sql.selectList("mall.QnaMapper.getQnaList",qnaVO);
         return getQnaList;
     }
-
+    public Map<String, Object> getQnaDetail(QnaVO qnaVO) throws SQLException {
+        Map<String, Object> getQnaDetail = sql.selectOne("mall.QnaMapper.getQnaDetail",qnaVO);
+        return getQnaDetail;
+    }
     public Integer getQnaListCount(QnaVO qnaVO) throws SQLException {
         Integer getQnaListCount=sql.selectOne("mall.QnaMapper.getQnaListCount",qnaVO);
         return getQnaListCount;
@@ -27,5 +30,7 @@ public class QnaDAO {
     public  void insertQna(QnaVO qnaVO) throws SQLException{
         sql.insert("mall.QnaMapper.insertQna",qnaVO);
     }
-
+    public void updateQna(QnaVO qnaVO) throws SQLException{
+        sql.insert("mall.QnaMapper.updateQna",qnaVO);
+    }
 }
