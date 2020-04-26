@@ -135,7 +135,7 @@
                                 <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
                                 <span class="cc">* 상품 분류의 분류URL이 /product/list.html?cale_no=7 이라면 7을 입력합니다.</span><br>
                                 <span class="cc">* 분류 개수가 많은 경우는 10|20|21 등으로 입력합니다.</span><br></p>
-                            <input type="text" id="product_ct" name="product_ct" placeholder="ex) 24|29|30" value="${list[0].pd_category_id}">
+                            <input type="text" id="product_ct" name="product_ct" placeholder="ex) 24|29|30" value="${list[0].pd_category_id}" readonly>
                         </td>
                     </tr>
                     <tr>
@@ -143,7 +143,7 @@
                         <td>
                             <p class="cc2">신상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
                                 <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
-                            <input type="text" id="product_new_class" name="product_new_class" placeholder="ex) N|Y|Y" value="Y">
+                            <input type="text" id="product_new_class" name="product_new_class" placeholder="ex) N|Y|Y" value="Y" readonly>
                         </td>
                     </tr>
 
@@ -152,7 +152,7 @@
                         <td>
                             <p class="cc2">추천 상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
                                 <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
-                            <input type="text" id="product_md_class" name="product_md_class" placeholder="ex) N|Y|Y" value="N">
+                            <input type="text" id="product_md_class" name="product_md_class" placeholder="ex) N|Y|Y" value="N" readonly>
                         </td>
                     </tr>
                     <tr>
@@ -160,7 +160,7 @@
                         <td>
                             <p class="cc2">특가 상품 영역에 진열함:Y, 진열 안 함: N로 입력합니다.<br>
                                 <span class="cc">* '분류번호'에 여러 개의 분류번호가 있는 경우 Y|N|N 등으로 입력합니다.</span></p>
-                            <input type="text" id="product_sp_class" name="product_sp_class" placeholder="ex) N|Y|Y" value="N">
+                            <input type="text" id="product_sp_class" name="product_sp_class" placeholder="ex) N|Y|Y" value="N" readonly>
                         </td>
                     </tr>
                     <tr>
@@ -294,14 +294,23 @@
                             <input type="text" id="sp-replace-text" name="product_payment_memo" placeholder="200byte까지 등록 가능. ex) 임시 품절 상품" disabled>
                         </td>
                     </tr>
-<%--                    <tr>--%>
-<%--                        <th>판매 기간</th>--%>
-<%--                        <td>--%>
-<%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.--%>
-<%--                            </p>--%>
-<%--                            <input type="text" id="goods-sDate-start" name="goods-sDate-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="goods-sDate-end" placeholder="ex) 2020-02-28">--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                        <tr>
+                            <th>판매 기간 사용 여부</th>
+                            <td>
+                                <input type="radio" id="product_validity_y" name="product_validity_yn" value="Y">
+                                <label for="product_validity_y">사용함</label>
+                                <input type="radio" id="product_validity_n" name="product_validity_yn" value="N" checked>
+                                <label for="product_validity_n">사용 안 함</label>
+                            </td>
+                        </tr>
+                    <tr>
+                        <th>판매 기간</th>
+                        <td>
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
+                            </p>
+                            <input type="text" id="goods-sDate-start" name="product_validity_start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="product_validity_end" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
                 <h3>옵션 정보</h3>
@@ -577,25 +586,25 @@
                             <input type="text" id="goods-rDate" name="product_release_date" placeholder="ex) 2020-02-28">
                         </td>
                     </tr>
-                    <tr>
-                        <th>유효 기간 사용 여부</th>
-                        <td>
-                            <input type="radio" id="goods-validity-y" name="product_validity_yn" value="Y">
-                            <label for="goods-validity-y">사용함</label>
-                            <input type="radio" id="goods-validity-n" name="product_validity_yn" value="N" checked>
-                            <label for="goods-validity-n">사용 안 함</label>
-                            <span class="cc">* 사용 안 함을 선택할 경우, 입력했던 사항은 초기화됩니다.</span>
-                        </td>
-                    </tr>
-                    <tr class="goods-validity-detail hidden">
-                        <th>유효 기간</th>
-                        <td>
-                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD~YYYY-MM-DD&#41;으로 입력합니다.<br>
-                                <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
-                            </p>
-                            <input type="text" id="goods-validity-start" name="product_validity" placeholder="ex) 2020-02-28~2021-02-28">
-                        </td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>유효 기간 사용 여부</th>--%>
+<%--                        <td>--%>
+<%--                            <input type="radio" id="goods-validity-y" name="product_validity_yn" value="Y">--%>
+<%--                            <label for="goods-validity-y">사용함</label>--%>
+<%--                            <input type="radio" id="goods-validity-n" name="product_validity_yn" value="N" checked>--%>
+<%--                            <label for="goods-validity-n">사용 안 함</label>--%>
+<%--                            <span class="cc">* 사용 안 함을 선택할 경우, 입력했던 사항은 초기화됩니다.</span>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <tr class="goods-validity-detail hidden">--%>
+<%--                        <th>유효 기간</th>--%>
+<%--                        <td>--%>
+<%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD~YYYY-MM-DD&#41;으로 입력합니다.<br>--%>
+<%--                                <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>--%>
+<%--                            </p>--%>
+<%--                            <input type="text" id="goods-validity-start" name="product_validity" placeholder="ex) 2020-02-28~2021-02-28">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     <tr>
                         <th>원산지</th>
                         <td>
@@ -876,22 +885,22 @@
                             <input type="text" id="goods-payment" name="product_payment_type" placeholder="ex) cash, mileage">
                         </td>
                     </tr>
-                    <tr>
-                        <th>상품 배송 유형 코드</th>
-                        <td>
-                            <p class="cc2">상품의 배송 유형을 설정할 경우 다음 항목 중 입력합니다.<br><br>
-                                사입배송: D, 직접배송: C, 기타: E|창고코드<br>
-                                <span class="cc">* 기타(E)의 경우 김포 창고 코드가 2이면 'E|2'로 입력</span><br>
-                                <span class="cc">* 빈 값일 경우 직접등록(C)으로 자동 등록됩니다.</span>
-                            </p>
-                            <input type="text" id="goods-shipping-code" name="product_delivery_type_code" placeholder="ex) E|2">
-                        </td>
-                    </tr>
+<%--                    <tr>--%>
+<%--                        <th>상품 배송 유형 코드</th>--%>
+<%--                        <td>--%>
+<%--                            <p class="cc2">상품의 배송 유형을 설정할 경우 다음 항목 중 입력합니다.<br><br>--%>
+<%--                                사입배송: D, 직접배송: C, 기타: E|창고코드<br>--%>
+<%--                                <span class="cc">* 기타(E)의 경우 김포 창고 코드가 2이면 'E|2'로 입력</span><br>--%>
+<%--                                <span class="cc">* 빈 값일 경우 직접등록(C)으로 자동 등록됩니다.</span>--%>
+<%--                            </p>--%>
+<%--                            <input type="text" id="goods-shipping-code" name="product_delivery_type_code" placeholder="ex) E|2">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     <tr>
                         <th>메모</th>
                         <td>
                             <p class="cc2">각 상품별로 상품 메모 정보를 입력합니다.<br>
-                                <span class="cc">* 상품 메모는 업로드마다 1개씩 추가됩니다.</span>
+<%--                                <span class="cc">* 상품 메모는 업로드마다 1개씩 추가됩니다.</span>--%>
                             </p>
                             <input type="text" id="goods-memo" name="product_memo">
                         </td>

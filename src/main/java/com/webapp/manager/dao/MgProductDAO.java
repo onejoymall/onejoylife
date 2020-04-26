@@ -1,6 +1,7 @@
 package com.webapp.manager.dao;
 
 import com.webapp.board.common.FileVO;
+import com.webapp.mall.vo.CommonVO;
 import com.webapp.manager.vo.ProductVO;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -51,5 +52,8 @@ public class MgProductDAO {
             sql.delete("mall.ProductMapper.deleteProductFile",f);
         }
 
+    }
+    public void updateProductList(CommonVO commonVO)throws SQLException{
+        sql.insert("mall.ProductMapper.updateProductList", commonVO);
     }
 }

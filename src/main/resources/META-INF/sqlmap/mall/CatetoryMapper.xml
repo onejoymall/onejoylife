@@ -159,9 +159,6 @@
     <delete id="deleteCategory" parameterType="java.util.Map">
         delete from product_category  where pd_category_id = #{pd_category_id}
     </delete>
-
-
-
     <select id="getCategoryEventList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
@@ -227,4 +224,29 @@
             file_link = #{filelink},
             file_order = #{fileorder}
     </insert>
+    <select id="getCategoryView" parameterType="java.util.Map" resultType="java.util.Map">
+        select concat(CC.categoryNameF, CC.categoryNameS, CC.categoryNameT) as categoryViewName
+        from (
+         select case
+                    when UU.categoryNameF is null then ''
+                    ELSE concat(UU.categoryNameF, ' > ') end as categoryNameF,
+                case
+                    when UU.categoryNameS is null then ''
+                    ELSE concat(UU.categoryNameS, ' > ') end as categoryNameS,
+                UU.categoryNameT
+         from (
+                  select (select Z.pd_category_name
+                          from product_category Z
+                          where Z.pd_category_id = (select Z.pd_category_upper_code
+                                                    from product_category Z
+                                                    where Z.pd_category_id = A.pd_category_upper_code)) as categoryNameF,
+                         (select Z.pd_category_name
+                          from product_category Z
+                          where Z.pd_category_id = A.pd_category_upper_code)                            as categoryNameS,
+                         pd_category_name                                                                  categoryNameT
+                  from product_category A
+                  where A.pd_category_id = #{pd_category_id}
+              ) UU
+        ) CC
+    </select>
 </mapper>

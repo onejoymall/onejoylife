@@ -163,16 +163,17 @@ public class ManagerController {
     public String managerProduct(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO) throws Exception {
 
         try {
+            if(searchVO.getDisplayRowCount()==null){
+                searchVO.setDisplayRowCount(10);
+            }
 
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
             params.put("pd_category_upper_code", "T");
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
-            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
+            searchVO.pageCalculate(productDAO.getMgProductListCount(searchVO));
             params.put("rowStart", searchVO.getRowStart());
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
-            List<Map<String, Object>> productList = productDAO.getProductList(searchVO);
+            List<Map<String, Object>> productList = productDAO.getMgProductList(searchVO);
             model.addAttribute("productList", productList);
             model.addAttribute("table_name", "product");
             model.addAttribute("Pk", "product_id");

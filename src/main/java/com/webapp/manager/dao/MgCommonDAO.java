@@ -2,6 +2,7 @@ package com.webapp.manager.dao;
 
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.manager.vo.MgCommonVO;
+import com.webapp.manager.vo.StockVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,8 @@ public class MgCommonDAO {
     }
     public void listUpdate(MgCommonVO mgCommonVO) throws SQLException{
         sql.update("mall.MgCommonMapper.listUpdate",mgCommonVO);
+    }
+    public void listStockUpdate(StockVO stockVO) throws SQLException{
+        sql.update("mall.MgCommonMapper.listStockUpdate",stockVO);
     }
 }
