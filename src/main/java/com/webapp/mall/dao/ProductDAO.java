@@ -40,4 +40,13 @@ public class ProductDAO {
         return getProductViewDetail;
     }
 
+    public List<Map<String, Object>> getMgProductList(SearchVO searchVO) throws SQLException {
+        List<Map<String, Object>> getMgProductList = sql.selectList("mall.ProductMapper.getMgProductList",searchVO);
+        return getMgProductList;
+    }
+    public Integer getMgProductListCount(SearchVO searchVO) throws SQLException {
+        Integer getMgProductListCount=sql.selectOne("mall.ProductMapper.getMgProductListCount",searchVO);
+        return getMgProductListCount;
+    }
+
 }

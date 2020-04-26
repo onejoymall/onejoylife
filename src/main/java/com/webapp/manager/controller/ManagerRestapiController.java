@@ -449,6 +449,25 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //상품상세보기 출력시 기존 카테고리 정보 불러오기
+    @RequestMapping(value = "/Manager/viewCategoryDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> viewCatetoryDetail(@RequestParam HashMap params){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> getCatetoryView = categoryDAO.getCategoryView(params);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("getCatetoryView",getCatetoryView);
+//                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
     //경품상세보기
     @RequestMapping(value = "/Manager/giveawayViewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerGiveawayViewDetail(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){

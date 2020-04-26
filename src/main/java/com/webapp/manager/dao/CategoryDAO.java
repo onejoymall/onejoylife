@@ -34,6 +34,10 @@ public class CategoryDAO {
         Map<String,Object> getCategoryDetail=sql.selectOne("mall.CategoryMapper.getCategoryDetail",searchVO);
         return getCategoryDetail;
     }
+    public Map<String,Object> getCategoryView(Map<String,Object> params) throws SQLException {
+        Map<String,Object> getCategoryView=sql.selectOne("mall.CategoryMapper.getCategoryView",params);
+        return getCategoryView;
+    }
     public  void insertCategory(Map<String, String> params) throws SQLException{
         sql.insert("mall.CategoryMapper.insertCategory",params);
     }

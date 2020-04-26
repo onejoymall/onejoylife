@@ -183,3 +183,5 @@ $('input[name=goods-seo]').click(function(){
         $('tr.seo-detail input[type=text]').val('');
     }
 });
+$("input[name=product_validity_start]").datepicker();
+$("input[name=product_validity_end]").datepicker();

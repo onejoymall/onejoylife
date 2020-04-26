@@ -19,4 +19,16 @@
             #{item}
         </foreach>
     </update>
+    <update id="listStockUpdate" parameterType="com.webapp.manager.vo.StockVO">
+        <![CDATA[
+        update ${table_name}
+        set
+             product_stock_use_yn = #{product_stock_use_yn},
+             product_stock_quantity = #{product_stock_quantity}
+        where ${pk} in
+        ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

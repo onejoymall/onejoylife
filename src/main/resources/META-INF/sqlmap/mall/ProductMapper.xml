@@ -12,6 +12,7 @@
                 (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1
             FROM product  where 1=1
+            and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
         <if test="product_cd_array != null">
             and product_cd IN (
@@ -37,6 +38,8 @@
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
             FROM product  where 1=1
+            and CASE WHEN product_validity_yn ='Y' THEN product_validity_start <= now() ELSE TRUE END
+            and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -58,6 +61,7 @@
         SELECT
             count(*) as cnt
         FROM product  where 1=1
+        and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -162,6 +166,8 @@
             product_live_type,
             product_youtube_id,
             product_payment_class_value,
+            (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
+            (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
             (select IFNULL(product_company_payment,0)) as product_company_payment,
             (select IFNULL(product_payment,0)) as product_payment,
@@ -346,7 +352,9 @@
         product_live_type,
         product_youtube_id,
         product_payment_class_value,
-        product_use_member_yn
+        product_use_member_yn,
+        product_validity_start,
+        product_validity_end
        )values(
         #{product_cd},
         #{product_market_cd},
@@ -443,7 +451,9 @@
         #{product_live_type},
         #{product_youtube_id},
         #{product_payment_class_value},
-        #{product_use_member_yn}
+        #{product_use_member_yn},
+        #{product_validity_start},
+        #{product_validity_end}
        )
 
     </insert>
@@ -539,7 +549,14 @@
         product_memo,
         product_point_class,
         product_point_rate,
-        product_point_rate_cash
+        product_point_rate_cash,
+        product_sp_class,
+        product_live_type,
+        product_youtube_id,
+        product_payment_class_value,
+        product_use_member_yn,
+        product_validity_start,
+        product_validity_end
         )
         select
         #{product_cd},
@@ -632,7 +649,14 @@
         product_memo,
         product_point_class,
         product_point_rate,
-        product_point_rate_cash
+        product_point_rate_cash,
+        product_sp_class,
+        product_live_type,
+        product_youtube_id,
+        product_payment_class_value,
+        product_use_member_yn,
+        product_validity_start,
+        product_validity_end
          from product where product_cd = #{request_product_cd}
 
     </insert>
@@ -737,7 +761,9 @@
         product_live_type=#{product_live_type},
         product_youtube_id=#{product_youtube_id},
         product_payment_class_value=#{product_payment_class_value},
-        product_use_member_yn=#{product_use_member_yn}
+        product_use_member_yn=#{product_use_member_yn},
+        product_validity_start=#{product_validity_start},
+        product_validity_end=#{product_validity_end}
         where product_cd =#{product_cd}
         ]]>
     </update>
@@ -758,4 +784,54 @@
     <delete id="deleteProductFile" parameterType="com.webapp.board.common.FileVO">
         delete from product_file  where key_id = #{parentPK} and file_order = #{fileorder}
     </delete>
+
+    <select id="getMgProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                *,
+                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
+                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 2) as file_2,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 3) as file_3,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
+                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
+            FROM product  where 1=1
+
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
+        <if test="orderByKey == null"> order by product_id DESC </if>
+        LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    <select id="getMgProductListCount" parameterType="com.webapp.manager.vo.ProductVO" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product  where 1=1
+
+        ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+    </select>
 </mapper>

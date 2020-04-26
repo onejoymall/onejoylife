@@ -3,13 +3,15 @@ package com.webapp.manager.controller;
 import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
+import com.webapp.board.common.SearchVO;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.vo.CommonVO;
+import com.webapp.mall.vo.SearchFilterVO;
+import com.webapp.manager.dao.MgCommonDAO;
 import com.webapp.manager.dao.MgStoreDAO;
 import com.webapp.manager.dao.MgSystemDAO;
-import com.webapp.manager.vo.MgDeliveryVO;
-import com.webapp.manager.vo.MgProductCodeVO;
-import com.webapp.manager.vo.ProductVO;
+import com.webapp.manager.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,8 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 public class MgSystemRestController {
     @Autowired
     private MgSystemDAO mgSystemDAO;
+    @Autowired
+    private MgCommonDAO mgCommonDAO;
     @Autowired
     MessageSource messageSource;
     @Autowired
@@ -83,7 +87,7 @@ public class MgSystemRestController {
         return resultMap;
     }
     //상품 코드정보조회
-    @RequestMapping(value = "Manager/CallCodeList", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/CallCodeList", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> CallCodeList(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgProductCodeVO mgProductCodeVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -128,5 +132,48 @@ public class MgSystemRestController {
         }
         return resultMap;
     }
+    //상품 일괄 수정
+    @RequestMapping(value = "/Manager/productListUpdate",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> productListUpdate(@RequestParam HashMap params, HttpServletRequest request, MgCommonVO mgCommonVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
 
+        try{
+            if(mgCommonVO.getChk() == null || mgCommonVO.getChk().length < 1){
+                error.put("Error", messageSource.getMessage("error.chcUpd","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.listUpdate(mgCommonVO);
+                resultMap.put("redirectUrl","/Manager/Product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //상품 일괄 수정 제고
+    @RequestMapping(value = "/Manager/productListUpdateStock",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> productListUpdateStock(@RequestParam HashMap params, HttpServletRequest request, StockVO stockVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(stockVO.getChk() == null || stockVO.getChk().length < 1){
+                error.put("Error", messageSource.getMessage("error.chcUpd","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.listStockUpdate(stockVO);
+                resultMap.put("redirectUrl","/Manager/Product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
 }

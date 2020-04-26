@@ -42,11 +42,12 @@
                     <h3 class="main-slider-title hide">main slider</h3>
                     <div class="main-slider-inner">
                         <ul class="main-slider-wrap">
-                            <c:if test="${not empty categoryRowData.file_link3}">
+                            <c:if test="${not empty categoryRowData.file_link3 and categoryRowData.pd_category_event_use_yn eq 'Y'}">
                                 <li id="main-slide-1"><a href="#" style="background: url(${categoryRowData.file_link3}) no-repeat center / contain !important;"></a></li>
                             </c:if>
-                            <c:if test="${not empty categoryRowData.file_link4}">
-                                <li id="main-slide-1"><a href="#" style="background:url(${categoryRowData.file_link3}) no-repeat center / contain !important;"></a></li>
+
+                            <c:if test="${not empty categoryRowData.file_link5 and categoryRowData.event_use_yn eq 'Y'}">
+                                <li id="main-slide-1"><a href="#" style="background:url(${categoryRowData.file_link5}) no-repeat center / contain !important;"></a></li>
                             </c:if>
                         </ul>
                     </div>
