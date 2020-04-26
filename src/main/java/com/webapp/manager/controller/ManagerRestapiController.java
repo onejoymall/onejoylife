@@ -16,6 +16,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -388,11 +392,28 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
-            if(deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
-                error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
+                if(deliveryInfoVO.getDelivery_t_invoice() !=null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
+                    error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+                }
+                if(deliveryInfoVO.getDelivery_t_code() !=null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
+                    error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+                }
             }
-            if(deliveryInfoVO.getDelivery_t_code().isEmpty()){
-                error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("H")){
+                //환불을위한 토큰발급
+                IamportClient client;
+                String test_api_key = "7152058542143411";
+                String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+                client = new IamportClient(test_api_key, test_api_secret);
+                String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
+                CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+                //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
+
+                IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+                if(payment_response.getResponse()==null){
+                    error.put("Error", payment_response.getMessage());
+                }
             }
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -401,8 +422,6 @@ public class ManagerRestapiController {
                 deliveryDAO.updateDeliveryManager(deliveryInfoVO);
                 paymentDAO.updatePaymentManger(deliveryInfoVO);
                 resultMap.put("success",messageSource.getMessage("success.done","ko"));
-//                resultMap.put("list",list);
-//                resultMap.put("deliveryInfoVO",deliveryInfoVO);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {

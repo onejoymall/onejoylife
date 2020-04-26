@@ -1164,6 +1164,11 @@ $(document).ready(function(){
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>';
                         $('#setButton').html(html);
                     }
+                    if(index=="payment_status" && item=="H"){
+                        html='' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'H\')">반품확인(결제취소)</button>';
+                        $('#setButton').html(html);
+                    }
                     if(index=="delivery_start_date" || index=="reg_date"){
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 

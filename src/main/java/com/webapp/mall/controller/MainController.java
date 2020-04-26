@@ -54,7 +54,16 @@ public class MainController {
 //        Map<String, String> param = new HashMap<String, String>();
         try{
             HttpSession session = request.getSession();
+
+            //회원전용상품 노출
             Object obj = session.getAttribute("login");
+            if(obj!=null){
+                if((Boolean)obj){
+                    searchVO.setProduct_use_member_yn(null);
+                }
+            }else{
+                searchVO.setProduct_use_member_yn("N");
+            }
 //            param.put("USR_ID","") //사용자조회시 사용
 //            userList = userDAO.getUserList(params);
 

@@ -18,6 +18,15 @@ public class SearchVO extends PageVO{
     private String start_date;
     private String end_date;
     private String product_name;
+    private String product_use_member_yn;
+
+    public String getProduct_use_member_yn() {
+        return product_use_member_yn;
+    }
+
+    public void setProduct_use_member_yn(String product_use_member_yn) {
+        this.product_use_member_yn = product_use_member_yn;
+    }
 
     public Integer getUsr_id() {
         return usr_id;

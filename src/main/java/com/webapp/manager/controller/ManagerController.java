@@ -595,6 +595,7 @@ public class ManagerController {
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             List<Map<String,Object>> list = paymentDAO.getPaymentList(params);
             //택배사목록
+            //스위트레커 연동필요
             Map<String, Object> companylist = CurlPost.curlPostFn(
                     deliveryInfoVO.getDelivery_t_url()
                             +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
@@ -602,6 +603,7 @@ public class ManagerController {
                     "",
                     "get"
             );
+
             List<Map<String,Object>> company = (List)companylist.get("Company");
 
             //코드 목록
