@@ -82,6 +82,15 @@ public class ProductController {
                 searchFilterVO.setOrderByKey("product_id");
                 searchFilterVO.setOrderByValue("DESC");
             }
+            //회원전용상품 노출
+            Object isLogin = session.getAttribute("login");
+            if(isLogin!=null){
+                if((Boolean)isLogin){
+                    searchFilterVO.setProduct_use_member_yn(null);
+                }
+            }else{
+                searchFilterVO.setProduct_use_member_yn("N");
+            }
             searchFilterVO.setProduct_sale_yn("Y");
             searchFilterVO.setProduct_use_yn("Y");
             searchFilterVO.pageCalculate(searchDAO.getSearchProductListCount(searchFilterVO));
@@ -137,6 +146,15 @@ public class ProductController {
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");
+            }
+            //회원전용상품 노출
+            Object obj = session.getAttribute("login");
+            if(obj!=null){
+                if((Boolean)obj){
+                    searchVO.setProduct_use_member_yn(null);
+                }
+            }else{
+                searchVO.setProduct_use_member_yn("N");
             }
             searchVO.setProduct_sale_yn("Y");
             searchVO.setProduct_use_yn("Y");
