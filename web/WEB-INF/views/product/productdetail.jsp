@@ -95,7 +95,8 @@
                                 배송안내
                             </div>
                             <div class="shipping-number">
-                                ${delivery.get("delivery_payment")}
+                                ${list.product_delivery_international_type_name} ${list.product_delivery_type_name} 
+                                <br>${list.product_delivery_payment_type_name} ${delivery.get("delivery_payment")}
                             </div>
                         </div>
                     </div>

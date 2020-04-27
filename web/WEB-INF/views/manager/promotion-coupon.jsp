@@ -43,8 +43,8 @@
             </div>
             <table>
                 <colgroup>
-                    <%-- <col width="2%">
-                    <col width="5%"> --%>
+                    <col width="2%">
+                    <%-- <col width="5%"> --%>
                     <col width="33%">
                     <col width="10%">
                     <col width="10%">
@@ -55,44 +55,39 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <!-- <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                    <td name="detail">번호</td> -->
+                    <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                    <!-- <td name="detail">번호</td> -->
                     <td name="detail">쿠폰명</td>
                     <td>발급수</td>
                     <td>쿠폰사용 매출액</td>
                     <td>쿠폰 수익률 조회</td>
                     <td>상태</td>
+                    <td>다운로드 url</td>
                     <td>등록일</td>
                     <td>관리</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <!-- <td><input type="checkbox" id="chk10" name="chk10"></td>
-                    <td>01</td> -->
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <!-- <td><input type="checkbox" id="chk9" name="chk9"></td>
-                    <td>01</td> -->
-                    <td>신규 가입 회원 3,000원 할인 적용</td>
-                    <td>0</td>
-                    <td>0원</td>
-                    <td>20%</td>
-                    <td class="txt-active">발급중</td>
-                    <td>2020-02-18 00:00:00</td>
-                    <td>
-                        <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                    </td>
-                </tr>
+                <c:if test="${not empty list}">
+                <c:forEach var="list" items="${list}">
+	                <tr>
+	                    <td><input type="checkbox" id="chk10" name="chk10" value="${list.coupon_cd}"></td>
+	                    <!-- <td>01</td> -->
+	                    <td>${list.coupon_name}</td>
+	                    <td>${list.coupon_paid_cnt}</td>
+	                    <td>0원</td>
+	                    <td>0%</td>
+	                    <td class="txt-active">발급중</td>
+	                    <td>
+	                    	<button type="button" class="goods-list-btn" onclick="copyToClipboard('onejoy-life.com/MyPage/Coupon-issued?coupon_cd=${list.coupon_cd}')">경로복사</button>
+                    	</td>
+	                    <td>${list.reg_date}</td>
+	                    <td>
+	                        <button type="button" class="goods-list-btn" name="detail1" data-id="${list.coupon_cd}">상세보기</button>
+	                    </td>
+	                </tr>
+                </c:forEach>
+                </c:if>
                 </tbody>
             </table>
             <form id="form1" name="form1"  method="post">

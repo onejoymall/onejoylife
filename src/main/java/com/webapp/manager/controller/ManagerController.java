@@ -82,7 +82,9 @@ public class ManagerController {
     @Autowired
     private MgReviewDAO mgReviewDAO;
     @Autowired
-    MgBrandDAO mgBrandDAO;
+    private MgBrandDAO mgBrandDAO;
+    @Autowired
+    private MgCouponDAO mgCouponDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
@@ -473,8 +475,17 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/promotion-coupon")
     public String managerPromotionCoupon(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
+        	searchVO.setDisplayRowCount(10);
+        	searchVO.setStaticRowEnd(10);
+    		searchVO.pageCalculate(mgCouponDAO.getCouponListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart()); 
+    		List<Map<String, Object>> list = mgCouponDAO.getCouponList(params);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -732,7 +743,8 @@ public class ManagerController {
     	model.addAttribute("topNav", 5);
     	model.addAttribute("style", "class-sales");
     	model.addAttribute("postUrl", "/Manager/class-sales-company");
-    	return "/manager/class-sales-company";
+//    	return "/manager/class-sales-company";
+    	return "tmp";
     }
   //분류별 매출 사용자별
     @RequestMapping(value = "/Manager/class-sales-paymethod")

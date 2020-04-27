@@ -950,6 +950,7 @@ $(document).ready(function(){
                         afterHidden: function () {
                             // location.href = data.redirectUrl;
                             $(".modal-close").click();
+                            location.reload();
                         }
                     });
                 }
@@ -1138,6 +1139,20 @@ $(document).ready(function(){
                         html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품완료</button>';
                         $('#setButton').html(html);
                     }
+                    if(index=="payment_status" && item=="R"){
+                        html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="O"){
+                        html='' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="D"){
+                        html='' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
+                        $('#setButton').html(html);
+                    }
                     if(index=="delivery_start_date" || index=="reg_date"){
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
@@ -1174,18 +1189,25 @@ $(document).ready(function(){
                         html='' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'I\')">상품준비중</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'D\')">배송준비중</button>' +
-                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="R"){
                         html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송정보수정</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'O\')">배송완료</button>' +
-                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>';
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="H"){
                         html='' +
-                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'H\')">반품확인(결제취소)</button>';
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'G\')">반품확인(결제취소)</button>';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="O"){
+                        html='' +
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="delivery_start_date" || index=="reg_date"){
@@ -2326,7 +2348,8 @@ $(document).ready(function(){
                     });
 
                 } else {
-                    location.href=data.redirectUrl;
+//                    location.href=data.redirectUrl;
+                	location.reload();
                 }
             },
             error: function (xhr, status, error) {
@@ -2933,3 +2956,14 @@ $('#updateStockSubmit').on("click",function () {
     commonAjaxCall("POST","/Manager/productListUpdateStock",formData);
 
 })
+
+//클립보드복사
+function copyToClipboard(val) {
+  var t = document.createElement("textarea");
+  document.body.appendChild(t);
+  t.value = val;
+  t.select();
+  document.execCommand('copy');
+  document.body.removeChild(t);
+  alert("copy!")
+}

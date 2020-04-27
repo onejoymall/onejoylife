@@ -13,6 +13,13 @@
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if>
+    <if test="store_approval_status != null and store_approval_status!=''">
+      <foreach item="item" index="index" collection="store_approval_status_arr" separator=" OR " open="AND (" close=")">
+        store_approval_status = #{item}
+      </foreach>
+    </if>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND store_approval_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND store_approval_date < #{end_date} ]]></if>
     <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
     <if test="orderByKey == null"> order by reg_date DESC </if>
     LIMIT ${rowStart-1}, ${displayRowCount}
@@ -25,6 +32,13 @@
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if>
+    <if test="store_approval_status!=null and searchKeyword!='' and store_approval_status!=''">
+      <foreach item="item" index="index" collection="store_approval_status_arr" separator=" OR " open="AND (" close=")">
+        store_approval_status = #{item}
+      </foreach>
+    </if>
+    <if test="start_date != null and start_date != ''"><![CDATA[AND store_approval_date >= #{start_date} ]]></if>
+    <if test="end_date != null and end_date != ''"><![CDATA[AND store_approval_date < #{end_date} ]]></if>
   </select>
   <select id="getStoreDetail" parameterType="com.webapp.manager.vo.StoreVO" resultType="java.util.Map">
     select *,

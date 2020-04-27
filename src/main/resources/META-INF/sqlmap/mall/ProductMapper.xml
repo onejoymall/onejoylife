@@ -178,6 +178,8 @@
             (select IFNULL(product_kg,0)) as product_kg,
             (select code.code_name from code where code.code='product_brand' and code.code_value =product.product_brand) as product_brand_name,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+            (select code.code_name from code where code.code='product_delivery_international_type' and code.code_value =product.product_delivery_international_type) as product_delivery_international_type_name,
+            (select code.code_name from code where code.code='product_delivery_payment_type' and code.code_value =product.product_delivery_payment_type) as product_delivery_payment_type_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
             (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
@@ -250,6 +252,13 @@
 		WHERE C.email = #{email}
 		GROUP BY A.product_id
 		HAVING COUNT(A.product_id) > 1) tmp
+    </select>
+    <select id="getLastPaymentDate" parameterType="hashmap" resultType="hashmap">
+	    SELECT date_format(A.reg_date,'%Y-%m-%d') reg_date
+		FROM product_payment_history A
+		WHERE A.pd_payment_user_id = #{coupon_paid_user_id}
+		ORDER BY reg_date DESC
+		LIMIT 1
     </select>
     <insert id="insertProductFile" parameterType="com.webapp.board.common.FileVO" >
         INSERT INTO product_file (key_id, file_name, real_name, file_size,file_link,file_order)

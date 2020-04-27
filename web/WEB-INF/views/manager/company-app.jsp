@@ -23,15 +23,39 @@
                             <label for="check1">담당자명</label>
                         </div>
                     </div>
-                    <div class="keyword-ck-box">
-<%--                        <p>상태</p>--%>
-                        <div class="ck-box">
-<%--                            <input type="radio" id="key-ck1" name="store_approval_status" value="T">--%>
-<%--                            <label for="key-ck1">승인</label>--%>
-<%--                            <input type="radio" id="key-ck2" name="store_approval_status" value="W">--%>
-<%--                            <label for="key-ck2">승인대기</label>--%>
-                        </div>
-                    </div>
+                    <table class="keyword-src-table">
+                        <colgroup>
+                            <col width="80px">
+                            <col width="420px">
+                            <col width="80px">
+                            <col width="420px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>상태</th>
+                                <td>
+                                   <input type="checkbox" name="store_approval_status" value="T" id="src-q1" checked>
+                                   <label for="src-q1">승인</label>
+                                   <input type="checkbox" name="store_approval_status" value="W" id="src-q2" checked>
+                                   <label for="src-q2">승인대기</label>
+                                </td>
+                                <th>승인일</th>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </form>
             </div>
             <div class="goods-list-wrap">
