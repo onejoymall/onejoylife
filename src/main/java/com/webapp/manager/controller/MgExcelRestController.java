@@ -1,23 +1,20 @@
 package com.webapp.manager.controller;
 
-import com.webapp.common.service.ExcelService;
-import com.webapp.common.service.I18nSo;
-import com.webapp.common.vo.Fruit;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.manager.dao.MgDownloadDAO;
-import com.webapp.manager.vo.ProductVO;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Locale;
+
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.webapp.common.service.ExcelService;
+import com.webapp.common.vo.Fruit;
+import com.webapp.manager.dao.MgDownloadDAO;
+import com.webapp.manager.vo.ProductVO;
 
 @Controller
 public class MgExcelRestController {

@@ -82,7 +82,9 @@ public class ManagerController {
     @Autowired
     private MgReviewDAO mgReviewDAO;
     @Autowired
-    MgBrandDAO mgBrandDAO;
+    private MgBrandDAO mgBrandDAO;
+    @Autowired
+    private MgCouponDAO mgCouponDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
@@ -473,8 +475,17 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/promotion-coupon")
     public String managerPromotionCoupon(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
-
+        	searchVO.setDisplayRowCount(10);
+        	searchVO.setStaticRowEnd(10);
+    		searchVO.pageCalculate(mgCouponDAO.getCouponListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart()); 
+    		List<Map<String, Object>> list = mgCouponDAO.getCouponList(params);
+    		
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -506,11 +517,12 @@ public class ManagerController {
         return "/manager/option-product";
     }
 
-    //업체별 상품 안내 기능
+    //업체별 서비스안내관리 상단
     @RequestMapping(value = "/Manager/market-config-partner")
     public String managerMarketConfigPartner(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
+        	params.put("market_config_code", "market-config-partner-top");
+            params.put("store_id", "admin"); //임시
             Map<String, Object> config = configDAO.getConfigDetail(params);
             if (isEmpty(config)) {
                 config.put("market_config_value", "");
@@ -522,8 +534,29 @@ public class ManagerController {
         }
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "info-setting");
-        model.addAttribute("postUrl", "/Manager/market-config-partner");
-        return "/manager/info-order";
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/market-config-partner-top";
+    }
+    
+    //업체별 서비스안내관리 하단
+    @RequestMapping(value = "/Manager/market-config-partner-bot")
+    public String managerMarketConfigPartnerBot(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	try {
+    		params.put("market_config_code", "market-config-partner-bot");
+            params.put("store_id", "admin"); //임시
+    		Map<String, Object> config = configDAO.getConfigDetail(params);
+    		if (isEmpty(config)) {
+    			config.put("market_config_value", "");
+    		}
+    		model.addAttribute("config", config);
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("topNav", 2);
+    	model.addAttribute("style", "info-setting");
+    	model.addAttribute("postUrl", "/Manager/config-proc");
+    	return "/manager/market-config-partner-bot";
     }
 
     //브랜드관리
@@ -732,7 +765,8 @@ public class ManagerController {
     	model.addAttribute("topNav", 5);
     	model.addAttribute("style", "class-sales");
     	model.addAttribute("postUrl", "/Manager/class-sales-company");
-    	return "/manager/class-sales-company";
+//    	return "/manager/class-sales-company";
+    	return "tmp";
     }
   //분류별 매출 사용자별
     @RequestMapping(value = "/Manager/class-sales-paymethod")

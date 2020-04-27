@@ -44,6 +44,11 @@ public class ProductDAO {
         List<Map<String, Object>> getMgProductList = sql.selectList("mall.ProductMapper.getMgProductList",searchVO);
         return getMgProductList;
     }
+    
+    public Map<String, Object> getLastPaymentDate(Map<String, Object> params) throws SQLException {
+    	Map<String, Object> getLastPaymentDate = sql.selectOne("mall.ProductMapper.getLastPaymentDate",params);
+    	return getLastPaymentDate;
+    }
     public Integer getMgProductListCount(SearchVO searchVO) throws SQLException {
         Integer getMgProductListCount=sql.selectOne("mall.ProductMapper.getMgProductListCount",searchVO);
         return getMgProductListCount;

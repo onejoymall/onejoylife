@@ -400,7 +400,7 @@ public class ManagerRestapiController {
                     error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
                 }
             }
-            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("H")){
+            if(deliveryInfoVO.getDelivery_status()!=null && (deliveryInfoVO.getDelivery_status().equals("G") || deliveryInfoVO.getDelivery_status().equals("C"))){
                 //환불을위한 토큰발급
                 IamportClient client;
                 String test_api_key = "7152058542143411";
@@ -1198,6 +1198,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
+        	params.put("store_id", "admin");//임시
             configDAO.insertConfig(params);
             resultMap.put("redirectUrl",request.getHeader("Referer"));
         }catch (Exception e){

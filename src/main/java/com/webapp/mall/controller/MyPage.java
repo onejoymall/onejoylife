@@ -4,6 +4,9 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +39,6 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.manager.vo.MgUserVO;
 @Controller
 public class MyPage {
     @Autowired
@@ -74,7 +76,7 @@ public class MyPage {
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
+            Integer coupon = couponDAO.getUserCouponListCount(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
@@ -85,7 +87,7 @@ public class MyPage {
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
             model.addAttribute("getDeliveryListCount",getDeliveryListCount);
             model.addAttribute("giveawayCnt",giveawayCnt);
-            model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
+            model.addAttribute("couponCnt", coupon);
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
 
         }catch(Exception e){
@@ -106,7 +108,7 @@ public class MyPage {
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            Map<String,Object> coupon = couponDAO.getUserCouponListCount(params);
+            Integer coupon = couponDAO.getUserCouponListCount(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
@@ -117,7 +119,7 @@ public class MyPage {
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
             model.addAttribute("getDeliveryListCount",getDeliveryListCount);
             model.addAttribute("giveawayCnt",giveawayCnt);
-            model.addAttribute("couponCnt", (Long)coupon.get("cnt"));
+            model.addAttribute("couponCnt", coupon);
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
 
         }catch(Exception e){
@@ -222,6 +224,55 @@ public class MyPage {
         } else {
             return "mypage/Coupon";
         }
+    }
+  //쿠폰 다운로드
+    @RequestMapping(value="/MyPage/Coupon-issued")
+    public String myPageCouponIssued(HttpSession session, Model model, @RequestParam HashMap params,HttpServletRequest request) {
+
+        try{
+        	params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("coupon_paid_user_id",userInfo.get("usr_id"));
+            
+            Map<String,Object> couponInfo = couponDAO.getCouponDetail(params);
+            if(couponInfo == null){
+            	model.addAttribute("msg","잘못된 접근입니다.");
+            }else if(couponDAO.getUserCouponListCount(params) > 0 && couponInfo.get("coupon_dup_yn").equals("N")){
+            	model.addAttribute("msg","중복사용은 불가능합니다.");
+            }else if(couponInfo.get("coupon_condition").equals("L")) {
+            	couponDAO.insertCoupon(params);
+            	model.addAttribute("msg","쿠폰이 등록되었습니다.");
+            }else if(couponInfo.get("coupon_condition").equals("M")) {
+            	Map<String,Object> lastPaymentDate = productDAO.getLastPaymentDate(params);
+            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            	Date curDate = new Date();
+            	Date lastDate = sdf.parse((String)lastPaymentDate.get("reg_date"));
+            	
+            	Calendar cal = Calendar.getInstance();
+            	cal.setTime(lastDate);
+            	cal.add(Calendar.DATE, (int)couponInfo.get("coupon_none_buy_month")*30);
+            	lastDate = cal.getTime();
+            	if(curDate.compareTo(lastDate) >= 0) {
+            		model.addAttribute("msg","쿠폰이 등록되었습니다.");
+            	}else {
+            		model.addAttribute("msg","조건이 충족하지못합니다.");
+            	}
+            }else {
+            	model.addAttribute("msg","잘못된 접근입니다.");
+            }
+        	
+            model.addAttribute("style", "mypage-3");
+            model.addAttribute("leftNavOrder", 3);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "mypage/Coupon-issued";
+//        Device device = DeviceUtils.getCurrentDevice(request);
+//        if(device.isMobile()){
+//            return "mobile/mypage-3";
+//        } else {
+//            return "mypage/Coupon-issued";
+//        }
     }
     //장바구니
     @RequestMapping(value="/MyPage/ShoppingBasket")

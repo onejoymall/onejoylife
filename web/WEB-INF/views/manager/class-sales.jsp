@@ -54,6 +54,20 @@
                                             <option>--</option>
                                             </select>
                                         </td>
+                                        <th>주문일</th>
+		                                <td>
+		                                    <div class="input-box2">
+		                                        <div class="cla">
+		                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                        <p class="cla-p1"> ~ </p>
+		                                        <div class="cla">
+		                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                    </div>
+		                                </td>
                                     </tr>
                                 </tbody>
                             </table>

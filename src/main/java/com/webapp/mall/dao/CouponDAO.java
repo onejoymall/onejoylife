@@ -21,13 +21,17 @@ public class CouponDAO {
         List<Map<String, Object>> getUserCouponList = sql.selectList("mall.CouponMapper.getUserCouponList",params);
         return getUserCouponList;
     }
-    public Map<String, Object> getCouponListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getCouponListCount=sql.selectOne("mall.CouponMapper.getCouponListCount",params);
+    public Integer getCouponListCount(Map<String, String> params) throws SQLException {
+    	Integer getCouponListCount=sql.selectOne("mall.CouponMapper.getCouponListCount",params);
         return getCouponListCount;
     }
-    public Map<String, Object> getUserCouponListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getUserCouponListCount=sql.selectOne("mall.CouponMapper.getUserCouponListCount",params);
+    public Integer getUserCouponListCount(Map<String, String> params) throws SQLException {
+    	Integer getUserCouponListCount=sql.selectOne("mall.CouponMapper.getUserCouponListCount",params);
         return getUserCouponListCount;
+    }
+    public Map<String, Object> getCouponDetail(Map<String, String> params) throws SQLException {
+        Map<String, Object> getCouponDetail=sql.selectOne("mall.CouponMapper.getCouponDetail",params);
+        return getCouponDetail;
     }
     public int insertCoupon(Map<String, String> params) throws SQLException {
         int insertCoupon = sql.insert("mall.CouponMapper.insertCoupon",params);

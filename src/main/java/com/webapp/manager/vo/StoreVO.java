@@ -21,6 +21,7 @@ public class StoreVO extends SearchVO {
     private String jibunAddress;
     private String extraAddress;
     private String store_approval_status;
+    private String[] store_approval_status_arr;
     private String store_approval_date;
 
     public String getStore_approval_date() {
@@ -176,5 +177,13 @@ public class StoreVO extends SearchVO {
 
     public void setExtraAddress(String extraAddress) {
         this.extraAddress = extraAddress;
+    }
+    
+    public void setStore_approval_status_arr(String[] store_approval_status_arr) {
+        this.store_approval_status_arr = store_approval_status_arr;
+    }
+
+    public String[] getStore_approval_status_arr() {
+        return store_approval_status.split(",");
     }
 }
