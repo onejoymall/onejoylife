@@ -1185,7 +1185,7 @@ $(document).ready(function(){
                     }
                     if(index=="payment_status" && item=="H"){
                         html='' +
-                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'H\')">반품확인(결제취소)</button>';
+                            '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'G\')">반품확인(결제취소)</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="delivery_start_date" || index=="reg_date"){
@@ -1873,12 +1873,83 @@ $(document).ready(function(){
         }
 
     });
+    //상품 선택업데이트 > 분류 선택
+    $('.addCategoryList').click(function () {
+        // $('#product_ct').val($('#selectCtCode').val());
+        var selectCodeEach = true;
+        var selectCtCode =$('#selectCtCode').val();
+        $('.selectCtCodeList').each(function () {
+
+            if($(this).val()==$('#selectCtCode').val()){
+                selectCodeEach = false;
+            }
+        });
+
+        var ctText = "" +
+            "<tr id='ctid"+selectCtCode+"'>" +
+            "<td>"+
+            $('#category1t').text() + $('#category2t').text() + $('#category3t').text() +
+            "<input type='hidden' name='selectCtCodeList[]'  class='selectCtCodeList' value='"+selectCtCode+"'>" +
+            "</td>" +
+            "<td>" +
+            // "<label for='pa1'> <input type='checkbox' name='defaultPa' id='pa1'>일반상품 영역</label><br>" +
+            "<label for='pa2'> <input type='checkbox' name='newPa[]' checked class='newPa'>신상품 영역</label><br>" +
+            "<label for='pa3'> <input type='checkbox' name='mdPa[]' class='mdPa'>추천상품 영역</label><br>" +
+            "<label for='pa4'> <input type='checkbox' name='spPa[]' class='spPa'>특가상품 영역</label>" +
+            "</td>" +
+            "<td>" +
+            "<button type='button' class='btn-default' onclick=\"$('#ctid"+selectCtCode+"').remove();categoryProc()\">선택 분류 삭제</button>" +
+            "</td>"
+        "</tr>";
+        if(selectCodeEach){
+            $('.addCategoryView').append(ctText);
+            categoryProc();
+        }else{
+            $.toast({
+                text: "이미 선택한 카테고리 입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+
+    });
+    //상품 등록 및 상세보기 카테고리
+    $('.UpdateProductCatetorySubmit').on("click",function () {
+        if($('input[name=chk]:checked').length < 1){
+            alert('수정 할 상품을 목록에서 선택하세요')
+        }else{
+            $('#addCategoryView').children().remove();
+            $('.addCategoryView').children().remove();
+            $('.UpdateProductCatetory').attr('style','display:block');
+        }
+
+
+    });
+    $('.updateCategorySubmitBtn').on("click",function () {
+        var product_ct = $('#product_ct').val();
+        var product_new_class = $('#product_new_class').val();
+        var product_md_class = $('#product_md_class').val();
+        var product_sp_class = $('#product_sp_class').val();
+        var formData = $('#defaultListForm').serialize()+
+            '&product_ct='+product_ct+
+            '&product_new_class='+product_new_class+
+            '&product_md_class='+product_md_class+
+            '&product_sp_class='+product_sp_class
+        commonAjaxCall("POST","/Manager/productListCategoryUpdate",formData);
+    });
     $('.selectCategory').on("click",function(){
         //소분류 초기화
         $('#category2t').empty();
         $('#category3t').empty();
         $('#subCategory').empty();
         $('#tirdCategory').empty();
+
+        $('.category2t').empty();
+        $('.category3t').empty();
+        $('.subCategory').empty();
+        $('.tirdCategory').empty();
         var uppper_code =$(this).attr("data-id");
         var text = $(this).text();
         $('.selectCategory').removeClass('font-weight-bold')
@@ -1900,6 +1971,11 @@ $(document).ready(function(){
                 //선택 카테고리 표기
                 $('#category1t').html("[대분류] " + text)
 
+                //중분류 표시
+                $('.subCategory').empty();
+                $('.subCategory').html(html);
+                //선택 카테고리 표기
+                $('.category1t').html("[대분류] " + text)
                 //
                 $('#selectCtCode').val(uppper_code);
             },
@@ -1914,6 +1990,8 @@ $(document).ready(function(){
         //중분류 초기화
         $('#category3').val('');
         $('#category3t').empty();
+        $('.category3').val('');
+        $('.category3t').empty();
         $('.subCategoryList').removeClass('font-weight-bold');
         $(this).addClass("font-weight-bold");
         var html="<ul>";
@@ -1933,6 +2011,13 @@ $(document).ready(function(){
                 //선택 카테고리 표기
 
                 $('#category2t').html(" > [중분류] "+text);
+
+                //중분류 표시
+                $('.tirdCategory').empty();
+                $('.tirdCategory').html(html);
+                //선택 카테고리 표기
+
+                $('.category2t').html(" > [중분류] "+text);
                 //
                 $('#selectCtCode').val(uppper_code);
             },
@@ -1950,6 +2035,10 @@ $(document).ready(function(){
         //선택 카테고리 표기
         $('#category3t').html(" > [소분류] "+text)
         $('#category3').val(uppper_code)
+
+        //선택 카테고리 표기
+        $('.category3t').html(" > [소분류] "+text)
+        $('.category3').val(uppper_code)
         //
         $('#selectCtCode').val(uppper_code);
     });

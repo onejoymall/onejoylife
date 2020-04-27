@@ -29,7 +29,7 @@ public class ManagerSessionInterceptor extends HandlerInterceptorAdapter {
 
 		HttpSession session = request.getSession();
 		//개발모드
-		session.setAttribute("adminLogin","admin");
+//		session.setAttribute("adminLogin","admin");
 		Object obj = session.getAttribute("adminLogin");
 		if ( obj == null ){
 			response.sendRedirect("/Manager/ManagerSign/ManagerLogin");

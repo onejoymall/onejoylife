@@ -400,7 +400,7 @@ public class ManagerRestapiController {
                     error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
                 }
             }
-            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("H")){
+            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("G")){
                 //환불을위한 토큰발급
                 IamportClient client;
                 String test_api_key = "7152058542143411";

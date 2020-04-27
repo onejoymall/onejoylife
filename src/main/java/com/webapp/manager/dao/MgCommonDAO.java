@@ -1,6 +1,7 @@
 package com.webapp.manager.dao;
 
 import com.webapp.mall.vo.CommonVO;
+import com.webapp.manager.vo.CategoryVO;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.StockVO;
 import org.apache.ibatis.session.SqlSession;
@@ -22,5 +23,8 @@ public class MgCommonDAO {
     }
     public void listStockUpdate(StockVO stockVO) throws SQLException{
         sql.update("mall.MgCommonMapper.listStockUpdate",stockVO);
+    }
+    public void productListCategoryUpdate(CategoryVO categoryVO) throws SQLException{
+        sql.update("mall.MgCommonMapper.productListCategoryUpdate",categoryVO);
     }
 }

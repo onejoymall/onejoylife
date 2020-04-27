@@ -90,6 +90,7 @@
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_sale_yn','Y')">판매함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_sale_yn','N')">판매안함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdateStock()">재고관리</button>
+                    <button type="button" class="btn-default UpdateProductCatetorySubmit" name="copy">분류관리</button>
                     <button type="button" class="btn-default" name="copy" onclick="location.href='/downloadExcelFile'"><i class="exel-ic"></i>다운로드</button>
 <%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
 <%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
@@ -1151,6 +1152,65 @@
                 </table>
             </div>
             <button class="btn-red mr-10" id="updateStockSubmit">입력하기</button>
+        </div>
+    </div>
+</div>
+<div class="modal UpdateProductCatetory">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>상품 분류 관리</h2>
+            <button type="button" class="modal-close">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="category">
+
+                    <table class="table">
+                        <colgroup>
+                            <col width='33%' />
+                            <col width='33%' />
+                            <col width='33%' />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>대분류</th> <th>중분류</th> <th>소분류</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <c:if test="${not empty list}">
+                                        <c:forEach var="categoryList" items="${list}">
+                                            <li class="selectCategory" data-id="${categoryList.pd_category_id}">${categoryList.pd_category_name}</li>
+                                        </c:forEach>
+                                    </c:if>
+                                </ul>
+                            </td>
+                            <td class="subCategory"></td>
+                            <td class="tirdCategory"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span class="category1t">[대분류] ${list[0].pd_category_name}</span>
+                    <span class="category2t"></span>
+                    <span class="category3t"></span>
+
+                    <input type="hidden" name="selectCtCode" class="selectCtCode" value="${list[0].pd_category_id}">
+
+                    <button class="btn-default addCategoryList" type="button">추가</button>
+                    <br>
+                    <table class="table">
+                        <colgroup>
+                            <col width="50%">
+                            <col width="25%">
+                            <col width="25%">
+                        </colgroup>
+                        <tbody class="addCategoryView">
+
+                        </tbody>
+                    </table>
+            </div>
+            <button type="button" class="btn-red mr-10 updateCategorySubmitBtn">저장</button>
         </div>
     </div>
 </div>
