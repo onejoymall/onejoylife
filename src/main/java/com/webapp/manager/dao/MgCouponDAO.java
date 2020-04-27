@@ -16,10 +16,14 @@ import com.webapp.manager.vo.CouponVO;
 public class MgCouponDAO {
     @Autowired
     private SqlSession sql;
-//    public List<Map<String, Object>> getReviewList(SearchVO params) throws SQLException {
-//        List<Map<String, Object>> getReviewList = sql.selectList("mall.MgReviewMapper.getReviewList",params);
-//        return getReviewList;
-//    }
+    public List<Map<String, Object>> getCouponList(Map<String, Object> params) throws SQLException {
+        List<Map<String, Object>> getCouponList = sql.selectList("mall.MgCouponMapper.getCouponList",params);
+        return getCouponList;
+    }
+    public Integer getCouponListCount(Map<String, Object> params) throws SQLException {
+    	Integer getCouponListCount = sql.selectOne("mall.MgCouponMapper.getCouponListCount",params);
+    	return getCouponListCount;
+    }
     public void insertCoupon(CouponVO couponVO) throws SQLException {
     	sql.insert("mall.MgCouponMapper.insertCoupon", couponVO);
     }

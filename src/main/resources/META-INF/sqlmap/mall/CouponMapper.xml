@@ -36,10 +36,10 @@
         <![CDATA[
         SELECT
             A.*,
-            (SELECT DATE_ADD(A.reg_date, INTERVAL (select Z.coupon_use_day from coupon Z  where Z.coupon_id=A.coupon_id) DAY)) as coupon_use_day,
-            (select Z.coupon_name from coupon Z where Z.coupon_id=A.coupon_id) as coupon_name,
-            (select Z.coupon_payment_condition from coupon Z where Z.coupon_id=A.coupon_id) as coupon_payment_condition,
-            (select Z.coupon_cd from coupon Z where Z.coupon_id=A.coupon_id) as coupon_cd
+            (SELECT coupon_valid_date_end from coupon Z  where Z.coupon_cd=A.coupon_cd) as coupon_use_day,
+            (select Z.coupon_name from coupon Z where Z.coupon_cd=A.coupon_cd) as coupon_name,
+            (select Z.coupon_payment_condition from coupon Z where Z.coupon_cd=A.coupon_cd) as coupon_payment_condition,
+            (select Z.coupon_cd from coupon Z where Z.coupon_cd=A.coupon_cd) as coupon_cd
         FROM coupon_paid_history A  where 1=1
         ]]>
 
@@ -51,30 +51,33 @@
         <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
         <if test="coupon_paid_user_id != null"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
     </select>
-    <select id="getUserCouponListCount" resultType="java.util.HashMap">
+    <select id="getUserCouponListCount" resultType="Integer">
         <![CDATA[
         SELECT
             count(*) as cnt
         FROM coupon_paid_history A  where 1=1
         ]]>
 
-        <if test="coupon_paid_id != null"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
+        <if test="coupon_paid_user_id != null"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
         <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
         <if test="coupon_name != null"><![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
         <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="coupon_paid_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
     </select>
+    <select id="getCouponDetail" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        SELECT *
+        from coupon A
+        where A.coupon_cd = #{coupon_cd}
+    </select>
 
-    <insert id="insertCoupon" parameterType="String">
+    <insert id="insertCoupon" parameterType="hashmap">
         <![CDATA[
-        insert into coupon(
-        coupon_cd,coupon_name,coupon_payment,coupon_use_yn)
+        insert into coupon_paid_history(
+        coupon_cd,coupon_paid_user_id)
       VALUES (
         #{coupon_cd},
-        #{coupon_name},
-        #{coupon_payment},
-        #{coupon_use_yn}
+        #{coupon_paid_user_id}
         )
         ]]>
     </insert>
