@@ -517,11 +517,12 @@ public class ManagerController {
         return "/manager/option-product";
     }
 
-    //업체별 상품 안내 기능
+    //업체별 서비스안내관리 상단
     @RequestMapping(value = "/Manager/market-config-partner")
     public String managerMarketConfigPartner(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
-
+        	params.put("market_config_code", "market-config-partner-top");
+            params.put("store_id", "admin"); //임시
             Map<String, Object> config = configDAO.getConfigDetail(params);
             if (isEmpty(config)) {
                 config.put("market_config_value", "");
@@ -533,8 +534,29 @@ public class ManagerController {
         }
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "info-setting");
-        model.addAttribute("postUrl", "/Manager/market-config-partner");
-        return "/manager/info-order";
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/market-config-partner-top";
+    }
+    
+    //업체별 서비스안내관리 하단
+    @RequestMapping(value = "/Manager/market-config-partner-bot")
+    public String managerMarketConfigPartnerBot(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	try {
+    		params.put("market_config_code", "market-config-partner-bot");
+            params.put("store_id", "admin"); //임시
+    		Map<String, Object> config = configDAO.getConfigDetail(params);
+    		if (isEmpty(config)) {
+    			config.put("market_config_value", "");
+    		}
+    		model.addAttribute("config", config);
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("topNav", 2);
+    	model.addAttribute("style", "info-setting");
+    	model.addAttribute("postUrl", "/Manager/config-proc");
+    	return "/manager/market-config-partner-bot";
     }
 
     //브랜드관리

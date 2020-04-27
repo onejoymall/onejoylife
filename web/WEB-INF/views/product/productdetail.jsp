@@ -242,7 +242,7 @@
                     </a></li>
                 </ul>
             </div>
-            <div class="goods-detail-wrap hidden" id="goods-information">
+            <div class="goods-detail-wrap" id="goods-information">
                 <ul class="detail-nav">
                     <li><a href="goods-description"><span>상품설명</span></a></li>
                     <li><a href="goods-information" class="active"><span>상품정보</span></a></li>
@@ -250,6 +250,7 @@
                     <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
                     <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
                 </ul>
+                <c:out value="${configtop.market_config_value}" escapeXml="false"/>
                 <div class="goods-information-wrap ">
                     <h5>상품 필수정보</h5>
                     <p class="goods-name">SM-G05-ZR/SS</p>
@@ -317,6 +318,7 @@
                         </tr>
                     </table>
                 </div>
+                <c:out value="${configbot.market_config_value}" escapeXml="false"/>
             </div>
             <div class="goods-detail-wrap" id="goods-review">
                 <ul class="detail-nav">

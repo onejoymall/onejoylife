@@ -1,17 +1,17 @@
 package com.webapp.mall.controller;
 
-import com.webapp.board.common.SearchVO;
-import com.webapp.common.dao.SelectorDAO;
-import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.CartPaymentVO;
-import com.webapp.mall.vo.CommonVO;
-import com.webapp.mall.vo.SearchFilterVO;
-import com.webapp.mall.vo.TodayVO;
-import com.webapp.manager.dao.CategoryDAO;
-import com.webapp.manager.dao.MgBrandDAO;
-import com.webapp.manager.vo.MgBrandVO;
-import com.webapp.manager.vo.ProductVO;
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -20,17 +20,24 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sun.misc.Contended;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import static org.springframework.util.CollectionUtils.isEmpty;
+import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
+import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.CartDAO;
+import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.ReviewDAO;
+import com.webapp.mall.dao.SearchDAO;
+import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CartPaymentVO;
+import com.webapp.mall.vo.CommonVO;
+import com.webapp.mall.vo.SearchFilterVO;
+import com.webapp.mall.vo.TodayVO;
+import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.ConfigDAO;
+import com.webapp.manager.dao.MgBrandDAO;
+import com.webapp.manager.vo.MgBrandVO;
 @Controller
 public class ProductController {
     @Autowired
@@ -53,6 +60,8 @@ public class ProductController {
     private SearchDAO searchDAO;
     @Autowired
     private ReviewDAO reviewDAO;
+    @Autowired
+    private ConfigDAO configDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
@@ -239,6 +248,14 @@ public class ProductController {
             model.addAttribute("option",option);
             //리뷰
 //            model.addAllAttributes("reviews",reviewDAO.get)
+            //서비스안내
+            params.put("store_id",list.get("store_id"));
+            params.put("market_config_code", "market-config-partner-top");
+            Map<String,Object> configtop = configDAO.getConfigDetail(params);
+            params.put("market_config_code", "market-config-partner-bot");
+            Map<String,Object> configbot = configDAO.getConfigDetail(params);
+            model.addAttribute("configtop",configtop);
+            model.addAttribute("configbot",configbot);
         }catch (Exception e){
             e.printStackTrace();
         }

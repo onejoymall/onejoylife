@@ -2304,7 +2304,7 @@ $(document).ready(function(){
                             icon: 'success',
                             hideAfter: 2000,
                             afterHidden: function () {
-                                location.href = data.redirectUrl;
+                                location.reload();
                             }
                         });
                     } else{
