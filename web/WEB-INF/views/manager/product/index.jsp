@@ -90,7 +90,7 @@
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_sale_yn','Y')">판매함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_sale_yn','N')">판매안함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdateStock()">재고관리</button>
-                    <button type="button" class="btn-default" name="copy" onclick="location.href='/downloadExcelFile'"><i class="exel-ic"></i>다운로드</button>
+                    <button type="button" class="btn-default excelBtn" name="copy" data-id="product"><i class="exel-ic"></i>다운로드</button>
 <%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
 <%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
 

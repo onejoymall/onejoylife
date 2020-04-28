@@ -2967,3 +2967,13 @@ function copyToClipboard(val) {
   document.body.removeChild(t);
   alert("copy!")
 }
+
+//엑셀다운버튼
+$(".excelBtn").on("click",function(){
+	var type = $(this).attr("data-id");
+	$('form:eq(0)').append(`
+		<button type='submit' formaction='/${type}/downloadExcelFile'>submit</button>
+	`);
+	$('form:eq(0) button:last').click();
+	$('form:eq(0) button:last').remove();
+});
