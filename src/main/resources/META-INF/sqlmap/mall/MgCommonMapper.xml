@@ -31,4 +31,18 @@
             #{item}
         </foreach>
     </update>
+    <update id="productListCategoryUpdate" parameterType="com.webapp.manager.vo.CategoryVO">
+        <![CDATA[
+        update ${table_name}
+        set
+             product_ct = #{product_ct},
+             product_new_class = #{product_new_class},
+             product_sp_class = #{product_sp_class},
+             product_md_class = #{product_md_class}
+        where ${pk} in
+        ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

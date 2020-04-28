@@ -176,4 +176,26 @@ public class MgSystemRestController {
         }
         return resultMap;
     }
+    //상품 일괄 분류 수정
+    @RequestMapping(value = "/Manager/productListCategoryUpdate",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> productListCategoryUpdate(@RequestParam HashMap params, HttpServletRequest request, CategoryVO categoryVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(categoryVO.getChk() == null || categoryVO.getChk().length < 1){
+                error.put("Error", messageSource.getMessage("error.chcUpd","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.productListCategoryUpdate(categoryVO);
+                resultMap.put("redirectUrl","/Manager/Product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
 }
