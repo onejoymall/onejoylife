@@ -98,8 +98,8 @@ public class MgExcelRestController {
     
     @RequestMapping(value = "/oneToOne/downloadExcelFile", method = RequestMethod.GET)
     public void oneToOneDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
-    	List<Map<String, Object>> couponList = mgDownloadDAO.getGiveawayDtoList(searchVO);
-    	excelDown(request,response,"oneToOne",couponList);
+//    	List<Map<String, Object>> couponList = mgDownloadDAO.getGiveawayDtoList(searchVO);
+//    	excelDown(request,response,"oneToOne",couponList);
     }
     
     private void excelDown(HttpServletRequest request, HttpServletResponse response, String keyword, List<Map<String, Object>> list) throws Exception{

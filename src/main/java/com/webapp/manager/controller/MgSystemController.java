@@ -28,7 +28,7 @@ public class MgSystemController {
     public String MgDelivery(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
         Object adminLogin = session.getAttribute("adminLogin");
         try {
-            if(adminLogin == "admin"){
+            if(adminLogin.equals("admin")){
                 mgDeliveryVO.setStore_id("admin");
             }
             Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
@@ -39,5 +39,23 @@ public class MgSystemController {
         model.addAttribute("topNav", 1);
         model.addAttribute("style", "goods-add");
         return "manager/system/delivery";
+    }
+    
+    //지역별 배송비 관리
+    @RequestMapping(value = "/Manager/Delivery-area")
+    public String MgDeliveryArea(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
+        Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(adminLogin.equals("admin")){
+                mgDeliveryVO.setStore_id("admin");
+            }
+            Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
+            model.addAttribute("detail", detail);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "goods-add");
+        return "manager/system/delivery-area";
     }
 }
