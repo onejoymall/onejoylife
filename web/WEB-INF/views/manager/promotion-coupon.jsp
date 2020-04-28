@@ -19,7 +19,7 @@
                         <input type="checkbox" name="src-name">
                         <label for="src-name">쿠폰명</label>
                         <input type="checkbox" name="src-code">
-                        <label for="src-code">상품코드</label>
+                        <label for="src-code">쿠폰코드</label>
                     </div>
                 </div>
 
@@ -27,11 +27,11 @@
         </div>
         <div class="goods-list-wrap">
             <div class="list-sort-wrap">
-               <%--  <div class="left">
-                    <button type="button" class="btn-default" name="copy">선택 삭제</button>
+               	<div class="left">
+                    <!-- <button type="button" class="btn-default" name="copy">선택 삭제</button>
                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>
-                   <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>
-                   <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>
+                   <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button> -->
+                   <button type="button" class="btn-default excelBtn" name="copy" data-id="coupon"><i class="exel-ic"></i>다운로드</button>
                 </div><!-- 
                 <div class="right">
                     <select name="order" class="order-select">
@@ -52,6 +52,7 @@
                     <col width="10%">
                     <col width="10%">
                     <col width="10%">
+                    <col width="10%">
                 </colgroup>
                 <thead>
                 <tr>
@@ -62,6 +63,7 @@
                     <td>쿠폰사용 매출액</td>
                     <td>쿠폰 수익률 조회</td>
                     <td>상태</td>
+                    <td>발급조건</td>
                     <td>다운로드 url</td>
                     <td>등록일</td>
                     <td>관리</td>
@@ -78,8 +80,11 @@
 	                    <td>0원</td>
 	                    <td>0%</td>
 	                    <td class="txt-active">발급중</td>
+	                    <td>${list.coupon_condition_name}</td>
 	                    <td>
-	                    	<button type="button" class="goods-list-btn" onclick="copyToClipboard('onejoy-life.com/MyPage/Coupon-issued?coupon_cd=${list.coupon_cd}')">경로복사</button>
+	                    	<c:if test="${list.coupon_condition == 'L' || list.coupon_condition == 'M'}">
+	                    		<button type="button" class="goods-list-btn" onclick="copyToClipboard('onejoy-life.com/MyPage/Coupon-issued?coupon_cd=${list.coupon_cd}')">경로복사</button>
+                    		</c:if>
                     	</td>
 	                    <td>${list.reg_date}</td>
 	                    <td>

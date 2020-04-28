@@ -73,6 +73,7 @@
                 <div class="list-sort-wrap">
                     <div class="left">
                         <button type="button" class="btn-default" id="listDelete">선택 삭제</button>
+                        <button type="button" class="btn-default excelBtn" name="copy" data-id="qna"><i class="exel-ic"></i>다운로드</button>
                     </div>
                 </div>
                 <form id="defaultListForm" method="POST">

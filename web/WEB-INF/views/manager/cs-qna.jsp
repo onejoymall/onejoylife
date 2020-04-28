@@ -6,7 +6,7 @@
     <main>
         <div class="main-content">
             <div class="main-header">
-                <h2 name="detail">상품 Q&amp;A</h2>
+                <h2 name="detail">1:1 문의</h2>
             </div>
             <div class="dashboard-wrap">
                 <div class="open-arrow"></div>
@@ -76,6 +76,7 @@
                 <div class="list-sort-wrap">
                     <div class="left">
                         <button type="button" class="goods-list-btn" name="copy">선택 삭제</button>
+                        <button type="button" class="btn-default excelBtn" name="copy" data-id="oneToOne"><i class="exel-ic"></i>다운로드</button>
                     </div>
 
                 </div>

@@ -7,15 +7,7 @@
   <select id="getProductDtoList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
     <![CDATA[
             SELECT
-                *,
-                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =A.product_delivery_type) as product_delivery_type_name,
-                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.product_made_company_cd) as product_made_company_name,
-                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =A.product_sale_yn) as product_sale_yn_name,
-                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
-                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
-                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
-                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
-                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
+                *
             FROM product A  where 1=1
         ]]>
     <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -23,6 +15,38 @@
         A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if>
-    <if test="product_name != null"> <![CDATA[AND A.product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
+    order by product_id desc
+  </select>
+  <select id="getGiveawayDtoList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.Map">
+    <![CDATA[
+            SELECT
+                *
+            FROM giveaway A  where 1=1
+        ]]>
+    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>
+    order by reg_date desc
+    limit 100
+  </select>
+  <select id="getOrderDtoList" parameterType="java.util.Map" resultType="java.util.Map">
+    <![CDATA[
+        SELECT
+            A.*,
+            (select Z.product_name from product Z where Z.product_cd = A.product_cd) product_name
+        FROM payment A
+        ]]>
+        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
+        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+    order by reg_date desc
+    limit 100
   </select>
 </mapper>

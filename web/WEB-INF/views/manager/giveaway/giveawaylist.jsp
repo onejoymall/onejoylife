@@ -86,7 +86,7 @@
                     <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
 <%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
 <%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
-                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>다운로드</button>
+                    <button type="button" class="btn-default excelBtn" name="copy" data-id="giveaway"><i class="exel-ic"></i>다운로드</button>
                 </div>
 <%--                <div class="right">--%>
 <%--                    <select name="order" class="order-select">--%>

@@ -5,7 +5,8 @@
 <mapper namespace="mall.MgCouponMapper">
     <select id="getCouponList" parameterType="hashmap" resultType="hashmap">
     	SELECT A.*,
-			(SELECT COUNT(*) FROM coupon_paid_history Z WHERE Z.coupon_cd = A.coupon_cd ) coupon_paid_cnt
+			(SELECT COUNT(*) FROM coupon_paid_history Z WHERE Z.coupon_cd = A.coupon_cd ) coupon_paid_cnt,
+			(SELECT Z.code_name FROM code Z WHERE Z.code = 'coupon_condition' and Z.code_value = A.coupon_condition ) coupon_condition_name
 		FROM coupon A
 		WHERE 1=1
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">

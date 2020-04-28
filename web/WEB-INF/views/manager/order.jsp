@@ -141,6 +141,7 @@
 
                         <button type="button" class="btn-default" name="copy" id="productReadySubmit">상품준비중 처리</button>
                         <button type="button" class="btn-default" name="copy" id="deliveryReadySubmit">배송준비중 처리</button>
+                        <button type="button" class="btn-default excelBtn" name="copy" data-id="order"><i class="exel-ic"></i>다운로드</button>
                    </div>
 <%--                    <div class="right">--%>
 <%--                        <select name="order" class="order-select">--%>

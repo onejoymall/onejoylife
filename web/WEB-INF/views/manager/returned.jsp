@@ -135,11 +135,12 @@
                 </form>
             </div>
             <div class="goods-list-wrap">
-<%--                <div class="list-sort-wrap">--%>
-<%--                    <div class="left">--%>
+                <div class="list-sort-wrap">
+                    <div class="left">
 <%--                        <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
 <%--                        <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>--%>
-<%--                    </div>--%>
+						<button type="button" class="btn-default excelBtn" name="copy" data-id="returned"><i class="exel-ic"></i>다운로드</button>
+                    </div>
 <%--                    <div class="right">--%>
 <%--                        <select name="order" class="order-select">--%>
 <%--                            <option value="32">10개씩 보기</option>--%>
@@ -147,7 +148,7 @@
 <%--                            <option value="92">100개씩 보기</option>--%>
 <%--                        </select>--%>
 <%--                    </div>--%>
-<%--                </div>--%>
+                </div>
                 <table>
                     <colgroup>
                         <col width="3%">
