@@ -99,18 +99,18 @@
                                     <p class="txt-counting">&#40;<span>0</span>/1000&#41;</p>
                                 </td>
                             </tr>
-<%--                            <tr class="imagefile-box">--%>
-<%--                                <td>이미지 첨부</td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="fileBox">--%>
-<%--                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">--%>
-<%--                                        <label for="uploadBtn" class="btn_file">파일찾기</label>--%>
-<%--                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">--%>
-<%--                                        <span class="ex">이미지 첨부는 1개만 가능합니다. 5Mbyte 이하로 올려주세요.</span>--%>
-<%--                                    </div>--%>
+                            <tr class="imagefile-box hidden">
+                                <td>이미지 첨부</td>
+                                <td>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
+                                        <label for="uploadBtn" class="btn_file">파일찾기</label>
+                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
+                                        <span class="ex">이미지 첨부는 1개만 가능합니다. 5Mbyte 이하로 올려주세요.</span>
+                                    </div>
 
-<%--                                </td>--%>
-<%--                            </tr>--%>
+                                </td>
+                            </tr>
 
                             </tbody>
                         </table>

@@ -1136,7 +1136,17 @@ $(document).ready(function(){
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="H"){
-                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품완료</button>';
+                        html='' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품완료</button>' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">반품거절(결제완료)</button>' +
+                            '';
+                        $('#setButton').html(html);
+                    }
+                    if(index=="payment_status" && item=="F"){
+                        html='' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환완료</button>' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환거절(결제완료)</button>' +
+                            '';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="R"){
@@ -1157,7 +1167,6 @@ $(document).ready(function(){
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
                     }
-
                     // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },
