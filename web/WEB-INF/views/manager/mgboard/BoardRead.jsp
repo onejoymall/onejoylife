@@ -32,8 +32,36 @@ function fn_SafeFormSubmit(){
 				alert("서버에 오류가 있어서 저장되지 않았습니다.");
 			}
 		}
-	})		
+	})
 }
+
+$(document).on("click","#mailSender",function () {
+	var formData = $("#form1").serialize();
+	jQuery.ajax({
+		type:"GET",
+		url:"/Board/authemail",
+		data:formData,
+
+		success : function(data) {
+			// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+			// TODO
+			console.log(data);
+			if(data.validateError){
+				$.each(data.validateError, function (index, item) {
+					if(index != "Error"){//일반에러메세지
+						$('#'+index+'Validation').html(item);
+					}
+				});
+			}
+		},
+
+		complete : function(data) {
+		},
+		error : function(xhr, status, error) {
+			console.log(xhr+status+error);
+		}
+	});
+})
 
 function fn_replyDelete(reno){
 	if (!confirm("삭제하시겠습니까?")) {
@@ -208,9 +236,10 @@ function fn_replyReplySave(){
 						<div style="border: 1px solid; width: 100%; padding: 5px">
 							<form id="form1" name="form1">
 								<input type="hidden" id="brdno1" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
+								<input type="hidden" id="email" name="email" value="<c:out value="${boardInfo.email}" />">
 								작성자: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
 								<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="답변을 달아주세요."></textarea>
-								<button type="button" class="btn-default" onclick="fn_SafeFormSubmit()">저장</button>
+								<button type="button" class="btn-default" id="mailSender" onclick="fn_SafeFormSubmit()">저장</button>
 							</form>
 						</div>
 					</c:if>

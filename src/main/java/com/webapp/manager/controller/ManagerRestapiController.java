@@ -112,6 +112,8 @@ public class ManagerRestapiController {
     private String downloadPath;
     @Value("${downloadEditorPath}")
     private String downloadEditorPath;
+    @Autowired
+    private MailSender mailSender;
 
     // 포인트 관리 포인트 추가 및 환수
     @RequestMapping(value = "/Manager/MgPointAdd", method = RequestMethod.POST, produces = "application/json")
@@ -1524,4 +1526,38 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
+    //1:1 문의글 답변 메일전송
+    @RequestMapping(value = "/Board/authemail", method = RequestMethod.GET, produces = "application/json")
+    public HashMap<String, Object> Boardauthemail(@RequestParam HashMap params,UserVO userVO){
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        String memo;
+        String subject =  messageSource.getMessage("BoardauthemailTitle","ko");
+        memo = (String)params.get("rememo");
+        try {
+
+            //이메일 필수 체크
+            if(userVO.getEmail().isEmpty()){
+                error.put("email", messageSource.getMessage("error.required","ko"));
+            }
+
+            //이메일 유효성검사
+            String regex ="^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+            Boolean emailValidation = userVO.getEmail().matches(regex);
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                //중복이 아니면 메일전송
+                mailSender.sendSimpleMessage(userVO.getEmail(), subject, memo);
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
 }

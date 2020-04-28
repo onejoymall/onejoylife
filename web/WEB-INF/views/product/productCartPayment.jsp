@@ -72,15 +72,15 @@
                                     <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
                                 </td>
                             </tr>
-                            <%--<c:if test="${cartPaymentList.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
+                            <%--<c:if test="${detail.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
                                 <tr>
-                                    <td>통관고유번호${cartPaymentList.product_delivery_International_type}</td>
+                                    <td>통관고유번호</td>
                                     <td><input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
                                 </tr>
                             </c:if>--%>
                             <c:if test="${empty sessionScope.email}">
                             <tr >
-                                <td>주문확인용 비밀번호 입력</td>
+                                <td>주문확인용 비밀번호 입력${detail.product_delivery_International_type}</td>
                                 <td>
                                     <input type="password" name="password" class="sec1-in1">
                                     <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
