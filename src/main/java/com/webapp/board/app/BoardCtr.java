@@ -123,7 +123,12 @@ public class BoardCtr {
             params.put("email",session.getAttribute("email"));
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            boardInfo.setUsr_id((Integer)userInfo.get("usr_id"));
+            if(isEmpty(userInfo)){
+
+            }else{
+                boardInfo.setUsr_id((Integer)userInfo.get("usr_id"));
+            }
+
             String[] fileno = request.getParameterValues("fileno");
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
