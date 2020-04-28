@@ -38,23 +38,48 @@
                                 <col width="420px">
                             </colgroup>
                             <tbody>
-                                <tr>
-                                    <th>기간별 선택</th>
-	                                <td>
-	                                    <div class="input-box2">
-	                                        <div class="cla">
-	                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
-	                                            <div class="cla-img1"></div>
-	                                        </div>
-	                                        <p class="cla-p1"> ~ </p>
-	                                        <div class="cla">
-	                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
-	                                            <div class="cla-img1"></div>
-	                                        </div>
-	                                    </div>
-	                                </td>
-                                </tr>
-                            </tbody>
+                                	<tr>
+	                                    <th>기간별 선택</th>
+	                                    <td>
+		                                    <div class="input-box1">
+		                                        <button type="button" class="ra-num" data-id="con1">오늘</p>
+		                                        <button type="button" class="ra-num" data-id="con2">1주일</p>
+		                                        <button type="button" class="ra-num" data-id="con3">1개월</p>
+		                                        <button type="button" class="ra-num" data-id="con4">3개월</p>
+		                                        <button type="button" class="ra-num" data-id="con5">6개월</p>
+		                                    </div>
+		                                </td>
+		                                <%-- <td>
+		                                    <div class="input-box2">
+		                                        <div class="cla">
+		                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                        <p class="cla-p1"> ~ </p>
+		                                        <div class="cla">
+		                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                    </div>
+		                                </td> --%>
+	                                </tr>
+	                                <tr>
+	                                	<th></th>
+	                                	<td>
+		                                    <div class="input-box2">
+		                                        <div class="cla">
+		                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                        <p class="cla-p1"> ~ </p>
+		                                        <div class="cla">
+		                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+		                                            <div class="cla-img1"></div>
+		                                        </div>
+		                                    </div>
+		                                </td>
+	                                </tr>
+                                </tbody>
                         </table>
                     </form>
                 </div>

@@ -311,7 +311,7 @@
         <div class="status">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db1">7</span></strong>
+                        <strong class="data-price"><span class="db1"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.mCnt}" /></span></strong>
                         <span class="data-unit">입금전</span>
                     </span>
             </p>
@@ -319,7 +319,7 @@
         <div class="status">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db2">16</span></strong>
+                        <strong class="data-price"><span class="db2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.wCnt}" /></span></strong>
                         <span class="data-unit">결제완료</span>
                     </span>
             </p>
@@ -327,15 +327,15 @@
         <div class="status">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db3">25</span></strong>
-                        <span class="data-unit">배송대기</span>
+                        <strong class="data-price"><span class="db3"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.dCnt + statusCount.iCnt}" /></span></strong>
+                        <span class="data-unit">배송준비중</span>
                     </span>
             </p>
         </div>
         <div class="status">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db4">34</span></strong>
+                        <strong class="data-price"><span class="db4"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.rCnt}" /></span></strong>
                         <span class="data-unit">배송중</span>
                     </span>
             </p>
@@ -343,7 +343,7 @@
         <div class="status">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db5">12</span></strong>
+                        <strong class="data-price"><span class="db5"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.oCnt}" /></span></strong>
                         <span class="data-unit">배송완료</span>
                     </span>
             </p>
@@ -351,24 +351,24 @@
         <div class="status2">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db6">1</span>/<span class="db7">2</span></strong>
-                        <span class="data-unit">취소신청/취소처리중</span>
+                        <strong class="data-price"><span class="db6"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.cCnt}" /></span></strong>
+                        <span class="data-unit">결제취소</span>
                     </span>
             </p>
         </div>
         <div class="status2">
             <p  href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db8">2</span>/<span class="db9">6</span></strong>
-                        <span class="data-unit">교환신청/교환처리중</span>
+                        <strong class="data-price"><span class="db8"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.sCnt}" /></span>/<span class="db9"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.sCnt + statusCount.fCnt}" /></span></strong>
+                        <span class="data-unit">교환완료/교환처리</span>
                     </span>
             </p>
         </div>
         <div class="status2">
             <p href="#" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db10">0</span>/<span class="db11">1</span></strong>
-                        <span class="data-unit">반품신청/반품처리중</span>
+                        <strong class="data-price"><span class="db10"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.gCnt}" /></span>/<span class="db11"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.gCnt + statusCount.hCnt}" /></span></strong>
+                        <span class="data-unit">반품완료/반품처리</span>
                     </span>
             </p>
         </div>

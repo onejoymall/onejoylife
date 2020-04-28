@@ -222,6 +222,10 @@ $(document).on("click",".ra-num",function () {
         setDatepickerToday($('input[name=start_date]'),-3,0);
         setDatepickerToday($('input[name=end_date]'),0,0);
     }
+    if($(this).attr("data-id")=="con5"){
+        setDatepickerToday($('input[name=start_date]'),-6,0);
+        setDatepickerToday($('input[name=end_date]'),0,0);
+    }
 });
 
 $(document).ready(function(){
