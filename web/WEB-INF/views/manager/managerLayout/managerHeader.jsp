@@ -91,7 +91,8 @@
                 			  afn:contains(menuList, '34') ||
                 			  afn:contains(menuList, '35') ||
                 			  afn:contains(menuList, '36') ||
-                			  afn:contains(menuList, '37')}">
+                			  afn:contains(menuList, '37') ||
+                			  afn:contains(menuList, '45')}">
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '29') || afn:contains(menuList, '30')}">
@@ -107,7 +108,7 @@
                             </ul>
                         </li>
                         </c:if>
-                        <c:if test="${afn:contains(menuList, '31') || afn:contains(menuList, '32')}">
+                        <c:if test="${afn:contains(menuList, '31') || afn:contains(menuList, '32') || afn:contains(menuList, '45') }">
                         <li><a href="/Manager/Giveaway">경품관리</a>
                             <ul>
                             	<c:if test="${afn:contains(menuList, '31')}">
@@ -115,6 +116,9 @@
                                 </c:if>
                                 <c:if test="${afn:contains(menuList, '32')}">
                                 <li><a href="/Manager/GiveawayAdd">경품등록</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '45')}">
+                                    <li><a href="/Manager/GiveawayPartList">경품 참여 관리</a></li>
                                 </c:if>
                             </ul>
                         </li>

@@ -487,6 +487,15 @@ public class restapiController {
                 error.put("Error", messageSource.getMessage("error.paymentUsedIsLess","ko"));
             }
 
+            Integer giveaMinPoint = (Integer)giveaway.get("giveaway_play_min_point");
+            if(giveaMinPoint > usedPoint){
+                error.put("Error", "경품 응모 최소 포인트 보다 응모하신 금액이 작습니다.");
+            }
+            Integer giveaMaxPoint = (Integer)giveaway.get("giveaway_play_max_point");
+            if(giveaMaxPoint < usedPoint){
+                error.put("Error", "경품 응모 최대 포인트를 초과하였습니다.");
+            }
+
             //검증
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);

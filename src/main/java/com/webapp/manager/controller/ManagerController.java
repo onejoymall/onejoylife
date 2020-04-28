@@ -12,6 +12,7 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
@@ -89,6 +90,8 @@ public class ManagerController {
     private String t_key;
     @Value("${t_url}")
     private String t_url;
+    @Autowired
+    private UserDAO userDAO;
     /**
      *  리스트.
      */
@@ -281,6 +284,29 @@ public class ManagerController {
             e.printStackTrace();
         }
         return "manager/product/productDetail";
+    }
+
+    //경품 참여 관리
+   @RequestMapping(value = "/Manager/GiveawayPartList")
+    public String managerGiveawayPartList(Model model, SearchVO searchVO,HashMap params,HttpSession session, HttpServletRequest request) throws Exception {
+        try{
+            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+            searchVO.setDisplayRowCount(10);
+            searchVO.setStaticRowEnd(10);
+            searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+
+            List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
+            model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
+            model.addAttribute("list", giveawayList);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("style", "goods");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "manager/giveaway/giveawaypartlist";
     }
 
     @RequestMapping(value = "/Manager/GiveawayAdd")
