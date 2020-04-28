@@ -644,6 +644,11 @@ public class ManagerController {
             params.put("code", "payment_status");
             List<Map<String, Object>> getSelectorList = selectorDAO.getSelectorList(params);
             model.addAttribute("getSelectorList", getSelectorList);
+            
+            //상태 카운트
+            Map<String, Object> getStatusCount = paymentDAO.getStatusCount(params);
+            model.addAttribute("statusCount", getStatusCount);
+            
             model.addAttribute("companyList", company);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
@@ -692,6 +697,11 @@ public class ManagerController {
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
             model.addAttribute("companyList", company);
+            
+          //상태 카운트
+            Map<String, Object> getStatusCount = paymentDAO.getStatusCount(params);
+            model.addAttribute("statusCount", getStatusCount);
+            
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         } catch (Exception e) {

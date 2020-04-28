@@ -16,6 +16,7 @@
       </foreach>
     </if>
     order by product_id desc
+    limit 100
   </select>
   <select id="getGiveawayDtoList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.Map">
     <![CDATA[

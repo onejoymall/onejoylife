@@ -292,3 +292,15 @@ main{
 	display: flex;
 	align-items: center;
 }
+
+.input-box1 > button{
+    width: 53.5px;
+    height: 27px;
+    border: 1px solid #62606b;
+    background: #fff;
+    color: #62606b;
+    text-align: center;
+    padding-top: 2px;
+    margin-right: 5px;
+    line-height: 22px;
+}
