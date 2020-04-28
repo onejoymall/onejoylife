@@ -72,7 +72,7 @@ public class MgSystemRestController {
 //            if(productVO.getProduct_name().isEmpty()){
 //                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
 //            }
-            if(adminLogin == "admin"){
+            if(adminLogin.equals("admin")){
                 mgDeliveryVO.setStore_id("admin");
             }
             if(!isEmpty(error)){

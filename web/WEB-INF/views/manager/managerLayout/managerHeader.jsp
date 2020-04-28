@@ -68,7 +68,10 @@
         <div class="header-gnb">
         <c:if test="${not empty menuList}">
             <ul class="gnb-out-ul">
-         		<c:if test="${afn:contains(menuList, '9') || afn:contains(menuList, '10')}">
+         		<c:if test="${afn:contains(menuList, '9') || 
+       						 afn:contains(menuList, '10') || 
+       						 afn:contains(menuList, '46') || 
+       						 afn:contains(menuList, '47')}">
                 <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/info-join">운영관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '9')}">
@@ -77,8 +80,17 @@
                         <c:if test="${afn:contains(menuList, '10')}">
                         <li><a href="/Manager/boardGroupList">게시판관리</a> </li>
                         </c:if>
-                        <c:if test="${afn:contains(menuList, '43')}">
-                            <li><a href="/Manager/Delivery">배송관리</a> </li>
+                        <c:if test="${afn:contains(menuList, '46') || afn:contains(menuList, '47')}">
+                        <li><a href="/Manager/Delivery">배송관리</a> 
+                           	<ul>
+                            	<c:if test="${afn:contains(menuList, '46')}">
+                                <li><a href="/Manager/Delivery">기본배송 관리</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '47')}">
+                                <li><a href="/Manager/Delivery-area">지역별 배송비 설정</a></li>
+                                </c:if>
+                            </ul>
+                        </li>
                         </c:if>
                     </ul>
                 </li>

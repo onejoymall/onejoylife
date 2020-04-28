@@ -114,6 +114,105 @@
                             </tr>
                         </tbody>
                     </table>
+                    
+                    <h3>반품주소 설정</h3>
+                    <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+
+                            <tr class="shipping-t-detail">
+                                <th rowspan="3">반품주소</th>
+                                <td>
+                                    <input type="text" id="postcode" name="refund_postcode" value="${detail.refund_postcode}"><button type="button" class="ad-but" id="daumMapCall2">우편번호</button>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td>
+                                    <input type="hidden" id="roadAddress" name="refund_roadAddress" class="ad-input" value="${detail.refund_roadAddress}">
+                                    <input type="text" id="jibunAddress" name="refund_jibunAddress" class="ad-input" placeholder="주소" value="${detail.refund_jibunAddress}">
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td>
+                                    <input type="text" id="extraAddress" name="refund_extraAddress" class="ad-input" placeholder="상세주소" value="${detail.refund_extraAddress}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>출고지 설정</h3>
+                    <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+
+                            <tr class="shipping-t-detail">
+                                <th rowspan="3">출고지 주소</th>
+                                <td>
+                                    <input type="text" id="postcode" name="postcode" value="${detail.forward_postcode}"><button type="button" class="ad-but" id="daumMapCall">우편번호</button>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td>
+                                    <input type="hidden" id="roadAddress" name="roadAddress" class="ad-input" value="${detail.forward_roadAddress}">
+                                    <input type="text" id="jibunAddress" name="jibunAddress" class="ad-input" placeholder="주소" value="${detail.forward_jibunAddress}">
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td>
+                                    <input type="text" id="extraAddress" name="extraAddress" class="ad-input" placeholder="상세주소" value="${detail.forward_extraAddress}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>희망 배송일/시간 설정</h3>
+                    <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+
+                            <tr class="shipping-t-detail">
+                                <th>배송일 설정</th>
+                                <td>
+                                    <input type="radio" name="hope_delivery_date_yn" value="Y" <c:if test="${detail.product_delivery_hope_date_yn eq 'Y' }">checked</c:if>>사용
+                                    <input type="radio" name="hope_delivery_date_yn" value="N" <c:if test="${detail.product_delivery_hope_date_yn eq 'N' }">checked</c:if>>사용안함
+                                </td>
+                            </tr>
+                            <tr>
+                            	<th>배송시간 설정</th>
+                            	<td>
+                                    <input type="radio" name="hope_delivery_time_yn" value="Y" <c:if test="${detail.product_delivery_hope_time_yn eq 'Y' }">checked</c:if>>사용
+                                    <input type="radio" name="hope_delivery_time_yn" value="N" <c:if test="${detail.product_delivery_hope_time_yn eq 'N' }">checked</c:if>>사용안함
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>묶음배송</h3>
+                    <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+
+                            <tr class="shipping-t-detail">
+                                <th>묶음배송 사용</th>
+                                <td>
+                    				<input type="radio" name="bundle_delivery_yn" value="Y" <c:if test="${detail.product_delivery_bundle_yn eq 'Y' }">checked</c:if>>사용
+                                    <input type="radio" name="bundle_delivery_yn" value="N" <c:if test="${detail.product_delivery_bundle_yn eq 'N' }">checked</c:if>>사용안함
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <button type="button" name="detail" class="btn-red" id="systemDeliveryFormSubmit">저장하기</button>
                 </form:form>
