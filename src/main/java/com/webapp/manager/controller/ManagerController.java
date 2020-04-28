@@ -288,10 +288,8 @@ public class ManagerController {
 
     //경품 참여 관리
    @RequestMapping(value = "/Manager/GiveawayPartList")
-    public String managerGiveawayPartList(Model model, SearchVO searchVO,HashMap params,HttpSession session, HttpServletRequest request) throws Exception {
+    public String managerGiveawayPartList(Model model, SearchVO searchVO,HashMap params) throws Exception {
         try{
-            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-            params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
@@ -302,7 +300,7 @@ public class ManagerController {
             model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
             model.addAttribute("list", giveawayList);
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("style", "goods");
+            model.addAttribute("style", "member-management");
         } catch (Exception e){
             e.printStackTrace();
         }

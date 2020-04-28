@@ -5,7 +5,7 @@
 <main>
     <div class="main-content">
         <div class="main-header">
-            <h2 name="detail">경품 참여 리스트</h2>
+            <h2 name="detail">경품 참여 관리</h2>
             <div class="main-hd-btn-wrap">
                 <%--                <button type="button" name="detail">상품 등록</button>--%>
                 <button type="button" class="ready"><i class="exel-ic"></i>일괄 등록/수정</button>
@@ -74,7 +74,7 @@
                                     <input type="hidden" name="product_cd" value="${list.giveaway_cd}">
                                 </td>
                                 <td>${list.email}</td>
-                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/> <fmt:formatDate value="${list.reg_date}" pattern="HH:mm"/></td>
                                 <td><fmt:formatNumber value="${list.giveaway_payment_epoint}" groupingUsed="true" />P</td>
                                 <td><fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/></td>
                                 <c:if test="${empty list.giveaway_winner_reg_date && empty list.winner_id}">
@@ -84,15 +84,15 @@
                                 </c:if>
                                 <c:if test="${not empty list.giveaway_winner_reg_date && empty list.winner_id}">
                                     <td>
-                                        <span>추첨완료</span><br>
-                                        <span class="txt-s">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
+                                        <span>추첨완료</span>
                                     </td>
                                 </c:if>
                                 <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
                                     <td>당첨</td>
                                 </c:if>
                                 <td>
-                                    <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${list.giveaway_cd}')" >상세보기</button>
+                                    <button type="button" class="goods-list-btn" >상세보기</button>
+<%--                                    <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${list.giveaway_cd}')" >상세보기</button>--%>
                                 </td>
                             </tr>
                         </c:forEach>
