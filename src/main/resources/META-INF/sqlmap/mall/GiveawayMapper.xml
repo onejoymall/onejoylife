@@ -91,6 +91,7 @@
         <![CDATA[
         select
         A.*,
+            (select Z.email from user Z where Z.usr_id = A.giveaway_play_user_id) as email,
             (select Z.giveaway_detail_image from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_detail_image,
             (select Z.giveaway_brand from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_brand,
             (select Z.giveaway_model_name from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_model_name,
