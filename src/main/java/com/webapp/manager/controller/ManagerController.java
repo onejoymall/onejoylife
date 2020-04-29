@@ -300,7 +300,7 @@ public class ManagerController {
             model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
             model.addAttribute("list", giveawayList);
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("style", "member-management");
+            model.addAttribute("style", "order");
         } catch (Exception e){
             e.printStackTrace();
         }
