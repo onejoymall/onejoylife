@@ -121,5 +121,8 @@ public class BoardSvc {
         sqlSession.delete("deleteBoard8Reply", param);
         
         return true;
-    }    
+    }
+    public BoardVO selectBoardMaxOne(String param) {
+        return sqlSession.selectOne("selectBoardMaxOne", param);
+    }
 }

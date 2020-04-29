@@ -49,7 +49,7 @@
                         <input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
                     </div>
                     <div class="button-box">
-                        <button type="button" onclick="fn_formSubmit()">저장</button>
+                        <button type="button" onclick="fn_formSubmit(true)">저장</button>
                     </div>
                 </form>
             </div>

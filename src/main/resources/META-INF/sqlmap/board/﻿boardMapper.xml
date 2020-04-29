@@ -73,6 +73,7 @@
         SELECT
             (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
             (select Z.REMEMO from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rememo,
+              (select Z.reno from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as reno,
             (select Z.REWRITER from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rewriter,
             (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
             question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,

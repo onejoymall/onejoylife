@@ -27,6 +27,16 @@ public class BoardVO {
     private String redate;
     private String rememo;
     private String rewriter;
+    private String reno;
+
+    public String getReno() {
+        return reno;
+    }
+
+    public void setReno(String reno) {
+        this.reno = reno;
+    }
+
     /* 첨부파일 */
     private List<MultipartFile> uploadfile;
     private List<MultipartFile> uploadfile2;
