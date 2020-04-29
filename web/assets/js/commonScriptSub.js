@@ -550,7 +550,9 @@ $(".sec2-ov>p>label").click(function(){
         data: "deliveryType="+deliverytype,
         success: function (data) {
         	$.each(data.delivery,function(index, item){
-        		$(`input[name=${index}]`).val(item);
+        		if(index != "order_no"){
+        			$(`input[name=${index}]`).val(item);
+        		}
         		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
         			var number = item.split("-");
         			['a','b','c'].forEach(function(el,idx){
