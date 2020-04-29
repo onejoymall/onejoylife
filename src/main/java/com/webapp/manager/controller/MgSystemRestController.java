@@ -46,7 +46,7 @@ public class MgSystemRestController {
         HashMap<String, Object> error = new HashMap<String, Object>();
         Object adminLogin = session.getAttribute("adminLogin");
         try {
-            if(adminLogin == "admin"){
+            if(adminLogin.equals("admin")){
                 mgDeliveryVO.setStore_id("admin");
             }
             if(!isEmpty(error)){
@@ -197,5 +197,59 @@ public class MgSystemRestController {
             e.printStackTrace();
         }
         return resultMap;
+    }
+    //지역별 배송비 사용설정
+    @RequestMapping(value = "/Manager/updateDeliveryArea",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> updateDeliveryArea(@RequestParam HashMap params, HttpServletRequest request,HttpSession session){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(adminLogin.equals("admin")){
+                params.put("store_id","admin");
+            }
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			mgSystemDAO.updateDeliveryArea(params);
+    			resultMap.put("success","success");
+    		}
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return resultMap;
+    }
+    //지역별 배송비 등록
+    @RequestMapping(value = "/Manager/insertDeliveryArea",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> insertDeliveryArea(@RequestParam HashMap params, HttpServletRequest request,HttpSession session){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	Object adminLogin = session.getAttribute("adminLogin");
+    	try {
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}
+    		
+    		if(params.get("area_name") == null || params.get("area_name").equals("")){
+    			error.put(messageSource.getMessage("area_name","ko"), messageSource.getMessage("error.required","ko"));
+			}
+    		if(params.get("postcode") == null || params.get("postcode").equals("")){
+    			error.put(messageSource.getMessage("postcode","ko"), messageSource.getMessage("error.required","ko"));
+			}
+    		if(params.get("additional_delivery_payment") == null || params.get("additional_delivery_payment").equals("")){
+    			error.put(messageSource.getMessage("additional_delivery_payment","ko"), messageSource.getMessage("error.required","ko"));
+    		}
+    		
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			mgSystemDAO.insertDeliveryArea(params);
+    			resultMap.put("success","success");
+    		}
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return resultMap;
     }
 }

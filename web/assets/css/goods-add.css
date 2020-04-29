@@ -401,3 +401,103 @@ input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-m
     text-align: center;
     margin-left: 5px;
 }
+/* goods-list-wrap */
+.goods-list-wrap{
+    width:100%;
+    padding:10px;
+}
+.list-sort-wrap{
+    width:100%;
+    height:35px;
+    margin-top:20px;
+    position:relative;
+}
+.list-sort-wrap .left{
+    width:50%;
+    position:absolute; top:0; left:0;
+}
+.list-sort-wrap .right{
+    width:50%;
+    position:absolute; top:0; right:0;
+}
+.right .order-select{
+    float:right;
+    height:25px;
+}
+.list-sort-wrap button{
+    background:#ffffff;
+    color:#5f5f5f;
+    border:1px solid;
+    padding:3px 5px;
+    font-size:12px;
+    border-radius: 5px;
+}
+.list-tit{
+    font-size: 18px;
+    margin-top: 25px;
+}
+.goods-list-wrap table{
+    width:100%;
+    text-align: center;
+    border: 1px solid #dadada;
+}
+.goods-list-wrap thead{
+    background:#f1f1f1
+}
+.goods-list-wrap tfoot{
+    background: #fafafa;
+}
+.goods-list-wrap thead td, .goods-list-wrap tfoot td{
+    padding:10px;
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+.goods-list-wrap tbody td{
+    padding:5px;
+    border-left: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+}
+#tab-on1 .goods-list-wrap tbody td{text-align: right;}
+#tab-on1 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on1 .goods-list-wrap tbody td:nth-child(2){text-align: left;}
+
+#tab-on2 .goods-list-wrap tbody td{text-align: right;}
+#tab-on2 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on2 .goods-list-wrap tbody td:nth-child(2){text-align: left;}
+#tab-on2 .goods-list-wrap tbody td:nth-child(3){text-align: left;}
+#tab-on2 .goods-list-wrap tbody td:nth-child(4){text-align: left;}
+
+#tab-on3 .goods-list-wrap tbody td{text-align: right;}
+#tab-on3 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on3 .goods-list-wrap tbody td:nth-child(2){text-align: center;}
+
+#tab-on4 .goods-list-wrap tbody td{text-align: right;}
+#tab-on4 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on4 .goods-list-wrap tbody td:nth-child(2){text-align: center;}
+#tab-on4 .goods-list-wrap tbody .on4-sub td:nth-child(2){text-align: right;}
+
+#tab-on5 .goods-list-wrap tbody td{text-align: right;}
+#tab-on5 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on5 .goods-list-wrap tbody td:nth-child(2){text-align: center;}
+#tab-on5 .goods-list-wrap tbody .on5-sub td:nth-child(2){text-align: right;}
+
+#tab-on6 .goods-list-wrap tbody td{text-align: right;}
+#tab-on6 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on6 .goods-list-wrap tbody td:nth-child(2){text-align: center;}
+#tab-on6 .goods-list-wrap tbody .on6-sub td:nth-child(2){text-align: right;}
+
+#tab-on7 .goods-list-wrap tbody td{text-align: right;}
+#tab-on7 .goods-list-wrap tbody td:nth-child(1){text-align: center;}
+#tab-on7 .goods-list-wrap tbody td:nth-child(2){text-align: center;}
+#tab-on7 .goods-list-wrap tbody .on7-sub td:nth-child(2){text-align: right;}
+
+.goods-list-wrap tfoot td{text-align: right;}
+.goods-list-wrap tfoot td:nth-child(1){text-align: center;}
+
+.goods-list-btn{
+    background:#555555;
+    color:#fff;
+    padding:3px 5px;
+    font-size:14px;
+    border-radius: 5px;
+}

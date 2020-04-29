@@ -149,6 +149,9 @@
 <%--                        </select>--%>
 <%--                    </div>--%>
                 </div>
+                <form name="defaultListForm" id="defaultListForm" method="POST">
+                <input type="hidden" name="Pk" value="${Pk}">
+                <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
                         <col width="3%">
@@ -184,7 +187,7 @@
                     <c:if test="${not empty list}">
                         <c:forEach var="list" items="${list}" varStatus="status">
                        <tr>
-                            <td><input type="checkbox" id="chk10" name="chk10"></td>
+                            <td><input type="checkbox" id="chk" name="chk" value="${list.order_no}"></td>
                             <td>${list.order_no}</td>
                             <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                             <td>${list.email}</td>
@@ -203,6 +206,7 @@
                     </c:if>
                     </tbody>
                 </table>
+                </form>
                 <form id="form1" name="form1"  method="post">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">

@@ -207,6 +207,7 @@
                     <tr class="body-tr">
                         <td class="body-td1">
                             받으시는분
+                            <input type="hidden" name="product_delivery_International_type" value="A"/>
                         </td>
                         <td  class="body-td2">
                             <input type="text" name="delivery_user_name"/>

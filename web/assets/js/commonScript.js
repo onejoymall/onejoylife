@@ -2461,7 +2461,16 @@ $(document).ready(function(){
 
                 } else {
 //                    location.href=data.redirectUrl;
-                	location.reload();
+                	$.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'success',
+                        hideAfter: 500,
+                        afterHidden: function () {
+	                        location.reload();
+	                    }
+                    });
                 }
             },
             error: function (xhr, status, error) {
@@ -2525,22 +2534,22 @@ $(document).ready(function(){
                 } else {
                     $('input[name=extraAddress]').val('');
                 }
-
-                var guideTextBox =  $('input[name=guide]');
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
-
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                    guideTextBox.style.display = 'block';
-                } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
-                }
+//
+//                var guideTextBox =  $('input[name=guide]');
+//                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+//                if(data.autoRoadAddress) {
+//                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+//                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+//                    guideTextBox.style.display = 'block';
+//
+//                } else if(data.autoJibunAddress) {
+//                    var expJibunAddr = data.autoJibunAddress;
+//                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+//                    guideTextBox.style.display = 'block';
+//                } else {
+//                    guideTextBox.innerHTML = '';
+//                    guideTextBox.style.display = 'none';
+//                }
             }
         }).open();
     });
@@ -2580,22 +2589,22 @@ $(document).ready(function(){
             } else {
                 $('input[name=refund_extraAddress]').val('');
             }
-
-            var guideTextBox =  $('input[name=refund_guide]');
-            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-            if(data.autoRoadAddress) {
-                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                guideTextBox.style.display = 'block';
-
-            } else if(data.autoJibunAddress) {
-                var expJibunAddr = data.autoJibunAddress;
-                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                guideTextBox.style.display = 'block';
-            } else {
-                guideTextBox.innerHTML = '';
-                guideTextBox.style.display = 'none';
-            }
+//
+//            var guideTextBox =  $('input[name=refund_guide]');
+//            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+//            if(data.autoRoadAddress) {
+//                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+//                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+//                guideTextBox.style.display = 'block';
+//
+//            } else if(data.autoJibunAddress) {
+//                var expJibunAddr = data.autoJibunAddress;
+//                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+//                guideTextBox.style.display = 'block';
+//            } else {
+//                guideTextBox.innerHTML = '';
+//                guideTextBox.style.display = 'none';
+//            }
         }
     }).open();
 });
@@ -3081,11 +3090,32 @@ function copyToClipboard(val) {
 }
 
 //엑셀다운버튼
+//$(".excelBtn").on("click",function(){
+//	var type = $(this).attr("data-id");
+//	$('form:eq(0)').append(`
+//		<button type='submit' formaction='/${type}/downloadExcelFile'>submit</button>
+//	`);
+//	$('form:eq(0) button:last').click();
+//	$('form:eq(0) button:last').remove();
+//});
+
+//선택다운버튼
 $(".excelBtn").on("click",function(){
+	if(!$('#defaultListForm input[name=chk]:checked').val()){
+		$.toast({
+            text: "다운받을 항목을 선택해주세요.",
+            showHideTransition: 'plain', //펴짐
+            position: 'top-right',
+            heading: 'Error',
+            icon: 'error'
+        });
+		return;
+	}
+	
 	var type = $(this).attr("data-id");
-	$('form:eq(0)').append(`
+	$('#defaultListForm').append(`
 		<button type='submit' formaction='/${type}/downloadExcelFile'>submit</button>
 	`);
-	$('form:eq(0) button:last').click();
-	$('form:eq(0) button:last').remove();
-});
+	$('#defaultListForm button:last').click();
+	$('#defaultListForm button:last').remove();
+})
