@@ -16,7 +16,18 @@
         product_delivery_date,
         product_delivery_payment_class,
         product_delivery_payment,
-        product_delivery_store_pickup
+        product_delivery_store_pickup,
+		product_delivery_hope_date_yn,
+		product_delivery_hope_time_yn,
+		product_delivery_bundle_yn,
+		refund_postcode,
+		refund_roadAddress,
+		refund_jibunAddress,
+		refund_extraAddress,
+		forward_postcode,
+		forward_roadAddress,
+		forward_jibunAddress,
+		forward_extraAddress
       )
       values
       (
@@ -29,7 +40,18 @@
         #{product_delivery_date},
         #{product_delivery_payment_class},
         #{product_delivery_payment},
-        #{product_delivery_store_pickup}
+        #{product_delivery_store_pickup},
+        #{hope_delivery_date_yn},
+		#{hope_delivery_time_yn},
+		#{bundle_delivery_yn},
+        #{refund_postcode},
+		#{refund_roadAddress},
+		#{refund_jibunAddress},
+		#{refund_extraAddress},
+		#{postcode},
+		#{roadAddress},
+		#{jibunAddress},
+		#{extraAddress}
       )
       on duplicate KEY update
         store_id=#{store_id},
@@ -41,7 +63,18 @@
         product_delivery_date=#{product_delivery_date},
         product_delivery_payment_class=#{product_delivery_payment_class},
         product_delivery_payment=#{product_delivery_payment},
-        product_delivery_store_pickup=#{product_delivery_store_pickup}
+        product_delivery_store_pickup=#{product_delivery_store_pickup},
+		product_delivery_hope_date_yn = #{hope_delivery_date_yn},
+		product_delivery_hope_time_yn = #{hope_delivery_time_yn},
+		product_delivery_bundle_yn = #{bundle_delivery_yn},
+		refund_postcode = #{refund_postcode},
+		refund_roadAddress = #{refund_roadAddress},
+		refund_jibunAddress = #{refund_jibunAddress},
+		refund_extraAddress = #{refund_extraAddress},
+		forward_postcode = #{postcode},
+		forward_roadAddress = #{roadAddress},
+		forward_jibunAddress = #{jibunAddress},
+		forward_extraAddress = #{extraAddress}
     </insert>
 
     <select id="getSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">

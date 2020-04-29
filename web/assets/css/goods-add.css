@@ -211,7 +211,7 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 }
 
 
-input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-mng"], input[name="goods-name-supplier"], input[name="goods-name-model"], #goods-info1, #goods-info2, 
+input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-mng"], input[name="goods-name-supplier"], input[name="goods-name-model"], #goods-info1, #goods-info2, input[name="refund_extraAddress"], input[name="refund_jibunAddress"], input[name="jibunAddress"], input[name="extraAddress"],
 #goods-search, #goods-detail-info, #goods-shipping, #sp-replace-text, #goods-option-detail, #goods-option-style, #goods-option-color, #goods-option-mandatory, #goods-stockout, #goods-addInput-name, #goods-imgExtra, #goods-volume, #shipping-period, .long #shippingFee-detail, #goods-HScode, #goods-material, #goods-material-en, #goods-fabric-en,#goods-seo-title, #goods-seo-author, #goods-seo-description, #goods-seo-keywords, #goods-seo-alt, #goods-payment, #goods-memo{
     width:100%;
 }
@@ -387,4 +387,17 @@ input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-m
 
 .cc2 a{
     color:#da394d;
+}
+.ad-but {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid;
+    color: #777;
+    width: 65px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 100;
+    line-height: 25px;
+    text-align: center;
+    margin-left: 5px;
 }
