@@ -24,6 +24,61 @@
                         <label for="check1">경품코드</label>
                     </div>
                 </div>
+                <table class="keyword-src-table">
+                    <colgroup>
+                        <col width="80px">
+                        <col width="420px">
+                        <col width="80px">
+                        <col width="420px">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>당첨결과</th>
+                        <td>
+                            <select name="payment_status" >
+                                <c:if test="${not empty getSelectorList}">
+                                    <option value="">선택</option>
+                                    <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                                        <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </td>
+                        <th>응모날짜</th>
+                        <td>
+                            <div class="input-box2">
+                                <div class="cla">
+                                    <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+                                    <div class="cla-img1"></div>
+                                </div>
+                                <p class="cla-p1"> ~ </p>
+                                <div class="cla">
+                                    <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+                                    <div class="cla-img1"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td></td>
+                        <th>당첨날짜</th>
+                        <td>
+                            <div class="input-box2">
+                                <div class="cla">
+                                    <input type="text" id="delivery_start_date" name="delivery_start_date" class="${param.delivery_start_date}">
+                                    <div class="cla-img1"></div>
+                                </div>
+                                <p class="cla-p1"> ~ </p>
+                                <div class="cla">
+                                    <input type="text" id="delivery_end_date" name="delivery_end_date" class="${param.delivery_end_date}">
+                                    <div class="cla-img1"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
         <div class="goods-list-wrap">
