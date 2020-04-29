@@ -43,14 +43,22 @@ public class MgBoardController {
             modelMap.addAttribute("searchVO", searchVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
-            modelMap.addAttribute("style", "cs-qna");
+
             if(bgInfo.getBgtype().isEmpty()){
+                modelMap.addAttribute("style", "cs-qna");
                 returnString = "manager/mgboard/BoardList";
+
             }
             if(bgInfo.getBgtype().equals("1:1")){
+                modelMap.addAttribute("style", "cs-qna");
                 returnString = "manager/cs-qna";
 
+            }else if(bgInfo.getBgtype().equals("faq")){
+                modelMap.addAttribute("style", "cs-faq");
+                returnString = "manager/cs-faq";
+
             }else{
+                modelMap.addAttribute("style", "cs-qna");
                 returnString = "manager/mgboard/BoardList";
             }
 
@@ -93,14 +101,27 @@ public class MgBoardController {
      * 글 저장.
      */
     @RequestMapping(value = "/Manager/boardSave")
-    public String boardSave(HttpServletRequest request, BoardVO boardInfo) {
+    public String boardSave(HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo) throws Exception{
         String[] fileno = request.getParameterValues("fileno");
+        try{
+            FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
 
-        FileUtil fs = new FileUtil();
-        List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
+            boardSvc.insertBoard(boardInfo, filelist, fileno);
+            if(boardInfo.getBgtype()!=null || boardInfo.getBgtype().equals("faq")){
+                if(boardInfo.getReno()!=null){
+                    boardReplyInfo.setReno(boardInfo.getReno());
+                }
+                boardReplyInfo.setRewriter(boardInfo.getBrdwriter());
+                boardReplyInfo.setRedeleteflag("N");
+                BoardVO boardInfoManNo  = boardSvc.selectBoardMaxOne(boardInfo.getBgno());
+                boardReplyInfo.setBrdno(boardInfoManNo.getBrdno());
+                boardSvc.insertBoardReply(boardReplyInfo);
+            }
 
-        boardSvc.insertBoard(boardInfo, filelist, fileno);
-
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "redirect:/Manager/boardList?bgno=" + boardInfo.getBgno();
     }
 

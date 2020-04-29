@@ -27,8 +27,12 @@
         SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY,BGTYPE
           FROM TBL_BOARDGROUP
          WHERE BGDELETEFLAG='N' AND BGNO=#{bgno} 
-    </select> 
-
+    </select>
+    <select id="selectBoardMaxOne" parameterType="String" resultType="com.webapp.board.app.BoardVO">
+        SELECT max(BRDNO) BRDNO
+          FROM TBL_BOARD
+         WHERE BGNO=#{bgno}
+    </select>
     <select id="selectBoardGroupOne4Used" parameterType="String" resultType="com.webapp.board.app.BoardGroupVO">
         SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY,BGTYPE
           FROM TBL_BOARDGROUP

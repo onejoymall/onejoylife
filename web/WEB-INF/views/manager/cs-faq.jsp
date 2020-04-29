@@ -7,6 +7,7 @@
             <div class="main-header">
                 <h2 name="detail">FAQ 관리</h2>
                 <div class="main-hd-btn-wrap">
+<%--                    <a href="/Manager/boardForm?bgno=<c:out value="${searchVO.bgno}"/>" nam>글쓰기</a>--%>
                     <button type="button" name="detail">게시글 등록</button>
                 </div>
             </div>
@@ -27,27 +28,7 @@
                             <col width="420px">
                         </colgroup>
                         <tbody>
-                            <tr>
-                                <th>분류</th>
-                                <td colspan="3">
-                                   <input type="checkbox" name="src-q1" id="src-q1" checked>
-                                   <label for="src-q1">회원정보관련</label>
-                                   <input type="checkbox" name="src-q2" id="src-q2" checked>
-                                   <label for="src-q2">주문결제</label>
-                                   <input type="checkbox" name="src-q3" id="src-q3" checked>
-                                   <label for="src-q3">배송안내</label>
-                                   <input type="checkbox" name="src-q4" id="src-q4" checked>
-                                   <label for="src-q4">주문취소</label>
-                                   <input type="checkbox" name="src-q5" id="src-q5" checked>
-                                   <label for="src-q5">환불요청</label>
-                                   <input type="checkbox" name="src-q6" id="src-q6" checked>
-                                   <label for="src-q6">상품관련</label>
-                                   <input type="checkbox" name="src-q7" id="src-q7" checked>
-                                   <label for="src-q7">포인트/이벤트</label>
-                                   <input type="checkbox" name="src-q8" id="src-q8" checked>
-                                   <label for="src-q8">기타</label>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <th>작성일</th>
                                 <td>
@@ -72,16 +53,16 @@
             </div>
             <div class="goods-list-wrap">
                 <div class="list-sort-wrap">
-                    <div class="left">
-                        <button type="button" class="goods-list-btn" name="copy">선택 삭제</button>
-                    </div>
-                    <div class="right">
-                        <select name="order" class="order-select">
-                            <option value="32">10개씩 보기</option>
-                            <option value="60">50개씩 보기</option>
-                            <option value="92">100개씩 보기</option>
-                        </select>
-                    </div>
+<%--                    <div class="left">--%>
+<%--                        <button type="button" class="goods-list-btn" name="copy">선택 삭제</button>--%>
+<%--                    </div>--%>
+<%--                    <div class="right">--%>
+<%--                        <select name="order" class="order-select">--%>
+<%--                            <option value="32">10개씩 보기</option>--%>
+<%--                            <option value="60">50개씩 보기</option>--%>
+<%--                            <option value="92">100개씩 보기</option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
                 </div>
                 <table>
                     <colgroup>
@@ -102,149 +83,33 @@
                             <td>분류</td>
                             <td>FAQ</td>
                             <td>등록일</td>
-                            <td>조회수</td>
                             <td>관리</td>
                         </tr>
                     </thead>
                     <tbody>
+                <c:forEach var="listview" items="${listview}" varStatus="status">
+                    <c:url var="link" value="/Manager/boardRead">
+                        <c:param name="brdno" value="${listview.brdno}" />
+                    </c:url>
+
                        <tr>
-                            <td><input type="checkbox" id="chk10" name="chk10"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>회원정보관련</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
+                           <td><input type="checkbox" name="chk" value="${listview.brdno}"></td>
+                           <td><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></td>
+                           <td><c:out value="${listview.brdwriter}"/></td>
+                           <td>
+                                   ${listview.question_type_name}
+                           </td>
+                            <td><c:out value="${listview.brdmemo}"/></td>
+                           <td><c:out value="${listview.brddate}"/></td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
+                                <button type="button" class="goods-list-btn" onclick="faqSelect('${bgInfo.bgno}','${listview.brdno}')">상세보기</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk9" name="chk9"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>주문결제</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk8" name="chk8"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>배송안내</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk7" name="chk7"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>주문취소</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk6" name="chk6"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>환불요청</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk5" name="chk5"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>상품관련</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk4" name="chk4"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>포인트/이벤트</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk3" name="chk3"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>기타</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk2" name="chk2"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>기타</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" id="chk1" name="chk1"></td>
-                            <td>01</td>
-                            <td>관리자</td>
-                            <td>기타</td>
-                            <td>자주묻는질문입니다.</td>
-                            <td>2020-03-04</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="goods-list-btn" name="detail1">상세보기</button>
-                            </td>
-                        </tr>
+                </c:forEach>
+
                     </tbody>
                 </table>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">≪</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＜</a></li>
-                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">8</a></li>
-                    <li class="page-item"><a class="page-link" href="#">9</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item"><a class="page-link" href="#">＞</a></li>
-                    <li class="page-item"><a class="page-link" href="#">≫</a></li>
-                </ul>
+
             </div>
         </div>
     </main>
@@ -255,7 +120,10 @@
                <h2>FAQ 작성</h2>
                 <button type="button" class="modal-close">×</button>
             </div>
-            <form action="" method="POST">
+            <form action="/Manager/boardSave" id="form1" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="bgno" value="<c:out value="${param.bgno}"/>">
+                <input type="hidden" name="brdno">
+                <input type="hidden" name="bgtype" value="<c:out value="${bgInfo.bgtype}"/>">
                 <div class="modal-body clearfix">
                     <table class="goods-detail-table">
                         <colgroup>
@@ -265,40 +133,54 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><span>관리자</span></td>
+                                <td><input type="text" name="brdwriter" id="brdwriter" value="관리자"></td>
                             </tr>
                             <tr>
                                 <th>분류</th>
                                 <td>
-                                    <input type="radio" id="faq-rd1" name="faq-rd">
-                                    <label for="faq-rd1">회원정보관련</label>
-                                    <input type="radio" id="faq-rd2" name="faq-rd">
-                                    <label for="faq-rd2">주문결제</label>
-                                    <input type="radio" id="faq-rd3" name="faq-rd">
-                                    <label for="faq-rd3">배송안내</label>
-                                    <input type="radio" id="faq-rd4" name="faq-rd">
-                                    <label for="faq-rd4">주문취소</label>
-                                    <input type="radio" id="faq-rd5" name="faq-rd" checked>
-                                    <label for="faq-rd5">환불요청</label>
-                                    <input type="radio" id="faq-rd6" name="faq-rd" checked>
-                                    <label for="faq-rd6">상품관련</label>
-                                    <input type="radio" id="faq-rd7" name="faq-rd" checked>
-                                    <label for="faq-rd7">포인트/이벤트</label>
-                                    <input type="radio" id="faq-rd8" name="faq-rd" checked>
-                                    <label for="faq-rd8">기타</label>
+                                    <input type="radio" name="question_type" id="faq-q2" value="S" checked>
+                                    <label for="faq-q2">대량주문</label>
+                                    <input type="radio" name="question_type" id="faq-q3" value="O">
+                                    <label for="faq-q3">주문/결제</label>
+                                    <input type="radio" name="question_type" id="faq-q4" value="C">
+                                    <label for="faq-q4">교환/반품/환불</label>
+                                    <input type="radio" name="question_type" id="faq-q5" value="G">
+                                    <label for="faq-q5">기타</label>
+                                    <input type="radio" name="question_type" id="faq-q6" value="F">
+                                    <label for="faq-q6">자주하는질문</label>
+                                    <input type="radio" name="question_type" id="faq-q7" value="P">
+                                    <label for="faq-q7">상품문의</label>
+                                    <input type="radio" name="question_type" id="faq-q1" value="A">
+                                    <label for="faq-q1">배송/설치</label>
+                                    <input type="radio" name="question_type" id="faq-q8" value="V">
+                                    <label for="faq-q8">이벤트/경품</label>
                                 </td>
                             </tr>
                             <tr>
                                 <th>FAQ 질문</th>
-                                <td><input type="text"></td>
+                                <td>
+                                    <input type="hidden" name="brdtitle" id="brdtitle" value="FAQ">
+                                    <input type="text" name="brdmemo" id="brdmemo"></td>
+                            </tr>
+                            <tr class="hidden">
+                                <td>첨부</td>
+                                <td>
+<%--                                    <c:forEach var="listview" items="${listview}" varStatus="status">--%>
+<%--                                        <input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">--%>
+<%--                                        <a href="/Board/fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>">--%>
+<%--                                            <c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>--%>
+<%--                                    </c:forEach>--%>
+
+                                    <input type="file" name="uploadfile" multiple="" />
+                                </td>
                             </tr>
                             <tr>
                                 <th>FAQ 답변</th>
-                                <td><textarea name="mem-push" id="summernote"></textarea></td>
+                                <td><textarea name="rememo" id="summernote"></textarea></td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-red">등록하기</button>
+                    <button type="button" name="detail" class="btn-red" onclick="fn_formSubmit(true)">등록하기</button>
                 </div>
             </form>
         </div>
@@ -309,7 +191,9 @@
                <h2>FAQ 상세보기</h2>
                 <button type="button" class="modal-close">×</button>
             </div>
-            <form action="" method="POST">
+            <form name="boardUpdateForm" id="boardUpdateForm" action="/Manager/boardSave" method="POST">
+                <input type="hidden" name="brdno" >
+                <input type="hidden" name="reno" >
                 <div class="modal-body clearfix">
                     <table class="goods-detail-table">
                         <colgroup>
@@ -319,40 +203,54 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><span>관리자</span></td>
+                                <td><input type="text" name="brdwriter"  value="관리자"></td>
                             </tr>
                             <tr>
                                 <th>분류</th>
                                 <td>
-                                    <input type="radio" id="faq1-rd1" name="faq1-rd">
-                                    <label for="faq1-rd1">회원정보관련</label>
-                                    <input type="radio" id="faq1-rd2" name="faq1-rd">
-                                    <label for="faq1-rd2">주문결제</label>
-                                    <input type="radio" id="faq1-rd3" name="faq1-rd">
-                                    <label for="faq1-rd3">배송안내</label>
-                                    <input type="radio" id="faq1-rd4" name="faq1-rd">
-                                    <label for="faq1-rd4">주문취소</label>
-                                    <input type="radio" id="faq1-rd5" name="faq1-rd" checked>
-                                    <label for="faq1-rd5">환불요청</label>
-                                    <input type="radio" id="faq1-rd6" name="faq1-rd" checked>
-                                    <label for="faq1-rd6">상품관련</label>
-                                    <input type="radio" id="faq1-rd7" name="faq1-rd" checked>
-                                    <label for="faq1-rd7">포인트/이벤트</label>
-                                    <input type="radio" id="faq1-rd8" name="faq1-rd" checked>
-                                    <label for="faq1-rd8">기타</label>
+                                    <input type="radio" name="question_type" id="faq1-q2" value="S" checked>
+                                    <label for="faq1-q2">대량주문</label>
+                                    <input type="radio" name="question_type" id="faq1-q3" value="O">
+                                    <label for="faq1-q3">주문/결제</label>
+                                    <input type="radio" name="question_type" id="faq1-q4" value="C">
+                                    <label for="faq1-q4">교환/반품/환불</label>
+                                    <input type="radio" name="question_type" id="faq1-q5" value="G">
+                                    <label for="faq1-q5">기타</label>
+                                    <input type="radio" name="question_type" id="faq1-q6" value="F">
+                                    <label for="faq1-q6">자주하는질문</label>
+                                    <input type="radio" name="question_type" id="faq1-q7" value="P">
+                                    <label for="faq1-q7">상품문의</label>
+                                    <input type="radio" name="question_type" id="faq1-q1" value="A">
+                                    <label for="faq1-q1">배송/설치</label>
+                                    <input type="radio" name="question_type" id="faq1-q8" value="V">
+                                    <label for="faq1-q8">이벤트/경품</label>
                                 </td>
                             </tr>
                             <tr>
                                 <th>FAQ 질문</th>
-                                <td><input type="text"></td>
+                                <td>
+                                <input type="hidden" name="brdtitle" value="FAQ">
+                                <input type="text" name="brdmemo"></td>
                             </tr>
                             <tr>
                                 <th>FAQ 답변</th>
-                                <td><textarea name="mem-push" id="summernote2"></textarea></td>
+                                <td><textarea name="rememo" id="summernoteBoard"></textarea></td>
+                            </tr>
+                            <tr class="hidden">
+                                <td>첨부</td>
+                                <td>
+                                    <%--                                    <c:forEach var="listview" items="${listview}" varStatus="status">--%>
+                                    <%--                                        <input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">--%>
+                                    <%--                                        <a href="/Board/fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>">--%>
+                                    <%--                                            <c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>--%>
+                                    <%--                                    </c:forEach>--%>
+
+                                    <input type="file" name="uploadfile" multiple="" />
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-red">수정하기</button>
+                    <button type="submit" class="btn-red">수정하기</button>
                 </div>
             </form>
         </div>
@@ -373,6 +271,16 @@
                     }
                 }
             });
+            $('#summernoteBoard').summernote({
+                tabsize: 2,
+                height: 150,
+                lang: 'ko-KR',
+                callbacks: {
+                    onImageUpload : function(files) {
+                        uploadSummernoteImageFile(files[0],this);
+                    }
+                }
+            });
             $('#summernote2').summernote({
                 tabsize: 2,
                 height: 150,
@@ -384,5 +292,19 @@
                 }
             });
         });
+        function faqSelect(bgno,brdno) {
+            $('.modal1').attr("style","display:block")
+            var formData = {"bgno":bgno,"brdno":brdno}
+            var dataList = commonAjaxListCall("POST","/Manager/BoardSelect",formData)
+            console.log(dataList)
+            $.each(dataList.boardInfo,function (key,value) {
+                $('#boardUpdateForm input:hidden[name='+key+']').val(value);
+                $('#boardUpdateForm input:text[name='+key+']').val(value);
+                $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
+                if(key =="rememo"){
+                    $('#summernoteBoard').summernote('code', value);
+                }
+            })
+        }
     </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
