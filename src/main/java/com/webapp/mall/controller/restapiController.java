@@ -1149,7 +1149,7 @@ public class restapiController {
             	params.put("delivery_user_phone", phone);
             	params.put("delivery_user_tel", tel);
             	deliveryDAO.updateDeliveryAddress(params);
-            	if(params.get("defaultYn") != null && params.get("defaultYn").equals("Y")) {
+            	if(params.containsKey("defaultYn") && params.get("defaultYn").equals("Y")) {
             		HashMap<String, Object> defaultN = new HashMap<String, Object>();
                 	defaultN.put("defaultYn","N");
                 	defaultN.put("email",session.getAttribute("email"));
