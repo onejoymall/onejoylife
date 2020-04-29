@@ -20,11 +20,15 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardGroupVO;
+import com.webapp.board.app.BoardSvc;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +69,10 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 @RestController
 public class ManagerRestapiController {
-
+    @Autowired
+    private BoardSvc boardSvc;
+    @Autowired
+    private BoardGroupSvc boardGroupSvc;
     @Autowired
     MessageSource messageSource;
     @Autowired
@@ -1559,5 +1566,37 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    @RequestMapping(value = "/Manager/BoardSelect" ,method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> boardSelect (SearchVO searchVO, ModelMap modelMap, HttpServletRequest request) throws Exception{
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
 
+            String brdno = request.getParameter("brdno");
+
+            boardSvc.updateBoard8Read(brdno);
+            BoardVO boardInfo = boardSvc.selectBoardOne(brdno);
+            List<?> listview = boardSvc.selectBoard8FileList(brdno);
+            List<?> replylist = boardSvc.selectBoard8ReplyList(brdno);
+
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardInfo.getBgno());
+            if (bgInfo == null) {
+                error.put("Error", "Error");
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("bgInfo",bgInfo);
+                resultMap.put("boardInfo",boardInfo);
+                resultMap.put("listview",listview);
+                resultMap.put("replylist",replylist);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
 }
