@@ -2406,11 +2406,21 @@ $(document).ready(function(){
                             icon: 'success',
                             hideAfter: 2000,
                             afterHidden: function () {
-                                location.reload();
+                            	location.href=data.redirectUrl;
                             }
                         });
                     } else{
-                        location.href=data.redirectUrl;
+                    	if(data.redirectUrl){
+                    		location.href=data.redirectUrl;	
+                    	}else{
+                    		$.toast({
+                                text: "ERROR",
+                                showHideTransition: 'plain', //펴짐
+                                position: 'mid-center',
+                                heading: 'Error',
+                                icon: 'error',
+                            });
+                    	}
                     }
                 }
             },
