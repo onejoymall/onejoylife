@@ -55,4 +55,9 @@ public class GiveawayDAO {
         sql.insert("mall.GiveawayMapper.insertGiveawayPlay",giveawayVO);
 
     }
+
+    public Map<String,Object> getGiveawayStatusCount(Map<String, String> params) throws SQLException{
+        Map<String,Object> getGiveawayStatusCount = sql.selectOne("mall.GiveawayMapper.getGiveawayStatusCount",params);
+        return getGiveawayStatusCount;
+    }
 }

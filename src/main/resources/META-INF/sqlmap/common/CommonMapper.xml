@@ -21,4 +21,13 @@
 		FROM code
 		where code =#{code}
 	</select>
+
+	<select id="getGiveSelectorList" resultType="java.util.HashMap">
+		SELECT
+		    *
+		FROM code
+		where code =#{code}
+	</select>
+
+
 </mapper>

@@ -58,7 +58,7 @@
 		                        <p><span>${list.reg_date}</span></p>
 		                    </td>
 		                    <td class="lis-td-p">
-		                        <p class="p-r-color"><span>${list.point_add}${list.point_use}</span></p>
+		                        <p class="p-r-color"><span>+${list.point_add} -${list.point_use}</span></p>
 		                        <p><span>${list.point_paid_type_name}</span></p>
 		                    </td>
 		                </tr>
