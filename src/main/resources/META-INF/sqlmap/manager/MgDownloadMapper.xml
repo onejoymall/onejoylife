@@ -4,50 +4,77 @@
 
 <mapper namespace="mall.MgDownloadMapper">
 
-  <select id="getProductDtoList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+  <select id="getProductDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
             SELECT
                 *
-            FROM product A  where 1=1
+            FROM product A where ${pk} in
         ]]>
-    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+    <!-- <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
-    </if>
+    </if> -->
+	    <foreach collection="chk" item="item" open="(" separator="," close=")">
+	         #{item}
+	    </foreach>
     order by product_id desc
-    limit 100
   </select>
-  <select id="getGiveawayDtoList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.Map">
+  <select id="getGiveawayDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
             SELECT
                 *
-            FROM giveaway A  where 1=1
+            FROM giveaway A  where ${pk} in
         ]]>
-    <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+    <!-- <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
-    </if>
+    </if> -->
+	    <foreach collection="chk" item="item" open="(" separator="," close=")">
+	         #{item}
+	    </foreach>
     order by reg_date desc
-    limit 100
   </select>
-  <select id="getOrderDtoList" parameterType="java.util.Map" resultType="java.util.Map">
+  <select id="getOrderDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
         SELECT
             A.*,
             (select Z.product_name from product Z where Z.product_cd = A.product_cd) product_name
-        FROM payment A
+        FROM payment A where ${pk} in
         ]]>
-        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <!-- <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
         <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
-        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if> -->
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+	         #{item}
+	    </foreach>
     order by reg_date desc
-    limit 100
+  </select>
+  <select id="getReturnedDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
+    <![CDATA[
+        select
+            A.*,B.*,
+            (select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+            (select Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+            (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
+            (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
+            (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
+            (select Z.product_name from product Z where Z.product_cd=B.product_cd ) as product_name,
+            (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
+            (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G')
+        AND A.${pk} in
+        ]]>
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+	         #{item}
+	    </foreach>
+    order by reg_date desc
   </select>
 </mapper>

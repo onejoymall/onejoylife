@@ -682,6 +682,8 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "order");
         model.addAttribute("postUrl", "/Manager/order");
+        model.addAttribute("table_name", "payment");
+        model.addAttribute("Pk", "order_no");
         return "/manager/order";
     }
 
@@ -734,6 +736,8 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "returned");
         model.addAttribute("postUrl", "/Manager/updateRefund");
+        model.addAttribute("table_name", "delivery_refund");
+        model.addAttribute("Pk", "order_no");
         return "/manager/returned";
     }
 

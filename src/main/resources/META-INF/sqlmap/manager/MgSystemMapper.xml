@@ -88,6 +88,20 @@
     <if test="product_class_name != null and product_class_name !=''"> and product_class_name =#{product_class_name}</if>
     order by reg_date desc
   </select>
+  <select id="getDeliveryAreaList" parameterType="hashmap" resultType="java.util.Map">
+    select *
+    from store_delivery_area A 
+    where 1=1
+    and store_id = #{store_id}
+    order by A.reg_date desc 
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+  <select id="getDeliveryAreaListCount" parameterType="hashmap" resultType="Integer">
+    select ifnull(count(*),0) cnt
+    from store_delivery_area A 
+    where 1=1
+    and store_id = #{store_id}
+  </select>
   <insert id="insertProductCode" parameterType="com.webapp.manager.vo.MgProductCodeVO">
     insert into product_class_code
     (
@@ -108,4 +122,27 @@
     product_class_use_yn=#{product_class_use_yn}
 
   </insert>
+  <update id="updateDeliveryArea" parameterType="hashmap">
+  	UPDATE store_delivery SET
+  		product_delivery_area_yn = #{product_delivery_area_yn}
+  	WHERE store_id = #{store_id}
+  </update>
+  <update id="insertDeliveryArea" parameterType="hashmap">
+  	INSERT INTO store_delivery_area(
+  		store_id,
+  		area_name,
+  		postcode,
+  		additional_delivery_payment
+  	)values(
+  		#{store_id},
+  		#{area_name},
+  		#{postcode},
+  		#{additional_delivery_payment}
+  	)
+  	on duplicate KEY update
+    store_id=#{store_id},
+	area_name=#{area_name},
+	postcode=#{postcode},
+	additional_delivery_payment=#{additional_delivery_payment}
+  </update>
 </mapper>

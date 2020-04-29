@@ -30,6 +30,7 @@ import com.webapp.common.service.ExcelService;
 import com.webapp.common.vo.Fruit;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.manager.dao.MgDownloadDAO;
+import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.ProductVO;
 
 @Controller
@@ -60,44 +61,60 @@ public class MgExcelRestController {
 //        return "excelDownloadView";
 //    }
     
-    @RequestMapping(value = "/product/downloadExcelFile", method = RequestMethod.GET)
-    public void productDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
-    	List<Map<String, Object>> productList = mgDownloadDAO.getProductDtoList(productVO);
-    	excelDown(request,response,"product",productList);
+    @RequestMapping(value = "/product/downloadExcelFile")
+    public void productDownloadExcelFile(@RequestParam HashMap params, MgCommonVO mgCommonVO, Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    	try {
+    		List<Map<String, Object>> productList = mgDownloadDAO.getProductDtoList(mgCommonVO);
+    		excelDown(request,response,"product",productList);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
     }
     
-    @RequestMapping(value = "/giveaway/downloadExcelFile", method = RequestMethod.GET)
-    public void giveawayDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
-    	List<Map<String, Object>> giveawayList = mgDownloadDAO.getGiveawayDtoList(searchVO);
-    	excelDown(request,response,"giveaway",giveawayList);
+    @RequestMapping(value = "/giveaway/downloadExcelFile")
+    public void giveawayDownloadExcelFile(@RequestParam HashMap params, MgCommonVO mgCommonVO, Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    	try {
+    		List<Map<String, Object>> giveawayList = mgDownloadDAO.getGiveawayDtoList(mgCommonVO);
+        	excelDown(request,response,"giveaway",giveawayList);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
     }
     
-    @RequestMapping(value = "/order/downloadExcelFile", method = RequestMethod.GET)
-    public void orderDownloadExcelFile(@RequestParam HashMap params, Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
-    	List<Map<String, Object>> orderList = mgDownloadDAO.getOrderDtoList(params); 
-    	excelDown(request,response,"order",orderList);
+    @RequestMapping(value = "/order/downloadExcelFile")
+    public void orderDownloadExcelFile(@RequestParam HashMap params, MgCommonVO mgCommonVO, Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    	try {
+    		List<Map<String, Object>> orderList = mgDownloadDAO.getOrderDtoList(mgCommonVO); 
+        	excelDown(request,response,"order",orderList);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
     }
     
-    @RequestMapping(value = "/coupon/downloadExcelFile", method = RequestMethod.GET)
-    public void couponDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    @RequestMapping(value = "/coupon/downloadExcelFile")
+    public void couponDownloadExcelFile(Model model, MgCommonVO mgCommonVO, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
 //    	List<Map<String, Object>> couponList = mgDownloadDAO.getCouponDtoList(searchVO);
 //    	excelDown(request,response,"coupon",couponList);
     }
     
-    @RequestMapping(value = "/returned/downloadExcelFile", method = RequestMethod.GET)
-    public void returnedDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
-//    	List<Map<String, Object>> returnedList = mgDownloadDAO.getReturnedDtoList(searchVO);
-//    	excelDown(request,response,"returned",returnedList);
+    @RequestMapping(value = "/returned/downloadExcelFile")
+    public void returnedDownloadExcelFile(Model model, MgCommonVO mgCommonVO, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    	try {
+    		List<Map<String, Object>> returnedList = mgDownloadDAO.getReturnedDtoList(mgCommonVO);
+        	excelDown(request,response,"returned",returnedList);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
     }
     
-    @RequestMapping(value = "/qna/downloadExcelFile", method = RequestMethod.GET)
-    public void qnaDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    @RequestMapping(value = "/qna/downloadExcelFile")
+    public void qnaDownloadExcelFile(Model model, MgCommonVO mgCommonVO, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
 //    	List<Map<String, Object>> qnaList = mgDownloadDAO.getQnaDtoList(searchVO);
 //    	excelDown(request,response,"qna",couponList);
     }
     
-    @RequestMapping(value = "/oneToOne/downloadExcelFile", method = RequestMethod.GET)
-    public void oneToOneDownloadExcelFile(Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    @RequestMapping(value = "/oneToOne/downloadExcelFile")
+    public void oneToOneDownloadExcelFile(Model model, MgCommonVO mgCommonVO, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
 //    	List<Map<String, Object>> couponList = mgDownloadDAO.getGiveawayDtoList(searchVO);
 //    	excelDown(request,response,"oneToOne",couponList);
     }
