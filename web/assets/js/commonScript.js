@@ -1142,14 +1142,14 @@ $(document).ready(function(){
                     if(index=="payment_status" && item=="H"){
                         html='' +
                             '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'G\')">반품완료</button>' +
-                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">반품거절(결제완료)</button>' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'J\')">반품거절</button>' +
                             '';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="F"){
                         html='' +
                             '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환완료</button>' +
-                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환거절(결제완료)</button>' +
+                            '<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'E\')">교환거절</button>' +
                             '';
                         $('#setButton').html(html);
                     }

@@ -25,6 +25,10 @@ public class MgSystemDAO {
         Map<String,Object> getSystemDelivery=sql.selectOne("mall.MgSystemMapper.getSystemDelivery",MgDeliveryVO);
         return getSystemDelivery;
     }
+    public Map<String,Object> getStoreDelivery(Map<String,Object> params) throws SQLException {
+    	Map<String,Object> getStoreDelivery=sql.selectOne("mall.MgSystemMapper.getStoreDelivery",params);
+    	return getStoreDelivery;
+    }
     public List<Map<String,Object>> getProductCodeList(MgProductCodeVO mgProductCodeVO) throws SqlSessionException{
         List<Map<String,Object>> getProductCodeList=sql.selectList("mall.MgSystemMapper.getProductCodeList",mgProductCodeVO);
         return getProductCodeList;
