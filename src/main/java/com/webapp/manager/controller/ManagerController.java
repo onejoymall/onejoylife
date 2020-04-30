@@ -288,7 +288,7 @@ public class ManagerController {
 
     //경품 참여 관리
    @RequestMapping(value = "/Manager/GiveawayPartList")
-    public String managerGiveawayPartList(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+   public String managerGiveawayPartList(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try{
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
@@ -317,7 +317,7 @@ public class ManagerController {
         model.addAttribute("topNav", 2);
         model.addAttribute("postUrl", "/Manager/GiveawayPartList");
 
-        return "manager/giveaway/giveawaypartlist";
+       return "manager/giveaway/giveawaypartlist";
     }
 
     @RequestMapping(value = "/Manager/GiveawayAdd")
@@ -695,8 +695,6 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "order");
         model.addAttribute("postUrl", "/Manager/order");
-        model.addAttribute("table_name", "payment");
-        model.addAttribute("Pk", "order_no");
         return "/manager/order";
     }
 
@@ -749,8 +747,6 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "returned");
         model.addAttribute("postUrl", "/Manager/updateRefund");
-        model.addAttribute("table_name", "delivery_refund");
-        model.addAttribute("Pk", "order_no");
         return "/manager/returned";
     }
 
