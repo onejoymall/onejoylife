@@ -288,22 +288,35 @@ public class ManagerController {
 
     //경품 참여 관리
    @RequestMapping(value = "/Manager/GiveawayPartList")
-    public String managerGiveawayPartList(Model model, SearchVO searchVO,HashMap params) throws Exception {
+    public String managerGiveawayPartList(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try{
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-
             List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
+
+            //코드 목록
+            params.put("code", "giveaway_play_status");
+            List<Map<String, Object>> getGiveSelectorList = selectorDAO.getGiveSelectorList(params);
+            model.addAttribute("getGiveSelectorList", getGiveSelectorList);
+
+            //상태 카운트
+            Map<String, Object> getGiveawayStatusCount = giveawayDAO.getGiveawayStatusCount(params);
+            model.addAttribute("statusCount", getGiveawayStatusCount);
+
             model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
             model.addAttribute("list", giveawayList);
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("style", "order");
         } catch (Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("style", "order");
+        model.addAttribute("topNav", 2);
+        model.addAttribute("postUrl", "/Manager/GiveawayPartList");
+
         return "manager/giveaway/giveawaypartlist";
     }
 
@@ -682,6 +695,8 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "order");
         model.addAttribute("postUrl", "/Manager/order");
+        model.addAttribute("table_name", "payment");
+        model.addAttribute("Pk", "order_no");
         return "/manager/order";
     }
 
@@ -734,6 +749,8 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "returned");
         model.addAttribute("postUrl", "/Manager/updateRefund");
+        model.addAttribute("table_name", "delivery_refund");
+        model.addAttribute("Pk", "order_no");
         return "/manager/returned";
     }
 

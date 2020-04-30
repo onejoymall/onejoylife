@@ -356,11 +356,13 @@
 <%--                                    </c:if>--%>
                                 </div>
                                 <div class="txt-in2">
-                                    <p><span class="in1-font2"><fmt:formatNumber value="${detail.product_user_payment}" groupingUsed="true" /></span> 원</p>
+                                	<c:set var = "productTotal" value = "${detail.product_user_payment * detail.payment_order_quantity}" />
+                                	<c:set var = "discountTotal" value = "${(detail.product_user_payment - detail.product_payment) * detail.payment_order_quantity}" />
+                                    <p><span class="in1-font2"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${detail.product_user_payment - detail.product_payment}" groupingUsed="true" /></span> 원</p>
+                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> 원</p>
                                     <c:if test="${not empty deliveryPayment}">
-                                        <p>+<span class="in1-font3"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> 원</p>
+                                        <p>+<span class="in1-font3" id="deliverySpan"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> 원</p>
                                     </c:if>
                                 </div>
                             </div>
@@ -370,8 +372,8 @@
                                     <p>E-POINT 적립예정</p>
                                 </div>
                                 <div class="txt-in2 in2-color">
-                                    <p><span class="in2-font2"><fmt:formatNumber value="${detail.product_payment+deliveryPayment}" groupingUsed="true" /></span> 원</p>
-                                    <p><span><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>
+                                    <p><span class="in2-font2" id="paymentSpan"><fmt:formatNumber value="${productTotal - discountTotal + deliveryPayment}" groupingUsed="true" /></span> 원</p>
+                                    <p><span><fmt:formatNumber value="${(productTotal*detail.product_point_rate)/100}" groupingUsed="true" /> </span></span>원</p>
                                 </div>
                             </div>
                         </div>
@@ -384,10 +386,10 @@
                         <button type="button" id="submitPayment">결제하기</button>
                     </div>
                 </div>
-                <input type="hidden" name="payment" value="${detail.product_payment+deliveryPayment}">
+                <input type="hidden" name="payment" value="${productTotal - discountTotal + deliveryPayment}">
                 <input type="hidden" name="order_no" value="${order_no}">
                 <input type="hidden" name="product_cd" value="${detail.product_cd}">
-                <input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
+                <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
 
             </form>
         </main>
@@ -396,6 +398,8 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	var originDelivery = ${deliveryPayment};
+	var originPayment = ${productTotal - discountTotal + deliveryPayment};
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
@@ -417,7 +421,7 @@
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: "${detail.product_name}",
-                amount: ${detail.product_payment+deliveryPayment},
+                amount: $('input[name=payment]').val(),
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
@@ -429,7 +433,7 @@
                         "orderNumber" : $('input[name=order_no]').val(),
                         "name" : '${detail.product_name}',
                         "quantity" : $('input[name=payment_order_quantity]').val(),
-                        "amount" : ${detail.product_payment+deliveryPayment},
+                        "amount" : $('input[name=payment]').val(),
                     },
                 ],
             }, function (rsp) { // callback
@@ -567,5 +571,36 @@
             $("#password_cfValidation").addClass("text-success");
         }
     })
+    
+    $("input[name=postcode]").on("input", function() {
+    	var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
+    	$.ajax({
+			method:"post",
+            url: "/additionalDeliveryPayment",
+            data:formData,
+            async: false,
+            success: function (data) {
+            	var resultDelivery = originDelivery + data.additionalDeliveryPayment;
+            	var resultPayment = originPayment + data.additionalDeliveryPayment;
+            	$("#deliverySpan").text(resultDelivery.toLocaleString('en'));
+            	$("#paymentSpan").text(resultPayment.toLocaleString('en'));
+            	$("input[name=payment]").val(resultPayment);
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            }
+    	});
+	});
+	var originalVal = $.fn.val;
+	$.fn.val = function (value) {
+	    var res = originalVal.apply(this, arguments);
+	
+	    if (this.is('input:text') && arguments.length >= 1) {
+	        // this is input type=text setter
+	        this.trigger("input");
+	    }
+	
+	    return res;
+	};
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

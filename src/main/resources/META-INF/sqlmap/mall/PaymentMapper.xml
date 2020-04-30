@@ -122,14 +122,12 @@
     </select>
     <select id="getTodaySummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT IFNULL(COUNT(*),0) orderCnt,
-				IFNULL(COUNT(*),0) - IFNULL(SUM(B.order_id IS NOT NULL),0) payCnt,
-				IFNULL(SUM(B.order_id IS NOT NULL),0) refundCnt,
+				IFNULL(COUNT(*),0) - IFNULL(SUM(A.payment_status IN ('C','G')),0) payCnt,
+				IFNULL(SUM(A.payment_status ='C'),0) refundCnt,
 				SUM(IFNULL(payment,0)) orderTotal, 
-				SUM(IFNULL(A.payment,0))-SUM(IFNULL(B.cancel_request_amount,0)) payTotal, 
-				SUM(IFNULL(B.cancel_request_amount,0)) refundTotal
+				SUM(IFNULL(A.payment,0))-SUM(IFNULL(IF(A.payment_status IN ('C','G'),A.payment,0),0)) payTotal, 
+				SUM(IFNULL(IF(A.payment_status IN ('C','G'),A.payment,0),0)) refundTotal
 		FROM payment A
-		LEFT JOIN payment_refund B
-		ON A.order_no = B.order_id
 		WHERE DATE_FORMAT(A.reg_date,'%Y%m%d') = DATE_FORMAT(SYSDATE(),'%Y%m%d')
     </select>
     <select id="getLastMonthSummary" resultType="java.util.HashMap" parameterType="java.util.Map" >

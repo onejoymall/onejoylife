@@ -61,7 +61,7 @@ public class ManagerMainController {
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("bgInfo", bgInfo);
         }catch (Exception e){
-
+        	e.printStackTrace();
         }
         model.addAttribute("topNav",1);
         model.addAttribute("today",new Date());

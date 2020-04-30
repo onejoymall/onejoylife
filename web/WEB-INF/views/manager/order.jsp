@@ -152,6 +152,8 @@
 <%--                    </div>--%>
                 </div>
                 <form id="defaultListForm" name="defaultListForm" method="POST">
+                	<input type="hidden" name="Pk" value="${Pk}">
+                	<input type="hidden" name="table_name" value="${table_name}">
                     <table>
                         <colgroup>
                             <col width="3%">

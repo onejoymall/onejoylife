@@ -29,8 +29,25 @@ public class MgSystemDAO {
         List<Map<String,Object>> getProductCodeList=sql.selectList("mall.MgSystemMapper.getProductCodeList",mgProductCodeVO);
         return getProductCodeList;
     }
+    public List<Map<String,Object>> getDeliveryAreaList(Map<String,Object> params) throws SqlSessionException{
+    	List<Map<String,Object>> getDeliveryAreaList=sql.selectList("mall.MgSystemMapper.getDeliveryAreaList",params);
+    	return getDeliveryAreaList;
+    }
+    public Integer getDeliveryAreaListCount(Map<String,Object> params) throws SqlSessionException{
+    	Integer getDeliveryAreaListCount=sql.selectOne("mall.MgSystemMapper.getDeliveryAreaListCount",params);
+    	return getDeliveryAreaListCount;
+    }
+    public Integer getAdditionalDeliveryPayment(Map<String,Object> params) throws SqlSessionException{
+    	Integer getAdditionalDeliveryPayment=sql.selectOne("mall.MgSystemMapper.getAdditionalDeliveryPayment",params);
+    	return getAdditionalDeliveryPayment;
+    }
     public void insertProductCode(MgProductCodeVO mgProductCodeVO) throws SqlSessionException{
         sql.insert("mall.MgSystemMapper.insertProductCode",mgProductCodeVO);
-
+    }
+    public void updateDeliveryArea(Map<String,Object> params) throws SqlSessionException{
+    	sql.update("mall.MgSystemMapper.updateDeliveryArea",params);
+    }
+    public void insertDeliveryArea(Map<String,Object> params) throws SqlSessionException{
+    	sql.insert("mall.MgSystemMapper.insertDeliveryArea",params);
     }
 }

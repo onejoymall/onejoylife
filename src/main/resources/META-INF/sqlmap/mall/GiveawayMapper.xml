@@ -104,12 +104,14 @@
             (select Z.giveaway_play_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id
         FROM giveaway_play_history A  where 1=1
         ]]>
-
+        <if test="giveaway_play_status != null and giveaway_play_status !=''"><![CDATA[AND A.giveaway_play_status = #{giveaway_play_status} ]]></if>
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>
         <if test="giveaway_cd != null"> <![CDATA[AND giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_play_user_id != null"> <![CDATA[AND giveaway_play_user_id= #{giveaway_play_user_id} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="cast_start_date != null and cast_start_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) >= #{cast_start_date} ]]></if>
+        <if test="cast_end_date != null and cast_end_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) <= #{cast_end_date} ]]></if>
         order by reg_date desc
         LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
@@ -671,5 +673,16 @@
 
         )
     </insert>
+
+    <select id="getGiveawayStatusCount" resultType="java.util.HashMap" parameterType="java.util.Map" >
+        SELECT SUM(IF(A.giveaway_play_status = 'I',1,0)) iCnt,
+                SUM(IF(A.giveaway_play_status = 'F',1,0)) fCnt,
+                SUM(IF(A.giveaway_play_status = 'W',1,0)) wCnt
+        FROM giveaway_play_history A
+        WHERE 1=1
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
+    </select>
+
 
 </mapper>
