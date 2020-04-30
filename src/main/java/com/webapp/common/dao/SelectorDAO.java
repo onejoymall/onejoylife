@@ -24,5 +24,4 @@ public class SelectorDAO{
         List<Map<String, Object>> getGiveSelectorList=sql.selectList("common.CommonMapper.getGiveSelectorList",params);
         return getGiveSelectorList;
     }
-
 }

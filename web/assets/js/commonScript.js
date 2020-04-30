@@ -694,7 +694,7 @@ $(document).ready(function(){
                             heading: '등록 성공!',
                             text: [
                                 '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                '<a href="/">쇼핑 계속!</a>',
+                                '<a href="">쇼핑 계속!</a>',
                             ],
 
                             showHideTransition: 'plain', //펴짐
@@ -707,7 +707,7 @@ $(document).ready(function(){
                             heading: '등록 성공!',
                             text: [
                                 '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                '<a href="/">쇼핑 계속!</a>',
+                                '<a href="">쇼핑 계속!</a>',
                             ],
 
                             showHideTransition: 'plain', //펴짐
@@ -792,7 +792,7 @@ $(document).ready(function(){
                             '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
                         ],
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'mid-center',
                         icon: 'info',
                         hideAfter: false
                     });
@@ -805,7 +805,7 @@ $(document).ready(function(){
                             '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
                         ],
                         showHideTransition: 'plain', //펴짐
-                        position: 'mid-center',
+                        position: 'top-right',
                         icon: 'info',
                         hideAfter: false
                     });
