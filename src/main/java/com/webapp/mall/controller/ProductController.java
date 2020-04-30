@@ -434,6 +434,7 @@ public class ProductController {
 
             //관리자가 지정한 배송구분별 배송비용을 출력한다.
             String splitDeliveryPaymentString=(String)params.get("product_delivery_payment");//구분별 배송비
+            String splitDeliveryPaymentTypeString=(String)params.get("product_delivery_payment_type");//구분별 배송비
             String delivery_payment_class = (String) params.get("product_delivery_payment_class");
             Integer product_payment =(Integer)params.get("product_payment");
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
@@ -472,6 +473,9 @@ public class ProductController {
                         deliveryPayment += Integer.parseInt(splitDeliveryTypeC[i].split("\\|")[2]);
                     }
                 }
+            }
+            if("C".equals(splitDeliveryPaymentTypeString)) {
+            	deliveryPayment=0;
             }
         }catch (Exception e){
             e.printStackTrace();

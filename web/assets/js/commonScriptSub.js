@@ -621,3 +621,4 @@ $("#coupon-insert-btn").click(function(){
         }
     });
 });
+

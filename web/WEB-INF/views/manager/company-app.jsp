@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
     <main>
         <div class="main-content">
@@ -17,9 +18,9 @@
                         <button type="submit" class="keyword-src-button">검색</button>
 
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="searchType" value="store_name" id="check2" checked>
+                            <input type="checkbox" name="searchType" value="store_name" id="check2" <c:if test="${fn:contains(searchVO.searchType, 'store_name')}">checked</c:if>>
                             <label for="check2">업체명</label>
-                            <input type="checkbox" name="searchType" value="store_ceo_name" id="check1" <c:if test="${param.searchType eq 'store_ceo_name'}">checked</c:if>>
+                            <input type="checkbox" name="searchType" value="store_ceo_name" id="check1" <c:if test="${fn:contains(searchVO.searchType, 'store_ceo_name')}">checked</c:if>>
                             <label for="check1">담당자명</label>
                         </div>
                     </div>
@@ -34,9 +35,9 @@
                             <tr>
                                 <th>상태</th>
                                 <td>
-                                   <input type="checkbox" name="store_approval_status" value="T" id="src-q1" checked>
+                                   <input type="checkbox" name="store_approval_status" value="T" id="src-q1" <c:if test="${fn:contains(searchVO.store_approval_status, 'T')}">checked</c:if>>
                                    <label for="src-q1">승인</label>
-                                   <input type="checkbox" name="store_approval_status" value="W" id="src-q2" checked>
+                                   <input type="checkbox" name="store_approval_status" value="W" id="src-q2" <c:if test="${fn:contains(searchVO.store_approval_status, 'W')}">checked</c:if>>
                                    <label for="src-q2">승인대기</label>
                                 </td>
                                 <th>승인일</th>
