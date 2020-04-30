@@ -712,7 +712,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
 
-            if(params.get("pd_category_name_add")==""){
+            if(params.get("pd_category_name_add")==null){
                 error.put("카테고리 명", messageSource.getMessage("error.required","ko"));
             }
             if(isEmpty(error)){
