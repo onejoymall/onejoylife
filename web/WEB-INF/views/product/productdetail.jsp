@@ -418,9 +418,23 @@
                     <div class="shipping-box">
                         <h6>배송 안내<i class="arrow-down"></i></h6>
                         ${list.product_delivery_info}
+                        <br>
+                        <b>상품 출고지</b>
+                        <br>
+                        - (${store_delivery.forward_postcode}) 
+                          ${store_delivery.forward_roadAddress}
+                          ${store_delivery.forward_extraAddress}
+                          <br>
                     </div>
                     <div class="return-box">
                         <h6>교환/반품 안내<i class="arrow-down"></i></h6>
+                        <br>
+                        <b>교환 및 반품 주소</b>
+                        <br>
+                        - (${store_delivery.refund_postcode}) 
+                          ${store_delivery.refund_roadAddress}
+                          ${store_delivery.refund_extraAddress}
+                          <br><br>
                         ${list.product_change_info}
                     </div>
                     <div class="refund-box">

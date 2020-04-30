@@ -37,6 +37,7 @@ import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
 import com.webapp.manager.dao.MgBrandDAO;
+import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.vo.MgBrandVO;
 @Controller
 public class ProductController {
@@ -62,6 +63,8 @@ public class ProductController {
     private ReviewDAO reviewDAO;
     @Autowired
     private ConfigDAO configDAO;
+    @Autowired
+    private MgSystemDAO mgSystemDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
@@ -256,6 +259,10 @@ public class ProductController {
             Map<String,Object> configbot = configDAO.getConfigDetail(params);
             model.addAttribute("configtop",configtop);
             model.addAttribute("configbot",configbot);
+            
+            //기본 배송설정
+            Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
+            model.addAttribute("store_delivery",storeInfo);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -387,6 +394,10 @@ public class ProductController {
             Integer deliveryPayment = deliveryPayment(detail);
             model.addAttribute("option",option );
             model.addAttribute("deliveryPayment",deliveryPayment );
+
+            //기본 배송설정
+            Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
+            model.addAttribute("store_delivery",storeInfo);
             if(!isEmpty(userInfo)){
 
                 //최근 배송지 불러오기

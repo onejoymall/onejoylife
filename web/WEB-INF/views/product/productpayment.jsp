@@ -81,14 +81,14 @@
                             <tr >
                                 <td>주문확인용 비밀번호 입력</td>
                                 <td>
-                                    <input type="password" name="password" class="sec1-in1">
+                                    <input type="password" id="password" name="password" class="sec1-in1">
                                     <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
                                 </td>
                             </tr>
                             <tr class="bor-none">
                                 <td>주문확인용 비밀번호 입력 확인</td>
                                 <td>
-                                    <input type="password"  name="password_cf" class="sec1-in1">
+                                    <input type="password" id="password_ch" name="password_cf" class="sec1-in1">
                                     <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
                                 </td>
                             </tr>
@@ -125,6 +125,7 @@
 
                                 </td>
                             </tr>
+                            <c:if test="${sessionScope.login}">
                             <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
@@ -142,6 +143,7 @@
                                     </p>
                                 </td>
                             </tr>
+                            </c:if>
                             <tr>
                                 <td>받으시는 분</td>
                                 <td><input type="text"  class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
@@ -233,6 +235,30 @@
                                     <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
                                 </td>
                             </tr>
+                            <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망일자</td>
+                                <td class="sel-td">
+
+                                    <div class="cla">
+                                        <input type="text" id="start_date" name="hope_date" class="date_pick">
+                                        <div class="cla-img1"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
+                            <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망시간</td>
+                                <td class="sel-td">
+									
+									<div class="cla">
+                                        <input type="text" name="hope_time" class="time_pick">
+                                        <!-- <div class="cla-img1"></div> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
                             </tbody>
                         </table>
                     </div>
@@ -398,15 +424,71 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-	var originDelivery = ${deliveryPayment};
-	var originPayment = ${productTotal - discountTotal + deliveryPayment};
+    var originDelivery = ${deliveryPayment};
+    var originPayment = ${productTotal - discountTotal + deliveryPayment};
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
     $("#submitPayment").on("click",function() {
-        if(!$('#le-ck').is(":checked")){
+        if($('#order_user_name').val() == ""){
             $.toast({
-                text: "이용약관 동의 는 필수 항목입니다.",
+                text: "주문자 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_email').val() == ""){
+            $.toast({
+                text: "이메일주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_phone_a').val() == "" || $('#order_user_phone_b').val() == "" || $('#order_user_phone_c').val() == ""){
+            $.toast({
+                text: "휴대폰 번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        <c:if test="${empty sessionScope.email}">
+        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+            $.toast({
+                text: "주문확인용 비밀번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        </c:if>
+        else if($('#delivery_user_name').val() == ""){
+            $.toast({
+                text: "받으시는 분 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#postcode').val() == "" || $('#roadAddress').val() == "" || $('#extraAddress').val() == ""){
+            $.toast({
+                text: "배송 주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if(!$('#le-ck').is(":checked")){
+            $.toast({
+                text: "이용약관 동의는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
                 position: 'top-right',
                 heading: 'Error',
@@ -571,36 +653,36 @@
             $("#password_cfValidation").addClass("text-success");
         }
     })
-    
+
     $("input[name=postcode]").on("input", function() {
-    	var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
-    	$.ajax({
-			method:"post",
+        var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
+        $.ajax({
+            method:"post",
             url: "/additionalDeliveryPayment",
             data:formData,
             async: false,
             success: function (data) {
-            	var resultDelivery = originDelivery + data.additionalDeliveryPayment;
-            	var resultPayment = originPayment + data.additionalDeliveryPayment;
-            	$("#deliverySpan").text(resultDelivery.toLocaleString('en'));
-            	$("#paymentSpan").text(resultPayment.toLocaleString('en'));
-            	$("input[name=payment]").val(resultPayment);
+                var resultDelivery = originDelivery + data.additionalDeliveryPayment;
+                var resultPayment = originPayment + data.additionalDeliveryPayment;
+                $("#deliverySpan").text(resultDelivery.toLocaleString('en'));
+                $("#paymentSpan").text(resultPayment.toLocaleString('en'));
+                $("input[name=payment]").val(resultPayment);
             },
             error: function (xhr, status, error) {
                 console.log(error,xhr,status );
             }
-    	});
-	});
-	var originalVal = $.fn.val;
-	$.fn.val = function (value) {
-	    var res = originalVal.apply(this, arguments);
-	
-	    if (this.is('input:text') && arguments.length >= 1) {
-	        // this is input type=text setter
-	        this.trigger("input");
-	    }
-	
-	    return res;
-	};
+        });
+    });
+    var originalVal = $.fn.val;
+    $.fn.val = function (value) {
+        var res = originalVal.apply(this, arguments);
+
+        if (this.is('input:text') && arguments.length >= 1) {
+            // this is input type=text setter
+            this.trigger("input");
+        }
+
+        return res;
+    };
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

@@ -8,7 +8,7 @@
             <h2 name="detail">경품 참여 관리</h2>
             <div class="main-hd-btn-wrap">
                 <%--                <button type="button" name="detail">상품 등록</button>--%>
-               <%-- <button type="button" class="ready"><i class="exel-ic"></i>일괄 등록/수정</button>--%>
+                <button type="button" class="ready"><i class="exel-ic"></i>일괄 등록/수정</button>
             </div>
         </div>
         <div class="search-form">
@@ -16,6 +16,7 @@
                 <div class="keyword-src-wrap">
                     <input type="text" class="keyword-src" name="keyword-src">
                     <button type="submit" class="keyword-src-button">검색</button>
+
                     <div class="src-filter-wrap">
                         <input type="checkbox" name="searchType" value="giveaway_name" id="check2" checked>
                         <label for="check2">경품명</label>
@@ -38,7 +39,7 @@
                                 <c:if test="${not empty getGiveSelectorList}">
                                     <option value="">선택</option>
                                     <c:forEach var="getGiveSelectorList" items="${getGiveSelectorList}" varStatus="status">
-                                        <option value="${getGiveSelectorList.code_value}" <c:if test="${getGiveSelectorList.code_value eq param.giveaway_play_status}">selected</c:if>>${getGiveSelectorList.code_name}</option>
+                                        <option value="${getGiveSelectorList.code_value}" <c:if test="${getGiveSelectorList.code_value eq param.payment_status}">selected</c:if>>${getGiveSelectorList.code_name}</option>
                                     </c:forEach>
                                 </c:if>
                             </select>
@@ -65,12 +66,12 @@
                         <td>
                             <div class="input-box2">
                                 <div class="cla">
-                                    <input type="text" id="cast_start_date" name="cast_start_date" class="date_pick" class="${param.delivery_start_date}">
+                                    <input type="text" id="cast_start_date" name="cast_start_date" class="date_pick" class="${param.cast_start_date}">
                                     <div class="cla-img1"></div>
                                 </div>
                                 <p class="cla-p1"> ~ </p>
                                 <div class="cla">
-                                    <input type="text" id="cast_end_date" name="cast_end_date" class="date_pick" class="${param.delivery_end_date}">
+                                    <input type="text" id="cast_end_date" name="cast_end_date" class="date_pick" class="${param.cast_end_date}">
                                     <div class="cla-img1"></div>
                                 </div>
                             </div>
@@ -97,6 +98,8 @@
                 <%--                </div>--%>
             </div>
             <form name="defaultListForm" id="defaultListForm" method="POST">
+                <input type="hidden" name="Pk" value="${Pk}">
+                <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
                         <col width="4%">
@@ -110,7 +113,7 @@
                     <tr>
                         <td><input type="checkbox" id="all-chk" name="all-chk"></td>
                         <td name="detail">이메일</td>
-                        <td name="detail">응모일</td>
+                        <td name="detail">응모시간</td>
                         <td>응모포인트</td>
                         <td>추첨일</td>
                         <td>당첨결과</td>

@@ -30,6 +30,8 @@
     <link rel='stylesheet' href='<c:url value="/assets/css/common/common.css"/>'/>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <!-- timepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
     <!--modal-->
 <%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />--%>
@@ -41,6 +43,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js"/>"></script>
+    <!-- timepicker -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
     //전역변수
     <c:if test="${not empty postUrl}">

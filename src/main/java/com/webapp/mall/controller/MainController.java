@@ -277,10 +277,11 @@ public class MainController {
             List<Map<String,Object>> productSpList = productDAO.getProductList(searchVO);
             model.addAttribute("list", productSpList);
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("style", "today-sale");
         }catch(Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("style", "today-sale");
+
         if(device.isMobile()){
             return "mobile/today";
         } else {
