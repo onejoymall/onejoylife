@@ -339,7 +339,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>영문 상품명<span class="cc-red">&#40;필수&#41;</span></th>
+                        <th>영문 상품명</th>
                         <td>
                             <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
                             <input type="text" id="product_name_en" name="product_name_en">
@@ -423,20 +423,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>소비자가<span class="cc-red">&#40;필수&#41;</span></th>
+                        <th>소비자가</th>
                         <td>
                             <input type="text" id="product_user_payment" name="product_user_payment"> 원
                         </td>
                     </tr>
                     <tr>
-                        <th>공급가</th>
+                        <th>공급가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="product_company_payment" name="product_company_payment"> 원
                         </td>
                     </tr>
 
                     <tr>
-                        <th>판매가</th>
+                        <th>판매가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="product_payment" name="product_payment"> 원
                         </td>
