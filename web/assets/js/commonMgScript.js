@@ -453,3 +453,79 @@ $(".basicNoToolbar").summernote({
         }
     }
 });
+
+//지역별 배송비 사용설정
+$("input[name=product_delivery_area_yn]").click(function(){
+	$.ajax({
+		url: "/Manager/updateDeliveryArea",
+		method: "post",
+		data: "product_delivery_area_yn="+$(this).val(),
+		success:function(data){
+			if(data.success){
+				$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 500,
+                    afterHidden: function () {
+                        location.reload();
+                    }
+                });
+			}
+		},
+		error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+	});
+});
+
+//지역별 배송비 등록
+$("#areaInsertBtn").click(function(){
+	var formData = $('#defaultForm').serialize();
+	$.ajax({
+		url: "/Manager/insertDeliveryArea",
+		method: "post",
+		data: formData,
+		success:function(data){
+			if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            }
+			if(data.success){
+				$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.reload();
+                    }
+                });
+			}
+		},
+		error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        },
+	});
+});

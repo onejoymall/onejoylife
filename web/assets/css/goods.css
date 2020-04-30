@@ -686,3 +686,15 @@ input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-m
 .cc2 a{
     color:#da394d;
 }
+.right button{
+    background:#da394a;
+    color:#fff;
+    border: 1px solid;
+    padding: 3px 5px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.goods-detail-wrap {
+    width: 100%;
+    padding: 30px 10px;
+}

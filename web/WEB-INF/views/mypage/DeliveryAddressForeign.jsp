@@ -193,6 +193,7 @@
    <div class="modal-content">
        <div class="modal-close-address">
            <p>배송지 수정</p>
+           <input type="hidden" name="product_delivery_International_type" value="C"/>
            <div class="close"></div>
        </div>
        <div class="content-in">

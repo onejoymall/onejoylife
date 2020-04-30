@@ -8,8 +8,6 @@
     FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
 			D.pd_category_name
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	left JOIN product_category D
@@ -32,14 +30,12 @@
   <select id="getCategorySalesList" resultType="java.util.HashMap">
     SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
 			D.pd_category_name,
-			ifnull(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	left JOIN product_category D
@@ -66,8 +62,6 @@
     FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
 			email
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	LEFT JOIN user B
 	ON A.payment_user_id = B.usr_id
 	LEFT JOIN user_grant D
@@ -90,14 +84,12 @@
 			email,
 			username,
 			D.user_grant_name,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	LEFT JOIN user B
 	ON A.payment_user_id = B.usr_id
 	LEFT JOIN user_grant D
@@ -120,14 +112,12 @@
   <select id="getPaymethodSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
   	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
 			B.code_name,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	LEFT JOIN code B
 	ON B.code = 'product_payment_type' AND A.payment_type_cd = B.code_value
 	left JOIN product C
@@ -142,21 +132,14 @@
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1,2
 	order by A.reg_date desc 
-	LIMIT ${rowStart-1}, ${displayRowCount}	
+	LIMIT ${rowStart-1}, ${displayRowCount}
   </select>
   
   <select id="getPaymethodSalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
   	SELECT IFNULL(COUNT(*),0) cnt
     FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
-			B.code_name,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
-			ifnull(COUNT(distinct C.product_id),0) product_count,
-			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
-			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			B.code_name
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	LEFT JOIN code B
 	ON B.code = 'product_payment_type' AND A.payment_type_cd = B.code_value
 	left JOIN product C
@@ -173,14 +156,12 @@
   </select>
   <select id="getDateSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
   	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -195,8 +176,6 @@
  	SELECT IFNULL(COUNT(*),0) cnt
   	FROM(SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -209,14 +188,12 @@
   	SELECT  CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
 					'~',
 					DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d')) reg_date,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -233,8 +210,6 @@
 					'~',
 					DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d')) reg_date
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -245,14 +220,12 @@
   
   <select id="getMonthSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
   	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m') reg_date,
-			IFNULL(sum(payment_order_quantity),0) payment_order_quantity,
+			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -267,8 +240,6 @@
  	SELECT IFNULL(COUNT(*),0) cnt
   	FROM(SELECT  DATE_FORMAT(A.reg_date,'%Y.%m') reg_date
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -281,14 +252,12 @@
   	select *
   	from (select *,@num:=@num+1 rank 
 	from (SELECT  D.pd_category_name,
-			ifnull(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status in ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	left JOIN product_category D
@@ -315,8 +284,6 @@
   	SELECT IFNULL(COUNT(*),0) cnt
  	FROM (SELECT 	D.pd_category_name
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	left JOIN product_category D
@@ -343,14 +310,12 @@
 	from (SELECT  C.product_cd,
   			C.product_name,
 			C.product_user_payment one_product_user_payment,
-			ifnull(sum(payment_order_quantity),0) payment_order_quantity,
+			ifnull(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
 			ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
 			ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
-			ifnull(sum(E.cancel_request_amount),0) cancel_request_amount
+			ifnull(sum(IF(A.payment_status in ('C','G'),A.payment,0)),0) cancel_request_amount
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
@@ -370,8 +335,6 @@
   	SELECT IFNULL(COUNT(*),0) cnt
  	FROM (SELECT  C.product_cd
 	FROM payment A
-	LEFT JOIN payment_refund E
-	ON A.order_no = E.order_id
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	left JOIN product_category D
