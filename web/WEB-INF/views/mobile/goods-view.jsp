@@ -8,7 +8,7 @@
     <div class="content">
         <form name="defaultForm" id="defaultForm" method="POST" action="/product/productPayment">
         <div class="closeBox">
-            <button class="closeBtn"></button>
+            <button type="button" class="closeBtn"></button>
         </div>
 
         <div class="scroll">
@@ -25,9 +25,9 @@
                 <ul class="flexbetween">
                     <li class="width-35">
                         <div class="number-group">
-                           <button class="button number-minus"></button>
+                           <button type="button" class="button number-minus"></button>
                            <input type="number" name="payment_order_quantity" value="1">
-                           <button class="button number-plus"></button>
+                           <button type="button" class="button number-plus"></button>
                         </div>
                     </li>
                     <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">원</span></h3></li>
@@ -41,9 +41,9 @@
                 <ul class="flexbetween">
                     <li class="width-35">
                         <div class="number-group">
-                           <button class="button number-minus"></button>
+                           <button type="button" class="button number-minus"></button>
                            <input type="number" value="1">
-                           <button class="button number-plus"></button>
+                           <button type="button" class="button number-plus"></button>
                         </div>
                     </li>
                     <li><h3>1,500<span class="text-sm">원</span></h3></li>
@@ -72,7 +72,7 @@
     <div class="content">
         <header>
            <h3>상품평 작성하기</h3>
-            <button class="popClose">
+            <button type="button" class="popClose">
                 <i class="ri-close-line"></i>
             </button>
         </header>
@@ -150,7 +150,7 @@
            <li>소비자가</li>
            <li class="line-through grey"><fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</li>
        </ul>
-       <%--<ul class="flexbetween py-05">
+       <ul class="flexbetween py-05">
            <li>세일</li>
            <li class="line-through grey">319,000원</li>
        </ul>--%>
@@ -216,44 +216,46 @@
                 </a>
         </div>
         </div>
-<%--        <div class="my-1 " id="content02">--%>
-<%--            <h3 class="mb-1">상품 필수정보</h3>--%>
-<%--            <hr class="mb-1">--%>
-<%--            <h2 class="mb-05">SM-G05-ZR/SS</h2>--%>
-<%--            <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>--%>
-<%--        </div>--%>
-<%--        <div class="my-1 bg_grey p-2 ">--%>
-<%--            <p class="grey pb-05">정격전압 (v)</p>--%>
-<%--            <h3>220</h3>--%>
-<%--            <p class="grey pt-2 pb-05">소비전력 (W)</p>--%>
-<%--            <h3>420</h3>--%>
-<%--            <p class="grey pt-2 pb-05">에너지소비효율등급</p>--%>
-<%--            <h3>3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음</h3>--%>
-<%--            <p class="grey pt-2 pb-05">동일모델 출시년월</p>--%>
-<%--            <h3>2017년 10월</h3>--%>
-<%--            <p class="grey pt-2 pb-05">품질보증기준</p>--%>
-<%--            <h3>관련법 및 소비자 분쟁해결 기준에 따름</h3>--%>
-<%--            <p class="grey pt-2 pb-05">크기 (mm)</p>--%>
-<%--            <h3>가로 : 630, 세로 : 690, 높이 : 1050</h3>--%>
-<%--            <p class="grey pt-2 pb-05">무게 (kg)</p>--%>
-<%--            <h3>47</h3>--%>
-<%--            <p class="grey pt-2 pb-05">색상</p>--%>
-<%--            <h3>실버</h3>--%>
-<%--            <p class="grey pt-2 pb-05">제조사</p>--%>
-<%--            <h3>삼성전자</h3>--%>
-<%--            <p class="grey pt-2 pb-05">제조국가</p>--%>
-<%--            <h3>태국</h3>--%>
-<%--            <p class="grey pt-2 pb-05">수입자</p>--%>
-<%--            <h3>삼성전자</h3>--%>
-<%--            <p class="grey pt-2 pb-05">A / S 책임자 (전화번호)</p>--%>
-<%--            <h3>삼성전자 (1588-3366)</h3>--%>
-<%--            <p class="grey pt-2 pb-05">사양</p>--%>
-<%--            <h3>태국</h3>--%>
-<%--            <p class="grey pt-2 pb-05">KC 전파적합성 인증</p>--%>
-<%--            <h3>kc마크MSIP-REI-WAF700SD</h3>--%>
-<%--            <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>--%>
-<%--            <h3>kc마크HU07310-17049C</h3>--%>
-<%--        </div>--%>
+        <div class="my-1 " id="content02">
+             <h3 class="mb-1">상품 필수정보</h3>
+             <hr class="mb-1">
+             <h2 class="mb-05">SM-G05-ZR/SS</h2>
+             <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>
+         </div>
+         <c:out value="${configtop.market_config_value}" escapeXml="false"/>
+         <div class="my-1 bg_grey p-2 ">
+             <p class="grey pb-05">정격전압 (v)</p>
+             <h3>220</h3>
+             <p class="grey pt-2 pb-05">소비전력 (W)</p>
+             <h3>420</h3>
+             <p class="grey pt-2 pb-05">에너지소비효율등급</p>
+             <h3>3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음</h3>
+             <p class="grey pt-2 pb-05">동일모델 출시년월</p>
+             <h3>2017년 10월</h3>
+             <p class="grey pt-2 pb-05">품질보증기준</p>
+             <h3>관련법 및 소비자 분쟁해결 기준에 따름</h3>
+             <p class="grey pt-2 pb-05">크기 (mm)</p>
+             <h3>가로 : 630, 세로 : 690, 높이 : 1050</h3>
+             <p class="grey pt-2 pb-05">무게 (kg)</p>
+             <h3>47</h3>
+             <p class="grey pt-2 pb-05">색상</p>
+             <h3>실버</h3>
+             <p class="grey pt-2 pb-05">제조사</p>
+             <h3>삼성전자</h3>
+             <p class="grey pt-2 pb-05">제조국가</p>
+             <h3>태국</h3>
+             <p class="grey pt-2 pb-05">수입자</p>
+             <h3>삼성전자</h3>
+             <p class="grey pt-2 pb-05">A / S 책임자 (전화번호)</p>
+             <h3>삼성전자 (1588-3366)</h3>
+             <p class="grey pt-2 pb-05">사양</p>
+             <h3>태국</h3>
+             <p class="grey pt-2 pb-05">KC 전파적합성 인증</p>
+             <h3>kc마크MSIP-REI-WAF700SD</h3>
+             <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>
+             <h3>kc마크HU07310-17049C</h3>
+         </div>
+         <c:out value="${configbot.market_config_value}" escapeXml="false"/>
         <c:import url="/product/productDetailReview"/>
         <!-- <div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">
@@ -431,13 +433,29 @@
                 <h3 class="mb-1">배송 안내</h3>
                 <hr class="grey mb-1">
                 ${list.product_delivery_info}
+                <br>
+                <b>상품 출고지</b>
+                <br>
+                - (${store_delivery.forward_postcode}) 
+                  ${store_delivery.forward_roadAddress}
+                  ${store_delivery.forward_extraAddress}
+                  <br><br>
+                <h3 class="mb-1">교환/반품 안내</h3>
+                <hr class="grey mb-1">
+                <b>교환 및 반품 주소</b>
+                <br>
+                - (${store_delivery.refund_postcode}) 
+                  ${store_delivery.refund_roadAddress}
+                  ${store_delivery.refund_extraAddress}
+                  <br><br>
+                ${list.product_change_info}
                 <h3 class="mb-1">환불 안내</h3>
                 <hr class="grey mb-1">
                 ${list.product_service_info}
             </div>
         </div>
     </section>
-    <button class="btn btn_bottom btn-redcover" id="btn_purchase">구매하기</button>
+    <button type="button" class="btn btn_bottom btn-redcover" id="btn_purchase">구매하기</button>
 
 <script>
 $(document).ready(function(){

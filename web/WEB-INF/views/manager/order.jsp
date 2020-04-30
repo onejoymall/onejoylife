@@ -266,6 +266,10 @@
                                 <td class="delivery_start_date">2020-03-14</td>
                             </tr>
                             <tr>
+                                <th>희망 배송일시</th>
+                                <td><span class="delivery_hope_date"></span> <span class="delivery_hope_time"></span></td>
+                            </tr>
+                            <tr>
                                 <th>공급사</th>
                                 <td class="product_made_company_name">-</td>
                             </tr>

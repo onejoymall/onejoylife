@@ -125,6 +125,7 @@
 
                                 </td>
                             </tr>
+                            <c:if test="${sessionScope.login}">
                             <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
@@ -142,6 +143,7 @@
                                     </p>
                                 </td>
                             </tr>
+                            </c:if>
                             <tr>
                                 <td>받으시는 분</td>
                                 <td><input type="text"  class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
@@ -233,6 +235,30 @@
                                     <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
                                 </td>
                             </tr>
+                            <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망일자</td>
+                                <td class="sel-td">
+
+                                    <div class="cla">
+                                        <input type="text" id="start_date" name="hope_date" class="date_pick">
+                                        <div class="cla-img1"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
+                            <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망시간</td>
+                                <td class="sel-td">
+									
+									<div class="cla">
+                                        <input type="text" name="hope_time" class="time_pick">
+                                        <!-- <div class="cla-img1"></div> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
                             </tbody>
                         </table>
                     </div>

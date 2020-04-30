@@ -21,7 +21,10 @@
         payment_type_cd,
         payment_status,
         customs_clearance_number,
-        password
+        password,
+        delivery_hope_date,
+        delivery_hope_time,
+        payment_order_quantity
         )values (
          #{success},
          #{imp_uid},
@@ -39,7 +42,10 @@
         #{payment_type_cd},
         #{payment_status},
         #{customs_clearance_number},
-        #{password}
+        #{password},
+        #{hope_date},
+        #{hope_time},
+        #{payment_order_quantity}
         )
     </insert>
 

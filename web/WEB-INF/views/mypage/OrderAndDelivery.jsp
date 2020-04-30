@@ -87,7 +87,7 @@
                                             </a>
                                         </td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /></span><span>원</span></td>
-                                        <td class="lis-font-w"><span>1</span></td>
+                                        <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
                                         <td class="pointer">
                                             <p class="lis-font-w dis-none">주문접수</p>

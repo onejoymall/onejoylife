@@ -69,6 +69,16 @@ $(document).ready(function(){
         });
         $(".date_pick").datepicker();                    
     });
+    //시간
+    $(function(){
+    	$('.time_pick').timepicker({
+		    timeFormat: 'hh:mm p',
+		    interval: 60,
+		    dynamic: false,
+		    dropdown: true,
+		    scrollbar: true
+		});
+    })
     //file upload
     // var uploadFile = $('.fileBox .uploadBtn');
     //

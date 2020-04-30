@@ -64,12 +64,14 @@
 
         <h2 class="pb-1 mt-4">배송지 정보</h2>
         <hr>
+        <c:if test="${sessionScope.login}">
         <p class="text-md mt-2 mb-05">배송지 선택</p>
         <div class="my-1">
-            <input type="radio" name="selectAddress" id="shipping01" checked value="OLD"><label for="shipping01">기본 배송지</label>
-            <input type="radio" id="shipping02" name="selectAddress" value="LAST"><label for="shipping02">최신 배송지</label>
-            <input type="radio" id="shipping03" name="selectAddress" value="NEW"><label for="shipping03">새로입력</label>
+            <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD"><label for="ra1-1">기본 배송지</label>
+            <input type="radio" id="ra1-2" name="selectAddress" value="LAST"><label for="ra1-2">최신 배송지</label>
+            <input type="radio" id="ra1-3" name="selectAddress" value="NEW"><label for="ra1-3">새로입력</label>
         </div>
+        </c:if>
         <p class="text-md mt-2 mb-05">받으시는 분</p>
         <input type="text" class="width-100 mb-05"  name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>">
 
@@ -145,6 +147,16 @@
             <option value="self">직접입력</option>
         </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
+        
+        <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
+        <p class="text-md mt-2 mb-05">배송 희망일자</p>
+        <input type="text" id="start_date" name="hope_date" class="date_pick width-100 mb-05">
+        </c:if>
+        
+        <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
+        <p class="text-md mt-2 mb-05">배송 희망시간</p>
+        <input type="text" name="hope_time" class="time_pick width-100 mb-05">
+        </c:if>
 
         <h2 class="pb-1 mt-4">주문상품 정보</h2>
         <hr>
@@ -213,12 +225,14 @@
     <h1 class="pb-1">최종 결제 금액 확인</h1>
     <hr>
     <ul class="calculator pt-2 pb-1">
+    	<c:set var = "productTotal" value = "${detail.product_user_payment * detail.payment_order_quantity}" />
+       	<c:set var = "discountTotal" value = "${(detail.product_user_payment - detail.product_payment) * detail.payment_order_quantity}" />
         <li class="text-lg">총 상품 금액</li>
-        <li><fmt:formatNumber value="${detail.product_user_payment *param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+        <li><fmt:formatNumber value="${productTotal}" groupingUsed="true" /> <span>원</span></li>
     </ul>
     <ul class="calculator pb-1">
         <li>할인금액</li>
-        <li>- <fmt:formatNumber value="${(detail.product_user_payment - detail.product_payment) * param.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+        <li>- <fmt:formatNumber value="${discountTotal}" groupingUsed="true" /> <span>원</span></li>
     </ul>
     <%--        <ul class="calculator pb-1">--%>
     <%--            <li>할인쿠폰</li>--%>
@@ -227,13 +241,13 @@
     <ul class="calculator pb-1">
         <li>배송비</li>
         <c:if test="${not empty deliveryPayment}">
-            <li><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+            <li><span id="deliverySpan"><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> <span>원</span></li>
         </c:if>
     </ul>
     <hr class="grey my-1">
     <ul class="calculator pb-1">
         <li>최종 결제 금액</li>
-        <li class="text-lg red"><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+        <li class="text-lg red"><span id="paymentSpan"><fmt:formatNumber value="${productTotal - discountTotal + deliveryPayment}" groupingUsed="true" /></span> <span>원</span></li>
     </ul>
     <ul class="calculator pb-1">
         <li>E-POINT 적립예정</li>
@@ -249,10 +263,10 @@
     </ul>
 </div>
 
-<input type="hidden" name="payment" value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}">
-<input type="hidden" name="order_no" value="${order_no}">
-<input type="hidden" name="product_cd" value="${detail.product_cd}">
-<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}">
+<input type="hidden" name="payment" value="${productTotal - discountTotal + deliveryPayment}">
+                <input type="hidden" name="order_no" value="${order_no}">
+                <input type="hidden" name="product_cd" value="${detail.product_cd}">
+                <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
 
 </form>
 
@@ -294,6 +308,8 @@
 </script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	var originDelivery = ${deliveryPayment};
+	var originPayment = ${productTotal - discountTotal + deliveryPayment};
 	var IMP = window.IMP; // 생략해도 괜찮습니다.
 	IMP.init("imp78484974");
 	var formData = $('#defaultForm').serialize();
@@ -315,7 +331,7 @@
 				pay_method:$('input[name=payment_type_cd]:checked').val(),
 				merchant_uid:$('input[name=order_no]').val(),
 				name: "${detail.product_name}",
-				amount: ${detail.product_payment+deliveryPayment},
+				amount: $('input[name=payment]').val(),
 				buyer_email: "${sessionScope.email}",
 				buyer_name: $('#order_user_name').val(),
 				buyer_tel: $('#order_user_phone').val(),
@@ -327,10 +343,10 @@
 						"orderNumber" : $('input[name=order_no]').val(),
 						"name" : '${detail.product_name}',
 						"quantity" : $('input[name=payment_order_quantity]').val(),
-						"amount" : ${detail.product_payment+deliveryPayment},
+						"amount" : $('input[name=payment]').val(),
 					},
 				],
-				m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",
+				m_redirect_url: "${baseURL}/MyPage/DashBoard",
 			}, function (rsp) { // callback
 				var formData = $('#defaultForm').serialize()
 					+'&payment_class=PRODUCT'
@@ -466,6 +482,37 @@
 			$("#password_cfValidation").addClass("text-success");
 		}
 	})
+	
+	$("input[name=postcode]").on("input", function() {
+    	var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
+    	$.ajax({
+			method:"post",
+            url: "/additionalDeliveryPayment",
+            data:formData,
+            async: false,
+            success: function (data) {
+            	var resultDelivery = originDelivery + data.additionalDeliveryPayment;
+            	var resultPayment = originPayment + data.additionalDeliveryPayment;
+            	$("#deliverySpan").text(resultDelivery.toLocaleString('en'));
+            	$("#paymentSpan").text(resultPayment.toLocaleString('en'));
+            	$("input[name=payment]").val(resultPayment);
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            }
+    	});
+	});
+	var originalVal = $.fn.val;
+	$.fn.val = function (value) {
+	    var res = originalVal.apply(this, arguments);
+	
+	    if (this.is('input:text') && arguments.length >= 1) {
+	        // this is input type=text setter
+	        this.trigger("input");
+	    }
+	
+	    return res;
+	};
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
