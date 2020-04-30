@@ -84,7 +84,7 @@
             <div class="mini-bnr-section">
                 <div class="mini-bnr-inner">
                     <a href="#">
-                        <img src="assets/img/mini-banner1.png" alt="프리미엄 리뷰 상품평 쓰고 30만원 받자"/>
+                        <img src="/banner/mini-banner1.png" alt="프리미엄 리뷰 상품평 쓰고 30만원 받자"/>
                     </a>
                 </div>
             </div>
@@ -128,14 +128,14 @@
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                    <img src="/banner/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                    <img src="/banner/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
                 </a>
             </div>
         </div>
@@ -211,14 +211,14 @@
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                    <img src="/banner/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                    <img src="/banner/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
                 </a>
             </div>
         </div>
@@ -292,14 +292,14 @@
         <div class="mini-bnr-section mini-bnr-5">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner5.png" alt="코카콜라 1만원 이상 구매시 1천원 할인"/>
+                    <img src="/banner/mini-banner5.png" alt="코카콜라 1만원 이상 구매시 1천원 할인"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-6">
             <div class="mini-bnr-inner">
                 <a href="#">
-                    <img src="assets/img/mini-banner6.png" alt="유제품 1만원 이상 구매시 10%"/>
+                    <img src="/banner/mini-banner6.png" alt="유제품 1만원 이상 구매시 10%"/>
                 </a>
             </div>
         </div>

@@ -9,7 +9,7 @@
     <form id="defaultForm" name="defaultForm" method="POST">
         <input type="hidden" name="product_cd" value="${param.product_cd}">
         <div class="main-section">
-            <p class="goods-name">LG휘센 2015년형 크라운2 스페셜 스탠드형 에어컨</p>
+<%--            <p class="goods-name">LG휘센 2015년형 크라운2 스페셜 스탠드형 에어컨</p>--%>
             <table>
                 <colgroup>
                     <col style="width: 120px;">

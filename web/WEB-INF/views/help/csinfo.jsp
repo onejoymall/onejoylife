@@ -18,7 +18,7 @@
                 <div class="r-sec1">
                     <p class="sec1-h1">원조이라이프 소개</p>
                     <div class="intro-imgbox">
-                        <img src="../assets/img/onejoylife-img.png">
+                        <img src="/banner/onejoylife-img.png">
                         <p class="intro-img-txt">원조이라이프는 여러분의 행복을 책임집니다.</p>
                     </div>
                     <div class="line2"></div>

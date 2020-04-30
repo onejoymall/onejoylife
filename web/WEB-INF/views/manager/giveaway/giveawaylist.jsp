@@ -625,7 +625,7 @@
                         <td>
                             <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
                             <%--                            </p>--%>
-                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg" value="2">
+                            <input type="file" id="goods-imgMidium" name="uploadfile2" placeholder="ex) sample1.jpg" value="2">
                         </td>
                     </tr>
                     <tr>
@@ -633,7 +633,7 @@
                         <td>
                             <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
                             <%--                            </p>--%>
-                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg" value="3">
+                            <input type="file" id="goods-imgTiny" name="uploadfile3" placeholder="ex) sample1.jpg" value="3">
                         </td>
                     </tr>
                     <tr>
@@ -641,7 +641,7 @@
                         <td>
                             <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
                             <%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <input type="file" id="goods-imgSmall" name="uploadfile4" placeholder="ex) sample1.jpg" value="4">
                         </td>
                     </tr>
                     <tr>
@@ -651,7 +651,7 @@
                             <%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
                             <%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
                             <%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <input type="file" id="goods-imgSmall" name="uploadfile5" placeholder="ex) sample1.jpg" value="4">
                         </td>
                     </tr>
 

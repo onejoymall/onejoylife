@@ -20,7 +20,7 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="assets/img/m-banner.png" alt="e point 경품참여">
+            <img src="/banner/m-banner.png" alt="e point 경품참여">
         </div>
     </div>
     <div class="mainList-wrap mt-1">
@@ -54,7 +54,7 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="assets/img/m-banner2.png" alt="행운의 경품당첨 주인공이 되세요!">
+            <img src="/banner/m-banner2.png" alt="행운의 경품당첨 주인공이 되세요!">
         </div>
     </div>
     <div class="mainList-wrap mt-1 clearfix">
@@ -235,7 +235,7 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="assets/img/m-banner3.png" alt="행운의 경품당첨 주인공이 되세요!">
+            <img src="/banner/img/m-banner3.png" alt="행운의 경품당첨 주인공이 되세요!">
         </div>
     </div>
     <div>

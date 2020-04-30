@@ -261,14 +261,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>공급가</th>
+                        <th>공급가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="product_company_payment" name="product_company_payment"> 원
                         </td>
                     </tr>
 
                     <tr>
-                        <th>판매가</th>
+                        <th>판매가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="product_payment" name="product_payment"> 원
                         </td>

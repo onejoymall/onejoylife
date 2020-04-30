@@ -4439,7 +4439,7 @@ select.order-select{
     height: 150px;
     overflow: hidden;
     position: relative;
-    background: url(../../img/onejoylife-img.png) no-repeat center / cover;
+    background: url(/banner/onejoylife-img.png) no-repeat center / cover;
 }
 .intro-imgbox img{height: 100%;}
 .intro-imgbox p {
