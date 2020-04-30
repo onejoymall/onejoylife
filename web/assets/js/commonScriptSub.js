@@ -39,7 +39,7 @@ $('.addAllCart').on("click",function(){
                     heading: '등록 성공!',
                     text: [
                         '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                        '<a href="/">쇼핑 계속!</a>',
+                        '<a href="">쇼핑 계속!</a>',
                     ],
 
                     showHideTransition: 'plain', //펴짐
@@ -116,7 +116,7 @@ function addFavorite(product_cd){
                 	heading: '등록 성공!',
                     text: [
                         '<a href="/MyPage/ShoppingAddList">찜목록 이동</a>',
-                        '<a href="/">쇼핑 계속!</a>',
+                        '<a href="">쇼핑 계속!</a>',
                     ],
 
                     showHideTransition: 'plain', //펴짐
