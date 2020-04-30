@@ -37,6 +37,10 @@ public class MgSystemDAO {
     	Integer getDeliveryAreaListCount=sql.selectOne("mall.MgSystemMapper.getDeliveryAreaListCount",params);
     	return getDeliveryAreaListCount;
     }
+    public Integer getAdditionalDeliveryPayment(Map<String,Object> params) throws SqlSessionException{
+    	Integer getAdditionalDeliveryPayment=sql.selectOne("mall.MgSystemMapper.getAdditionalDeliveryPayment",params);
+    	return getAdditionalDeliveryPayment;
+    }
     public void insertProductCode(MgProductCodeVO mgProductCodeVO) throws SqlSessionException{
         sql.insert("mall.MgSystemMapper.insertProductCode",mgProductCodeVO);
     }

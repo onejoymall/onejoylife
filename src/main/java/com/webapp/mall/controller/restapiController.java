@@ -15,6 +15,7 @@ import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
 import com.webapp.mall.vo.*;
+import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.dao.QnaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -89,6 +90,8 @@ public class restapiController {
     private ReviewDAO reviewDAO;
     @Autowired
     private QnaDAO qnaDAO;
+    @Autowired
+    private MgSystemDAO mgSystemDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -1454,5 +1457,24 @@ public class restapiController {
             resultMap.put("e", e);
         }
         return resultMap;
+    }
+    //우편번호변경시 지역별배송비 체크
+    @RequestMapping(value = "/additionalDeliveryPayment", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> additionalDeliveryPayment(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	try {
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			Integer additionalDeliveryPayment = mgSystemDAO.getAdditionalDeliveryPayment(params);
+    			resultMap.put("additionalDeliveryPayment", additionalDeliveryPayment == null ? 0 : additionalDeliveryPayment);
+    		}
+    	} catch (Exception e) {
+    		
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
     }
 }
