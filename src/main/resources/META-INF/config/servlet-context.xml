@@ -24,7 +24,7 @@
 	<resources mapping="/assets/**" location="/assets/" />
 	<resources mapping="/product/editorUploads/**" location="file:///${downloadEditorFile}/" />
 	<resources mapping="/fileupload/**" location="file:///${fileUploadPath}/" />
-
+	<resources mapping="/banner/**" location="file:///${bannerPath}/" />
 	<beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="0"/>
 	</beans:bean>
