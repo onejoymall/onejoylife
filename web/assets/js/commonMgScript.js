@@ -52,7 +52,7 @@ $(document).on("click","#callOption",function () {
 })
 //옵션 상세보기
 $(document).on("click","#mgOptionDetail",function () {
-    $(".modal").attr("style", "display:block");
+    // $(".modal").attr("style", "display:block");
     var dataId = $(this).attr("data-id");
     jQuery.ajax({
         type: 'POST',
