@@ -578,13 +578,26 @@ $(document).ready(function(){
                             showText = index + " (은) " + item;
                         }
                         // $.toast().reset('all');//토스트 초기화
-                        $.toast({
-                            text: showText,
-                            showHideTransition: 'plain', //펴짐
-                            position: 'top-right',
-                            heading: 'Error',
-                            icon: 'error'
-                        });
+                        var filter = "win16|win32|win64|macintel|mac|";
+                        if(navigator.platform){
+                            if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                                $.toast({
+                                    text: showText,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'mid-center',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+                            } else {
+                                $.toast({
+                                    text: showText,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'top-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+                            }
+                        }
                     });
 
                 } else {

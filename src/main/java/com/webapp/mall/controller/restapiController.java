@@ -679,8 +679,8 @@ public class restapiController {
         return resultMap;
     }
     //장바구니 결제 처리
-    @RequestMapping(value = "/Save/PaymentOrders" )
-    public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+    @RequestMapping(value = "/Save/PaymentOrders", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
@@ -708,6 +708,11 @@ public class restapiController {
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
                 //회원인 경우 보유포인트 확인
 
+                //결제비용
+                Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
+                List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
+                model.addAttribute("cartPaymentList", cartPaymentList);
+                model.addAttribute("getCartSum", getCartSum);
 
                 Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
                 String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));

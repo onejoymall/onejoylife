@@ -318,18 +318,20 @@ public class ProductController {
     //장바구니 결제
     @RequestMapping(value = "/product/productPaymentCart")
     public String productPaymentCart(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CartPaymentVO cartPaymentVO) throws Exception{
+
         try{
             params.put("email",session.getAttribute("email"));
-            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                cartPaymentVO.setCart_user_id((String) session.getAttribute("nonMembersUserId"));
+            }else{
+                String usr_id = userInfo.get("usr_id").toString();
+                cartPaymentVO.setCart_user_id(usr_id);
+            }
             //주문번호생성
             String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
             model.addAttribute("order_no",order_no);
 
-            if(isEmpty(userInfo)){
-                cartPaymentVO.setCart_user_id((String) session.getAttribute("nonMembersUserId"));
-            }else{
-                cartPaymentVO.setCart_user_id((String) userInfo.get("usr_id"));
-            }
 
             //결제비용
             Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);

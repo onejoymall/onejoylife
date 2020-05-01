@@ -241,7 +241,7 @@ public class MainController {
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
-    	Device device = DeviceUtils.getCurrentDevice(request);
+        Device device = DeviceUtils.getCurrentDevice(request);
         try{
 
             //카테고리 목록
@@ -258,8 +258,8 @@ public class MainController {
                 searchVO.setDisplayRowCount(16);
             }
             if(device.isMobile()){
-            	searchVO.setDisplayRowCount(1000);
-            } 
+                searchVO.setDisplayRowCount(1000);
+            }
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");
