@@ -84,4 +84,5 @@
            <li><a href="/MyPage/OrderAndDelivery" class="btn ">목록보기</a></li>
         </ul>
     </div>
-    
+
+<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

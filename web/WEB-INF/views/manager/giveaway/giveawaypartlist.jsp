@@ -39,7 +39,7 @@
                                 <c:if test="${not empty getGiveSelectorList}">
                                     <option value="">선택</option>
                                     <c:forEach var="getGiveSelectorList" items="${getGiveSelectorList}" varStatus="status">
-                                        <option value="${getGiveSelectorList.code_value}" <c:if test="${getGiveSelectorList.code_value eq param.payment_status}">selected</c:if>>${getGiveSelectorList.code_name}</option>
+                                        <option value="${getGiveSelectorList.code_value}" <c:if test="${getGiveSelectorList.code_value eq param.giveaway_play_status}">selected</c:if>>${getGiveSelectorList.code_name}</option>
                                     </c:forEach>
                                 </c:if>
                             </select>
@@ -113,7 +113,7 @@
                     <tr>
                         <td><input type="checkbox" id="all-chk" name="all-chk"></td>
                         <td name="detail">이메일</td>
-                        <td name="detail">응모시간</td>
+                        <td name="detail">응모일</td>
                         <td>응모포인트</td>
                         <td>추첨일</td>
                         <td>당첨결과</td>

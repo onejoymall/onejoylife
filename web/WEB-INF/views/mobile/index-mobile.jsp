@@ -205,7 +205,7 @@
         </div>
         <ul class="mainList-sm">
             <c:if test="${not empty giveawaylist}">
-                <c:forEach var="list" items="${giveawaylist}" varStatus="status" end="5">
+                <c:forEach var="list" items="${giveawaylist}" varStatus="status">
                     <li>
                         <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
                             <div class="img-box">
