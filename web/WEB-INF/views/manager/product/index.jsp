@@ -501,13 +501,13 @@
                     <tr>
                         <th>주문 수량 제한</th>
                         <td >
-                            최소 <input type="number" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="number" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
+                            최소 <input type="text" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="text" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
                         </td>
                     </tr>
                     <tr>
                         <th>적립금</th>
                         <td >
-                            <input type="number" id="goods-savings" name="product_point_rate">
+                            <input type="text" id="goods-savings" name="product_point_rate">
                             <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
                         </td>
                     </tr>
@@ -1147,7 +1147,7 @@
                             <input type="radio" id="product_stock_use_n" name="product_stock_use_yn" value="N">
                         </td>
                     </tr>
-                    <tr><td>재고 수량</td><td><input type="number" name="product_stock_quantity"></td></tr>
+                    <tr><td>재고 수량</td><td><input type="text" name="product_stock_quantity"></td></tr>
                     </tbody>
                 </table>
             </div>
