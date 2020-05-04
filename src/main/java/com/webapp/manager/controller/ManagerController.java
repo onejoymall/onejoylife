@@ -513,18 +513,25 @@ public class ManagerController {
     public String managerPromotionCoupon(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
         	searchVO.setDisplayRowCount(10);
-        	searchVO.setStaticRowEnd(10);
+        	searchVO.setStaticRowEnd(10); 
+        	params.put("searchTypeArr",searchVO.getSearchTypeArr());
     		searchVO.pageCalculate(mgCouponDAO.getCouponListCount(params));
     		params.put("displayRowCount", searchVO.getDisplayRowCount());
-    		params.put("rowStart", searchVO.getRowStart()); 
+    		params.put("rowStart", searchVO.getRowStart());
     		List<Map<String, Object>> list = mgCouponDAO.getCouponList(params);
     		
+    		//발급조건
+    		params.put("code", "coupon_condition");
+            List<Map<String, Object>> getCouponSelectorList = selectorDAO.getSelectorList(params);
+            model.addAttribute("coupon_condition_list", getCouponSelectorList);
+    		
             model.addAttribute("list", list);
+            model.addAttribute("coupon_condition", params.get("coupon_condition"));
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("table_name", "payment");
-            model.addAttribute("Pk", "payment_cd");
+            model.addAttribute("table_name", "coupon");
+            model.addAttribute("Pk", "coupon_id");
         } catch (Exception e) {
-            e.printStackTrace();
+             e.printStackTrace();
         }
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "promotion-coupon");

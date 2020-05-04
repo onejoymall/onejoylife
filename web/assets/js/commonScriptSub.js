@@ -257,7 +257,7 @@ $('.modal-enable-menu-btn').on("click",function () {
     var formData = $('#mgPointForm').serialize();
     enableMenuArr = [];
     $.each($('input[name=enable_menu]'),function(idx, item){
-	if($(this).prop("checked")) enableMenuArr.push($(this).val());
+    	if($(this).prop("checked")) enableMenuArr.push($(this).val());
     });
     formData = "enable_menu="+enableMenuArr.join("|") + "&" + formData;
     jQuery.ajax({
@@ -616,7 +616,8 @@ $("input[name=selectAddress]").click(function(){
 $("input[name=selectAddress]:eq(0)").trigger("click");
 
 //관리자 쿠폰 등록
-$("#coupon-insert-btn").click(function(){
+$("button[name=coupon-confirm-btn]").click(function(){
+	var proc = $(this).attr('data-id');
 	var formData = new FormData($("#insertForm")[0]);
 	jQuery.ajax({
         type: 'POST',
@@ -624,7 +625,7 @@ $("#coupon-insert-btn").click(function(){
         data: formData,
         processData: false, // 필수
         contentType: false, // 필수
-        url:'/manager/insertCoupon',
+        url:`/manager/${proc}Coupon`,
         success: function (data) {
         	if (data.validateError) {
                 $('.validateError').empty();
@@ -645,13 +646,13 @@ $("#coupon-insert-btn").click(function(){
                     });
                 });
 
-            } else {
+            } else if(data.success){
             	$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
                     position: 'top-right',
                     icon: 'success',
-                    hideAfter: 2000,
+                    hideAfter: 1000,
                     afterHidden: function () {
                         location.reload();
                     }
@@ -666,3 +667,351 @@ $("#coupon-insert-btn").click(function(){
         }
     });
 });
+
+//관리자 쿠폰 상세보기
+$(".couponDetailBtn, #couponInsertBtn").click(function(){
+	if($(this).attr("data-id")){
+		$("#couponTitle").text("수정");
+		$("button[name=coupon-confirm-btn]").attr("data-id","update");
+		$("button[name=coupon-confirm-btn]").text("수정하기");
+		
+		jQuery.ajax({
+	        type: 'POST',
+	        url: '/Manager/getCouponDetail',
+	        data: "coupon_cd="+$(this).attr("data-id"),
+	        success: function (data) {
+	        	var coupon = data.coupon;
+	        	console.log(coupon);
+	        	$.each(coupon,function(index, item){
+	        		if(	index == 'coupon_name' ||
+						index == 'supplier_cd' ||
+						index == 'fileName' ||
+						index == 'uploadfile' ||
+						index == 'coupon_valid_date_start' ||
+						index == 'coupon_valid_date_end' ||
+						index == 'coupon_ct' ||
+						index == 'coupon_use_payment_class' ||
+						index == 'coupon_cd'){ //단순텍스트
+	        			$(`input[name=${index}]`).val(item);
+	        		}else if(index == 'coupon_sale_cal_condition'){ //적용계산기준
+	        			$(`select[name=${index}]`).val(item);
+	        		}else if(index == 'country_supply'){ //국가별공급
+	        			item.split("|").forEach(function(el){
+	        				$(`input[name=${index}][value=${el}]`).prop("checked",true);
+	        			});
+	        		}else if(index == 'coupon_sale_type'){ //혜택구분
+	        			$(`input[name=${index}][value=${item}]`).trigger("click");
+	        			$(`input[name=coupon_sale_payment]`).val(coupon.coupon_sale_payment);
+	        			$(`input[name=coupon_sale_rate]`).val(coupon.coupon_sale_rate);
+	        		}else if(index == 'coupon_use_range' ||	
+	        				 index == 'coupon_dup_yn' ||
+	        				 index == 'login_alert_yn' ||
+	        				 index == 'sms_alert_yn' ||
+	        				 index == 'email_alert_yn'){ //단순라디오
+	        			$(`input[name=${index}][value=${item}]`).trigger("click");
+	        		}else if(index == 'coupon_condition'){ //발급구분
+	        			switch(item){
+	        			case 'T': {
+	        				$("select[name=coupon_condition1]").val("T").trigger('change');
+	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+                            $(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
+                            $(`input[name=coupon_issued_target_id]`).val(coupon.coupon_issued_target_id);
+	        				break;
+	        			}
+	        			case 'J':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				break;
+	        			}
+	        			case 'D':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("D").trigger('change');
+	        				if(coupon.coupon_min_amount) $("select[name=box2-out-select1]").val("box2-in1-2").trigger("change");
+	        				else $("select[name=box2-out-select1]").val("box2-in1-1").trigger("change");
+	        				$(`input[name=coupon_min_amount]`).val(coupon.coupon_min_amount);
+	        				if(coupon.coupon_issue_order_end){
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        				}
+	        				else {
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        				}
+	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				break;
+	        			}
+	        			case 'B':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("B").trigger('change');
+	        				if(coupon.coupon_issue_time == 'B'){
+	        					$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        					$(`input[name=coupon_anniversary_before]`).val(coupon.coupon_anniversary_before);
+	        				}
+	        				break;
+	        			}
+	        			case 'R':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("R").trigger('change');
+	        				$(`input[name=coupon_review_condition]`).val(coupon.coupon_review_condition);
+	        				break;
+	        			}
+	        			case 'C':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("C").trigger('change');
+	        				if(coupon.coupon_min_amount) $("select[name=box2-out-select1]").val("box2-in1-2").trigger("change");
+	        				else $("select[name=box2-out-select1]").val("box2-in1-1").trigger("change");
+	        				$(`input[name=coupon_min_amount]`).val(coupon.coupon_min_amount);
+	        				if(coupon.coupon_issue_order_end){
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        				}
+	        				else {
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        				}
+	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				break;
+	        			}
+	        			case 'F':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("F").trigger('change');
+	        				if(coupon.coupon_issue_order_end){
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        				}
+	        				else {
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        				}
+	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				break;
+	        			}
+	        			case 'S':{
+	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
+	        				$("select[name=coupon_condition2]").val("S").trigger('change');
+	        				$(`input[name=coupon_buy_count_condition][value=${coupon.coupon_buy_count_condition}]`).trigger("click");
+	        				$(`input[name=coupon_min_buy_count]`).val(coupon.coupon_min_buy_count);
+	        				if(coupon.coupon_issue_order_end){
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        				}
+	        				else {
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        				}
+	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				break;
+	        			}
+	        			case 'L':{
+	        				$("select[name=coupon_condition1]").val("next3").trigger('change');
+	        				$("select[name=coupon_condition3]").val("L").trigger('change');
+	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        				$(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
+	        				break;
+	        			}
+	        			case 'M':{
+	        				$("select[name=coupon_condition1]").val("next3").trigger('change');
+	        				$("select[name=coupon_condition3]").val("M").trigger('change');
+	        				$("select[name=coupon_none_buy_month]").val(coupon.coupon_none_buy_month).trigger('change');
+	        				break;
+	        			}
+	        			}
+	        		}
+	        	});
+	        },
+	        error: function (xhr, status, error) {
+	            console.log(error,xhr,status );
+	        },
+	    });
+	}else{
+		$("#couponTitle").text("등록");
+		$("button[name=coupon-confirm-btn]").attr("data-id","insert");
+		$("button[name=coupon-confirm-btn]").text("등록하기");
+		
+		$("input[name=coupon_name]").val("");
+		$("input[name=coupon_issued_target_id]").val("");
+		$("input[name=supplier_cd]").val("");
+		$("input[name=fileName]").val("");
+		$("input[name=uploadfile]").val("");
+		$("input[name=country_supply]").prop("checked",false);
+		$("label[for=discount-radio1]").trigger("click");
+		$('input[name=coupon_sale_type]:checked').trigger("click")
+		$("input[name=coupon_sale_payment]").val("");
+		$("input[name=coupon_sale_rate]").val("");
+		$("select[name=coupon_condition1]").val("T").trigger('change');
+		$("label[for=option1-rd1]").trigger("click");
+		$("input[name=coupon_issue_time]:checked").trigger("click");
+		$("select[name=box2-out-select1]").val("box2-in1-1");
+		$("input[name=coupon_min_amount]").val("");
+		$("label[for=num1-1]").trigger("click");
+		$("input[name=coupon_min_buy_count]").val("");
+		$("label[for=iss-day1]").trigger("click");
+		$("input[name=coupon_issue_order_end]").val("");
+		$("select[name=coupon_none_buy_month]").val("1");
+		$("input[name=coupon_valid_date_start]").val("");
+		$("input[name=coupon_valid_date_end]").val("");
+		$("label[for=apply-rd1]").trigger("click");
+		$("input[name=coupon_ct]").val("");
+		$("label[for=goods-validity1]").trigger("click");
+		$("input[name=goods-validity]:checked").trigger("click");
+		$("input[name=coupon_use_min_amount]").val("");
+		$("select[name=coupon_sale_cal_condition]").val("B");
+		$("input[name=coupon_use_payment_class]").val("cash,card,mieage,tcash,icash,cell,kpay,paynow,payco,kakaopay,smilepay,naverpay");
+		$("label[for=coupon1-rd2]").trigger("click");
+		$("label[for=kind-rd1]").trigger("click");
+		$("label[for=login-coupon-rd1]").trigger("click");
+		$("label[for=sms-coupon-rd1]").trigger("click");
+		$("label[for=email-coupon-rd1]").trigger("click");
+	}
+});
+
+$("#couponRegButton").click(function(){
+	location.href="/MyPage/Coupon-issued?coupon_cd="+$("input[name=coupon_cd]").val();
+})
+
+$("#couponBatchUpdateBtn").click(function(){
+	if(!$('#defaultListForm input[name=chk]:checked').val()){
+		$.toast({
+            text: "항목을 선택해주세요.",
+            showHideTransition: 'plain', //펴짐
+            position: 'top-right',
+            heading: 'Error',
+            icon: 'error'
+        });
+		return;
+	}
+	
+	$(".modal1").attr("style", "display:block");
+    $('body').css("overflow", "hidden");
+});
+
+//쿠폰 일괄수정
+$('#coupon-update-batch-btn').on("click",function(){
+    var formData = $('#defaultListForm').serialize();
+    var batchUpdateFormData = $('#batchUpdateForm').serialize();
+    formData += "&"+batchUpdateFormData;
+    var alertType;
+    var showText;
+    jQuery.ajax({
+        type: 'POST',
+        url: '/manager/updateCouponBatch',
+        data: formData,
+        success: function (data) {
+        	if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else if(data.success){
+            	$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.reload();
+                    }
+                });
+            }
+        	if(data.e){
+        		alert("error");
+        	}
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+
+//회원아이디 조회 모달
+$(".userModalBtn").click(function(e){
+    $('.dataListView').html();
+    e.preventDefault();
+    $(".userModal").attr("style", "display:block");
+    $('body').css("overflow", "hidden");
+    var dataList = commonAjaxListCall('POST','/Manager/CallNormalUserList');
+    var html;
+    $.each(dataList.getNormalUserList,function (key,value) {
+        html +='' +
+            '<tr data-id="'+value.usr_id+'">' +
+            '<td><div class="codeRadio"></div></td>' +
+            '<td>'+(value.username ? value.username : '')+'</td>' +
+            '<td>'+value.email+'</td>' +
+            '<td>'+value.usr_id+'</td>' +
+            '</tr>';
+    })
+    $('.dataListView').html(html);
+    
+    //row클릭시 이벤트
+    $(".codeSrcTable .userTable tr").on("click",function(){
+        $(".codeSrcTable tbody tr").removeClass('active');
+        $(this).addClass('active');
+        $("input[name=coupon_issued_target_id]").val($(this).attr("data-id"));
+
+        $(".userModal").attr("style", "display:none");
+    });
+});
+
+//쿠폰다운
+$(".couponDownBtn").click(function(){
+	jQuery.ajax({
+        type: 'POST',
+        url: '/MyPage/downloadCoupon',
+        data: "coupon_cd="+$(this).attr("data-id"),
+        success: function (data) {
+        	if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else if(data.success){
+            	$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.reload();
+                    }
+                });
+            }
+        	if(data.e){
+        		alert("error");
+        	}
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})

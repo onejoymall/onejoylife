@@ -254,9 +254,9 @@
 		HAVING COUNT(A.product_id) > 1) tmp
     </select>
     <select id="getLastPaymentDate" parameterType="hashmap" resultType="hashmap">
-	    SELECT date_format(A.reg_date,'%Y-%m-%d') reg_date
-		FROM product_payment_history A
-		WHERE A.pd_payment_user_id = #{coupon_paid_user_id}
+		SELECT date_format(A.reg_date,'%Y-%m-%d') reg_date
+		FROM payment A
+		WHERE A.payment_user_id = #{coupon_paid_user_id}
 		ORDER BY reg_date DESC
 		LIMIT 1
     </select>

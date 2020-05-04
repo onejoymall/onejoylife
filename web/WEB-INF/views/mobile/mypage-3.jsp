@@ -13,7 +13,21 @@
         <h2 class="pb-1">쿠폰 등록</h2>
         <hr class="mb-2">
         <form action="">
-            <input type="text" class="coupon-in" placeholder="15자리를 입력하세요"><button type="button" class="cou-btn">등록하기</button>
+            <input type="text" class="coupon-in" name="coupon_cd" placeholder="15자리를 입력하세요"><button type="button" class="cou-btn" id="couponRegButton">등록하기</button>
+        </form>
+    </section>
+    <section class="wrap">
+        <h2 class="pb-1">다운로드 가능한 쿠폰</h2>
+        <hr class="mb-2">
+        <form action="">
+        	<c:if test="${not empty userDownloadCouponList}">
+            <c:forEach var="list" items="${userDownloadCouponList}">
+            	${list.coupon_name} <button type="button" class="couponDownBtn cou-btn" data-id="${list.coupon_cd}">다운로드</button>            	
+            </c:forEach>
+            </c:if>
+            <c:if test="${empty userDownloadCouponList}">
+            	다운로드 가능한 쿠폰이 없습니다.
+            </c:if>
         </form>
     </section>
     <section class="wrap">
@@ -36,10 +50,10 @@
                 <tr>
                     <td class="lis-td-con">
                         <p><span>${userCouponList.coupon_name}</span></p>
-                        <p><span><fmt:formatNumber value="${userCouponList.coupon_payment_condition}" groupingUsed="true" /> ${message_coupon_payment_condition}</span></p>
+                        <c:if test="${not empty userCouponList.coupon_use_min_amount}"><p><span><fmt:formatNumber value="${userCouponList.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}</span></p></c:if>
                     </td>
                     <td class="lis-td-p">
-                        <p><span>~ ${userCouponList.coupon_use_day}</span></p>
+                        <p><span><fmt:formatDate value="${userCouponList.coupon_valid_date_start}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${userCouponList.coupon_valid_date_end}" pattern="yyyy.MM.dd"/></span></p>
                     </td>
                  </tr>
                 </c:forEach>
@@ -54,8 +68,6 @@
         <ul class="centerBtns mt-3">
             <li><a href="#"><i class="ri-arrow-left-s-line"></i></a></li>
             <li><a href="#" class="active">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
             <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
         </ul>
     </section>

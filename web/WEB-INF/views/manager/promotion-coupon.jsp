@@ -1,35 +1,74 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
 <main>
     <div class="main-content">
         <div class="main-header">
             <h2 name="detail">쿠폰 관리</h2>
             <div class="main-hd-btn-wrap">
-                <button type="button" name="detail">쿠폰 등록</button>
+                <button type="button" name="detail" id="couponInsertBtn">쿠폰 등록</button>
 <%--                <button type="button"><i class="exel-ic"></i>일괄 등록/수정</button>--%>
             </div>
         </div>
         <div class="search-form">
             <form name="listSrcForm" id="listSrcForm" method="get">
                 <div class="keyword-src-wrap">
-                    <input type="text" class="keyword-src" name="keyword-src">
+                    <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                     <button type="submit" class="keyword-src-button">검색</button>
                     <div class="src-filter-wrap">
-                        <input type="checkbox" name="src-name">
+                        <input id="src-name" type="checkbox" name="searchType" value="coupon_name" <c:if test="${fn:contains(searchVO.searchType, 'coupon_name')}">checked</c:if>>
                         <label for="src-name">쿠폰명</label>
-                        <input type="checkbox" name="src-code">
+                        <input id="src-code" type="checkbox" name="searchType" value="coupon_cd" <c:if test="${fn:contains(searchVO.searchType, 'coupon_cd')}">checked</c:if>>
                         <label for="src-code">쿠폰코드</label>
                     </div>
                 </div>
-
+				<table class="keyword-src-table">
+                        <colgroup>
+                            <col width="80px">
+                            <col width="420px">
+                            <col width="80px">
+                            <col width="420px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>발급조건</th>
+                                <td>
+                                   <select name="coupon_condition">
+                                   		<option value="">선택</option>
+                                   <c:if test="${not empty coupon_condition_list}">
+                                   <c:forEach var="list" items="${coupon_condition_list}">
+                                   		<option value="${list.code_value}" <c:if test="${coupon_condition == list.code_value}">selected</c:if>>${list.code_name}</option>
+                                   </c:forEach>
+                                   </c:if>
+                                   </select>
+                                </td>
+                                <th>등록일</th>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             </form>
         </div>
         <div class="goods-list-wrap">
             <div class="list-sort-wrap">
                	<div class="left">
-                    <!-- <button type="button" class="btn-default" name="copy">선택 삭제</button>
-                   <button type="button" class="btn-default" name="copy">선택 복사 등록</button>
+                    <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
+                    <button type="button" class="btn-default " name="copy" id="couponBatchUpdateBtn">선택 일괄수정</button>
+                   <!-- <button type="button" class="btn-default" name="copy">선택 복사 등록</button>
                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button> -->
                    <button type="button" class="btn-default excelBtn" name="copy" data-id="coupon"><i class="exel-ic"></i>다운로드</button>
                 </div><!-- 
@@ -39,62 +78,77 @@
                         <option value="60">50개씩 보기</option>
                         <option value="92">100개씩 보기</option>
                     </select>
-                </div> --> --%>
+                </div> -->
             </div>
-            <table>
-                <colgroup>
-                    <col width="2%">
-                    <%-- <col width="5%"> --%>
-                    <col width="33%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="10%">
-                </colgroup>
-                <thead>
-                <tr>
-                    <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                    <!-- <td name="detail">번호</td> -->
-                    <td name="detail">쿠폰명</td>
-                    <td>발급수</td>
-                    <td>쿠폰사용 매출액</td>
-                    <td>쿠폰 수익률 조회</td>
-                    <td>상태</td>
-                    <td>발급조건</td>
-                    <td>다운로드 url</td>
-                    <td>등록일</td>
-                    <td>관리</td>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${not empty list}">
-                <c:forEach var="list" items="${list}">
+            <form name="defaultListForm" id="defaultListForm" method="POST">
+	            <input type="hidden" name="Pk" value="${Pk}">
+	            <input type="hidden" name="table_name" value="${table_name}">
+	            <table>
+	                <colgroup>
+	                    <col width="2%">
+	                    <col width="33%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                    <col width="10%">
+	                </colgroup>
+	                <thead>
 	                <tr>
-	                    <td><input type="checkbox" id="chk10" name="chk10" value="${list.coupon_cd}"></td>
-	                    <!-- <td>01</td> -->
-	                    <td>${list.coupon_name}</td>
-	                    <td>${list.coupon_paid_cnt}</td>
-	                    <td>0원</td>
-	                    <td>0%</td>
-	                    <td class="txt-active">발급중</td>
-	                    <td>${list.coupon_condition_name}</td>
-	                    <td>
-	                    	<c:if test="${list.coupon_condition == 'L' || list.coupon_condition == 'M'}">
-	                    		<button type="button" class="goods-list-btn" onclick="copyToClipboard('onejoy-life.com/MyPage/Coupon-issued?coupon_cd=${list.coupon_cd}')">경로복사</button>
-                    		</c:if>
-                    	</td>
-	                    <td>${list.reg_date}</td>
-	                    <td>
-	                        <button type="button" class="goods-list-btn" name="detail1" data-id="${list.coupon_cd}">상세보기</button>
-	                    </td>
+	                    <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+	                    <!-- <td name="detail">번호</td> -->
+	                    <td>쿠폰명</td>
+	                    <td>쿠폰번호</td>
+	                    <td>카테고리</td>
+	                    <td>쿠폰 할인</td>
+	                    <td>발급수</td>
+	                    <td>쿠폰사용 매출액</td>
+	                    <td>쿠폰 수익률 조회</td>
+	                    <td>상태</td>
+	                    <td>발급조건</td>
+	                    <td>다운로드 url</td>
+	                    <td>등록일</td>
+	                    <td>관리</td>
 	                </tr>
-                </c:forEach>
-                </c:if>
-                </tbody>
-            </table>
+	                </thead>
+	                <tbody>
+	                <c:if test="${not empty list}">
+	                <c:forEach var="list" items="${list}">
+		                <tr>
+		                    <td>
+		                    	<input type="checkbox" id="chk" name="chk" value="${list.coupon_id}">
+                                <input type="hidden" name="coupon_id" value="${list.coupon_id}">
+                            </td>
+		                    <!-- <td>01</td> -->
+		                    <td>${list.coupon_name}</td>
+		                    <td>${list.coupon_cd}</td>
+		                    <td>${list.category_name}</td>
+		                    <td>
+		                    	<c:if test="${list.coupon_sale_type eq 'amount'}"><fmt:formatNumber value="${list.coupon_sale_payment}" groupingUsed="true" />원</c:if>
+		                    	<c:if test="${list.coupon_sale_type eq 'percentage'}"><fmt:formatNumber value="${list.coupon_sale_rate}" groupingUsed="true" />%</c:if>
+		                    </td>
+		                    <td>${list.coupon_paid_cnt}</td>
+		                    <td>0원</td>
+		                    <td>0%</td>
+		                    <td class="txt-active">발급중</td>
+		                    <td>${list.coupon_condition_name}</td>
+		                    <td>
+		                    	<c:if test="${list.coupon_condition == 'L' || list.coupon_condition == 'M'}">
+		                    		<button type="button" class="goods-list-btn" onclick="copyToClipboard('onejoy-life.com/MyPage/Coupon-issued?coupon_cd=${list.coupon_cd}')">경로복사</button>
+	                    		</c:if>
+	                    	</td>
+		                    <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+		                    <td>
+		                        <button type="button" class="goods-list-btn couponDetailBtn" name="detail" data-id="${list.coupon_cd}">상세보기</button>
+		                    </td>
+		                </tr>
+	                </c:forEach>
+	                </c:if>
+	                </tbody>
+	            </table>
+            </form>
             <form id="form1" name="form1"  method="post">
                 <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                 <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
@@ -107,7 +161,7 @@
     <div class="modal-content">
         <form id="insertForm" method="POST">
             <div class="modal-header">
-                <h2>쿠폰 등록</h2>
+                <h2>쿠폰 <span id="couponTitle">등록</span></h2>
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
@@ -125,6 +179,7 @@
                         <th>쿠폰명 <span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="coupon_name" name="coupon_name" value="" placeholder="쿠폰명">
+                            <input type="hidden" id="coupon_cd" name="coupon_cd">                            
                         </td>
                     </tr>
                     <tr>
@@ -139,7 +194,8 @@
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
                         	<input type="text" class="fileName" name="fileName" readonly="readonly">
-                            <input type="file" name="uploadfile" class="uploadBtn">
+                            <label for="rvImg1" class="btn_file goods-list-btn">파일선택</label>
+                            <input type="file" id="rvImg1" name="uploadfile" class="uploadBtn hidden">
                         </td>
                     </tr>
 					 <tr>
@@ -163,13 +219,13 @@
                         </td>
                     </tr>
                     <tr class="discount-detail1" >
-                        <th>할인금액</th>
+                        <th>할인금액<span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="discount1-rd" name="coupon_sale_payment" placeholder="" class="txt-right"> 원
                         </td>
                     </tr>
                     <tr class="discount-detail2" style="display:none">
-                        <th>할인율</th>
+                        <th>할인율<span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <input type="text" id="discount1-rd1" name="coupon_sale_rate" placeholder="" class="txt-right"> %
                         </td>
@@ -207,6 +263,14 @@
                     </colgroup>
                     <tbody>
                     <!-- 대상자 지정 발급 -->
+                    <tr class="option0-box">
+                        <th>발급대상자<span class="cc1">&#40;필수&#41;</span></th>
+                        <td>
+                            <p class="cc2"><a href="#" class="userModalBtn" >&#91;회원아이디 조회&#93;</a>
+                            </p>
+                            <input type="text" id="goods-m" name="coupon_issued_target_id" placeholder="ex) 265">
+                        </td>
+                    </tr>
                     <tr>
                         <th>발급시점</th>
                         <td>
@@ -280,12 +344,12 @@
                                          <input type="text" class="txt-right num-width2" name="coupon_min_amount">
                                          <span> 원</span>
                                      </span>
-                            <span class="box2-span box2-txt2">
+                            <!-- <span class="box2-span box2-txt2">
                                          <input type="text" class="txt-right num-width2">
                                          <span> 원 이상 ~ </span>
                                          <input type="text" class="txt-right num-width2">
                                          <span> 원 까지</span>
-                                     </span>
+                                     </span> -->
                         </td>
                     </tr>
                     <tr class="option2-box7">
@@ -389,7 +453,7 @@
                         <td>
                             <input type="radio" id="iss-day1" name="iss-day" value="D1">
                             <label for="iss-day1">설정안함</label>
-                            <input type="radio" id="iss-day2" name="iss-day" checked>
+                            <input type="radio" id="iss-day2" name="iss-day" value="D2" checked>
                             <label for="iss-day2">설정함</label>
                             <span>
                                          <!-- <input type="text"  placeholder="ex) 2020-02-24"  name="day-iss1">
@@ -737,19 +801,19 @@
                     <tr class="option3-box2">
                         <th>미구매 기간</th>
                         <td>
-                            <select name="" id="" class="num-width3">
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
-                                <option value="">5</option>
-                                <option value="">6</option>
-                                <option value="">7</option>
-                                <option value="">8</option>
-                                <option value="">9</option>
-                                <option value="">10</option>
-                                <option value="">11</option>
-                                <option value="">12</option>
+                            <select name="coupon_none_buy_month" id="" class="num-width3">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
                             </select>
                             <span> 개월</span>
                         </td>
@@ -793,7 +857,7 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th>유효 기간 설정</th>
+                        <th>유효 기간 설정<span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.<br>
                                 <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
@@ -804,14 +868,14 @@
                     <tr>
                         <th>적용 범위</th>
                         <td>
-                            <input type="radio" name="coupon_use_range" id="apply-rd1" value="P">
+                            <input type="radio" name="coupon_use_range" id="apply-rd1" value="P" checked>
                             <label for="apply-rd1">상품 쿠폰</label>
-                            <input type="radio" name="coupon_use_range" id="apply-rd2" value="O" checked>
+                            <input type="radio" name="coupon_use_range" id="apply-rd2" value="O">
                             <label for="apply-rd2">주문서 쿠폰</label>
                         </td>
                     </tr>
                     <tr>
-                        <th>카테고리</th>
+                        <th>카테고리<span class="cc1">&#40;필수&#41;</span></th>
                         <td>
                             <p class="cc2">해당 쿠폰이 속할 상품 분류 번호(상품 카테고리 번호)를 입력합니다.<br>
                                 <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
@@ -859,7 +923,7 @@
                                 무통장입금: cash, 카드결제: card, 적립금: mileage, 실시간 계좌이체: tcash, 가상계좌: icash, 휴대폰결제: cell, 케이페이: kpay, 페이나우: paynow, 페이코: payco, 카카오페이: kakaopay, 스마일페이: smilepay, 네이버페이: naverpay<br>
                                 <span class="cc">* 결제 수단이 여러 개인 경우 쉼표&#40;,&#41;로 구분합니다.</span>
                             </p>
-                            <input type="text" id="goods-payment" name="coupon_use_payment_class" placeholder="ex) cash, mileage">
+                            <input type="text" id="goods-payment" name="coupon_use_payment_class" placeholder="ex) cash, mileage" value="cash,card,mieage,tcash,icash,cell,kpay,paynow,payco,kakaopay,smilepay,naverpay">
                         </td>
                     </tr>
                     <tr>
@@ -880,7 +944,7 @@
                             <label for="member-rd2">회원만 사용 가능</label>
                         </td>
                     </tr> -->
-                    <tr>
+                    <!-- <tr>
                         <th>쿠폰 종류</th>
                         <td>
                             <input type="radio" name="coupon_type" id="kind-rd1" value="S">
@@ -888,7 +952,7 @@
                             <input type="radio" name="coupon_type" id="kind-rd2" value="N" checked>
                             <label for="kind-rd2">일반 온라인 쿠폰</label>
                         </td>
-                    </tr>
+                    </tr> -->
                     </tbody>
                 </table>
                 <h3>부가 서비스</h3>
@@ -937,12 +1001,12 @@
 
                     </tbody>
                 </table>
-                <button type="button" name="" class="btn-red" id="coupon-insert-btn">등록하기</button>
+                <button type="button" name="coupon-confirm-btn" class="btn-red" id="coupon-insert-btn">확인</button>
             </div>
         </form>
     </div>
 </div><!-- 등록 끝 -->
-<div class="modal1">
+<%-- <div class="modal1">
     <div class="modal-content">
         <form method="POST">
             <div class="modal-header">
@@ -1756,7 +1820,7 @@
             </div>
         </form>
     </div>
-</div><!-- 상세보기 끝 -->
+</div> --%><!-- 상세보기 끝 -->
 <%-- <div class="modal2">
     <div class="modal-content">
         <form action="" method="POST">
@@ -2571,6 +2635,119 @@
         </form>
     </div>
 </div> --%>
+<!-- 일괄수정 모달 -->
+<div class="modal1">
+    <div class="modal-content">
+        <form id="batchUpdateForm" method="POST">
+            <div class="modal-header">
+                <h2>쿠폰 일괄 수정</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <h3>발급 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="80%">
+                    </colgroup>
+                    <tbody>
+					 <tr>
+                        <th>국가별 공급</th>
+                        <td>
+                            <input type="checkbox" name="batch_country_supply" value="korea" id="nation1-ck1" checked>
+                            <label for="nation1-ck1">한국</label>
+                            <input type="checkbox" name="batch_country_supply" value="usa" id="nation1-ck2">
+                            <label for="nation1-ck2">미국</label>
+                            <input type="checkbox" name="batch_country_supply" value="china" id="nation1-ck3">
+                            <label for="nation1-ck3">중국</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3>사용 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="80%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>유효 기간 설정</th>
+                        <td>
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.<br>
+                                <span class="cc">* 빈 값이면 저장 날짜를 기준으로 하여 1년으로 자동 설정됩니다.</span>
+                            </p>
+                            <input type="text" id="goods-validity-start-batch" name="batch_coupon_valid_date_start" class="date_pick" placeholder="ex) 2020-02-28"> ~ <input type="text" class="date_pick" id="goods-validity-end-batch" name="batch_coupon_valid_date_end" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>적용 범위</th>
+                        <td>
+                            <input type="radio" name="batch_coupon_use_range" id="apply-rd1" value="P" checked>
+                            <label for="apply-rd1">상품 쿠폰</label>
+                            <input type="radio" name="batch_coupon_use_range" id="apply-rd2" value="O">
+                            <label for="apply-rd2">주문서 쿠폰</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>카테고리</th>
+                        <td>
+                            <p class="cc2">해당 쿠폰이 속할 상품 분류 번호(상품 카테고리 번호)를 입력합니다.<br>
+                                <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
+                                <span class="cc">* 상품 분류의 분류URL이 /product/list.html?cale_no=7 이라면 7을 입력합니다.</span><br>
+                                <span class="cc">* 분류 개수가 많은 경우는 10|20|21 등으로 입력합니다.</span><br></p>
+                            <input type="text" id="goods-cate2" name="batch_coupon_ct" placeholder="ex) 24|29|30">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>개별 결제 수단 설정</th>
+                        <td>
+                            <p class="cc2">상품의 개별 결제수단을 설정할 경우 다음 항목 중 입력합니다.<br><br>
+                                무통장입금: cash, 카드결제: card, 적립금: mileage, 실시간 계좌이체: tcash, 가상계좌: icash, 휴대폰결제: cell, 케이페이: kpay, 페이나우: paynow, 페이코: payco, 카카오페이: kakaopay, 스마일페이: smilepay, 네이버페이: naverpay<br>
+                                <span class="cc">* 결제 수단이 여러 개인 경우 쉼표&#40;,&#41;로 구분합니다.</span>
+                            </p>
+                            <input type="text" id="goods-payment" name="batch_coupon_use_payment_class" placeholder="ex) cash, mileage" value="cash,card,mieage,tcash,icash,cell,kpay,paynow,payco,kakaopay,smilepay,naverpay">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn-red" id="coupon-update-batch-btn">확인</button>
+            </div>
+        </form>
+    </div>
+</div><!-- 일괄수정 끝 -->
+
+<!-- 회원 아이디 모달 -->
+<div class="modal2 userModal" >
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>회원아이디 정보조회</h2>
+            <button type="button" class="modal-close2">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="wrap">
+                <table class="codeSrcTable">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="15%">
+                        <col width="70%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <td></td>
+                    <td>회원명</td>
+                    <td>회원이메일</td>
+                    <td>회원아이디</td>
+                    </thead>
+                    <tbody class="dataListView userTable">
+
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-red mr-10" id="code-com">입력하기</button>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="/assets/js/promotion-coupon.js"></script>
 
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

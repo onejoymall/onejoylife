@@ -9,8 +9,8 @@ $(function(){
     });
     
     // 혜택구분
-    $('input[name=coupon_use_type]').click(function(){
-        if($('input[name=coupon_use_type]:checked').val() == "amount"){
+    $('input[name=coupon_sale_type]').on("input change click",function(){
+        if($('input[name=coupon_sale_type]:checked').val() == "amount"){
             $('tr.discount-detail1').attr('style','display:table-row');
             $('tr.discount-detail2').attr('style','display:none')
             $('tr.discount-detail2 input[type=text]').val('');
@@ -30,7 +30,10 @@ $(function(){
         $('#option3-select').val("L").trigger('change');
         
         if(state == 'option1'){
-        	$('.option1-box').show(); 
+        	$('.option1-box').show();
+        	$('.option0-box').show(); 
+        }else{
+        	$('.option0-box').hide();
         }
         if(state == 'option2'){
         	$('.option1-box').hide(); 

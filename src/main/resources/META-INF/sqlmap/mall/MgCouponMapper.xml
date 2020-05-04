@@ -6,7 +6,8 @@
     <select id="getCouponList" parameterType="hashmap" resultType="hashmap">
     	SELECT A.*,
 			(SELECT COUNT(*) FROM coupon_paid_history Z WHERE Z.coupon_cd = A.coupon_cd ) coupon_paid_cnt,
-			(SELECT Z.code_name FROM code Z WHERE Z.code = 'coupon_condition' and Z.code_value = A.coupon_condition ) coupon_condition_name
+			(SELECT Z.code_name FROM code Z WHERE Z.code = 'coupon_condition' and Z.code_value = A.coupon_condition ) coupon_condition_name,
+			(SELECT GROUP_CONCAT(Z.pd_category_name) FROM product_category Z WHERE find_in_set(Z.pd_category_id,replace(A.coupon_ct,'|',','))) category_name
 		FROM coupon A
 		WHERE 1=1
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -14,8 +15,16 @@
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 	      </foreach>
 	    </if>
+	    <if test="coupon_condition != null and coupon_condition != ''">AND coupon_condition = #{coupon_condition}</if>
 	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
 	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	    <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${displayRowCount} ]]>
+    </select>
+    <select id="getCouponDetail" parameterType="hashmap" resultType="hashmap">
+    	SELECT A.*,
+			(select Z.file_name from coupon_file Z where Z.key_id=A.coupon_cd and Z.file_order =1) as fileName
+		FROM coupon A
+		WHERE coupon_cd = #{coupon_cd}
     </select>
     <select id="getCouponListCount" parameterType="hashmap" resultType="Integer">
     	SELECT count(*) cnt
@@ -89,8 +98,10 @@
 			#{coupon_condition},
 			#{coupon_issue_time},
 			#{coupon_anniversary_before},
-			#{coupon_issue_date},
-			#{coupon_issue_order_end},
+			<if test="coupon_issue_date == ''">null,</if>
+			<if test="coupon_issue_date != ''">#{coupon_issue_date},</if>
+			<if test="coupon_issue_order_end == ''">null,</if>
+			<if test="coupon_issue_order_end != ''">#{coupon_issue_order_end},</if>
 			#{coupon_min_amount},
 			#{coupon_review_condition},
 			#{coupon_buy_count_condition},
@@ -104,8 +115,10 @@
 			#{coupon_use_payment_class},
 			#{coupon_img_path},
 			#{coupon_alert_class},
-			#{coupon_valid_date_start},
-			#{coupon_valid_date_end},
+			<if test="coupon_valid_date_start == ''">null,</if>
+			<if test="coupon_valid_date_start != ''">#{coupon_valid_date_start},</if>
+			<if test="coupon_valid_date_end == ''">null,</if>
+			<if test="coupon_valid_date_end != ''">#{coupon_valid_date_end},</if>
 			#{coupon_issued_target_id},
 			#{coupon_payment},
 			#{coupon_payment_condition},
@@ -116,6 +129,60 @@
 			#{email_alert_yn}
     	)
     </insert>
+    <update id="updateCoupon" parameterType="com.webapp.manager.vo.CouponVO">
+   		update coupon set
+	        coupon_ct = #{coupon_ct},
+	        supplier_cd = #{supplier_cd},
+	        coupon_name = #{coupon_name},
+	        coupon_sale_type = #{coupon_sale_type},
+	        coupon_sale_payment = #{coupon_sale_payment},
+	        coupon_sale_rate = #{coupon_sale_rate},
+	        country_supply = #{country_supply},
+	        coupon_condition = #{coupon_condition},
+	        coupon_issue_time = #{coupon_issue_time},
+	        coupon_anniversary_before = #{coupon_anniversary_before},
+	        coupon_issue_date = <if test="coupon_issue_date == ''">null,</if>
+								<if test="coupon_issue_date != ''">#{coupon_issue_date},</if>
+	        coupon_issue_order_end = <if test="coupon_issue_order_end == ''">null,</if>
+									 <if test="coupon_issue_order_end != ''">#{coupon_issue_order_end},</if>
+	        coupon_min_amount = #{coupon_min_amount},
+	        coupon_review_condition = #{coupon_review_condition},
+	        coupon_buy_count_condition = #{coupon_buy_count_condition},
+	        coupon_min_buy_count = #{coupon_min_buy_count},
+	        coupon_none_buy_month = #{coupon_none_buy_month},
+	        coupon_use_range = #{coupon_use_range},
+	        coupon_use_min_amount = #{coupon_use_min_amount},
+	        coupon_sale_cal_condition = #{coupon_sale_cal_condition},
+	        coupon_dup_yn = #{coupon_dup_yn},
+	        coupon_type = #{coupon_type},
+	        coupon_use_payment_class = #{coupon_use_payment_class},
+	        coupon_img_path = #{coupon_img_path},
+	        coupon_alert_class = #{coupon_alert_class},
+	        coupon_valid_date_start = #{coupon_valid_date_start},
+	        coupon_valid_date_end = #{coupon_valid_date_end},
+	        coupon_issued_target_id = #{coupon_issued_target_id},
+	        coupon_payment = #{coupon_payment},
+	        coupon_payment_condition = #{coupon_payment_condition},
+	        coupon_class = #{coupon_class},
+	        coupon_use_yn = #{coupon_use_yn},
+	        login_alert_yn = #{login_alert_yn},
+	        sms_alert_yn = #{sms_alert_yn},
+	        email_alert_yn = #{email_alert_yn}
+    	where coupon_cd = #{coupon_cd}
+    </update>
+    <update id="updateCouponBatch" parameterType="com.webapp.manager.vo.CouponVO">
+   		update coupon set
+	        country_supply = #{batch_country_supply},
+	        coupon_valid_date_start = #{batch_coupon_valid_date_start},
+	        coupon_valid_date_end = #{batch_coupon_valid_date_end},
+	        coupon_use_range = #{batch_coupon_use_range},
+	        coupon_ct = #{batch_coupon_ct},
+	        coupon_use_payment_class = #{batch_coupon_use_payment_class}
+    	where coupon_id in 
+    	<foreach collection="chk" item="item" open="(" separator="," close=")">
+             #{item}
+        </foreach>
+    </update>
     <insert id="insertCouponFile" parameterType="com.webapp.board.common.FileVO" >
         INSERT INTO coupon_file (key_id, file_name, real_name, file_size, file_link, file_order)
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
@@ -123,7 +190,7 @@
 	<delete id="deleteCouponFile" parameterType="com.webapp.board.common.FileVO">
         delete from coupon_file  where key_id = #{parentPK} and file_order = #{fileorder}
     </delete>
-    <delete id="deleteReviewFileOne" parameterType="com.webapp.board.common.FileVO">
+    <delete id="deleteCouponFileOne" parameterType="com.webapp.board.common.FileVO">
         delete from coupon_file  where key_id = #{parentPK} and file_order = #{fileorder}
     </delete>
 </mapper>

@@ -65,4 +65,8 @@ public class UserDAO {
     public void insertUserHistory(UserVO userVO) throws SQLException{
         sql.insert("mall.UserMapper.insertUserHistory", userVO);
     }
+	public Map<String, Object> getUserConditionInfo(Integer user_id) {
+		 Map<String, Object> getUserConditionInfo = sql.selectOne("mall.UserMapper.getUserConditionInfo",user_id);
+        return getUserConditionInfo;
+	}
 }

@@ -20,12 +20,22 @@ public class MgCouponDAO {
         List<Map<String, Object>> getCouponList = sql.selectList("mall.MgCouponMapper.getCouponList",params);
         return getCouponList;
     }
+    public Map<String, Object> getCouponDetail(Map<String, Object> params) throws SQLException {
+    	Map<String, Object> getCouponDetail = sql.selectOne("mall.MgCouponMapper.getCouponDetail",params);
+    	return getCouponDetail;
+    }
     public Integer getCouponListCount(Map<String, Object> params) throws SQLException {
     	Integer getCouponListCount = sql.selectOne("mall.MgCouponMapper.getCouponListCount",params);
     	return getCouponListCount;
     }
     public void insertCoupon(CouponVO couponVO) throws SQLException {
     	sql.insert("mall.MgCouponMapper.insertCoupon", couponVO);
+    }
+    public void updateCoupon(CouponVO couponVO) throws SQLException {
+    	sql.update("mall.MgCouponMapper.updateCoupon", couponVO);
+    }
+    public void updateCouponBatch(CouponVO couponVO) throws SQLException {
+    	sql.update("mall.MgCouponMapper.updateCouponBatch", couponVO);
     }
     public boolean checkDupCouponCD(String couponCD) throws SQLException {
     	return (int)sql.selectOne("mall.MgCouponMapper.checkDupCouponCD", couponCD) > 0;
