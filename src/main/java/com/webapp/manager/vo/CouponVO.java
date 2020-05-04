@@ -45,6 +45,13 @@ public class CouponVO extends SearchVO {
 	private String coupon_condition1;
 	private String coupon_condition2;
 	private String coupon_condition3;
+	private String batch_country_supply;
+	private String batch_coupon_valid_date_start;
+	private String batch_coupon_valid_date_end;
+	private String batch_coupon_use_range;
+	private String batch_coupon_ct;
+	private String batch_coupon_use_payment_class;
+	private String[] chk;
 	
 	public Integer getCoupon_id() {
 		return coupon_id;
@@ -297,5 +304,47 @@ public class CouponVO extends SearchVO {
 	}
 	public void setCoupon_issue_order_end(String coupon_issue_order_end) {
 		this.coupon_issue_order_end = coupon_issue_order_end;
+	}
+	public String getBatch_country_supply() {
+		return batch_country_supply;
+	}
+	public void setBatch_country_supply(String batch_country_supply) {
+		this.batch_country_supply = batch_country_supply;
+	}
+	public String getBatch_coupon_valid_date_start() {
+		return batch_coupon_valid_date_start;
+	}
+	public void setBatch_coupon_valid_date_start(String batch_coupon_valid_date_start) {
+		this.batch_coupon_valid_date_start = batch_coupon_valid_date_start;
+	}
+	public String getBatch_coupon_valid_date_end() {
+		return batch_coupon_valid_date_end;
+	}
+	public void setBatch_coupon_valid_date_end(String batch_coupon_valid_date_end) {
+		this.batch_coupon_valid_date_end = batch_coupon_valid_date_end;
+	}
+	public String getBatch_coupon_use_range() {
+		return batch_coupon_use_range;
+	}
+	public void setBatch_coupon_use_range(String batch_coupon_use_range) {
+		this.batch_coupon_use_range = batch_coupon_use_range;
+	}
+	public String getBatch_coupon_ct() {
+		return batch_coupon_ct;
+	}
+	public void setBatch_coupon_ct(String batch_coupon_ct) {
+		this.batch_coupon_ct = batch_coupon_ct;
+	}
+	public String getBatch_coupon_use_payment_class() {
+		return batch_coupon_use_payment_class;
+	}
+	public void setBatch_coupon_use_payment_class(String batch_coupon_use_payment_class) {
+		this.batch_coupon_use_payment_class = batch_coupon_use_payment_class;
+	}
+	public String[] getChk() {
+		return chk;
+	}
+	public void setChk(String[] chk) {
+		this.chk = chk;
 	}
 }

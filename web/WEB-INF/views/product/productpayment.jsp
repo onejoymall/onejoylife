@@ -297,39 +297,39 @@
                             </tbody>
                         </table>
                     </div>
-<%--                    <div class="sec4">--%>
-<%--                        <p class="sec-h1">주문상품 정보</p>--%>
-<%--                        <table class="sec4-table">--%>
-<%--                            <colgroup>--%>
-<%--                                <col style="width: 180px;">--%>
-<%--                                <col style="width: 620px;">--%>
-<%--                            </colgroup>--%>
-<%--                            <tbody class="sec4-tbody">--%>
-<%--                            <tr>--%>
-<%--                                <td>총 상품 금액</td>--%>
-<%--                                <td><span>3,099,000</span>원</td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="bor-none">--%>
-<%--                                <td>할인쿠폰</td>--%>
-<%--                                <td class="sec4-sel">--%>
-<%--                                    <div class="sel-box">--%>
-<%--                                        <select name="" id="">--%>
-<%--                                            <option value="">첫 구매 고객 특별할이 20% ( ~ 2020.04.30)</option>--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                        <select name="" id="" class="sel-none">--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                        <select name="" id="" class="sel-none">--%>
-<%--                                            <option value="">사용가능 쿠폰이 없습니다.</option>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                    <p>보유 쿠폰 <span>3</span>장</p>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
-<%--                    </div>--%>
+                    <div class="sec4">
+                        <p class="sec-h1">주문상품 정보</p>
+                        <table class="sec4-table">
+                            <colgroup>
+                                <col style="width: 180px;">
+                                <col style="width: 620px;">
+                            </colgroup>
+                            <tbody class="sec4-tbody">
+                            <tr>
+                                <td>총 상품 금액</td>
+                                <td><span>3,099,000</span>원</td>
+                            </tr>
+                            <tr class="bor-none">
+                                <td>할인쿠폰</td>
+                                <td class="sec4-sel">
+                                    <div class="sel-box">
+                                        <select name="" id="">
+                                            <option value="">첫 구매 고객 특별할이 20% ( ~ 2020.04.30)</option>
+                                            <option value="">사용가능 쿠폰이 없습니다.</option>
+                                        </select>
+                                        <select name="" id="" class="sel-none">
+                                            <option value="">사용가능 쿠폰이 없습니다.</option>
+                                        </select>
+                                        <select name="" id="" class="sel-none">
+                                            <option value="">사용가능 쿠폰이 없습니다.</option>
+                                        </select>
+                                    </div>
+                                    <p>보유 쿠폰 <span>3</span>장</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="sec5">
                         <p class="sec-h1">결제 정보</p>
                         <div class="ck-box">

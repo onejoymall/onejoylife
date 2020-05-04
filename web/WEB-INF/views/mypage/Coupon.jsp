@@ -22,8 +22,24 @@
 
                         <div class="coupon-input">
                             <p>*소지하고 계신 원조이몰 할인쿠폰 번호 15자리를 입력해 주세요.</p>
-                            <input type="text" placeholder="">
-                            <button>등록하기</button>
+                            <input type="text" placeholder="" name="coupon_cd">
+                            <button type="button" id="couponRegButton">등록하기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="coupon1">
+                    <p class="cou-font">다운로드 가능한 쿠폰</p>
+                    <div class="coupon-box">
+
+                        <div class="coupon-input">
+                            <c:if test="${not empty userDownloadCouponList}">
+				            <c:forEach var="list" items="${userDownloadCouponList}">
+				            	${list.coupon_name} <button type="button" class="couponDownBtn" data-id="${list.coupon_cd}">다운로드</button>
+				            </c:forEach>
+				            </c:if>
+				            <c:if test="${empty userDownloadCouponList}">
+				            	다운로드 가능한 쿠폰이 없습니다.
+				            </c:if>
                         </div>
                     </div>
                 </div>
@@ -31,16 +47,18 @@
                     <p class="cou-font">등록된 쿠폰 내역</p>
                     <table>
                         <colgroup>
-                            <col style="width:200px">
+                            <col style="width:150px">
                             <col style="width:247px">
                             <col style="width:247px">
-                            <col style="width:200px">
+                            <col style="width:100px">
+                            <col style="width:150px">
                         </colgroup>
                         <thead class="cou-header">
                         <tr>
                             <th>등록시간</th>
                             <th>쿠폰명</th>
                             <th>조건</th>
+                            <th>쿠폰할인</th>
                             <th>유효기간</th>
                         </tr>
                         </thead>
@@ -48,17 +66,24 @@
                         <c:if test="${not empty userCouponList}">
                             <c:forEach var="userCouponList" items="${userCouponList}">
                                 <tr>
-                                    <td>${userCouponList.reg_date}</td>
+                                    <td><fmt:formatDate value="${userCouponList.reg_date}" pattern="yyyy.MM.dd HH:mm"/></td>
                                     <td>${userCouponList.coupon_name}</td>
-
-                                    <td><fmt:formatNumber value="${userCouponList.coupon_payment_condition}" groupingUsed="true" /> ${message_coupon_payment_condition}</td>
-                                    <td>${userCouponList.coupon_use_day}</td>
+                                    <td>
+										<c:if test="${not empty userCouponList.coupon_use_min_amount}">
+                                    	<fmt:formatNumber value="${userCouponList.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}
+	                                    </c:if>
+                                  	</td>
+                                  	<td>
+				                    	<c:if test="${userCouponList.coupon_sale_type eq 'amount'}"><fmt:formatNumber value="${userCouponList.coupon_sale_payment}" groupingUsed="true" />원</c:if>
+				                    	<c:if test="${userCouponList.coupon_sale_type eq 'percentage'}"><fmt:formatNumber value="${userCouponList.coupon_sale_rate}" groupingUsed="true" />%</c:if>
+                                  	</td>
+                                    <td><fmt:formatDate value="${userCouponList.coupon_valid_date_start}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${userCouponList.coupon_valid_date_end}" pattern="yyyy.MM.dd"/></td>
                                 </tr>
                             </c:forEach>
                         </c:if>
                         <c:if test="${empty userCouponList}">
                             <tr>
-                                <td colspan="4">사용 가능 쿠폰  Q&amp;A이 없습니다.</td>
+                                <td colspan="5">사용 가능 쿠폰  Q&amp;A이 없습니다.</td>
                                 <td></td>
                                 <td></td>
                             </tr>

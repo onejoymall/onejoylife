@@ -11,17 +11,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.webapp.board.app.BoardGroupSvc;
-import com.webapp.board.app.BoardSvc;
-import com.webapp.board.app.BoardVO;
-import com.webapp.mall.vo.*;
-import com.webapp.manager.dao.MgSystemDAO;
-import com.webapp.manager.dao.QnaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +25,9 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardSvc;
+import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
@@ -42,6 +38,7 @@ import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.CommonDAO;
+import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PaymentDAO;
@@ -50,6 +47,14 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CommonVO;
+import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.OptionVO;
+import com.webapp.mall.vo.QnaVO;
+import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.dao.MgSystemDAO;
+import com.webapp.manager.dao.QnaDAO;
 import com.webapp.manager.vo.ProductVO;
 
 @RestController
@@ -92,6 +97,8 @@ public class restapiController {
     private QnaDAO qnaDAO;
     @Autowired
     private MgSystemDAO mgSystemDAO;
+    @Autowired
+    private CouponDAO couponDAO;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -1475,6 +1482,31 @@ public class restapiController {
     		}else{
     			Integer additionalDeliveryPayment = mgSystemDAO.getAdditionalDeliveryPayment(params);
     			resultMap.put("additionalDeliveryPayment", additionalDeliveryPayment == null ? 0 : additionalDeliveryPayment);
+    		}
+    	} catch (Exception e) {
+    		
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
+    }
+    
+    //마이페이지 자동발급쿠폰 다운버튼
+    @RequestMapping(value = "/MyPage/downloadCoupon", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> downloadCoupon(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	try {
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+                //로그인 확인
+                params.put("email",session.getAttribute("email"));
+                Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+                params.put("coupon_paid_user_id", userInfo.get("usr_id"));
+                
+    			couponDAO.insertCoupon(params);
+    			resultMap.put("success", "success");
     		}
     	} catch (Exception e) {
     		

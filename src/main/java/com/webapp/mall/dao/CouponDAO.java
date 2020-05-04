@@ -25,6 +25,14 @@ public class CouponDAO {
     	Integer getCouponListCount=sql.selectOne("mall.CouponMapper.getCouponListCount",params);
         return getCouponListCount;
     }
+    public List<Map<String, Object>> getUserDownloadCouponList(Map<String, String> params) throws SQLException {
+    	List<Map<String, Object>> getUserDownloadCouponList = sql.selectList("mall.CouponMapper.getUserDownloadCouponList",params);
+    	return getUserDownloadCouponList;
+    }
+    public Integer getUserDownloadCouponListCount(Map<String, String> params) throws SQLException {
+    	Integer getUserDownloadCouponListCount=sql.selectOne("mall.CouponMapper.getUserDownloadCouponListCount",params);
+    	return getUserDownloadCouponListCount;
+    }
     public Integer getUserCouponListCount(Map<String, String> params) throws SQLException {
     	Integer getUserCouponListCount=sql.selectOne("mall.CouponMapper.getUserCouponListCount",params);
         return getUserCouponListCount;

@@ -5,6 +5,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,13 +77,14 @@ public class MyPage {
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            Integer coupon = couponDAO.getUserCouponListCount(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
+            params.put("coupon_paid_user_id",userInfo.get("usr_id"));
             //배송중
             params.put("delivery_status","D");
 
+            Integer coupon = couponDAO.getUserCouponListCount(params);
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
             model.addAttribute("getDeliveryListCount",getDeliveryListCount);
@@ -203,29 +205,45 @@ public class MyPage {
     }
     //쿠폰
     @RequestMapping(value="/MyPage/Coupon")
-    public String myPageCoupon(HttpSession session, Model model, HashMap params,HttpServletRequest request) {
-
+    public String myPageCoupon(HttpSession session, Model model, HashMap params,HttpServletRequest request,SearchVO searchVO) {
+    	Device device = DeviceUtils.getCurrentDevice(request);
         try{
+        	searchVO.setDisplayRowCount(10);
+        	searchVO.setStaticRowEnd(10);
+        	if(device.isMobile()) {
+        		searchVO.setDisplayRowCount(1000);
+            	searchVO.setStaticRowEnd(1000);	
+        	}
             //사용자 아이디 확인 후 전달
-            params.put("email",session.getAttribute("email"));
+            params.put("email",session.getAttribute("email")); 
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             params.put("coupon_paid_user_id",userInfo.get("usr_id"));
             List<Map<String,Object>> userCouponList = couponDAO.getUserCouponList(params);
             model.addAttribute("message_coupon_payment_condition",messageSource.getMessage("coupon.coupon_payment_condition","ko"));
             model.addAttribute("userCouponList", userCouponList);
+            
+            //자동발급조건 다운로드가능쿠폰
+            List<Map<String,Object>> userDownloadCouponList = couponDAO.getUserDownloadCouponList(params);
+            List<Map<String,Object>> userDownloadCouponListResult = new ArrayList<>();
+            for(Map<String,Object> coupon:userDownloadCouponList) {
+            	if(couponConditionCheck(coupon, (Integer)userInfo.get("usr_id"))) userDownloadCouponListResult.add(coupon);
+            }
+            model.addAttribute("userDownloadCouponList", userDownloadCouponListResult);
+            
             model.addAttribute("style", "mypage-3");
             model.addAttribute("leftNavOrder", 3);
         }catch (Exception e){
             e.printStackTrace();
         }
-        Device device = DeviceUtils.getCurrentDevice(request);
+        
         if(device.isMobile()){
             return "mobile/mypage-3";
         } else {
             return "mypage/Coupon";
         }
     }
-  //쿠폰 다운로드
+    
+    //쿠폰 다운로드
     @RequestMapping(value="/MyPage/Coupon-issued")
     public String myPageCouponIssued(HttpSession session, Model model, @RequestParam HashMap params,HttpServletRequest request) {
 
@@ -236,7 +254,7 @@ public class MyPage {
             
             Map<String,Object> couponInfo = couponDAO.getCouponDetail(params);
             if(couponInfo == null){
-            	model.addAttribute("msg","잘못된 접근입니다.");
+            	model.addAttribute("msg","잘못된 쿠폰번호입니다.");
             }else if(couponDAO.getUserCouponListCount(params) > 0 && couponInfo.get("coupon_dup_yn").equals("N")){
             	model.addAttribute("msg","중복사용은 불가능합니다.");
             }else if(couponInfo.get("coupon_condition").equals("L")) {
@@ -244,16 +262,21 @@ public class MyPage {
             	model.addAttribute("msg","쿠폰이 등록되었습니다.");
             }else if(couponInfo.get("coupon_condition").equals("M")) {
             	Map<String,Object> lastPaymentDate = productDAO.getLastPaymentDate(params);
-            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            	Date curDate = new Date();
-            	Date lastDate = sdf.parse((String)lastPaymentDate.get("reg_date"));
-            	
-            	Calendar cal = Calendar.getInstance();
-            	cal.setTime(lastDate);
-            	cal.add(Calendar.DATE, (int)couponInfo.get("coupon_none_buy_month")*30);
-            	lastDate = cal.getTime();
-            	if(curDate.compareTo(lastDate) >= 0) {
-            		model.addAttribute("msg","쿠폰이 등록되었습니다.");
+            	if(lastPaymentDate != null) {
+	            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            	Date curDate = new Date();
+	            	Date lastDate = sdf.parse((String)lastPaymentDate.get("reg_date"));
+	            	
+	            	Calendar cal = Calendar.getInstance();
+	            	cal.setTime(lastDate);
+	            	cal.add(Calendar.DATE, (int)couponInfo.get("coupon_none_buy_month")*30);
+	            	lastDate = cal.getTime();
+	            	if(curDate.compareTo(lastDate) >= 0) {
+	            		couponDAO.insertCoupon(params);
+	            		model.addAttribute("msg","쿠폰이 등록되었습니다.");
+	            	}else {
+	            		model.addAttribute("msg","조건이 충족하지못합니다.");
+	            	}
             	}else {
             		model.addAttribute("msg","조건이 충족하지못합니다.");
             	}
@@ -926,5 +949,30 @@ public class MyPage {
         }
 
         return deliveryPayment;
+    }
+    
+    //자동발급조건체크
+    public boolean couponConditionCheck(Map<String,Object> coupon, Integer user_id) {
+    	boolean isCondition = false;
+    	String couponConditionType = (String)coupon.get("coupon_condition");
+    	Map<String,Object> userInfo = userDAO.getUserConditionInfo(user_id);
+    	
+    	switch(couponConditionType) {
+    	case "T": break;
+    	case "L": break;
+    	case "M": break;
+    	case "J": 
+    		isCondition = true;
+    		break;
+    		
+    	case "D": break;
+    	case "B": break;
+    	case "R": break;
+		case "C": break;
+		case "F": break;
+		case "S": break;
+    	}
+    	
+    	return isCondition;
     }
 }

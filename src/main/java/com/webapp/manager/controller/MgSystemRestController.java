@@ -252,4 +252,27 @@ public class MgSystemRestController {
     	}
     	return resultMap;
     }
+    
+    //회원 아이디정보조회
+    @RequestMapping(value = "/Manager/CallNormalUserList", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> CallNormalUserList(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgProductCodeVO mgProductCodeVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>(); 
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        Object adminLogin = session.getAttribute("adminLogin");
+        try{
+//            if(productVO.getProduct_name().isEmpty()){
+//                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
+//            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                List<Map<String,Object>> getNormalUserList = mgSystemDAO.getNormalUserList();
+                resultMap.put("getNormalUserList",getNormalUserList);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
 }

@@ -81,6 +81,11 @@
         <if test="password_change_code != null"> <![CDATA[AND A.password_change_code= #{password_change_code} ]]></if>
         <![CDATA[ limit 1 ]]>
     </select>
+    <select id="getUserConditionInfo" parameterType="Integer" resultType="java.util.Map">
+        SELECT *
+		FROM user
+		WHERE usr_id = #{value}
+    </select>
     <update id="updateToken" parameterType="String">
         <![CDATA[
         update user set

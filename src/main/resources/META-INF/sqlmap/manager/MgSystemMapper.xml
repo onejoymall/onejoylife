@@ -91,6 +91,13 @@
     <if test="product_class_name != null and product_class_name !=''"> and product_class_name =#{product_class_name}</if>
     order by reg_date desc
   </select>
+  <select id="getNormalUserList" resultType="java.util.Map">
+    select
+    *
+    from user
+    where level = 1
+    order by reg_date desc
+  </select>
   <select id="getDeliveryAreaList" parameterType="hashmap" resultType="java.util.Map">
     select *
     from store_delivery_area A 

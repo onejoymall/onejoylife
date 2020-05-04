@@ -421,7 +421,7 @@ $('.uploadBtn').on('change', function(object){
     filesArr.forEach(function (f) {
         if(!f.type.match("image.*")){
             alert("이미지파일만 등록 가능합니다.");
-            return;
+            return false;
         }
         sel_file = f;
         var reader = new FileReader();
