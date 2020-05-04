@@ -72,15 +72,21 @@
                                     <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
                                 </td>
                             </tr>
-                            <%--<c:if test="${detail.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
-                                <tr>
-                                    <td>통관고유번호</td>
-                                    <td><input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
-                                </tr>
-                            </c:if>--%>
+                            <c:set var="doneLoop" value="false"/>
+                                <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
+                                    <c:if test="${cartPaymentList.product_delivery_International_type eq 'B' || cartPaymentList.product_delivery_International_type eq 'C'}">
+                                        <c:if test="${not doneLoop}">
+                                        <tr>
+                                            <td>통관고유번호</td>
+                                            <td><input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
+                                        </tr>
+                                        <c:set var="doneLoop" value="true"/>
+                                        </c:if>
+                                    </c:if>
+                                </c:forEach>
                             <c:if test="${empty sessionScope.email}">
                             <tr >
-                                <td>주문확인용 비밀번호 입력${detail.product_delivery_International_type}</td>
+                                <td>주문확인용 비밀번호 입력</td>
                                 <td>
                                     <input type="password" name="password" class="sec1-in1">
                                     <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>

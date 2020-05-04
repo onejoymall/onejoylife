@@ -50,7 +50,52 @@
     </insert>
 
     <insert id="paymentOrders" parameterType="java.util.Map">
-
+        insert into payment(
+        success,
+        imp_uid,
+        payment_user_id,
+        merchant_uid,
+        pay_method,
+        pg_provider,
+        pg_type,
+        error_msg,
+        payment_cd,
+        order_no,
+        product_cd,
+        giveaway_cd,
+        payment,
+        payment_type_cd,
+        payment_status,
+        customs_clearance_number,
+        password,
+        delivery_hope_date,
+        delivery_hope_time,
+        payment_order_quantity
+        )values
+        <foreach collection="optionVOList" item="item" separator=" , ">
+         (
+         #{item.success},
+         #{item.imp_uid},
+          #{item.payment_user_id},
+         #{item.merchant_uid},
+         #{item.pay_method},
+         #{item.pg_provider},
+         #{item.pg_type},
+         #{item.error_msg},
+        #{item.payment_cd},
+        #{item.order_no},
+        #{item.product_cd},
+        #{item.giveaway_cd},
+        #{item.payment},
+        #{item.payment_type_cd},
+        #{item.payment_status},
+        #{item.customs_clearance_number},
+        #{item.password},
+        #{item.hope_date},
+        #{item.hope_time},
+        #{item.payment_order_quantity}
+        )
+        </foreach>
     </insert>
 
 
