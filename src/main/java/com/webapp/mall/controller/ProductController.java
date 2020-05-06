@@ -25,6 +25,7 @@ import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.CartDAO;
+import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.ReviewDAO;
@@ -65,6 +66,9 @@ public class ProductController {
     private ConfigDAO configDAO;
     @Autowired
     private MgSystemDAO mgSystemDAO;
+
+    @Autowired
+    private CouponDAO couponDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
@@ -75,7 +79,7 @@ public class ProductController {
 //            product_brand
 //            product_option_color
 //            product_score
-//            product_payment
+//            tproduct_payment
 
             mgBrandVO.setRowStart(1);
             mgBrandVO.setDisplayRowCount(5);
@@ -411,12 +415,22 @@ public class ProductController {
                 model.addAttribute("userInfo",userInfo );
                 model.addAttribute("latestDelivery",latestDelivery );
             }
-
+            
+            //보유 쿠폰
+            params.put("coupon_paid_user_id",params.get("order_user_id"));
+            params.put("coupon_ct", ((String)detail.get("product_ct")).split("\\|"));
+            params.put("coupon_use_range", "P");
+            
+            //사용가능쿠폰
+            List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(params);
+            model.addAttribute("enableCouponList",enableCouponList);
+            
+            
             model.addAttribute("postUrl","/SaveDeliveInfo" );
             model.addAttribute("detail",detail );
             model.addAttribute("style","mypage-4-1-1");
             model.addAttribute("order_no",order_no);
-
+            
         }catch (Exception e){
             e.printStackTrace();
         }

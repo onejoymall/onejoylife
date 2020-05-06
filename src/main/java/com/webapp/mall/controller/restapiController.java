@@ -47,6 +47,7 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
@@ -242,6 +243,12 @@ public class restapiController {
                 userVO.setLog_type("join");
                 userDAO.insertUserHistory(userVO);
                 resultMap.put("redirectUrl", "/sign/signUpDone");
+                
+                params.put("coupon_condition","J");
+                List<Map<String,Object>> joinCoupon = couponDAO.getCouponList(params);
+                for(Map<String,Object> coupon:joinCoupon) {
+                	mailSender.sendSimpleMessage(userVO.getEmail(), "쿠폰이 발급되었습니다", "["+coupon.get("name")+"] 쿠폰을 마이페이지에서 확인하세요.");
+                }
             }
 
         } catch (Exception e) {
@@ -667,7 +674,12 @@ public class restapiController {
 
 
             paymentDAO.insertPayment(params);
-
+            
+            //쿠폰사용으로 변경
+            if(params.get("coupon_cd") != null && !params.get("coupon_cd").equals("")) {
+            	couponDAO.updateCouponUse(params);
+            }
+            
             //경품 응모시 결제 상태 변경
             if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
                 if(params.get("success").equals("false")){

@@ -27,21 +27,43 @@
                         </div>
                     </div>
                 </div>
-                <div class="coupon1">
-                    <p class="cou-font">다운로드 가능한 쿠폰</p>
-                    <div class="coupon-box">
-
-                        <div class="coupon-input">
+                <div class="coupon2">
+                    <p class="cou-font">쿠폰 받기</p>
+                    <table>
+                        <colgroup>
+                            <col style="width:247px">
+                            <col style="width:247px">
+                            <col style="width:200px">
+                            <col style="width:200px">
+                        </colgroup>
+                        <thead class="cou-header">
+                            <tr>
+                                <th>쿠폰명</th>
+                                <th>조건</th>
+                                <th>유효기간</th>
+                                <th>받기</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cou-body">
                             <c:if test="${not empty userDownloadCouponList}">
 				            <c:forEach var="list" items="${userDownloadCouponList}">
-				            	${list.coupon_name} <button type="button" class="couponDownBtn" data-id="${list.coupon_cd}">다운로드</button>
+				            	<td><span>${list.coupon_name}</span></td>
+                                <td>
+                                	<span>
+                                	<c:if test="${not empty list.coupon_use_min_amount}">
+                                    	<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}
+                                    </c:if>
+                                    </span>
+                                </td>
+                                <td><span> ~ ${list.coupon_valid_date_end}</span></td>
+                                <td><button type="button" class="btn-blue couponDownBtn" data-id="${list.coupon_cd}">다운로드</button></td>
 				            </c:forEach>
 				            </c:if>
 				            <c:if test="${empty userDownloadCouponList}">
-				            	다운로드 가능한 쿠폰이 없습니다.
+				            	<td colspan="4">다운로드 가능한 쿠폰이 없습니다.</td>
 				            </c:if>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="coupon2">
                     <p class="cou-font">등록된 쿠폰 내역</p>

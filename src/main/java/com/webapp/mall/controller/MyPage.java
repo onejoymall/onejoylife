@@ -84,12 +84,12 @@ public class MyPage {
             //배송중
             params.put("delivery_status","D");
 
-            Integer coupon = couponDAO.getUserCouponListCount(params);
+            Integer couponCnt = couponDAO.getUserCouponListCount(params);
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
             Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
             model.addAttribute("getDeliveryListCount",getDeliveryListCount);
             model.addAttribute("giveawayCnt",giveawayCnt);
-            model.addAttribute("couponCnt", coupon);
+            model.addAttribute("couponCnt", couponCnt);
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
 
         }catch(Exception e){
@@ -962,7 +962,9 @@ public class MyPage {
     	case "L": break;
     	case "M": break;
     	case "J": 
-    		isCondition = true;
+    		Date userReg = (Date)userInfo.get("reg_date");
+    		Date couponReg = (Date)coupon.get("reg_date");
+    		if(userReg.compareTo(couponReg) > 0) isCondition = true;
     		break;
     		
     	case "D": break;
