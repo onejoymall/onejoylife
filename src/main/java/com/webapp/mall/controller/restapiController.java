@@ -680,7 +680,7 @@ public class restapiController {
     }
     //장바구니 결제 처리
     @RequestMapping(value = "/Save/PaymentOrders", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params,CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+    public  HashMap<String, Object> PaymentOrders(@RequestParam HashMap params, CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
@@ -708,11 +708,6 @@ public class restapiController {
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
                 //회원인 경우 보유포인트 확인
 
-                //결제비용
-                Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
-                List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
-                model.addAttribute("cartPaymentList", cartPaymentList);
-                model.addAttribute("getCartSum", getCartSum);
 
                 Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
                 String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
@@ -738,9 +733,13 @@ public class restapiController {
                     }
                 }
                 resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
+                paymentDAO.insertPayment(params);
+                cartPaymentVO.setCart_user_id("" + params.get("payment_user_id"));
+                List<Map<String, Object>> bundlelist = cartDAO.getCartPaymentList(cartPaymentVO);
+                paymentDAO.paymentOrders(bundlelist, params);
+                cartDAO.CartPaymentListDelete(cartPaymentVO);
             }
 
-            paymentDAO.paymentOrders(params);
 
         }catch (Exception e){
             e.printStackTrace();

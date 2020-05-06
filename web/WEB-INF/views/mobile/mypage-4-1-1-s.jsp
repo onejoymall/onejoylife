@@ -47,7 +47,16 @@
             <span> - </span>
             <input type="text" class="width-30 mb-05" name="order_user_phone_c" id="order_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
             <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
-
+        <c:set var="doneLoop" value="false"/>
+        <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
+        <c:if test="${cartPaymentList.product_delivery_International_type eq 'B' || cartPaymentList.product_delivery_International_type eq 'C'}">
+        <c:if test="${not doneLoop}">
+            <p class="text-md mt-2 mb-05">통관고유번호</p>
+            <input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" />
+            <c:set var="doneLoop" value="true"/>
+        </c:if>
+        </c:if>
+        </c:forEach>
         <c:if test="${empty sessionScope.email}">
             <p class="text-md mt-2 mb-05">비밀번호 입력</p>
                 <input type="password" name="password" class="sec1-in1">
@@ -146,8 +155,10 @@
 
 <c:if test="${not empty cartPaymentList}">
     <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
-         <ul class="product pt-1 pb-0">
-            <ul class="py-0">
+        <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
+        <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
+        <ul class="product pt-1 pb-0">
+            <ul class="pdinfo py-0">
                 <li>
                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                         <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
@@ -158,10 +169,12 @@
                     <h5>${cartPaymentList.product_name}</h5>
                     <p class="grey">${cartPaymentList.product_model}</p>
                 </li>
+                <li><button class="del">삭제</button></li>
             </ul>
             <ul class="options">
                 <li>상품금액</li>
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment}" groupingUsed="true" /> <span>원</span></li>
+                <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
             </ul>
             <ul class="options">
                 <li>수량</li>
@@ -171,12 +184,15 @@
             <ul class="options mb-1">
                 <li>주문금액</li>
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
+
+                <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
+                <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
+                <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
+                <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
+                <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
+                <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
             </ul>
         </ul>
-        <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
-        <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
-        <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
-        <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
     </c:forEach>
 </c:if>
         <%--<h2 class="mt-4">할인 정보</h2>
@@ -218,7 +234,7 @@
         </ul>
        <ul class="calculator pb-1">
             <li>할인</li>
-            <li>- <span class="in1-font3"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /><span>원</span></li>
+            <li>- <span class="in1-font3 discount"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /><span>원</span></li>
         </ul>
 <%--        <ul class="calculator pb-1">--%>
 <%--            <li>할인쿠폰</li>--%>
@@ -227,14 +243,14 @@
         <c:if test="${not empty getCartSum.total_delivery_payment}">
             <ul class="calculator pb-1">
                 <li>배송비</li>
-                <li><fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+                <li class="delivery"><fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </c:if>
 
         <hr class="grey my-1">
         <ul class="calculator pb-1">
             <li>최종 결제 금액</li>
-            <li class="text-lg red"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-lg red total"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
         </ul>
         <ul class="calculator pb-1">
             <li>E-POINT 적립예정</li>
@@ -247,10 +263,10 @@
     <div class="bottomBtns">
         <ul>
            <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
+            <input type="hidden" name="product_payment_pg" value="sumtotal">
         </ul>
     </div>
 
-    <input type="hidden" name="payment" value="${getCartSum.total_payment+getCartSum.total_delivery_payment}">
     <input type="hidden" name="order_no" value="${order_no}">
 
     </form>
@@ -293,6 +309,50 @@ function show(num){
 </script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+    //주문페이지 상품 삭제
+    var allprice = ${getCartSum.total_ori_payment};
+    console.log(allprice);
+    var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
+    console.log(alldiscount);
+    var alldelivery = ${getCartSum.total_delivery_payment};
+    console.log(alldelivery);
+    var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+    console.log(sumtotal);
+    $(document).on("click","button.del",function(){
+        $(this).parent().parent().parent().remove();
+        sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+        console.log(sumtotal);
+        var before_price = $(this).parent().prev().prev().children().children('input[name=allprice]').val();
+        console.log(before_price);
+        var totalprice = allprice - before_price;
+        console.log(totalprice);
+        var price = $(this).parent().prev().children('input[name=price]').val();
+        console.log(price);
+        var discount = before_price - price;
+        console.log(discount);
+        var totaldiscount = alldiscount - discount;
+        console.log(totaldiscount);
+        var delivery = $(this).parent().prev().children('input[name=delivery]').val();
+        console.log(delivery);
+        var totaldelivery = alldelivery - delivery;
+        console.log(totaldelivery);
+        allprice = totalprice;
+        console.log(totalprice);
+        alldiscount = totaldiscount;
+        console.log(totaldiscount);
+        alldelivery = totaldelivery;
+        console.log(totaldelivery);
+        sumtotal = totalprice - totaldiscount + totaldelivery;
+        console.log(sumtotal);
+        $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('.total').text(sumtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        $('input[name=product_payment_pg]').attr('value', sumtotal);
+    })
+    sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+    $('input[name=product_payment_pg]').attr('value', sumtotal);
+
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
@@ -323,7 +383,8 @@ function show(num){
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: product_name,
-                amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},
+                amount: $('input[name=product_payment_pg]').val(),
+                <%--amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},--%>
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),

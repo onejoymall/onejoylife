@@ -1,5 +1,7 @@
 package com.webapp.mall.dao;
 
+import com.webapp.board.common.FileVO;
+import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,14 @@ public class PaymentDAO {
     public void insertPayment(Map<String,Object> params) throws SQLException {
         sql.insert("mall.PaymentMapper.insertPayment",params);
     }
-    public void paymentOrders(Map<String,Object> params) throws SQLException {
-        sql.insert("mall.PaymentMapper.paymentOrders",params);
+    public void paymentOrders( List<Map<String, Object>> bundlelist, Map<String, Object> params) throws SQLException {
+
+        for(Map<String, Object> c : bundlelist){
+            c.put("payment_cd", params.get("payment_cd"));
+            c.put("order_no", params.get("order_no"));
+            c.put("payment_type_cd", params.get("payment_type_cd"));
+            sql.insert("mall.PaymentMapper.paymentOrders", c);
+        }
     }
     public void updateGiveawayDeliveryStatus(Map<String,Object> params) throws SQLException {
         sql.update("mall.PaymentMapper.updateGiveawayDeliveryStatus",params);

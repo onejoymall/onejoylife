@@ -251,6 +251,7 @@
                             <c:if test="${not empty cartPaymentList}">
                                 <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
                                     <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
+                                    <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
                                     <tr>
                                         <td>
                                             <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
@@ -379,25 +380,41 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-	//주문페이지 상품 삭제
-	var allprice = ${getCartSum.total_ori_payment};
-	var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
-	var alldelivery = ${getCartSum.total_delivery_payment};
+    //주문페이지 상품 삭제
+    var allprice = ${getCartSum.total_ori_payment};
+    console.log(allprice);
+    var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
+    console.log(alldiscount);
+    var alldelivery = ${getCartSum.total_delivery_payment};
+    console.log(alldelivery);
     var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-	$(document).on("click","button.del",function(){
-		$(this).parent().parent().remove();
+    console.log(sumtotal);
+    $(document).on("click","button.del",function(){
+        $(this).parent().parent().remove();
         sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
+        console.log(sumtotal);
         var before_price = $(this).parent().prev().prev().children().children('input[name=allprice]').val();
+        console.log(before_price);
         var totalprice = allprice - before_price;
+        console.log(totalprice);
         var price = $(this).parent().prev().children('input[name=price]').val();
+        console.log(price);
         var discount = before_price - price;
+        console.log(discount);
         var totaldiscount = alldiscount - discount;
+        console.log(totaldiscount);
         var delivery = $(this).parent().prev().children('input[name=delivery]').val();
+        console.log(delivery);
         var totaldelivery = alldelivery - delivery;
+        console.log(totaldelivery);
         allprice = totalprice;
+        console.log(totalprice);
         alldiscount = totaldiscount;
+        console.log(totaldiscount);
         alldelivery = totaldelivery;
+        console.log(totaldelivery);
         sumtotal = totalprice - totaldiscount + totaldelivery;
+        console.log(sumtotal);
         $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -421,7 +438,63 @@
     }
 
     $("#submitPayment").on("click",function() {
-        if(!$('#le-ck').is(":checked")){
+        if($('#order_user_name').val() == ""){
+            $.toast({
+                text: "주문자 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_email').val() == ""){
+            $.toast({
+                text: "이메일주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_phone_a').val() == "" || $('#order_user_phone_b').val() == "" || $('#order_user_phone_c').val() == ""){
+            $.toast({
+                text: "휴대폰 번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+            <c:if test="${empty sessionScope.email}">
+        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+            $.toast({
+                text: "주문확인용 비밀번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+            </c:if>
+        else if($('#delivery_user_name').val() == ""){
+            $.toast({
+                text: "받으시는 분 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#postcode').val() == "" || $('#roadAddress').val() == "" || $('#extraAddress').val() == ""){
+            $.toast({
+                text: "배송 주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if(!$('#le-ck').is(":checked")){
             $.toast({
                 text: "이용약관 동의는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
