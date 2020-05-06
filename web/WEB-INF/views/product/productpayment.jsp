@@ -298,33 +298,30 @@
                         </table>
                     </div>
                     <div class="sec4">
-                        <p class="sec-h1">주문상품 정보</p>
+                        <p class="sec-h1">사용가능한 쿠폰</p>
                         <table class="sec4-table">
                             <colgroup>
                                 <col style="width: 180px;">
                                 <col style="width: 620px;">
                             </colgroup>
                             <tbody class="sec4-tbody">
-                            <tr>
-                                <td>총 상품 금액</td>
-                                <td><span>3,099,000</span>원</td>
-                            </tr>
                             <tr class="bor-none">
-                                <td>할인쿠폰</td>
+                                <td>쿠폰</td>
                                 <td class="sec4-sel">
                                     <div class="sel-box">
-                                        <select name="" id="">
-                                            <option value="">첫 구매 고객 특별할이 20% ( ~ 2020.04.30)</option>
-                                            <option value="">사용가능 쿠폰이 없습니다.</option>
-                                        </select>
-                                        <select name="" id="" class="sel-none">
-                                            <option value="">사용가능 쿠폰이 없습니다.</option>
-                                        </select>
-                                        <select name="" id="" class="sel-none">
-                                            <option value="">사용가능 쿠폰이 없습니다.</option>
+                                        <select id="couponBox">
+                                        	<c:if test="${not empty enableCouponList}">
+                                        		<option value="">선택 안함</option>
+                                        		<c:forEach var="list" items="${enableCouponList}" varStatus="status">
+                                            		<option value="${status.index}">${list.coupon_name} ( ~ ${list.coupon_valid_date_end})</option>
+                                            	</c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty enableCouponList}">
+                                            	<option value="">사용가능 쿠폰이 없습니다.</option>
+                                            </c:if>
                                         </select>
                                     </div>
-                                    <p>보유 쿠폰 <span>3</span>장</p>
+                                    <p>사용가능 쿠폰 <span><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /></span>장</p>
                                 </td>
                             </tr>
                             </tbody>
@@ -386,7 +383,7 @@
                                 	<c:set var = "discountTotal" value = "${(detail.product_user_payment - detail.product_payment) * detail.payment_order_quantity}" />
                                     <p><span class="in1-font2"><fmt:formatNumber value="${productTotal}" groupingUsed="true" /></span> 원</p>
 <%--                                    <p>-<span class="in1-font3"> 90,000</span> 원</p>--%>
-                                    <p>-<span class="in1-font3"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> 원</p>
+                                    <p>-<span class="in1-font3" id="discountSpan"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> 원</p>
                                     <c:if test="${not empty deliveryPayment}">
                                         <p>+<span class="in1-font3" id="deliverySpan"> <fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> 원</p>
                                     </c:if>
@@ -421,11 +418,28 @@
         </main>
     </div>
 </div>
+
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-    var originDelivery = ${deliveryPayment};
-    var originPayment = ${productTotal - discountTotal + deliveryPayment};
+	var	originProduct = ${productTotal};	//원래 소비자가
+    var originDelivery = ${deliveryPayment}; //원래 배송비
+    var originPayment = ${productTotal - discountTotal + deliveryPayment}; //원래 판매가+배송비
+    var originDiscount = ${discountTotal}; //원래 할인가
+	var addDelivery = 0;	//도서산간 추가배송비
+	var disCoupon = 0;	//쿠폰할인
+	var useCoupon;
+	
+    var enableCouponList = [];
+    <c:forEach var="list" items="${enableCouponList}" varStatus="status">
+		var obj = {
+		<c:forEach var="el" items="${list}" varStatus="status">
+			${el.key}: "${el.value}",	
+		</c:forEach>
+		};
+		enableCouponList.push(obj);
+	</c:forEach>
+    
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     var formData = $('#defaultForm').serialize();
@@ -527,7 +541,9 @@
                     +'&pg_provider='+rsp.pg_provider
                     +'&pay_method='+rsp.pay_method
                     +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg;
+                    +'&error_msg='+rsp.error_msg
+                    +'&coupon_cd='+useCoupon.coupon_cd
+                    +'&coupon_paid_user_id='+useCoupon.coupon_paid_user_id;
 
                 var alertType;
                 var showText;
@@ -662,8 +678,9 @@
             data:formData,
             async: false,
             success: function (data) {
-                var resultDelivery = originDelivery + data.additionalDeliveryPayment;
-                var resultPayment = originPayment + data.additionalDeliveryPayment;
+        		addDelivery = data.additionalDeliveryPayment;
+                var resultDelivery = originDelivery + addDelivery;
+                var resultPayment = originPayment - disCoupon + addDelivery;
                 $("#deliverySpan").text(resultDelivery.toLocaleString('en'));
                 $("#paymentSpan").text(resultPayment.toLocaleString('en'));
                 $("input[name=payment]").val(resultPayment);
@@ -684,5 +701,31 @@
 
         return res;
     };
+    
+    $("#couponBox").on("input", function(){
+		var idx = $(this).val();
+		useCoupon = enableCouponList[idx];
+		
+		if(useCoupon){
+		    var resultDiscount;
+		    if(useCoupon.coupon_sale_type == 'amount'){
+				disCoupon = useCoupon.coupon_sale_payment;
+		    }else{
+				if(useCoupon.coupon_sale_cal_condition == 'A'){
+				    disCoupon = parseInt(originProduct*(useCoupon.coupon_sale_rate/100));
+			    }else{
+					disCoupon = parseInt((originProduct-originDiscount)*(useCoupon.coupon_sale_rate/100));
+			    }
+		    }
+		}else{
+		    disCoupon = 0;
+		}
+		
+		var resultDiscount = parseInt(originDiscount) + parseInt(disCoupon);
+		var resultPayment = originPayment - disCoupon + addDelivery;
+        $("#discountSpan").text(resultDiscount.toLocaleString('en'));
+        $("#paymentSpan").text(resultPayment.toLocaleString('en'));
+        $("input[name=payment]").val(resultPayment);
+    });
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

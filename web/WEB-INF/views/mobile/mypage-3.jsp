@@ -17,18 +17,34 @@
         </form>
     </section>
     <section class="wrap">
-        <h2 class="pb-1">다운로드 가능한 쿠폰</h2>
-        <hr class="mb-2">
-        <form action="">
-        	<c:if test="${not empty userDownloadCouponList}">
-            <c:forEach var="list" items="${userDownloadCouponList}">
-            	${list.coupon_name} <button type="button" class="couponDownBtn cou-btn" data-id="${list.coupon_cd}">다운로드</button>            	
-            </c:forEach>
-            </c:if>
-            <c:if test="${empty userDownloadCouponList}">
-            	다운로드 가능한 쿠폰이 없습니다.
-            </c:if>
-        </form>
+        <h2 class="pb-1">쿠폰 받기</h2>
+        <hr>
+        <table>
+            <colgroup>
+                <col style="width: *">
+                <col style="width: 75px;">
+                <col style="width: 50px;">
+            </colgroup>
+            <tbody class="lis-body">
+            	<c:if test="${not empty userDownloadCouponList}">
+	            <c:forEach var="list" items="${userDownloadCouponList}">
+	            	<tr>
+	                    <td class="lis-td-con">
+	                        <p><span>${list.coupon_name}</span></p>
+	                        <c:if test="${not empty list.coupon_use_min_amount}">
+                            	<p><span>(<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition})</span></p>
+                            </c:if>
+	                        <p><span> ~ ${list.coupon_valid_date_end}</span></p>
+	                    </td>
+	                    <td><button type="button" class="btn couponDownBtn" data-id="${list.coupon_cd}">받기</button></td>
+	                </tr>            	
+	            </c:forEach>
+	            </c:if>
+	            <c:if test="${empty userDownloadCouponList}">
+	            	다운로드 가능한 쿠폰이 없습니다.
+	            </c:if>
+            </tbody>
+        </table>
     </section>
     <section class="wrap">
         <h2 class="pb-1">등록된 쿠폰 내역</h2>

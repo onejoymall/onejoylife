@@ -102,8 +102,7 @@ main{overflow: hidden;}
     height: calc(100% / 2);
 }
 .rec2-in:nth-child(5) > div > p {
-    /*line-height: 4rem;*/
-    line-height: 60px;
+    line-height: 4rem;
     padding: 0 20px;
 }
 .in-coin1 {
@@ -113,6 +112,9 @@ main{overflow: hidden;}
     float: right;
 }
 /* coupon */
+.coupon2{
+    margin-bottom: 50px;
+}
 .cou-font {
     font-size: 1.6rem;
     margin: 20px 0 10px;
@@ -183,3 +185,14 @@ main{overflow: hidden;}
 }
 .right-box > a,
 .left-box > a{ display: block;width: 100%;height: 100%;}
+.btn-blue{
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    padding: 5px 15px;
+    border-radius: 20px;
+    line-height: 28px;
+    background: none;
+    border: 1px solid;
+    color:#4159d3;
+}
