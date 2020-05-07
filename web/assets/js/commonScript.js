@@ -923,7 +923,7 @@ $(document).ready(function(){
     $(document).on("click","#productUpdate",function () {
         var formData = new FormData($('#defaultForm')[0]);
         //수정중인 페이징 기억
-        formData.append("page", $('input[name=page]').val());
+        formData.append("page", $('input[name=page]').val() ? $('input[name=page]').val() : 1);
         jQuery.ajax({
             type: 'POST',
             enctype: 'multipart/form-data',
