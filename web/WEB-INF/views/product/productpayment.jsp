@@ -413,7 +413,8 @@
                 <input type="hidden" name="order_no" value="${order_no}">
                 <input type="hidden" name="product_cd" value="${detail.product_cd}">
                 <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
-
+                <input type="hidden" name="coupon_cd" value="">
+                <input type="hidden" name="coupon_paid_user_id" value="">
             </form>
         </main>
     </div>
@@ -516,7 +517,7 @@
                 pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
-                name: "${detail.product_name}",
+                name: '${detail.product_name}',
                 amount: $('input[name=payment]').val(),
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
@@ -541,9 +542,7 @@
                     +'&pg_provider='+rsp.pg_provider
                     +'&pay_method='+rsp.pay_method
                     +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg
-                    +'&coupon_cd='+useCoupon.coupon_cd
-                    +'&coupon_paid_user_id='+useCoupon.coupon_paid_user_id;
+                    +'&error_msg='+rsp.error_msg;
 
                 var alertType;
                 var showText;
@@ -706,6 +705,7 @@
 		var idx = $(this).val();
 		useCoupon = enableCouponList[idx];
 		
+		
 		if(useCoupon){
 		    var resultDiscount;
 		    if(useCoupon.coupon_sale_type == 'amount'){
@@ -717,8 +717,12 @@
 					disCoupon = parseInt((originProduct-originDiscount)*(useCoupon.coupon_sale_rate/100));
 			    }
 		    }
+		    $("input[name=coupon_cd]").val(useCoupon.coupon_cd);
+		    $("input[name=coupon_paid_user_id]").val(useCoupon.coupon_paid_user_id);
 		}else{
 		    disCoupon = 0;
+		    $("input[name=coupon_cd]").val('');
+		    $("input[name=coupon_paid_user_id]").val('');
 		}
 		
 		var resultDiscount = parseInt(originDiscount) + parseInt(disCoupon);
