@@ -4,34 +4,54 @@
 
 <mapper namespace="mall.CouponMapper">
 
-    <!-- <select id="getCouponList" resultType="java.util.HashMap">
+    <select id="getCouponList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
           *
-        FROM coupon  where 1=1
+        FROM coupon A  where 1=1
+        AND SYSDATE() BETWEEN A.coupon_valid_date_start AND date_add(A.coupon_valid_date_end, INTERVAL 1 DAY)
+		AND (A.coupon_issue_date IS NULL OR SYSDATE() > A.coupon_issue_date)
         ]]>
-
-        <if test="coupon_id != null"> <![CDATA[AND coupon_id= #{coupon_id} ]]></if>
-        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
-        <if test="coupon_name != null"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
-        <if test="coupon_use_yn != null"> <![CDATA[AND coupon_use_yn= #{coupon_use_yn} ]]></if>
+		<if test="coupon_paid_id != null and coupon_paid_id !=''"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
+		<if test="coupon_condition != null and coupon_condition !=''"> <![CDATA[AND A.coupon_condition= #{coupon_condition} ]]></if>
+		<if test="login_alert_yn != null and login_alert_yn !=''"> <![CDATA[AND A.login_alert_yn= #{login_alert_yn} ]]></if>
+		<if test="email_alert_yn != null and email_alert_yn !=''"> <![CDATA[AND A.email_alert_yn= #{email_alert_yn} ]]></if>
+		<if test="sms_alert_yn != null and sms_alert_yn !=''"> <![CDATA[AND A.sms_alert_yn= #{sms_alert_yn} ]]></if>
+        <if test="coupon_cd != null and coupon_cd != ''"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_ct != null and coupon_ct != ''">
+        	<foreach collection="coupon_ct" item="item" separator="OR" open="AND (" close=")">
+         		<![CDATA[FIND_IN_SET(#{item},replace(B.coupon_ct,'|',',')) ]]>
+        	</foreach>
+        </if>
+        <if test="coupon_name != null and coupon_name != ''"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
+        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="coupon_paid_class_cd != null and coupon_paid_class_cd != ''"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
+        <if test="coupon_paid_user_id != null and coupon_paid_user_id != ''"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
+        <if test="coupon_use_range != null and coupon_use_range != ''"> <![CDATA[AND B.coupon_use_range= #{coupon_use_range} ]]></if>
     </select>
     <select id="getCouponListCount" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
             count(*) as cnt
         FROM coupon  where 1=1
+        AND SYSDATE() BETWEEN A.coupon_valid_date_start AND date_add(A.coupon_valid_date_end, INTERVAL 1 DAY)
+		AND (A.coupon_issue_date IS NULL OR SYSDATE() > A.coupon_issue_date)
         ]]>
-
-        <if test="coupon_id != null"> <![CDATA[AND coupon_id= #{coupon_id} ]]></if>
-        <if test="coupon_cd != null"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
-        <if test="coupon_name != null"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
-        <if test="coupon_use_yn != null"> <![CDATA[AND coupon_use_yn= #{coupon_use_yn} ]]></if>
-    </select> -->
+		<if test="coupon_paid_id != null and coupon_paid_id !=''"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
+        <if test="coupon_cd != null and coupon_cd != ''"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
+        <if test="coupon_ct != null and coupon_ct != ''">
+        	<foreach collection="coupon_ct" item="item" separator="OR" open="AND (" close=")">
+         		<![CDATA[FIND_IN_SET(#{item},replace(B.coupon_ct,'|',',')) ]]>
+        	</foreach>
+        </if>
+        <if test="coupon_name != null and coupon_name != ''"> <![CDATA[AND coupon_name like CONCAT('%',#{coupon_name},'%') ]]></if>
+        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="coupon_paid_class_cd != null and coupon_paid_class_cd != ''"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
+        <if test="coupon_paid_user_id != null and coupon_paid_user_id != ''"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
+        <if test="coupon_use_range != null and coupon_use_range != ''"> <![CDATA[AND B.coupon_use_range= #{coupon_use_range} ]]></if>
+    </select>
     <select id="getUserDownloadCouponList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT *

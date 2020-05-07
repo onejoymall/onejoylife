@@ -8,9 +8,8 @@
 <section class="subheader">
     <div class="subTitle">주문/결제</div>
 </section>
-
+<form name="defaultForm" id="defaultForm" method="POST">
 <section class="wrap">
-    <form name="defaultForm" id="defaultForm" method="POST">
         <h2 class="pb-1">주문자 정보</h2>
         <hr>
         <p class="text-md mt-2 mb-05">주문하시는 분</p>
@@ -191,20 +190,24 @@
             </ul>
         </ul>
 
-        <%--<h2 class="mt-4">할인 정보</h2>
+        <h2 class="mt-4">할인 정보</h2>
         <hr class="my-1">
-        <ul class="calculator">
-            <li>총 주문금액</li>
-            <li>13,090,000 <span>원</span></li>
-        </ul>
         <p class="text-md mt-1 mb-05">배송시 요청사항</p>
-         <select class="full mt-05 mb-05">
-            <option value="" disabled selected>첫 구매 고객 특별할이 20% ( ~ 2020.04.30)</option>
+         <select class="full mt-05 mb-05" id="couponBox">
+         	<c:if test="${not empty enableCouponList}">
+        		<option value="">선택 안함</option>
+        		<c:forEach var="list" items="${enableCouponList}" varStatus="status">
+            		<option value="${status.index}">${list.coupon_name} ( ~ ${list.coupon_valid_date_end})</option>
+            	</c:forEach>
+            </c:if>
+            <c:if test="${empty enableCouponList}">
+            	<option value="">사용가능 쿠폰이 없습니다.</option>
+            </c:if>
          </select>
          <ul class="calculator">
-            <li>보유 쿠폰</li>
-            <li>3 <span>장</span></li>
-        </ul>--%>
+            <li>사용가능 쿠폰</li>
+            <li><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /> <span>장</span></li>
+        </ul>
 
         <h2 class="pb-1 mt-4">결제 정보</h2>
         <hr>
@@ -232,7 +235,7 @@
     </ul>
     <ul class="calculator pb-1">
         <li>할인금액</li>
-        <li>- <fmt:formatNumber value="${discountTotal}" groupingUsed="true" /> <span>원</span></li>
+        <li>- <span class="in1-font3" id="discountSpan"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> <span>원</span></li>
     </ul>
     <%--        <ul class="calculator pb-1">--%>
     <%--            <li>할인쿠폰</li>--%>
@@ -263,7 +266,7 @@
     </ul>
 </div>
 
-<input type="hidden" name="payment" value="${productTotal - discountTotal + deliveryPayment}">
+				<input type="hidden" name="payment" value="${productTotal - discountTotal + deliveryPayment}">
                 <input type="hidden" name="order_no" value="${order_no}">
                 <input type="hidden" name="product_cd" value="${detail.product_cd}">
                 <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
@@ -308,34 +311,93 @@
 </script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-	var originDelivery = ${deliveryPayment};
-	var originPayment = ${productTotal - discountTotal + deliveryPayment};
+	var	originProduct = ${productTotal};	//원래 소비자가
+	var originDelivery = ${deliveryPayment}; //원래 배송비
+	var originPayment = ${productTotal - discountTotal + deliveryPayment}; //원래 판매가+배송비
+	var originDiscount = ${discountTotal}; //원래 할인가
+	var addDelivery = 0;	//도서산간 추가배송비
+	var disCoupon = 0;	//쿠폰할인
+	var useCoupon;
+	
+	var enableCouponList = [];
+    <c:forEach var="list" items="${enableCouponList}" varStatus="status">
+		var obj = {
+		<c:forEach var="el" items="${list}" varStatus="status">
+			${el.key}: "${el.value}",	
+		</c:forEach>
+		};
+		enableCouponList.push(obj);
+	</c:forEach>
+	
 	var IMP = window.IMP; // 생략해도 괜찮습니다.
 	IMP.init("imp78484974");
 	var formData = $('#defaultForm').serialize();
 	$("#submitPayment").on("click",function() {
-		if(!$('#replysns').is(":checked")){
-            var filter = "win16|win32|win64|macintel|mac|";
-            if(navigator.platform){
-                if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
-                    $.toast({
-                        text: "이용약관 동의는 필수 항목입니다.",
-                        showHideTransition: 'plain', //펴짐
-                        position: 'mid-center',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                } else {
-                    $.toast({
-                        text: "이용약관 동의는 필수 항목입니다.",
-                        showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                }
-            }
-		}else{
+		if($('#order_user_name').val() == ""){
+            $.toast({
+                text: "주문자 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_email').val() == ""){
+            $.toast({
+                text: "이메일주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_phone_a').val() == "" || $('#order_user_phone_b').val() == "" || $('#order_user_phone_c').val() == ""){
+            $.toast({
+                text: "휴대폰 번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        <c:if test="${empty sessionScope.email}">
+        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+            $.toast({
+                text: "주문확인용 비밀번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        </c:if>
+        else if($('#delivery_user_name').val() == ""){
+            $.toast({
+                text: "받으시는 분 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#postcode').val() == "" || $('#roadAddress').val() == "" || $('#extraAddress').val() == ""){
+            $.toast({
+                text: "배송 주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if(!$('#replysns').is(":checked")){
+            $.toast({
+                text: "이용약관 동의는 필수 항목입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }else{
 
 			// loginAuth(data.access_token);
 			// location.href=data.redirectUrl;
@@ -343,7 +405,7 @@
 				pg: "kcp",
 				pay_method:$('input[name=payment_type_cd]:checked').val(),
 				merchant_uid:$('input[name=order_no]').val(),
-				name: "${detail.product_name}",
+				name: '${detail.product_name}',
 				amount: $('input[name=payment]').val(),
 				buyer_email: "${sessionScope.email}",
 				buyer_name: $('#order_user_name').val(),
@@ -497,35 +559,67 @@
 	})
 	
 	$("input[name=postcode]").on("input", function() {
-    	var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
-    	$.ajax({
-			method:"post",
+        var formData = "postcode="+$(this).val()+"&product_cd="+$("input[name=product_cd]").val();
+        $.ajax({
+            method:"post",
             url: "/additionalDeliveryPayment",
             data:formData,
             async: false,
             success: function (data) {
-            	var resultDelivery = originDelivery + data.additionalDeliveryPayment;
-            	var resultPayment = originPayment + data.additionalDeliveryPayment;
-            	$("#deliverySpan").text(resultDelivery.toLocaleString('en'));
-            	$("#paymentSpan").text(resultPayment.toLocaleString('en'));
-            	$("input[name=payment]").val(resultPayment);
+        		addDelivery = data.additionalDeliveryPayment;
+                var resultDelivery = originDelivery + addDelivery;
+                var resultPayment = originPayment - disCoupon + addDelivery;
+                $("#deliverySpan").text(resultDelivery.toLocaleString('en'));
+                $("#paymentSpan").text(resultPayment.toLocaleString('en'));
+                $("input[name=payment]").val(resultPayment);
             },
             error: function (xhr, status, error) {
                 console.log(error,xhr,status );
             }
-    	});
-	});
-	var originalVal = $.fn.val;
-	$.fn.val = function (value) {
-	    var res = originalVal.apply(this, arguments);
+        });
+    });
+    var originalVal = $.fn.val;
+    $.fn.val = function (value) {
+        var res = originalVal.apply(this, arguments);
+
+        if (this.is('input:text') && arguments.length >= 1) {
+            // this is input type=text setter
+            this.trigger("input");
+        }
+
+        return res;
+    };
 	
-	    if (this.is('input:text') && arguments.length >= 1) {
-	        // this is input type=text setter
-	        this.trigger("input");
-	    }
-	
-	    return res;
-	};
+	$("#couponBox").on("input", function(){
+		var idx = $(this).val();
+		useCoupon = enableCouponList[idx];
+		
+		
+		if(useCoupon){
+		    var resultDiscount;
+		    if(useCoupon.coupon_sale_type == 'amount'){
+				disCoupon = useCoupon.coupon_sale_payment;
+		    }else{
+				if(useCoupon.coupon_sale_cal_condition == 'A'){
+				    disCoupon = parseInt(originProduct*(useCoupon.coupon_sale_rate/100));
+			    }else{
+					disCoupon = parseInt((originProduct-originDiscount)*(useCoupon.coupon_sale_rate/100));
+			    }
+		    }
+		    $("input[name=coupon_cd]").val(useCoupon.coupon_cd);
+		    $("input[name=coupon_paid_user_id]").val(useCoupon.coupon_paid_user_id);
+		}else{
+		    disCoupon = 0;
+		    $("input[name=coupon_cd]").val('');
+		    $("input[name=coupon_paid_user_id]").val('');
+		}
+		
+		var resultDiscount = parseInt(originDiscount) + parseInt(disCoupon);
+		var resultPayment = originPayment - disCoupon + addDelivery;
+        $("#discountSpan").text(resultDiscount.toLocaleString('en'));
+        $("#paymentSpan").text(resultPayment.toLocaleString('en'));
+        $("input[name=payment]").val(resultPayment);
+    });
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

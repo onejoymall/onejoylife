@@ -43,7 +43,7 @@
                                 <tbody>
                                     <tr>
                                         <th>카테고리</th>
-                                        <td>
+                                        <td id="categorySearch">
                                             <select class="category1" name="category1">
                                             <option>--</option>
                                             </select>
@@ -66,8 +66,17 @@
 		                                </td>
                                     </tr>
                                     <tr>
-                                    	<th></th>
-                                    	<td></td>
+                                    	<th>매출현황기준</th>
+                                        <td>
+                                            <select name="sales_criteria">
+                                            	<option value="date" selected>일</option>
+                                            	<option value="week">주</option>
+                                            	<option value="month">월</option>
+                                            	<option value="quater">분기</option>
+                                            	<option value="half">반기</option>
+                                            	<option value="year">연</option>
+                                            </select>
+                                        </td>
                                     	<th></th>
                                     	<td>
 		                                    <div class="input-box2">
@@ -192,16 +201,16 @@
                     data.list.forEach(function(el){
                     	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
                     });
-                    $(".keyword-src-table tbody select:nth-child(1)").html(html);
+                    $(".keyword-src-table tbody #categorySearch select:nth-child(1)").html(html);
                 },
                 error: function (xhr, status, error) {
                     alert(error);
                 }
             });
-        	$('.keyword-src-table tbody select:nth-child(1)').on("change",function(){
+        	$('.keyword-src-table tbody #categorySearch select:nth-child(1)').on("change",function(){
        	        //소분류 초기화
-       	        $('.keyword-src-table tbody select:nth-child(2)').empty();
-       	        $('.keyword-src-table tbody select:nth-child(3)').empty();
+       	        $('.keyword-src-table tbody #categorySearch select:nth-child(2)').empty();
+       	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
        	        var uppper_code =$(this).val();
        	        
        	        jQuery.ajax({
@@ -214,16 +223,16 @@
       	                    data.list.forEach(function(el){
       	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
       	                    });
-      	                    $(".keyword-src-table tbody select:nth-child(2)").html(html);
+      	                    $(".keyword-src-table tbody #categorySearch select:nth-child(2)").html(html);
        	            },
        	            error: function (xhr, status, error) {
        	                alert(error);
        	            }
        	        });
        	    });
-        	$('.keyword-src-table tbody select:nth-child(2)').on("change",function(){
+        	$('.keyword-src-table tbody #categorySearch select:nth-child(2)').on("change",function(){
            	        //소분류 초기화
-           	        $('.keyword-src-table tbody select:nth-child(3)').empty();
+           	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
            	        var uppper_code =$(this).val();
            	        console.log(uppper_code)
            	        jQuery.ajax({
@@ -235,7 +244,7 @@
           	                    data.list.forEach(function(el){
           	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
           	                    });
-          	                    $(".keyword-src-table tbody select:nth-child(3)").html(html);
+          	                    $(".keyword-src-table tbody #categorySearch select:nth-child(3)").html(html);
            	            },
            	            error: function (xhr, status, error) {
            	                alert(error);

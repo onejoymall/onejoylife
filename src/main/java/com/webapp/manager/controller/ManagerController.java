@@ -761,6 +761,9 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/class-sales")
     public String managerClassSales(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
+        	if(params.get("sales_criteria") == null || params.get("sales_criteria").equals("")) {
+        		params.put("sales_criteria","date");
+        	}
     		searchVO.setDisplayRowCount(10);
     		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
     		params.put("displayRowCount", searchVO.getDisplayRowCount());

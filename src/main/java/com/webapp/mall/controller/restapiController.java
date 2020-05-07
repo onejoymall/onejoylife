@@ -245,9 +245,12 @@ public class restapiController {
                 resultMap.put("redirectUrl", "/sign/signUpDone");
                 
                 params.put("coupon_condition","J");
+                params.put("login_alert_yn","");
+                params.put("email_alert_yn","Y");
+                params.put("sms_alert_yn","");
                 List<Map<String,Object>> joinCoupon = couponDAO.getCouponList(params);
                 for(Map<String,Object> coupon:joinCoupon) {
-                	mailSender.sendSimpleMessage(userVO.getEmail(), "쿠폰이 발급되었습니다", "["+coupon.get("name")+"] 쿠폰을 마이페이지에서 확인하세요.");
+                	mailSender.sendSimpleMessage(userVO.getEmail(), "쿠폰이 발급되었습니다", "["+coupon.get("coupon_name")+"] 쿠폰을 마이페이지에서 확인하세요.");
                 }
             }
 

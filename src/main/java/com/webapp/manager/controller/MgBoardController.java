@@ -27,7 +27,6 @@ public class MgBoardController {
     public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request) throws Exception{
         String returnString="";
         try{
-
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
             if (bgInfo == null) {
                 return "manager/mgboard/BoardGroupFail";
@@ -37,7 +36,7 @@ public class MgBoardController {
             }
             searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
 
-            List<?> listview  = boardSvc.selectBoardList(searchVO);
+            List<?> listview  = boardSvc.selectMgBoardList(searchVO);
 
             modelMap.addAttribute("listview", listview);
             modelMap.addAttribute("searchVO", searchVO);
