@@ -168,14 +168,20 @@
                     <p>${cartPaymentList.product_made_company_name}</p>
                     <h5>${cartPaymentList.product_name}</h5>
                     <p class="grey">${cartPaymentList.product_model}</p>
+
+                    <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
+                    <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
+                    <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
+                    <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
+                    <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
+                    <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                 </li>
                 <li><button class="del">삭제</button></li>
             </ul>
             <ul class="options">
                 <li>상품금액</li>
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment}" groupingUsed="true" /> <span>원</span></li>
-                <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
-            </ul>
+               </ul>
             <ul class="options">
                 <li>수량</li>
                 <li><span>${cartPaymentList.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}"></span><span>개</span></li>
@@ -185,11 +191,6 @@
                 <li>주문금액</li>
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
 
-                <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
-                <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
-                <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
-                <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
-                <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                 <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
             </ul>
         </ul>
@@ -311,39 +312,23 @@ function show(num){
 <script>
     //주문페이지 상품 삭제
     var allprice = ${getCartSum.total_ori_payment};
-    console.log(allprice);
     var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
-    console.log(alldiscount);
     var alldelivery = ${getCartSum.total_delivery_payment};
-    console.log(alldelivery);
     var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-    console.log(sumtotal);
     $(document).on("click","button.del",function(){
         $(this).parent().parent().parent().remove();
         sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-        console.log(sumtotal);
-        var before_price = $(this).parent().prev().prev().children().children('input[name=allprice]').val();
-        console.log(before_price);
+        var before_price = $(this).parent().prev().children('input[name=allprice]').val();
         var totalprice = allprice - before_price;
-        console.log(totalprice);
         var price = $(this).parent().prev().children('input[name=price]').val();
-        console.log(price);
         var discount = before_price - price;
-        console.log(discount);
         var totaldiscount = alldiscount - discount;
-        console.log(totaldiscount);
         var delivery = $(this).parent().prev().children('input[name=delivery]').val();
-        console.log(delivery);
         var totaldelivery = alldelivery - delivery;
-        console.log(totaldelivery);
         allprice = totalprice;
-        console.log(totalprice);
         alldiscount = totaldiscount;
-        console.log(totaldiscount);
         alldelivery = totaldelivery;
-        console.log(totaldelivery);
         sumtotal = totalprice - totaldiscount + totaldelivery;
-        console.log(sumtotal);
         $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -367,13 +352,26 @@ function show(num){
 
     $("#submitPayment").on("click",function() {
         if(!$('#replysns').is(":checked")){
-            $.toast({
-                text: "이용약관 동의 는 필수 항목입니다.",
-                showHideTransition: 'plain', //펴짐
-                position: 'top-right',
-                heading: 'Error',
-                icon: 'error'
-            });
+            var filter = "win16|win32|win64|macintel|mac|";
+            if(navigator.platform){
+                if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                    $.toast({
+                        text: "이용약관 동의는 필수 항목입니다.",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'mid-center',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                } else {
+                    $.toast({
+                        text: "이용약관 동의는 필수 항목입니다.",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                }
+            }
         }else{
 
             // loginAuth(data.access_token);

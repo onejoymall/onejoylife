@@ -382,39 +382,23 @@
 <script>
     //주문페이지 상품 삭제
     var allprice = ${getCartSum.total_ori_payment};
-    console.log(allprice);
     var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
-    console.log(alldiscount);
     var alldelivery = ${getCartSum.total_delivery_payment};
-    console.log(alldelivery);
     var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-    console.log(sumtotal);
     $(document).on("click","button.del",function(){
         $(this).parent().parent().remove();
         sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-        console.log(sumtotal);
         var before_price = $(this).parent().prev().prev().children().children('input[name=allprice]').val();
-        console.log(before_price);
         var totalprice = allprice - before_price;
-        console.log(totalprice);
         var price = $(this).parent().prev().children('input[name=price]').val();
-        console.log(price);
         var discount = before_price - price;
-        console.log(discount);
         var totaldiscount = alldiscount - discount;
-        console.log(totaldiscount);
         var delivery = $(this).parent().prev().children('input[name=delivery]').val();
-        console.log(delivery);
         var totaldelivery = alldelivery - delivery;
-        console.log(totaldelivery);
         allprice = totalprice;
-        console.log(totalprice);
         alldiscount = totaldiscount;
-        console.log(totaldiscount);
         alldelivery = totaldelivery;
-        console.log(totaldelivery);
         sumtotal = totalprice - totaldiscount + totaldelivery;
-        console.log(sumtotal);
         $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
