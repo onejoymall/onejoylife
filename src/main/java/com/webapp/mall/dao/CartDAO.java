@@ -43,6 +43,10 @@ public class CartDAO {
         return getCartPaymentList;
     }
 
+    public void CartPaymentListDelete(CartPaymentVO cartPaymentVO) throws SQLException {
+        sql.delete("mall.CartMapper.CartPaymentListDelete",cartPaymentVO);
+    }
+
     public Map<String,Object> getPaymentCartSum(CartPaymentVO cartPaymentVO) throws SQLException{
         Map<String,Object> getPaymentCartSum = sql.selectOne("mall.CartMapper.getPaymentCartSum",cartPaymentVO);
         return getPaymentCartSum;

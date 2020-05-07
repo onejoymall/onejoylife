@@ -17,6 +17,14 @@
         </foreach>
         order by A.reg_date DESC
     </select>
+
+    <delete id="CartPaymentListDelete" parameterType="com.webapp.mall.vo.CartPaymentVO">
+        delete from product_cart where cart_cd in
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+        #{item}
+        </foreach> and cart_user_id=#{cart_user_id}
+    </delete>
+
     <select id="getPaymentCartSum" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
 
         select

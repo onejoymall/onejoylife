@@ -1566,6 +1566,27 @@ body.black ul.product ul.options li:last-child, body.black ul.product ul.options
     color: rgba(255,255,255,0.7);
 }
 
+ul.pdinfo li:first-child{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    margin-right: 1em;
+}
+ul.pdinfo li:first-child img{
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+ul.pdinfo li:nth-child(2){
+    width:calc(100% - 140px - 1em)!important;
+}
+ul.pdinfo li:nth-child(3){
+    width:60px!important;
+}
+
 .wrap ul.basket{
     position: relative;
     display: flex;
