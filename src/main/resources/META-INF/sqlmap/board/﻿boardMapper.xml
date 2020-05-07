@@ -41,6 +41,26 @@
          ORDER BY BRDNO DESC 
          LIMIT ${rowStart-1}, 10
     </select>
+    <select id="selectMgBoard8List" resultType="com.webapp.board.app.BoardVO" parameterType="com.webapp.board.common.SearchVO">
+        SELECT
+            BRDNO, BRDTITLE, BRDWRITER, DATE_FORMAT(BRDDATE,'%Y-%m-%d') BRDDATE, BRDHIT,
+                (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
+                (SELECT COUNT(*) FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT,
+                (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT,
+                (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
+                (SELECT REMEMO FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) rememo,
+                (SELECT REWRITER FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REWRITER,
+                question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
+                email,phone,password,BRDMEMO,usr_id
+
+          FROM TBL_BOARD TB
+         <include refid="includeBoard"/>
+        <if test="usr_id != null and usr_id !=''">
+            AND TB.usr_id=#{usr_id}
+        </if>
+         ORDER BY BRDNO DESC 
+         LIMIT ${rowStart-1}, 10
+    </select>
     <insert id="insertBoard" parameterType="com.webapp.board.app.BoardVO" >
         <selectKey resultType="String" keyProperty="brdno" order="BEFORE">
             SELECT IFNULL(MAX(BRDNO),0)+1 FROM TBL_BOARD
