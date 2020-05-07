@@ -50,8 +50,8 @@
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
-        <if test="product_ct != null and product_ct != ''"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
-        <if test="mainViewType != null and mainViewType != ''"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
         <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
         <if test="orderByKey == null"> order by product_id DESC </if>
         LIMIT ${rowStart-1}, ${displayRowCount}
