@@ -315,13 +315,26 @@
 	var formData = $('#defaultForm').serialize();
 	$("#submitPayment").on("click",function() {
 		if(!$('#replysns').is(":checked")){
-			$.toast({
-				text: "이용약관 동의 는 필수 항목입니다.",
-				showHideTransition: 'plain', //펴짐
-				position: 'top-right',
-				heading: 'Error',
-				icon: 'error'
-			});
+            var filter = "win16|win32|win64|macintel|mac|";
+            if(navigator.platform){
+                if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                    $.toast({
+                        text: "이용약관 동의는 필수 항목입니다.",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'mid-center',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                } else {
+                    $.toast({
+                        text: "이용약관 동의는 필수 항목입니다.",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                }
+            }
 		}else{
 
 			// loginAuth(data.access_token);
