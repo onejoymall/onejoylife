@@ -617,7 +617,7 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 fileVO.setParentPK(giveawayVO.getGiveaway_cd());
-                fileVO.setParentPK(productVO.getProduct_cd());
+//                fileVO.setParentPK(productVO.getProduct_cd());
                 if(!isEmpty(filelist)){
                     fileVO.setFileorder(1);
                     mgProductDAO.deleteProductFile(filelist,fileVO);

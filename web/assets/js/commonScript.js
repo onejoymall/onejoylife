@@ -112,7 +112,21 @@ $(document).on("click",".favoriteSubmit",function () {
 
 //비회원 결제
 $(document).on("click","#paymentSubmit",function () {
-    if(isLogin==''){
+
+    var order = $('input[name=payment_order_quantity]').val();
+    var max = $('input[name=order_max]').val();
+    var min = $('input[name=order_min]').val();
+
+    if (order < min || order > max) {
+        $.toast({
+            text: '최대/최소 주문 수량을 확인하세요.',
+            showHideTransition: 'plain', //펴짐
+            position: 'top-right',
+            heading: 'Error',
+            icon: 'error',
+            stack: false
+        });
+    } else if(isLogin==''){
         $.toast({
             heading: '비회원 주문 중입니다.',
             text: [
@@ -2307,12 +2321,14 @@ $(document).ready(function(){
     function defaultModalGiveaway (giveaway_cd){
         var file_link='';
         $(".modal").attr("style", "display:block");
+        var resultData;
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/giveawayViewDetail',
             data: {"giveaway_cd":giveaway_cd},
             success: function (data) {
                 console.log(data.list)
+                resultData=data.list;
                 $.each(data.list, function (index, item) {
                     $('input[name^="'+index+'"]').val(item);
                     $('#'+index).val(item);
@@ -2336,7 +2352,7 @@ $(document).ready(function(){
                         $('#editor6').summernote('code', item);
                     }
                 });
-                var ele1 =$('input[name^="file_1"]').val();
+                /*var ele1 =$('input[name^="file_1"]').val();
                 var ele2 =$('input[name^="file_2"]').val();
                 var ele3 =$('input[name^="file_3"]').val();
                 var ele4 =$('input[name^="file_4"]').val();
@@ -2346,9 +2362,13 @@ $(document).ready(function(){
                 $('.product_list_image').attr('src',ele2.replace(/(<([^>]+)>)/ig,""));
                 $('.product_list_image_sm').attr('src',ele3.replace(/(<([^>]+)>)/ig,""));
                 $('.product_list_image_response').attr('src',ele4.replace(/(<([^>]+)>)/ig,""));
-                $('.product_add_image').attr('src',ele5.replace(/(<([^>]+)>)/ig,""));
-
-                $('input[name^="giveaway_cd"]').val(giveaway_cd)
+                $('.product_add_image').attr('src',ele5.replace(/(<([^>]+)>)/ig,""));*/
+                $('.file_link1').attr("src",resultData.file_1);
+                $('.file_link2').attr("src",resultData.file_2);
+                $('.file_link3').attr("src",resultData.file_3);
+                $('.file_link4').attr("src",resultData.file_4);
+                $('.file_link5').attr("src",resultData.file_5);
+                $('input[name^="giveaway_cd"]').val(giveaway_cd);
             },
             error: function (xhr, status, error) {
                 alert(error);

@@ -176,7 +176,7 @@
 <%--            <div class="right">--%>
 <%--                <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>상품 정보 다운로드</button>--%>
 <%--            </div>--%>
-            <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/productAddProc"/>">
+            <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/GiveawayAddProc"/>">
                 <h3>기본 정보</h3>
                 <table class="goods-detail-table">
                     <colgroup>
@@ -193,7 +193,7 @@
                     <tr>
                         <th>경품 추첨 설정</th>
                         <td>
-                            <p class="cc2">경품의 자동 추첨 기준 포인트 를 입력합니다.<br>
+                            <p class="cc2">경품의 자동 추첨 기준 포인트를 입력합니다.<br>
                                 <span class="cc">* 설정된 기준 포인트 달성시 자동추첨 됩니다.</span><br>
                             </p>
                             <input type="text" id="giveaway_play_winner_point" name="giveaway_play_winner_point" >
@@ -202,7 +202,7 @@
                     <tr>
                         <th>경품 응모 최대 포인트</th>
                         <td>
-                            <p class="cc2">경품의 응모 가능한 최대 포인트 를 입력합니다.<br>
+                            <p class="cc2">경품의 응모 가능한 최대 포인트를 입력합니다.<br>
 <%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
                             </p>
                             <input type="text" id="giveaway_play_max_point" name="giveaway_play_max_point" >
@@ -211,7 +211,7 @@
                     <tr>
                         <th>경품 응모 최소 포인트</th>
                         <td>
-                            <p class="cc2">경품의 응모 가능한 최소 포인트 를 입력합니다.<br>
+                            <p class="cc2">경품의 응모 가능한 최소 포인트를 입력합니다.<br>
 <%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
                             </p>
                             <input type="text" id="giveaway_play_min_point" name="giveaway_play_min_point" >
