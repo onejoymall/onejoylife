@@ -237,7 +237,7 @@ public class MainController {
             return "layout/mainTopNav";
         }
     }
-    @RequestMapping(value = "/mall/today", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/mall/today", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();

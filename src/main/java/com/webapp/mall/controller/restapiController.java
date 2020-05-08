@@ -619,7 +619,7 @@ public class restapiController {
         return resultMap;
     }
     //결제 정보저장
-    @RequestMapping(value = "/SavePayment", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/SavePayment", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     public  HashMap<String, Object> SavePayment(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();

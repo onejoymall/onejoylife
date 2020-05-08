@@ -75,6 +75,8 @@
 <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
                                     <td>
                                         <input type="number" name="payment_order_quantity" value="${list.payment_order_quantity}" class="num-box payment_order_quantity" data-id="${list.cart_cd}">
+                                        <input type="hidden" name="order_max" value="${list.product_max_limit}" />
+                                        <input type="hidden" name="order_min" value="${list.product_min_limit}" />
                                     </td>
                                     <td>
                                         <div class="price-number before-price">
