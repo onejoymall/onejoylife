@@ -677,6 +677,7 @@ public class restapiController {
 
 
             paymentDAO.insertPayment(params);
+            paymentDAO.insertBundle(params);
             
             //쿠폰사용으로 변경
             if(params.get("coupon_cd") != null && !params.get("coupon_cd").equals("")) {

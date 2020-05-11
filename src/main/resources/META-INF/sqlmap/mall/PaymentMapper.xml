@@ -66,6 +66,25 @@
         #{payment_order_quantity}
         )
     </insert>
+    <insert id="insertBundle" parameterType="hashmap">
+        insert into payment_bundle(
+	        product_cd,
+	        payment_cd,
+	        order_no,
+	        cart_cd,
+	        payment_type_cd,
+	        payment_order_quantity,
+	        coupon_cd
+        )values (
+	        #{product_cd},
+	        #{payment_cd},
+	        #{order_no},
+	        #{cart_cd},
+	        #{payment_type_cd},
+	        #{payment_order_quantity},
+        	#{coupon_cd}
+        )
+    </insert>
 
 
 

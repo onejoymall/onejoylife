@@ -117,7 +117,7 @@ $(document).on("click","#paymentSubmit",function () {
     var max = $('input[name=order_max]').val();
     var min = $('input[name=order_min]').val();
 
-    if (order < min || order > max) {
+    if (order < min || (max != 0 && order > max)) {
         $.toast({
             text: '최대/최소 주문 수량을 확인하세요.',
             showHideTransition: 'plain', //펴짐
