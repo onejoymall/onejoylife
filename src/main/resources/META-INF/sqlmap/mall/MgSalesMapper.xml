@@ -99,7 +99,27 @@
   </select>
   <select id="getUserSalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
   	SELECT IFNULL(COUNT(*),0) cnt
-    FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+    FROM (SELECT  
+			<if test='sales_criteria == "date"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+			</if>
+			<if test='sales_criteria == "week"'>
+				CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+				'~',
+				DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+			</if>
+			<if test='sales_criteria == "month"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m')
+			</if>
+			<if test='sales_criteria == "quater"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+			</if>
+			<if test='sales_criteria == "half"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+			</if>
+			<if test='sales_criteria == "year"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+			</if> reg_date,
 			email
 	FROM payment A
 	LEFT JOIN user B
@@ -120,7 +140,27 @@
   </select>
   
   <select id="getUserSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
-  	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+  	SELECT  
+			<if test='sales_criteria == "date"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+			</if>
+			<if test='sales_criteria == "week"'>
+				CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+				'~',
+				DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+			</if>
+			<if test='sales_criteria == "month"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m')
+			</if>
+			<if test='sales_criteria == "quater"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+			</if>
+			<if test='sales_criteria == "half"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+			</if>
+			<if test='sales_criteria == "year"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+			</if> reg_date,
 			email,
 			username,
 			D.user_grant_name,
@@ -150,7 +190,27 @@
   </select>
   
   <select id="getPaymethodSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
-  	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+  	SELECT  
+			<if test='sales_criteria == "date"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+			</if>
+			<if test='sales_criteria == "week"'>
+				CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+				'~',
+				DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+			</if>
+			<if test='sales_criteria == "month"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m')
+			</if>
+			<if test='sales_criteria == "quater"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+			</if>
+			<if test='sales_criteria == "half"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+			</if>
+			<if test='sales_criteria == "year"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+			</if> reg_date,
 			B.code_name,
 			IFNULL(COUNT(A.payment_cd),0) payment_order_quantity,
 			ifnull(COUNT(distinct C.product_id),0) product_count,
@@ -177,7 +237,27 @@
   
   <select id="getPaymethodSalesListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
   	SELECT IFNULL(COUNT(*),0) cnt
-    FROM (SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
+    FROM (SELECT  
+			<if test='sales_criteria == "date"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+			</if>
+			<if test='sales_criteria == "week"'>
+				CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+				'~',
+				DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+			</if>
+			<if test='sales_criteria == "month"'>
+				DATE_FORMAT(A.reg_date,'%Y.%m')
+			</if>
+			<if test='sales_criteria == "quater"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+			</if>
+			<if test='sales_criteria == "half"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+			</if>
+			<if test='sales_criteria == "year"'>
+				concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+			</if> reg_date,
 			B.code_name
 	FROM payment A
 	LEFT JOIN code B
