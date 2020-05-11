@@ -342,6 +342,10 @@ public class ProductController {
             List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
             model.addAttribute("cartPaymentList", cartPaymentList);
             model.addAttribute("getCartSum", getCartSum);
+            
+            //희망 배송일시 YN
+            Map<String,Object> storeInfo = mgSystemDAO.getCartStoreHopeInfo(cartPaymentVO);
+            model.addAttribute("store_delivery",storeInfo);
 
             if(!isEmpty(userInfo)){
                 //최근 배송지 불러오기

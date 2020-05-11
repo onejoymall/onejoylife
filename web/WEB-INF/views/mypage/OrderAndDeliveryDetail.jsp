@@ -91,6 +91,10 @@
                             <td class="body-td-tit1">배송시 요청사항</td>
                             <td class="body-td-txt"><span>${delivery.delivery_message}</span></td>
                         </tr>
+                        <tr>
+                            <td class="body-td-tit1">희망 배송일시</td>
+                            <td class="body-td-txt"><span>${paymentDetail.delivery_hope_date} ${paymentDetail.delivery_hope_time}</span></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

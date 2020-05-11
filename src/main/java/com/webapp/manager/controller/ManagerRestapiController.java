@@ -1439,7 +1439,7 @@ public class ManagerRestapiController {
     
   //쿠폰등록
     @Transactional
-    @RequestMapping(value = "/manager/insertCoupon", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/insertCoupon", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> insertCoupon(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -1517,7 +1517,7 @@ public class ManagerRestapiController {
     
     //쿠폰수정
     @Transactional
-    @RequestMapping(value = "/manager/updateCoupon", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/updateCoupon", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> updateCoupon(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -1591,7 +1591,7 @@ public class ManagerRestapiController {
     
   //쿠폰일괄수정
     @Transactional
-    @RequestMapping(value = "/manager/updateCouponBatch", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/updateCouponBatch", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> updateCouponBatch(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();

@@ -28,6 +28,9 @@ public class PaymentDAO {
             sql.insert("mall.PaymentMapper.paymentOrders", c);
         }
     }
+    public void insertBundle(Map<String,Object> params) throws SQLException {
+        sql.insert("mall.PaymentMapper.insertBundle",params);
+    }
     public void updateGiveawayDeliveryStatus(Map<String,Object> params) throws SQLException {
         sql.update("mall.PaymentMapper.updateGiveawayDeliveryStatus",params);
     }

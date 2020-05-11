@@ -638,7 +638,7 @@ $("button[name=coupon-confirm-btn]").click(function(){
         data: formData,
         processData: false, // 필수
         contentType: false, // 필수
-        url:`/manager/${proc}Coupon`,
+        url:`/Manager/${proc}Coupon`,
         success: function (data) {
         	if (data.validateError) {
                 $('.validateError').empty();
@@ -908,7 +908,7 @@ $('#coupon-update-batch-btn').on("click",function(){
     var showText;
     jQuery.ajax({
         type: 'POST',
-        url: '/manager/updateCouponBatch',
+        url: '/Manager/updateCouponBatch',
         data: formData,
         success: function (data) {
         	if (data.validateError) {

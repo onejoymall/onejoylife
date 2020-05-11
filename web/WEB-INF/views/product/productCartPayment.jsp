@@ -221,6 +221,30 @@
                                     <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
                                 </td>
                             </tr>
+                            <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망일자</td>
+                                <td class="sel-td">
+
+                                    <div class="cla">
+                                        <input type="text" id="start_date" name="hope_date" class="date_pick">
+                                        <div class="cla-img1"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
+                            <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
+                            <tr class="bor-none">
+                                <td>배송 희망시간</td>
+                                <td class="sel-td">
+									
+									<div class="cla">
+                                        <input type="text" name="hope_time" class="time_pick">
+                                        <!-- <div class="cla-img1"></div> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            </c:if>
                             </tbody>
                         </table>
                     </div>
@@ -289,6 +313,36 @@
                                 </c:forEach>
                             </c:if>
 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="sec4">
+                        <p class="sec-h1">사용가능한 쿠폰</p>
+                        <table class="sec4-table">
+                            <colgroup>
+                                <col style="width: 180px;">
+                                <col style="width: 620px;">
+                            </colgroup>
+                            <tbody class="sec4-tbody">
+                            <tr class="bor-none">
+                                <td>쿠폰</td>
+                                <td class="sec4-sel">
+                                    <div class="sel-box">
+                                        <select id="couponBox">
+                                        	<c:if test="${not empty enableCouponList}">
+                                        		<option value="">선택 안함</option>
+                                        		<c:forEach var="list" items="${enableCouponList}" varStatus="status">
+                                            		<option value="${status.index}">${list.coupon_name} ( ~ ${list.coupon_valid_date_end})</option>
+                                            	</c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty enableCouponList}">
+                                            	<option value="">사용가능 쿠폰이 없습니다.</option>
+                                            </c:if>
+                                        </select>
+                                    </div>
+                                    <p>사용가능 쿠폰 <span><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /></span>장</p>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
