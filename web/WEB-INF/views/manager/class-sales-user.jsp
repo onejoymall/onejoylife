@@ -44,7 +44,18 @@
                                 </colgroup>
                                 <tbody>
                                 	<tr>
-	                                    <th>주문일</th>
+		                                <th>매출현황기준</th>
+                                        <td>
+                                            <select name="sales_criteria">
+                                            	<option value="date" <c:if test="${params.sales_criteria == 'date'}">selected</c:if>>일</option>
+                                            	<option value="week" <c:if test="${params.sales_criteria == 'week'}">selected</c:if>>주</option>
+                                            	<option value="month" <c:if test="${params.sales_criteria == 'month'}">selected</c:if>>월</option>
+                                            	<option value="quater" <c:if test="${params.sales_criteria == 'quater'}">selected</c:if>>분기</option>
+                                            	<option value="half" <c:if test="${params.sales_criteria == 'half'}">selected</c:if>>반기</option>
+                                            	<option value="year" <c:if test="${params.sales_criteria == 'year'}">selected</c:if>>연</option>
+                                            </select>
+                                        </td>
+                                        <th>주문일</th>
 	                                    <td>
 		                                    <div class="input-box1">
 		                                        <button type="button" class="ra-num" data-id="con1">오늘</p>
@@ -69,6 +80,8 @@
 		                                </td> --%>
 	                                </tr>
 	                                <tr>
+	                                	<th></th>
+	                                	<td></td>
 	                                	<th></th>
 	                                	<td>
 		                                    <div class="input-box2">
@@ -196,16 +209,16 @@
                     data.list.forEach(function(el){
                     	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
                     });
-                    $(".keyword-src-table tbody select:nth-child(1)").html(html);
+                    $(".keyword-src-table tbody #categorySearch select:nth-child(1)").html(html);
                 },
                 error: function (xhr, status, error) {
                     alert(error);
                 }
             });
-        	$('.keyword-src-table tbody select:nth-child(1)').on("change",function(){
+        	$('.keyword-src-table tbody #categorySearch select:nth-child(1)').on("change",function(){
        	        //소분류 초기화
-       	        $('.keyword-src-table tbody select:nth-child(2)').empty();
-       	        $('.keyword-src-table tbody select:nth-child(3)').empty();
+       	        $('.keyword-src-table tbody #categorySearch select:nth-child(2)').empty();
+       	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
        	        var uppper_code =$(this).val();
        	        
        	        jQuery.ajax({
@@ -218,16 +231,16 @@
       	                    data.list.forEach(function(el){
       	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
       	                    });
-      	                    $(".keyword-src-table tbody select:nth-child(2)").html(html);
+      	                    $(".keyword-src-table tbody #categorySearch select:nth-child(2)").html(html);
        	            },
        	            error: function (xhr, status, error) {
        	                alert(error);
        	            }
        	        });
        	    });
-        	$('.keyword-src-table tbody select:nth-child(2)').on("change",function(){
+        	$('.keyword-src-table tbody #categorySearch select:nth-child(2)').on("change",function(){
            	        //소분류 초기화
-           	        $('.keyword-src-table tbody select:nth-child(3)').empty();
+           	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
            	        var uppper_code =$(this).val();
            	        console.log(uppper_code)
            	        jQuery.ajax({
@@ -239,7 +252,7 @@
           	                    data.list.forEach(function(el){
           	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
           	                    });
-          	                    $(".keyword-src-table tbody select:nth-child(3)").html(html);
+          	                    $(".keyword-src-table tbody #categorySearch select:nth-child(3)").html(html);
            	            },
            	            error: function (xhr, status, error) {
            	                alert(error);

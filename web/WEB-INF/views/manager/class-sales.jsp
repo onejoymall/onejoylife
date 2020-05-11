@@ -69,12 +69,12 @@
                                     	<th>매출현황기준</th>
                                         <td>
                                             <select name="sales_criteria">
-                                            	<option value="date" selected>일</option>
-                                            	<option value="week">주</option>
-                                            	<option value="month">월</option>
-                                            	<option value="quater">분기</option>
-                                            	<option value="half">반기</option>
-                                            	<option value="year">연</option>
+                                            	<option value="date" <c:if test="${params.sales_criteria == 'date'}">selected</c:if>>일</option>
+                                            	<option value="week" <c:if test="${params.sales_criteria == 'week'}">selected</c:if>>주</option>
+                                            	<option value="month" <c:if test="${params.sales_criteria == 'month'}">selected</c:if>>월</option>
+                                            	<option value="quater" <c:if test="${params.sales_criteria == 'quater'}">selected</c:if>>분기</option>
+                                            	<option value="half" <c:if test="${params.sales_criteria == 'half'}">selected</c:if>>반기</option>
+                                            	<option value="year" <c:if test="${params.sales_criteria == 'year'}">selected</c:if>>연</option>
                                             </select>
                                         </td>
                                     	<th></th>

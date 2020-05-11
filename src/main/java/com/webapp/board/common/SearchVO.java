@@ -19,6 +19,7 @@ public class SearchVO extends PageVO{
     private String end_date;
     private String product_name;
     private String product_use_member_yn;
+    private String sales_criteria;
 
     public String getProduct_use_member_yn() {
         return product_use_member_yn;
@@ -163,6 +164,14 @@ public class SearchVO extends PageVO{
     public String[] getSearchTypeArr() {
         return searchType.split(",");
     }
+
+	public String getSales_criteria() {
+		return sales_criteria;
+	}
+
+	public void setSales_criteria(String sales_criteria) {
+		this.sales_criteria = sales_criteria;
+	}
 
 }
  

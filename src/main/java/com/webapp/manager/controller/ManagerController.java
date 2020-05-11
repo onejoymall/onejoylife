@@ -771,6 +771,7 @@ public class ManagerController {
     		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
     		
             model.addAttribute("list", list);
+            model.addAttribute("params", params);
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("table_name", "payment");
             model.addAttribute("Pk", "payment_cd");
@@ -786,11 +787,16 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/class-sales-user")
     public String managerClassSalesUser(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
+        	if(params.get("sales_criteria") == null || params.get("sales_criteria").equals("")) {
+        		params.put("sales_criteria","date");
+        		searchVO.setSales_criteria("date");
+        	}
     		searchVO.setDisplayRowCount(10);
     		searchVO.pageCalculate(mgSalesDAO.getUserSalesListCount(searchVO));
     		List<Map<String, Object>> list = mgSalesDAO.getUserSalesList(searchVO);
     		
             model.addAttribute("list", list);
+            model.addAttribute("params", params);
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("table_name", "payment");
             model.addAttribute("Pk", "payment_cd");
@@ -829,11 +835,16 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/class-sales-paymethod")
     public String managerClassSalesPaymethod(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
+        	if(params.get("sales_criteria") == null || params.get("sales_criteria").equals("")) {
+        		params.put("sales_criteria","date");
+        		searchVO.setSales_criteria("date");
+        	}
     		searchVO.setDisplayRowCount(10);
     		searchVO.pageCalculate(mgSalesDAO.getPaymethodSalesListCount(searchVO));
     		List<Map<String, Object>> list = mgSalesDAO.getPaymethodSalesList(searchVO);
     		
             model.addAttribute("list", list);
+            model.addAttribute("params", params);
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("table_name", "payment");
             model.addAttribute("Pk", "payment_cd");
