@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
+<c:import url="/mobile/layout/sub-header"/>
     <section class="subheader">
         <div class="subTitle">취소/재결제/교환/반품</div>
     </section>

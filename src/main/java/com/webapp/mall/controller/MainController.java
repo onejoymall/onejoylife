@@ -211,7 +211,7 @@ public class MainController {
 
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
-            searchVO.pageCalculate(cartDAO.getCartListCount(params));
+            searchVO.pageCalculate(cartDAO.getTopCartListCount(params));
 
             //오늘 본 상품 출력시 적용
             if(isEmpty((List<String>)session.getAttribute("today"))){
@@ -236,6 +236,100 @@ public class MainController {
         } else {
             return "layout/mainTopNav";
         }
+    }
+    @RequestMapping(value = "/mobile/layout/main-header")
+    public String MmainTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
+        try{
+            // 카테고리 출력
+            params.put("pd_category_upper_code","T");
+            params.put("pd_category_main_view","Y");
+            List<Map<String,Object>> categoryList = categoryDAO.getCategoryList(params);
+            params.put("pd_category_upper_code",null);
+            List<Map<String,Object>> subList = categoryDAO.getCategorySubList(params);
+            List<Map<String,Object>> thirdList = categoryDAO.getCategoryThirdList(params);
+            model.addAttribute("categoryList",categoryList);
+            model.addAttribute("subList",subList);
+            model.addAttribute("thirdList",thirdList);
+
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+
+            if(isEmpty(userInfo)){
+                params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("cart_user_id",userInfo.get("usr_id"));
+            }
+
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(cartDAO.getTopCartListCount(params));
+
+            //오늘 본 상품 출력시 적용
+            if(isEmpty((List<String>)session.getAttribute("today"))){
+
+            }else{
+                todayVO.setProduct_cd_array((List<String>)session.getAttribute("today"));
+                List<Map<String,Object>> todayList = productDAO.getProductTodayList(todayVO);
+                model.addAttribute("todayList", todayList);
+            }
+
+//            todayVO.setProduct_cd_array(new String[]{"string1"});
+
+
+            model.addAttribute("searchVO", searchVO);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "mobile/layout/main-header";
+
+    }
+    @RequestMapping(value = "/mobile/layout/sub-header")
+    public String MsubTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
+        try{
+            // 카테고리 출력
+            params.put("pd_category_upper_code","T");
+            params.put("pd_category_main_view","Y");
+            List<Map<String,Object>> categoryList = categoryDAO.getCategoryList(params);
+            params.put("pd_category_upper_code",null);
+            List<Map<String,Object>> subList = categoryDAO.getCategorySubList(params);
+            List<Map<String,Object>> thirdList = categoryDAO.getCategoryThirdList(params);
+            model.addAttribute("categoryList",categoryList);
+            model.addAttribute("subList",subList);
+            model.addAttribute("thirdList",thirdList);
+
+            params.put("email",session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+
+            if(isEmpty(userInfo)){
+                params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("cart_user_id",userInfo.get("usr_id"));
+            }
+
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(cartDAO.getTopCartListCount(params));
+
+            //오늘 본 상품 출력시 적용
+            if(isEmpty((List<String>)session.getAttribute("today"))){
+
+            }else{
+                todayVO.setProduct_cd_array((List<String>)session.getAttribute("today"));
+                List<Map<String,Object>> todayList = productDAO.getProductTodayList(todayVO);
+                model.addAttribute("todayList", todayList);
+            }
+
+//            todayVO.setProduct_cd_array(new String[]{"string1"});
+
+
+            model.addAttribute("searchVO", searchVO);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "mobile/layout/sub-header";
+
     }
     @RequestMapping(value = "/mall/today", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
