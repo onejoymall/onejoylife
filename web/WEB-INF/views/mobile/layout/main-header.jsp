@@ -57,7 +57,7 @@
         <ul class="submenu">
             <li><a href="/mall/today">오늘의 특가</a></li>
             <li><a href="/giveaway">경품</a></li>
-            <li><a href="javascript:void(0);" class="ready">특판</a></li>
+            <li><a href="/product?product_ct=808">특판</a></li>
             <li><a href="avascript:void(0);" class="ready">여행</a></li>
             <li><a href="http://onejoymcm.com">라이브 쇼핑</a></li>
         </ul>

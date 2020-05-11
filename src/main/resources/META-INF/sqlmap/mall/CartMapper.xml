@@ -54,6 +54,14 @@
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         order by A.reg_date DESC LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
+    <select id="getTopCartListCount" parameterType="java.util.Map" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product_cart  where cart_user_id = #{cart_user_id}
+
+        ]]>
+    </select>
     <select id="getCartListCount" parameterType="java.util.Map" resultType="Integer">
         <![CDATA[
         SELECT

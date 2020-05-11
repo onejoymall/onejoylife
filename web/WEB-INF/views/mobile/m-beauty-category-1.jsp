@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/mobile/layout/main-header.jsp" %>
+<c:import url="/mobile/layout/main-header"/>
 
     <section class="subheader">
         <div class="subTitle">${categoryRowData.pd_category_name}</div>

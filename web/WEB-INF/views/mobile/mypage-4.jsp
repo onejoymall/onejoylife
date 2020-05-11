@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
+<c:import url="/mobile/layout/sub-header"/>
 
     <section class="subheader">
         <div class="subTitle">장바구니</div>
@@ -57,6 +57,8 @@
                                 <option value="5" <c:if test="${list.payment_order_quantity eq '5'}"> selected</c:if>>5</option>
                                 <option value="6" <c:if test="${list.payment_order_quantity eq '6'}"> selected</c:if>>6</option>
                             </select>
+                            <input type="hidden" name="order_max" value="${list.product_max_limit}" />
+                            <input type="hidden" name="order_min" value="${list.product_min_limit}" />
                         </li>
                     </ul>
                 </c:forEach>

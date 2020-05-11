@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/mobile/layout/sub-header.jsp" %>
+<c:import url="/mobile/layout/sub-header"/>
 
 
 <section class="subheader">
@@ -422,6 +422,7 @@
 					},
 				],
 				m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",
+                <%--m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",--%>
 			}, function (rsp) { // callback
 				var formData = $('#defaultForm').serialize()
 					+'&payment_class=PRODUCT'

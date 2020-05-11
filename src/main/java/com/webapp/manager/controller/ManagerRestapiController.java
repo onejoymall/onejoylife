@@ -970,9 +970,9 @@ public class ManagerRestapiController {
 //            if(productVO.getProduct_user_payment().is){
 //                error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
 //            }
-//            if(productVO.getProduct_company_payment() == null){
-//                error.put(messageSource.getMessage("product_company_payment","ko"), messageSource.getMessage("error.required","ko"));
-//            }
+            if(productVO.getProduct_company_payment() == null){
+                error.put(messageSource.getMessage("product_company_payment","ko"), messageSource.getMessage("error.required","ko"));
+            }
             if(productVO.getProduct_payment() == null){
                 error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
             }
