@@ -663,14 +663,16 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/order")
     public String managerOrder(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
+        	if(searchVO.getDisplayRowCount()==null){
+                searchVO.setDisplayRowCount(10);
+            }
+        	
             deliveryInfoVO.setDelivery_t_key(t_key);
             deliveryInfoVO.setDelivery_t_url(t_url);
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
 
             params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("staticRowEnd",searchVO.getDisplayRowCount());
             List<Map<String,Object>> list = paymentDAO.getPaymentList(params);
             //택배사목록
             //스위트레커 연동필요
@@ -723,13 +725,14 @@ public class ManagerController {
     @RequestMapping(value = "/Manager/returned")
     public String managerRetured(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
+        	if(deliveryInfoVO.getDisplayRowCount()==null){
+        		deliveryInfoVO.setDisplayRowCount(10);
+            }
             deliveryInfoVO.setDelivery_t_key(t_key);
             deliveryInfoVO.setDelivery_t_url(t_url);
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
-            searchVO.pageCalculate(refundDAO.getDeliveryRefundListCount(deliveryInfoVO));
+            deliveryInfoVO.pageCalculate(refundDAO.getDeliveryRefundListCount(deliveryInfoVO));
             params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("staticRowEnd",searchVO.getDisplayRowCount());
             List<Map<String,Object>> list = refundDAO.getDeliveryRefundList(deliveryInfoVO);
             //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(

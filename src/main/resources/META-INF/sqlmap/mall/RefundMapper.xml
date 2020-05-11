@@ -68,6 +68,7 @@
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
         <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= #{delivery_end_date} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${displayRowCount} ]]>
     </select>
     <select id="getDeliveryRefundListCount" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="Integer">
         <![CDATA[

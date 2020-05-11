@@ -15,6 +15,7 @@
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
                         <input type="text" class="keyword-src" name="keyword-src">
+                        <input type="hidden" name="displayRowCount">
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
                             <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
@@ -141,6 +142,13 @@
 <%--                        <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>--%>
 						<button type="button" class="btn-default excelBtn" name="copy" data-id="returned"><i class="exel-ic"></i>다운로드</button>
                     </div>
+                    <div class="right">
+		            	<select name="order" class="order-select">
+			               <option value="10" <c:if test="${searchVO.displayRowCount == 10}"> selected</c:if>>10개씩 보기</option>
+			               <option value="50" <c:if test="${searchVO.displayRowCount == 50}"> selected</c:if>>50개씩 보기</option>
+			               <option value="100" <c:if test="${searchVO.displayRowCount == 100}"> selected</c:if>>100개씩 보기</option>
+		            	</select>
+	                </div>
 <%--                    <div class="right">--%>
 <%--                        <select name="order" class="order-select">--%>
 <%--                            <option value="32">10개씩 보기</option>--%>
@@ -422,5 +430,11 @@
         </div>
     </div>
 </div>
+<script>
+    $('.order-select').on("change",function () {
+        $('input[name=displayRowCount]').val($(this).val());
+        $('#listSrcForm').submit();
+    })
+</script>
     <script type="text/javascript" src="../assets/js/goods-add.js"></script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
