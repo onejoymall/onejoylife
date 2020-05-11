@@ -83,6 +83,15 @@
     <select id="getStoreDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">
         select * from store_delivery where store_id = (select product_user_ud from product where product_cd = #{product_cd})
     </select>
+    <select id="getCartStoreHopeInfo" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
+        select if(sum(if(A.product_delivery_hope_date_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_date_yn,
+				if(sum(if(A.product_delivery_hope_time_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_time_yn
+		from store_delivery A where store_id IN (select product_user_ud from product WHERE product_cd IN (select product_cd from product_cart WHERE cart_cd IN 
+		<foreach collection="chk" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+		))
+    </select>
   <select id="getProductCodeList" parameterType="com.webapp.manager.vo.MgProductCodeVO" resultType="java.util.Map">
     select
     *,(select code_name from code where code.code='product_class_code' and code_value=product_class_code.product_class_code_type) product_class_code_type_name

@@ -1347,7 +1347,8 @@ $(document).ready(function(){
                         icon: 'success',
                         hideAfter: 2000,
                         afterHidden: function () {
-                            location.href=data.redirectUrl;
+//                            location.href=data.redirectUrl;
+                            location.reload();
                         }
                     });
                     // loginAuth(data.access_token);

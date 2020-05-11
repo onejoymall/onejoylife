@@ -23,6 +23,10 @@ public class CartDAO {
         Integer getCartListCount=sql.selectOne("mall.CartMapper.getCartListCount",params);
         return getCartListCount;
     }
+    public Integer getCartStoreCount(Map<String, String> params) throws SQLException {
+    	Integer getCartStoreCount=sql.selectOne("mall.CartMapper.getCartStoreCount",params);
+    	return getCartStoreCount;
+    }
     public void insertCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.insertCart",params);
     }

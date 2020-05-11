@@ -74,6 +74,14 @@
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
 
     </select>
+    <select id="getCartStoreCount" parameterType="hashmap" resultType="Integer">
+    	SELECT COUNT(*)
+		FROM product_cart A
+		JOIN product B
+		ON A.product_cd = B.product_cd
+		WHERE A.cart_user_id = #{cart_user_id}
+		AND B.product_user_ud = #{product_user_ud}
+    </select>
 
     <insert id="insertCart" parameterType="java.util.Map">
         insert into product_cart(
