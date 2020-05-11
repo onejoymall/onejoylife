@@ -432,12 +432,12 @@ public class ProductController {
             
             model.addAttribute("postUrl","/SaveDeliveInfo" );
             model.addAttribute("detail",detail );
-            model.addAttribute("style","mypage-4-1-1");
             model.addAttribute("order_no",order_no);
             
         }catch (Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("style","mypage-4-1-1");
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
             return "mobile/mypage-4-1-1";

@@ -117,30 +117,49 @@ $(document).on("click","#paymentSubmit",function () {
     var max = $('input[name=order_max]').val();
     var min = $('input[name=order_min]').val();
 
-    if (order < min || (max != 0 && order > max)) {
-        $.toast({
-            text: '최대/최소 주문 수량을 확인하세요.',
-            showHideTransition: 'plain', //펴짐
-            position: 'top-right',
-            heading: 'Error',
-            icon: 'error',
-            stack: false
-        });
-    } else if(isLogin==''){
-        $.toast({
-            heading: '비회원 주문 중입니다.',
-            text: [
-                '<a href="/sign/login">로그인 후 이용</a>',
-                '<a href="/sign/signup">회원 가입 후 이용</a>',
-                '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-            ],
-            showHideTransition: 'plain', //펴짐
-            position: 'top-right',
-            icon: 'info',
-            hideAfter: false
-        });
-    }else{
-        $('#defaultForm').submit();
+    if(max != 0){
+        if (order < min || order > max ) {
+            $.toast({
+                text: '최대/최소 주문 수량을 확인하세요.',
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error',
+                stack: false
+            });
+        } else if(isLogin==''){
+            $.toast({
+                heading: '비회원 주문 중입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                icon: 'info',
+                hideAfter: false
+            });
+        }else{
+            $('#defaultForm').submit();
+        }
+    } else {
+        if(isLogin==''){
+            $.toast({
+                heading: '비회원 주문 중입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                icon: 'info',
+                hideAfter: false
+            });
+        }else{
+            $('#defaultForm').submit();
+        }
     }
 })
 //찜
@@ -674,83 +693,191 @@ $(document).ready(function(){
     function addShoppingBasket(product_cd) {
         var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
         var filter = "win16|win32|win64|macintel|mac|";
-        jQuery.ajax({
-            type: 'POST',
-            data: formData,
-            url:'/cart/addcart',
-            success: function (data) {
-                if (data.validateError) {
-                    $('.validateError').empty();
-                    $.each(data.validateError, function (index, item) {
-                        // $('#validateError'+index).removeClass('none');
-                        // $('#validateError'+index).html('* '+item);
-                        if(index == "Error"){//일반에러메세지
-                            alertType = "error";
-                            showText = item;
-                        }else{
-                            alertType = "error";
-                            showText = index + " (은) " + item;
-                        }
-                        if(navigator.platform){
-                            if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
-                                // $.toast().reset('all');//토스트 초기화
-                                $.toast({
-                                    text: showText,
-                                    showHideTransition: 'plain', //펴짐
-                                    position: 'mid-center',
-                                    heading: 'Error',
-                                    icon: 'error'
-                                });
-                            } else {
-                                // $.toast().reset('all');//토스트 초기화
-                                $.toast({
-                                    text: showText,
-                                    showHideTransition: 'plain', //펴짐
-                                    position: 'top-right',
-                                    heading: 'Error',
-                                    icon: 'error'
-                                });
-                            }
-                        }
-                    });
-
-                } else {
-
+        var order = $('input[name=payment_order_quantity]').val();
+        var max = $('input[name=order_max]').val();
+        var min = $('input[name=order_min]').val();
+        if(max != 0) {
+            if (order < min || order > max) {
+                if(navigator.platform){
                     if(filter.indexOf(navigator.platform.toLowerCase()) < 0) {
                         $.toast({
-                            heading: '등록 성공!',
-                            text: [
-                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                '<a href="">쇼핑 계속!</a>',
-                            ],
-
+                            text: '최대/최소 주문 수량을 확인하세요.',
                             showHideTransition: 'plain', //펴짐
                             position: 'mid-center',
-                            icon: 'success',
-                            hideAfter: false,
+                            heading: 'Error',
+                            icon: 'error',
+                            stack: false
                         });
                     } else {
                         $.toast({
-                            heading: '등록 성공!',
-                            text: [
-                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                '<a href="">쇼핑 계속!</a>',
-                            ],
-
+                            text: '최대/최소 주문 수량을 확인하세요.',
                             showHideTransition: 'plain', //펴짐
                             position: 'top-right',
-                            icon: 'success',
-                            hideAfter: false,
+                            heading: 'Error',
+                            icon: 'error',
+                            stack: false
                         });
                     }
-                    // loginAuth(data.access_token);
-                    // location.href=data.redirectUrl;
                 }
-            },
-            error: function (xhr, status, error) {
-                alert("error");
+            } else {
+                jQuery.ajax({
+                    type: 'POST',
+                    data: formData,
+                    url:'/cart/addcart',
+                    success: function (data) {
+                        if (data.validateError) {
+                            $('.validateError').empty();
+                            $.each(data.validateError, function (index, item) {
+                                // $('#validateError'+index).removeClass('none');
+                                // $('#validateError'+index).html('* '+item);
+                                if(index == "Error"){//일반에러메세지
+                                    alertType = "error";
+                                    showText = item;
+                                }else{
+                                    alertType = "error";
+                                    showText = index + " (은) " + item;
+                                }
+                                if(navigator.platform){
+                                    if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                                        // $.toast().reset('all');//토스트 초기화
+                                        $.toast({
+                                            text: showText,
+                                            showHideTransition: 'plain', //펴짐
+                                            position: 'mid-center',
+                                            heading: 'Error',
+                                            icon: 'error'
+                                        });
+                                    } else {
+                                        // $.toast().reset('all');//토스트 초기화
+                                        $.toast({
+                                            text: showText,
+                                            showHideTransition: 'plain', //펴짐
+                                            position: 'top-right',
+                                            heading: 'Error',
+                                            icon: 'error'
+                                        });
+                                    }
+                                }
+                            });
+
+                        } else {
+
+                            if(filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                                $.toast({
+                                    heading: '등록 성공!',
+                                    text: [
+                                        '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                        '<a href="">쇼핑 계속!</a>',
+                                    ],
+
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'mid-center',
+                                    icon: 'success',
+                                    hideAfter: false,
+                                });
+                            } else {
+                                $.toast({
+                                    heading: '등록 성공!',
+                                    text: [
+                                        '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                        '<a href="">쇼핑 계속!</a>',
+                                    ],
+
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'top-right',
+                                    icon: 'success',
+                                    hideAfter: false,
+                                });
+                            }
+                            // loginAuth(data.access_token);
+                            // location.href=data.redirectUrl;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("error");
+                    }
+                });
             }
-        });
+        } else {
+            jQuery.ajax({
+                type: 'POST',
+                data: formData,
+                url:'/cart/addcart',
+                success: function (data) {
+                    if (data.validateError) {
+                        $('.validateError').empty();
+                        $.each(data.validateError, function (index, item) {
+                            // $('#validateError'+index).removeClass('none');
+                            // $('#validateError'+index).html('* '+item);
+                            if(index == "Error"){//일반에러메세지
+                                alertType = "error";
+                                showText = item;
+                            }else{
+                                alertType = "error";
+                                showText = index + " (은) " + item;
+                            }
+                            if(navigator.platform){
+                                if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'mid-center',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                } else {
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'top-right',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                }
+                            }
+                        });
+
+                    } else {
+
+                        if(filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                            $.toast({
+                                heading: '등록 성공!',
+                                text: [
+                                    '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                    '<a href="">쇼핑 계속!</a>',
+                                ],
+
+                                showHideTransition: 'plain', //펴짐
+                                position: 'mid-center',
+                                icon: 'success',
+                                hideAfter: false,
+                            });
+                        } else {
+                            $.toast({
+                                heading: '등록 성공!',
+                                text: [
+                                    '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                    '<a href="">쇼핑 계속!</a>',
+                                ],
+
+                                showHideTransition: 'plain', //펴짐
+                                position: 'top-right',
+                                icon: 'success',
+                                hideAfter: false,
+                            });
+                        }
+                        // loginAuth(data.access_token);
+                        // location.href=data.redirectUrl;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
+                }
+            });
+        }
+
     }
     //장바구니 전체 주문
     $(document).on("click","#allOrder",function () {
@@ -848,6 +975,9 @@ $(document).ready(function(){
     $('.payment_order_quantity').on("change",function(){
         var payment_order_quantity= $(this).val();
         var cart_cd= $(this).attr('data-id');
+        var order = $('input[name=payment_order_quantity]').val();
+        var max = $('input[name=order_max]').val();
+        var min = $('input[name=order_min]').val();
         jQuery.ajax({
             type: 'POST',
             data: {"cart_cd":cart_cd,"payment_order_quantity":payment_order_quantity},
@@ -875,6 +1005,15 @@ $(document).ready(function(){
                         });
                     });
 
+                } else if (order < min || order > max) {
+                    $.toast({
+                        text: '최대/최소 주문 수량을 확인하세요.',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error',
+                        stack: false
+                    });
                 } else {
                     $.toast({
                         heading: '주문 수량 변경 완료!',
