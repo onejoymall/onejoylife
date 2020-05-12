@@ -943,6 +943,19 @@ public class restapiController {
         return resultMap;
     }
 
+    //찜목록 삭제
+    @RequestMapping(value = "/cart/deleteFavorite", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> deleteFavorite(@RequestParam HashMap params){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            cartDAO.deleteFavorite(params);
+            resultMap.put("redirectUrl","/MyPage/ShoppingAddList");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
     //장바구니 등록
     @RequestMapping(value = "/cart/addcart", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> addCart(HttpSession session, HttpServletRequest request,OptionVO optionVO,@RequestParam HashMap params){

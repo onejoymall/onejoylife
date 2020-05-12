@@ -148,46 +148,5 @@ public class restapiSubController {
 
     }
 
-    //장바구니 전체 등록
-    @RequestMapping(value = "/cart/addAllCart", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> addAllCart(@RequestParam HashMap params, HttpSession session, HttpServletRequest request){
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        HashMap<String, Object> error = new HashMap<String, Object>();
-        try{
-
-            //카트번호
-            params.put("cart_cd","CR"+numberGender.numberGen(6,1));
-            //사용자 아이디 확인 후 전달
-            params.put("email",session.getAttribute("email"));
-            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            if(isEmpty(userInfo)){
-                String cart_user_id = numberGender.numberGen(6,1);
-                params.put("member_yn","N");
-
-                if ( session.getAttribute("nonMembersUserId") == null ){
-                    session.setAttribute("nonMembersUserId",cart_user_id);
-                    params.put("cart_user_id",cart_user_id);
-                }else{
-                    params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
-                }
-            }else{
-                params.put("member_yn","Y");
-                params.put("cart_user_id",userInfo.get("usr_id"));
-            }
-            //카트 중복조회
-            if(cartDAO.getCartListCount(params) > 0){
-                error.put("Error", messageSource.getMessage("error.duplicateCart","ko"));
-            }
-            if(!isEmpty(error)){
-                resultMap.put("validateError",error);
-            }else{
-                cartDAO.addAllCart(params);
-                resultMap.put("redirectUrl",request.getHeader("Referer"));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return resultMap;
-    }
 
 }

@@ -110,6 +110,8 @@
 
                         ${option}
 
+
+                    </div>
                     <div class="quantity-box">
                         <span>구매수량</span>
                         <div class="total-quantity">
@@ -125,7 +127,6 @@
                     <%--                    </div>--%>
 
 
-                    </div>
 
                     <div class="buy-wrap">
                         <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button>

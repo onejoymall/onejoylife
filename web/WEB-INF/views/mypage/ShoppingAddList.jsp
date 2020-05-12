@@ -25,7 +25,7 @@
                                 <div class="sec4-txt">
                                     <p class="txt-tit">찜 목록</p>
                                     <div class="txt-right">
-                                        <button type="button" id="del-chk-btn" class="commonlistDelete">삭제하기</button>
+                                        <button type="button" id="del-chk-btn" class="deleteFavorites">삭제하기</button>
                                         <button type="button" id="cart-chk-btn" class="addAllCart">장바구니 담기</button>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                     <c:if test="${not empty list}">
                                         <c:forEach var="list" items="${list}" varStatus="status">
                                             <tr>
-                                                <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_favorites_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                                <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
                                                 <td>
                                                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                                                         <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
@@ -72,6 +72,7 @@
                                                 <td>
                                                     <a href="javascript:void(0);" onclick="addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
                                                 </td>
+                                                <input type="hidden" name="payment_order_quantity" value="1">
                                             </tr>
                                         </c:forEach>
                                     </c:if>

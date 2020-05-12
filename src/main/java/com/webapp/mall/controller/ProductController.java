@@ -611,7 +611,7 @@ public class ProductController {
                     outText += "" +
                             "<select name=\"select_option_value\" class=\"option-box width-100 my-1\">"
                             + "<option selected>옵션 선택</option>";
-                    //오션스타일 에따라 다르게
+                    //옵션 스타일에 따라 다르게
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
                                 "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";

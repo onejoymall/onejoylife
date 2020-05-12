@@ -5,19 +5,33 @@ $(function() {
     })
 })
 
-//장바구니 전체 등록
+//찜목록 장바구니 등록
 $('.addAllCart').on("click",function(){
-    var formData = $('#defaultForm').serialize();
-    var alertType;
-    var showText;
+    product_cds = [];
+    $.each($('input[name=chk]'),function(idx, item){
+        if($(this).prop("checked")) addShoppingBasket($(this).val());
+    });
+});
+
+//찜목록 리스트 삭제
+$('.deleteFavorites').on("click",function(){
+    product_cds = [];
+    $.each($('input[name=chk]'),function(idx, item){
+        if($(this).prop("checked")) deleteFavorite($(this).val());
+    });
+});
+//찜목록 삭제
+function deleteFavorite(product_cd) {
     jQuery.ajax({
         type: 'POST',
-        url: '/cart/addAllCart',
-        data: formData,
+        data: {"product_cd": product_cd},
+        url:'/cart/deleteFavorite',
         success: function (data) {
             if (data.validateError) {
                 $('.validateError').empty();
                 $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
                     if(index == "Error"){//일반에러메세지
                         alertType = "error";
                         showText = item;
@@ -25,6 +39,7 @@ $('.addAllCart').on("click",function(){
                         alertType = "error";
                         showText = index + " (은) " + item;
                     }
+                    // $.toast().reset('all');//토스트 초기화
                     var filter = "win16|win32|win64|macintel|mac|";
                     if(navigator.platform){
                         if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
@@ -48,25 +63,15 @@ $('.addAllCart').on("click",function(){
                 });
 
             } else {
-                $.toast({
-                    heading: '등록 성공!',
-                    text: [
-                        '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                        '<a href="">쇼핑 계속!</a>',
-                    ],
-
-                    showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
-                    icon: 'success',
-                    hideAfter: false,
-                });
+                location.href=data.redirectUrl;
             }
         },
         error: function (xhr, status, error) {
             alert("error");
         }
     });
-});
+}
+
 //자주구매하는상품 장바구니 선택담기
 $('.addChkCart').on("click",function(){
 	product_cds = [];
