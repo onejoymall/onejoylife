@@ -113,6 +113,7 @@
                                 <col style="width: 620px;">
                             </colgroup>
                             <tbody class="sec2-tbody">
+                            <c:if test="${sessionScope.login}">
                             <tr>
                                 <td>배송지 선택</td>
                                 <td class="sec2-ov">
@@ -130,6 +131,7 @@
                                     </p>
                                 </td>
                             </tr>
+                            </c:if>
                             <tr>
                                 <td>받으시는 분</td>
                                 <td><input type="text"  class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
