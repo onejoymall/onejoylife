@@ -126,17 +126,6 @@
         </foreach>
         values (#{cart_cd},#{option_name},#{select_option_value})
     </insert>
-    <insert id="addAllcart" parameterType="java.util.Map">
-        insert into ${table_name}(
-        cart_cd,
-        product_cd,
-        cart_user_id,
-        member_yn
-        ) values
-        <foreach collection="chk" item="item" open="(" separator="," close=")">
-            (#{cart_cd},#{item},#{cart_user_id},#{member_yn})
-        </foreach>
-    </insert>
 
     <delete id="deleteCart" parameterType="com.webapp.manager.vo.ProductVO">
         delete from product_cart where product_cd=#{product_cd}
@@ -183,7 +172,7 @@
     <insert id="insertFavorites" parameterType="java.util.Map">
         insert into product_favorites(product_favorites_cd,product_cd,user_id,member_yn) values (#{product_favorites_cd},#{product_cd},#{user_id},#{member_yn})
     </insert>
-    <delete id="deleteFavorites" parameterType="com.webapp.manager.vo.ProductVO">
+    <delete id="deleteFavorite" parameterType="com.webapp.manager.vo.ProductVO">
         delete from product_favorites where product_cd=#{product_cd}
     </delete>
 

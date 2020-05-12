@@ -6,13 +6,16 @@
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
 	</section>
+<form name="defaultform" id="defaultForm" method="POST">
+	<input type="hidden" name="table_name" value="product_favorites">
+	<input type="hidden" name="pk" value="product_favorites_cd">
     <section class="wrap">
        <ul class="flexbetween mb-1">
            <li>
                <h2>찜 목록</h2>
            </li>   
            <li>
-      			<button type="button" id="del-chk-btn" class="btn btn-red commonlistDelete">삭제하기</button>
+      			<button type="button" id="del-chk-btn" class="btn btn-red deleteFavorites">삭제하기</button>
 				<button type="button" id="cart-chk-btn" class="btn btn-blue addAllCart">장바구니 담기</button>
            </li>
        </ul>
@@ -22,7 +25,7 @@
             <c:forEach var="list" items="${list}" varStatus="status">
             <ul class="basket">
 	            <li>
-	                <input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_favorites_cd}">
+	                <input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}">
 	                <label for="body-ck1-${status.index}"></label>
 	            </li>
 	            <li>
@@ -41,6 +44,7 @@
 	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
 	                <button class="btn-blue btn" onclick="addShoppingBasket('${list.product_cd}')">장바구니 담기</button>
 	            </li>
+				<input type="hidden" name="payment_order_quantity" value="1">
 	        </ul>
 	        <hr>
             </c:forEach>
@@ -49,6 +53,7 @@
                     표시할 내용이 없습니다.
 		<hr>
         </c:if>
-    </section>
+	</section>
+</form>
     
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

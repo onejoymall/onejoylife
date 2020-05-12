@@ -37,13 +37,10 @@ public class CartDAO {
     public void insertCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.insertCart",params);
     }
-    public void addAllCart(Map<String, String> params) throws Exception {
-        sql.insert("mall.CartMapper.addAllCart", params);
-    }
+
     public void deleteCart(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.deleteCart",params);
     }
-
 
     public void updateCart(Map<String, String> params) throws Exception{
         sql.update("mall.CartMapper.updateCart",params);
@@ -79,8 +76,8 @@ public class CartDAO {
     public void insertFavorites(Map<String, String> params) throws Exception{
         sql.insert("mall.CartMapper.insertFavorites",params);
     }
-    public void deleteFavorites(Map<String, String> params) throws Exception{
-        sql.insert("mall.CartMapper.deleteFavorites",params);
+    public void deleteFavorite(Map<String, String> params) throws Exception{
+        sql.delete("mall.CartMapper.deleteFavorite",params);
     }
     public Map<String,Object> getFavoritesSum(Map<String, Object> params) throws SQLException{
         Map<String,Object> getFavoritesSum = sql.selectOne("mall.CartMapper.getFavoritesSum",params);
