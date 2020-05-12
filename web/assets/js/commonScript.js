@@ -1005,7 +1005,7 @@ $(document).ready(function(){
                         });
                     });
 
-                } else if (order < min || order > max) {
+                } else if (order < min || (max != 0 && order > max)) {
                     $.toast({
                         text: '최대/최소 주문 수량을 확인하세요.',
                         showHideTransition: 'plain', //펴짐

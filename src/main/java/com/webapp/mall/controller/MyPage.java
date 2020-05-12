@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -319,8 +320,41 @@ public class MyPage {
             model.addAttribute("searchVO", searchVO);
             
             //결제비용
-            Map<String,Object> getCartSum = cartDAO.getCartSum(params);
-            List<Map<String,Object>> list = cartDAO.getCartList(params);
+            Map<String,Object> getCartSum = new HashMap<>();
+            List<Map<String,Object>> list = cartDAO.getCartProductList(params);
+            Map<String, Integer> storeDeliveryList = new HashMap<>();
+            
+            int total_ori_payment = 0;
+            int total_payment = 0;
+            int total_delivery_payment = 0;
+            
+            for(Map<String,Object> map : list) {
+            	map.put("delivery_payment",deliveryPayment(map));
+            	total_ori_payment += (int)map.get("product_payment") * (int)map.get("payment_order_quantity");
+            	total_payment += (int)map.get("product_user_payment") * (int)map.get("payment_order_quantity");
+            	
+            	//스토어 묶음배송
+            	if("N".equals(map.get("product_delivery_bundle_yn"))){
+            		total_delivery_payment += (int)map.get("delivery_payment");
+            	}else if("Y".equals(map.get("product_delivery_bundle_yn"))) {
+            		if(storeDeliveryList.containsKey(map.get("product_user_ud"))){ //키가있으면
+            			if(storeDeliveryList.get((String)map.get("product_user_ud")) > (int)map.get("delivery_payment")) { //가장비싼배송비
+            				storeDeliveryList.put((String)map.get("product_user_ud"), storeDeliveryList.get((String)map.get("product_user_ud"))); 
+            			}else {
+            				storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment")); 
+            			}
+            		}else { //키가없으면
+            			storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment"));
+            		}
+            	}
+            }
+            Set<String> keys = storeDeliveryList.keySet();
+            for(String key:keys) {
+            	total_delivery_payment += storeDeliveryList.get(key);
+            }
+            getCartSum.put("total_ori_payment",total_ori_payment);
+            getCartSum.put("total_payment",total_payment);
+            getCartSum.put("total_delivery_payment",total_delivery_payment);
             model.addAttribute("list", list);
             model.addAttribute("getCartSum", getCartSum);
         }catch (Exception e){
@@ -905,11 +939,11 @@ public class MyPage {
             }
 
             //관리자가 지정한 배송구분별 배송비용을 출력한다.
-            String splitDeliveryPaymentString=(String)params.get("product_delivery_payment");//구분별 배송비
+            String splitDeliveryPaymentString=String.valueOf(params.get("product_delivery_payment"));//구분별 배송비
             String delivery_payment_class = (String) params.get("product_delivery_payment_class");
             Integer product_payment =(Integer)params.get("product_payment");
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
-            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+            Integer payment_order_quantity = Integer.parseInt(String.valueOf(params.get("payment_order_quantity")));
             if ("T".equals(delivery_payment_class)) {
                 deliveryPayment=0;
             } else if ("R".equals(delivery_payment_class)) {
