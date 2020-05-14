@@ -9,6 +9,19 @@
                      TB.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
               </foreach>
         </if>
+        <if test="start_date != null and start_date != ''"><![CDATA[AND TB.BRDDATE >= #{start_date} ]]></if>
+	    <if test="end_date != null and end_date != ''"><![CDATA[AND TB.BRDDATE < #{end_date} ]]></if>
+	    <if test="question_type != null and question_type != ''"><![CDATA[AND TB.question_type = #{question_type} ]]></if>
+	    <if test="answer_yn != null and answer_yn != ''">
+	    	<foreach item="item" index="index" collection="answer_yn_arr" separator=" OR " open="AND (" close=")">
+                     <if test='item == "Y"'>
+                     	<![CDATA[ (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') > 0 ]]>
+                     </if>
+                     <if test='item == "N"'>
+                     	<![CDATA[ (SELECT COUNT(*) FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') <= 0 ]]>
+                     </if>
+              </foreach>
+		</if>
 
     </sql>
 

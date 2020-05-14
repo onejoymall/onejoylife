@@ -373,7 +373,9 @@ button{
     width:100%;
     margin:0 auto;
 }
-
+.banner-section a img{
+    width:100%;
+}
 .related-goods-section{
     width:100%;
     margin:0 auto;

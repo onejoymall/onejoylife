@@ -186,6 +186,42 @@
 <%--                <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>상품 정보 다운로드</button>--%>
 <%--            </div>--%>
             <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/productAddProc"/>">
+            	<h3>라이브 쇼핑 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+	                    <tr>
+	                        <th>동영상 구분</th>
+	                        <td>
+	                        	<input type="radio" id="goods-sale1" name="product_live_type" value="" checked>
+	                            <label for="goods-sale1">일반상품</label>
+	                            <input type="radio" id="goods-sale" name="product_live_type" value="U">
+	                            <label for="goods-sale">유튜브</label>
+	                            <input type="radio" id="goods-notsale" name="product_live_type" value="M">
+	                            <label for="goods-notsale">직접 업로드</label>
+	                        </td>
+	                    </tr>
+	                    <tr class="hidden" id="typeU">
+	                        <th>유튜브 영상 ID</th>
+	                        <td>
+	                            <input type="text" name="product_youtube_id" placeholder="ex) Xq0r6OHPsQc">
+	                        </td>
+	                    </tr>
+	                    <tr class="hidden" id="typeM">
+	                        <th>동영상 등록</th>
+	                        <td>
+	                            <div class="fileBox">
+	                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+	                                <label for="pdImg6" class="btn_file">파일찾기</label>
+	                                <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo">
+	                            </div>
+	                        </td>
+                    	</tr>
+                    </tbody>
+                </table>
                 <h3>기본 정보</h3>
                 <table class="goods-detail-table">
                     <colgroup>
@@ -425,20 +461,20 @@
                     <tr>
                         <th>소비자가</th>
                         <td>
-                            <input type="text" id="product_user_payment" name="product_user_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_user_payment" name="product_user_payment"> 원
                         </td>
                     </tr>
                     <tr>
                         <th>공급가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="product_company_payment" name="product_company_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_company_payment" name="product_company_payment"> 원
                         </td>
                     </tr>
 
                     <tr>
                         <th>판매가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="product_payment" name="product_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_payment" name="product_payment"> 원
                         </td>
                     </tr>
                     <%--                    <tr>--%>
@@ -501,13 +537,13 @@
                     <tr>
                         <th>주문 수량 제한</th>
                         <td >
-                            최소 <input type="text" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="text" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
+                            최소 <input class="onlyNumber" type="text" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input class="onlyNumber" type="text" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
                         </td>
                     </tr>
                     <tr>
                         <th>적립금</th>
                         <td >
-                            <input type="text" id="goods-savings" name="product_point_rate">
+                            <input class="onlyNumber" type="text" id="goods-savings" name="product_point_rate">
                             <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
                         </td>
                     </tr>
@@ -913,7 +949,7 @@
                         <th>상품 전체 중량&#40;kg&#41;</th>
                         <td>
                             <p class="cc2"><span class="cc">* 소수점 둘째 자리까지 입력할 수 있습니다.</span></p>
-                            <input type="text" id="product_kg" name=product_kg">Kg
+                            <input class="onlyNumberAndDot" type="text" id="product_kg" name="product_kg" value='0'>Kg
                         </td>
                     </tr>
                     <tr>
@@ -1218,7 +1254,23 @@
     $('.order-select').on("change",function () {
         $('input[name=displayRowCount]').val($(this).val());
         $('#listSrcForm').submit();
-    })
+    });
+    
+	$("input[name=product_live_type]").on("input click",function(){
+		var type=$(this).val();
+		if(type){
+			if(type=='U'){
+				$("#typeU").removeClass("hidden");
+				$("#typeM").addClass("hidden");
+			}else{
+				$("#typeM").removeClass("hidden");
+				$("#typeU").addClass("hidden");
+			}
+		}else{
+			$("#typeU").addClass("hidden");
+			$("#typeM").addClass("hidden");
+		}
+	});
 </script>
 <script type="text/javascript" src="/assets/js/goods-add.js"></script>
 <script type="text/javascript" src="/assets/js/index.js"></script>

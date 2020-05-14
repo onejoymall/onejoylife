@@ -436,6 +436,14 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	/* var	originProduct = ${productTotal};	//원래 소비자가
+	var originDelivery = ${deliveryPayment}; //원래 배송비
+	var originPayment = ${productTotal - discountTotal + deliveryPayment}; //원래 판매가+배송비
+	var originDiscount = ${discountTotal}; //원래 할인가
+	var addDelivery = 0;	//도서산간 추가배송비
+	var disCoupon = 0;	//쿠폰할인
+	var useCoupon; */
+	
     //주문페이지 상품 삭제
     var allprice = ${getCartSum.total_ori_payment};
     var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
@@ -564,7 +572,7 @@
                         "orderNumber" : $('input[name=order_no]').val(),
                         "name" : '${detail.product_name}',
                         "quantity" : $('input[name=payment_order_quantity]').val(),
-                        "amount" : ${detail.product_payment+deliveryPayment},
+                        "amount" : $('input[name=product_payment_pg]').val(),
                     },
                 ],
             }, function (rsp) { // callback

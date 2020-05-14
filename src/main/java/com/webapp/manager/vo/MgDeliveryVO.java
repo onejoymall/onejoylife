@@ -22,6 +22,8 @@ public class MgDeliveryVO {
     private String hope_delivery_date_yn;
     private String hope_delivery_time_yn;
     private String bundle_delivery_yn;
+    private String refund_value;
+    private String forward_value;
 
     public String getStore_id() {
         return store_id;
@@ -190,4 +192,21 @@ public class MgDeliveryVO {
 	public void setBundle_delivery_yn(String bundle_delivery_yn) {
 		this.bundle_delivery_yn = bundle_delivery_yn;
 	}
+
+	public String getRefund_value() {
+		return refund_value;
+	}
+
+	public void setRefund_value(String refund_value) {
+		this.refund_value = refund_value;
+	}
+
+	public String getForward_value() {
+		return forward_value;
+	}
+
+	public void setForward_value(String forward_value) {
+		this.forward_value = forward_value;
+	}
+	
 }

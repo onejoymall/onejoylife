@@ -174,6 +174,8 @@
                 위시리스트</a></li>
             <li><a href="#" class="share">공유하기</a></li>
         </ul>
+        <a href="${lineBannerList1.url}" class="width-100">
+            <img src="${lineBannerList1.file_1}" /></a>
         <img src="../../assets/img/goods-view/bnr1.jpg" alt="" class="width-100">
         <ul class="taps" id="tap">
            <li><a href="javascript:move(1)" class="active">상품설명</a></li>

@@ -76,7 +76,8 @@
          		<c:if test="${afn:contains(menuList, '9') || 
        						 afn:contains(menuList, '10') || 
        						 afn:contains(menuList, '46') || 
-       						 afn:contains(menuList, '47')}">
+       						 afn:contains(menuList, '47') ||
+       						 afn:contains(menuList, '48') }">
                 <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/info-join">운영관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '9')}">
@@ -96,6 +97,9 @@
                                 </c:if>
                             </ul>
                         </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '48')}">
+                        <li><a href="/Manager/banner">배너관리</a> </li>
                         </c:if>
                     </ul>
                 </li>

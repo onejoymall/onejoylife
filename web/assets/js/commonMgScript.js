@@ -342,12 +342,12 @@ $(document).on("click","#gradeChange",function () {
 
 //배송비 구분 선택 박스 변경 시
 $(document).on("change","#shipping-fee",function(){
-    var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
-    var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input type="text" id="shippingFee-detail" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
-    var shipD='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>';
-    var shipW='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
-    var shipC='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
-    var shipN='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input type="text" id="product_delivery_payment" name="product_delivery_payment">원을 부과함.</td></tr>';
+	var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input class="onlyNumber" class="onlyNumber" type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
+    var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input class="onlyNumberAndPipe" type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
+    var shipD='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">20,000원 이상~30,000원 미만일 때 배송비 2,000원을 부과하고 30,000원 이상~50,000원 미만일 때 배송비 1,000원을 부과하려면<br>20000|30000|2000//30000|50000|1000 입력</p><input class="onlyNumberAndPipe" type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 20000|30000|2000//30000|50000|1000"></td></tr>';
+    var shipW='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3kg 이상~5kg 미만일 때 배송비 2,000원을 부과하고 5kg 이상~7kg 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input class="onlyNumberAndPipe" type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+    var shipC='<tr class="shippingFee-detail-wrap shipping-t-detail long"><th>배송비 상세 설정</th><td><p class="cc2">3개 이상~5개 미만일 때 배송비 2,000원을 부과하고 5개 이상~7개 미만일 때 배송비 5,000원을 부과하려면<br>3|5|2000//5|7|7000 입력</p><input class="onlyNumberAndPipe" type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 3|5|2000//5|7|7000"></td></tr>';
+    var shipN='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>주문 금액에 상관 없이 수량에 따라 배송료 <input class="onlyNumber" type="text" id="product_delivery_payment" name="product_delivery_payment">원을 부과함.</td></tr>';
 
     if($('select[name=product_delivery_payment_class]').val() == "R"){
         $('.shippingFee-detail-wrap').remove();
@@ -378,6 +378,8 @@ $(document).on("change","#shipping-fee",function(){
 
     }
     $('.shippingFee-detail-wrap').attr('style','display:table-row');
+    
+    validationNumber();
 });
 //기본 배송 설정 클릭
 $(document).on("click",'.goods-shipping',function(){
@@ -421,6 +423,40 @@ $('.uploadBtn').on('change', function(object){
     filesArr.forEach(function (f) {
         if(!f.type.match("image.*")){
             alert("이미지파일만 등록 가능합니다.");
+            return false;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var imgDisplayType ='copy';
+            // if(imgDisplayType =="copy"){
+            //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+            //     $('.uploadBtn').siblings('.fileName').val(filename);
+            // }else{
+                thisObject.parent().siblings('img').attr("src",e.target.result);
+                thisObject.siblings('.fileName').val(filename);
+            // }
+
+        }
+        reader.readAsDataURL(f);
+    })
+});
+
+$('.uploadBtnVideo').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    console.log(object.target);
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    var maxSize = 100 * 1024 * 1024;
+    filesArr.forEach(function (f) {
+    	if(files[0].size > maxSize){
+    		alert("크기 100MB 미만의 파일만 등록 가능합니다.");
+            return false;
+    	}
+        if(!f.type.match("video.*")){
+            alert("동영상파일만 등록 가능합니다.");
             return false;
         }
         sel_file = f;

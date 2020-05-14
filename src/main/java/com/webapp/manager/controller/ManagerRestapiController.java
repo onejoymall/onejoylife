@@ -94,6 +94,8 @@ public class ManagerRestapiController {
     @Autowired
     private ConfigDAO configDAO;
     @Autowired
+    private BannerDAO bannerDAO;
+    @Autowired
     private MgStoreDAO mgStoreDAO;
     @Autowired
     private DeliveryDAO deliveryDAO;
@@ -404,10 +406,10 @@ public class ManagerRestapiController {
 
         try {
             if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
-                if(deliveryInfoVO.getDelivery_t_invoice() !=null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
+                if(deliveryInfoVO.getDelivery_t_invoice() == null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
                     error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
                 }
-                if(deliveryInfoVO.getDelivery_t_code() !=null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
+                if(deliveryInfoVO.getDelivery_t_code() == null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
                     error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
                 }
             }
@@ -832,13 +834,16 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+        	if(productVO.getProduct_live_type().equals("")) {
+        		productVO.setProduct_live_type(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
             List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
             List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
             List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
+            List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -894,6 +899,11 @@ public class ManagerRestapiController {
                     mgProductDAO.deleteProductFile(filelist5,fileVO);
                     mgProductDAO.insertProductFile(filelist5,fileVO);
                 }
+                if(!isEmpty(filelist6)){
+                	fileVO.setFileorder(6);
+                	mgProductDAO.deleteProductFile(filelist6,fileVO);
+                	mgProductDAO.insertProductFile(filelist6,fileVO);
+                }
 
 //                mgProductDAO.insertProduct(productVO);
 //                mgProductDAO.updateProduct();
@@ -944,13 +954,16 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+        	if(productVO.getProduct_live_type().equals("")) {
+        		productVO.setProduct_live_type(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
             List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
             List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
             List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
+            List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -1005,6 +1018,11 @@ public class ManagerRestapiController {
                     fileVO.setFileorder(5);
                     mgProductDAO.deleteProductFile(filelist5,fileVO);
                     mgProductDAO.insertProductFile(filelist5,fileVO);
+                }
+                if(!isEmpty(filelist6)){
+                    fileVO.setFileorder(6);
+                    mgProductDAO.deleteProductFile(filelist6,fileVO);
+                    mgProductDAO.insertProductFile(filelist6,fileVO);
                 }
                 mgProductDAO.insertProduct(productVO);
                 resultMap.put("redirectUrl","/Manager/Product");
@@ -1739,5 +1757,57 @@ public class ManagerRestapiController {
     	}
     	
     	return resultMap;
+    }
+    //배너상세
+    @RequestMapping(value = "/Manager/getBannerDetail" ,method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> getBannerDetail (@RequestParam HashMap params,SearchVO searchVO, ModelMap modelMap, HttpServletRequest request) throws Exception{
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	try{
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			Map<String,Object> data = bannerDAO.getBannerDetail(params);
+    			resultMap.put("banner",data);
+    		}
+    		
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	return resultMap;
+    }
+    
+    //배너수정
+    @Transactional
+    @RequestMapping(value = "/Manager/updateBanner", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> updateBanner(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+        	
+        	FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"banner");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/banner/"+ft.format(new Date())+"/");
+            
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	fileVO.setParentPK(params.get("banner_id")+"");
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    bannerDAO.deleteBannerFile(filelist,fileVO);
+                    bannerDAO.insertBannerFile(filelist,fileVO);
+                }
+                bannerDAO.updateBanner(params);
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/Manager/banner");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
     }
 }

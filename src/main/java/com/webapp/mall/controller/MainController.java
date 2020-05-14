@@ -1,5 +1,23 @@
 package com.webapp.mall.controller;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 //import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardGroupVO;
@@ -12,23 +30,9 @@ import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.TodayVO;
+import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
-import java.util.*;
-
-import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -38,6 +42,8 @@ public class MainController {
     ProductDAO productDAO;
     @Autowired
     CategoryDAO categoryDAO;
+    @Autowired
+    BannerDAO bannerDAO;
     @Autowired
     UserDAO userDAO;
     @Autowired
@@ -144,7 +150,40 @@ public class MainController {
             List<Map<String,Object>> categoryBannerList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryBannerList",categoryBannerList);
 
+            //서브배너
+            params.put("banner_type","main_sub");
+            List<Map<String,Object>> bannerList = bannerDAO.getBannerList(params);
+            for(Map<String,Object> banner:bannerList) {
+            	if("H".equals(banner.get("banner_event_type"))) {
+            		banner.put("url",banner.get("banner_href"));
+            	}else if("P".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product/productDetail?product_cd="+banner.get("banner_product_cd"));
+            	}else if("C".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product?product_ct="+banner.get("banner_product_ct"));
+            	}
+            }
+            model.addAttribute("subSlider", bannerList);
 
+            //띠배너
+            params.put("banner_type","main_line");
+            List<Map<String,Object>> lineBannerList = bannerDAO.getBannerList(params);
+            for(Map<String,Object> banner:lineBannerList) {
+            	if("H".equals(banner.get("banner_event_type"))) {
+            		banner.put("url",banner.get("banner_href"));
+            	}else if("P".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product/productDetail?product_cd="+banner.get("banner_product_cd"));
+            	}else if("C".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product?product_ct="+banner.get("banner_product_ct"));
+            	}
+            }
+            model.addAttribute("lineBannerList1", lineBannerList.get(0));
+            model.addAttribute("lineBannerList2", lineBannerList.get(1));
+            model.addAttribute("lineBannerList3", lineBannerList.get(2));
+            model.addAttribute("lineBannerList4", lineBannerList.get(3));
+            model.addAttribute("lineBannerList5", lineBannerList.get(4));
+            model.addAttribute("lineBannerList6", lineBannerList.get(5));
+            model.addAttribute("lineBannerList7", lineBannerList.get(6));
+            
             //이벤트 목록
             params.put("pd_category_event_use_yn","");
             params.put("banner_use_yn","");

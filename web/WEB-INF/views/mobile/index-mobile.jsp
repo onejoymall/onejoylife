@@ -20,7 +20,8 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="/banner/m-banner.png" alt="e point 경품참여">
+            <a href="${lineBannerList1.url}" class="img-box">
+            <img src="${lineBannerList1.file_1}" onerror="this.src='http://placehold.it/200x30'"/></a>
         </div>
     </div>
     <div class="mainList-wrap mt-1">
@@ -54,7 +55,9 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="/banner/m-banner2.png" alt="행운의 경품당첨 주인공이 되세요!">
+        	<a href="${lineBannerList2.url}" class="img-box">
+            <img src="${lineBannerList2.file_1}" onerror="this.src='http://placehold.it/200x30'"/></a>
+            
         </div>
     </div>
     <div class="mainList-wrap mt-1 clearfix">
@@ -88,7 +91,8 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="assets/img/m-banner4.png" alt="행운의 경품당첨 주인공이 되세요!">
+            <a href="${lineBannerList3.url}" class="img-box">
+            <img src="${lineBannerList3.file_1}" onerror="this.src='http://placehold.it/200x30'"/></a>
         </div>
     </div>
     <div class="mt-1 bg_grey2 clearfix">
@@ -235,7 +239,8 @@
     </div>
     <div class="mt-1">
         <div class="img-box">
-            <img src="/banner/img/m-banner3.png" alt="행운의 경품당첨 주인공이 되세요!">
+            <a href="${lineBannerList4.url}" class="img-box">
+            <img src="${lineBannerList4.file_1}" onerror="this.src='http://placehold.it/200x30'"/></a>
         </div>
     </div>
     <div>
