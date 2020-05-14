@@ -2308,6 +2308,7 @@ $(document).ready(function(){
                         $('input:text[name^="'+index+'"]').val(item);
                         $('select[name='+index+']').val(item);
                         $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+                        $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                     });
                     $('input[name^="product_validity_end"]').val(data.list.product_validity_end);
                     $('input:radio[name=product_validity_yn][value=\'' + data.list.product_validity_yn + '\']').prop('checked',true);

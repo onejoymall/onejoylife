@@ -834,13 +834,16 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+        	if(productVO.getProduct_live_type().equals("")) {
+        		productVO.setProduct_live_type(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
             List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
             List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
             List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
+            List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -896,6 +899,11 @@ public class ManagerRestapiController {
                     mgProductDAO.deleteProductFile(filelist5,fileVO);
                     mgProductDAO.insertProductFile(filelist5,fileVO);
                 }
+                if(!isEmpty(filelist6)){
+                	fileVO.setFileorder(6);
+                	mgProductDAO.deleteProductFile(filelist6,fileVO);
+                	mgProductDAO.insertProductFile(filelist6,fileVO);
+                }
 
 //                mgProductDAO.insertProduct(productVO);
 //                mgProductDAO.updateProduct();
@@ -946,13 +954,16 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+        	if(productVO.getProduct_live_type().equals("")) {
+        		productVO.setProduct_live_type(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
             List<FileVO> filelist3 = fs.saveAllFiles(boardInfo.getUploadfile3(),downloadPath+"product");
             List<FileVO> filelist4 = fs.saveAllFiles(boardInfo.getUploadfile4(),downloadPath+"product");
             List<FileVO> filelist5 = fs.saveAllFiles(boardInfo.getUploadfile5(),downloadPath+"product");
+            List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
@@ -1007,6 +1018,11 @@ public class ManagerRestapiController {
                     fileVO.setFileorder(5);
                     mgProductDAO.deleteProductFile(filelist5,fileVO);
                     mgProductDAO.insertProductFile(filelist5,fileVO);
+                }
+                if(!isEmpty(filelist6)){
+                    fileVO.setFileorder(6);
+                    mgProductDAO.deleteProductFile(filelist6,fileVO);
+                    mgProductDAO.insertProductFile(filelist6,fileVO);
                 }
                 mgProductDAO.insertProduct(productVO);
                 resultMap.put("redirectUrl","/Manager/Product");

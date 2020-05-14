@@ -43,6 +43,7 @@ public class BoardVO {
     private List<MultipartFile> uploadfile3;
     private List<MultipartFile> uploadfile4;
     private List<MultipartFile> uploadfile5;
+    private List<MultipartFile> uploadfile6;
 
     public Integer getUsr_id() {
         return usr_id;
@@ -250,5 +251,13 @@ public class BoardVO {
 
     public void setUploadfile5(List<MultipartFile> uploadfile5) {
         this.uploadfile5 = uploadfile5;
+    }
+    
+    public List<MultipartFile> getUploadfile6() {
+        return uploadfile6;
+    }
+
+    public void setUploadfile6(List<MultipartFile> uploadfile6) {
+        this.uploadfile6 = uploadfile6;
     }
 }

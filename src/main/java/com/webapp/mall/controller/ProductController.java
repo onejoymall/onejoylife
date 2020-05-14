@@ -393,7 +393,10 @@ public class ProductController {
     public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
 
         try{
-
+        	if(params.get("email") != null && !params.get("email").equals("") && params.get("login").equals("true")) {
+        		session.setAttribute("email", params.get("email"));
+        		session.setAttribute("login", true);
+        	}
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);

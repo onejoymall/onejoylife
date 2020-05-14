@@ -439,6 +439,40 @@ $('.uploadBtn').on('change', function(object){
         reader.readAsDataURL(f);
     })
 });
+
+$('.uploadBtnVideo').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    console.log(object.target);
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    var maxSize = 100 * 1024 * 1024;
+    filesArr.forEach(function (f) {
+    	if(files[0].size > maxSize){
+    		alert("크기 100MB 미만의 파일만 등록 가능합니다.");
+            return false;
+    	}
+        if(!f.type.match("video.*")){
+            alert("동영상파일만 등록 가능합니다.");
+            return false;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var imgDisplayType ='copy';
+            // if(imgDisplayType =="copy"){
+            //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+            //     $('.uploadBtn').siblings('.fileName').val(filename);
+            // }else{
+                thisObject.parent().siblings('img').attr("src",e.target.result);
+                thisObject.siblings('.fileName').val(filename);
+            // }
+
+        }
+        reader.readAsDataURL(f);
+    })
+});
 $(".basicNoToolbar").summernote({
     height: 100,
     toolbar: false,

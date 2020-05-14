@@ -18,6 +18,42 @@
 <%--                <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>상품 정보 다운로드</button>--%>
             </div>
             <form name="defaultForm" id="defaultForm" method="post" enctype="multipart/form-data" action="<c:url value="/Manager/productAddProc"/>">
+            	<h3>라이브 쇼핑 정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+	                    <tr>
+	                        <th>동영상 구분</th>
+	                        <td>
+	                        	<input type="radio" id="goods-sale1" name="product_live_type" value="" checked>
+	                            <label for="goods-sale1">일반상품</label>
+	                            <input type="radio" id="goods-sale" name="product_live_type" value="U">
+	                            <label for="goods-sale">유튜브</label>
+	                            <input type="radio" id="goods-notsale" name="product_live_type" value="M">
+	                            <label for="goods-notsale">직접 업로드</label>
+	                        </td>
+	                    </tr>
+	                    <tr class="hidden" id="typeU">
+	                        <th>유튜브 영상 ID</th>
+	                        <td>
+	                            <input type="text" name="product_youtube_id" placeholder="ex) Xq0r6OHPsQc">
+	                        </td>
+	                    </tr>
+	                    <tr class="hidden" id="typeM">
+	                        <th>동영상 등록</th>
+	                        <td>
+	                            <div class="fileBox">
+	                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+	                                <label for="pdImg6" class="btn_file">파일찾기</label>
+	                                <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo">
+	                            </div>
+	                        </td>
+                    	</tr>
+                    </tbody>
+                </table>
                 <h3>기본 정보</h3>
                 <table class="goods-detail-table">
                     <colgroup>
@@ -980,5 +1016,23 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
 <script src="<c:url value='/assets/js/lang/summernote-ko-KR.js'/>"></script>
 <script type="text/javascript" src="/assets/js/index.js"></script>
-
+<script>
+$(function(){
+	$("input[name=product_live_type]").on("input click",function(){
+		var type=$(this).val();
+		if(type){
+			if(type=='U'){
+				$("#typeU").removeClass("hidden");
+				$("#typeM").addClass("hidden");
+			}else{
+				$("#typeM").removeClass("hidden");
+				$("#typeU").addClass("hidden");
+			}
+		}else{
+			$("#typeU").addClass("hidden");
+			$("#typeM").addClass("hidden");
+		}
+	})
+})
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
