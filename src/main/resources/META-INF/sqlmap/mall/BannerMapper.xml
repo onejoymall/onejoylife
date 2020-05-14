@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.BannerMapper">
+
+    <select id="getBannerList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.*,
+            (select Z.file_link from banner_file Z where Z.key_id = A.banner_id and file_order = 1) file_1
+        FROM banner A where 1=1 ]]>
+        <if test="banner_type != null and banner_type != ''">
+            AND banner_type=#{banner_type}
+        </if>
+    </select>
+    <select id="getCategorySubList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where 1=1
+        ]]>
+        <if test="pd_category_id!=null and pd_category_id!=''">
+            AND pd_category_id=#{pd_category_id}
+        </if>
+        <if test="pd_category_upper_code!=null and pd_category_upper_code!=''">
+            AND pd_category_upper_code=#{pd_category_upper_code}
+        </if>
+    </select>
+    <select id="getCategoryThirdList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            *
+        FROM product_category  where 1=1
+        ]]>
+        <if test="pd_category_id!=null and pd_category_id!=''">
+            AND pd_category_id=#{pd_category_id}
+        </if>
+        <if test="pd_category_upper_code!=null and pd_category_upper_code!=''">
+            AND pd_category_upper_code=#{pd_category_upper_code}
+        </if>
+    </select>
+    <select id="getBannerDetail" parameterType="hashmap" resultType="java.util.Map">
+		SELECT
+            A.*,
+            (select Z.file_link from banner_file Z where Z.key_id = A.banner_id and file_order = 1) file_1
+        FROM banner A WHERE A.banner_id = #{banner_id}
+    </select>
+    <insert id="insertCategory" parameterType="java.util.Map">
+        insert into product_category(pd_category_upper_code,pd_category_name)values(#{pd_category_upper_code},#{pd_category_name})
+
+    </insert>
+    <insert id="insertCategoryEvent" parameterType="java.util.Map">
+        insert into product_category_event(
+            pd_category_id,
+            pd_category_event_title,
+            pd_category_event_memo,
+            pd_category_event_img_src,
+            pd_category_event_use_yn,
+            pd_category_event_start,
+            pd_category_event_end,
+            banner_title,
+            banner_memo,
+            banner_start_date,
+            banner_end_date,
+            banner_use_yn,
+            event_title,
+            event_memo,
+            event_start_date,
+            event_end_date,
+            event_use_yn,
+            manager_name
+        )values(
+            #{pd_category_id},
+            #{pd_category_event_title},
+            #{pd_category_event_memo},
+            #{pd_category_event_img_src},
+            #{pd_category_event_use_yn},
+            #{pd_category_event_start},
+            #{pd_category_event_end},
+            #{banner_title},
+            #{banner_memo},
+            #{banner_start_date},
+            #{banner_end_date},
+            #{banner_use_yn},
+            #{event_title},
+            #{event_memo},
+            #{event_start_date},
+            #{event_end_date},
+            #{event_use_yn},
+            #{manager_name}
+        )
+         on duplicate KEY update
+        pd_category_id=#{pd_category_id},
+        pd_category_event_title=#{pd_category_event_title},
+        pd_category_event_memo=#{pd_category_event_memo},
+        pd_category_event_img_src=#{pd_category_event_img_src},
+        pd_category_event_use_yn=#{pd_category_event_use_yn},
+        pd_category_event_start=#{pd_category_event_start},
+        pd_category_event_end=#{pd_category_event_end},
+        banner_title=#{banner_title},
+        banner_memo=#{banner_memo},
+        banner_start_date=#{banner_start_date},
+        banner_end_date=#{banner_end_date},
+        banner_use_yn=#{banner_use_yn},
+        event_title=#{event_title},
+        event_memo=#{event_memo},
+        event_start_date=#{event_start_date},
+        event_end_date=#{event_end_date},
+        event_use_yn=#{event_use_yn},
+        manager_name=#{manager_name}
+
+    </insert>
+    <update id="updateBanner" parameterType="java.util.Map">
+        update banner
+        set
+        banner_name=#{banner_name},
+        banner_product_cd=#{banner_product_cd},
+        banner_product_ct=#{banner_product_ct},
+        banner_href=#{banner_href},
+        banner_event_type=#{banner_event_type},
+        update_date=sysdate()
+        where banner_id=#{banner_id}
+    </update>
+    <delete id="deleteCategory" parameterType="java.util.Map">
+        delete from product_category  where pd_category_id = #{pd_category_id}
+    </delete>
+    <select id="getCategoryEventList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+            A.pd_category_event_id,
+            A.pd_category_id,
+            A.pd_category_event_title,
+            A.pd_category_event_memo,
+            A.pd_category_event_use_yn,
+            A.banner_title,
+            A.banner_memo,
+            A.banner_use_yn,
+            A.event_title,
+            A.event_memo,
+            A.event_use_yn,
+            A.manager_name,
+            DATE_FORMAT(A.event_start_date,'%Y-%m-%d') as event_start_date,
+            DATE_FORMAT(A.event_end_date,'%Y-%m-%d') as event_end_date,
+            DATE_FORMAT(A.banner_start_date,'%Y-%m-%d') as banner_start_date,
+            DATE_FORMAT(A.banner_end_date,'%Y-%m-%d') as banner_end_date,
+            DATE_FORMAT(A.pd_category_event_start,'%Y-%m-%d') as pd_category_event_start,
+            DATE_FORMAT(A.pd_category_event_end,'%Y-%m-%d') as pd_category_event_end,
+            (select count(1) from product  where find_in_set(#{pd_category_id},replace(product_ct,'|',',')) > 0) as product_cnt,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=1) as file_link,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=2) as file_link2,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=3) as file_link3,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=4) as file_link4,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=5) as file_link5
+        FROM product_category_event A  where 1=1
+
+        ]]>
+        <if test="pd_category_event_end != null and pd_category_event_end !=''">
+            AND A.pd_category_event_use_yn = #{pd_category_event_use_yn}
+            <![CDATA[AND A.pd_category_event_end >= now()]]>
+        </if>
+        <if test="banner_use_yn!=null and banner_use_yn!=''">
+            AND A.banner_use_yn = #{banner_use_yn}
+            <![CDATA[AND A.banner_end_date >= now()]]>
+        </if>
+        <if test="event_use_yn!=null and event_use_yn!=''">
+            AND A.event_use_yn = #{event_use_yn}
+            <![CDATA[AND A.event_end_date >= now()]]>
+        </if>
+        <if test="pd_category_event_use_yn!=null and pd_category_event_use_yn!=''">
+            AND A.pd_category_event_use_yn = #{pd_category_event_use_yn}
+            <![CDATA[AND A.pd_category_event_end >= now()]]>
+        </if>
+        order by A.reg_date desc
+        <if test="limit!=null and limit!=''">
+            limit #{limitTo},#{limitBe}
+        </if>
+    </select>
+    <delete id="deleteBannerFile" parameterType="java.util.Map">
+        delete from banner_file  where key_id = #{parentPK} and file_order = #{fileorder}
+    </delete>
+    <insert id="insertBannerFile" parameterType="com.webapp.board.common.FileVO" >
+        INSERT INTO banner_file (key_id, file_name, real_name, file_size,file_link,file_order)
+            VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
+        on duplicate KEY update
+            key_id= #{parentPK},
+            file_name= #{filename},
+            real_name = #{realname},
+            file_size = #{filesize},
+            file_link = #{filelink},
+            file_order = #{fileorder}
+    </insert>
+    <select id="getCategoryView" parameterType="java.util.Map" resultType="java.util.Map">
+        select concat(CC.categoryNameF, CC.categoryNameS, CC.categoryNameT) as categoryViewName
+        from (
+         select case
+                    when UU.categoryNameF is null then ''
+                    ELSE concat(UU.categoryNameF, ' > ') end as categoryNameF,
+                case
+                    when UU.categoryNameS is null then ''
+                    ELSE concat(UU.categoryNameS, ' > ') end as categoryNameS,
+                UU.categoryNameT
+         from (
+                  select (select Z.pd_category_name
+                          from product_category Z
+                          where Z.pd_category_id = (select Z.pd_category_upper_code
+                                                    from product_category Z
+                                                    where Z.pd_category_id = A.pd_category_upper_code)) as categoryNameF,
+                         (select Z.pd_category_name
+                          from product_category Z
+                          where Z.pd_category_id = A.pd_category_upper_code)                            as categoryNameS,
+                         pd_category_name                                                                  categoryNameT
+                  from product_category A
+                  where A.pd_category_id = #{pd_category_id}
+              ) UU
+        ) CC
+    </select>
+</mapper>

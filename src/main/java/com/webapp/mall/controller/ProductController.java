@@ -35,6 +35,7 @@ import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.SearchFilterVO;
 import com.webapp.mall.vo.TodayVO;
+import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
 import com.webapp.manager.dao.MgBrandDAO;
@@ -44,6 +45,8 @@ import com.webapp.manager.vo.MgBrandVO;
 public class ProductController {
     @Autowired
     ProductDAO productDAO;
+    @Autowired
+    BannerDAO bannerDAO;
     @Autowired
     DeliveryDAO deliveryDAO;
     @Autowired
@@ -267,6 +270,20 @@ public class ProductController {
             //기본 배송설정
             Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
             model.addAttribute("store_delivery",storeInfo);
+            
+            //띠배너
+            params.put("banner_type","product_line");
+            List<Map<String,Object>> lineBannerList = bannerDAO.getBannerList(params);
+            for(Map<String,Object> banner:lineBannerList) {
+            	if("H".equals(banner.get("banner_event_type"))) {
+            		banner.put("url",banner.get("banner_href"));
+            	}else if("P".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product/productDetail?product_cd="+banner.get("banner_product_cd"));
+            	}else if("C".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product?product_ct="+banner.get("banner_product_ct"));
+            	}
+            }
+            model.addAttribute("lineBannerList1", lineBannerList.get(0));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -376,7 +393,10 @@ public class ProductController {
     public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
 
         try{
-
+        	if(params.get("email") != null && !params.get("email").equals("") && params.get("login").equals("true")) {
+        		session.setAttribute("email", params.get("email"));
+        		session.setAttribute("login", true);
+        	}
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);

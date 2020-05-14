@@ -148,7 +148,8 @@
     </article>
     <article class="banner-section">
         <div class="inner">
-            <a href="#" class="img-box"><img src="../assets/img/goods-view/bnr1.jpg" alt="매일 100% 당첨 행운의 룰렛" /></a>
+            <a href="${lineBannerList1.url}" class="img-box">
+            <img src="${lineBannerList1.file_1}" /></a>
         </div>
     </article>
     <article class="related-goods-section">
@@ -426,9 +427,7 @@
                         <br>
                         <b>상품 출고지</b>
                         <br>
-                        - (${store_delivery.forward_postcode}) 
-                          ${store_delivery.forward_roadAddress}
-                          ${store_delivery.forward_extraAddress}
+                        ${store_delivery.forward_value}
                           <br>
                     </div>
                     <div class="return-box">
@@ -436,9 +435,7 @@
                         <br>
                         <b>교환 및 반품 주소</b>
                         <br>
-                        - (${store_delivery.refund_postcode}) 
-                          ${store_delivery.refund_roadAddress}
-                          ${store_delivery.refund_extraAddress}
+                        ${store_delivery.refund_value}
                           <br><br>
                         ${list.product_change_info}
                     </div>

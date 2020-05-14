@@ -25,12 +25,11 @@
         </div>
         <div class="sub-slider-inner">
             <ul class="sub-slider-wrap">
-                <li id="sub-slide-1"><a href="#"></a></li>
-                <li id="sub-slide-2"><a href="#"></a></li>
-                <li id="sub-slide-3"><a href="#"></a></li>
-                <li id="sub-slide-4"><a href="#"></a></li>
-                <li id="sub-slide-5"><a href="#"></a></li>
-                <li id="sub-slide-6"><a href="#"></a></li>
+            	<c:if test="${not empty subSlider}">
+            	<c:forEach var="list" items="${subSlider}">
+	                <li class="sub-slide" ><a href="${list.url}" style="background:url(${list.file_1}) no-repeat center center / cover;"></a></li>
+                </c:forEach>
+            	</c:if>
             </ul>
         </div>
     </article>
@@ -83,8 +82,8 @@
             </div>
             <div class="mini-bnr-section">
                 <div class="mini-bnr-inner">
-                    <a href="#">
-                        <img src="/banner/mini-banner1.png" alt="프리미엄 리뷰 상품평 쓰고 30만원 받자"/>
+                    <a href="${lineBannerList1.url}">
+                        <img src="${lineBannerList1.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                     </a>
                 </div>
             </div>
@@ -127,15 +126,15 @@
         </div>
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                <a href="${lineBannerList2.url}">
+                    <img src="${lineBannerList2.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                <a href="${lineBannerList3.url}">
+                    <img src="${lineBannerList3.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>
@@ -210,15 +209,15 @@
         </div>
         <div class="mini-bnr-section mini-bnr-2">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner2.png" alt="해외직구가 어려운 이들을 위한 돌직구 백서"/>
+                <a href="${lineBannerList4.url}">
+                    <img src="${lineBannerList4.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-3">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner3.png" alt="리디셀렉트 10개월권 50% 할인+1개월 추가"/>
+                <a href="${lineBannerList5.url}">
+                    <img src="${lineBannerList5.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>
@@ -291,15 +290,15 @@
         </div>
         <div class="mini-bnr-section mini-bnr-5">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner5.png" alt="코카콜라 1만원 이상 구매시 1천원 할인"/>
+                <a href="${lineBannerList6.url}">
+                    <img src="${lineBannerList6.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-6">
             <div class="mini-bnr-inner">
-                <a href="#">
-                    <img src="/banner/mini-banner6.png" alt="유제품 1만원 이상 구매시 10%"/>
+                <a href="${lineBannerList7.url}">
+                    <img src="${lineBannerList7.file_1}" onerror="this.src='http://placehold.it/200x30'"/>
                 </a>
             </div>
         </div>

@@ -24,22 +24,22 @@ public class MgBoardController {
      * 리스트.
      */
     @RequestMapping(value = "/Manager/boardList")
-    public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request) throws Exception{
+    public String boardList(BoardVO boardVO, SearchVO searchVO, ModelMap modelMap,HttpServletRequest request) throws Exception{
         String returnString="";
         try{
-            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardVO.getBgno());
             if (bgInfo == null) {
                 return "manager/mgboard/BoardGroupFail";
             }
-            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
-                searchVO.setDisplayRowCount(10);
+            if(boardVO.getDisplayRowCount()==null || boardVO.getDisplayRowCount() < 10){
+            	boardVO.setDisplayRowCount(10);
             }
-            searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+            boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
-            List<?> listview  = boardSvc.selectMgBoardList(searchVO);
-
+            List<?> listview  = boardSvc.selectMgBoardList(boardVO);
+ 
             modelMap.addAttribute("listview", listview);
-            modelMap.addAttribute("searchVO", searchVO);
+            modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
 
