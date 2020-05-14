@@ -502,7 +502,7 @@ public class MainController {
     }
 
     //modal
-    @RequestMapping(value = "mobile/layout/m_modal", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/mobile/layout/m_modal", method = RequestMethod.GET, produces = "application/json")
     public String m_Modal(@RequestParam HashMap params, ModelMap model) throws Exception {
 
         try{

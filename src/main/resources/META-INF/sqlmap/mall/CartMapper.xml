@@ -84,7 +84,12 @@
     </select>
     <select id="getCartProductList" parameterType="java.util.Map" resultType="java.util.Map">
         select A.*, B.*,
-        	(select Z.product_delivery_bundle_yn from store_delivery Z where B.product_user_ud = Z.store_id) as product_delivery_bundle_yn
+        	(select Z.product_delivery_bundle_yn from store_delivery Z where B.product_user_ud = Z.store_id) as product_delivery_bundle_yn,
+        	(select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 2) as file_2,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 3) as file_3,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 4) as file_4,
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 5) as file_5
         from product_cart A 
         left join product B 
         on(A.product_cd = B.product_cd) 

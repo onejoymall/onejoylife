@@ -252,7 +252,7 @@
                 <a href="<c:url value="/Help/usePointGuid"/>"><i class="icon epoint i-big"></i>E-POINT 안내</a>
             </li>
             <li>
-                <a href="<c:url value="/Help/faqCenter"/>"><i class="icon faq i-big"></i>자주하는 질문</a>
+                <a href="<c:url value="/Help/faqCenter?bgno=16&question_type=F"/>"><i class="icon faq i-big"></i>자주하는 질문</a>
             </li>
         </ul>
     </div>

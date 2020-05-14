@@ -120,10 +120,13 @@ $(document).on("click","#paymentSubmit",function () {
     if(max != 0){
         if (order < min || order > max ) {
             $.toast({
-                text: '최대/최소 주문 수량을 확인하세요.',
+                heading : '최소/최대 주문 수량을 확인해주세요.',
+                text: [
+                    '최소 : ' + min,
+                    '최대 : ' + max,
+                ],
                 showHideTransition: 'plain', //펴짐
                 position: 'top-right',
-                heading: 'Error',
                 icon: 'error',
                 stack: false
             });
@@ -701,7 +704,11 @@ $(document).ready(function(){
                 if(navigator.platform){
                     if(filter.indexOf(navigator.platform.toLowerCase()) < 0) {
                         $.toast({
-                            text: '최대/최소 주문 수량을 확인하세요.',
+                            heading : '최소/최대 주문 수량을 확인해주세요.',
+                            text: [
+                                '최소 : ' + min,
+                                '최대 : ' + max,
+                            ],
                             showHideTransition: 'plain', //펴짐
                             position: 'mid-center',
                             heading: 'Error',
@@ -710,7 +717,11 @@ $(document).ready(function(){
                         });
                     } else {
                         $.toast({
-                            text: '최대/최소 주문 수량을 확인하세요.',
+                            heading : '최소/최대 주문 수량을 확인해주세요.',
+                            text: [
+                                '최소 : ' + min,
+                                '최대 : ' + max,
+                            ],
                             showHideTransition: 'plain', //펴짐
                             position: 'top-right',
                             heading: 'Error',
@@ -1007,7 +1018,11 @@ $(document).ready(function(){
 
                 } else if (order < min || (max != 0 && order > max)) {
                     $.toast({
-                        text: '최대/최소 주문 수량을 확인하세요.',
+                        heading : '최소/최대 주문 수량을 확인해주세요.',
+                        text: [
+                            '최소 : ' + min,
+                            '최대 : ' + max,
+                        ],
                         showHideTransition: 'plain', //펴짐
                         position: 'top-right',
                         heading: 'Error',
@@ -2755,15 +2770,15 @@ $(document).ready(function(){
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            $('input[name=refund_postcode]').val(data.zonecode);
-            $('input[name=refund_roadAddress]').val(roadAddr);
-            $('input[name=refund_jibunAddress]').val(data.jibunAddress);
+            $('input[name=postcode]').val(data.zonecode);
+            $('input[name=roadAddress]').val(roadAddr);
+            $('input[name=jibunAddress]').val(data.jibunAddress);
 
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
-                $('input[name=refund_extraAddress]').val(extraRoadAddr);
+                $('input[name=extraAddress]').val(extraRoadAddr);
             } else {
-                $('input[name=refund_extraAddress]').val('');
+                $('input[name=extraAddress]').val('');
             }
 //
 //            var guideTextBox =  $('input[name=refund_guide]');

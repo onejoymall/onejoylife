@@ -12,7 +12,7 @@
     <div class="footer-top-section">
         <ul class="clearfix">
             <li><a href="#link-info-main" rel="modal:open">이용약관</a></li>
-            <li><a href="#modal-idownloadPathnfo-privacy" rel="modal:open">개인정보처리방침</a></li>
+            <li><a href="#modal-info-privacy" rel="modal:open">개인정보처리방침</a></li>
 <%--            <li class="company-app"><a href="javascript:void(0)" id="link-company-app" >제휴 문의</a></li>--%>
             <li class="company-app"><a href="javascript:void(0)" class="ready">제휴 문의</a></li>
             <li><a href="/Help/csinfo">고객센터</a></li>
