@@ -124,12 +124,12 @@
                         <tbody>
 
                             <tr class="shipping-t-detail">
-                                <th rowspan="3">반품주소</th>
+                                <th>반품주소</th>
                                 <td>
-                                    <input type="text" id="postcode" name="refund_postcode" value="${detail.refund_postcode}"><button type="button" class="ad-but" id="daumMapCall2">우편번호</button>
+                                    <textarea name="refund_value" id="summernote">${detail.refund_value}</textarea>
                                 </td>
                             </tr>
-                            <tr>
+                            <%-- <tr>
                             	<td>
                                     <input type="hidden" id="roadAddress" name="refund_roadAddress" class="ad-input" value="${detail.refund_roadAddress}">
                                     <input type="text" id="jibunAddress" name="refund_jibunAddress" class="ad-input" placeholder="주소" value="${detail.refund_jibunAddress}">
@@ -139,7 +139,7 @@
                             	<td>
                                     <input type="text" id="extraAddress" name="refund_extraAddress" class="ad-input" placeholder="상세주소" value="${detail.refund_extraAddress}">
                                 </td>
-                            </tr>
+                            </tr> --%>
                         </tbody>
                     </table>
                     
@@ -152,12 +152,12 @@
                         <tbody>
 
                             <tr class="shipping-t-detail">
-                                <th rowspan="3">출고지 주소</th>
+                                <th>출고지 주소</th>
                                 <td>
-                                    <input type="text" id="postcode" name="postcode" value="${detail.forward_postcode}"><button type="button" class="ad-but" id="daumMapCall">우편번호</button>
+                                    <textarea name="forward_value" id="summernote2">${detail.forward_value}</textarea>
                                 </td>
                             </tr>
-                            <tr>
+                           <%--  <tr>
                             	<td>
                                     <input type="hidden" id="roadAddress" name="roadAddress" class="ad-input" value="${detail.forward_roadAddress}">
                                     <input type="text" id="jibunAddress" name="jibunAddress" class="ad-input" placeholder="주소" value="${detail.forward_jibunAddress}">
@@ -167,7 +167,7 @@
                             	<td>
                                     <input type="text" id="extraAddress" name="extraAddress" class="ad-input" placeholder="상세주소" value="${detail.forward_extraAddress}">
                                 </td>
-                            </tr>
+                            </tr> --%>
                         </tbody>
                     </table>
                     

@@ -27,7 +27,9 @@
 		forward_postcode,
 		forward_roadAddress,
 		forward_jibunAddress,
-		forward_extraAddress
+		forward_extraAddress,
+		refund_value,
+		forward_value
       )
       values
       (
@@ -51,7 +53,9 @@
 		#{postcode},
 		#{roadAddress},
 		#{jibunAddress},
-		#{extraAddress}
+		#{extraAddress},
+		#{refund_value},
+		#{forward_value}
       )
       on duplicate KEY update
         store_id=#{store_id},
@@ -74,7 +78,9 @@
 		forward_postcode = #{postcode},
 		forward_roadAddress = #{roadAddress},
 		forward_jibunAddress = #{jibunAddress},
-		forward_extraAddress = #{extraAddress}
+		forward_extraAddress = #{extraAddress},
+		refund_value = #{refund_value},
+		forward_value = #{forward_value}
     </insert>
 
     <select id="getSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">

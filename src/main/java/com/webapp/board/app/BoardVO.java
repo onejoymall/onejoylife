@@ -3,9 +3,10 @@ package com.webapp.board.app;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.webapp.board.common.SearchVO;
 import com.webapp.board.common.utiletc;
 
-public class BoardVO {
+public class BoardVO extends SearchVO{
     private Integer usr_id;
     private String bgno;
     private String brdno;
@@ -28,6 +29,8 @@ public class BoardVO {
     private String rememo;
     private String rewriter;
     private String reno;
+    private String answer_yn;
+    private String[] answer_yn_arr;
 
     public String getReno() {
         return reno;
@@ -260,4 +263,22 @@ public class BoardVO {
     public void setUploadfile6(List<MultipartFile> uploadfile6) {
         this.uploadfile6 = uploadfile6;
     }
+
+	public String getAnswer_yn() {
+		return answer_yn;
+	}
+
+	public void setAnswer_yn(String answer_yn) {
+		this.answer_yn = answer_yn;
+	}
+
+	public String[] getAnswer_yn_arr() {
+		return answer_yn.split(",");
+	}
+
+	public void setAnswer_yn_arr(String[] answer_yn_arr) {
+		this.answer_yn_arr = answer_yn_arr;
+	}
+    
+    
 }

@@ -427,9 +427,7 @@
                         <br>
                         <b>상품 출고지</b>
                         <br>
-                        - (${store_delivery.forward_postcode}) 
-                          ${store_delivery.forward_roadAddress}
-                          ${store_delivery.forward_extraAddress}
+                        ${store_delivery.forward_value}
                           <br>
                     </div>
                     <div class="return-box">
@@ -437,9 +435,7 @@
                         <br>
                         <b>교환 및 반품 주소</b>
                         <br>
-                        - (${store_delivery.refund_postcode}) 
-                          ${store_delivery.refund_roadAddress}
-                          ${store_delivery.refund_extraAddress}
+                        ${store_delivery.refund_value}
                           <br><br>
                         ${list.product_change_info}
                     </div>

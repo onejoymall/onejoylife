@@ -282,7 +282,7 @@
                             <input type="radio" id="goods-taxation" name="goods-tax" class="goods-tax" value="A" checked>
                             <label for="goods-taxation">과세 상품</label>
                             <label for="goods-taxation-detail">&#40;과세율 : </label>
-                            <input type="number" id="goods-taxation-detail" name="goods-taxation-detail" placeholder=""><span>%&#41;</span>
+                            <input class="onlyNumber" type="number" id="goods-taxation-detail" name="goods-taxation-detail" placeholder=""><span>%&#41;</span>
                             <input type="radio" id="goods-taxFree" name="goods-tax" class="goods-tax" value="B">
                             <label for="goods-taxFree">면세 상품</label>
                             <input type="radio" id="goods-taxZero" name="goods-tax"class="goods-tax" value="C">
@@ -293,20 +293,20 @@
                     <tr>
                         <th>소비자가</th>
                         <td>
-                            <input type="text" id="product_user_payment" name="product_user_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_user_payment" name="product_user_payment"> 원
                         </td>
                     </tr>
                     <tr>
                         <th>공급가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="product_company_payment" name="product_company_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_company_payment" name="product_company_payment"> 원
                         </td>
                     </tr>
 
                     <tr>
                         <th>판매가<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <input type="text" id="product_payment" name="product_payment"> 원
+                            <input class="onlyNumber" type="text" id="product_payment" name="product_payment"> 원
                         </td>
                     </tr>
 <%--                    <tr>--%>
@@ -368,13 +368,13 @@
                     <tr>
                         <th>주문 수량 제한</th>
                         <td>
-                            최소 <input type="number" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input type="number" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
+                            최소 <input class="onlyNumber" type="number" id="limited-quantity-min" name="product_min_limit"> ~ 최대 <input class="onlyNumber" type="number" id="limited-quantity-max" name="product_max_limit"><span class="cc">* 최소값은 1 이상, 최대값은 빈 값일 경우 '제한 없음'으로 저장됩니다.</span>
                         </td>
                     </tr>
                     <tr>
                         <th>적립금</th>
                         <td>
-                            <input type="number" id="goods-savings" name="product_point_rate">
+                            <input class="onlyNumber" type="number" id="goods-savings" name="product_point_rate">
                             <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
                         </td>
                     </tr>
@@ -802,7 +802,7 @@
                         <th>상품 전체 중량&#40;kg&#41;</th>
                         <td>
                             <p class="cc2"><span class="cc">* 소수점 둘째 자리까지 입력할 수 있습니다.</span></p>
-                            <input type="text" id="product_kg" name=product_kg">Kg
+                            <input class="onlyNumberAndDot" type="text" id="product_kg" name="product_kg" value='0'>Kg
                         </td>
                     </tr>
                     <tr>

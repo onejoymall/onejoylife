@@ -14,12 +14,12 @@
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
-                        <button type="button" class="keyword-src-button">검색</button>
+                    	<input type="hidden" name="bgno" value="15"/>
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                        <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="src-name" id="src-name">
-                            <label for="src-name">작성자</label>
-
+							<input type="checkbox" name="searchType" value="brdwriter" id="check2" checked>
+	                        <label for="check2">작성자</label>
                         </div>
                     </div>
                     <table class="keyword-src-table">
@@ -33,21 +33,21 @@
                             <tr>
                                 <th>질문 유형</th>
                                 <td>
-                                    <select name="question_type" id="question_type">
-                                        <option value="">선택</option>
-                                        <option value="S">대량주문</option>
-                                        <option value="O">주문/결제</option>
-                                        <option value="C">교환/반품/환불</option>
-                                        <option value="E">이벤트</option>
-                                        <option value="D">배송</option>
-                                        <option value="G">기타</option>
+                                    <select name="question_type">
+                                        <option value="" <c:if test="${param.question_type == ''}">selected</c:if>>선택</option>
+                                        <option value="S" <c:if test="${param.question_type == 'S'}">selected</c:if>>대량주문</option>
+                                        <option value="O" <c:if test="${param.question_type == 'O'}">selected</c:if>>주문/결제</option>
+                                        <option value="C" <c:if test="${param.question_type == 'C'}">selected</c:if>>교환/반품/환불</option>
+                                        <option value="E" <c:if test="${param.question_type == 'E'}">selected</c:if>>이벤트</option>
+                                        <option value="D" <c:if test="${param.question_type == 'D'}">selected</c:if>>배송</option>
+                                        <option value="G" <c:if test="${param.question_type == 'G'}">selected</c:if>>기타</option>
                                     </select>
                                 </td>
                                 <th>답변 상태</th>
                                 <td>
-                                   <input type="checkbox" name="src-before" id="src-before" >
+                                   <input type="checkbox" name="answer_yn" id="src-before" value="N" <c:if test="${fn:contains(searchVO.answer_yn, 'N')}">checked</c:if>>
                                    <label for="src-before">답변전</label>
-                                   <input type="checkbox" name="src-after" id="src-after" >
+                                   <input type="checkbox" name="answer_yn" id="src-after" value="Y" <c:if test="${fn:contains(searchVO.answer_yn, 'Y')}">checked</c:if>>
                                    <label for="src-after">답변완료</label>
                                 </td>
                             </tr>
@@ -57,12 +57,12 @@
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="from_date" name="from_date" class="date_pick">
+                                            <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="to_date" name="to_date" class="date_pick">
+                                            <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
