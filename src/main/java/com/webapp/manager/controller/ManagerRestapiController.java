@@ -94,6 +94,8 @@ public class ManagerRestapiController {
     @Autowired
     private ConfigDAO configDAO;
     @Autowired
+    private BannerDAO bannerDAO;
+    @Autowired
     private MgStoreDAO mgStoreDAO;
     @Autowired
     private DeliveryDAO deliveryDAO;
@@ -1739,5 +1741,57 @@ public class ManagerRestapiController {
     	}
     	
     	return resultMap;
+    }
+    //배너상세
+    @RequestMapping(value = "/Manager/getBannerDetail" ,method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> getBannerDetail (@RequestParam HashMap params,SearchVO searchVO, ModelMap modelMap, HttpServletRequest request) throws Exception{
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	try{
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			Map<String,Object> data = bannerDAO.getBannerDetail(params);
+    			resultMap.put("banner",data);
+    		}
+    		
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	return resultMap;
+    }
+    
+    //배너수정
+    @Transactional
+    @RequestMapping(value = "/Manager/updateBanner", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> updateBanner(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+        	
+        	FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"banner");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/banner/"+ft.format(new Date())+"/");
+            
+            
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	fileVO.setParentPK(params.get("banner_id")+"");
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+                    bannerDAO.deleteBannerFile(filelist,fileVO);
+                    bannerDAO.insertBannerFile(filelist,fileVO);
+                }
+                bannerDAO.updateBanner(params);
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/Manager/banner");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
     }
 }

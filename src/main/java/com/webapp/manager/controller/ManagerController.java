@@ -63,6 +63,8 @@ public class ManagerController {
     @Autowired
     private MgStoreDAO mgStoreDAO;
     @Autowired
+    private BannerDAO bannerDAO;
+    @Autowired
     private BoardGroupSvc boardSvc;
     @Autowired
     private PaymentDAO paymentDAO;
@@ -222,6 +224,27 @@ public class ManagerController {
             e.printStackTrace();
         }
         return "/manager/product/category";
+    }
+    
+    @RequestMapping(value = "/Manager/banner")
+    public String managerBanner(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	try {
+    		params.put("pd_category_upper_code", "T");
+    		List<Map<String, Object>> list = bannerDAO.getBannerList(params);
+    		params.put("pd_category_upper_code", null);
+    		List<Map<String, Object>> subList = categoryDAO.getCategorySubList(params);
+    		List<Map<String, Object>> thirdList = categoryDAO.getCategoryThirdList(params);
+    		model.addAttribute("list", list);
+    		model.addAttribute("subList", subList);
+    		model.addAttribute("thirdList", thirdList);
+    		model.addAttribute("topNav", 2);
+    		model.addAttribute("style", "category");
+    		model.addAttribute("postUrl", "/Manager/productCategoryDisplayProc");
+//            model.addAttribute("productList",productList);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return "/manager/banner";
     }
 
     @RequestMapping(value = "/Manager/ProductAdd")

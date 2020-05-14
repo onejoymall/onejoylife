@@ -3292,3 +3292,82 @@ $(".excelBtn").on("click",function(){
 	$('#defaultListForm button:last').click();
 	$('#defaultListForm button:last').remove();
 })
+
+//배너선택
+function selectBanner(banner_id){
+	$(".main-right").removeClass("hidden");
+	$(".file_link1").attr("src","");
+	$.ajax({
+		url: "/Manager/getBannerDetail",
+		method: 'post',
+		data: `banner_id=${banner_id}`,
+		success: function(res) {
+			console.log(res);
+			$.each(res.banner,function(index, item){
+				if(index == "banner_event_type"){
+					$(`input[name=${index}][value=${item}]`).trigger("click");
+				}else if(index == "file_1"){
+					$(".file_link1").attr("src",item);
+				}else{
+					$(`input[name=${index}]`).val(item);
+				}
+			});
+		},
+		error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+	})
+}
+
+//배너 등록
+$(document).on("click","#formBannerSubmit",function () {
+    var formData = new FormData($('#defaultForm')[0]);
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/Manager/updateBanner',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else if(data.success) {
+            	$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'top-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.href = data.redirectUrl;
+                    }
+                });
+                // loginAuth(data.access_token);
+//                location.href=data.redirectUrl;
+            	location.reload();
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})

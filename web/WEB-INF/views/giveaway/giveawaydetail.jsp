@@ -111,7 +111,8 @@
     </article>
     <article class="banner-section">
         <div class="inner">
-            <a href="#" class="img-box"><img src="../assets/img/goods-view/bnr1.jpg" alt="매일 100% 당첨 행운의 룰렛" /></a>
+            <a href="${lineBannerList1.url}" class="img-box">
+            <img src="${lineBannerList1.file_1}" /></a>
         </div>
     </article>
 
