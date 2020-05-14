@@ -173,7 +173,7 @@
                 <li>
                         <a href="/product?product_ct=${categoryEventList.pd_category_id}">
                             <div class="img-box" id="exhibition-img1">
-                                <img src="${categoryEventList.file_link}" onerror="this.src='http://placehold.it/190x190'">
+                                <img src="${categoryEventList.file_link}" onerror="this.src='http://placehold.it/190x190'" style="height:158px;">
                             </div>
                             <div class="mainList-big2-text">
                                 <p class="list-title">${categoryEventList.pd_category_event_title}</p>
@@ -189,7 +189,7 @@
                     <li>
                         <a href="/product?product_ct=${categoryEventListSub.pd_category_id}">
                             <div class="img-box" id="exhibition-img${status.index}">
-                                <img src="${categoryEventListSub.file_link}" onerror="this.src='http://placehold.it/190x190'">
+                                <img src="${categoryEventListSub.file_link}" onerror="this.src='http://placehold.it/190x190'" style="height:158px;">
                             </div>
                             <div class="mainList-big2-text">
                                 <p class="list-title">${categoryEventListSub.pd_category_event_title}</p>
@@ -249,10 +249,10 @@
                 <a href="<c:url value="/sign/signup"/>" class="link-a"><i class="icon join i-big"></i>회원가입</a>
             </li>
             <li>
-                <a href="#"><i class="icon epoint i-big"></i>E-POINT 안내</a>
+                <a href="<c:url value="/Help/usePointGuid"/>"><i class="icon epoint i-big"></i>E-POINT 안내</a>
             </li>
             <li>
-                <a href="#"><i class="icon faq i-big"></i>자주하는 질문</a>
+                <a href="<c:url value="/Help/faqCenter?bgno=16&question_type=F"/>"><i class="icon faq i-big"></i>자주하는 질문</a>
             </li>
         </ul>
     </div>

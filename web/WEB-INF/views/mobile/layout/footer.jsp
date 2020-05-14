@@ -6,15 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <c:import url="/mobile/layout/m_modal"/>
 <footer class="pb-5 bg_grey2">
     <ul class="ftmenu bg_red">
         <li><a href="<c:url value="/Help/csinfo"/>">고객센터</a></li>
         <li><a href="#">쇼핑몰 입점/제휴문의</a></li>
     </ul>
     <ul class="ftmenu">
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">이용약관</a></li>
+        <li><a href="#" id="mo-btn1">개인정보처리방침</a></li>
+        <li><a href="#" id="mo-btn2">이용약관</a></li>
     </ul>
     <ul class="wrap">
         <li>주식회사 원조이</li>

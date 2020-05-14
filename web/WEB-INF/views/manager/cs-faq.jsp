@@ -139,7 +139,7 @@
                                 <th>분류</th>
                                 <td>
                                     <input type="radio" name="question_type" id="faq-q2" value="S" checked>
-                                    <label for="faq-q2">대량주문</label>
+                                    <label for="faq-q2">E-포인트</label>
                                     <input type="radio" name="question_type" id="faq-q3" value="O">
                                     <label for="faq-q3">주문/결제</label>
                                     <input type="radio" name="question_type" id="faq-q4" value="C">
@@ -209,7 +209,7 @@
                                 <th>분류</th>
                                 <td>
                                     <input type="radio" name="question_type" id="faq1-q2" value="S" checked>
-                                    <label for="faq1-q2">대량주문</label>
+                                    <label for="faq1-q2">E-포인트</label>
                                     <input type="radio" name="question_type" id="faq1-q3" value="O">
                                     <label for="faq1-q3">주문/결제</label>
                                     <input type="radio" name="question_type" id="faq1-q4" value="C">

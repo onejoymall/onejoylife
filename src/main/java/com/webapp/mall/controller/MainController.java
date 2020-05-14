@@ -500,4 +500,27 @@ public class MainController {
         }
         return "layout/modal";
     }
+
+    //modal
+    @RequestMapping(value = "/mobile/layout/m_modal", method = RequestMethod.GET, produces = "application/json")
+    public String m_Modal(@RequestParam HashMap params, ModelMap model) throws Exception {
+
+        try{
+
+            params.put("market_config_code","info-main");
+            Map<String,Object> infoMain = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain", infoMain);
+            params.put("market_config_code","info-privacy");
+            Map<String,Object> infoPrivacy = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy", infoPrivacy);
+            params.put("market_config_code","info-join");
+            Map<String,Object> infoJoin = configDAO.getConfigDetail(params);
+            model.addAttribute("infoJoin", infoJoin);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "mobile/layout/m_modal";
+    }
+
 }

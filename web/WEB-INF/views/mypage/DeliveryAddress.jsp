@@ -258,12 +258,12 @@
                         </td>
                         <td class="body-td2 td-m">
                             <div class="input-group">
-                                <input type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
-                                <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button>
+                                <input type="text" name="postcode" id="postcode_modi" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+                                <button type="button" class="grey" id="daumMapCall2">우편번호 찾기</button>
                             </div>
-                            <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
-                             <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
-                             <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
+                            <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                             <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                             <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress_modi"></p>
                              
                         </td>
                     </tr>
@@ -293,6 +293,10 @@
 $(function(){
 	$(".close").click(function(){
         $(".modal").attr("style", "display:none");
+	});
+
+	$(".close").click(function(){
+        $(".modal2").attr("style", "display:none");
 	});
 	
 	$(".ck-p").click(function(){
