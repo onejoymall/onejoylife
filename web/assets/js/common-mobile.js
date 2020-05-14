@@ -90,3 +90,10 @@ $(document).ready(function(){
     });
 });
 
+
+$(document).ready(function(){
+    $('.faq').on('click',function(){
+        $(this).addClass('active');
+        $('.faq').not($(this)).removeClass('active');
+    })
+});

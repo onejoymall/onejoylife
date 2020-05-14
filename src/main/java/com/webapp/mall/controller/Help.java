@@ -10,8 +10,11 @@ import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class Help {
@@ -47,9 +50,22 @@ public class Help {
     }
     //FAQ
     @RequestMapping(value="/Help/faqCenter")
-    public String helpFaqCenter(Model model, HttpServletRequest request) {
+    public String helpFaqCenter(@RequestParam HashMap params, Model model, HttpServletRequest request, SearchVO searchVO) {
+
+        BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("16");
+        searchVO.setBgno("16");
+        searchVO.setDisplayRowCount(10);
+        searchVO.setStaticRowEnd(10);
+        searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+        List<?> listview  = boardSvc.selectBoardList(searchVO);
+
+        model.addAttribute("listview", listview);
+        model.addAttribute("searchVO", searchVO);
+        model.addAttribute("bgInfo", bgInfo);
+
+
         model.addAttribute("style", "help-3");
-        model.addAttribute("leftNavOrder", "3");
+        model.addAttribute("leftNavOrder", "7");
 
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){

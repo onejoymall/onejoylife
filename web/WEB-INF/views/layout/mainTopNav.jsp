@@ -51,7 +51,7 @@
 <%--                <li><a href="#">이벤트</a></li>--%>
                 <li><a href="/giveaway">경품</a></li>
                 <li><a href="/product?product_ct=808">특판</a></li>
-                <li><a href="javascript:void(0);" class="ready">여행</a></li>
+                <li><a href="/product?product_ct=880">여행</a></li>
                 <li><a href="http://onejoymcm.com">라이브 쇼핑</a></li>
             </ul>
             <div class="search-box">

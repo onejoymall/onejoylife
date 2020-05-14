@@ -503,3 +503,14 @@ $(function(){
         }
     });
 });
+
+/*
+$('.main-title-box').click(function(){
+    $(this).parent($('.faq-data-box')).toggleClass('active');
+})
+$('.faq-sort-item a').click(function(){
+    event.preventDefault();
+    $(this).parents($('.faq-sort-list')).find($('a')).removeClass('active');
+    $(this).addClass('active');
+})
+*/

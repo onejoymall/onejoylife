@@ -5,7 +5,7 @@
             <ul class="outer-ul">
                 <li class="outer-li"><a href="/Help/csinfo" class="<c:if test="${leftNavOrder == 1}">active</c:if>">ONEJOYLIFE</a></li>
                 <li class="outer-li"><a href="/Help/usePointGuid" class="<c:if test="${leftNavOrder == 2}">active</c:if>">포인트 사용안내</a></li>
-                <li class="outer-li"><a href="/Help/faqCenter" class="<c:if test="${leftNavOrder == 3}">active</c:if>">FAQ 센터</a></li>
+                <li class="outer-li"><a href="/Help/faqCenter?bgno=16" class="<c:if test="${leftNavOrder == 7}">active</c:if>">FAQ 센터</a></li>
                 <li class="outer-li"><a href="/Board/boardList?bgno=15" class="<c:if test="${leftNavOrder == 3}">active</c:if>">1:1 문의</a>
                     <ul class="inner-ul">
                         <li><a href="/Board/boardList?bgno=15" class="<c:if test="${leftNavOrder == 4}">active</c:if>">1:1 문의</a></li>

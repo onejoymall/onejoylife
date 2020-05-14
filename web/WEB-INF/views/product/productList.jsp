@@ -36,6 +36,7 @@
 <%--                    <li></li>--%>
 <%--                </ul>--%>
 <%--            </div>--%>
+            <c:if test="${not empty categoryRowData.file_link3 and categoryRowData.pd_category_event_use_yn eq 'Y' || categoryRowData.file_link5 and categoryRowData.event_use_yn eq 'Y'}">
             <section class="main-section">
                 <h2 class="main-section-title hide">main section</h2>
                 <article class="main-slider">
@@ -53,6 +54,7 @@
                     </div>
                 </article>
             </section>
+            </c:if>
             <p class="gift-amount">${categoryRowData.pd_category_name} 전체 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
 <%--            <div class="nav-tit clearfix">--%>
 <%--                <h4>MD추천</h4>--%>

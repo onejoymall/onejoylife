@@ -13,8 +13,8 @@
         <li><a href="#">쇼핑몰 입점/제휴문의</a></li>
     </ul>
     <ul class="ftmenu">
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">이용약관</a></li>
+        <li><a href="#modal-1">개인정보처리방침</a></li>
+        <li><a href="#modal-2">이용약관</a></li>
     </ul>
     <ul class="wrap">
         <li>주식회사 원조이</li>
@@ -28,6 +28,8 @@
         <li>Copyright ONEJOYlife. All rights reserved.</li>
     </ul>
 </footer>
+
+
 
 
     <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>

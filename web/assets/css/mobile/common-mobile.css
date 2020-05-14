@@ -3643,6 +3643,13 @@ body.black .btn-login{
     overflow-x: hidden;
     overflow-y: auto;
 }
+.lan-btn {
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    border: 1px solid #2D2E43;
+    background: #2D2E43;
+}
 /* 마이페이지 메인 */
 .point-box {
     width: 100%;
@@ -4947,4 +4954,98 @@ select#list-sort{
 .input-group .btn.btn-black{
     height: 40px;
     line-height: 40px;
+}
+
+/* 모달1 */
+.modal1{
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* background-color: rgba(0,0,0,0.7); */
+    line-height: 28px;
+}
+.modal1-bg {
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background:rgba(0,0,0,0.7);
+    transition: 0.3s;
+}
+.modal-close{
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    width: 35px;
+    height: 35px;
+}
+.modal-close::before{
+    content: "";
+    display:block;
+    position:absolute;
+    top:0px;
+    left:15px;
+    width:2px;
+    height:25px;
+    background:#343434;
+    transform: rotate(45deg);
+}
+.modal-close::after{
+    content: "";
+    display:block;
+    position:absolute;
+    top:0px;
+    left:15px;
+    width:2px;
+    height:25px;
+    background:#343434;
+    transform: rotate(135deg);
+}
+.modal1-content{
+    position:relative;
+    top:50%;
+    width: 90%;
+    max-width: 500px;
+    max-height:80vh;
+    background: #fff;
+    margin: 0 auto;
+    transform: translateY(calc(-50% - 35px));
+}
+.modal1-header{
+    position: absolute;
+    top:0;
+    width:100%;
+    height:50px;
+    background:#fff;
+    color:#343434;
+}
+.modal1-header h2{
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    color: #343434;
+}
+.modal1-body{
+    width:100%;
+    height:auto;
+    max-height:calc(70vh);
+}
+.modal1-body-wrap{
+    width: 100%;
+    height: auto;
+    background: #fff;
+    padding: 20px;
+}
+.modal1-in-txt {
+    min-width: 150px;
+    max-height: 65vh;
+    /* min-height: 200px; */
+    overflow: auto;
+    margin-top: 35px;
 }

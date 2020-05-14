@@ -31,7 +31,7 @@
                 <li>나의 경품관리
                     <hr>
                     <ul class="in-ul">
-                        <li><a href="<c:url value="/MyPage/GiveawayExperience"/>">경품 체험하기</a></li>
+                        <li><a href="<c:url value="/MyPage/GiveawayExperience"/>" class="ready">경품 체험하기</a></li>
                         <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>">경품 당첨내역 조회</a></li>
                     </ul>
                 </li>

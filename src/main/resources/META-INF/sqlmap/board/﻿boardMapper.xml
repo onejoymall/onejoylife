@@ -38,6 +38,9 @@
         <if test="usr_id == null">
             AND TB.usr_id is null
         </if>
+        <if test="question_type != null">
+            AND TB.question_type=#{question_type}
+        </if>
          ORDER BY BRDNO DESC 
          LIMIT ${rowStart-1}, 10
     </select>
