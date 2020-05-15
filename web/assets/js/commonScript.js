@@ -264,30 +264,6 @@ $(document).on("click",".ra-num",function () {
     }
 });
 
-$(document).ready(function(){
-    $('.gnb>li:first-child').mouseover(function(){
-        $('.gnb-submenu').show();
-    });
-    $('.gnb>li:first-child').mouseleave(function(){
-        $('.gnb-submenu').hide();
-    });
-    $('.gnb-submenu>li').mouseover(function(){
-        $(this).children('.gnb-submenu-2dp').show();
-    });
-    $('.gnb-submenu>li').mouseleave(function(){
-        $(this).children('.gnb-submenu-2dp').hide();
-    });
-    $('.gnb-submenu-2dp>li').mouseover(function(){
-        $(this).children('.gnb-submenu-3dp').show().animate({
-            width: '200px'
-        },100);
-    });
-    $('.gnb-submenu-2dp>li').mouseleave(function(){
-        $(this).children('.gnb-submenu-3dp').hide().animate({
-            width: '0px'
-        },100);
-    });
-});
 //관리자 카테고리 관리
     // 카테고리 선택
     function selectCategory(category_id){
@@ -2620,6 +2596,103 @@ $(document).ready(function(){
             }
         });
     });
+
+    //경품응모
+   $('#giveaway_apply').on("click",function () {
+       if(isLogin==''){
+            $.toast({
+                heading: '비회원입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                icon: 'info',
+                hideAfter: false
+            });
+        }
+
+        var formData = $('#defaultForm').serialize();
+        var alertType;
+        var showText;
+
+        jQuery.ajax({
+            type: $('#defaultForm').attr('method'),
+            url: postUrl,
+            // enctype: 'multipart/form-data',
+            data: formData,
+            success: function (data) {
+                // console.log(data.validateError)
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    console.log(data);
+                    $.each(data.validateError, function (index, item) {
+                        // $('#validateError'+index).removeClass('none');
+                        // $('#validateError'+index).html('* '+item);
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        var filter = "win16|win32|win64|mac|macintel";
+
+                        if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+                            $.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'mid-center',
+                                heading: 'Error',
+                                icon: 'error',
+                            });
+                        } else {
+                            $.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'top-right',
+                                heading: 'Error',
+                                icon: 'error',
+                            });
+                        }
+                    });
+
+                } else {
+                    // loginAuth(data.access_token);
+                    if (data.success) {
+                        $.toast({
+                            text: 'success',
+                            showHideTransition: 'plain', //펴짐
+                            position: 'top-right',
+                            icon: 'success',
+                            hideAfter: 2000,
+                            afterHidden: function () {
+                            	location.href=data.redirectUrl;
+                            }
+                        });
+                    } else{
+                    	if(data.redirectUrl){
+                    		location.href=data.redirectUrl;
+                    	}else{
+                    		$.toast({
+                                text: "ERROR",
+                                showHideTransition: 'plain', //펴짐
+                                position: 'mid-center',
+                                heading: 'Error',
+                                icon: 'error',
+                            });
+                    	}
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    });
+
     //공통 리스트 삭제
     $('#listDelete').on("click",function(){
         var formData = $('#defaultListForm').serialize();

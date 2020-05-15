@@ -102,7 +102,7 @@
                 </c:if>
                 <c:if test="${empty detail.email}">
                 <div class="buy-wrap">
-                    <button class="buynow" type="button" id="formSubmit">바로 응모하기</button>
+                    <button class="buynow" type="button" id="giveaway_apply">바로 응모하기</button>
                     <button class="favorite ready" type="button"><i class="heart-empty" ></i></button>
                 </div>
                 </c:if>

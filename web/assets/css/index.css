@@ -605,7 +605,7 @@ body{
     width:15px;
     height:15px;
     margin:0 5px;
-    background:url(../img/right.svg) center center no-repeat;
+    background: url(../img/right.png) no-repeat center center / 15px;
 }
 .info-score{
     margin-top:20px;

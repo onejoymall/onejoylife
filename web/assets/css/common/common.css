@@ -383,7 +383,7 @@ input[class='styleClass']:checked + label
     width:15px;height:15px;
     overflow: hidden;
     white-space: nowrap;
-    text-indent: 100%;
+    text-indent: 200%;
 }
 .left-ar {
     top:6px;
@@ -593,4 +593,8 @@ input[class='styleClass']:checked + label
     height: 20px;
     background: url(../../img/x-red.png)no-repeat center / cover;
     margin: 0 auto;
+}
+
+.bx-wrapper .bx-controls-direction a {
+    z-index: 998!important;
 }

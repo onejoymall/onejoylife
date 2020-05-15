@@ -547,7 +547,7 @@ public class restapiController {
                         if(giveawayPlayCount <= 0 ){
                             Integer winnerUserId = (Integer) giveawayDAO.getGiveawayPlayUserRandId(params);
                             params.put("giveaway_play_id",winnerUserId);
-                            params.put("giveaway_winner_user_id",winnerUserId);
+                            params.put("giveaway_winner_user_id",userInfo.get("usr_id"));
                             giveawayDAO.updateWinnerUser(params);
                             giveawayDAO.insertGiveawayWinner(params);
                         }

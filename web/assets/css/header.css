@@ -126,10 +126,14 @@
     height:87px;
     padding:22.5px 25px;
 }
+.header-logo-inner a{
+   display: block;
+   width: 240px;
+}
 h1{
     width:242px;
     height:42px;
-    text-indent: 100%;
+    text-indent: 200%;
     white-space: nowrap;
     overflow:hidden;
     background:url(../img/logo.png) center center no-repeat;
@@ -277,13 +281,13 @@ h1{
     height:100%;
     padding:10px 0;
 }
-input.input-text{
-    border:none;
-    width:199px;
-    height:36px;
-    padding:0 15px;
+input.input-text {
+    border: none;
+    width: 199px;
+    height: 36px;
+    padding:0 35px 0 15px;
     border-radius: 18px;
-    background:rgba(0,0,0,0.06);
+    background: rgba(0,0,0,0.06);
     font-size: 14px;
     font-family: 'Noto Sans KR';
     line-height: normal;
@@ -296,7 +300,7 @@ input.input-text{
     position:absolute;
     top:10px;
     right:5px;
-    background:url(../img/search.svg) center center no-repeat;
+    background:url(../img/search.png) no-repeat center center / 20px;
     cursor: pointer;
 }
 .cart-box{
@@ -322,4 +326,19 @@ input.input-text{
     text-align: center;
     font-size:11px;
     color:#fff;
+}
+/*gnb css추가*/
+.gnb>li:first-child:hover .gnb-submenu{
+    display:block;
+}
+.gnb-submenu li:hover .gnb-submenu-2dp{
+    display:block;
+}
+.gnb-submenu-2dp li:hover .gnb-submenu-3dp{
+    display:block;
+    width:200px;
+    transition: .3s;
+}
+.gnb-submenu, .gnb-submenu-2dp, .gnb-submenu-3dp{
+    min-height:650px!important;
 }
