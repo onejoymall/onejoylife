@@ -3051,7 +3051,8 @@ function callTableTrStyle(type){
 
 }
 //저장 후 결과만
-function commonAjaxSaveCall(type,url,formData,popup=false){
+function commonAjaxSaveCall(type,url,formData,popup){
+	if(!popup) popup=false;
     var alertType;
     var showText;
     var hideAfterType;
@@ -3129,7 +3130,8 @@ $(document).on("click",'#toastLoginLink',function () {
     window.close();
 })
 //상품 문의 ajaxPaging 구현필요
-function callQnalist(product_cd,page=1) {
+function callQnalist(product_cd,page) {
+	if(!page) page = 1;
     var formData = {"product_cd":product_cd,"page":page};
     var dataList = commonAjaxListCall("POST","/product/listQna",formData);
     var html='';
@@ -3304,9 +3306,7 @@ $(".excelBtn").on("click",function(){
 	}
 	
 	var type = $(this).attr("data-id");
-	$('#defaultListForm').append(`
-		<button type='submit' formaction='/${type}/downloadExcelFile'>submit</button>
-	`);
+	$('#defaultListForm').append("<button type='submit' formaction='/"+type+"/downloadExcelFile'>submit</button>");
 	$('#defaultListForm button:last').click();
 	$('#defaultListForm button:last').remove();
 })
@@ -3318,16 +3318,16 @@ function selectBanner(banner_id){
 	$.ajax({
 		url: "/Manager/getBannerDetail",
 		method: 'post',
-		data: `banner_id=${banner_id}`,
+		data: "banner_id="+banner_id,
 		success: function(res) {
 			console.log(res);
 			$.each(res.banner,function(index, item){
 				if(index == "banner_event_type"){
-					$(`input[name=${index}][value=${item}]`).trigger("click");
+					$("input[name="+index+"][value="+item+"}]").trigger("click");
 				}else if(index == "file_1"){
 					$(".file_link1").attr("src",item);
 				}else{
-					$(`input[name=${index}]`).val(item);
+					$("input[name="+index+"]").val(item);
 				}
 			});
 		},

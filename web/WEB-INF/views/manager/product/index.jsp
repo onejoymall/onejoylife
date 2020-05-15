@@ -1132,7 +1132,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>분류코드 정보조회</h2>
-            <button type="button" class="modal-close">×</button>
+            <button type="button" class="modal-close-code">×</button>
         </div>
         <div class="modal-body">
             <div class="src-wrap clearfix">

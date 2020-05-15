@@ -32,6 +32,33 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>경품 추첨 설정</th>
+                        <td>
+                            <p class="cc2">경품의 자동 추첨 기준 포인트를 입력합니다.<br>
+                                <span class="cc">* 설정된 기준 포인트 달성시 자동추첨 됩니다.</span><br>
+                            </p>
+                            <input type="text" id="giveaway_play_winner_point" name="giveaway_play_winner_point" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>경품 응모 최대 포인트</th>
+                        <td>
+                            <p class="cc2">경품의 응모 가능한 최대 포인트를 입력합니다.<br>
+<%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
+                            </p>
+                            <input type="text" id="giveaway_play_max_point" name="giveaway_play_max_point" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>경품 응모 최소 포인트</th>
+                        <td>
+                            <p class="cc2">경품의 응모 가능한 최소 포인트를 입력합니다.<br>
+<%--                                <span class="cc">* 이볅된 기준 포인트 달성시 자동추첨 됩니다.</span><br>--%>
+                            </p>
+                            <input type="text" id="giveaway_play_min_point" name="giveaway_play_min_point" >
+                        </td>
+                    </tr>
+                    <tr>
                         <th>진열</th>
                         <td>
                             <input type="radio" id="goods-exposure" name="giveaway_use_yn" value="Y" checked>
@@ -59,9 +86,9 @@
                                     <col width='33%' />
                                 </colgroup>
                                 <thead>
-                                    <tr>
-                                        <th>대분류</th> <th>중분류</th> <th>소분류</th>
-                                    </tr>
+                                <tr>
+                                    <th>대분류</th> <th>중분류</th> <th>소분류</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
@@ -83,7 +110,7 @@
                             <span id="category2t"></span>
                             <span id="category3t"></span>
 
-                           <input type="hidden" name="selectCtCode" id="selectCtCode" value="${list[0].pd_category_id}">
+                            <input type="hidden" name="selectCtCode" id="selectCtCode" value="${list[0].pd_category_id}">
 
                             <button class="btn-default" type="button" id="addCategoryList">추가</button>
                             <br>
@@ -221,12 +248,12 @@
                             <input type="text" id="giveaway_payment" name="giveaway_payment"> 원
                         </td>
                     </tr>
-<%--                    <tr>--%>
-<%--                        <th>상품가</th>--%>
-<%--                        <td>--%>
-<%--                            <input type="text" id="" name="product_payment"> 원--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                    <%--                    <tr>--%>
+                    <%--                        <th>상품가</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <input type="text" id="" name="product_payment"> 원--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
                     <tr>
                         <th>판매가 대체 문구 사용</th>
                         <td>
@@ -242,14 +269,14 @@
                             <input type="text" id="sp-replace-text" name="giveaway_payment_memo" placeholder="200byte까지 등록 가능. ex) 임시 품절 상품" disabled>
                         </td>
                     </tr>
-<%--                    <tr>--%>
-<%--                        <th>판매 기간</th>--%>
-<%--                        <td>--%>
-<%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.--%>
-<%--                            </p>--%>
-<%--                            <input type="text" id="goods-sDate-start" name="goods-sDate-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="goods-sDate-end" placeholder="ex) 2020-02-28">--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                    <%--                    <tr>--%>
+                    <%--                        <th>판매 기간</th>--%>
+                    <%--                        <td>--%>
+                    <%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.--%>
+                    <%--                            </p>--%>
+                    <%--                            <input type="text" id="goods-sDate-start" name="goods-sDate-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="goods-sDate-end" placeholder="ex) 2020-02-28">--%>
+                    <%--                        </td>--%>
+                    <%--                    </tr>--%>
                     </tbody>
                 </table>
                 <h3>옵션 정보</h3>
@@ -429,43 +456,73 @@
                     <tr>
                         <th>이미지 등록&#40;상세&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg" value="1">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link1"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg1" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg1" name="uploadfile" class="uploadBtn">
+                            </div>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/big/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+<%--                            <input type="file" id="goods-imgBig" name="uploadfile" placeholder="ex) sample1.jpg" value="1">--%>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;목록&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgMidium" name="uploadfile" placeholder="ex) sample1.jpg" value="2">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg2" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg2" name="uploadfile2" class="uploadBtn">
+                            </div>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/midium/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+                            <%--<input type="file" id="goods-imgMidium" name="uploadfile2" placeholder="ex) sample1.jpg" value="2">--%>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;작은목록&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgTiny" name="uploadfile" placeholder="ex) sample1.jpg" value="3">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg3" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg3" name="uploadfile3" class="uploadBtn">
+                            </div>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/tiny/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+<%--                            <input type="file" id="goods-imgTiny" name="uploadfile3" placeholder="ex) sample1.jpg" value="3">--%>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;축소&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link4"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg4" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg4" name="uploadfile4" class="uploadBtn">
+                            </div>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/small/에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.--%>
+                            <%--                            </p>--%>
+<%--                            <input type="file" id="goods-imgSmall" name="uploadfile4" placeholder="ex) sample1.jpg" value="4">--%>
                         </td>
                     </tr>
                     <tr>
                         <th>이미지 등록&#40;추가&#41;</th>
                         <td>
-<%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
-<%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
-<%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
-<%--                            </p>--%>
-                            <input type="file" id="goods-imgSmall" name="uploadfile" placeholder="ex) sample1.jpg" value="4">
+                            <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link5"/>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                <label for="pdImg5" class="btn_file">파일찾기</label>
+                                <input type="file" id="pdImg5" name="uploadfile5" class="uploadBtn">
+                            </div>
+                            <%--                            <p class="cc2">웹 FTP에 접속해 /web/product/extra/excel에 미리 이미지를 등록한 뒤 이미지 명만 입력합니다.<br>--%>
+                            <%--                                <span class="cc">* bar(|)를 구분자로 하여 최대 20개 연속 입력할 수 있습니다.</span><br>--%>
+                            <%--                                <span class="cc">* 최대 20개까지만 등록되며 21번째 이미지부터는 등록되지 않습니다.</span>--%>
+                            <%--                            </p>--%>
+<%--                            <input type="file" id="goods-imgSmall" name="uploadfile5" placeholder="ex) sample1.jpg" value="4">--%>
                         </td>
                     </tr>
 
@@ -827,8 +884,13 @@
                     </tr>
                     </tbody>
                 </table>
-
                 <button type="button" id="formGiveawaySubmit" class="btn-red">저장하기</button>
+                <input type="hidden" name="file_1">
+                <input type="hidden" name="file_2">
+                <input type="hidden" name="file_3">
+                <input type="hidden" name="file_4">
+                <input type="hidden" name="file_5">
+                <input type="hidden" name="giveaway_cd">
             </form>
         </div>
     </div>

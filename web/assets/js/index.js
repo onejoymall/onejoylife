@@ -127,6 +127,10 @@ $(document).ready(function(){
             $(".modal2").attr("style", "display:none");
             $('body').css("overflow", "auto");
         });
+        $(".modal-close-code").click(function(){
+            $(".codeSrcModal").attr("style", "display:none");
+            $('body').css("overflow", "auto");
+        });
     });
     $(function(){
         $("button[name='detail']").click(function(){

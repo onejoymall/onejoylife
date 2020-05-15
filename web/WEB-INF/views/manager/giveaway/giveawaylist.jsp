@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <main>
     <div class="main-content">
         <div class="main-header">
@@ -118,10 +119,10 @@
                 <tr>
                     <td><input type="checkbox" id="all-chk" name="all-chk"></td>
                     <td name="detail">경품코드</td>
-                    <td name="detail" colspan="2">상품명</td>
+                    <td name="detail" colspan="2">경품명</td>
 <%--                    <td>카테고리</td>--%>
-                    <td>정가</td>
-                    <td>판매가</td>
+                    <td>당첨포인트</td>
+                    <td>응모포인트</td>
 <%--                    <td>재고</td>--%>
                     <td>배송</td>
 <%--                    <td>구매수량</td>--%>
@@ -141,8 +142,8 @@
                             <td ><img src='${productList.file_1}' onerror="this.src='http://placehold.it/80x80'" height="80"></td>
                             <td style="border-left: none!important;">${productList.giveaway_name}</td>
 <%--                            <td>${productList.product_ct}</td>--%>
-                            <td>${productList.giveaway_user_payment}</td>
-                            <td>${productList.giveaway_payment}</td>
+                            <td>${productList.giveaway_play_winner_point}</td>
+                            <td>${productList.sum_play_point}</td>
 <%--                            <td></td>--%>
                             <td>${productList.giveaway_delivery_type_name}</td>
 <%--                            <td></td>--%>

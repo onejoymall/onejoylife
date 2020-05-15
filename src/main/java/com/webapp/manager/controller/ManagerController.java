@@ -689,7 +689,8 @@ public class ManagerController {
         	if(searchVO.getDisplayRowCount()==null){
                 searchVO.setDisplayRowCount(10);
             }
-        	
+        	params.put("searchKeyword", searchVO.getSearchKeyword());
+        	params.put("searchTypeArr", searchVO.getSearchTypeArr());
             deliveryInfoVO.setDelivery_t_key(t_key);
             deliveryInfoVO.setDelivery_t_url(t_url);
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));

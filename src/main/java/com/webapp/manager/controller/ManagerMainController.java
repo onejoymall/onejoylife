@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
-import com.webapp.board.common.SearchVO;
+import com.webapp.board.app.BoardVO;
 import com.webapp.mall.dao.PaymentDAO;
 
 @Controller
@@ -26,7 +26,7 @@ public class ManagerMainController {
     @Autowired
     private PaymentDAO paymentDAO;
     @RequestMapping(value = "/Manager/ManagerMain")
-    public String ManagerMain(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String ManagerMain(@RequestParam HashMap params, ModelMap model, BoardVO searchVO) throws Exception {
         try{
             //공지사항
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("9");
