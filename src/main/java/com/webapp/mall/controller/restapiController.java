@@ -1139,9 +1139,10 @@ public class restapiController {
             	HashMap<String, Object> defaultN = new HashMap<String, Object>();
             	defaultN.put("defaultYn","N");
             	defaultN.put("email",session.getAttribute("email"));
-                deliveryDAO.updateDefaultDelivery(defaultN);
+                deliveryDAO.disabledDefaultDelivery(defaultN);
+                params.put("email",session.getAttribute("email"));
                 params.put("defaultYn","Y");
-                deliveryDAO.updateDefaultDelivery(params);
+                deliveryDAO.enabledDefaultDelivery(params);
                 String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
                 resultMap.put("redirectUrl", redirect);
             }
@@ -1196,10 +1197,11 @@ public class restapiController {
             		HashMap<String, Object> defaultN = new HashMap<String, Object>();
                 	defaultN.put("defaultYn","N");
                 	defaultN.put("email",session.getAttribute("email"));
-                    deliveryDAO.updateDefaultDelivery(defaultN);
+                	deliveryDAO.disabledDefaultDelivery(defaultN);
                     params.put("defaultYn","Y");
                     params.put("orderNo",params.get("order_no"));
-                    deliveryDAO.updateDefaultDelivery(params);
+                    params.put("email",session.getAttribute("email"));
+                    deliveryDAO.enabledDefaultDelivery(params);
             	}
             	String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
                 resultMap.put("redirectUrl", redirect);
@@ -1242,10 +1244,11 @@ public class restapiController {
             		HashMap<String, Object> defaultN = new HashMap<String, Object>();
                 	defaultN.put("defaultYn","N");
                 	defaultN.put("email",session.getAttribute("email"));
-                    deliveryDAO.updateDefaultDelivery(defaultN);
+                	deliveryDAO.disabledDefaultDelivery(defaultN);
                     params.put("defaultYn","Y");
                     params.put("orderNo",params.get("order_no"));
-                    deliveryDAO.updateDefaultDelivery(params);
+                    params.put("email",session.getAttribute("email"));
+                    deliveryDAO.enabledDefaultDelivery(params);
             	}
             	String redirect = params.get("product_delivery_International_type").equals("A") ? "/MyPage/DeliveryAddress" : "/MyPage/DeliveryAddressForeign";
                 resultMap.put("redirectUrl", redirect);

@@ -1,9 +1,10 @@
 package com.webapp.mall.controller;
 
-import com.webapp.board.app.BoardGroupSvc;
-import com.webapp.board.app.BoardGroupVO;
-import com.webapp.board.app.BoardSvc;
-import com.webapp.board.common.SearchVO;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -12,9 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardGroupVO;
+import com.webapp.board.app.BoardSvc;
+import com.webapp.board.app.BoardVO;
 
 @Controller
 public class Help {
@@ -50,17 +52,17 @@ public class Help {
     }
     //FAQ
     @RequestMapping(value="/Help/faqCenter")
-    public String helpFaqCenter(@RequestParam HashMap params, Model model, HttpServletRequest request, SearchVO searchVO) {
+    public String helpFaqCenter(@RequestParam HashMap params, Model model, HttpServletRequest request, BoardVO boardVO) {
 
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("16");
-        searchVO.setBgno("16");
-        searchVO.setDisplayRowCount(10);
-        searchVO.setStaticRowEnd(10);
-        searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
-        List<?> listview  = boardSvc.selectBoardList(searchVO);
+        boardVO.setBgno("16");
+        boardVO.setDisplayRowCount(10);
+        boardVO.setStaticRowEnd(10);
+        boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
+        List<?> listview  = boardSvc.selectBoardList(boardVO);
 
         model.addAttribute("listview", listview);
-        model.addAttribute("searchVO", searchVO);
+        model.addAttribute("searchVO", boardVO);
         model.addAttribute("bgInfo", bgInfo);
 
 
@@ -77,7 +79,7 @@ public class Help {
     }
     //1:1 문의
     @RequestMapping(value="/Help/csBoard")
-    public String helpCsBoard(Model modelMap, SearchVO searchVO, HttpServletRequest request) {
+    public String helpCsBoard(Model modelMap, BoardVO boardVO, HttpServletRequest request) {
 
         BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("15");
         if (bgInfo == null) {

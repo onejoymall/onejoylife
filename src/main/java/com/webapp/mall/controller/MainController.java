@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
+import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.mall.dao.CartDAO;
@@ -55,7 +56,7 @@ public class MainController {
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO) throws Exception {
+    public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO, BoardVO boardVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
         try{
@@ -203,15 +204,15 @@ public class MainController {
             model.addAttribute("infoPrivacy", configMain2);
             //공지사항
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("8");
-            searchVO.setBgno("8");
-            searchVO.setDisplayRowCount(4);
-            searchVO.setStaticRowEnd(4);
-            searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+            boardVO.setBgno("8");
+            boardVO.setDisplayRowCount(4);
+            boardVO.setStaticRowEnd(4);
+            boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
-            List<?> listview  = boardSvc.selectBoardList(searchVO);
+            List<?> listview  = boardSvc.selectBoardList(boardVO);
 
             model.addAttribute("noticeListView", listview);
-            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("searchVO", boardVO);
             model.addAttribute("bgInfo", bgInfo);
 
         }catch(Exception e){
