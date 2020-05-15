@@ -34,6 +34,18 @@
         </repository>
     </repositories>
     <dependencies>
+    	<!-- 썸네일추출  -->
+    	<dependency>
+            <groupId>org.jcodec</groupId>
+            <artifactId>jcodec</artifactId>
+            <version>0.1.9</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.jcodec</groupId>
+            <artifactId>jcodec-javase</artifactId>
+            <version>0.1.9</version>
+        </dependency>
         <!-- 모바일 버전 -->
         <dependency>
             <groupId>org.springframework.mobile</groupId>
