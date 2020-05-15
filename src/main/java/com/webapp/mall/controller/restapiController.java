@@ -623,7 +623,7 @@ public class restapiController {
     public  HashMap<String, Object> SavePayment(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
-
+        
         try{
             //결제번호생성
             params.put("payment_cd","PM"+numberGender.numberGen(6,1));

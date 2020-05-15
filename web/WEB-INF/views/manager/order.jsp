@@ -14,7 +14,7 @@
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                         <input type="hidden" name="displayRowCount">
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
@@ -66,12 +66,12 @@
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" id="delivery_start_date" name="delivery_start_date" class="${param.delivery_start_date}">
+                                            <input type="text" class="date_pick" id="delivery_start_date" name="delivery_start_date" value="${param.delivery_start_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" id="delivery_end_date" name="delivery_end_date" class="${param.delivery_end_date}">
+                                            <input type="text" class="date_pick" id="delivery_end_date" name="delivery_end_date" value="${param.delivery_end_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>

@@ -910,7 +910,7 @@ body{
     line-height: 70px;
     text-align: center;
 }
-.modal-close{
+.modal-close, .modal-close-code{
     position:absolute; top:0; right:0;
     width: 35px;
     height: 35px;
@@ -920,9 +920,10 @@ body{
     text-indent: 200%;
     overflow: hidden;
 }
-.modal-close:hover {
+.modal-close:hover, .modal-close-code:hover {
     cursor: pointer;
 }
+
 .table-title{
     font-size:20px;
     margin:30px 0 15px 15px;
