@@ -279,6 +279,8 @@ $(document).on("click",".ra-num",function () {
         $('input:radio[name=pd_category_event_use_yn]').eq(1).click();
         $('input:radio[name=banner_use_yn]').eq(1).click();
         $('input:radio[name=event_use_yn]').eq(1).click();
+        $('input:radio[name=pd_category_use_yn]').eq(1).click();
+
         $('input[name=pd_category_event_title]').val('');
         $('input[name=pd_category_event_memo]').val('');
         $('input[name=pd_category_event_start]').val('');
@@ -292,7 +294,13 @@ $(document).on("click",".ra-num",function () {
          $('input[event_memo]').val('');
          $('input[event_start_date]').val('');
          $('input[event_end_date]').val('');
+
         $('.file_link').attr('src','');
+        $('.file_link2').attr('src', '');
+        $('.file_link3').attr('src','');
+        $('.file_link4').attr('src','');
+        $('.file_link5').attr('src','');
+
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/productCategorySelect',
@@ -325,6 +333,7 @@ $(document).on("click",".ra-num",function () {
                 $('input:radio[name=pd_category_event_use_yn][value=\''+categorySelect.pd_category_event_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=banner_use_yn][value=\''+categorySelect.banner_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=event_use_yn][value=\''+categorySelect.event_use_yn+'\']').prop("checked",true);
+                $('input:radio[name=pd_category_use_yn][value=\''+categorySelect.pd_category_use_yn+'\']').prop("checked",true);
 
                 $('.file_link').attr('src',categorySelect.file_link);
                 $('.file_link2').attr('src',categorySelect.file_link2);

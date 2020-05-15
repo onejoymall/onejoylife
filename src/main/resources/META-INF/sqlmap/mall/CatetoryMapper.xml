@@ -180,12 +180,17 @@
             DATE_FORMAT(A.banner_end_date,'%Y-%m-%d') as banner_end_date,
             DATE_FORMAT(A.pd_category_event_start,'%Y-%m-%d') as pd_category_event_start,
             DATE_FORMAT(A.pd_category_event_end,'%Y-%m-%d') as pd_category_event_end,
-            (select count(1) from product  where find_in_set(#{pd_category_id},replace(product_ct,'|',',')) > 0) as product_cnt,
+             ]]>
+         <if test="pd_category_id != null and pd_category_id !=''">
+             <![CDATA[(select count(1) from product  where find_in_set(#{pd_category_id},replace(product_ct,'|',',')) > 0) as product_cnt,]]>
+         </if>
+        <![CDATA[
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=1) as file_link,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=2) as file_link2,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=3) as file_link3,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=4) as file_link4,
-            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=5) as file_link5
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=5) as file_link5,
+            (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id order by Z.file_order desc limit 1) as main_big_banner_src
         FROM product_category_event A  where 1=1
 
         ]]>
