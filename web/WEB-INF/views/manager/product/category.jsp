@@ -127,73 +127,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="main-right-2">
-                    <div class="main-right-sec">
-                        <table class="right-table">
-                            <colgroup>
-                                <col style="width: 20%;">
-                                <col style="width: 80%;">
-                            </colgroup>
-                            <tbody>
-                            <tr>
-                                <td>기획전 노출</td>
-                                <td class="radio-td">
-                                    <input type="radio" id="pd_category_event_use_y" name="pd_category_event_use_yn" class="styleClass" value="Y">
-                                    <label for="pd_category_event_use_y"><span>표시함</span></label>
-                                    <input type="radio" id="pd_category_event_use_n" name="pd_category_event_use_yn" class="styleClass" value="N">
-                                    <label for="pd_category_event_use_n"><span>표시안함</span></label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>상세 화면 상단 이미지</td>
-                                <td>
-                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3" />
-                                    <div class="fileBox">
-                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
-                                        <label for="searchDetailTopImg" class="btn_file">파일찾기</label>
-                                        <input type="file" id="searchDetailTopImg" name="uploadfile3" class="uploadBtn">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>메인 화면 목록 이미지</td>
-                                <td>
-                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link"/>
-                                    <div class="fileBox">
-                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
-                                        <label for="mainListImg" class="btn_file">파일찾기</label>
-                                        <input type="file" id="mainListImg" name="uploadfile" class="uploadBtn">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>제목</td>
-                                <td><input type="text" class="text-width" name="pd_category_event_title"></td>
-                            </tr>
-                            <tr class="day-none">
-                                <td>기간</td>
-                                <td>
-                                    <div class="input-box2">
-                                        <div class="cla">
-                                            <input type="text" id="from_date" class="date_pick" name="pd_category_event_start">
-                                            <div class="cla-img1"></div>
-                                        </div>
-                                        <p class="cla-p1"> ~ </p>
-                                        <div class="cla">
-                                            <input type="text" id="to_date" class="date_pick" name="pd_category_event_end">
-                                            <div class="cla-img1"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>간단 설명</td>
-                                <td><input type="text" class="text-width" name="pd_category_event_memo"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
                 <div class="main-right-3">
                     <div class="main-right-sec">
                         <table class="right-table">
@@ -203,14 +137,14 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <td>매인 배너 표시</td>
+                                <td>매인 상단 큰 배너 표시</td>
                                 <td class="radio-td">
                                     <input type="radio" id="pd_category_main_bn_use_y" name="banner_use_yn" class="styleClass" value="Y"><label for="pd_category_main_bn_use_y"><span>표시함</span></label>
                                     <input type="radio" id="pd_category_main_bn_use_n" name="banner_use_yn" class="styleClass" value="N"><label for="pd_category_main_bn_use_n"><span>표시안함</span></label>
                                 </td>
                             </tr>
                             <tr>
-                                <td>배너 이미지 등록</td>
+                                <td>매인 상단 큰 배너 이미지 등록</td>
                                 <td>
                                     <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link2"/>
                                     <div class="fileBox">
@@ -243,6 +177,73 @@
                             <tr>
                                 <td>간단 설명</td>
                                 <td><input type="text" class="text-width" name="banner_memo"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="main-right-2">
+                    <div class="main-right-sec">
+                        <table class="right-table">
+                            <colgroup>
+                                <col style="width: 20%;">
+                                <col style="width: 80%;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>기획전 노출</td>
+                                <td class="radio-td">
+                                    <input type="radio" id="pd_category_event_use_y" name="pd_category_event_use_yn" class="styleClass" value="Y">
+                                    <label for="pd_category_event_use_y"><span>표시함</span></label>
+                                    <input type="radio" id="pd_category_event_use_n" name="pd_category_event_use_yn" class="styleClass" value="N">
+                                    <label for="pd_category_event_use_n"><span>표시안함</span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>기획전 상세 화면 상단 이미지</td>
+                                <td>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link3" />
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="searchDetailTopImg" class="btn_file">파일찾기</label>
+                                        <input type="file" id="searchDetailTopImg" name="uploadfile3" class="uploadBtn">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>기획전 메인 화면 목록 이미지</td>
+                                <td>
+                                    <img src="" onerror="this.src='http://placehold.it/150'" width="150" class="file_link"/>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" name="fileName" readonly="readonly">
+                                        <label for="mainListImg" class="btn_file">파일찾기</label>
+                                        <input type="file" id="mainListImg" name="uploadfile" class="uploadBtn">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td><input type="text" class="text-width" name="pd_category_event_title"></td>
+                            </tr>
+                            <tr class="day-none">
+                                <td>기간</td>
+                                <td>
+                                    <div class="input-box2">
+                                        <div class="cla">
+                                            <input type="text" id="from_date" class="date_pick" name="pd_category_event_start">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                        <p class="cla-p1"> ~ </p>
+                                        <div class="cla">
+                                            <input type="text" id="to_date" class="date_pick" name="pd_category_event_end">
+                                            <div class="cla-img1"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>간단 설명</td>
+                                <td><input type="text" class="text-width" name="pd_category_event_memo"></td>
                             </tr>
                             </tbody>
                         </table>
