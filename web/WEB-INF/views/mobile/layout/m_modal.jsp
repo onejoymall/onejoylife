@@ -10,14 +10,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="modal" id="modal-info-privacy">
+    <div class="modal-bg"></div>
     <div class="modal-content clearfix">
         <div class="modal-header">
            <h2 class="modal-title">원조이몰 개인정보처리방침</h2>
-            <!-- <button type="button" class="modal-close">×</button> -->
         </div>
         <div class="modal-body clearfix">
             <div class="modal-body-wrap">
-                <p><c:out value="${infoPrivacy.market_config_value}" escapeXml="false"/></p>
+                <div class="modal-in-txt clearfix">
+                    <p><c:out value="${infoPrivacy.market_config_value}" escapeXml="false"/></p>
+                </div>
                 <div class="btn-area clearfix">
                     <button type="button" href="javascript:void(0)" class="md-btn-default">확인</button>
                 </div>
@@ -26,14 +28,16 @@
     </div>
 </div>
 <div class="modal" id="link-info-main">
+    <div class="modal-bg"></div>
     <div class="modal-content clearfix">
         <div class="modal-header">
            <h2 class="modal-title">원조이몰 이용약관</h2>
-            <!-- <button type="button" class="modal-close">×</button> -->
         </div>
         <div class="modal-body clearfix">
             <div class="modal-body-wrap">
-                <p><c:out value="${infoMain.market_config_value}" escapeXml="false"/></p>
+                <div class="modal-in-txt clearfix">
+                    <p><c:out value="${infoMain.market_config_value}" escapeXml="false"/></p>
+                </div>
                 <div class="btn-area clearfix">
                     <button type="button" href="javascript:void(0)" class="md-btn-default">확인</button>
                 </div>

@@ -2,9 +2,13 @@ package com.webapp.mall.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.vo.SearchFilterVO;
+import com.webapp.manager.vo.MgBrandVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -52,19 +56,21 @@ public class Help {
     }
     //FAQ
     @RequestMapping(value="/Help/faqCenter")
-    public String helpFaqCenter(@RequestParam HashMap params, Model model, HttpServletRequest request, BoardVO boardVO) {
+    public String helpFaqCenter(@RequestParam HashMap params, Model model, HttpServletRequest request, BoardVO boardVO) throws Exception{
+        try {
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("16");
+            boardVO.setBgno("16");
+            boardVO.setDisplayRowCount(10);
+            boardVO.setStaticRowEnd(10);
+            boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
+            List<?> listview  = boardSvc.selectBoardList(boardVO);
 
-        BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("16");
-        boardVO.setBgno("16");
-        boardVO.setDisplayRowCount(10);
-        boardVO.setStaticRowEnd(10);
-        boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
-        List<?> listview  = boardSvc.selectBoardList(boardVO);
-
-        model.addAttribute("listview", listview);
-        model.addAttribute("searchVO", boardVO);
-        model.addAttribute("bgInfo", bgInfo);
-
+            model.addAttribute("listview", listview);
+            model.addAttribute("searchVO", boardVO);
+            model.addAttribute("bgInfo", bgInfo);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         model.addAttribute("style", "help-3");
         model.addAttribute("leftNavOrder", "7");
@@ -77,6 +83,7 @@ public class Help {
         }
 
     }
+
     //1:1 문의
     @RequestMapping(value="/Help/csBoard")
     public String helpCsBoard(Model modelMap, BoardVO boardVO, HttpServletRequest request) {

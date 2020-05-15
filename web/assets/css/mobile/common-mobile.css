@@ -3447,7 +3447,7 @@ body.black .btn-login{
 .complete-main .btn-login{
     margin: 20px 0 40px;
 }
-/* 모달 */
+/* 모달1 */
 .modal{
     display: none;
     position: fixed;
@@ -3457,88 +3457,69 @@ body.black .btn-login{
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.7);
+    /* background-color: rgba(0,0,0,0.7); */
     line-height: 28px;
+}
+.modal-bg {
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background:rgba(0,0,0,0.7);
+    transition: 0.3s;
 }
 .modal-content{
     position:relative;
     top:50%;
     width: 90%;
+    max-width: 500px;
     max-height:80vh;
     background: #fff;
     margin: 0 auto;
     transform: translateY(calc(-50% - 35px));
-}
-.language-modal .modal-content {
-    position:relative;
-    top:50%;
-    width: 90%;
-    background: #fff;
-    margin: 0 auto;
 }
 .modal-header{
     position: absolute;
     top:0;
     width:100%;
     height:50px;
-    background:#da394a;
-    color:#fff;
+    /* background:#fff;
+    color:#343434; */
+    background: #DA394A;
+    color: #fff;
 }
 .modal-header h2{
     font-size: 16px;
     line-height: 50px;
     text-align: center;
+    /* color: #343434; */
     color: #fff;
 }
 .modal-body{
     width:100%;
     height:auto;
     max-height:calc(70vh);
-    transform: translateY(70px);
-    overflow:auto;
 }
 .modal-body-wrap{
-    width:100%;
-    height:auto;
-    background:#fff;
+    width: 100%;
+    height: auto;
+    background: #fff;
     padding: 20px;
 }
-.btn-area{margin-top:30px;text-align: center;}
-.btn-l{padding: 30px; margin: 0;}
+.modal-in-txt {
+    min-width: 150px;
+    max-height: 53vh;
+    /* min-height: 200px; */
+    overflow: auto;
+    margin-top: 35px;
+}
+.btn-area{margin-top:10px;text-align: center;}
 .md-btn-default{
     width:200px;
-    height:45px;
+    height:50px;
     color:#fff;
-    background:#da394a;
-    font-size:16px;
-}
-.modal-content .language-body .modal-body-wrap { padding: 0;}
-.language-ul li{
-    width: 100%;
-    /* height: 40px; */
-    /* padding: 5px 0 5px 20px; */
-    border-bottom: 1px solid #e1e1e1;
-}
-.language-ul li button {
-    width: 100%;
-    text-align: left;
-    line-height: 40px;
-    font-size: 14px;
-    padding: 5px 0 5px 20px;
-
-}
-.lan-btn{
-    width:200px;
-    height:40px;
-    color:#fff;
-    background:#da394a;
-    font-size:16px;
-}
-.md-btn-default{
-    width:200px;
-    height:45px;
-    color:#fff;
-    background:#da394a;
+    background:#da294a;
     font-size:16px;
 }
 /*국가설정*/
