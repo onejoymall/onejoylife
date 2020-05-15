@@ -57,7 +57,6 @@
 	                                		${list.postcode}
 	                                		${list.roadAddress}
 	                                		${list.extraAddress}
-	                                		${list.jibunAddress}
 		                                </span>
 	                                </td>
 	                                <td>

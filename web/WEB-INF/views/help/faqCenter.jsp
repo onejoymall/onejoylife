@@ -19,7 +19,7 @@
                     <p class="sec1-h1">FAQ</p>
                     <div class="faq-search-box">
                         <span>FAQ 검색</span>
-                        <form action="/Help/faqCenter?bgno=16" id="faq-search-form" name="faq-search-form" method="get">
+                        <form action="/faq/search-page" id="faq-search-form" name="faq-search-form" method="get">
                             <input type="text" id="faq-search" name="faq-search" class="input-text">
                             <button id="faq-search-btn" type="button" class="search-btn">검색</button>
                         </form>
