@@ -176,16 +176,18 @@
 		delivery_visible_yn = 'N'
 		WHERE order_no = #{orderNo}
     </update>
-    <update id="updateDefaultDelivery" parameterType="java.util.Map">
+    <update id="enabledDefaultDelivery" parameterType="java.util.Map">
         UPDATE delivery_info SET
-		default_delivery_info_yn = #{defaultYn}
+		default_delivery_info_yn = 'Y'
 		WHERE 1=1
-		<if test="orderNo != null and orderNo != ''">
 		and order_no = #{orderNo}
-		</if>
-		<if test="email != null and email != ''">
 		and order_user_email = #{email}
-		</if>
+    </update>
+    <update id="disabledDefaultDelivery" parameterType="java.util.Map">
+        UPDATE delivery_info SET
+		default_delivery_info_yn = 'N'
+		WHERE 1=1
+		and order_user_email = #{email}
     </update>
     <update id="updateDeliveryAddress" parameterType="java.util.Map">
         UPDATE delivery_info SET

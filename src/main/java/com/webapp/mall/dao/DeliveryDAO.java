@@ -33,8 +33,11 @@ public class DeliveryDAO {
     public void deleteDelivery(Map<String,Object> paramas) throws SQLException {
     	sql.update("mall.DeliveryMapper.deleteDelivery",paramas);
     }
-    public void updateDefaultDelivery(Map<String,Object> paramas) throws SQLException {
-    	sql.update("mall.DeliveryMapper.updateDefaultDelivery",paramas);
+    public void enabledDefaultDelivery(Map<String,Object> paramas) throws SQLException {
+    	sql.update("mall.DeliveryMapper.enabledDefaultDelivery",paramas);
+    }
+    public void disabledDefaultDelivery(Map<String,Object> paramas) throws SQLException {
+    	sql.update("mall.DeliveryMapper.disabledDefaultDelivery",paramas);
     }    
     public void updateDeliveryAddress(Map<String,Object> paramas) throws SQLException {
     	sql.update("mall.DeliveryMapper.updateDeliveryAddress",paramas);
