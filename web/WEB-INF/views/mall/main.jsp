@@ -18,7 +18,7 @@
             <ul class="main-slider-wrap">
         <c:if test="${not empty categoryBannerList}">
             <c:forEach var="categoryBannerList" items="${categoryBannerList}" varStatus="status">
-                <li style="background:url(${categoryBannerList.file_link2}) no-repeat center / contain;"><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"></a></li>
+                <li style="background:url(${categoryBannerList.file_link2}) no-repeat center / contain; cursor: pointer" onclick="location.href='<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>'"><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>">&nbsp;</a></li>
             </c:forEach>
         </c:if>
             </ul>
@@ -448,7 +448,7 @@
         pagerType:'short',
         controls:true,
         useCSS:false,
-        touchEnabled : (navigator.maxTouchPoints > 0),
+        touchEnabled : false,
     });
     $('.sub-slider-wrap').bxSlider({
         auto:false,
