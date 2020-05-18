@@ -21,6 +21,7 @@
         
         <hr>
         <c:if test="${not empty list}">
+			<form name="defaultform" id="defaultForm" method="POST">
             <c:forEach var="list" items="${list}" varStatus="status">
             <ul class="basket">
 	            <li>
@@ -50,9 +51,11 @@
 	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
 	                <button class="btn-blue btn" onclick="addShoppingBasket('${list.product_cd}')">장바구니 담기</button>
 	            </li>
+				<input type="hidden" name="payment_order_quantity" value="1">
 	        </ul>
 	        <hr>
             </c:forEach>
+			</form>
         </c:if>
         <c:if test="${empty list}">
                     표시할 내용이 없습니다.
@@ -69,7 +72,8 @@
            </li>
        </ul>
        <hr>
-       
+
+			<form name="defaultform" id="defaultForm" method="POST">
        <c:forEach var="list" items="${productList}" varStatus="status">
             <ul class="basket">
 	            <li>
@@ -99,9 +103,11 @@
 	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
 	                <button class="btn-blue btn" onclick="addShoppingBasket('${list.product_cd}')">장바구니 담기</button>
 	            </li>
+				<input type="hidden" name="payment_order_quantity" value="1">
 	        </ul>
 	        <hr>
             </c:forEach>
+			</form>
        </c:if>
     </section>
     

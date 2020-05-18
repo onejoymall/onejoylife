@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -55,7 +54,7 @@
                     </div>
                     <div class="join-ck-box clearfix">
                         <input type="checkbox" id="join-ck" name="join-ck" class="save-ck">
-                        <label for="join-ck"><p class="ck-txt">본인은 만 14세 이상이며, <a href="" class="mo-btn">원조이몰 이용약관</a>, <a href="" class="mo-btn">제3자동의 이용약관</a>, <a href="" class="mo-btn">개인정보 수집 및 이용</a>, <a href="" class="mo-btn">개인정보 제공 내용</a>을 확인하였으며, 동의합니다.</p></label>
+                        <label for="join-ck"><p class="ck-txt">본인은 만 14세 이상이며, <a href="#" id="mo-btn2">원조이몰 이용약관</a>, <a href="#">제3자동의 이용약관</a>, <a href="#">개인정보 수집 및 이용</a>, <a href="#">개인정보 제공 내용</a>을 확인하였으며, 동의합니다.</p></label>
                     </div>
                     <button type="submit" id="formSignUpSubmit" class="btn-join">회원가입</button>
                 </form>
@@ -64,41 +63,16 @@
         <div class="mo-footer">
 
         </div>
-        <div class="modal">
-            <div class="modal-content clearfix">
-                <div class="modal-header">
-                   <h2 class="modal-title">원조이몰 이용약관</h2>
-                    <!-- <button type="button" class="modal-close">×</button> -->
-                </div>
-                <div class="modal-body clearfix">
-                    <div class="modal-body-wrap">
-                        <p>test</p>
-                        <div class="btn-area clearfix">
-                            <button type="button" href="javascript:void(0)" class="md-btn-default">확인</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="loading-bar-wrap hidden">
         <div class="loading-bar"></div>
     </div>
+
+<c:import url="/mobile/layout/m_modal"/>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.610.0.min.js"></script>
 
     <script>
-        $(function(){
-            $(".mo-btn").click(function(){
-                event.preventDefault();
-                $(".modal").attr("style", "display:block");
-                $('body').css("overflow", "hidden");
-            });
-            $(".md-btn-default").click(function(){
-                $(".modal").attr("style", "display:none");
-                $('body').css("overflow", "auto");
-            });
-        });
 
         $(document).ready(function(){
             $(".back-arr").click(function(){

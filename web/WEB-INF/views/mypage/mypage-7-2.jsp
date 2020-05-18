@@ -183,6 +183,7 @@
                                 <td class="body-td-txt2 txt-color"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                                 <td class="body-td-tit">결제수단</td>
                                 <td class="body-td-txt2"><span>${paymentDetail.pay_method}</span></td>
+                                <input type="hidden" name="pay_method" value="${paymentDetail.pay_method}"/>
                             </tr>
                             </tbody>
                         </table>
