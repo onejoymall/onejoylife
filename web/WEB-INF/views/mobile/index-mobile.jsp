@@ -8,8 +8,8 @@
         <ul class="main-slider-wrap">
             <c:if test="${not empty categoryBannerList}">
                 <c:forEach var="categoryBannerList" items="${categoryBannerList}" varStatus="status">
-                    <li><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"><img src="${categoryBannerList.file_link2}" alt="메인이벤트1"></a></li>
-
+<%--                    <li><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"><img src="${categoryBannerList.file_link2}" alt="메인이벤트1"></a></li>--%>
+                    <li style="background:url(${categoryBannerList.file_link2}) no-repeat center / cover;"><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>">${categoryBannerList.file_link2}</a></li>
                 </c:forEach>
             </c:if>
         </ul>
