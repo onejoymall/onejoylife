@@ -45,6 +45,9 @@ public class CartDAO {
     public void updateCart(Map<String, String> params) throws Exception{
         sql.update("mall.CartMapper.updateCart",params);
     }
+    public void updateCartUser(Map<String, String> params) throws Exception{
+        sql.update("mall.CartMapper.updateCartUser",params);
+    }
 
     public List<Map<String, Object>> getCartPaymentList(CartPaymentVO cartPaymentVO) throws SQLException {
         List<Map<String, Object>> getCartPaymentList = sql.selectList("mall.CartMapper.getCartPaymentList",cartPaymentVO);

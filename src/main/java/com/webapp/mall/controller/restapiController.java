@@ -300,6 +300,14 @@ public class restapiController {
                            }
 
                         }
+
+
+                        if(session.getAttribute("nonMembersUserId") != null){
+                            Map<String,Object> userInfo2 = userDAO.getLoginUserList(params);
+                            params.put("cart_user_id",userInfo2.get("usr_id"));
+                            params.put("nonMembersUserId",session.getAttribute("nonMembersUserId"));
+                            cartDAO.updateCartUser(params);
+                        }
 //                        else { // 로그인에 실패한 경우
 //                            resultMap.put("redirectUrl", "/login");
 //                        }
