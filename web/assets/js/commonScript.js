@@ -3405,7 +3405,7 @@ function selectBanner(banner_id){
 			console.log(res);
 			$.each(res.banner,function(index, item){
 				if(index == "banner_event_type"){
-					$("input[name="+index+"][value="+item+"}]").trigger("click");
+					$("input[name="+index+"][value="+item+"]").trigger("click");
 				}else if(index == "file_1"){
 					$(".file_link1").attr("src",item);
 				}else{
