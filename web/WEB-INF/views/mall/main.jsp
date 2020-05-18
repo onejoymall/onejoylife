@@ -37,7 +37,7 @@
         <h3 class="e-point-title hide">E-point 경품 추첨</h3>
         <div class="point-bnr">
             <div class="point-bnr-inner">
-                <a href="<c:url value="/giveaway"/>"><img src="assets/img/e-point-bg.png" alt="E-point 경품 추첨. 망설이면 후회해요!" /></a>
+                <a href="<c:url value="${giveawayLineBanner.url}"/>"><img src="${giveawayLineBanner.file_1}" onerror="this.src='http://placehold.it/1100x265'"/></a>
             </div>
         </div>
         <div class="point-product-wrap">

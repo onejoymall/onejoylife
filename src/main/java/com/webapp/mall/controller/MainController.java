@@ -166,6 +166,20 @@ public class MainController {
             }
             model.addAttribute("subSlider", bannerList);
 
+            //경품띠배너
+            params.put("banner_type","main_giveaway_line");
+            List<Map<String,Object>> giveawayLineBannerList = bannerDAO.getBannerList(params);
+            for(Map<String,Object> banner:giveawayLineBannerList) {
+            	if("H".equals(banner.get("banner_event_type"))) {
+            		banner.put("url",banner.get("banner_href"));
+            	}else if("P".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product/productDetail?product_cd="+banner.get("banner_product_cd"));
+            	}else if("C".equals(banner.get("banner_event_type"))) {
+            		banner.put("url","/product?product_ct="+banner.get("banner_product_ct"));
+            	}
+            }
+            model.addAttribute("giveawayLineBanner", giveawayLineBannerList.get(0));
+            
             //띠배너
             params.put("banner_type","main_line");
             List<Map<String,Object>> lineBannerList = bannerDAO.getBannerList(params);
