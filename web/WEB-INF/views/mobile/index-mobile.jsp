@@ -8,7 +8,10 @@
         <ul class="main-slider-wrap">
             <c:if test="${not empty categoryBannerList}">
                 <c:forEach var="categoryBannerList" items="${categoryBannerList}" varStatus="status">
-                    <li style="background:url(${categoryBannerList.file_link2}) no-repeat center / contain;"><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"></a></li>
+<%--                    <li><a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"><img src="${categoryBannerList.file_link2}" alt="메인이벤트1"></a></li>--%>
+                    <li style="background:url(${categoryBannerList.file_link2}) no-repeat center / cover;" onclick="location.href='<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>'">
+<%--                        <a href="<c:url value="/product?product_ct=${categoryBannerList.pd_category_id}"/>"> </a>--%>
+                    </li>
                 </c:forEach>
             </c:if>
         </ul>
@@ -100,38 +103,16 @@
             <h2 class="red">이벤트 <i class="ri-arrow-right-s-line"></i></h2>
         </div>
         <ul class="mainList-sm2">
-            <li>
-                <a href="#">
-                   <div class="img-box">
-                        <img src="assets/img/event1.png" alt="">
-                    </div>
-                    <p>미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                   <div class="img-box">
-                        <img src="assets/img/event3.png" alt="">
-                    </div>
-                    <p>미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                   <div class="img-box">
-                        <img src="assets/img/event2.png" alt="">
-                    </div>
-                    <p>미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                   <div class="img-box">
-                        <img src="assets/img/event4.png" alt="">
-                    </div>
-                    <p>미식가가 사랑하는 돼지고기 이베리코 최대 25% 할인</p>
-                </a> 
-            </li>
+        <c:if test="${not empty eventList}">
+            <c:forEach var="eventList" items="${eventList}" varStatus="status">
+                <li>
+                    <a href="/product?product_ct=${eventList.pd_category_id}">
+                        <div class="img-box"><img src="${eventList.file_link5}" /></div>
+                        <p class="event-title">${eventList.event_title}</p>
+                    </a>
+                </li>
+            </c:forEach>
+        </c:if>
         </ul>
     </div>
     <div class="mainList-wrap mt-1 clearfix">

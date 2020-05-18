@@ -97,7 +97,7 @@
                 <div class="exhibition-row clearfix">
                 <c:if test="${not empty categoryEventList}">
                     <c:forEach var="categoryEventList" items="${categoryEventList}" varStatus="status">
-                        <div class="exhibition-list-item-type1">
+                        <div class="exhibition-list-item-type2">
                             <a href="/product?product_ct=${categoryEventList.pd_category_id}">
                                 <div class="img-box" id="exhibition-img1" style=" background:url(${categoryEventList.file_link}) center center no-repeat; background-size:cover;"></div>
                                 <p class="exhibition-list-item-title">${categoryEventList.pd_category_event_title}</p>
