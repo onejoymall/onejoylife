@@ -48,6 +48,7 @@
                         </thead>
                         <tbody class="lis-body">
                         <c:if test="${not empty list}">
+                            <form name="defaultform" id="defaultForm" method="POST">
                             <c:forEach var="list" items="${list}" varStatus="status">
                                 <tr>
                                     <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
@@ -73,7 +74,9 @@
                                         <a href="javascript:addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
                                     </td>
                                 </tr>
+                                <input type="hidden" name="payment_order_quantity" value="1">
                             </c:forEach>
+                            </form>
                         </c:if>
                         <c:if test="${empty list}">
                             <tr>
@@ -114,7 +117,8 @@
                         </tr>
                         </thead>
                         <tbody class="lis-body">
-                            <c:forEach var="list" items="${productList}" varStatus="status">
+                            <form name="defaultform" id="defaultForm" method="POST">
+                                <c:forEach var="list" items="${productList}" varStatus="status">
                                 <tr>
                                     <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
                                     <td class="my-lis-2">
@@ -140,6 +144,7 @@
                                     </td>
                                 </tr>
                                 </c:forEach>
+                            </form>
                         </tbody>
                     </table>
                     </c:if>

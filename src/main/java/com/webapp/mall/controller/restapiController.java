@@ -820,6 +820,28 @@ public class restapiController {
             if(deliveryInfoVO.getReason().isEmpty()){
                 error.put(messageSource.getMessage("reason","ko"), messageSource.getMessage("error.required","ko"));
             }
+            if(deliveryInfoVO.getRefund_send_date().isEmpty()){
+                error.put(messageSource.getMessage("refund_send_date","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getRefund_delivery_t_code().isEmpty()){
+                error.put(messageSource.getMessage("refund_delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(deliveryInfoVO.getRefund_delivery_t_invoice().isEmpty()){
+                error.put(messageSource.getMessage("refund_delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+            }
+
+            String pay_method = "";
+            if(!params.put("pay_method", pay_method).equals("card")){
+                if(deliveryInfoVO.getRefund_bank().isEmpty()){
+                    error.put(messageSource.getMessage("refund_bank","ko"), messageSource.getMessage("error.required","ko"));
+                }
+                if(deliveryInfoVO.getRefund_account().isEmpty()){
+                    error.put(messageSource.getMessage("refund_account","ko"), messageSource.getMessage("error.required","ko"));
+                }
+                if(deliveryInfoVO.getRefund_holder().isEmpty()){
+                    error.put(messageSource.getMessage("refund_holder","ko"), messageSource.getMessage("error.required","ko"));
+                }
+            }
 
             params.put("email",session.getAttribute("email"));
             //로그인 확인

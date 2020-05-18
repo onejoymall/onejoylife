@@ -74,7 +74,7 @@ public class ProductController {
     private CouponDAO couponDAO;
     //상품 검색
     @RequestMapping(value="/product/search-page")
-    public String productSearch(Model model, HttpSession session, HashMap params, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
+    public String productSearch(@RequestParam HashMap params, Model model,SearchVO searchVO, HttpSession session, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
     	Device device = DeviceUtils.getCurrentDevice(request);
         try{
 //            product_delivery_International_type
@@ -97,9 +97,9 @@ public class ProductController {
                 searchFilterVO.setDisplayRowCount(12);
             }
             // 기본정렬
-            if(searchFilterVO.getOrderByValue()==null || searchFilterVO.getOrderByKey()==null){
-                searchFilterVO.setOrderByKey("product_id");
-                searchFilterVO.setOrderByValue("DESC");
+            if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
+                searchVO.setOrderByKey("product_id");
+                searchVO.setOrderByValue("DESC");
             }
             //회원전용상품 노출
             Object isLogin = session.getAttribute("login");
