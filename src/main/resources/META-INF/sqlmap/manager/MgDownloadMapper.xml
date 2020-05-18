@@ -39,9 +39,12 @@
   <select id="getOrderDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
         SELECT
-            A.*,
+            A.*,B.*,
             (select Z.product_name from product Z where Z.product_cd = A.product_cd) product_name
-        FROM payment A where ${pk} in
+        FROM payment A 
+        LEFT JOIN delivery_info B
+        ON A.order_no = B.order_no
+        WHERE A.${pk} in
         ]]>
         <!-- <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
@@ -54,7 +57,7 @@
         <foreach collection="chk" item="item" open="(" separator="," close=")">
 	         #{item}
 	    </foreach>
-    order by reg_date desc
+    order by A.reg_date desc
   </select>
   <select id="getReturnedDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[

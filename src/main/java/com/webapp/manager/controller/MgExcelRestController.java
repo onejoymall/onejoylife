@@ -61,6 +61,7 @@ public class MgExcelRestController {
 //        return "excelDownloadView";
 //    }
     
+    
     @RequestMapping(value = "/product/downloadExcelFile")
     public void productDownloadExcelFile(@RequestParam HashMap params, MgCommonVO mgCommonVO, Model model, ExcelService excelService,ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
     	try {
