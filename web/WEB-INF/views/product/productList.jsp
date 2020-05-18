@@ -36,7 +36,7 @@
 <%--                    <li></li>--%>
 <%--                </ul>--%>
 <%--            </div>--%>
-            <c:if test="${not empty categoryRowData.file_link3 and categoryRowData.pd_category_event_use_yn eq 'Y' || categoryRowData.file_link5 and categoryRowData.event_use_yn eq 'Y'}">
+            <c:if test="${not empty categoryRowData.file_link3 and categoryRowData.pd_category_event_use_yn eq 'Y' || not empty categoryRowData.file_link5 and categoryRowData.event_use_yn eq 'Y'}">
             <section class="main-section">
                 <h2 class="main-section-title hide">main section</h2>
                 <article class="main-slider">
