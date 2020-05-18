@@ -9,11 +9,11 @@
         <%--        <a href="index.html" class="goback clearfix">이전 페이지</a>--%>
         <div class="join-form-box">
             <form id="defaultForm" name="defaultForm" method="POST">
-                <input type="hidden" name="market_config_code" value="market-config-partner-bot">
+                <input type="hidden" name="market_config_code" value="market-config-partner-live">
                 <ul class="info-tab clearfix">
                     <li><a href="/Manager/market-config-partner">상단</a></li>
-                    <li><a href="/Manager/market-config-partner-bot" class="active">하단</a></li>
-                    <li><a href="/Manager/market-config-partner-live">라이브쇼핑</a></li>
+                    <li><a href="/Manager/market-config-partner-bot" >하단</a></li>
+                    <li><a href="/Manager/market-config-partner-live" class="active">라이브쇼핑</a></li>
                 </ul>
                 <div class="text-editor clearfix">
                     <textarea name="market_config_value" id="summernote">${config.market_config_value}</textarea>
