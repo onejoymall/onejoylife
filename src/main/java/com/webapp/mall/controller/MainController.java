@@ -126,7 +126,7 @@ public class MainController {
             params.put("pd_category_event_use_yn","Y");
             //몇번째부터 몇개
             params.put("limitTo",0);
-            params.put("limitBe",2);
+            params.put("limitBe",3);
             params.put("pd_category_event_end","now()");
             List<Map<String,Object>> categoryEventList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryEventList",categoryEventList);
@@ -134,7 +134,7 @@ public class MainController {
             //기획전 목록 2
             params.put("pd_category_event_use_yn","Y");
             //몇번째부터 몇개
-            params.put("limitTo",2);
+            params.put("limitTo",3);
             params.put("limitBe",3);
             params.put("pd_category_event_end","now()");
             List<Map<String,Object>> categoryEventListSub = categoryDAO.getCategoryEventList(params);
