@@ -13,6 +13,7 @@
                 <ul class="info-tab clearfix">
                     <li><a href="/Manager/market-config-partner" class="active">상단</a></li>
                     <li><a href="/Manager/market-config-partner-bot">하단</a></li>
+                    <li><a href="/Manager/market-config-partner-live">라이브쇼핑</a></li>
                 </ul>
                 <div class="text-editor clearfix">
                     <textarea name="market_config_value" id="summernote">${config.market_config_value}</textarea>

@@ -12,6 +12,7 @@
                 (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1
             FROM product  where 1=1
+            and product_live_type is null
             and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
         <if test="product_cd_array != null">
@@ -38,6 +39,7 @@
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
             FROM product  where 1=1
+            and product_live_type is null
             and CASE WHEN product_validity_yn ='Y' THEN product_validity_start <= now() ELSE TRUE END
             and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
@@ -61,6 +63,7 @@
         SELECT
             count(*) as cnt
         FROM product  where 1=1
+        and product_live_type is null
         and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -194,6 +197,7 @@
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5,
             (select Z.product_delivery_bundle_yn from store_delivery Z where product.product_user_ud = Z.store_id) as product_delivery_bundle_yn
         from product where product_cd=#{product_cd}
+        and product_live_type is null
     </select>
     <select id="getUserProductPaymentList" resultType="java.util.HashMap">
         <![CDATA[
@@ -239,6 +243,7 @@
 		FROM payment A
 		LEFT JOIN product B
 		ON A.product_cd = B.product_cd
+		and B.product_live_type is null
 		LEFT JOIN user C
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
@@ -253,6 +258,7 @@
 		FROM payment A
 		LEFT JOIN product B
 		ON A.product_cd = B.product_cd
+		and B.product_live_type is null
 		LEFT JOIN user C
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}

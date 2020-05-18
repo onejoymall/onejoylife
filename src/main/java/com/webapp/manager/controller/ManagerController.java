@@ -625,6 +625,27 @@ public class ManagerController {
     	model.addAttribute("postUrl", "/Manager/config-proc");
     	return "/manager/market-config-partner-bot";
     }
+    
+    //업체별 서비스안내관리 라이브쇼핑
+    @RequestMapping(value = "/Manager/market-config-partner-live")
+    public String managerMarketConfigPartnerLive(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	try {
+    		params.put("market_config_code", "market-config-partner-live");
+    		params.put("store_id", "admin"); //임시
+    		Map<String, Object> config = configDAO.getConfigDetail(params);
+    		if (isEmpty(config)) {
+    			config.put("market_config_value", "");
+    		}
+    		model.addAttribute("config", config);
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("topNav", 2);
+    	model.addAttribute("style", "info-setting");
+    	model.addAttribute("postUrl", "/Manager/config-proc");
+    	return "/manager/market-config-partner-live";
+    }
 
     //브랜드관리
     @RequestMapping(value = "/Manager/option-brand")
