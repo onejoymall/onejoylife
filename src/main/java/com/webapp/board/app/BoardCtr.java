@@ -36,30 +36,30 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-     public String boardList(SearchVO searchVO, ModelMap modelMap,HttpServletRequest request,HashMap params,HttpSession session )throws Exception {
+     public String boardList(BoardVO boardVO, SearchVO searchVO, ModelMap modelMap,HttpServletRequest request,HashMap params,HttpSession session )throws Exception {
         String returnString="";
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(searchVO.getBgno());
+            BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardVO.getBgno());
             if(!isEmpty(userInfo)){
                 if(bgInfo.getBgtype().equals("1:1")) {
-                    searchVO.setUsr_id((Integer) userInfo.get("usr_id"));
+                    boardVO.setUsr_id((Integer) userInfo.get("usr_id"));
                 }
             }
             if (bgInfo == null) {
                 return "board/BoardGroupFail";
             }
-            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 10){
-                searchVO.setDisplayRowCount(10);
+            if(boardVO.getDisplayRowCount()==null || boardVO.getDisplayRowCount() < 10){
+                boardVO.setDisplayRowCount(10);
             }
-            searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
+            boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
-            List<?> listview  = boardSvc.selectBoardList(searchVO);
+            List<?> listview  = boardSvc.selectBoardList(boardVO);
 
             modelMap.addAttribute("listview", listview);
-            modelMap.addAttribute("searchVO", searchVO);
+            modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
 
