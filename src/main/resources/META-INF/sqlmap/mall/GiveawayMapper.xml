@@ -101,7 +101,7 @@
             (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_winner_reg_date,
             (select Z.code_name from code Z where Z.code = 'giveaway_play_status' and Z.code_value=A.giveaway_play_status) as giveaway_play_status_name,
             (select Z.code_name from code Z where Z.code = 'giveaway_payment_status' and Z.code_value=A.giveaway_payment_status) as giveaway_payment_status_name,
-            (select Z.giveaway_play_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id
+            (select Z.giveaway_winner_user_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id
         FROM giveaway_play_history A  where 1=1
         ]]>
         <if test="giveaway_play_status != null and giveaway_play_status !=''"><![CDATA[AND A.giveaway_play_status = #{giveaway_play_status} ]]></if>

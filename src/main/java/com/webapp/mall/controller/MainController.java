@@ -90,6 +90,7 @@ public class MainController {
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
             List<Map<String,Object>> list = giveawayDAO.getGiveawayList(giveawayVO);
+
             model.addAttribute("giveawaylist", list);
 
             //상품목록

@@ -132,7 +132,21 @@
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/> <fmt:formatDate value="${list.reg_date}" pattern="HH:mm"/></td>
                                 <td><fmt:formatNumber value="${list.giveaway_payment_epoint}" groupingUsed="true" />P</td>
                                 <td><fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/></td>
-                                <td>${list.giveaway_play_status_name}</td>
+                                <c:if test="${empty list.giveaway_winner_reg_date && empty list.winner_id}">
+                                    <td>
+                                        <span>진행중</span>
+                                    </td>
+                                </c:if>
+                                <c:if test="${not empty list.giveaway_winner_reg_date && empty list.winner_id}">
+                                <td>
+                                    <span>추첨완료</span>
+                                </td>
+                                </c:if>
+                                <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
+                                    <td>
+                                        <span>당첨</span>
+                                    </td>
+                                </c:if>
                                 <td>
                                     <button type="button" class="goods-list-btn" >상세보기</button>
 <%--                                    <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${list.giveaway_cd}')" >상세보기</button>--%>

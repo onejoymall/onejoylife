@@ -436,11 +436,11 @@ $("#updateDeliveryInfo").click(function(){
         data: formData,
         success: function (data) {
         	$.each(data.deliveryInfo,function(index, item){
-        		$(`input[name=${index}]`).val(item);
+        		$("input[name="+index+"]").val(item);
         		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
         			var number = item.split("-");
         			['a','b','c'].forEach(function(el,idx){
-        				$(`input[name=${index}_${el}]`).val(number[idx]);
+        				$("input[name="+index+"_"+el+"]").val(number[idx]);
         			});
         		}
         	});
@@ -570,12 +570,12 @@ $(".sec2-ov>p>label").click(function(){
         	$.each(data.delivery,function(index, item){
         		if(index != "order_no" &&
 				   index != "product_cd"){
-        			$(`input[name=${index}]`).val(item);
+        			$("input[name="+index+"]").val(item);
         		}
         		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
         			var number = item.split("-");
         			['a','b','c'].forEach(function(el,idx){
-        				$(`input[name=${index}_${el}]`).val(number[idx]);
+        				$("input[name="+index+"_"+el+"]").val(number[idx]);
         			});
         		}
         	});
@@ -616,12 +616,12 @@ $("input[name=selectAddress]").click(function(){
         	$.each(data.delivery,function(index, item){
         		if(index != "order_no" &&
 				   index != "product_cd"){
-        			$(`input[name=${index}]`).val(item);
+        			$("input[name="+index+"]").val(item);
         		}
         		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
         			var number = item.split("-");
         			['a','b','c'].forEach(function(el,idx){
-        				$(`input[name=${index}_${el}]`).val(number[idx]);
+        				$("input[name="+index+"_"+el+"]").val(number[idx]);
         			});
         		}
         	});
@@ -643,7 +643,7 @@ $("button[name=coupon-confirm-btn]").click(function(){
         data: formData,
         processData: false, // 필수
         contentType: false, // 필수
-        url:`/Manager/${proc}Coupon`,
+        url:'/Manager/'+proc+'Coupon',
         success: function (data) {
         	if (data.validateError) {
                 $('.validateError').empty();
@@ -710,15 +710,15 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 						index == 'coupon_ct' ||
 						index == 'coupon_use_payment_class' ||
 						index == 'coupon_cd'){ //단순텍스트
-	        			$(`input[name=${index}]`).val(item);
+	        			$("input[name="+index+"]").val(item);
 	        		}else if(index == 'coupon_sale_cal_condition'){ //적용계산기준
-	        			$(`select[name=${index}]`).val(item);
+	        			$("select[name="+index+"]").val(item);
 	        		}else if(index == 'country_supply'){ //국가별공급
 	        			item.split("|").forEach(function(el){
-	        				$(`input[name=${index}][value=${el}]`).prop("checked",true);
+	        				$("input[name="+index+"][value="+el+"]").prop("checked",true);
 	        			});
 	        		}else if(index == 'coupon_sale_type'){ //혜택구분
-	        			$(`input[name=${index}][value=${item}]`).trigger("click");
+	        			$("input[name="+index+"][value="+item+"]").trigger("click");
 	        			$(`input[name=coupon_sale_payment]`).val(coupon.coupon_sale_payment);
 	        			$(`input[name=coupon_sale_rate]`).val(coupon.coupon_sale_rate);
 	        		}else if(index == 'coupon_use_range' ||	
@@ -726,13 +726,13 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				 index == 'login_alert_yn' ||
 	        				 index == 'sms_alert_yn' ||
 	        				 index == 'email_alert_yn'){ //단순라디오
-	        			$(`input[name=${index}][value=${item}]`).trigger("click");
+	        			$("input[name="+index+"][value="+item+"]").trigger("click");
 	        		}else if(index == 'coupon_condition'){ //발급구분
 	        			switch(item){
 	        			case 'T': {
 	        				$("select[name=coupon_condition1]").val("T").trigger('change');
-	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
-	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
+	        				$("input[name=coupon_issue_time][value"+coupon.coupon_issue_time+"]").trigger("click");
                             $(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
                             $(`input[name=coupon_issued_target_id]`).val(coupon.coupon_issued_target_id);
 	        				break;
@@ -762,7 +762,7 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
 	        				$("select[name=coupon_condition2]").val("B").trigger('change');
 	        				if(coupon.coupon_issue_time == 'B'){
-	        					$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        					$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
 	        					$(`input[name=coupon_anniversary_before]`).val(coupon.coupon_anniversary_before);
 	        				}
 	        				break;
@@ -807,7 +807,7 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        			case 'S':{
 	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
 	        				$("select[name=coupon_condition2]").val("S").trigger('change');
-	        				$(`input[name=coupon_buy_count_condition][value=${coupon.coupon_buy_count_condition}]`).trigger("click");
+	        				$("input[name=coupon_buy_count_condition][value="+coupon.coupon_buy_count_condition+"]").trigger("click");
 	        				$(`input[name=coupon_min_buy_count]`).val(coupon.coupon_min_buy_count);
 	        				if(coupon.coupon_issue_order_end){
 	        					$(`input[name=iss-day][value=D2]`).trigger("click");
@@ -823,8 +823,8 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        			case 'L':{
 	        				$("select[name=coupon_condition1]").val("next3").trigger('change');
 	        				$("select[name=coupon_condition3]").val("L").trigger('change');
-	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
-	        				$(`input[name=coupon_issue_time][value=${coupon.coupon_issue_time}]`).trigger("click");
+	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
+	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
 	        				$(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
 	        				break;
 	        			}
