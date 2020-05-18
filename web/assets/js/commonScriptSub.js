@@ -423,6 +423,18 @@ $('#updateDefaultDeliveryInfo').on("click",function () {
 $("#addDeliveryInfo").click(function(){
     event.preventDefault();
     $(".modal").attr("style", "display:block");
+    $("input[name=delivery_user_name]").val('');
+    $("select[name=delivery_user_phone_a]").val('010');
+    $("input[name=delivery_user_phone_b]").val('');
+    $("input[name=delivery_user_phone_c]").val('');
+    $("select[name=delivery_user_tel_a]").val('010');
+    $("input[name=delivery_user_tel_b]").val('');
+    $("input[name=delivery_user_tel_c]").val('');
+    $("input[name=postcode]").val('');
+    $("input[name=roadAddress]").val('');
+    $("input[name=extraAddress]").val('');
+    $("input[name=jibunAddress]").val('');
+    return;
 });
 
 //배송지 수정 모달

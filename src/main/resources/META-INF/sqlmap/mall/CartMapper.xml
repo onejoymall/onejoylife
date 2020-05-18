@@ -139,6 +139,12 @@
     <update id="updateCart" parameterType="java.util.Map">
         update product_cart set payment_order_quantity=#{payment_order_quantity} where cart_cd = #{cart_cd}
     </update>
+
+    <update id="updateCartUser" parameterType="java.util.Map">
+        update product_cart set cart_user_id= #{cart_user_id}
+         where cart_user_id = #{nonMembersUserId}
+    </update>
+
     <select id="getFavoritesList" parameterType="java.util.Map" resultType="java.util.Map">
         <![CDATA[
         select

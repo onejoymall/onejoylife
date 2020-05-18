@@ -4,6 +4,7 @@ import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.UserVO;
 import org.apache.http.HttpResponse;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,6 +45,8 @@ public class UserController {
     private NumberGender numberGender;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    CartDAO cartDAO;
     // 로그아웃 하는 부분
     @RequestMapping(value="/sign/logout")
     public String logout(HttpSession session, UserVO userVO) throws IOException {
@@ -85,6 +89,7 @@ public class UserController {
             if ( obj != null ){
                 returnString = "redirect:/";
             }
+
             model.addAttribute("siteUrl", siteUrl);
         }catch(Exception e){
             e.printStackTrace();
