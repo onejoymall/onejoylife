@@ -209,7 +209,7 @@ body{
 .point-bnr{
     width:100%;
     height:auto;
-    background:#232323;
+    /*background:#232323;*/
     margin-bottom:50px;
 }
 .point-bnr-inner{

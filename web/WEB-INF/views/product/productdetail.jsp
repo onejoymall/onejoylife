@@ -359,7 +359,7 @@
 <%--                                    <option value="refund">반품/환불/취소</option>--%>
 <%--                                    <option value="etc">기타</option>--%>
 <%--                                </select>--%>
-                                <button type="button" class="write-review" onclick="window.open('/Popup/write-qna?product_cd=${param.product_cd}','상품 문의','width=720, height=600,loaction=no,status=no,scrollbars=yes');">작성하기</button>
+                                <button type="button" class="write-review" id="productqna" data-id="${list.product_cd}">작성하기</button>
                             </div>
                         </div>
                         <ul class="qna-data-list">

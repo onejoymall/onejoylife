@@ -335,7 +335,7 @@
         <div class="mt-4 mb-2" id="content04">
            <ul class="flexbetween mb-1">
                <li><h3>상품 Q&A<span class="red text-md ml-1">65</span></h3></li>
-               <li><button class="btn btn-black" id="btn_qna">작성하기</button></li>
+               <li><button class="btn btn-black" data-id="${list.product_cd}" id="btn_qna">작성하기</button></li>
            </ul>
            <hr>
            <div class="qnaNothing">문의 내역이 없습니다.</div>
@@ -500,7 +500,22 @@ $(document).ready(function(){
         $('#review').addClass('on');
     })
     $('#btn_qna').on('click',function(){
-        $('#qna').addClass('on');
+        var product_cd = $(this).attr("data-id");
+        if(isLogin==''){
+            $.toast({
+                heading: '비회원으로 이용중 입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'mid-center',
+                icon: 'info',
+                hideAfter: false
+            });
+        }else {
+            $('#qna').addClass('on');
+        }
     })
     $('#btn_purchase').on('click',function(){
         $('.underPurchase').addClass('on');

@@ -38,7 +38,6 @@
 		AND product_delivery_International_type = #{international}
 		</if>
 		ORDER BY A.default_delivery_info_yn = 'Y' DESC, A.reg_date desc
-		LIMIT 5
     </select>
     <insert id="insertDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into delivery_info(
