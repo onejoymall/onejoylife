@@ -351,7 +351,62 @@ function show(num){
     }
 
     $("#submitPayment").on("click",function() {
-        if(!$('#replysns').is(":checked")){
+        if($('#order_user_name').val() == ""){
+            $.toast({
+                text: "주문자 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_email').val() == ""){
+            $.toast({
+                text: "이메일주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#order_user_phone_a').val() == "" || $('#order_user_phone_b').val() == "" || $('#order_user_phone_c').val() == ""){
+            $.toast({
+                text: "휴대폰 번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+            <c:if test="${empty sessionScope.email}">
+        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+            $.toast({
+                text: "주문확인용 비밀번호를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+            </c:if>
+        else if($('#delivery_user_name').val() == ""){
+            $.toast({
+                text: "받으시는 분 성함을 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
+        else if($('#postcode').val() == "" || $('#roadAddress').val() == "" || $('#extraAddress').val() == ""){
+            $.toast({
+                text: "배송 주소를 입력해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        } else if(!$('#replysns').is(":checked")){
             var filter = "win16|win32|win64|macintel|mac|";
             if(navigator.platform){
                 if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
