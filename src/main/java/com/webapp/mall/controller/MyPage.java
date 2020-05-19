@@ -805,14 +805,14 @@ public class MyPage {
     }
     //배송지 변경
     @RequestMapping(value="/MyPage/DeliveryAddress")
-    public String myPageDeliveryAddress(Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
+    public String myPageDeliveryAddress(@RequestParam HashMap params, Model model, HttpServletRequest request, HttpSession session, SearchVO searchVO) {
     	 try {
-    		Map<String, Object> params = new HashMap<String, Object>();
     		params.put("email", session.getAttribute("email"));
     		params.put("international", 'A');
-     		List<Map<String, Object>> list = deliveryDAO.getUserDeliveryList(params);
 
-             model.addAttribute("list", list);
+            List<Map<String, Object>> list = deliveryDAO.getUserDeliveryList(params);
+            model.addAttribute("list", list);
+
              model.addAttribute("searchVO", searchVO);
              model.addAttribute("table_name", "payment");
              model.addAttribute("Pk", "payment_cd");
