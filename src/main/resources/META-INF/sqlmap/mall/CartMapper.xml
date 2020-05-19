@@ -8,9 +8,10 @@
         select
             A.*,
             B.*,
+            (select Z.product_delivery_bundle_yn from store_delivery Z where B.product_user_ud = Z.store_id) as product_delivery_bundle_yn,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =B.product_delivery_type) as product_delivery_type_name,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
-        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
+        from product_cart A join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
         ]]>
         <foreach collection="chk" item="item" open="(" separator="," close=")">
             #{item}
@@ -30,7 +31,6 @@
         select
             ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
             ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
-            ifnull(sum(A.product_delivery_payment),0) as total_delivery_payment,
             ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
         <foreach collection="chk" item="item" open="(" separator="," close=")">
@@ -49,7 +49,7 @@
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 5) as file_5
-        from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
+        from product_cart A join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
         ]]>
         <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         order by A.reg_date DESC LIMIT ${rowStart-1}, ${staticRowEnd}
@@ -77,7 +77,6 @@
         select
             ifnull(sum(B.product_payment * A.payment_order_quantity),0) as total_payment,
             ifnull(sum(B.product_user_payment * A.payment_order_quantity),0) as total_ori_payment,
-            ifnull(sum(A.product_delivery_payment),0) as total_delivery_payment,
             ifnull(sum(round((B.product_payment * B.product_point_rate)/100)),0) as point_add
         from product_cart A left join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id}
 
@@ -112,7 +111,6 @@
         member_yn,
         payment_order_quantity,
         select_option_value,
-        product_delivery_payment,
         option_name)
         values (
         #{cart_cd},
@@ -121,7 +119,6 @@
         #{member_yn},
         #{payment_order_quantity},
         #{select_option_value},
-        #{product_delivery_payment},
         #{option_name})
     </insert>
     <insert id="insertCartOption" parameterType="com.webapp.mall.vo.OptionVO">

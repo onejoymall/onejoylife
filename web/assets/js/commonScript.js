@@ -902,6 +902,7 @@ $(document).on("click",".ra-num",function () {
         var filter = "win16|win32|win64|mac|macintel";
         $('#defaultForm').attr("action","/product/productPaymentCart");
         if($(this).attr("data-id") =='allCheck'){
+        	$("#tr-ck1-1").trigger("click");
             $('input[name=chk]').prop("checked",true);
         }
         if($('input[name=chk]:checked').length <= 0){
@@ -2297,20 +2298,18 @@ $(document).on("click",".ra-num",function () {
                         else if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
                         }else{
+                        	if(index=="product_delivery_class" && item=="T"){
+                                $('.shippingFee-detail-wrap').remove();
+                            }
+                            if(index=="product_delivery_payment_class"){
 
+                                callDelivery(item);
+                            }
+                            $('input:text[name^="'+index+'"]').val(item);
+                            $('select[name='+index+']').val(item);
+                            $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+                            $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                         }
-
-                        if(index=="product_delivery_class" && item=="T"){
-                            $('.shippingFee-detail-wrap').remove();
-                        }
-                        if(index=="product_delivery_payment_class"){
-
-                            callDelivery(item);
-                        }
-                        $('input:text[name^="'+index+'"]').val(item);
-                        $('select[name='+index+']').val(item);
-                        $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
-                        $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                     });
                     $('input[name^="product_validity_end"]').val(data.list.product_validity_end);
                     $('input:radio[name=product_validity_yn][value=\'' + data.list.product_validity_yn + '\']').prop('checked',true);

@@ -128,9 +128,11 @@
     and store_id = #{store_id}
   </select>
   <select id="getAdditionalDeliveryPayment" parameterType="hashmap" resultType="Integer">
-    SELECT if((SELECT product_delivery_area_yn FROM store_delivery WHERE store_id = (SELECT product_user_ud FROM product WHERE product_cd = #{product_cd})) = 'Y',A.additional_delivery_payment,0) additionalDeliveryPayment
+  	SELECT A.additional_delivery_payment
 	FROM store_delivery_area A
 	WHERE postcode = #{postcode}
+	AND A.store_id = (SELECT product_user_ud FROM product WHERE product_cd = #{product_cd})
+	AND (SELECT Z.product_delivery_area_yn FROM store_delivery Z WHERE Z.store_id = (SELECT product_user_ud FROM product WHERE product_cd = #{product_cd})) = 'Y'
   </select>
   <insert id="insertProductCode" parameterType="com.webapp.manager.vo.MgProductCodeVO">
     insert into product_class_code

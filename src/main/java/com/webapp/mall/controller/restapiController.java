@@ -1545,7 +1545,6 @@ public class restapiController {
     			resultMap.put("additionalDeliveryPayment", additionalDeliveryPayment == null ? 0 : additionalDeliveryPayment);
     		}
     	} catch (Exception e) {
-    		
     		resultMap.put("e", e);
     	}
     	return resultMap;

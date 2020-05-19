@@ -839,6 +839,12 @@ public class ManagerRestapiController {
         	if(productVO.getProduct_live_type().equals("")) {
         		productVO.setProduct_live_type(null);
         	}
+        	if(productVO.getProduct_validity_start().equals("")) {
+        		productVO.setProduct_validity_start(null);
+        	}
+        	if(productVO.getProduct_validity_end().equals("")) {
+        		productVO.setProduct_validity_end(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");

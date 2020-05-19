@@ -209,8 +209,6 @@ public class MainController {
             List<Map<String,Object>> eventList = categoryDAO.getCategoryEventList(params);
             model.addAttribute("eventList",eventList);
 
-
-
             params.put("market_config_code","info-main");
             Map<String,Object> configMain = configDAO.getConfigDetail(params);
             model.addAttribute("infoMain", configMain);

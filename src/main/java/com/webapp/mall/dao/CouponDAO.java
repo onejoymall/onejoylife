@@ -17,7 +17,7 @@ public class CouponDAO {
         return getCouponList;
     }
 
-    public List<Map<String, Object>> getUserCouponList(Map<String, String> params) throws SQLException {
+    public List<Map<String, Object>> getUserCouponList(Map<String, Object> params) throws SQLException {
         List<Map<String, Object>> getUserCouponList = sql.selectList("mall.CouponMapper.getUserCouponList",params);
         return getUserCouponList;
     }

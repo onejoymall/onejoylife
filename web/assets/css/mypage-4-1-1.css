@@ -466,3 +466,6 @@ input[id="sec5-ra3"]:checked + label
     margin-right: 5px;
     line-height: 22px;
 }
+.bor-bot-b{
+	border-bottom: 2px solid #dadada !important;
+}
