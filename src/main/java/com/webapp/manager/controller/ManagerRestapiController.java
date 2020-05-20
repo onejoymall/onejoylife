@@ -449,6 +449,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
+        	params.put("product_live_type","all");
             Map<String,Object> list = mgProductDAO.getProductViewDetail(params);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);

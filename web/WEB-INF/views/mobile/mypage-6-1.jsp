@@ -77,7 +77,7 @@
         <p class="grey pt-2 pb-05">결제금액</p>
         <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">결제수단</p>
-        <h3>${paymentDetail.pay_method}</h3>
+        <h3>${paymentDetail.pay_method_name}</h3>
     </section>
     <div class="bottomBtns">
         <ul>

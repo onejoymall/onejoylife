@@ -647,6 +647,7 @@ public class MyPage {
         	}
 
             for(Map<String,Object> map : list) {
+            	map.put("payment_order_quantity",1);
             	Integer deliveryPayment = deliveryPayment(map);
                 map.put("deliveryPayment",deliveryPayment);
             }
@@ -941,7 +942,7 @@ public class MyPage {
             //관리자가 지정한 배송구분별 배송비용을 출력한다.
             String splitDeliveryPaymentString=String.valueOf(params.get("product_delivery_payment"));//구분별 배송비
             String delivery_payment_class = (String) params.get("product_delivery_payment_class");
-            Integer product_payment =(Integer)params.get("product_payment");
+            Integer product_payment =Integer.parseInt(String.valueOf(params.get("product_payment")));
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
             Integer payment_order_quantity = Integer.parseInt(String.valueOf(params.get("payment_order_quantity")));
             if ("T".equals(delivery_payment_class)) {

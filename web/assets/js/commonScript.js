@@ -581,6 +581,16 @@ $(document).on("click",".ra-num",function () {
     //공통 리스트 삭제
     $('.commonlistDelete').on("click",function(){
         var formData = $('#defaultForm').serialize();
+        if(!formData.includes("chk")){
+        	$.toast({
+                text: "항목을 선택해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        	return;
+        }
         var alertType;
         var showText;
         jQuery.ajax({

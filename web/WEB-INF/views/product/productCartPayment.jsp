@@ -295,7 +295,6 @@
                                         <td>
                                             <div class="price-number before-price">
                                                 <fmt:formatNumber value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" />원
-                                                <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
                                             </div>
                                         </td>
                                         <td>
@@ -431,7 +430,7 @@
                                 </div>
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2 total sum-span4"></span> 원</p>
-                                    <p><span class="total sum-span5"></span></span>원</p>
+                                    <p><span class="total sum-span5"></span></span> 원</p>
                                 </div>
                             </div>
                         </div>
@@ -597,7 +596,13 @@
    		});
 
     	if(isDup){
-    		alert("이미 선택된 쿠폰입니다.");
+    		$.toast({
+                text: "이미 선택된 쿠폰입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
     		$(this).val('').trigger("click");
     		return;
     	}else{
