@@ -160,6 +160,7 @@
             (select Z.delivery_status from delivery_info Z where Z.order_no=A.order_no) as delivery_status,
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
+            (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = A.pay_method) as pay_method_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,

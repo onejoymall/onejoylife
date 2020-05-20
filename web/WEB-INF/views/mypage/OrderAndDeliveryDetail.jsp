@@ -141,7 +141,7 @@
                             <td class="body-td-tit2">결제금액</td>
                             <td class="body-td-txt txt-color"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                             <td class="body-td-tit2">결제수단</td>
-                            <td class="body-td-txt"><span>${paymentDetail.pay_method}</span></td>
+                            <td class="body-td-txt"><span>${paymentDetail.pay_method_name}</span></td>
                         </tr>
                         </tbody>
                     </table>
