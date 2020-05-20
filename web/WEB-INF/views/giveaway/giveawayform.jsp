@@ -45,7 +45,7 @@
                                     <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
-
+                                        <c:set var="phoneNumber" value="${latestDelivery.order_user_phone}" />
                                     </c:if>
                                     <c:if test="${not empty userInfo.phone}">
                                         <c:set var="phoneNumber" value="${userInfo.phone}" />
@@ -68,7 +68,7 @@
                                     <input type="text" name="order_user_phone_b" id="order_user_phone_b" value="${phoneMap.key2}" class="order_user_phone" maxlength="4">
                                     <span> - </span>
                                     <input type="text" name="order_user_phone_c" id="order_user_phone_c" value="${phoneMap.key3}" class="order_user_phone" maxlength="4">
-                                    <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:out value="${phoneNumber}"/> ">
+                                    <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:out value="${latestDelivery.order_user_phone}"/> ">
                                 </td>
                             </tr>
                             </tbody>
@@ -226,7 +226,6 @@
         var phoneB = $("#delivery_user_tel_b").val();
         var phoneC = $("#delivery_user_tel_c").val();
         $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
-        console.log(phoneA+"-"+phoneB+"-"+phoneC)
     })
 
 </script>

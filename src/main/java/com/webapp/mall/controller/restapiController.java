@@ -590,6 +590,9 @@ public class restapiController {
                 deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
             }
 
+            if(deliveryInfoVO.getOrder_user_name().isEmpty()){
+                error.put(messageSource.getMessage("order_user_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
             if(deliveryInfoVO.getOrder_user_email().isEmpty()){
                 error.put(messageSource.getMessage("order_user_email","ko"), messageSource.getMessage("error.required","ko"));
             }

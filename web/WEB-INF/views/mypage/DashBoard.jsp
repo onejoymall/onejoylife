@@ -137,7 +137,7 @@
                 <div class="r-sec5">
                     <div class="sec5-txt">
                         <p class="txt-tit">경품 참여 내역</p>
-                        <p class="mor-a"><a href="mypage-11.html">더보기 ></a></p>
+                        <p class="mor-a"><a href="/MyPage/GiveawayWinningList">더보기 ></a></p>
                     </div>
                     <table>
                         <colgroup>
