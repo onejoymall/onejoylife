@@ -531,6 +531,66 @@ public class ManagerController {
         return "/manager/info-privacy";
     }
 
+    //제3자동의 이용약관
+    @RequestMapping(value = "/Manager/info-main2")
+    public String managerInfoMain2(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            params.put("market_config_code", "info-main2");
+            Map<String, Object> config = configDAO.getConfigDetail(params);
+            if (isEmpty(config)) {
+                config.put("market_config_value", "");
+            }
+            model.addAttribute("config", config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "info-setting");
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/info-main2";
+    }
+
+    //개인정보 수집 및 이용
+    @RequestMapping(value = "/Manager/info-privacy2")
+    public String managerInfoPrivacy2(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            params.put("market_config_code", "info-privacy2");
+            Map<String, Object> config = configDAO.getConfigDetail(params);
+            if (isEmpty(config)) {
+                config.put("market_config_value", "");
+            }
+            model.addAttribute("config", config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "info-setting");
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/info-privacy2";
+    }
+
+    //개인정보 제공
+    @RequestMapping(value = "/Manager/info-privacy3")
+    public String managerInfoPrivacy3(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            params.put("market_config_code", "info-privacy3");
+            Map<String, Object> config = configDAO.getConfigDetail(params);
+            if (isEmpty(config)) {
+                config.put("market_config_value", "");
+            }
+            model.addAttribute("config", config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "info-setting");
+        model.addAttribute("postUrl", "/Manager/config-proc");
+        return "/manager/info-privacy3";
+    }
+
     //쿠폰관리
     @RequestMapping(value = "/Manager/promotion-coupon")
     public String managerPromotionCoupon(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {

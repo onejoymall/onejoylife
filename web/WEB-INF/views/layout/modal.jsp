@@ -32,7 +32,42 @@
                     <h2></h2>
                     <button type="button" class="modal-close" rel="modal:close">×</button>
                 </div>
-                ${infoJoin.market_config_value}
+                <div class="modal-body">
+                    ${infoJoin.market_config_value}
+                </div>
+            </div>
+        </div>
+        <div class="main_modal" id="default-modal2">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2></h2>
+                    <button type="button" class="modal-close" rel="modal:close">×</button>
+                </div>
+                <div class="modal-body">
+                    ${infoMain2.market_config_value}
+                </div>
+            </div>
+        </div>
+        <div class="main_modal" id="default-modal3">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2></h2>
+                    <button type="button" class="modal-close" rel="modal:close">×</button>
+                </div>
+                <div class="modal-body">
+                    ${infoPrivacy2.market_config_value}
+                </div>
+            </div>
+        </div>
+        <div class="main_modal" id="default-modal4">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2></h2>
+                    <button type="button" class="modal-close" rel="modal:close">×</button>
+                </div>
+                <div class="modal-body">
+                    ${infoPrivacy3.market_config_value}
+                </div>
             </div>
         </div>
         <!-- 업체신청 모달 -->
