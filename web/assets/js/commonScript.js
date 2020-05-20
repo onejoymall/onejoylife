@@ -3128,6 +3128,7 @@ function callTableTrStyle(type){
         }
 
         $(".codeSrcModal").attr("style", "display:none");
+        $('body').css("overflow", "auto");
     });
 
 }

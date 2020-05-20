@@ -9,10 +9,10 @@
         <%--        <a href="index.html" class="goback clearfix">이전 페이지</a>--%>
         <div class="join-form-box">
             <form id="defaultForm" name="defaultForm" method="POST">
-                <input type="hidden" name="market_config_code" value="info-order">
+                <input type="hidden" name="market_config_code" value="info-privacy3">
                 <ul class="info-tab clearfix">
                     <li><a href="/Manager/info-join" >회원가입</a></li>
-                    <li><a href="/Manager/info-order" class="active">주문안내</a></li>
+                    <li><a href="/Manager/info-order">주문안내</a></li>
                     <li><a href="/Manager/info-pay">결제안내</a></li>
                     <li><a href="/Manager/info-service">배송안내</a></li>
                     <li><a href="/Manager/info-refund"  >교환/반품안내</a></li>
@@ -22,7 +22,7 @@
                     <li><a href="/Manager/info-privacy">개인정보처리방침 안내</a></li>
                     <li><a href="/Manager/info-main2">제3자동의 이용약관</a></li>
                     <li><a href="/Manager/info-privacy2">개인정보 수집 및 이용</a></li>
-                    <li><a href="/Manager/info-privacy3">개인정보 제공</a></li>
+                    <li><a href="/Manager/info-privacy3" class="active">개인정보 제공</a></li>
                 </ul>
                 <div class="text-editor clearfix">
                     <textarea name="market_config_value" id="summernote">${config.market_config_value}</textarea>

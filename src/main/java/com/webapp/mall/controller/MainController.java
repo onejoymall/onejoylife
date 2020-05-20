@@ -508,6 +508,15 @@ public class MainController {
             params.put("market_config_code","info-join");
             Map<String,Object> infoJoin = configDAO.getConfigDetail(params);
             model.addAttribute("infoJoin", infoJoin);
+            params.put("market_config_code","info-main2");
+            Map<String,Object> infoMain2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain2", infoMain2);
+            params.put("market_config_code","info-privacy2");
+            Map<String,Object> infoPrivacy2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy2", infoPrivacy2);
+            params.put("market_config_code","info-privacy3");
+            Map<String,Object> infoPrivacy3 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy3", infoPrivacy3);
 
         }catch(Exception e){
             e.printStackTrace();
@@ -530,6 +539,15 @@ public class MainController {
             params.put("market_config_code","info-join");
             Map<String,Object> infoJoin = configDAO.getConfigDetail(params);
             model.addAttribute("infoJoin", infoJoin);
+            params.put("market_config_code","info-main2");
+            Map<String,Object> infoMain2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoMain2", infoMain2);
+            params.put("market_config_code","info-privacy2");
+            Map<String,Object> infoPrivacy2 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy2", infoPrivacy2);
+            params.put("market_config_code","info-privacy3");
+            Map<String,Object> infoPrivacy3 = configDAO.getConfigDetail(params);
+            model.addAttribute("infoPrivacy3", infoPrivacy3);
 
         }catch(Exception e){
             e.printStackTrace();
