@@ -357,10 +357,23 @@ public class ProductController {
             //결제비용
             Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
             List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
+            for(Map<String,Object> map : cartPaymentList) {
+            	map.put("delivery_payment",deliveryPayment(map));
+            	//보유 쿠폰
+            	Map<String,Object> parameter = new HashMap<>();
+            	parameter.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
+            	parameter.put("coupon_ct", ((String)map.get("product_ct")).split("\\|"));
+            	parameter.put("product_payment",map.get("product_payment"));
+            	parameter.put("coupon_use_range", "O");
+                
+                //사용가능쿠폰
+                List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(parameter);
+                map.put("enableCouponList",enableCouponList);
+            }
             model.addAttribute("cartPaymentList", cartPaymentList);
             model.addAttribute("getCartSum", getCartSum);
             
-            //희망 배송일시 YN
+            //희망 배송일시 YN (상품중 하나라도 희망배송설정 Y면
             Map<String,Object> storeInfo = mgSystemDAO.getCartStoreHopeInfo(cartPaymentVO);
             model.addAttribute("store_delivery",storeInfo);
 
@@ -484,12 +497,12 @@ public class ProductController {
             }
 
             //관리자가 지정한 배송구분별 배송비용을 출력한다.
-            String splitDeliveryPaymentString=(String)params.get("product_delivery_payment");//구분별 배송비
+            String splitDeliveryPaymentString=String.valueOf(params.get("product_delivery_payment"));//구분별 배송비
             String splitDeliveryPaymentTypeString=(String)params.get("product_delivery_payment_type");//구분별 배송비
             String delivery_payment_class = (String) params.get("product_delivery_payment_class");
             Integer product_payment =(Integer)params.get("product_payment");
             Integer product_kg = Integer.parseInt((String)params.get("product_kg"));
-            Integer payment_order_quantity = Integer.parseInt((String)params.get("payment_order_quantity"));
+            Integer payment_order_quantity = Integer.parseInt(String.valueOf(params.get("payment_order_quantity")));
             if ("T".equals(delivery_payment_class)) {
                 deliveryPayment=0;
             } else if ("R".equals(delivery_payment_class)) {
