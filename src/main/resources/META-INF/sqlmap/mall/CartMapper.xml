@@ -90,7 +90,7 @@
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 5) as file_5
         from product_cart A 
-        left join product B 
+        join product B 
         on(A.product_cd = B.product_cd) 
         where A.cart_user_id =#{cart_user_id}
     </select>

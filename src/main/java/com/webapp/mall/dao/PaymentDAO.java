@@ -1,15 +1,16 @@
 package com.webapp.mall.dao;
 
-import com.webapp.board.common.FileVO;
-import com.webapp.mall.vo.CartPaymentVO;
-import com.webapp.mall.vo.DeliveryInfoVO;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import com.webapp.mall.vo.CartPaymentVO;
+import com.webapp.mall.vo.DeliveryInfoVO;
 
 @Repository
 public class PaymentDAO {
@@ -67,4 +68,23 @@ public class PaymentDAO {
     public void insertPaymentRefund(DeliveryInfoVO deliveryInfoVO)throws SQLException {
         sql.insert("mall.PaymentMapper.insertPaymentRefund",deliveryInfoVO);
     }
+	public void insertCartBundle(CartPaymentVO cartPaymentVO) {
+		for(int i=0;i<cartPaymentVO.getChk().length;i++){
+			Map<String,Object> map = new HashMap<>();
+			map.put("product_cd",cartPaymentVO.getProduct_cd()[i]);
+			map.put("payment_cd",cartPaymentVO.getPayment_cd());
+			map.put("order_no",cartPaymentVO.getOrder_no());
+			map.put("cart_cd",cartPaymentVO.getChk()[i]);
+			map.put("payment_type_cd",cartPaymentVO.getPayment_type_cd());
+			map.put("payment_order_quantity",cartPaymentVO.getPayment_order_quantity()[i]);
+			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i]);
+            sql.insert("mall.PaymentMapper.insertBundle", map);
+            
+            //쿠폰사용으로 변경
+            if(map.get("coupon_cd") != null && !map.get("coupon_cd").equals("")) {
+            	map.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
+            	sql.update("mall.CouponMapper.updateCouponUse",map);
+            }
+        }
+	}
 }

@@ -1,7 +1,7 @@
 package com.webapp.mall.vo;
 
 public class CartPaymentVO extends CommonVO {
-    private String cart_user_id;
+   private String cart_user_id;
    private String error_msg;
    private String merchant_uid;
    private String payment;
@@ -14,6 +14,9 @@ public class CartPaymentVO extends CommonVO {
    private String payment_type_cd;
    private String pg_provider;
    private String success;
+   private String[] product_cd;
+   private String[] coupon_cd;
+   private String[] payment_order_quantity;
 
     public String getError_msg() {
         return error_msg;
@@ -118,5 +121,29 @@ public class CartPaymentVO extends CommonVO {
     public void setCart_user_id(String cart_user_id) {
         this.cart_user_id = cart_user_id;
     }
+
+	public String[] getProduct_cd() {
+		return product_cd;
+	}
+
+	public void setProduct_cd(String[] product_cd) {
+		this.product_cd = product_cd;
+	}
+
+	public String[] getCoupon_cd() {
+		return coupon_cd;
+	}
+
+	public void setCoupon_cd(String[] coupon_cd) {
+		this.coupon_cd = coupon_cd;
+	}
+
+	public String[] getPayment_order_quantity() {
+		return payment_order_quantity;
+	}
+
+	public void setPayment_order_quantity(String[] payment_order_quantity) {
+		this.payment_order_quantity = payment_order_quantity;
+	}
 
 }

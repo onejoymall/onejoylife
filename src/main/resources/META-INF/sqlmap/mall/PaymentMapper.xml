@@ -6,6 +6,7 @@
     <insert id="insertPayment" parameterType="java.util.Map">
         insert into payment(
         success,
+        product_order_name,
         imp_uid,
         payment_user_id,
         merchant_uid,
@@ -27,8 +28,9 @@
         payment_order_quantity
         )values (
          #{success},
+         #{product_order_name},
          #{imp_uid},
-          #{payment_user_id},
+         #{payment_user_id},
          #{merchant_uid},
          #{pay_method},
          #{pg_provider},
