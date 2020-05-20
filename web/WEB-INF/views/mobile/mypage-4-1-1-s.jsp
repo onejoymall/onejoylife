@@ -625,7 +625,7 @@ function show(num){
                         "amount" : $('input[name=payment]').val(),
                     },
                 ],
-            }, function (rsp) { // callback
+            }, function (rsp) { // callback 모바일 호출안됨
                 var formData = $('#defaultForm').serialize()
                     +'&payment_class=PRODUCT'
                     +'&success='+rsp.success

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com.webapp.board.app.BoardGroupSvc;
@@ -60,6 +61,7 @@ import com.webapp.manager.vo.ProductVO;
 
 @RestController
 public class restapiController {
+	IamportClient client;
     @Autowired
     private BoardSvc boardSvc;
     @Autowired
@@ -638,7 +640,7 @@ public class restapiController {
 
             params.put("email",session.getAttribute("email"));
             //실제 결제승인이 이뤄졌거나, 가상계좌 발급이 성공된 경우, true
-            if(deliveryInfoVO.getSuccess()){
+            if(deliveryInfoVO.getSuccess() != null){
                 params.put("payment_status","W");
                 //가상계좌결제시 미결제로 상태변경
                 if(deliveryInfoVO.getPay_method().equals("vbank")){
