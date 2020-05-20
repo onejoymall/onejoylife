@@ -44,9 +44,9 @@
 
     <insert id="insertConfig" parameterType="java.util.Map">
        insert into market_config
-       (market_config_code,market_config_value<if test="store_id != null and store_id != ''">,store_id</if>)
+        (market_config_id, market_config_code,market_config_value<if test="store_id != null and store_id != ''">,store_id</if>)
        values
-       (#{market_config_code},#{market_config_value}<if test="store_id != null and store_id != ''">,#{store_id}</if>)
+       (#{market_config_id},#{market_config_code},#{market_config_value}<if test="store_id != null and store_id != ''">,#{store_id}</if>)
         on duplicate KEY update
        market_config_value = #{market_config_value}
     </insert>

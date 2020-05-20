@@ -95,7 +95,7 @@
                         <input type="checkbox" name="option" id="ch">
                         <label for="ch">
                             <div class="ch-p-box">
-                                <p>본인은 <strong>만 14세 이상</strong>이며, <a href="#default-modal" rel="modal:open">원조이몰 이용약관,</a><a> 제3자동의 이용약관,</a><a> 개인정보 수집 및 이용,</a><a> 개인정보 제공,</a> 내용을 확인하였으며, 동의합니다.</p>
+                                <p>본인은 <strong>만 14세 이상</strong>이며, <a href="#default-modal" rel="modal:open">원조이몰 이용약관,</a><a href="#default-modal2" rel="modal:open"> 제3자동의 이용약관,</a><a href="#default-modal3" rel="modal:open"> 개인정보 수집 및 이용,</a><a href="#default-modal4" rel="modal:open"> 개인정보 제공,</a> 내용을 확인하였으며, 동의합니다.</p>
                             </div>
                         </label>
                     </div>

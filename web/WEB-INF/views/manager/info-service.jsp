@@ -20,6 +20,9 @@
                     <li><a href="/Manager/info-point">적립금 및 포인트</a></li>
                     <li><a href="/Manager/info-main">이용약관</a></li>
                     <li><a href="/Manager/info-privacy">개인정보처리방침</a></li>
+                    <li><a href="/Manager/info-main2">제3자동의 이용약관</a></li>
+                    <li><a href="/Manager/info-privacy2">개인정보 수집 및 이용</a></li>
+                    <li><a href="/Manager/info-privacy3">개인정보 제공</a></li>
                 </ul>
                 <div class="text-editor clearfix">
                     <textarea name="market_config_value" id="summernote">${config.market_config_value}</textarea>

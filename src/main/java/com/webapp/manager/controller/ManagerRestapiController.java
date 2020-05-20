@@ -1244,6 +1244,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
+            params.put("market_config_id", "systemText");
         	params.put("store_id", "admin");//임시
             configDAO.insertConfig(params);
             resultMap.put("redirectUrl",request.getHeader("Referer"));
