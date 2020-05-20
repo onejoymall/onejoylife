@@ -229,7 +229,7 @@
                                 <td class="sel-td">
 
                                     <div class="cla">
-                                        <input type="text" id="start_date" name="hope_date" class="date_pick">
+                                        <input type="text" id="start_date" name="delivery_hope_date" class="date_pick">
                                         <div class="cla-img1"></div>
                                     </div>
                                 </td>
@@ -241,7 +241,7 @@
                                 <td class="sel-td">
 									
 									<div class="cla">
-                                        <input type="text" name="hope_time" class="time_pick">
+                                        <input type="text" name="delivery_hope_time" class="time_pick">
                                         <!-- <div class="cla-img1"></div> -->
                                     </div>
                                 </td>
@@ -291,7 +291,6 @@
                                         </td>
                                         <td>
                                                 ${cartPaymentList.payment_order_quantity}
-                                            <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
                                         </td>
                                         <td>
                                             <div class="price-number before-price">
@@ -301,10 +300,6 @@
                                         </td>
                                         <td>
                                             <span><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /></span>원
-                                            <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
-                                            <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
-                                            <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
-                                            <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
                                         </td>
@@ -316,7 +311,7 @@
 		                                <td>쿠폰</td>
 		                                <td class="sec4-sel" colspan="5">
 		                                    <div class="sel-box">
-		                                        <select class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
+		                                        <select name="coupon_cd" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
 		                                        	<c:if test="${not empty cartPaymentList.enableCouponList}">
 		                                        		<option value="">선택 안함</option>
 		                                        		<c:forEach var="list" items="${cartPaymentList.enableCouponList}" varStatus="status">
@@ -436,7 +431,7 @@
                                 </div>
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2 total sum-span4"></span> 원</p>
-                                    <p><span><fmt:formatNumber value="${getCartSum.point_add}" groupingUsed="true" /> </span></span>원</p>
+                                    <p><span class="total sum-span5"></span></span>원</p>
                                 </div>
                             </div>
                         </div>
@@ -448,7 +443,10 @@
                     <div class="but-box">
                         <button type="button" id="submitPayment">결제하기</button>
                     </div>
-                    <input type="hidden" name="product_payment_pg" value="sumtotal">
+                    <input type="hidden" name="payment" value="9999999">
+                    <input type="hidden" name="product_order_name" value="상품이름">
+                    <input type="hidden" name="point_add" value="포인트">
+                    <input type="hidden" name="quantity_total" value="수량합">
                 </div>
             </form>
         </main>
@@ -483,6 +481,8 @@
 		var discount=0;
 		var delivery=0;
 		var total=0;
+		var point=0;
+		var quantity=0;
 		
 		var storeDeliveryList = {};
 		ids.forEach(function(id){
@@ -490,8 +490,12 @@
 				return el.cart_cd == id
 			});
 			
-			payment += cart.product_user_payment*cart.payment_order_quantity;
-			discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
+			var point_rate = (cart.product_point_rate && cart.product_point_rate > 0) ? cart.product_point_rate : 0;
+			payment += parseInt(cart.product_user_payment*cart.payment_order_quantity);
+			discount += parseInt((cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity);
+			point += parseInt(((cart.product_payment*point_rate)/100)*cart.payment_order_quantity);
+			quantity += parseInt(cart.payment_order_quantity);
+
 			if(cart.product_delivery_bundle_yn == 'N'){ //묶음배송 아니면 상품의 배송비 + 지열별배송비  
 				delivery += parseInt(cart.delivery_payment) + parseInt(addDelivery[cart.product_user_ud] ? addDelivery[cart.product_user_ud] : 0);
 			}else{
@@ -516,7 +520,10 @@
 		$(".sum-span2").html(discount.toLocaleString('en'));
 		$(".sum-span3").html(delivery.toLocaleString('en'));
 		$(".sum-span4").html((payment-discount+delivery).toLocaleString('en'));
-		$('input[name=product_payment_pg]').val(payment-discount+delivery);
+		$(".sum-span5").html(point.toLocaleString('en'));
+		$('input[name=payment]').val(payment-discount+delivery);
+		$('input[name=point_add]').val(point);
+		$('input[name=quantity_total]').val(quantity);
 	}
 	
     //주문페이지 상품 삭제
@@ -696,7 +703,8 @@
                 icon: 'error'
             });
         }else{
-        	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + " 외 " + (cartList.length-1) + "건";  
+        	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + " 외 " + (cartList.length-1) + "건";
+        	$("input[name=product_order_name]").val(product_name);
 
             // loginAuth(data.access_token);
             // location.href=data.redirectUrl;
@@ -705,7 +713,7 @@
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: product_name,
-                amount: $('input[name=product_payment_pg]').val(),
+                amount: $('input[name=payment]').val(),
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
@@ -716,8 +724,8 @@
                     {
                         "orderNumber" : $('input[name=order_no]').val(),
                         "name" : cartList,
-                        "quantity" : $('input[name=payment_order_quantity]').val(),
-                        "amount" : $('input[name=product_payment_pg]').val(),
+                        "quantity" : $('input[name=quantity_total]').val(),
+                        "amount" : $('input[name=payment]').val(),
                     },
                 ],
             }, function (rsp) { // callback
@@ -734,7 +742,74 @@
                 var alertType;
                 var showText;
                 if(rsp.success){
-                    commonAjaxCall("POST","/Save/PaymentOrders",formData)
+                	jQuery.ajax({
+                        type: "POST",
+                        url: "/Save/PaymentOrders",
+                        data: formData,
+                        success: function (data) {
+                            if (data.validateError) {
+                                $('.validateError').empty();
+                                $.each(data.validateError, function (index, item) {
+                                    if(index == "Error"){//일반에러메세지
+                                        alertType = "error";
+                                        showText = item;
+                                    }else{
+                                        alertType = "error";
+                                        showText = index + " (은) " + item;
+                                    }
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'top-right',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                });
+
+                            } else {
+                                jQuery.ajax({
+                                    type: "POST",
+                                    url: "/SaveDeliveInfo",
+                                    data: $('#defaultForm').serialize(),
+                                    // enctype: 'multipart/form-data',
+                                    success: function (data) {
+                                        if (data.validateError) {
+                                            $('.validateError').empty();
+                                            $.each(data.validateError, function (index, item) {
+                                                // $('#validateError'+index).removeClass('none');
+                                                // $('#validateError'+index).html('* '+item);
+                                                if (index == "Error") {//일반에러메세지
+                                                    alertType = "error";
+                                                    showText = item;
+                                                } else {
+                                                    alertType = "error";
+                                                    showText = index + " (은) " + item;
+                                                }
+
+                                                $.toast({
+                                                    text: showText,
+                                                    showHideTransition: 'plain', //펴짐
+                                                    position: 'top-right',
+                                                    heading: 'Error',
+                                                    icon: 'error'
+                                                });
+                                            });
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        alert("error");
+                                    }
+                                });
+                                // loginAuth(data.access_token);
+                                location.href=data.redirectUrl;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("error");
+                        }
+                    });
+                    /* commonAjaxCall("POST","/Save/PaymentOrders",formData) */
                 }else{
                     $.toast({
                         text: rsp.error_msg,
