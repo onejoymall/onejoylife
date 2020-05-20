@@ -68,12 +68,14 @@
         
         <h2 class="pb-1 mt-4">배송지 정보</h2>
         <hr>
+        <c:if test="${sessionScope.login}">
         <p class="text-md mt-2 mb-05">배송지 선택</p>
         <div class="my-1">
-            <input type="radio" name="selectAddress" id="shipping01" checked value="OLD"><label for="shipping01">기본 배송지</label>
-            <input type="radio" id="shipping02" name="selectAddress" value="LAST"><label for="shipping02">최신 배송지</label>
-            <input type="radio" id="shipping03" name="selectAddress" value="NEW"><label for="shipping03">새로입력</label>
+            <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD"><label for="ra1-1">기본 배송지</label>
+            <input type="radio" id="ra1-2" name="selectAddress" value="LAST"><label for="ra1-2">최신 배송지</label>
+            <input type="radio" id="ra1-3" name="selectAddress" value="NEW"><label for="ra1-3">새로입력</label>
         </div>
+        </c:if>
         <p class="text-md mt-2 mb-05">받으시는 분</p>
         <input type="text" class="width-100 mb-05"  name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>">
         
@@ -155,45 +157,63 @@
 
 <c:if test="${not empty cartPaymentList}">
     <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
+    <div id="cart-wrap">
         <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
         <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
         <ul class="product pt-1 pb-0">
             <ul class="pdinfo py-0">
                 <li>
-                    <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
+                    <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
                         <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
                     </a>
                 </li>
                 <li>
-                    <p>${cartPaymentList.product_made_company_name}</p>
-                    <h5>${cartPaymentList.product_name}</h5>
-                    <p class="grey">${cartPaymentList.product_model}</p>
-
-                    <input type="hidden" name="allprice" value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}"/>
-                    <input type="hidden" name="price" value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}"/>
-                    <input type="hidden" name="delivery" value="${cartPaymentList.product_delivery_payment}"/>
-                    <input type="hidden" name="payment" value="${cartPaymentList.product_payment}">
-                    <input type="hidden" name="product_name" value="${cartPaymentList.product_name}">
-                    <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
+                    <%-- <p>${cartPaymentList.product_made_company_name}</p> --%>
+                    <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
+                    	<h5>${cartPaymentList.product_name}</h5>
+                   	</a>
+                    <%-- <p class="grey">${cartPaymentList.product_model}</p> --%>
                 </li>
-                <li><button class="del">삭제</button></li>
+                <li><button type="button" class="del del-p" value="${cartPaymentList.cart_cd}"></button></li>
             </ul>
-            <ul class="options">
-                <li>상품금액</li>
-                <li><fmt:formatNumber value="${cartPaymentList.product_payment}" groupingUsed="true" /> <span>원</span></li>
-               </ul>
             <ul class="options">
                 <li>수량</li>
-                <li><span>${cartPaymentList.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}"></span><span>개</span></li>
+                <li><span>${cartPaymentList.payment_order_quantity} 개</span></li>
             </ul>
-            <hr class="grey my-1">
+            <ul class="options ">
+                <li>소비자가</li>
+                <li class="line-through"><fmt:formatNumber value="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /><span> 원</span></li>
+            </ul>
             <ul class="options mb-1">
-                <li>주문금액</li>
-                <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /> <span>원</span></li>
-
+                <li>상품가격</li>
+                <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                 <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /><span> 원</span></li>
+            </ul>
+            <ul class="options">
+                <li>쿠폰 <span class="enable-coupon">(사용가능 쿠폰 <fmt:formatNumber value="${fn:length(cartPaymentList.enableCouponList)}" groupingUsed="true" />장)</span></li>
+                <li>
+	                <select name="coupon_cd" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
+	                	<c:if test="${not empty cartPaymentList.enableCouponList}">
+	                		<option value="">선택 안함</option>
+	                		<c:forEach var="list" items="${cartPaymentList.enableCouponList}" varStatus="status">
+	                    		<option value="${list.coupon_cd}" 
+	                   			 data-type="${list.coupon_sale_type}" 
+	                   			 data-sale-condition="${list.coupon_sale_cal_condition}"
+	                   			 data-sale-rate="${list.coupon_sale_rate}"
+	                   			 data-sale-payment="${list.coupon_sale_payment}">
+	                    			${list.coupon_name} ( ~ ${list.coupon_valid_date_end})
+	                   			</option>
+	                    	</c:forEach>
+	                    </c:if>
+	                    <c:if test="${empty cartPaymentList.enableCouponList}">
+	                    	<option value="">사용가능 쿠폰이 없습니다.</option>
+	                    </c:if>
+	                </select>
+                </li>
             </ul>
         </ul>
+        </div>
     </c:forEach>
 </c:if>
         <%--<h2 class="mt-4">할인 정보</h2>
@@ -231,31 +251,25 @@
         <hr>
         <ul class="calculator pt-2 pb-1">
             <li class="text-lg">총 상품 금액</li>
-            <li><span class="in1-font2"><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="sum-span1"></li>
         </ul>
        <ul class="calculator pb-1">
             <li>할인</li>
-            <li>- <span class="in1-font3 discount"><fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /><span>원</span></li>
+            <li class="sum-span2"></li>
         </ul>
-<%--        <ul class="calculator pb-1">--%>
-<%--            <li>할인쿠폰</li>--%>
-<%--            <li>- 9,000 <span>원</span></li>--%>
-<%--        </ul>--%>
-        <c:if test="${not empty getCartSum.total_delivery_payment}">
-            <ul class="calculator pb-1">
-                <li>배송비</li>
-                <li class="delivery"><fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
-            </ul>
-        </c:if>
+        <ul class="calculator pb-1">
+            <li>배송비</li>
+            <li class="delivery sum-span3"></li>
+        </ul>
 
         <hr class="grey my-1">
         <ul class="calculator pb-1">
             <li>최종 결제 금액</li>
-            <li class="text-lg red total"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-lg red total sum-span4" ></li>
         </ul>
         <ul class="calculator pb-1">
             <li>E-POINT 적립예정</li>
-            <li class="text-md red"><fmt:formatNumber value="${getCartSum.point_add}" groupingUsed="true" /> <span>원</span></li>
+            <li class="text-md red sum-span5"></li>
         </ul>
         <hr class="my-1">
         <input type="checkbox" id="replysns" class="b8 mb-2">
@@ -264,12 +278,13 @@
     <div class="bottomBtns">
         <ul>
            <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
-            <input type="hidden" name="product_payment_pg" value="sumtotal">
+            <input type="hidden" name="payment" value="9999999">
+            <input type="hidden" name="product_order_name" value="상품이름">
+            <input type="hidden" name="point_add" value="포인트">
+            <input type="hidden" name="quantity_total" value="수량합">
         </ul>
     </div>
-
     <input type="hidden" name="order_no" value="${order_no}">
-
     </form>
 
 
@@ -310,33 +325,190 @@ function show(num){
 </script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-    //주문페이지 상품 삭제
-    var allprice = ${getCartSum.total_ori_payment};
-    var alldiscount = ${getCartSum.total_ori_payment-getCartSum.total_payment};
-    var alldelivery = ${getCartSum.total_delivery_payment};
-    var sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-    $(document).on("click","button.del",function(){
-        $(this).parent().parent().parent().remove();
-        sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-        var before_price = $(this).parent().prev().children('input[name=allprice]').val();
-        var totalprice = allprice - before_price;
-        var price = $(this).parent().prev().children('input[name=price]').val();
-        var discount = before_price - price;
-        var totaldiscount = alldiscount - discount;
-        var delivery = $(this).parent().prev().children('input[name=delivery]').val();
-        var totaldelivery = alldelivery - delivery;
-        allprice = totalprice;
-        alldiscount = totaldiscount;
-        alldelivery = totaldelivery;
-        sumtotal = totalprice - totaldiscount + totaldelivery;
-        $('.in1-font2').text(totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        $('.discount').text(totaldiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        $('.delivery').text(totaldelivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        $('.total').text(sumtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        $('input[name=product_payment_pg]').attr('value', sumtotal);
-    })
-    sumtotal = ${getCartSum.total_payment+getCartSum.total_delivery_payment};
-    $('input[name=product_payment_pg]').attr('value', sumtotal);
+	var addDelivery = {};
+	var cartList = [];
+	var couponDiscount = 0;
+	<c:forEach var="list" items="${cartPaymentList}" varStatus="status">
+		var obj = {
+		<c:forEach var="el" items="${list}" varStatus="status">
+			<c:if test="${!fn:contains(el.key, 'html') && !fn:contains(el.key, 'editor')}">
+				${el.key}: "${el.value}",
+			</c:if>
+		</c:forEach>
+		};
+		cartList.push(obj);
+	</c:forEach>
+	
+	var ids = cartList.map(function(el){
+		return el.cart_cd;
+	});
+	applyCoupon();
+	addDeliveryPayment(ids);
+	computePayment(ids);
+	
+	function computePayment(ids){
+		var payment=0;
+		var discount=0;
+		var delivery=0;
+		var total=0;
+		var point=0;
+		var quantity=0;
+		
+		var storeDeliveryList = {};
+		ids.forEach(function(id){
+			var cart = cartList.find(function(el){
+				return el.cart_cd == id
+			});
+			
+			var point_rate = (cart.product_point_rate && cart.product_point_rate > 0) ? cart.product_point_rate : 0;
+			payment += parseInt(cart.product_user_payment*cart.payment_order_quantity);
+			discount += parseInt((cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity);
+			point += parseInt(((cart.product_payment*point_rate)/100)*cart.payment_order_quantity);
+			quantity += parseInt(cart.payment_order_quantity);
+	
+			if(cart.product_delivery_bundle_yn == 'N'){ //묶음배송 아니면 상품의 배송비 + 지열별배송비  
+				delivery += parseInt(cart.delivery_payment) + parseInt(addDelivery[cart.product_user_ud] ? addDelivery[cart.product_user_ud] : 0);
+			}else{
+				if(storeDeliveryList.hasOwnProperty(cart.product_user_ud)){ //스토어키가 이미 있다면 가장비싼배송비
+					if(storeDeliveryList[cart.product_user_ud] < cart.delivery_payment) { 
+						storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment) 
+	    			}
+				}else{ //키가없다면 키추가
+					storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment)
+				}
+			}
+		});
+		
+		//스토어별 지역별배송비
+		$.each(storeDeliveryList,function(key,val){
+			delivery += val + parseInt(addDelivery[key] ? addDelivery[key] : 0);
+		});
+		
+		discount += couponDiscount;
+		
+		$(".sum-span1").html(payment.toLocaleString('en') + '<span> 원</span>');
+		$(".sum-span2").html("- " + discount.toLocaleString('en') + '<span> 원</span>');
+		$(".sum-span3").html("+ " + delivery.toLocaleString('en') + '<span> 원</span>');
+		$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span> 원</span>');
+		$(".sum-span5").html(point.toLocaleString('en') + '<span> 원</span>');
+		$('input[name=payment]').val(payment-discount+delivery);
+		$('input[name=point_add]').val(point);
+		$('input[name=quantity_total]').val(quantity);
+	}
+	
+	//주문페이지 상품 삭제
+	$(document).on("click","button.del",function(){
+		if(cartList.length <= 1){
+			alert("삭제할 수 없습니다.");
+			return
+		}
+		var del_cart_cd = $(this).val();
+		var cartIdx = cartList.findIndex(function(el){
+			return el.cart_cd == del_cart_cd
+		});
+		cartList.splice(cartIdx,1);
+		
+	    $(this).closest("div#cart-wrap").remove();
+	    
+	    var ids = cartList.map(function(el){
+			return el.cart_cd;
+		});
+	    applyCoupon();
+		addDeliveryPayment(ids);
+		computePayment(ids);
+	});
+	
+	//추가배송비
+	function addDeliveryPayment(ids){
+		ids.forEach(function(id){
+			var cart = cartList.find(function(el){
+				return el.cart_cd == id
+			});
+			
+			var formData = "postcode="+$("input[name=postcode]").val()+"&product_cd="+cart.product_cd;
+			$.ajax({
+	            method:"post",
+	            url: "/additionalDeliveryPayment",
+	            data:formData,
+	            async: false,
+	            success: function (data) {
+	            	addDelivery[cart.product_user_ud] = data.additionalDeliveryPayment;
+	            },
+	            error: function (xhr, status, error) {
+	                console.log(error,xhr,status );
+	            }
+	        });
+		});
+	}
+	
+		//우편번호 변경이벤트
+	$("input[name=postcode]").on("input", function() {
+		var ids = cartList.map(function(el){
+			return el.cart_cd;
+		});
+		applyCoupon();
+		addDeliveryPayment(ids);
+		computePayment(ids);
+	});
+		
+		//쿠폰박스 변경시
+	$(".couponBox").on("input", function(){
+		var couponCd = $(this).val();
+		var curIdx = $(this).attr("data-id");
+		var isDup = false;
+	
+		$(".couponBox").each(function(index) {
+	   		if($(this).attr("data-id") != curIdx){ //선택한셀렉트제외 같은쿠폰이있다면
+	   			  if($(this).val() && $(this).val() == couponCd){
+	   				  isDup = true;
+	   			  }
+	   		}
+			});
+	
+		if(isDup){
+			$.toast({
+                text: "이미 선택된 쿠폰입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'top-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+			$(this).val('').trigger("click");
+			return;
+		}else{
+			applyCoupon();
+			addDeliveryPayment(ids);
+			computePayment(ids);
+		}
+	});
+	
+	//쿠폰적용
+	function applyCoupon(){
+		var disCoupon = 0;
+		$(".couponBox").each(function(index) {
+			if($(this).val()){
+				var option = $(this).children("option[value="+$(this).val()+"]");
+				var saleType = option.attr("data-type");
+				var saleCalCondition = option.attr("data-sale-condition");
+				var salePayment = option.attr("data-sale-payment");
+				var saleRate = option.attr("data-sale-rate");
+				
+				var productUserPayment = $(this).attr("data-user-payment");
+				var productPayment = $(this).attr("data-payment");
+				
+				if(saleType == 'amount'){
+					disCoupon += parseInt(salePayment);
+			    }else{
+					if(saleCalCondition == 'A'){
+					    disCoupon += parseInt(productUserPayment*(saleRate/100));
+				    }else{
+						disCoupon += parseInt(productPayment*(saleRate/100));
+				    }
+			    }
+		    }
+		});
+		couponDiscount = disCoupon;
+	}
 
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
@@ -428,6 +600,8 @@ function show(num){
                 }
             }
         }else{
+        	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + " 외 " + (cartList.length-1) + "건";
+        	$("input[name=product_order_name]").val(product_name);
 
             // loginAuth(data.access_token);
             // location.href=data.redirectUrl;
@@ -436,8 +610,7 @@ function show(num){
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
                 name: product_name,
-                amount: $('input[name=product_payment_pg]').val(),
-                <%--amount: ${getCartSum.total_payment+getCartSum.total_delivery_payment},--%>
+                amount: $('input[name=payment]').val(),
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
@@ -447,9 +620,9 @@ function show(num){
                 kcpProducts : [
                     {
                         "orderNumber" : $('input[name=order_no]').val(),
-                        "name" : '${detail.product_name}',
-                        "quantity" : $('input[name=payment_order_quantity]').val(),
-                        "amount" : ${detail.product_payment+deliveryPayment},
+                        "name" : cartList,
+                        "quantity" : $('input[name=quantity_total]').val(),
+                        "amount" : $('input[name=payment]').val(),
                     },
                 ],
             }, function (rsp) { // callback
@@ -466,7 +639,74 @@ function show(num){
                 var alertType;
                 var showText;
                 if(rsp.success){
-                    commonAjaxCall("POST","/Save/PaymentOrders",formData)
+                	jQuery.ajax({
+                        type: "POST",
+                        url: "/Save/PaymentOrders",
+                        data: formData,
+                        success: function (data) {
+                            if (data.validateError) {
+                                $('.validateError').empty();
+                                $.each(data.validateError, function (index, item) {
+                                    if(index == "Error"){//일반에러메세지
+                                        alertType = "error";
+                                        showText = item;
+                                    }else{
+                                        alertType = "error";
+                                        showText = index + " (은) " + item;
+                                    }
+                                    // $.toast().reset('all');//토스트 초기화
+                                    $.toast({
+                                        text: showText,
+                                        showHideTransition: 'plain', //펴짐
+                                        position: 'top-right',
+                                        heading: 'Error',
+                                        icon: 'error'
+                                    });
+                                });
+
+                            } else {
+                                jQuery.ajax({
+                                    type: "POST",
+                                    url: "/SaveDeliveInfo",
+                                    data: $('#defaultForm').serialize(),
+                                    // enctype: 'multipart/form-data',
+                                    success: function (data) {
+                                        if (data.validateError) {
+                                            $('.validateError').empty();
+                                            $.each(data.validateError, function (index, item) {
+                                                // $('#validateError'+index).removeClass('none');
+                                                // $('#validateError'+index).html('* '+item);
+                                                if (index == "Error") {//일반에러메세지
+                                                    alertType = "error";
+                                                    showText = item;
+                                                } else {
+                                                    alertType = "error";
+                                                    showText = index + " (은) " + item;
+                                                }
+
+                                                $.toast({
+                                                    text: showText,
+                                                    showHideTransition: 'plain', //펴짐
+                                                    position: 'top-right',
+                                                    heading: 'Error',
+                                                    icon: 'error'
+                                                });
+                                            });
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        alert("error");
+                                    }
+                                });
+                                // loginAuth(data.access_token);
+                                location.href=data.redirectUrl;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("error");
+                        }
+                    });
+                    /* commonAjaxCall("POST","/Save/PaymentOrders",formData) */
                 }else{
                     $.toast({
                         text: rsp.error_msg,

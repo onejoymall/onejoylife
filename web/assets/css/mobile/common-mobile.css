@@ -5009,3 +5009,22 @@ select#list-sort{
     overflow: auto;
     margin-top: 35px;
 }
+
+.del-p {
+	float: right;
+    width: 20px;
+    height: 20px;
+    background: url(../../img/x-red.png)no-repeat center / cover;
+    margin: 0 auto;
+}
+.couponBox{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #aaa;
+    outline: none;
+    margin: 12px 0;
+    padding-left: 10px;
+}
+.enable-coupon{
+	zoom: 0.8;
+}
