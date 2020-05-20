@@ -965,6 +965,12 @@ public class ManagerRestapiController {
         	if(productVO.getProduct_live_type().equals("")) {
         		productVO.setProduct_live_type(null);
         	}
+        	if(productVO.getProduct_validity_start().equals("")) {
+        		productVO.setProduct_validity_start(null);
+        	}
+        	if(productVO.getProduct_validity_end().equals("")) {
+        		productVO.setProduct_validity_end(null);
+        	}
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
             List<FileVO> filelist2 = fs.saveAllFiles(boardInfo.getUploadfile2(),downloadPath+"product");
@@ -997,9 +1003,9 @@ public class ManagerRestapiController {
             if(productVO.getProduct_payment() == null){
                 error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
             }
-            if(productVO.getProduct_user_payment() == null){
+            /*if(productVO.getProduct_user_payment() == null){
             	error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
-            }
+            }*/
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
