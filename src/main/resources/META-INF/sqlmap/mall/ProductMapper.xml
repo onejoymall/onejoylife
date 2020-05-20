@@ -197,7 +197,9 @@
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5,
             (select Z.product_delivery_bundle_yn from store_delivery Z where product.product_user_ud = Z.store_id) as product_delivery_bundle_yn
         from product where product_cd=#{product_cd}
-        and product_live_type is null
+        <if test="product_live_type == null or product_live_type == ''">
+        	and product_live_type is null
+        </if>
     </select>
     <select id="getUserProductPaymentList" resultType="java.util.HashMap">
         <![CDATA[

@@ -105,20 +105,20 @@
     <section class="wrap">
         <ul class="calculator">
             <li>총 주문금액</li>
-            <li><fmt:formatNumber value="${getCartSum.total_ori_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="sum-span1"></li>
         </ul>
         <ul class="calculator">
             <li>총 할인금액</li>
-            <li>- <fmt:formatNumber value="${getCartSum.total_ori_payment-getCartSum.total_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="sum-span2"></li>
         </ul>
         <ul class="calculator">
             <li>배송비</li>
-            <li>+ <fmt:formatNumber value="${getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="sum-span3"></li>
         </ul>
         <hr>
         <ul class="calculator">
             <li>원결제예정금액</li>
-            <li class="txtRed"><fmt:formatNumber value="${getCartSum.total_payment+getCartSum.total_delivery_payment}" groupingUsed="true" /> <span>원</span></li>
+            <li class="txtRed sum-span4"></li>
         </ul>
     </section>
     <div class="bottomBtns">
@@ -129,5 +129,66 @@
     </div>
 
 
-
+<script>
+var cartList = [];
+<c:forEach var="list" items="${list}" varStatus="status">
+	var obj = {
+	<c:forEach var="el" items="${list}" varStatus="status">
+		<c:if test="${!fn:contains(el.key, 'html')}">
+			${el.key}: "${el.value}",	
+		</c:if>
+	</c:forEach>
+	};
+	cartList.push(obj);
+</c:forEach>
+computePayment([]);
+$(function(){
+	$("input[type=checkbox][name=chk], #tr-ck1-1").on("input",function(){
+		var checkIds=[];
+		$('input[type=checkbox][name=chk]').each(function (index) {
+			if($(this).is(":checked")){
+				checkIds.push($(this).val());
+			}
+		});
+		computePayment(checkIds);
+	})
+});
+	
+function computePayment(ids){
+	var payment=0;
+	var discount=0;
+	var delivery=0;
+	var total=0;
+	
+	var storeDeliveryList = {};
+	ids.forEach(function(id){
+		var cart = cartList.find(function(el){
+			return el.cart_cd == id
+		});
+		
+		payment += cart.product_user_payment*cart.payment_order_quantity;
+		discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
+		if(cart.product_delivery_bundle_yn == 'N'){ //묶음배송체크
+			delivery += parseInt(cart.delivery_payment);
+		}else{
+			if(storeDeliveryList.hasOwnProperty(cart.product_user_ud)){ //키가있다면 가장비싼배송비
+				if(storeDeliveryList[cart.product_user_ud] < cart.delivery_payment) { 
+					storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment) 
+    			}
+			}else{ //키가없다면 키추가
+				storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment)
+			}
+		}
+	});
+	
+	$.each(storeDeliveryList,function(key,val){
+		delivery += val;
+	});
+	
+	$(".sum-span1").html(payment.toLocaleString('en') + '<span>원</span>');
+	$(".sum-span2").html('- ' + discount.toLocaleString('en') + '<span>원</span>');
+	$(".sum-span3").html('+ ' + delivery.toLocaleString('en') + '<span>원</span>');
+	$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span>원</span>');
+}
+</script>
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
