@@ -151,7 +151,17 @@
                           <option value="self">직접입력</option>
          </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
-         
+        
+         <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
+        	<p class="text-md mt-2 mb-05">배송 희망일자</p>
+        	<input type="text" id="start_date" name="hope_date" class="date_pick width-100 mb-05">
+        </c:if>
+        
+        <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
+	        <p class="text-md mt-2 mb-05">배송 희망시간</p>
+	        <input type="text" name="hope_time" class="time_pick width-100 mb-05">
+        </c:if>
+        
          <h2 class="pb-1 mt-4">주문상품 정보</h2>
          <hr>
 
@@ -159,7 +169,7 @@
     <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
     <div id="cart-wrap">
         <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
-        <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
+        <input type="hidden" name="chk[]" value="${cartPaymentList.cart_cd}">
         <ul class="product pt-1 pb-0">
             <ul class="pdinfo py-0">
                 <li>
@@ -187,13 +197,14 @@
             <ul class="options mb-1">
                 <li>상품가격</li>
                 <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
-                <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                <input type="hidden" name="product_cds[]" value="${cartPaymentList.product_cd}">
+                <input type="hidden" name="payment_order_quantity[]" value="${cartPaymentList.payment_order_quantity}">
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /><span> 원</span></li>
             </ul>
             <ul class="options">
                 <li>쿠폰 <span class="enable-coupon">(사용가능 쿠폰 <fmt:formatNumber value="${fn:length(cartPaymentList.enableCouponList)}" groupingUsed="true" />장)</span></li>
                 <li>
-	                <select name="coupon_cd" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
+	                <select name="coupon_cd[]" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
 	                	<c:if test="${not empty cartPaymentList.enableCouponList}">
 	                		<option value="">선택 안함</option>
 	                		<c:forEach var="list" items="${cartPaymentList.enableCouponList}" varStatus="status">
@@ -473,7 +484,7 @@ function show(num){
                 heading: 'Error',
                 icon: 'error'
             });
-			$(this).val('').trigger("click");
+			$(this).val('null').trigger("click");
 			return;
 		}else{
 			applyCoupon();
@@ -625,6 +636,7 @@ function show(num){
                         "amount" : $('input[name=payment]').val(),
                     },
                 ],
+                m_redirect_url: "${baseURL}/Save/PaymentOrdersMobile?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
             }, function (rsp) { // callback 모바일 호출안됨
                 var formData = $('#defaultForm').serialize()
                     +'&payment_class=PRODUCT'

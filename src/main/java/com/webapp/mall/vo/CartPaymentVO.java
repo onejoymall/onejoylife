@@ -15,6 +15,7 @@ public class CartPaymentVO extends CommonVO {
    private String pg_provider;
    private String success;
    private String[] product_cd;
+   private String[] product_cds;
    private String[] coupon_cd;
    private String[] payment_order_quantity;
 
@@ -144,6 +145,14 @@ public class CartPaymentVO extends CommonVO {
 
 	public void setPayment_order_quantity(String[] payment_order_quantity) {
 		this.payment_order_quantity = payment_order_quantity;
+	}
+
+	public String[] getProduct_cds() {
+		return product_cds;
+	}
+
+	public void setProduct_cds(String[] product_cds) {
+		this.product_cds = product_cds;
 	}
 
 }

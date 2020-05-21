@@ -69,4 +69,8 @@ public class CategoryDAO {
         }
 
     }
+	public Map<String, Object> getRootCategoty(Map<String, Object> params) {
+		Map<String, Object> getRootCategory = sql.selectOne("mall.CategoryMapper.getRootCategory", params);
+		return getRootCategory;
+	}
 }

@@ -1033,3 +1033,7 @@ input:checked + label.ra-icon{
     border-left:1px solid rgba(0,0,0,0.1);
 }
 /*옵션 선택 end*/
+.goods-information-wrap>.img-box>img{
+	width: 100%;
+	height: auto;
+}

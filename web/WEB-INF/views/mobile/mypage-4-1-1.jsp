@@ -421,7 +421,7 @@
 						"amount" : $('input[name=payment]').val(),
 					},
 				],
-				m_redirect_url: "${baseURL}/SavePayment?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
+				m_redirect_url: "${baseURL}/SavePaymentMobile?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
                 <%--m_redirect_url: "${baseURL}/MyPage/OrderAndDelivery",--%>
 			}, function (rsp) { // callback
 				var formData = $('#defaultForm').serialize()

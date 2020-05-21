@@ -35,7 +35,10 @@ function commonAjaxCall(type,url,formData){
                     icon: 'success',
                     hideAfter: 1000,
                     afterHidden: function () {
-                        location.href = data.redirectUrl;
+                    	if(data.redirectUrl)
+                    		location.href = data.redirectUrl;
+                    	else
+                    		location.reload();
                     }
                 });
             }
