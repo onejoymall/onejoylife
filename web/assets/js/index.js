@@ -508,11 +508,27 @@ $(function(){
     });
 });
 
+//공지사항
 $('.main-title-box').click(function(){
-    $(this).parent().toggleClass('active');
+    if($(this).parents('.notice-data-item').hasClass('active')){
+        $(this).parents('.notice-data-item').removeClass('active');
+    }else{
+        $(this).parents('.notice-data-item').addClass('active');
+    }
 });
-$('.faq-sort-item a').click(function(){
-    event.preventDefault();
-    $(this).parents($('.faq-sort-list')).find($('a')).removeClass('active');
-    $(this).addClass('active');
-})
+//1:1
+$('.main-title-box').click(function(){
+    if($(this).parents('.qna-data-item').hasClass('active')){
+        $(this).parents('.qna-data-item').removeClass('active');
+    }else{
+        $(this).parents('.qna-data-item').addClass('active');
+    }
+});
+//FAQ
+$('.main-title-box').click(function(){
+    if($(this).parents('.faq-data-item').hasClass('active')){
+        $(this).parents('.faq-data-item').removeClass('active');
+    }else{
+        $(this).parents('.faq-data-item').addClass('active');
+    }
+});

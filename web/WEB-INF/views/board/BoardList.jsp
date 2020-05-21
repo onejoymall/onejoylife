@@ -44,6 +44,9 @@
 <%--						</li>--%>
 
 						<c:forEach var="listview" items="${listview}" varStatus="status">
+							<c:url var="link" value="/Board/boardList">
+								<c:param name="brdno" value="${listview.brdno}" />
+							</c:url>
 							<c:url var="link" value="/Board/boardRead">
 								<c:param name="brdno" value="${listview.brdno}" />
 							</c:url>
@@ -65,7 +68,6 @@
 								<div class="content-box">
 									<div class="notice-setting-box">
 										<span>첨부파일 : <i class="file-ic"></i>
-											<input type="hidden" id="brdno" name="brdno" value="<c:out value="${listview.brdno}"/>">
 											<%--<a href="#" class="file-name">설치신청서.DOC</a>--%>
 											<c:forEach var="list" items="${list}" varStatus="status">
 												<a href="/Board/fileDownload?filename=<c:out value="${list.filename}"/>&downname=<c:out value="${list.realname }"/>">
@@ -100,16 +102,4 @@
 		</main>
 	</div>
 </div>
-<script>
-
-	$('.main-title-box').click(function(){
-		$(this).parent($('.notice-data-item')).toggleClass('active');
-	});
-
-    $('.notice-sort-item a').click(function(){
-        event.preventDefault();
-        $(this).parents($('.notice-sort-list')).find($('a')).removeClass('active');
-        $(this).addClass('active');
-    })
-</script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
