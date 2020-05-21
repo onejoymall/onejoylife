@@ -951,7 +951,7 @@ public class ManagerRestapiController {
     //상품등록 에디터 이미지 업로드
     @RequestMapping(value="/Manager/uploadSummernoteImageFile", method = RequestMethod.POST, produces = "application/json")
 //    @ResponseBody
-    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
+    public HashMap<String, Object> uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request) throws Exception{
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
 
@@ -964,11 +964,11 @@ public class ManagerRestapiController {
         String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 
         File targetFile = new File(fileRoot + savedFileName);
-
+        Object siteUrl = request.getRequestURL().toString().replace(request.getRequestURI(),"");
         try {
             InputStream fileStream = multipartFile.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-            resultMap.put("url", "/product/editorUploads/"+savedFileName);
+            resultMap.put("url", siteUrl+"/product/editorUploads/"+savedFileName);
             resultMap.put("responseCode", "success");
 
         } catch (IOException e) {
