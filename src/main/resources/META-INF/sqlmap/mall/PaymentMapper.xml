@@ -97,6 +97,7 @@
     <select id="getPaymentList" resultType="java.util.HashMap">
     <![CDATA[
         SELECT
+        	IF(A.product_order_name is not null,A.product_order_name,B.product_name) as product_name,
             A.*,B.*,
             (select Z.username from user Z where Z.usr_id=A.payment_user_id) as username,
             (select Z.email from user Z where Z.usr_id=A.payment_user_id) as email,
