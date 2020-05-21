@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="faq-search-result active">
-                        <p><b class="text-red">"<span id="search1">냉장고</span>"</b>관련 검색결과 총 <b class="text-red"><span id="search2">0</span></b> 개가 검색되었습니다.</p>
+<%--                        <p><b class="text-red">"<span id="search1">냉장고</span>"</b>관련 검색결과 총 <b class="text-red"><span id="search2">0</span></b> 개가 검색되었습니다.</p>--%>
                     </div>
                     <ul class="faq-data-list">
                         <li class="faq-data-title">
