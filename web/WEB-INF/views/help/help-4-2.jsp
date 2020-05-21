@@ -189,19 +189,5 @@
             }
         }
 
-        // $('.notice-sort-item a').click(function(){
-        //     event.preventDefault();
-        //     $(this).parents($('.notice-sort-list')).find($('a')).removeClass('active');
-        //     $(this).addClass('active');
-        // })
-        // var uploadFile = $('.fileBox .uploadBtn');
-        // uploadFile.on('change', function(){
-        //     if(window.FileReader){
-        //         var filename = $(this)[0].files[0].name;
-        //     } else {
-        //         var filename = $(this).val().split('/').pop().split('\\').pop();
-        //     }
-        //     $(this).siblings('.fileName').val(filename);
-        // });
     </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
