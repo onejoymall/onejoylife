@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class FileDownload {
-
+    @Value("${downloadPath}")
+    private String downloadPath;
     /**
      * 파일(첨부파일, 이미지등) 다운로드.
      */
     @RequestMapping(value = "/Board/fileDownload")
-    public void fileDownload(HttpServletRequest request,HttpServletResponse response) {
+    public void fileDownload(HttpServletRequest request,HttpServletResponse response) throws Exception{
 
-        String path = "";
+        String path = downloadPath+"board";
         
         String filename = request.getParameter("filename");
         String downname = request.getParameter("downname");
@@ -36,8 +37,8 @@ public class FileDownload {
         
         try {
             filename = URLEncoder.encode(filename, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            System.out.println("UnsupportedEncodingException");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         
         realPath = path +"/"+ downname.substring(0,4) + "/" + downname;
@@ -65,6 +66,8 @@ public class FileDownload {
             System.out.println("FileNotFoundException");
         } catch (IOException ex) {
             System.out.println("IOException");
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     

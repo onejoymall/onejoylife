@@ -69,7 +69,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/Manager/**" />
-
+			<mvc:exclude-mapping path="/Board/**" />
 			<mvc:exclude-mapping path="/Manager/ManagerSign/**" />
 			<mvc:exclude-mapping path="/Manager/productAddProc" />
 			<mvc:exclude-mapping path="/Manager/productAdd" />

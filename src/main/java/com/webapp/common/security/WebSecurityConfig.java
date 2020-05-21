@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
         	.antMatchers("/resources/**")
             .antMatchers("/assets/**")
+                .antMatchers("/Board/**")
 //        	.antMatchers("/**/introView.do")
 //            .antMatchers("/api/pay/multilanglist")
 //            .antMatchers("/api/assist/order")

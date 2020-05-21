@@ -62,6 +62,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
             .antMatchers("/assets").permitAll()
             .antMatchers("/resource").permitAll()
             .antMatchers("/authemail").permitAll()
+                .antMatchers("/Board").permitAll()
             .antMatchers(HttpMethod.OPTIONS).permitAll()
             //.antMatchers(HttpMethod.GET, "/**").permitAll()
             //.antMatchers().authenticated()
