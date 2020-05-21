@@ -22,6 +22,10 @@ public class CategoryDAO {
         List<Map<String, Object>> getCategoryEventList = sql.selectList("mall.CategoryMapper.getCategoryEventList",params);
         return getCategoryEventList;
     }
+    public Integer getCategoryListCount(SearchVO searchVO) throws SQLException {
+        Integer getCategoryListCount = sql.selectOne("mall.CategoryMapper.getCategoryListCount",searchVO);
+        return getCategoryListCount;
+    }
     public List<Map<String, Object>> getCategorySubList(Map<String, String> params) throws SQLException {
         List<Map<String, Object>> getCategorySubList = sql.selectList("mall.CategoryMapper.getCategorySubList",params);
         return getCategorySubList;

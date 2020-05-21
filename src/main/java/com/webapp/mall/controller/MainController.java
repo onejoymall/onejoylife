@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -433,6 +434,44 @@ public class MainController {
             return "mobile/today";
         } else {
             return "mall/today";
+        }
+    }
+    //이벤트 리스트
+    @RequestMapping(value="/mall/eventList")
+    public String eventList(Model model, HttpSession session, HashMap params, SearchVO searchVO, HttpServletRequest request) throws Exception {
+        Device device = DeviceUtils.getCurrentDevice(request);
+        try{
+            if(searchVO.getDisplayRowCount()==null || searchVO.getDisplayRowCount() < 12){
+                searchVO.setDisplayRowCount(12);
+            }
+            if(device.isMobile()){
+                searchVO.setDisplayRowCount(1000);
+            }
+            searchVO.pageCalculate(categoryDAO.getCategoryListCount(searchVO));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
+
+            //카테고리 목록
+            params.put("pd_category_event_use_yn","");
+            params.put("banner_use_yn","");
+            params.put("event_use_yn","Y");
+//            params.put("limit",12);
+
+            List<Map<String,Object>> eventList = categoryDAO.getCategoryEventList(params);
+            Map<String,Object> categoryRowData = categoryDAO.getCategoryDetail(searchVO);
+            model.addAttribute("eventList",eventList);
+            model.addAttribute("categoryRowData",categoryRowData);
+            model.addAttribute("searchVO", searchVO);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "category-sub");
+
+        if(device.isMobile()){
+            return "mobile/m-beauty-category-1";
+        } else {
+            return "mall/eventList";
         }
     }
     @RequestMapping(value = "/mall/live-shopping", method = RequestMethod.GET, produces = "application/json")

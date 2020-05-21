@@ -45,7 +45,7 @@
                 <div class="point-pdt-parti-wrap">
                     <div class="parti-percent-wrap">
                         <span class="progress">0%</span>
-                        <span class="progress-now">참여율 <b class="progress-now-number"> ${detail.parti_rate}%</b><span class="parti-ppl"> &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중&#41;</span></span>
+                        <span class="progress-now">참여율 <b class="progress-now-number"> ${detail.parti_rate}%</b><span class="parti-ppl"> <%--&#40;<span class="parti-ppl-number"><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중&#41;--%></span></span>
                         <span class="progress">100%</span>
                     </div>
                     <div class="progress-bar">
