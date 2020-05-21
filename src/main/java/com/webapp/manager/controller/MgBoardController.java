@@ -107,18 +107,20 @@ public class MgBoardController {
         String[] fileno = request.getParameterValues("fileno");
         try{
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"notice");
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"board");
 
             boardSvc.insertBoard(boardInfo, filelist, fileno);
-            if(boardInfo.getBgtype()!=null || boardInfo.getBgtype().equals("faq")){
-                if(boardInfo.getReno()!=null){
-                    boardReplyInfo.setReno(boardInfo.getReno());
+            if(boardInfo.getBgtype()!=null){
+                if(boardInfo.getBgtype().equals("faq")){
+                    if(boardInfo.getReno()!=null){
+                        boardReplyInfo.setReno(boardInfo.getReno());
+                    }
+                    boardReplyInfo.setRewriter(boardInfo.getBrdwriter());
+                    boardReplyInfo.setRedeleteflag("N");
+                    BoardVO boardInfoManNo  = boardSvc.selectBoardMaxOne(boardInfo.getBgno());
+                    boardReplyInfo.setBrdno(boardInfoManNo.getBrdno());
+                    boardSvc.insertBoardReply(boardReplyInfo);
                 }
-                boardReplyInfo.setRewriter(boardInfo.getBrdwriter());
-                boardReplyInfo.setRedeleteflag("N");
-                BoardVO boardInfoManNo  = boardSvc.selectBoardMaxOne(boardInfo.getBgno());
-                boardReplyInfo.setBrdno(boardInfoManNo.getBrdno());
-                boardSvc.insertBoardReply(boardReplyInfo);
             }
 
         }catch (Exception e){
