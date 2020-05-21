@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,7 +201,7 @@ public class ProductController {
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
-    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request) throws Exception {
+    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request,HttpServletResponse response) throws Exception {
         try{
 
             //상품 상세페이지 로드시 최근 본 상품 세션에 적용
@@ -423,8 +424,8 @@ public class ProductController {
     }
     //상품결제
     @RequestMapping(value = "/product/productPayment")
-    public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO) throws Exception{
-
+    public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO,
+    		@RequestParam(value = "select_option_value", required = false) String[] select_option_value, HttpServletResponse response) throws Exception{
         try{
         	if(params.get("email") != null && !params.get("email").equals("") && params.get("login").equals("true")) {
         		session.setAttribute("email", params.get("email"));
@@ -451,12 +452,12 @@ public class ProductController {
             Map<String,Object> delivery = giveawayDelivery(params);
             model.addAttribute("delivery",delivery );
             //옵션
-            params.put("product_option_input",detail.get("product_option_input"));
-            String option = getOption(params);
+//            params.put("product_option_input",detail.get("product_option_input"));
+//            String option = getOption(params);
+//            model.addAttribute("option",option );
 
             detail.put("payment_order_quantity",params.get("payment_order_quantity"));
             Integer deliveryPayment = deliveryPayment(detail);
-            model.addAttribute("option",option );
             model.addAttribute("deliveryPayment",deliveryPayment );
 
             //기본 배송설정
@@ -472,6 +473,19 @@ public class ProductController {
                 Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
                 model.addAttribute("userInfo",userInfo );
                 model.addAttribute("latestDelivery",latestDelivery );
+                String options = "";
+                if(select_option_value != null && select_option_value.length > 0) {
+                	options += String.join("/", select_option_value);
+                }
+                if(params.get("btn-option-value") != null && !params.get("btn-option-value").equals("")) {
+                	if(options.equals(""))  options += params.get("btn-option-value"); 
+                	else					options += "/"+params.get("btn-option-value");
+                }
+            	if(params.get("rd-option-value") != null && !params.get("rd-option-value").equals("")) {
+            		if(options.equals(""))  options += params.get("rd-option-value"); 
+                	else					options += "/"+params.get("rd-option-value");
+                }
+                model.addAttribute("option",new String(options.getBytes("8859_1"), "UTF-8"));
             }
             
             //보유 쿠폰
@@ -681,7 +695,7 @@ public class ProductController {
 
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += ""  +
-                                "   <button type=\"button\" class=\"optionBtn\" >"+splitThirdArray[i]+"</button>";
+                                "   <button type=\"button\" class=\"optionBtn\" name=\"btnOption\">"+splitThirdArray[i]+"</button>";
                     }
                     outText += "" +
                                 "</div>\n" +
@@ -696,7 +710,7 @@ public class ProductController {
 
                     for (int i = 0; i < splitThirdArray.length; i++) {
                         outText += "" +
-                            "<input type=\"radio\" id=\"rdOption"+i+"\" name=\"rdOption\"><label for=\"rdOption"+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
+                            "<input class=\"optionRd\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
                     }
                     outText += "" +
                                 "</div></div>\n" ;

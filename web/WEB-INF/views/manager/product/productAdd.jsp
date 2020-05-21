@@ -430,8 +430,8 @@
                     </tr>
                     <tr class="option-group hidden">
                         <th>옵션 스타일</th>
-                        <td><p class="cc2">셀렉트박스: S, 텍스트버튼: B, 라디오버튼: R<br>
-                            <input type="text" id="goods-option-style" name="product_option_style" placeholder="ex) P,B,S">
+                        <td><p class="cc2">셀렉트박스: P, 텍스트버튼: B, 라디오버튼: R<br>
+                            <input type="text" id="goods-option-style" name="product_option_style" placeholder="ex) P,B,R">
                         </td>
                     </tr>
                     <tr class="option-group hidden">

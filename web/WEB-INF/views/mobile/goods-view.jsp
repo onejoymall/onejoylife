@@ -16,7 +16,8 @@
             <option value="" selected>상품선택</option>
         </select>--%>
             ${option}
-
+			<input type="hidden" name="btn-option-value"/>
+			<input type="hidden" name="rd-option-value"/>
             <div class="purchaseBox mb-1">
                 <div class="item-delete">
                     <i class="ri-close-line"></i>
@@ -591,9 +592,22 @@ $(document).ready(function(){
 //        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
 //    });
     $('.optionBtn').click(function(){
-            $(this).siblings('.optionBtn').removeClass('on');
-            $(this).addClass('on');
-        })
+        $(this).siblings('.optionBtn').removeClass('on');
+        $(this).addClass('on');
+        var btnOptionValue = "";
+        $(".optionBtn.on").each(function(idx){
+        	btnOptionValue += (idx != 0 ? "/" : "") + $(this).text();
+        });
+        $("input[name=btn-option-value]").val(btnOptionValue);
+    })
+    $('.optionRd').click(function(){
+        var raOptionValue = "";
+        $(".optionRd:checked").each(function(idx){
+        	raOptionValue += (idx != 0 ? "/" : "") + $(this).val();
+        });
+        $("input[name=rd-option-value]").val(raOptionValue);
+    })
+    
     $('.goodsQna').on('click',function(){
         $(this).addClass('active');
         $('.goodsQna').not($(this)).removeClass('active');

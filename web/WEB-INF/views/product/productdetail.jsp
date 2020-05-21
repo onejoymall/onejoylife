@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -109,7 +109,8 @@
 
 
                         ${option}
-
+						<input type="hidden" name="btn-option-value"/>
+						<input type="hidden" name="rd-option-value"/>
 
                     </div>
                     <div class="quantity-box">
@@ -606,6 +607,18 @@
         $('.optionBtn').click(function(){
             $(this).siblings('.optionBtn').removeClass('on');
             $(this).addClass('on');
+            var btnOptionValue = "";
+            $(".optionBtn.on").each(function(idx){
+            	btnOptionValue += (idx != 0 ? "/" : "") + $(this).text();
+            });
+            $("input[name=btn-option-value]").val(btnOptionValue);
+        })
+        $('.optionRd').click(function(){
+            var raOptionValue = "";
+            $(".optionRd:checked").each(function(idx){
+            	raOptionValue += (idx != 0 ? "/" : "") + $(this).val();
+            });
+            $("input[name=rd-option-value]").val(raOptionValue);
         })
 
         $('.favorite').click(function(){

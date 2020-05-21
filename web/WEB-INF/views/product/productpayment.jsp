@@ -286,7 +286,7 @@
                                 <td><img src='${detail.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></td>
                                 <td class="p-box">
                                     <p>${detail.product_made_company_name}</p>
-                                    <p>${detail.product_name}</p>
+                                    <p>${detail.product_name} ${option}</p>
                                     <p>${detail.product_model}</p>
 <%--                                    <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                 </td>
@@ -415,6 +415,7 @@
                 <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
                 <input type="hidden" name="coupon_cd" value="">
                 <input type="hidden" name="coupon_paid_user_id" value="">
+                <input type="hidden" name="product_order_name" value="${detail.product_name} ${option}"/>
             </form>
         </main>
     </div>
@@ -517,7 +518,7 @@
                 pg: "kcp",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
                 merchant_uid:$('input[name=order_no]').val(),
-                name: '${detail.product_name}',
+                name: '${detail.product_name} ${option}',
                 amount: $('input[name=payment]').val(),
                 buyer_email: "${sessionScope.email}",
                 buyer_name: $('#order_user_name').val(),
@@ -528,7 +529,7 @@
                 kcpProducts : [
                     {
                         "orderNumber" : $('input[name=order_no]').val(),
-                        "name" : '${detail.product_name}',
+                        "name" : '${detail.product_name} ${option}',
                         "quantity" : $('input[name=payment_order_quantity]').val(),
                         "amount" : $('input[name=payment]').val(),
                     },
