@@ -23,6 +23,8 @@ import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller 
 public class BoardCtr {
@@ -39,9 +41,8 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-     public String boardList(BoardVO boardVO, SearchVO searchVO, ModelMap modelMap,HttpServletRequest request,HashMap params,HttpSession session )throws Exception {
+     public String boardList(@RequestParam HashMap params, BoardVO boardVO, SearchVO searchVO, ModelMap modelMap, HttpServletRequest request, HttpSession session )throws Exception {
         String returnString="";
-        String brdno = request.getParameter("brdno");
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -60,12 +61,9 @@ public class BoardCtr {
             }
             boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
-            List<?> list = boardSvc.selectBoard8FileList(brdno);
-
             List<?> listview  = boardSvc.selectBoardList(boardVO);
 
             modelMap.addAttribute("listview", listview);
-            modelMap.addAttribute("list", list);
             modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
@@ -162,7 +160,7 @@ public class BoardCtr {
         if (bgInfo == null) {
             return "board/BoardGroupFail";
         }
-        
+
         modelMap.addAttribute("boardInfo", boardInfo);
         modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("replylist", replylist);

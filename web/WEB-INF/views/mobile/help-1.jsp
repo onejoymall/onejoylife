@@ -5,13 +5,17 @@
 <c:import url="/mobile/layout/sub-header"/>
 
     <section class="subheader">
-        <div class="subTitle">원조이라이프 소개</div>
+        <div class="subTitle">원조이몰</div>
     </section>
     <div class="intro-imgbox clearfix">
          <p class="intro-img-txt">원조이라이프는 여러분의 행복을 책임집니다.</p>
      </div>
     <div class="wrap clearfix page-list help-1">
         <ul>
+            <li><!--2020.05.21 경품안내 추가-->
+                <a href="<c:url value="/Help/help-1-1"/>">경품안내</a>
+                <hr>
+            </li>
             <li>
                 <a href="<c:url value="/Help/usePointGuid"/>">포인트 사용안내</a>
                 <hr>

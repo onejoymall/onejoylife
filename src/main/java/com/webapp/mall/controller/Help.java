@@ -28,7 +28,7 @@ public class Help {
     private BoardSvc boardSvc;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
-    //회원정보 변경
+    //경품안내
     @RequestMapping(value="/Help/csinfo")
     public String helpCsInfo(Model model, HttpServletRequest request) {
         model.addAttribute("style", "help-1");
@@ -40,6 +40,13 @@ public class Help {
         } else {
             return "help/csinfo";
         }
+    }
+    @RequestMapping(value="/Help/help-1-1")
+    public String helpgiveawqy(Model model, HttpServletRequest request) {
+        model.addAttribute("style", "help-1");
+        model.addAttribute("leftNavOrder", "1");
+
+            return "mobile/help-1-1";
     }
     //포인트 사용안내
     @RequestMapping(value="/Help/usePointGuid")

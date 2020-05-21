@@ -34,5 +34,9 @@
 			document.form1.page.value=page;
 			document.form1.submit();
 		}
+		function fnSubmitForm(page){
+			document.form2.page.value=page;
+			document.form2.submit();
+		}
 	</script>
 </c:if>
