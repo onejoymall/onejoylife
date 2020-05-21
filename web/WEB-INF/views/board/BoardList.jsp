@@ -69,10 +69,8 @@
 									<div class="notice-setting-box">
 										<span>첨부파일 : <i class="file-ic"></i>
 											<%--<a href="#" class="file-name">설치신청서.DOC</a>--%>
-											<c:forEach var="list" items="${list}" varStatus="status">
-												<a href="/Board/fileDownload?filename=<c:out value="${list.filename}"/>&downname=<c:out value="${list.realname }"/>">
-												<c:out value="${list.filename}"/></a> <c:out value="${list.size2String()}"/><br/>
-											</c:forEach>
+											<a href="/Board/fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>">
+											<c:out value="${listview.filename}"/></a><br/>
 										</span>
 									</div>
 									<div class="notice-content-body">
