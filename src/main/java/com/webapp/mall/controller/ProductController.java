@@ -217,8 +217,28 @@ public class ProductController {
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> list = productDAO.getProductViewDetail(params);
-
+            
             model.addAttribute("list",list);
+            
+            //루트 카테고리
+//            Map<String,Object> rootCategory = categoryDAO.getRootCategoty(list);
+//            model.addAttribute("rootCategory", rootCategory);
+            
+            //같은공급사상품
+            list.put("rowStart",1);
+            list.put("displayRowCount",8);
+            List<Map<String,Object>> sameSupplierProductList = productDAO.sameSupplierProductList(list);
+            model.addAttribute("sameSupplierProductList", sameSupplierProductList);
+            
+            //관련상품 (카테고리기준)
+            list.put("product_cts",((String)list.get("product_ct")).split("\\|"));
+            List<Map<String,Object>> relatedProductList = productDAO.relatedProductList(list);
+            model.addAttribute("relatedProductList", relatedProductList);
+            
+            //함께본상품 
+//            List<Map<String,Object>> serialProductList = categoryDAO.serialProductList(list);
+//            model.addAttribute("serialProductList", serialProductList);
+            
             //찜한 상품 표기
             // 비회원 처리 로직 변경필요
             if(isEmpty(userInfo)){
@@ -414,6 +434,7 @@ public class ProductController {
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
             params.put("product_cd",request.getParameter("product_cd"));
+            params.put("product_live_type", "on");
             Map<String,Object> detail = productDAO.getProductViewDetail(params);
             //상품 금액
             params.put("product_payment",detail.get("product_payment"));

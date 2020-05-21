@@ -466,7 +466,7 @@ public class MyPage {
     }
     //주문상세
     @RequestMapping(value="/MyPage/OrderDetailGuest")
-    public String myPageOrderAndDeliveryDetailGuest(Model model,@RequestParam HashMap params) {
+    public String myPageOrderAndDeliveryDetailGuest(HttpServletRequest request, Model model,@RequestParam HashMap params) {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
@@ -477,7 +477,12 @@ public class MyPage {
         }
         model.addAttribute("leftNavOrder", 6);
         model.addAttribute("style", "mypage-6-1");
-        return "mypage/OrderAndDeliveryDetail";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-6-1";
+        } else {
+            return "mypage/OrderAndDeliveryDetail";
+        }
     }
 
     //취소

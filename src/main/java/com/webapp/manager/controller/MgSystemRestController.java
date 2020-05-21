@@ -191,7 +191,6 @@ public class MgSystemRestController {
                 resultMap.put("validateError",error);
             }else{
                 mgCommonDAO.productListCategoryUpdate(categoryVO);
-                resultMap.put("redirectUrl","/Manager/Product");
             }
         }catch (Exception e){
             e.printStackTrace();

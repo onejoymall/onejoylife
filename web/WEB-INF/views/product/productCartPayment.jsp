@@ -229,7 +229,7 @@
                                 <td class="sel-td">
 
                                     <div class="cla">
-                                        <input type="text" id="start_date" name="delivery_hope_date" class="date_pick">
+                                        <input type="text" id="start_date" name="hope_date" class="date_pick">
                                         <div class="cla-img1"></div>
                                     </div>
                                 </td>
@@ -241,7 +241,7 @@
                                 <td class="sel-td">
 									
 									<div class="cla">
-                                        <input type="text" name="delivery_hope_time" class="time_pick">
+                                        <input type="text" name="hope_time" class="time_pick">
                                         <!-- <div class="cla-img1"></div> -->
                                     </div>
                                 </td>
@@ -300,6 +300,7 @@
                                         <td>
                                             <span><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /></span>원
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
+                                            <input type="hidden" name="product_cds" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
                                         </td>
                                         <td>
@@ -451,6 +452,11 @@
         </main>
     </div>
 </div>
+
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, '')}" />
+<c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="noParamUrl" value="${baseURL}${requestPath}"/>
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>

@@ -261,4 +261,19 @@
               ) UU
         ) CC
     </select>
+    <select id="getRootCategory" parameterType="hashmap" resultType="hashmap">
+    	SELECT if(A.pd_category_upper_code = 0, 
+					A.pd_category_id, 
+					(SELECT if(B.pd_category_upper_code = 0, 
+								B.pd_category_id, 
+								(SELECT C.pd_category_id
+								FROM product_category C
+								WHERE C.pd_category_id = B.pd_category_upper_code)
+					)
+					FROM product_category B
+					WHERE B.pd_category_id = A.pd_category_upper_code)
+				) rootCategory
+		FROM product_category A
+		WHERE A.pd_category_id = #{product_ct}
+    </select>
 </mapper>

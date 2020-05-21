@@ -71,7 +71,7 @@ public class PaymentDAO {
 	public void insertCartBundle(CartPaymentVO cartPaymentVO) {
 		for(int i=0;i<cartPaymentVO.getChk().length;i++){
 			Map<String,Object> map = new HashMap<>();
-			map.put("product_cd",cartPaymentVO.getProduct_cd()[i]);
+			map.put("product_cd",cartPaymentVO.getProduct_cds()[i]);
 			map.put("payment_cd",cartPaymentVO.getPayment_cd());
 			map.put("order_no",cartPaymentVO.getOrder_no());
 			map.put("cart_cd",cartPaymentVO.getChk()[i]);
