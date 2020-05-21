@@ -41,9 +41,11 @@
                 (SELECT REMEMO FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) rememo,
                 (SELECT REWRITER FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REWRITER,
                 question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
+                (SELECT FILENAME  FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO order by FILENO  DESC limit 1) FILENAME,
+                (SELECT REALNAME  FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO order by FILENO  DESC limit 1) REALNAME,
                 email,phone,password,BRDMEMO,usr_id
 
-          FROM TBL_BOARD TB
+        FROM TBL_BOARD TB
          <include refid="includeBoard"/>
         <if test="usr_id != null and usr_id !=''">
             AND TB.usr_id=#{usr_id}

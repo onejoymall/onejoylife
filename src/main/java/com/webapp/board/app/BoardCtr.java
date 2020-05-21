@@ -43,7 +43,6 @@ public class BoardCtr {
     @RequestMapping(value = "/Board/boardList")
      public String boardList(@RequestParam HashMap params, BoardVO boardVO, SearchVO searchVO, ModelMap modelMap, HttpServletRequest request, HttpSession session )throws Exception {
         String returnString="";
-        String brdno = request.getParameter("brdno");
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -64,10 +63,7 @@ public class BoardCtr {
 
             List<?> listview  = boardSvc.selectBoardList(boardVO);
 
-            List<?> list = boardSvc.selectBoard8FileList(brdno);
-
             modelMap.addAttribute("listview", listview);
-            modelMap.addAttribute("list", list);
             modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
