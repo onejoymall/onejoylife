@@ -61,7 +61,7 @@
                             <div class="point-pdt-parti-wrap">
                                 <div class="parti-percent-wrap">
                                     <span class="progress">${list.parti_rate}%</span>
-                                    <span class="progress-now">참여율 <span class="progress-now-number">${list.parti_rate}%</span><span class="parti-ppl"> &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중&#41;</span></span>
+                                    <span class="progress-now">참여율 <span class="progress-now-number">${list.parti_rate}%</span><span class="parti-ppl"><%-- &#40;<span class="parti-ppl-number"><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중&#41;--%></span></span>
                                     <span class="progress">100%</span>
                                 </div>
                                 <div class="progress-bar">
@@ -226,7 +226,7 @@
         <h3 class="hide">특가 상품</h3>
         <div class="special-price-inner">
             <h4 class="main-section-h4">특가상품</h4>
-            <p class="special-price-more"><a href="#">특가 상품 더보기<i class="right-arrow"></i></a></p>
+            <p class="special-price-more"><a href="/mall/today">특가 상품 더보기<i class="right-arrow"></i></a></p>
 <%--            <div class="category-wrap clearfix" id="special-price-section-cate">--%>
 <%--                <div class="category-row-type2 clearfix">--%>
 <%--                    <div class="category-item active">--%>
@@ -360,7 +360,7 @@
         <h3 class="hide">이벤트</h3>
         <div class="event-inner clearfix">
             <h4 class="main-section-h4">이벤트</h4>
-            <p class="special-price-more"><a href="#">이벤트 더보기<i class="right-arrow"></i></a></p>
+            <p class="special-price-more"><a href="/mall/eventList">이벤트 더보기<i class="right-arrow"></i></a></p>
             <ul class="event-list">
         <c:if test="${not empty eventList}">
             <c:forEach var="eventList" items="${eventList}" varStatus="status">

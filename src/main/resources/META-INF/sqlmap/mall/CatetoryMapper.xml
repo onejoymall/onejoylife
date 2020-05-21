@@ -215,6 +215,13 @@
             limit #{limitTo},#{limitBe}
         </if>
     </select>
+    <select id="getCategoryListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
+        <![CDATA[
+        SELECT
+            count(*) as cnt
+        FROM product_category_event  where 1=1 AND event_use_yn='Y'
+        ]]>
+    </select>
     <delete id="deleteCategoryFile" parameterType="java.util.Map">
         delete from product_category_file  where key_id = #{parentPK} and file_order = #{fileorder}
     </delete>
