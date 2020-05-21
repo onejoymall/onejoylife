@@ -819,6 +819,28 @@ public class ManagerRestapiController {
                     categoryDAO.deleteCategoryFile(filelist5,fileVO);
                     categoryDAO.insertCategoryFile(filelist5,fileVO);
                 }
+                if(params.get("pd_category_event_start").equals("")){
+                    params.put("pd_category_event_start",null);
+                }
+                if(params.get("pd_category_event_end").equals("")){
+                    params.put("pd_category_event_end",null);
+                }
+                if(params.get("banner_start_date").equals("")){
+                    params.put("banner_start_date",null);
+                }
+                if(params.get("banner_end_date").equals("")){
+                    params.put("banner_end_date",null);
+                }
+                if(params.get("event_start_date").equals("")){
+                    params.put("event_start_date",null);
+                }
+                if(params.get("event_end_date").equals("")){
+                    params.put("event_end_date",null);
+                }
+
+
+
+
 
                 categoryDAO.insertCategoryEvent(params);
                 resultMap.put("redirectUrl","/Manager/Category");

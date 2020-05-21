@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.webapp.mall.dao.UserDAO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,8 @@ public class BoardCtr {
     private BoardSvc boardSvc;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
+    @Value("${downloadPath}")
+    private String downloadPath;
     
     /**
      * 리스트.
@@ -38,6 +41,7 @@ public class BoardCtr {
     @RequestMapping(value = "/Board/boardList")
      public String boardList(BoardVO boardVO, SearchVO searchVO, ModelMap modelMap,HttpServletRequest request,HashMap params,HttpSession session )throws Exception {
         String returnString="";
+        String brdno = request.getParameter("brdno");
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -56,9 +60,12 @@ public class BoardCtr {
             }
             boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
+            List<?> list = boardSvc.selectBoard8FileList(brdno);
+
             List<?> listview  = boardSvc.selectBoardList(boardVO);
 
             modelMap.addAttribute("listview", listview);
+            modelMap.addAttribute("list", list);
             modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));

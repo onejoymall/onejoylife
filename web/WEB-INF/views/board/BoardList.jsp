@@ -13,7 +13,6 @@
 			<%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
 			<div class="right-contain">
 				<div class="r-sec1">
-
 					<p class="sec1-h1"><c:out value="${bgInfo.bgname}"/></p>
 					<ul class="notice-data-list">
 						<li class="notice-data-title">
@@ -64,12 +63,19 @@
 									<div class="notice-date"><c:out value="${listview.brddate}"/></div>
 								</div>
 								<div class="content-box">
-<%--									<div class="notice-setting-box">--%>
-<%--										<span>첨부파일 : <i class="file-ic"></i><a href="#" class="file-name">설치신청서.DOC</a></span>--%>
-<%--									</div>--%>
+									<div class="notice-setting-box">
+										<span>첨부파일 : <i class="file-ic"></i>
+											<input type="hidden" id="brdno" name="brdno" value="<c:out value="${listview.brdno}"/>">
+											<%--<a href="#" class="file-name">설치신청서.DOC</a>--%>
+											<c:forEach var="list" items="${list}" varStatus="status">
+												<a href="/Board/fileDownload?filename=<c:out value="${list.filename}"/>&downname=<c:out value="${list.realname }"/>">
+												<c:out value="${list.filename}"/></a> <c:out value="${list.size2String()}"/><br/>
+											</c:forEach>
+										</span>
+									</div>
 									<div class="notice-content-body">
 										<div class="notice-content-body-a">
-											<p id="boardMemoPrint">123123</p>
+											<p id="boardMemoPrint">${listview.brdmemo}</p>
 										</div>
 									</div>
 								</div>

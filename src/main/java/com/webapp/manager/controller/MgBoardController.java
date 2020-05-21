@@ -6,6 +6,7 @@ import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ public class MgBoardController {
     private BoardSvc boardSvc;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
+    @Value("${downloadPath}")
+    private String downloadPath;
     /**
      * 리스트.
      */
@@ -104,7 +107,7 @@ public class MgBoardController {
         String[] fileno = request.getParameterValues("fileno");
         try{
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"notice");
 
             boardSvc.insertBoard(boardInfo, filelist, fileno);
             if(boardInfo.getBgtype()!=null || boardInfo.getBgtype().equals("faq")){
