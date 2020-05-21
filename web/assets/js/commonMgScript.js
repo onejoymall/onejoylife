@@ -340,7 +340,7 @@ $(document).on("click","#gradeChange",function () {
     });
 })
 
-//배송비 구분 선택 박스 변경 시
+// 배송비 구분 선택 박스 변경 시
 $(document).on("change","#shipping-fee",function(){
 	var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input class="onlyNumber" class="onlyNumber" type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';
     var shipM='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td><p class="cc2">구매 금액이 30,000원 미만일 때 배송비 2,500원을 부과하려면 30000|2500 입력</p><input class="onlyNumberAndPipe" type="text" id="product_delivery_payment" name="product_delivery_payment" placeholder="ex) 30000|2500"></td></tr>';
@@ -378,7 +378,7 @@ $(document).on("change","#shipping-fee",function(){
 
     }
     $('.shippingFee-detail-wrap').attr('style','display:table-row');
-    
+
     validationNumber();
 });
 //기본 배송 설정 클릭

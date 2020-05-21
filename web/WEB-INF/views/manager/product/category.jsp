@@ -70,6 +70,7 @@
                             <span>
                                 <input type="text" name="pd_category_name"  style="color:#363636!important;">
                             </span>
+                            <span id="ctUrl"></span>
                         </p>
                     </div>
                     <div class="main-right-sec">
