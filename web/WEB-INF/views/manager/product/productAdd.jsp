@@ -279,15 +279,15 @@
                     <tr>
                         <th>과세 구분</th>
                         <td>
-                            <input type="radio" id="goods-taxation" name="goods-tax" class="goods-tax" value="A" checked>
+                            <input type="radio" id="goods-taxation" name="product_tex_class" class="goods-tax" value="A" checked>
                             <label for="goods-taxation">과세 상품</label>
                             <label for="goods-taxation-detail">&#40;과세율 : </label>
                             <input class="onlyNumber" type="number" id="goods-taxation-detail" name="goods-taxation-detail" placeholder=""><span>%&#41;</span>
-                            <input type="radio" id="goods-taxFree" name="goods-tax" class="goods-tax" value="B">
+                            <input type="radio" id="goods-taxFree" name="product_tex_class" class="goods-tax" value="B">
                             <label for="goods-taxFree">면세 상품</label>
-                            <input type="radio" id="goods-taxZero" name="goods-tax"class="goods-tax" value="C">
+                            <input type="radio" id="goods-taxZero" name="product_tex_class"class="goods-tax" value="C">
                             <label for="goods-taxZero">영세 상품</label>
-                            <input type="hidden" name="product_tex_class" id="product_tex_class" value="A|0">
+<%--                            <input type="hidden" name="product_tex_class" id="product_tex_class" value="A|0">--%>
                         </td>
                     </tr>
                     <tr>
