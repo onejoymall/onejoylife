@@ -47,7 +47,7 @@
         </table>
     </section>
     <section class="wrap">
-        <h2 class="pb-1">등록된 쿠폰 내역</h2>
+        <h2 class="pb-1">등록된 쿠폰</h2>
         <hr>
         <table>
             <colgroup>
@@ -76,7 +76,7 @@
             </c:if>
             <c:if test="${empty userCouponList}">
                 <tr>
-                    <td colspan="2">사용 가능 쿠폰  Q&amp;A이 없습니다.</td>
+                    <td colspan="2">사용 가능 쿠폰이 없습니다.</td>
                 </tr>
             </c:if>
             </tbody>

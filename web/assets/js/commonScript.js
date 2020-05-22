@@ -635,7 +635,7 @@ $(document).on("click",".ra-num",function () {
                     });
 
                 } else {
-                    location.href=data.redirectUrl;
+                    location.reload();
                 }
             },
             error: function (xhr, status, error) {

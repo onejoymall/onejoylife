@@ -38,12 +38,23 @@
   </select>
   <select id="getOrderDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
-        SELECT
-            A.*,B.*,
-            (select Z.product_name from product Z where Z.product_cd = A.product_cd) product_name
+        SELECT 
+            A.*,B.*, C.*,
+            (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'M' AND Z.product_class_code = C.product_made_company_cd) AS product_made_company_name,
+            (SELECT Z.store_name FROM store Z WHERE Z.supplier_cd = C.product_supplier) AS product_supplier_name,
+            (SELECT Z.store_id FROM store Z WHERE Z.supplier_cd = C.product_supplier) AS product_supplier_id,
+            (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'B' AND Z.product_class_code = C.product_brand) AS product_brand_name,
+            (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'T' AND Z.product_class_code = C.product_trend) AS product_trend_name,
+            (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'O' AND Z.product_class_code = C.product_origin) AS product_origin_name,
+            (SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = A.payment_status ) AS payment_status_name,
+            (SELECT if(SUBSTRING_INDEX(C.product_tex_class, '|', 1) = 'A','과세상품',Z.code_name) FROM code Z WHERE Z.code = 'product_tex_class' AND Z.code_value = SUBSTRING_INDEX(C.product_tex_class, '|', 1) ) AS product_tex_class_name,
+            SUBSTRING_INDEX(C.product_tex_class, '|', -1) AS product_tex
+            
         FROM payment A 
         LEFT JOIN delivery_info B
         ON A.order_no = B.order_no
+        LEFT JOIN product C
+        ON A.product_cd = C.product_cd
         WHERE A.${pk} in
         ]]>
         <!-- <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>

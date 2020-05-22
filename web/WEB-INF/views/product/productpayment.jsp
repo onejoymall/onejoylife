@@ -28,11 +28,11 @@
                             <tbody class="sec1-tbody">
                             <tr>
                                 <td>주문하시는 분</td>
-                                <td><input type="text" name="order_user_name" id="order_user_name"  class="sec1-in1"  value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>"></td>
+                                <td><input type="text" name="order_user_name" id="order_user_name"  class="sec1-in1"  value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if><c:if test="${empty sessionScope.email}"></c:if>"></td>
                             </tr>
                             <tr>
                                 <td>이메일주소</td>
-                                <td><input type="text" name="order_user_email" id="order_user_email"  class="sec1-in1" value="<c:if test="${not empty sessionScope.email}">${sessionScope.email}</c:if>"></td>
+                                <td><input type="text" name="order_user_email" id="order_user_email"  class="sec1-in1" value="<c:if test="${not empty sessionScope.email}">${sessionScope.email}</c:if><c:if test="${empty sessionScope.email}"></c:if>"></td>
                             </tr>
                             <tr >
                                 <td>휴대폰 번호

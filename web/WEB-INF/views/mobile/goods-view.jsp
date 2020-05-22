@@ -22,7 +22,7 @@
                 <div class="item-delete">
                     <i class="ri-close-line"></i>
                 </div>
-                <h4>${list.product_name}</h4>
+                <h4>${list.product_brand_name}<br> ${list.product_name} <br> ${list.product_model_name}</h4>
                 <ul class="flexbetween">
                     <li class="width-35">
                         <div class="number-group">

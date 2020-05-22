@@ -85,9 +85,8 @@
         AND A.coupon_use_yn = 'N'
         AND SYSDATE() BETWEEN B.coupon_valid_date_start AND date_add(B.coupon_valid_date_end, INTERVAL 1 DAY)
 		AND (B.coupon_issue_date IS NULL OR SYSDATE() > B.coupon_issue_date)
-		AND if(B.coupon_use_min_amount IS NULL,1,#{product_payment} >= B.coupon_use_min_amount)
         ]]>
-
+		<if test="product_payment != null and product_payment !=''"> AND if(B.coupon_use_min_amount IS NULL,1,#{product_payment} >= B.coupon_use_min_amount)</if>
         <if test="coupon_paid_id != null and coupon_paid_id !=''"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
         <if test="coupon_cd != null and coupon_cd != ''"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
         <if test="coupon_ct != null and coupon_ct != ''">
