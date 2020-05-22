@@ -31,7 +31,7 @@
                         <p class="font-de1">배송중인 상품</p>
                         <p class="font-de2">
                             <a href="<c:url value="/MyPage/OrderAndDelivery"/>">
-                                <span>${getDeliveryListCount}</span>
+                                <span>${paymentCnt.rCnt}</span>
                             </a>
                         </p>
                     </div>
@@ -58,12 +58,13 @@
                             <p class="in-coin1 font-de1">OJT</p>
                             <p class="in-coin2 font-de2">
                                 <a href="#">
-                                    <span>0</span>
-                                    <span>coin</span>
+                                	<span>준비중</span>
+                                    <!-- <span>0</span>
+                                    <span>coin</span> -->
                                 </a>
                             </p>
                         </div>
-                        <div>
+                        <!-- <div>
                             <p class="in-coin1 font-de1">OJST</p>
                             <p class="in-coin2 font-de2">
                                 <a href="#">
@@ -71,7 +72,7 @@
                                     <span>coin</span>
                                 </a>
                             </p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
