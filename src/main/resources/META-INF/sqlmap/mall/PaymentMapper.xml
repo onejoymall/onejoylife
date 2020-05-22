@@ -116,7 +116,12 @@
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+		  	<if test='item == "product_name"'>
+		      	IF(A.product_order_name is not null,A.product_order_name,B.product_name) LIKE CONCAT('%', #{searchKeyword},'%' ) 
+		    </if>
+		    <if test='item != "product_name"'>
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	        </if>
 	      </foreach>
 	    </if>
         <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>

@@ -66,7 +66,7 @@
                     </table>
                 </div>
                 <div class="coupon2">
-                    <p class="cou-font">등록된 쿠폰 내역</p>
+                    <p class="cou-font">등록된 쿠폰</p>
                     <table>
                         <colgroup>
                             <col style="width:150px">
@@ -105,7 +105,7 @@
                         </c:if>
                         <c:if test="${empty userCouponList}">
                             <tr>
-                                <td colspan="5">사용 가능 쿠폰  Q&amp;A이 없습니다.</td>
+                                <td colspan="5">사용 가능 쿠폰이 없습니다.</td>
                                 <td></td>
                                 <td></td>
                             </tr>

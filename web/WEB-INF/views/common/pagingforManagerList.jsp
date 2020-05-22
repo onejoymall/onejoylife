@@ -31,12 +31,13 @@
 
 	<script type="text/javascript">
 		function fnSubmitForm(page){
-			document.form1.page.value=page;
-			document.form1.submit();
-		}
-		function fnSubmitForm(page){
-			document.form2.page.value=page;
-			document.form2.submit();
+			if(document.form1 && document.form1.page){
+				document.form1.page.value=page;
+				document.form1.submit();
+			}else{
+				document.form2.page.value=page;
+				document.form2.submit();
+			}
 		}
 	</script>
 </c:if>

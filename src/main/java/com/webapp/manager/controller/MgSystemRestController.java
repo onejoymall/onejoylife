@@ -147,7 +147,6 @@ public class MgSystemRestController {
                 resultMap.put("validateError",error);
             }else{
                 mgCommonDAO.listUpdate(mgCommonVO);
-                resultMap.put("redirectUrl","/Manager/Product");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -169,7 +168,7 @@ public class MgSystemRestController {
                 resultMap.put("validateError",error);
             }else{
                 mgCommonDAO.listStockUpdate(stockVO);
-                resultMap.put("redirectUrl","/Manager/Product");
+//                resultMap.put("redirectUrl","/Manager/Product");
             }
         }catch (Exception e){
             e.printStackTrace();
