@@ -14,10 +14,12 @@
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
-                        <button type="button" class="keyword-src-button">검색</button><div class="src-filter-wrap">
-                            <input type="checkbox" id="src-name">
-                            <label for="src-name">FAQ</label>
+                    	<input type="hidden" name="bgno" value="16"/>
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                        <button type="submit" class="keyword-src-button">검색</button>
+                        <div class="src-filter-wrap">
+                            <input type="checkbox" name="searchType" value="brdmemo" id="check2" checked>
+                            <label for="check2">FAQ</label>
                         </div>
                     </div>
                     <table class="keyword-src-table">
@@ -28,25 +30,22 @@
                             <col width="420px">
                         </colgroup>
                         <tbody>
-
-                            <tr>
-                                <th>작성일</th>
-                                <td>
-                                    <div class="input-box2">
-                                        <div class="cla">
-                                            <input type="text" id="from_date" name="from_date" class="date_pick">
-                                            <div class="cla-img1"></div>
-                                        </div>
-                                        <p class="cla-p1"> ~ </p>
-                                        <div class="cla">
-                                            <input type="text" id="to_date" name="to_date" class="date_pick">
-                                            <div class="cla-img1"></div>
-                                        </div>
+                        <tr>
+                            <th>등록일</th>
+                            <td>
+                                <div class="input-box2">
+                                    <div class="cla">
+                                        <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+                                        <div class="cla-img1"></div>
                                     </div>
-                                </td>   
-                                <th></th>
-                                <td></td>
-                            </tr>
+                                    <p class="cla-p1"> ~ </p>
+                                    <div class="cla">
+                                        <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+                                        <div class="cla-img1"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </form>
@@ -193,7 +192,7 @@
                <h2>FAQ 상세보기</h2>
                 <button type="button" class="modal-close">×</button>
             </div>
-            <form name="boardUpdateForm" id="boardUpdateForm" action="/Manager/boardSave" method="POST">
+            <form name="boardUpdateForm" id="boardUpdateForm" action="<c:url value="/Manager/boardSave"/>" method="POST">
                 <input type="hidden" name="brdno" >
                 <input type="hidden" name="reno" >
                 <div class="modal-body clearfix">
@@ -205,7 +204,7 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><input type="text" name="brdwriter"  value="관리자"></td>
+                                <td><input type="text" id="brdwriter" name="brdwriter"  value="관리자"></td>
                             </tr>
                             <tr>
                                 <th>분류</th>
@@ -295,18 +294,20 @@
             });
         });
         function faqSelect(bgno,brdno) {
-            $('.modal1').attr("style","display:block")
-            var formData = {"bgno":bgno,"brdno":brdno}
-            var dataList = commonAjaxListCall("POST","/Manager/BoardSelect",formData)
-            console.log(dataList)
+            $('.modal1').attr("style","display:block");
+            var formData = {"bgno":bgno,"brdno":brdno};
+            var html;
+            var dataList = commonAjaxListCall("POST","/Manager/BoardSelect",formData);
+            console.log(dataList.boardInfo);
             $.each(dataList.boardInfo,function (key,value) {
-                $('#boardUpdateForm input:hidden[name='+key+']').val(value);
-                $('#boardUpdateForm input:text[name='+key+']').val(value);
-                $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
                 if(key =="rememo"){
                     $('#summernoteBoard').summernote('code', value);
                 }
+                $('#boardUpdateForm input:hidden[name='+key+']').val(value);
+                $('#boardUpdateForm input:text[name='+key+']').val(value);
+                $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
             })
+            $('.modal1').html('');
         }
     </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
