@@ -19,9 +19,10 @@
                     <p class="sec1-h1">FAQ</p>
                     <div class="faq-search-box">
                         <span>FAQ 검색</span>
-                        <form action="/faq/search-page" id="faq-search-form" name="faq-search-form" method="get">
-                            <input type="text" id="faq-search" name="faq-search" class="input-text">
-                            <button id="faq-search-btn" type="button" class="search-btn">검색</button>
+                        <form id="faq-search-form" name="faq-search-form" method="get" >
+                            <input type="hidden" name="searchType" value="brdmemo">
+                            <input type="text" id="faq-search" class="input-text" name="searchKeyword" value="${param.searchKeyword}">
+                            <button id="faq-search-btn" type="submit" class="search-btn">검색</button>
                         </form>
                     </div>
                     <div class="faq-sort-list">
@@ -74,9 +75,11 @@
                             </a>
                         </div>
                     </div>
+                    <c:if test="${not empty param.searchKeyword}">
                     <div class="faq-search-result active">
-<%--                        <p><b class="text-red">"<span id="search1">냉장고</span>"</b>관련 검색결과 총 <b class="text-red"><span id="search2">0</span></b> 개가 검색되었습니다.</p>--%>
+                        <p><b class="text-red">"<span id="search1">${param.searchKeyword}</span>"</b>관련 검색결과 총 <b class="text-red"><span id="search2">${searchVO.totRow}</span></b> 개가 검색되었습니다.</p>
                     </div>
+                    </c:if>
                     <ul class="faq-data-list">
                         <li class="faq-data-title">
                             <div class="faq-sort">타입</div>
