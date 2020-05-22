@@ -92,9 +92,10 @@ public class MainController {
             if(device.isMobile()){
                 giveawayVO.setDisplayRowCount(4);
                 giveawayVO.setStaticRowEnd(4);
+            } else {
+                giveawayVO.setDisplayRowCount(3);
+                giveawayVO.setStaticRowEnd(3);
             }
-            giveawayVO.setDisplayRowCount(3);
-            giveawayVO.setStaticRowEnd(3);
             giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
