@@ -154,7 +154,7 @@
                                 <td>
                                     <p><input type="password" name="store_password" placeholder="비밀번호"></p>
                                     <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"></p>
-                                    <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 좋바으로 10-20자 미만</p>
+                                    <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 조합으로 10-20자 미만</p>
                                     <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>
                                 </td>
                             </tr>

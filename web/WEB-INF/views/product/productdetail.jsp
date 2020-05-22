@@ -135,7 +135,7 @@
                         <input type="hidden" name="order_max" value="${list.product_max_limit}" />
                         <input type="hidden" name="order_min" value="${list.product_min_limit}" />
                         <input type="hidden" name="product_delivery_bundle_yn" value="${list.product_delivery_bundle_yn}" />
-                        <input type="hidden" name="product_user_ud" value="${list.product_user_ud}" />
+                        <input type="hidden" name="product_store_id" value="${list.product_store_id}" />
                         <button class="favorite" type="button" data-id="${list.product_cd}">
 
                                 <i class="heart-empty <c:if test="${heart}">heart-full</c:if>"> </i>

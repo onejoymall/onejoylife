@@ -173,7 +173,7 @@
             product_stock_use_yn,
             product_stock_quantity,
             product_store_id,
-            product_user_ud,
+            product_store_id,
             (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
             (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
@@ -195,7 +195,7 @@
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 3) as file_3,
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
             (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5,
-            (select Z.product_delivery_bundle_yn from store_delivery Z where product.product_user_ud = Z.store_id) as product_delivery_bundle_yn
+            (select Z.product_delivery_bundle_yn from store_delivery Z where product.product_store_id = Z.store_id) as product_delivery_bundle_yn
         from product where product_cd=#{product_cd}
         <if test="product_live_type == null or product_live_type == ''">
         	and product_live_type is null
@@ -281,6 +281,7 @@
     <insert id="insertProduct" parameterType="com.webapp.manager.vo.ProductVO">
        insert into product(
         product_cd,
+        product_store_id,
         product_market_cd,
         product_use_yn,
         product_sale_yn,
@@ -380,6 +381,7 @@
         product_validity_end
        )values(
         #{product_cd},
+        #{product_store_id},
         #{product_market_cd},
         #{product_use_yn},
         #{product_sale_yn},
@@ -691,6 +693,7 @@
         <![CDATA[
         update product set
         product_market_cd=#{product_market_cd},
+        product_store_id=#{product_store_id},
         product_use_yn=#{product_use_yn},
         product_sale_yn=#{product_sale_yn},
         product_ct=#{product_ct},

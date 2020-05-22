@@ -745,6 +745,7 @@
                             <p class="cc2"><a href="#" class="codeSrc" data-id ="S">&#91;상품 코드정보조회&#93;</a>
                             </p>
                             <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
+                            <input type="hidden" name="product_store_id"/>
                         </td>
                     </tr>
                     <tr>
@@ -1248,6 +1249,159 @@
             </div>
             <button type="button" class="btn-red mr-10 updateCategorySubmitBtn">저장</button>
         </div>
+    </div>
+</div>
+
+<div class="modal modal1">
+    <div class="modal-content">
+        <form name="defaultForm1" id="defaultForm1" method="multipart/form-data">
+            <div class="modal-header">
+               <h2>입점업체 등록</h2>
+                <button type="button" class="modal-close1">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <h3>기본정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="142px">
+                        <col width="800px">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th>입점사 ID</th>
+                            <td>
+                                <input type="text" id="store_id" name="store_id">
+                                <button type="button" class="btn_file" id="storIdDupCheck">중복확인</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호 설정</th>
+                            <td>
+                                <p><input type="password" name="store_password" placeholder="비밀번호"></p>
+                                <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"></p>
+                                <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 조합으로 10-20자 미만</p>
+                                <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <h3>판매자</h3>
+                <table class="goods-detail-table">
+                        <colgroup>
+                            <col width="142px">
+                            <col width="800px">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>상호</th>
+                                <td>
+                                    <input type="text" id="store_name" name="store_name">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사업자등록번호</th>
+                                <td>
+<%--                                        <input type="radio" id="table-ra1" name="store_reg_type" value="D">--%>
+<%--                                        <label for="table-ra1">개인</label>--%>
+<%--                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">--%>
+<%--                                        <label for="table-ra2">법인</label>--%>
+                                    <input type="text" id="store_reg" name="store_reg">
+                                    <button type="button" class="btn_file" id="storRegDupCheck">중복확인</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>대표자</th>
+                                <td>
+                                    <input type="text" id="store_ceo_name" name="store_ceo_name">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>업태/업종</th>
+                                <td>
+                                    <input type="text" id="store_type" name="store_type"> / <input type="text" id="store_item" name="store_item">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>사업자등록증 사본</th>
+                                <td>
+                                    <div class="fileBox">
+                                        <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
+                                        <label for="uploadBtn" class="btn_file">파일찾기</label>
+                                        <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
+                                        <div class="fileDownload">
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>통신판매신고번호</th>
+                                <td>
+                                    <input type="text" id="store_online_reg" name="store_online_reg">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>전화</th>
+                                <td>
+                                    <input type="text" id="store_tel" name="store_tel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>메일</th>
+                                <td>
+                                    <input type="text" id="store_mail" name="store_mail">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>팩스</th>
+                                <td>
+                                    <input type="text" id="store_fax" name="store_fax">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>사업장 주소</th>
+                                <td class="address-td">
+                                    <p><input type="text" id="postcode" name="postcode"><button type="button" class="ad-but" id="daumMapCall">우편번호</button></p>
+                                    <p><span>(도로명)</span><input type="text" id="roadAddress" name="roadAddress" class="ad-input"></p>
+                                    <p><span>(지번)</span><input type="text" id="jibunAddress" name="jibunAddress" class="ad-input"></p>
+                                    <p><span>(공통상세)</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>계산서 수신메일</th>
+                                <td>
+                                    <input type="text" id="tex_email" name="tex_email">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>계좌번호</th>
+                                <td>
+                                    <input type="text" id="store_bank_account" name="store_bank_account">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>예금주</th>
+                                <td>
+                                    <input type="text" id="store_bank_holder" name="store_bank_holder">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>은행명</th>
+                                <td>
+                                    <input type="text" id="store_bank_name" name="store_bank_name">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <button type="button" id="formStoreSubmitProduct" class="btn-red">등록하기</button>
+                <div class="updateBtn hidden">
+                    <button type="button" id="storeApproval" class="btn-red">승인</button>
+                    <button type="button" id="storeUpdateSubmit" class="btn-red">수정</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <script>

@@ -352,17 +352,17 @@ public class MyPage {
             	total_payment += (int)map.get("product_user_payment") * (int)map.get("payment_order_quantity");
             	
             	//스토어 묶음배송
-            	if("N".equals(map.get("product_delivery_bundle_yn"))){
+            	if(!map.containsKey("product_delivery_bundle_yn") || "N".equals(map.get("product_delivery_bundle_yn"))){
             		total_delivery_payment += (int)map.get("delivery_payment");
             	}else if("Y".equals(map.get("product_delivery_bundle_yn"))) {
-            		if(storeDeliveryList.containsKey(map.get("product_user_ud"))){ //키가있으면
-            			if(storeDeliveryList.get((String)map.get("product_user_ud")) > (int)map.get("delivery_payment")) { //가장비싼배송비
-            				storeDeliveryList.put((String)map.get("product_user_ud"), storeDeliveryList.get((String)map.get("product_user_ud"))); 
+            		if(storeDeliveryList.containsKey(map.get("product_store_id"))){ //키가있으면
+            			if(storeDeliveryList.get((String)map.get("product_store_id")) > (int)map.get("delivery_payment")) { //가장비싼배송비
+            				storeDeliveryList.put((String)map.get("product_store_id"), storeDeliveryList.get((String)map.get("product_store_id"))); 
             			}else {
-            				storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment")); 
+            				storeDeliveryList.put((String)map.get("product_store_id"), (int)map.get("delivery_payment")); 
             			}
             		}else { //키가없으면
-            			storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment"));
+            			storeDeliveryList.put((String)map.get("product_store_id"), (int)map.get("delivery_payment"));
             		}
             	}
             }

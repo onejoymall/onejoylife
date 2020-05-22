@@ -377,15 +377,15 @@ function show(num){
 			point += parseInt(((cart.product_payment*point_rate)/100)*cart.payment_order_quantity);
 			quantity += parseInt(cart.payment_order_quantity);
 	
-			if(cart.product_delivery_bundle_yn == 'N'){ //묶음배송 아니면 상품의 배송비 + 지열별배송비  
-				delivery += parseInt(cart.delivery_payment) + parseInt(addDelivery[cart.product_user_ud] ? addDelivery[cart.product_user_ud] : 0);
+			if(!cart.product_delivery_bundle_yn || cart.product_delivery_bundle_yn == 'N'){ //묶음배송 아니면 상품의 배송비 + 지열별배송비  
+				delivery += parseInt(cart.delivery_payment) + parseInt(addDelivery[cart.product_store_id] ? addDelivery[cart.product_store_id] : 0);
 			}else{
-				if(storeDeliveryList.hasOwnProperty(cart.product_user_ud)){ //스토어키가 이미 있다면 가장비싼배송비
-					if(storeDeliveryList[cart.product_user_ud] < cart.delivery_payment) { 
-						storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment) 
+				if(storeDeliveryList.hasOwnProperty(cart.product_store_id)){ //스토어키가 이미 있다면 가장비싼배송비
+					if(storeDeliveryList[cart.product_store_id] < cart.delivery_payment) { 
+						storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment) 
 	    			}
 				}else{ //키가없다면 키추가
-					storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment)
+					storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment)
 				}
 			}
 		});
@@ -443,7 +443,7 @@ function show(num){
 	            data:formData,
 	            async: false,
 	            success: function (data) {
-	            	addDelivery[cart.product_user_ud] = data.additionalDeliveryPayment;
+	            	addDelivery[cart.product_store_id] = data.additionalDeliveryPayment;
 	            },
 	            error: function (xhr, status, error) {
 	                console.log(error,xhr,status );
