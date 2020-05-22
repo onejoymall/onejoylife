@@ -204,7 +204,7 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><input type="text" id="brdwriter" name="brdwriter"  value="관리자"></td>
+                                <td><input type="text" name="brdwriter"  value="관리자"></td>
                             </tr>
                             <tr>
                                 <th>분류</th>
@@ -296,7 +296,6 @@
         function faqSelect(bgno,brdno) {
             $('.modal1').attr("style","display:block");
             var formData = {"bgno":bgno,"brdno":brdno};
-            var html;
             var dataList = commonAjaxListCall("POST","/Manager/BoardSelect",formData);
             console.log(dataList.boardInfo);
             $.each(dataList.boardInfo,function (key,value) {
@@ -307,7 +306,6 @@
                 $('#boardUpdateForm input:text[name='+key+']').val(value);
                 $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
             })
-            $('.modal1').html('');
         }
     </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
