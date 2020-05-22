@@ -58,7 +58,7 @@
                         <div class="sec2-box">
                             <div class="sec2-p1">결제수단</div>
                             <div class="sec2-p2">
-                                <input type="radio" id="sec2-ra" name="payment_type_cd" value="card">
+                                <input type="radio" id="sec2-ra" name="payment_type_cd" value="card" checked>
                                 <label for="sec2-ra"><span class="ra-txt">신용카드</span></label>
                                 <input type="radio" id="sec2-ra2" name="payment_type_cd" value="trans">
                                 <label for="sec2-ra2"><span class="ra-txt">실시간 계좌이체</span></label>

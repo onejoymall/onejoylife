@@ -871,6 +871,7 @@
             $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
             $("#password_cfValidation").removeClass("text-success");
         }else{
+            $("#password_cfValidation").text(" * 비밀번호가 일치합니다.")
             $("#password_cfValidation").addClass("text-success");
         }
     })
