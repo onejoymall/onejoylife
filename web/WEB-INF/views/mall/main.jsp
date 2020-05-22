@@ -404,6 +404,13 @@
                     <div class="notice-title"><a>${noticeListView.brdtitle}</a></div>
                     <div class="notice-date"><span>${noticeListView.brddate}</span><i class="arrow-down" id="arrow"></i></div>
                     <div class="notice-content">
+                        <div class="notice-setting-box">
+                            <span>첨부파일 : <i class="file-ic"></i>
+                                <%--<a href="#" class="file-name">설치신청서.DOC</a>--%>
+                                <a href="/Board/fileDownload?filename=<c:out value="${noticeListView.filename}"/>&downname=<c:out value="${noticeListView.realname }"/>" class="file-name">
+                                <c:out value="${noticeListView.filename}"/></a><br/>
+                            </span>
+                        </div>
                             ${noticeListView.brdmemo}
                     </div>
                 </li>

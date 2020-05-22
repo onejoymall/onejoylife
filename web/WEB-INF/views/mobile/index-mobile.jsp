@@ -74,7 +74,7 @@
                     <li>
                         <a href="/product/productDetail?product_cd=${productList.product_cd}">
                             <div class="img-box">
-                                <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'">
+                                <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
@@ -126,7 +126,7 @@
                     <a href="/product/productDetail?product_cd=${productList.product_cd}">
                         <li>
                             <div class="img-box">
-                                <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" >
+                                <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                 <a href="#" class="share-ic"></a>
                             </div>
@@ -194,7 +194,7 @@
                     <li>
                         <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
                             <div class="img-box">
-                                   <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'">
+                                   <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
             <!--                    <p class="saleBox">35%</p>-->
                                 <a href="#" class="share-ic"></a>
                             </div>

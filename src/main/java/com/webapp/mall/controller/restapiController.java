@@ -512,17 +512,21 @@ public class restapiController {
                 giveaway_play_winner_point = (Integer) giveaway.get("giveaway_play_winner_point");
             }
             //상품응모포인트와 입력한 포인트
-            if(giveawayUsePoint > usedPoint){
+  /*          if(giveawayUsePoint > usedPoint){
                 error.put("Error", messageSource.getMessage("error.paymentUsedIsLess","ko"));
-            }
+            }*/
 
             Integer giveaMinPoint = (Integer)giveaway.get("giveaway_play_min_point");
-            if(giveaMinPoint > usedPoint){
-                error.put("Error", "경품 응모 최소 포인트 보다 응모하신 금액이 작습니다.");
-            }
             Integer giveaMaxPoint = (Integer)giveaway.get("giveaway_play_max_point");
-            if(giveaMaxPoint < usedPoint){
-                error.put("Error", "경품 응모 최대 포인트를 초과하였습니다.");
+            if(giveaMinPoint != null && giveaMinPoint != null && giveaMinPoint != 0 && giveaMinPoint != 0){
+                if(giveaMinPoint > usedPoint){
+                    error.put("Error", "경품 응모 최소 포인트 보다 응모하신 금액이 작습니다.");
+                }
+                if(giveaMaxPoint < usedPoint){
+                    error.put("Error", "경품 응모 최대 포인트를 초과하였습니다.");
+                }
+            } else{
+
             }
 
             //검증
