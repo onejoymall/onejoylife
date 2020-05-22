@@ -4,6 +4,7 @@ import com.webapp.board.common.SearchVO;
 
 public class StoreVO extends SearchVO {
     private String store_id;
+    private String supplier_cd;   
     private String store_password;
     private String store_passwordCf;
     private String store_name;
@@ -23,6 +24,10 @@ public class StoreVO extends SearchVO {
     private String store_approval_status;
     private String[] store_approval_status_arr;
     private String store_approval_date;
+    private String tex_email;
+    private String store_bank_account;
+    private String store_bank_holder;
+    private String store_bank_name;
 
     public String getStore_approval_date() {
         return store_approval_date;
@@ -186,4 +191,45 @@ public class StoreVO extends SearchVO {
     public String[] getStore_approval_status_arr() {
         return store_approval_status.split(",");
     }
+
+	public String getTex_email() {
+		return tex_email;
+	}
+
+	public void setTex_email(String tex_email) {
+		this.tex_email = tex_email;
+	}
+
+	public String getStore_bank_account() {
+		return store_bank_account;
+	}
+
+	public void setStore_bank_account(String store_bank_account) {
+		this.store_bank_account = store_bank_account;
+	}
+
+	public String getStore_bank_holder() {
+		return store_bank_holder;
+	}
+
+	public void setStore_bank_holder(String store_bank_holder) {
+		this.store_bank_holder = store_bank_holder;
+	}
+
+	public String getStore_bank_name() {
+		return store_bank_name;
+	}
+
+	public void setStore_bank_name(String store_bank_name) {
+		this.store_bank_name = store_bank_name;
+	}
+
+	public String getSupplier_cd() {
+		return supplier_cd;
+	}
+
+	public void setSupplier_cd(String supplier_cd) {
+		this.supplier_cd = supplier_cd;
+	}
+    
 }

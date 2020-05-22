@@ -1099,7 +1099,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-
+        	storeVO.setSupplier_cd("S"+numberGender.numberGen(6, 1));
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"store");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");

@@ -1547,7 +1547,18 @@ $(document).on("click",".ra-num",function () {
 
                 } else {
                     // loginAuth(data.access_token);
-                    location.href=data.redirectUrl;
+//                    location.href=data.redirectUrl;
+                	$.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'top-right',
+                        icon: 'success',
+                        hideAfter: 1000,
+                        afterHidden: function () {
+//                        	location.href=data.redirectUrl;
+                        	location.reload();
+                        }
+                    });
                 }
             },
             error: function (xhr, status, error) {

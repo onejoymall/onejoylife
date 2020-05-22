@@ -57,6 +57,7 @@
       insert into store
       (
         store_id,
+        supplier_cd,
         store_password,
         store_name,
         store_reg,
@@ -80,6 +81,7 @@
       values
       (
         #{store_id},
+        #{supplier_cd},
         #{store_password},
         #{store_name},
         #{store_reg},
@@ -95,10 +97,10 @@
         #{jibunAddress},
         #{extraAddress},
         #{store_approval_status},
-        #{tex_email),
-        #{store_bank_account),
-        #{store_bank_holder),
-        #{store_bank_name)
+        #{tex_email},
+        #{store_bank_account},
+        #{store_bank_holder},
+        #{store_bank_name}
       )
     </insert>
   <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">
