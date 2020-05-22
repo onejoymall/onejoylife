@@ -60,6 +60,8 @@ public class MainController {
     public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO, BoardVO boardVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
+
+        Device device = DeviceUtils.getCurrentDevice(request);
         try{
             HttpSession session = request.getSession();
 
@@ -84,7 +86,10 @@ public class MainController {
             searchVO.setProduct_use_yn("Y");
 
             //경품목록
-
+            if(device.isMobile()){
+                giveawayVO.setDisplayRowCount(4);
+                giveawayVO.setStaticRowEnd(4);
+            }
             giveawayVO.setDisplayRowCount(3);
             giveawayVO.setStaticRowEnd(3);
             giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
@@ -233,7 +238,6 @@ public class MainController {
             e.printStackTrace();
         }
 
-        Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
             return "mobile/index-mobile";
         } else {

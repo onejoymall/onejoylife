@@ -155,7 +155,7 @@
            <li>소비자가</li>
            <li class="line-through grey"><fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</li>
        </ul>
-       <ul class="flexbetween py-05">
+       <%--<ul class="flexbetween py-05">
            <li>세일</li>
            <li class="line-through grey">319,000원</li>
        </ul>--%>
