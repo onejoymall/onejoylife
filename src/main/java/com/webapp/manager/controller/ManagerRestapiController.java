@@ -1747,6 +1747,8 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
+    //FAQ 상세보기
     @RequestMapping(value = "/Manager/BoardSelect" ,method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> boardSelect (SearchVO searchVO, ModelMap modelMap, HttpServletRequest request) throws Exception{
         HashMap<String, Object> error = new HashMap<String, Object>();

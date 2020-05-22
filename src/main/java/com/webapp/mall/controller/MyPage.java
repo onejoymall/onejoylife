@@ -740,7 +740,12 @@ public class MyPage {
         }
 
         model.addAttribute("style", "mypage-4-2-1");
-        return "giveaway/giveawayform";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4-2-1";
+        } else{
+            return "giveaway/giveawayform";
+        }
     }
     //경품 결제
     @RequestMapping(value="/MyPage/giveawaypayment")
@@ -774,7 +779,13 @@ public class MyPage {
             e.printStackTrace();
         }
         model.addAttribute("style", "mypage-4-2-2");
-        return "mypage/GiveawayPayment";
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/mypage-4-2-2";
+        } else{
+            return "mypage/GiveawayPayment";
+        }
+
     }
     //회원정보 변경 비번확인
     @RequestMapping(value="/MyPage/mypage-12")

@@ -34,7 +34,7 @@
                             <ul>
                                 <li>
                                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
-                                    <img src='${list.file_1}' onerror="this.src='http://placehold.it/90'">
+                                    <img src='${list.file_1}' onerror="this.src='http://placehold.it/90'" width="100">
                                     </a>
                                 </li>
                                 <li>

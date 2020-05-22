@@ -1099,3 +1099,15 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 .btn-submit:hover{
     background:#f05464;
 }
+
+/*메인하단 공지사항*/
+.notice-setting-box{
+    text-align: right;
+    font-size: 14px;
+}
+.file-ic{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background:url(../img/icon/file.svg) center center no-repeat;
+}
