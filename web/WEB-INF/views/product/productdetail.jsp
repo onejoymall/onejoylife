@@ -497,7 +497,7 @@
             // useCSS:false,
             pagerCustom: '#bx-pager',
             randomStart: false,
-            // touchEnabled : (navigator.maxTouchPoints > 0),
+            touchEnabled : (navigator.maxTouchPoints > 0),
         });
         $('.related-goods').bxSlider({
             // auto:false,
@@ -512,7 +512,7 @@
             // autoControls:true,
             // controls:true,
             // useCSS:false,
-            // touchEnabled : (navigator.maxTouchPoints > 0),
+            touchEnabled : (navigator.maxTouchPoints > 0),
             randomStart: false,
         });
     });
