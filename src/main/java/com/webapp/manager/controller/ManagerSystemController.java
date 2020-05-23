@@ -39,7 +39,7 @@ public class ManagerSystemController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        model.addAttribute("topNav", 6);
+        model.addAttribute("topNav", 1);
         model.addAttribute("style", "member-management");
 //        model.addAttribute("postUrl", "/Manager/member-management");
         return "/manager/system/systemHistory";

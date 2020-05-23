@@ -411,7 +411,7 @@ public class MainController {
                 searchVO.setDisplayRowCount(16);
             }
             if(device.isMobile()){
-                searchVO.setDisplayRowCount(1000);
+                searchVO.setDisplayRowCount(16);
             }
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
