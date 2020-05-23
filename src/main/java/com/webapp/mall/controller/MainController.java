@@ -471,11 +471,13 @@ public class MainController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "category-sub");
+
 
         if(device.isMobile()){
-            return "mobile/m-beauty-category-1";
+            model.addAttribute("style", "index");
+            return "mobile/eventList";
         } else {
+            model.addAttribute("style", "category-sub");
             return "mall/eventList";
         }
     }
