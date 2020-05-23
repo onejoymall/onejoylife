@@ -5,6 +5,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
@@ -117,6 +120,8 @@ public class ManagerRestapiController {
     private MgReviewDAO mgReviewDAO;
     @Autowired
     private MgCouponDAO mgCouponDAO;
+    @Autowired
+    private MgSystemDAO mgSystemDAO;
     @Autowired
     private CouponDAO couponDAO;
     @Value("${downloadPath}")
@@ -281,6 +286,9 @@ public class ManagerRestapiController {
     public HashMap<String, Object> ListUpdate(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String ip = req.getHeader("X-FORWARDED-FOR");
+        String getChkArrValue="";
         try {
             //테이블명 table
             //pk 필드명 pk
@@ -299,6 +307,14 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 mgCommonDAO.ListDelete(mgCommonVO);
+                params.put("email",session.getAttribute("email"));
+                params.put("user_ip",req.getRemoteAddr());
+
+                for(String pkArr : mgCommonVO.getChk()){
+                    getChkArrValue += pkArr + "/";
+                }
+                params.put("work_history","관리자 > 선택삭제 > 관련테이블 : "+mgCommonVO.getTable_name() + "  삭제키 : "+ getChkArrValue);
+                mgSystemDAO.insertSystemHistory(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {

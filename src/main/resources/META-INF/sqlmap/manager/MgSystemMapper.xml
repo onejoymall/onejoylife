@@ -3,6 +3,30 @@
 
 
 <mapper namespace="mall.MgSystemMapper">
+    <insert id="insertSystemHistory" parameterType="java.util.Map">
+        insert into system_log(
+        email,
+        user_ip,
+        work_history
+        )values(
+       #{email},
+       #{user_ip},
+       #{work_history}
+        )
+    </insert>
+    <select id="systemHistoryList" parameterType="com.webapp.manager.vo.MgSystemVO" resultType="java.util.Map">
+    select *
+    from system_log A
+    where 1=1
+    order by A.reg_date desc
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+    <select id="systemHistoryListCount" parameterType="com.webapp.manager.vo.MgSystemVO" resultType="Integer">
+    select ifnull(count(*),0) cnt
+    from system_log A
+    where 1=1
+
+  </select>
 
   <insert id="insertSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO">
       insert into store_delivery
