@@ -29,7 +29,7 @@
     </div>
     <div class="mainList-wrap mt-1">
         <div class="wrap bg_grey2">
-            <h2 class="red">오늘의 특가 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 ><a href="/mall/today" class="red"> 오늘의 특가 <i class="ri-arrow-right-s-line"></i></a></h2>
             <h4 class="mt-05">오늘의 특가 상품 구매시 E-POINT 적립 2배!</h4>
         </div>
         <ul class="mainList-sm">
@@ -65,7 +65,7 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">추천 상품 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 class="red">추천 상품 </h2>
             <h4 class="mt-05">고민없이 선택하는 MD 강력 추천 상품!</h4>
         </div>
         <ul class="mainList-sm">
@@ -100,7 +100,7 @@
     </div>
     <div class="mt-1 bg_grey2 clearfix">
         <div class="wrap">
-            <h2 class="red">이벤트 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 class="red"><a href="/mall/eventList" class="red"> 이벤트 <i class="ri-arrow-right-s-line"></i></a></h2>
         </div>
         <ul class="mainList-sm2">
         <c:if test="${not empty eventList}">
@@ -117,7 +117,7 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">인기 상품 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 class="red">인기 상품</h2>
             <h4 class="mt-05">망설이면 후회하는 원조이몰 인기 상품!</h4>
         </div>
         <ul class="mainList-sm">
@@ -146,7 +146,7 @@
     </div>
     <div class="mt-1 bg_grey2 clearfix">
         <div class="wrap">
-            <h2 class="red">기획전 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 class="red">기획전</h2>
         </div>
         <ul class="mainList-big2">
             <c:if test="${not empty categoryEventList}">
@@ -185,7 +185,7 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">경품 추첨 <i class="ri-arrow-right-s-line"></i></h2>
+            <h2 class="red"><a href="/giveaway" class="red"> 경품 추첨 <i class="ri-arrow-right-s-line"></i></a></h2>
             <h4 class="mt-05">E-POINT 행운의 주인공이 되어 보세요!</h4>
         </div>
         <ul class="mainList-sm">
