@@ -8,7 +8,7 @@
         select
             A.*,
             B.*,
-            (select Z.product_delivery_bundle_yn from store_delivery Z where B.product_user_ud = Z.store_id) as product_delivery_bundle_yn,
+            (select Z.product_delivery_bundle_yn from store_delivery Z where B.product_store_id = Z.store_id) as product_delivery_bundle_yn,
             (select code.code_name from code where code.code='product_delivery_type' and code.code_value =B.product_delivery_type) as product_delivery_type_name,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
         from product_cart A join product B on(A.product_cd = B.product_cd) where A.cart_user_id =#{cart_user_id} and A.cart_cd in
@@ -83,7 +83,7 @@
     </select>
     <select id="getCartProductList" parameterType="java.util.Map" resultType="java.util.Map">
         select A.*, B.*,
-        	(select Z.product_delivery_bundle_yn from store_delivery Z where B.product_user_ud = Z.store_id) as product_delivery_bundle_yn,
+        	(select Z.product_delivery_bundle_yn from store_delivery Z where B.product_store_id = Z.store_id) as product_delivery_bundle_yn,
         	(select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 3) as file_3,
@@ -100,7 +100,7 @@
 		JOIN product B
 		ON A.product_cd = B.product_cd
 		WHERE A.cart_user_id = #{cart_user_id}
-		AND B.product_user_ud = #{product_user_ud}
+		AND B.product_store_id = #{product_store_id}
     </select>
 
     <insert id="insertCart" parameterType="java.util.Map">

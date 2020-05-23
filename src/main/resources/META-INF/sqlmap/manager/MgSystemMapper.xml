@@ -87,12 +87,12 @@
         select * from store_delivery where store_id = #{store_id}
     </select>
     <select id="getStoreDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO" resultType="java.util.Map">
-        select * from store_delivery where store_id = (select product_user_ud from product where product_cd = #{product_cd})
+        select * from store_delivery where store_id = (select product_store_id from product where product_cd = #{product_cd})
     </select>
     <select id="getCartStoreHopeInfo" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
         select if(sum(if(A.product_delivery_hope_date_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_date_yn,
 				if(sum(if(A.product_delivery_hope_time_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_time_yn
-		from store_delivery A where store_id IN (select product_user_ud from product WHERE product_cd IN (select product_cd from product_cart WHERE cart_cd IN 
+		from store_delivery A where store_id IN (select product_store_id from product WHERE product_cd IN (select product_cd from product_cart WHERE cart_cd IN
 		<foreach collection="chk" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -131,8 +131,8 @@
   	SELECT A.additional_delivery_payment
 	FROM store_delivery_area A
 	WHERE postcode = #{postcode}
-	AND A.store_id = (SELECT product_user_ud FROM product WHERE product_cd = #{product_cd})
-	AND (SELECT Z.product_delivery_area_yn FROM store_delivery Z WHERE Z.store_id = (SELECT product_user_ud FROM product WHERE product_cd = #{product_cd})) = 'Y'
+	AND A.store_id = (SELECT product_store_id FROM product WHERE product_cd = #{product_cd})
+	AND (SELECT Z.product_delivery_area_yn FROM store_delivery Z WHERE Z.store_id = (SELECT product_store_id FROM product WHERE product_cd = #{product_cd})) = 'Y'
   </select>
   <insert id="insertProductCode" parameterType="com.webapp.manager.vo.MgProductCodeVO">
     insert into product_class_code
