@@ -43,6 +43,9 @@
                     </c:forEach>
        				</c:if>
                 </div>
+
+                    <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+
             </div>
         </article>
     </section>
