@@ -412,6 +412,8 @@ public class MainController {
             }
             if(device.isMobile()){
                 searchVO.setDisplayRowCount(16);
+                //표시항 페이징 수
+                searchVO.setDisplayPagingCount(5);
             }
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
