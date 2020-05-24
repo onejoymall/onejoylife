@@ -84,7 +84,7 @@
 
     $(document).ready(function(){
         $(".back-arr").click(function(){
-            window.history.back();
+            history.back();
         });
     });
 </script>
