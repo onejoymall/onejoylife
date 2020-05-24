@@ -9,7 +9,7 @@
     </section>
     
     <section class="wrap category-wrap">
-        <form id="form1" name="form1"  method="post">
+        <form id="form1" name="form1"  method="get">
     	<p class="gift-amount">${categoryRowData.pd_category_name} 전체 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
 		<article class="epoint-gift-wrap">
             <div class="inner clearfix">
