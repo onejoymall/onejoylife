@@ -74,11 +74,11 @@
 
     <script>
 
-        $(document).ready(function(){
-            $(".back-arr").click(function(){
-                history.back();
-            });
-        });
+        // $(document).ready(function(){
+        //     $(".back-arr").click(function(){
+        //         history.back();
+        //     });
+        // });
 
         $('#formSignUpSubmit').on("click",function () {
             var password = $('#password').val();

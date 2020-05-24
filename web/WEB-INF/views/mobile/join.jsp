@@ -47,11 +47,11 @@
         </div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $(".back-arr").click(function(){
-                history.back();
-            });
-        });
+        // $(document).ready(function(){
+        //     $(".back-arr").click(function(){
+        //         history.back();
+        //     });
+        // });
 
         $('.btn-kakao-login').click(function () {
             window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');

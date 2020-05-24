@@ -242,6 +242,7 @@
         </div>
 
                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+                <input type="hidden" name="product_ct" value="${param.product_ct}">
 <%--                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">--%>
             </form>
     </article>

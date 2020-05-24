@@ -44,10 +44,11 @@
        				</c:if>
                 </div>
 
+                    <input type="hidden" name="product_ct" value="${param.product_ct}">
                     <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-
             </div>
         </article>
+        </form>
     </section>
-    
+
     <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

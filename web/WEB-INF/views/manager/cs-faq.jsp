@@ -52,9 +52,9 @@
             </div>
             <div class="goods-list-wrap">
                 <div class="list-sort-wrap">
-<%--                    <div class="left">--%>
-<%--                        <button type="button" class="goods-list-btn" name="copy">선택 삭제</button>--%>
-<%--                    </div>--%>
+                    <div class="left">
+                        <button type="button" class="goods-list-btn" name="copy" id="listDelete">선택 삭제</button>
+                    </div>
 <%--                    <div class="right">--%>
 <%--                        <select name="order" class="order-select">--%>
 <%--                            <option value="32">10개씩 보기</option>--%>
@@ -63,6 +63,9 @@
 <%--                        </select>--%>
 <%--                    </div>--%>
                 </div>
+                <form name="defaultListForm" id="defaultListForm" method="post">
+                    <input type="hidden" name="Pk" value="${Pk}">
+                    <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
                         <col width="2%">
@@ -86,6 +89,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                 <c:forEach var="listview" items="${listview}" varStatus="status">
                     <c:url var="link" value="/Manager/boardRead">
                         <c:param name="brdno" value="${listview.brdno}" />
@@ -108,6 +112,7 @@
 
                     </tbody>
                 </table>
+                </form>
 				<form id="form2" name="form2"  method="post">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                 </form>

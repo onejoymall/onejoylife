@@ -3127,9 +3127,9 @@ $(document).on("click",".ra-num",function () {
         $('#main-search-form').submit();
     }
 
-    $('.back-arr').on("click",function () {
-        window.history.back();
-    })
+    // $('.back-arr').on("click",function () {
+    //     window.history.back();
+    // })
     //게시판글쓰기
     function chkInputValue(id, msg){
         if ( $.trim($(id).val()) == "") {
