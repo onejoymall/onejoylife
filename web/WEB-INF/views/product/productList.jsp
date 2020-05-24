@@ -186,7 +186,7 @@
 <%--                    </div>--%>
 <%--                </div>--%>
 <%--            </div>--%>
-            <form id="form1" name="form1"  method="post">
+            <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
                         <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=1"/>'">랭킹순</button>

@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div class="inner-right">
-                    <form id="form1" name="form1"  method="post">
+                    <form id="form1" name="form1"  method="get">
 
 
                         <p class="gift-amount"><span>${param.product_name}</span> 에 대한 검색 결과 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span> 건</p>

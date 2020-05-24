@@ -47,6 +47,9 @@
                     </c:forEach>
        				</c:if>
             </div>
+                <form id="form1" name="form1"  method="get">
+                    <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+                </form>
         </article>
     </section>
     
