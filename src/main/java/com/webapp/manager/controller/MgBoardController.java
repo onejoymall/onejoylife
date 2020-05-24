@@ -45,7 +45,8 @@ public class MgBoardController {
             modelMap.addAttribute("searchVO", boardVO);
             modelMap.addAttribute("bgInfo", bgInfo);
             modelMap.addAttribute("leftNavOrder", request.getParameter("bgno"));
-
+            modelMap.addAttribute("table_name", "TBL_BOARD");
+            modelMap.addAttribute("Pk", "BRDNO");
             if(bgInfo.getBgtype().isEmpty()){
                 modelMap.addAttribute("style", "cs-qna");
                 returnString = "manager/mgboard/BoardList";

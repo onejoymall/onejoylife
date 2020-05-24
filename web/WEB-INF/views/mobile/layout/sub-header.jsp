@@ -82,11 +82,11 @@
     window.addEventListener('keydown', handleFirstTab);
 
 
-    $(document).ready(function(){
-        $(".back-arr").click(function(){
-            window.history.back();
-        });
-    });
+    // $(document).ready(function(){
+    //     $(".back-arr").click(function(){
+    //         history.back();
+    //     });
+    // });
 </script>
 <body class="pt-48 pb-5">
         <header class="header clearfix">

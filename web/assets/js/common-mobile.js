@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    //뒤로가기
+    // 뒤로가기
     $(".back-arr").click(function(e){
         e.preventDefault();
-        window.history.back();
+        history.back();
     });
     //헤더스크롤
     var scroll;
