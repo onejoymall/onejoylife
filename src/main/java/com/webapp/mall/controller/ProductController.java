@@ -160,7 +160,8 @@ public class ProductController {
                 searchVO.setDisplayRowCount(12);
             }
             if(device.isMobile()){
-            	searchVO.setDisplayRowCount(1000);
+                searchVO.setDisplayRowCount(12);
+                searchVO.setDisplayPagingCount(5);
             }
             // 기본정렬
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){

@@ -54,6 +54,7 @@
                         </p>
                     </div>
                     <div class="rec2-in">
+
                         <div>
                             <p class="in-coin1 font-de1">OJT</p>
                             <p class="in-coin2 font-de2">
@@ -64,15 +65,16 @@
                                 </a>
                             </p>
                         </div>
-                        <!-- <div>
-                            <p class="in-coin1 font-de1">OJST</p>
-                            <p class="in-coin2 font-de2">
-                                <a href="#">
-                                    <span>0</span>
-                                    <span>coin</span>
-                                </a>
-                            </p>
-                        </div> -->
+<%--                        <div>--%>
+<%--                            <p class="in-coin1 font-de1">OJST</p>--%>
+<%--                            <p class="in-coin2 font-de2">--%>
+<%--                                <a href="#">--%>
+<%--                                    <span>0</span>--%>
+<%--                                    <span>coin</span>--%>
+<%--                                </a>--%>
+<%--                            </p>--%>
+<%--                        </div>--%>
+                    <p class="font-de1">준비중</p>
                     </div>
                 </div>
 

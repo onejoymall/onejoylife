@@ -485,6 +485,10 @@ $(document).on("click",".ra-num",function () {
     //메인화면 MD
     function mdSlideCategorySelect(category_id,mainViewType){
         selectedList.reloadSlider();
+        $('.tab-content-item').removeClass("active");
+        $('.tab-content-item').addClass("hidden");
+        $('#'+mainViewType).removeClass("hidden")
+        $('#'+mainViewType).addClass("active")
         $('.selected-list').html();
             var html='';
         jQuery.ajax({
@@ -525,7 +529,7 @@ $(document).on("click",".ra-num",function () {
                 }
             },
             error: function (xhr, status, error) {
-                alert("error");
+                alert(error);
             }
         });
 //슬라이더 선언

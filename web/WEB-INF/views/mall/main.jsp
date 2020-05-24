@@ -154,15 +154,15 @@
                 </li>
             </ul>
             <div class="tab-content-wrap">
-                <div class="tab-content-item active" id="tab1">
+                <div class="tab-content-item active" id="product_md_class">
                     <div class="tab-content-item-inner">
-                        <div class="category-wrap" id="selected-list-section-cate">
+                        <div class="category-wrap">
                             <div class="category-row">
-                                <span class="active" onclick="mdSlideCategorySelect()">ALL</span>
+                                <span class="active" onclick="mdSlideCategorySelect('','product_md_class')">ALL</span>
                     <c:if test="${not empty categoryList}">
                         <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
                         <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
-                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}')">${categoryList.pd_category_name}</span>
+                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_md_class')">${categoryList.pd_category_name}</span>
                         <c:if test="${categoryLineCut  == 0}">
                             </div>
                             <div class="category-row">
@@ -171,40 +171,81 @@
                     </c:if>
                             </div>
                         </div>
-                        <div class="product-list-type2">
-                            <ul class="selected-list">
-                            <c:if test="${not empty productList}">
-                                <c:forEach var="productList" items="${productList}" varStatus="status">
-                                <li>
-                                    <a href="/product/productDetail?product_cd=${productList.product_cd}">
-                                        <div class="img-box">
-                                            <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
-<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
-                                            <i class="share-ic"></i>
-                                        </div>
-                                        <div class="product-info">
-                                            <p class="info-production">${productList.product_made_company_name}</p>
-                                            <p class="info-product-name">${productList.product_name}</p>
-                                            <p class="info-price"><span class="price-before">
-                                                <fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</span>
-                                                <i class="right-arrow"></i><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</p>
-                                            <p class="info-score">
-                                                <i class="star-ic"></i>
-                                                <span class="score-number">4.5</span>
-                                                <span class="score-text">5,324개 평가</span>
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                </c:forEach>
-                            </c:if>
-                            <c:if test="${empty productList}">
-                                <li>표시할 내용이 없습니다.</li>
-                            </c:if>
-                            </ul>
-                        </div>
+
                     </div>
                 </div>
+                <div class="tab-content-item hidden" id="product_new_class">
+                    <div class="tab-content-item-inner">
+                        <div class="category-wrap">
+                            <div class="category-row">
+                                <span class="active" onclick="mdSlideCategorySelect('','product_new_class')">ALL</span>
+                                <c:if test="${not empty categoryList}">
+                                <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
+                                <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
+                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_new_class')">${categoryList.pd_category_name}</span>
+                                <c:if test="${categoryLineCut  == 0}">
+                            </div>
+                            <div class="category-row">
+                                </c:if>
+                                </c:forEach>
+                                </c:if>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-content-item hidden" id="product_sp_class">
+                    <div class="tab-content-item-inner">
+                        <div class="category-wrap">
+                            <div class="category-row">
+                                <span class="active" onclick="mdSlideCategorySelect('','product_sp_class')">ALL</span>
+                                <c:if test="${not empty categoryList}">
+                                <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
+                                <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
+                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_sp_class')">${categoryList.pd_category_name}</span>
+                                <c:if test="${categoryLineCut  == 0}">
+                            </div>
+                            <div class="category-row">
+                                </c:if>
+                                </c:forEach>
+                                </c:if>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="product-list-type2">
+                <ul class="selected-list">
+                    <c:if test="${not empty productList}">
+                        <c:forEach var="productList" items="${productList}" varStatus="status">
+                            <li>
+                                <a href="/product/productDetail?product_cd=${productList.product_cd}">
+                                    <div class="img-box">
+                                        <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
+                                            <%--                                            <p class="sale-percent">35<span>%</span></p>--%>
+                                        <i class="share-ic"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <p class="info-production">${productList.product_made_company_name}</p>
+                                        <p class="info-product-name">${productList.product_name}</p>
+                                        <p class="info-price"><span class="price-before">
+                                                <fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</span>
+                                            <i class="right-arrow"></i><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</p>
+                                        <p class="info-score">
+                                            <i class="star-ic"></i>
+                                            <span class="score-number">4.5</span>
+                                            <span class="score-text">5,324개 평가</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty productList}">
+                        <li>표시할 내용이 없습니다.</li>
+                    </c:if>
+                </ul>
             </div>
         </div>
         <div class="mini-bnr-section mini-bnr-2">

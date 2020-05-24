@@ -71,13 +71,15 @@ $(document).ready(function(){
     });
     //시간
     $(function(){
-    	$('.time_pick').timepicker({
-		    timeFormat: 'hh:mm p',
-		    interval: 60,
-		    dynamic: false,
-		    dropdown: true,
-		    scrollbar: true
-		});
+        if($('.time_pick').length < 0){
+            $('.time_pick').timepicker({
+                timeFormat: 'hh:mm p',
+                interval: 60,
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+        }
     })
     //file upload
     // var uploadFile = $('.fileBox .uploadBtn');

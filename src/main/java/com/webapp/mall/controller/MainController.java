@@ -418,7 +418,9 @@ public class MainController {
                 searchVO.setDisplayRowCount(16);
             }
             if(device.isMobile()){
-                searchVO.setDisplayRowCount(1000);
+                searchVO.setDisplayRowCount(16);
+                //표시항 페이징 수
+                searchVO.setDisplayPagingCount(5);
             }
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
@@ -478,11 +480,13 @@ public class MainController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("style", "category-sub");
+
 
         if(device.isMobile()){
-            return "mobile/m-beauty-category-1";
+            model.addAttribute("style", "index");
+            return "mobile/eventList";
         } else {
+            model.addAttribute("style", "category-sub");
             return "mall/eventList";
         }
     }

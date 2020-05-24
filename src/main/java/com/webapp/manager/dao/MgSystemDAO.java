@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.webapp.manager.vo.MgSystemVO;
+import com.webapp.manager.vo.StoreVO;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,17 @@ public class MgSystemDAO {
     @Transactional
     public void insertSystemDelivery(MgDeliveryVO MgDeliveryVO) throws SQLException {
         sql.insert("mall.MgSystemMapper.insertSystemDelivery",MgDeliveryVO);
+    }
+    public List<Map<String,Object>> systemHistoryList(MgSystemVO mgSystemVO) throws SqlSessionException{
+        List<Map<String,Object>> systemHistoryList=sql.selectList("mall.MgSystemMapper.systemHistoryList",mgSystemVO);
+        return systemHistoryList;
+    }
+    public Integer systemHistoryListCount(MgSystemVO mgSystemVO) throws SQLException {
+        Integer systemHistoryListCount=sql.selectOne("mall.MgSystemMapper.systemHistoryListCount",mgSystemVO);
+        return systemHistoryListCount;
+    }
+    public void insertSystemHistory(Map<String,Object> params) throws SQLException {
+        sql.insert("mall.MgSystemMapper.insertSystemHistory",params);
     }
     public Map<String,Object> getSystemDelivery(MgDeliveryVO MgDeliveryVO) throws SQLException {
         Map<String,Object> getSystemDelivery=sql.selectOne("mall.MgSystemMapper.getSystemDelivery",MgDeliveryVO);

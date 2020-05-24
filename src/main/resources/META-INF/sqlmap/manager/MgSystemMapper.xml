@@ -3,6 +3,30 @@
 
 
 <mapper namespace="mall.MgSystemMapper">
+    <insert id="insertSystemHistory" parameterType="java.util.Map">
+        insert into system_log(
+        email,
+        user_ip,
+        work_history
+        )values(
+       #{email},
+       #{user_ip},
+       #{work_history}
+        )
+    </insert>
+    <select id="systemHistoryList" parameterType="com.webapp.manager.vo.MgSystemVO" resultType="java.util.Map">
+    select *
+    from system_log A
+    where 1=1
+    order by A.reg_date desc
+	LIMIT ${rowStart-1}, ${displayRowCount}
+  </select>
+    <select id="systemHistoryListCount" parameterType="com.webapp.manager.vo.MgSystemVO" resultType="Integer">
+    select ifnull(count(*),0) cnt
+    from system_log A
+    where 1=1
+
+  </select>
 
   <insert id="insertSystemDelivery" parameterType="com.webapp.manager.vo.MgDeliveryVO">
       insert into store_delivery
@@ -92,7 +116,7 @@
     <select id="getCartStoreHopeInfo" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
         select if(sum(if(A.product_delivery_hope_date_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_date_yn,
 				if(sum(if(A.product_delivery_hope_time_yn = 'Y',1,0)) > 0,'Y','N') product_delivery_hope_time_yn
-		from store_delivery A where store_id IN (select product_store_id from product WHERE product_cd IN (select product_cd from product_cart WHERE cart_cd IN 
+		from store_delivery A where store_id IN (select product_store_id from product WHERE product_cd IN (select product_cd from product_cart WHERE cart_cd IN
 		<foreach collection="chk" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>

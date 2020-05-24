@@ -52,7 +52,7 @@
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
-        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="product_ct != null and product_ct != ''"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
         <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
         <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
         <if test="orderByKey == null"> order by product_id DESC </if>
@@ -173,7 +173,7 @@
             product_stock_use_yn,
             product_stock_quantity,
             product_store_id,
-            product_store_id,
+            product_store_id as product_user_ud,
             (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
             (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
