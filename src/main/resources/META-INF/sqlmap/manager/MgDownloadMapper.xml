@@ -48,7 +48,7 @@
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'O' AND Z.product_class_code = C.product_origin) AS product_origin_name,
             (SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = A.payment_status ) AS payment_status_name,
             (SELECT if(SUBSTRING_INDEX(C.product_tex_class, '|', 1) = 'A','과세상품',Z.code_name) FROM code Z WHERE Z.code = 'product_tex_class' AND Z.code_value = SUBSTRING_INDEX(C.product_tex_class, '|', 1) ) AS product_tex_class_name,
-            SUBSTRING_INDEX(C.product_tex_class, '|', -1) AS product_tex
+            if(SUBSTRING_INDEX(C.product_tex_class, '|', -1) IN ('A','B','C'),NULL,SUBSTRING_INDEX(C.product_tex_class, '|', -1)) AS product_tex
             
         FROM payment A 
         LEFT JOIN delivery_info B

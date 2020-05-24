@@ -210,7 +210,7 @@ body{
 
 /*modal*/
 /* 모달 팝업창 */
-.modal{
+.modal, .modal1{
     display: none;
     position: fixed;
     z-index: 999999;
@@ -243,7 +243,7 @@ body{
     line-height: 70px;
     text-align: center;
 }
-.modal-close, .modal-close-code{
+.modal-close, .modal-close-code, .modal-close1{
     position:absolute; top:0; right:0;
     width: 35px;
     height: 35px;
@@ -253,7 +253,7 @@ body{
     text-indent: 200%;
     overflow: hidden;
 }
-.modal-close:hover, .modal-close-code:hover {
+.modal-close:hover, .modal-close-code:hover, .modal-close1:hover {
     cursor: pointer;
 }
 
@@ -697,4 +697,36 @@ input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-m
 .goods-detail-wrap {
     width: 100%;
     padding: 30px 10px;
+}
+.btn_file {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid;
+    color: #777;
+    width: 65px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 100;
+    line-height: 25px;
+    text-align: center;
+}
+.address-td span {
+    display: inline-block;
+    width: 8%;
+}
+.address-td .ad-input {
+    width: 92%;
+}
+.ad-but {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid;
+    color: #777;
+    width: 65px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 100;
+    line-height: 25px;
+    text-align: center;
+    margin-left: 5px;
 }

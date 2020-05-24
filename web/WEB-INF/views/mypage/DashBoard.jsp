@@ -20,23 +20,23 @@
                         <div class="sec3-box1">배송현황</div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon1"></div>
-                            <p>주문접수<span>(1)</span></p>
+                            <p>주문접수<span>(${paymentCnt.mCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon2"></div>
-                            <p>결제완료<span>(0)</span></p>
+                            <p>결제완료<span>(${paymentCnt.wCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon3"></div>
-                            <p>상품준비중<span>(0)</span></p>
+                            <p>상품준비중<span>(${paymentCnt.iCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon4"></div>
-                            <p>배송중<span>(0)</span></p>
+                            <p>배송중<span>(${paymentCnt.rCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon5"></div>
-                            <p>배송완료<span>(0)</span></p>
+                            <p>배송완료<span>(${paymentCnt.oCnt})</span></p>
                         </div>
                     </div>
                 </div>

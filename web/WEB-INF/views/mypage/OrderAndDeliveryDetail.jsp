@@ -40,7 +40,7 @@
                         <tr>
                             <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                             <td class="sec1-tbody-p1">
-                                <p>[${paymentDetail.product_made_company_name}] ${paymentDetail.product_name}</p>
+                                <p>${paymentDetail.product_made_company_name} ${paymentDetail.product_name}</p>
                                 <p>${paymentDetail.product_made_company_model}</p>
                             </td>
                             <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
@@ -141,7 +141,7 @@
                             <td class="body-td-tit2">결제금액</td>
                             <td class="body-td-txt txt-color"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                             <td class="body-td-tit2">결제수단</td>
-                            <td class="body-td-txt"><span>${paymentDetail.pay_method_name}</span></td>
+                            <td class="body-td-txt"><span>${paymentDetail.pay_method_name} ${paymentDetail.vbank_name} ${paymentDetail.vbank_num}</span></td>
                         </tr>
                         </tbody>
                     </table>

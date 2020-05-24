@@ -168,15 +168,15 @@ function computePayment(ids){
 		
 		payment += cart.product_user_payment*cart.payment_order_quantity;
 		discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
-		if(cart.product_delivery_bundle_yn == 'N'){ //묶음배송체크
+		if(!cart.product_delivery_bundle_yn || cart.product_delivery_bundle_yn == 'N'){ //묶음배송체크
 			delivery += parseInt(cart.delivery_payment);
 		}else{
-			if(storeDeliveryList.hasOwnProperty(cart.product_user_ud)){ //키가있다면 가장비싼배송비
-				if(storeDeliveryList[cart.product_user_ud] < cart.delivery_payment) { 
-					storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment) 
+			if(storeDeliveryList.hasOwnProperty(cart.product_store_id)){ //키가있다면 가장비싼배송비
+				if(storeDeliveryList[cart.product_store_id] < cart.delivery_payment) { 
+					storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment) 
     			}
 			}else{ //키가없다면 키추가
-				storeDeliveryList[cart.product_user_ud] = parseInt(cart.delivery_payment)
+				storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment)
 			}
 		}
 	});

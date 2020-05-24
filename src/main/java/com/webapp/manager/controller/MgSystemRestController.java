@@ -100,7 +100,12 @@ public class MgSystemRestController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                List<Map<String,Object>>getProductCodeList = mgSystemDAO.getProductCodeList(mgProductCodeVO);
+            	List<Map<String,Object>> getProductCodeList = null;
+            	if(mgProductCodeVO.getProduct_class_code_type().equals("S")) {
+            		getProductCodeList = mgSystemDAO.getSupplierList(params);
+            	}else {
+            		getProductCodeList = mgSystemDAO.getProductCodeList(mgProductCodeVO);
+            	}
                 resultMap.put("getProductCodeList",getProductCodeList);
             }
         }catch (Exception e){

@@ -1028,6 +1028,9 @@ public class restapiController {
 //                optionList.add(optionVO);
 //                optionVO.setOptionVOList(optionList);
 //                cartDAO.insertCartOption(optionVO);
+            	if(params.get("payment_order_quantity") == null || params.get("payment_order_quantity").equals("")) {
+            		params.put("payment_order_quantity","1");
+            	}
                 cartDAO.insertCart(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }

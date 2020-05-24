@@ -26,6 +26,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.response.Payment;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
@@ -65,6 +67,11 @@ public class MyPage {
     PaymentDAO paymentDAO;
     @Autowired
     ReviewDAO reviewDAO;
+    IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
     @Autowired
     private NumberGender numberGender;
     @Value("${t_key}")
@@ -82,13 +89,17 @@ public class MyPage {
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
             params.put("coupon_paid_user_id",userInfo.get("usr_id"));
+            params.put("payment_user_id",userInfo.get("usr_id"));
             //배송중
             params.put("delivery_status","D");
 
             Integer couponCnt = couponDAO.getUserCouponListCount(params);
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
-            Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
-            model.addAttribute("getDeliveryListCount",getDeliveryListCount);
+            
+          //배송현황 카운트
+            Map<String,Object> paymentCnt = paymentDAO.getUserPaymentStatusCount(params);
+            model.addAttribute("paymentCnt", paymentCnt);
+            
             model.addAttribute("giveawayCnt",giveawayCnt);
             model.addAttribute("couponCnt", couponCnt);
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
@@ -115,12 +126,15 @@ public class MyPage {
             params.put("point_paid_user_id",userInfo.get("usr_id"));
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
             params.put("order_user_id",userInfo.get("usr_id"));
+            params.put("payment_user_id",userInfo.get("usr_id"));
             //배송중
             params.put("delivery_status","D");
 
+          //배송현황 카운트
+            Map<String,Object> paymentCnt = paymentDAO.getUserPaymentStatusCount(params);
+            model.addAttribute("paymentCnt", paymentCnt);
+            
             Integer giveawayCnt = giveawayDAO.getUserGiveawayPlayListCount(params);
-            Integer getDeliveryListCount = deliveryDAO.getDeliveryListCount(params);
-            model.addAttribute("getDeliveryListCount",getDeliveryListCount);
             model.addAttribute("giveawayCnt",giveawayCnt);
             model.addAttribute("couponCnt", coupon);
             model.addAttribute("point_amount",pointDAO.getPointAmount(params));
@@ -161,6 +175,10 @@ public class MyPage {
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
 
+            //배송현황 카운트
+            Map<String,Object> paymentCnt = paymentDAO.getUserPaymentStatusCount(params);
+            model.addAttribute("paymentCnt", paymentCnt);
+            
             List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
             model.addAttribute("giveawayList", giveawayList);
         }catch (Exception e){
@@ -334,17 +352,17 @@ public class MyPage {
             	total_payment += (int)map.get("product_user_payment") * (int)map.get("payment_order_quantity");
             	
             	//스토어 묶음배송
-            	if("N".equals(map.get("product_delivery_bundle_yn"))){
+            	if(!map.containsKey("product_delivery_bundle_yn") || "N".equals(map.get("product_delivery_bundle_yn"))){
             		total_delivery_payment += (int)map.get("delivery_payment");
             	}else if("Y".equals(map.get("product_delivery_bundle_yn"))) {
-            		if(storeDeliveryList.containsKey(map.get("product_user_ud"))){ //키가있으면
-            			if(storeDeliveryList.get((String)map.get("product_user_ud")) > (int)map.get("delivery_payment")) { //가장비싼배송비
-            				storeDeliveryList.put((String)map.get("product_user_ud"), storeDeliveryList.get((String)map.get("product_user_ud"))); 
+            		if(storeDeliveryList.containsKey(map.get("product_store_id"))){ //키가있으면
+            			if(storeDeliveryList.get((String)map.get("product_store_id")) > (int)map.get("delivery_payment")) { //가장비싼배송비
+            				storeDeliveryList.put((String)map.get("product_store_id"), storeDeliveryList.get((String)map.get("product_store_id"))); 
             			}else {
-            				storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment")); 
+            				storeDeliveryList.put((String)map.get("product_store_id"), (int)map.get("delivery_payment")); 
             			}
             		}else { //키가없으면
-            			storeDeliveryList.put((String)map.get("product_user_ud"), (int)map.get("delivery_payment"));
+            			storeDeliveryList.put((String)map.get("product_store_id"), (int)map.get("delivery_payment"));
             		}
             	}
             }
@@ -450,6 +468,11 @@ public class MyPage {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            
+            client = new IamportClient(apiKey, apiSecret);
+            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+            paymentDetail.put("vbank_name",impPayment.getVbankName());
+            paymentDetail.put("vbank_num",impPayment.getVbankNum());
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
         }catch (Exception e){

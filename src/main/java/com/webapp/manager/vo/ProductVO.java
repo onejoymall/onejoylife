@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ProductVO extends SearchVO {
     String product_score;
+    String product_store_id;
     String product_id;
     String product_cd;
     String product_market_cd;
@@ -932,4 +933,12 @@ public class ProductVO extends SearchVO {
     public void setProduct_point_rate_cash(Integer product_point_rate_cash) {
         this.product_point_rate_cash = product_point_rate_cash;
     }
+
+	public String getProduct_store_id() {
+		return product_store_id;
+	}
+
+	public void setProduct_store_id(String product_store_id) {
+		this.product_store_id = product_store_id;
+	}
 }

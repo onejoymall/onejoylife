@@ -57,6 +57,10 @@ public class PaymentDAO {
     	Map<String,Object> getLastMonthSummary = sql.selectOne("mall.PaymentMapper.getLastMonthSummary",params);
     	return getLastMonthSummary;
     }
+    public Map<String,Object> getUserPaymentStatusCount(Map<String, String> params) throws SQLException{
+    	Map<String,Object> getUserPaymentStatusCount = sql.selectOne("mall.PaymentMapper.getUserPaymentStatusCount",params);
+    	return getUserPaymentStatusCount;
+    }
     public Map<String,Object> getStatusCount(Map<String, String> params) throws SQLException{
     	Map<String,Object> getStatusCount = sql.selectOne("mall.PaymentMapper.getStatusCount",params);
     	return getStatusCount;

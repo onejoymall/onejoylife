@@ -130,6 +130,13 @@
     <if test="product_class_name != null and product_class_name !=''"> and product_class_name =#{product_class_name}</if>
     order by reg_date desc
   </select>
+  <select id="getSupplierList" parameterType="hashmap" resultType="hashmap">
+    SELECT A.supplier_cd AS product_class_code,
+			CONCAT(A.store_name,'(ID:',A.store_id,')') AS product_class_name,
+			'공급사' AS product_class_code_type_name
+	FROM store A
+	ORDER BY A.reg_date desc
+  </select>
   <select id="getNormalUserList" resultType="java.util.Map">
     select
     *

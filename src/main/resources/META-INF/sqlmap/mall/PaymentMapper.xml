@@ -3,6 +3,16 @@
 
 
 <mapper namespace="mall.PaymentMapper">
+	<select id="getUserPaymentStatusCount" parameterType="hashmap" resultType="hashmap">
+		SELECT sum(A.payment_status = 'M') as mCnt,
+				 sum(A.payment_status = 'w') as wCnt,
+				 sum(A.payment_status IN ('I','D')) as iCnt,
+				 sum(A.payment_status = 'R') as rCnt,
+				 sum(A.payment_status = 'O') as oCnt
+		FROM payment A
+		WHERE A.payment_user_id = #{payment_user_id}
+	</select>
+	
     <insert id="insertPayment" parameterType="java.util.Map">
         insert into payment(
         success,

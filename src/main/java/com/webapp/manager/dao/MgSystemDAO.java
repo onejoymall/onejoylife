@@ -1,6 +1,7 @@
 package com.webapp.manager.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,4 +77,8 @@ public class MgSystemDAO {
     public void insertDeliveryArea(Map<String,Object> params) throws SqlSessionException{
     	sql.insert("mall.MgSystemMapper.insertDeliveryArea",params);
     }
+	public List<Map<String, Object>> getSupplierList(HashMap params) {
+		List<Map<String,Object>> getSupplierList=sql.selectList("mall.MgSystemMapper.getSupplierList",params);
+    	return getSupplierList;
+	}
 }

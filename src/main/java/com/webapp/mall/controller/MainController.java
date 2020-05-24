@@ -28,6 +28,7 @@ import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
@@ -38,22 +39,24 @@ import com.webapp.manager.dao.ConfigDAO;
 @Controller
 @RequestMapping("/")
 public class MainController {
+	@Autowired
+	private PaymentDAO paymentDAO;
     @Autowired
-    GiveawayDAO giveawayDAO;
+    private GiveawayDAO giveawayDAO;
     @Autowired
-    ProductDAO productDAO;
+    private ProductDAO productDAO;
     @Autowired
-    CategoryDAO categoryDAO;
+    private CategoryDAO categoryDAO;
     @Autowired
-    BannerDAO bannerDAO;
+    private BannerDAO bannerDAO;
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
     @Autowired
-    CartDAO cartDAO;
+    private CartDAO cartDAO;
     @Autowired
     private BoardSvc boardSvc;
     @Autowired
-    ConfigDAO configDAO;
+    private ConfigDAO configDAO;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
@@ -364,8 +367,12 @@ public class MainController {
                 params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
             }else{
                 params.put("cart_user_id",userInfo.get("usr_id"));
+                params.put("payment_user_id",userInfo.get("usr_id"));
             }
-
+            //배송현황 카운트
+            Map<String,Object> paymentCnt = paymentDAO.getUserPaymentStatusCount(params);
+            model.addAttribute("paymentCnt", paymentCnt);
+            
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
             searchVO.pageCalculate(cartDAO.getTopCartListCount(params));
