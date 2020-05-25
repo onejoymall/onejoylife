@@ -48,6 +48,7 @@
        				</c:if>
             </div>
                 <form id="form1" name="form1"  method="get">
+                    <input type="hidden" name="product_name" value="${param.product_name}">
                     <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                 </form>
         </article>
