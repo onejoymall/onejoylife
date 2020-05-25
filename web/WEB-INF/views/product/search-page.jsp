@@ -281,7 +281,7 @@
                                 </c:if>
                             </div>
                         </div>
-
+                        <input type="hidden" name="product_name" value="${param.product_name}">
                         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                         <%--                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">--%>
                     </form>
