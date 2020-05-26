@@ -148,9 +148,10 @@
                         </tbody>
                     </table>
                     </c:if>
-                    
-                    <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
-                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                    <form name="form1" id="form1" method="get">
+                        <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
+                        <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                    </form>
                 </div>
             </div>
             </div>

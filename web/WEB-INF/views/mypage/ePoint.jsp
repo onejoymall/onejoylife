@@ -16,7 +16,7 @@
             <div class="right-contain">
 
                 <c:import url="/MyPage/RightHeader"/>
-                <form id="form1" name="form1"  method="post">
+                <form id="form1" name="form1"  method="get">
                 <div class="ojt-tab-box">
                     <div class="ojt-tab">
                         <p class="ojt-but on2" data-id2="ojt1">E-POINT</p>

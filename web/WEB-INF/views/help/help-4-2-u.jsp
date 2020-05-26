@@ -83,13 +83,13 @@
                             <p class="ex">
                                 <span>쇼핑몰 관련 1:1 문의하기 입니다.<br>매장 이용관련 불편사항은<a href="">[원조이몰 고객지원센터]</a>를 이용하여 글을 남겨주세요.</span>
                             </p>
-                            <form id="form1" name="form1"  method="post">
+                            <form id="form1" name="form1"  method="get">
                                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                             </form>
                             </ul>
                         </div>
                     </form>
-                </div> 
+                </div>
             </main>
         </div>
     </div>

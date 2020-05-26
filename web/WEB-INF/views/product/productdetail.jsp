@@ -41,8 +41,7 @@
                         <p class="goods-name">
 <%--                            <span class="tag-sale">세일</span>--%>
 <%--                            <span class="tag-coupon">쿠폰</span>--%>
-                            <br>
-                            ${list.product_brand_name}<br> ${list.product_name} <br> ${list.product_model_name}
+                            ${list.product_name}<br>
                         </p>
                     </div>
                     <div class="goods-price-wrap">

@@ -17,7 +17,7 @@
         <div class="inner clearfix">
             <h3>E-point 경품추첨</h3>
             <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">${searchVO.totRow}</span>개의 상품이 등록되어 있습니다.</p>
-            <form id="form1" name="form1"  method="post">
+            <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
                         <button type="button" class="sort-tab-item <c:if test="${empty searchVO.sortOrder}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/giveaway"/>'">ALL</button>
