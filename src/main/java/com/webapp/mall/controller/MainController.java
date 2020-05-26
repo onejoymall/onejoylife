@@ -26,6 +26,7 @@ import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
+import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PaymentDAO;
@@ -39,6 +40,8 @@ import com.webapp.manager.dao.ConfigDAO;
 @Controller
 @RequestMapping("/")
 public class MainController {
+	@Autowired
+    private NumberGender numberGender;
 	@Autowired
 	private PaymentDAO paymentDAO;
     @Autowired
@@ -280,7 +283,11 @@ public class MainController {
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 
             if(isEmpty(userInfo)){
-                params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
+            	String cart_user_id = numberGender.numberGen(6,1);
+            	if ( session.getAttribute("nonMembersUserId") == null ){
+            		session.setAttribute("nonMembersUserId",cart_user_id);
+            	}
+            	params.put("cart_user_id",session.getAttribute("nonMembersUserId"));
             }else{
                 params.put("cart_user_id",userInfo.get("usr_id"));
             }

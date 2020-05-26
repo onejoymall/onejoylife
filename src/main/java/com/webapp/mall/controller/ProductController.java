@@ -204,20 +204,42 @@ public class ProductController {
     @RequestMapping(value = "/product/productDetail")
     public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request,HttpServletResponse response) throws Exception {
         try{
-
+        	params.put("email",session.getAttribute("email"));
+        	Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            // 비회원 처리 로직 변경필요
+            if(isEmpty(userInfo)){
+                params.put("user_id", session.getAttribute("nonMembersUserId"));
+            }else{
+                params.put("user_id", userInfo.get("usr_id"));
+            }
+            
             //상품 상세페이지 로드시 최근 본 상품 세션에 적용
             if(isEmpty((List<String>)session.getAttribute("today"))){
                 todayVO.setProduct_cd_array_string((String)params.get("product_cd"));
                 session.setAttribute("today",todayVO.getProduct_cd_array());
+                
+                //최근본상품없으면 prev없이 insert
+                Map<String,Object> map = new HashMap<>();
+                map.put("product_current",params.get("product_cd"));
+                map.put("usr_id",params.get("user_id"));
+                productDAO.insertProductHistory(map);
             }else{
-                todayVO.setProduct_cd_array((List<String>) session.getAttribute("today"));
+            	todayVO.setProduct_cd_array((List<String>) session.getAttribute("today"));
+            	//최근본상품있으면 이전기록 next 업데이트
+                Map<String,Object> map = new HashMap<>();
+                map.put("product_current",todayVO.getProduct_cd_array().get(todayVO.getProduct_cd_array().size()-1));
+                map.put("product_next",params.get("product_cd"));
+                map.put("usr_id",params.get("user_id"));
+                productDAO.updateProductHistory(map);
+                
+                map.put("product_prev",todayVO.getProduct_cd_array().get(todayVO.getProduct_cd_array().size()-1));
+                map.put("product_current",params.get("product_cd"));
+                productDAO.insertProductHistory(map);
+                
                 todayVO.setProduct_cd_array_string((String)params.get("product_cd"));
                 session.setAttribute("today",todayVO.getProduct_cd_array());
             }
 
-
-            params.put("email",session.getAttribute("email"));
-            Map<String, Object> userInfo = userDAO.getLoginUserList(params);
             Map<String,Object> list = productDAO.getProductViewDetail(params);
             
             model.addAttribute("list",list);
@@ -237,17 +259,11 @@ public class ProductController {
             List<Map<String,Object>> relatedProductList = productDAO.relatedProductList(list);
             model.addAttribute("relatedProductList", relatedProductList);
             
-            //함께본상품 
-//            List<Map<String,Object>> serialProductList = categoryDAO.serialProductList(list);
-//            model.addAttribute("serialProductList", serialProductList);
+            //함께본상품
+            List<Map<String,Object>> serialProductList = productDAO.serialProductList(list);
+            model.addAttribute("serialProductList", serialProductList);
             
             //찜한 상품 표기
-            // 비회원 처리 로직 변경필요
-            if(isEmpty(userInfo)){
-                params.put("user_id", session.getAttribute("nonMembersUserId"));
-            }else{
-                params.put("user_id", userInfo.get("usr_id"));
-            }
             searchVO.setDisplayRowCount(1);
             searchVO.pageCalculate(cartDAO.getFavoritesListCount(params));
             params.put("rowStart",searchVO.getRowStart());

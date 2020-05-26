@@ -890,11 +890,38 @@
     </select>
     
     <select id="serialProductList" parameterType="hashmap" resultType="hashmap">
-    	SELECT *,
-    		(select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1
+    	SELECT A.*,
+			   (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1
 		FROM product A
-		WHERE A.product_supplier = (select Z.product_supplier FROM product Z WHERE Z.product_cd = #{product_cd})
-		ORDER BY reg_date DESC
+		JOIN product_history B
+		ON B.product_current = A.product_cd
+		WHERE (B.product_prev = #{product_cd}
+		OR B.product_next = #{product_cd})
+		AND B.product_current != #{product_cd}
+		GROUP BY B.product_current
+		ORDER BY COUNT(B.product_current) DESC
 		LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
+    
+    <insert id="insertProductHistory" parameterType="hashmap">
+    	INSERT INTO product_history(
+			product_prev,
+			product_current,
+			usr_id
+		)VALUES(
+			#{product_prev},
+			#{product_current},
+			#{usr_id}
+		)
+    </insert>
+    
+    <update id="updateProductHistory" parameterType="hashmap">
+	    UPDATE product_history SET 
+			product_next = #{product_next},
+			update_date = SYSDATE()
+		WHERE usr_id = #{usr_id}
+		AND product_current = #{product_current}
+		ORDER BY reg_date DESC
+		LIMIT 1
+    </update>
 </mapper>
