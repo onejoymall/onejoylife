@@ -217,21 +217,21 @@
             </div>
             <div class="product-list-type2">
                 <ul class="selected-list">
-                    <c:if test="${not empty productList}">
-                        <c:forEach var="productList" items="${productList}" varStatus="status">
+                    <c:if test="${not empty productMDList}">
+                        <c:forEach var="productMDList" items="${productMDList}" varStatus="status">
                             <li>
-                                <a href="/product/productDetail?product_cd=${productList.product_cd}">
+                                <a href="/product/productDetail?product_cd=${productMDList.product_cd}">
                                     <div class="img-box">
-                                        <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
+                                        <img src='${productMDList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="190">
                                             <%--                                            <p class="sale-percent">35<span>%</span></p>--%>
                                         <i class="share-ic"></i>
                                     </div>
                                     <div class="product-info">
-                                        <p class="info-production">${productList.product_made_company_name}</p>
-                                        <p class="info-product-name">${productList.product_name}</p>
+                                        <p class="info-production">${productMDList.product_made_company_name}</p>
+                                        <p class="info-product-name">${productMDList.product_name}</p>
                                         <p class="info-price"><span class="price-before">
-                                                <fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</span>
-                                            <i class="right-arrow"></i><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</p>
+                                                <fmt:formatNumber value="${productMDList.product_user_payment}" groupingUsed="true" />원</span>
+                                            <i class="right-arrow"></i><fmt:formatNumber value="${productMDList.product_payment}" groupingUsed="true" />원</p>
                                         <p class="info-score">
                                             <i class="star-ic"></i>
                                             <span class="score-number">4.5</span>
@@ -242,7 +242,7 @@
                             </li>
                         </c:forEach>
                     </c:if>
-                    <c:if test="${empty productList}">
+                    <c:if test="${empty productMDList}">
                         <li>표시할 내용이 없습니다.</li>
                     </c:if>
                 </ul>
