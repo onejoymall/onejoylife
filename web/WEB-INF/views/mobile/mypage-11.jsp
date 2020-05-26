@@ -117,7 +117,7 @@
             </ul>
         </c:if>
         <hr>
-        <form id="form1" name="form1"  method="post">
+        <form id="form1" name="form1"  method="get">
             <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
             <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
         </form>

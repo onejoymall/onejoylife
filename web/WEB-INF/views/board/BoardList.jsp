@@ -82,7 +82,7 @@
 							</li>
 						</c:forEach>
 					</ul>
-						<form id="form1" name="form1"  method="post">
+						<form id="form1" name="form1"  method="get">
 						    <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
 
 <%--							<div>--%>

@@ -15,7 +15,7 @@
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
                 <c:import url="/MyPage/RightHeader"/>
-                <form id="form1" name="form1"  method="post">
+                <form id="form1" name="form1"  method="get">
                 <div class="r-input-box">
                     <p class="r-in-p1">주문현황</p>
 
