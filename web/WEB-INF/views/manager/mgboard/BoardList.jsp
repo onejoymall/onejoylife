@@ -66,7 +66,7 @@
 						</c:forEach>
 						</tbody>
 					</table>
-						<form id="form1" name="form1"  method="post">
+						<form id="form1" name="form1"  method="get">
 							<jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
 
 						</form>

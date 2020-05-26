@@ -117,7 +117,7 @@
                             <p>검색된 결과가 없습니다.</p>
                         </li>
                     </ul>
-                    <form id="form1" name="form1"  method="post">
+                    <form id="form1" name="form1"  method="get">
                         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                     </form>
                 </div>

@@ -113,7 +113,7 @@
                     </tbody>
                 </table>
                 </form>
-				<form id="form2" name="form2"  method="post">
+				<form id="form2" name="form2"  method="get">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                 </form>
             </div>
