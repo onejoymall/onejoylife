@@ -188,8 +188,8 @@
             <div class="also-viewed-goods">
                 <h5>함께 본 상품</h5>
                 <ul class="related-goods">
-                    <c:if test="${not empty sameSupplierProductList}">
-	            	<c:forEach var="list" items="${sameSupplierProductList}">
+                    <c:if test="${not empty serialProductList}">
+	            	<c:forEach var="list" items="${serialProductList}">
 		            	<li><a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
 		                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 		                    <p class="goods-name">${list.product_name}</p>
@@ -197,7 +197,7 @@
 		                </a></li>
 	                </c:forEach>
 	            	</c:if>
-	            	<c:if test="${empty sameSupplierProductList}">
+	            	<c:if test="${empty serialProductList}">
 	            		함께 본 상품이 없습니다.
 	            	</c:if>
                 </ul>

@@ -65,5 +65,10 @@ public class ProductDAO {
 		List<Map<String, Object>> serialProductList = sql.selectList("mall.ProductMapper.serialProductList", params);
 		return serialProductList;
 	}
-
+	public void insertProductHistory(Map<String, Object> params) {
+		sql.insert("mall.ProductMapper.insertProductHistory", params);
+	}
+	public void updateProductHistory(Map<String, Object> params) {
+		sql.insert("mall.ProductMapper.updateProductHistory", params);
+	}
 }
