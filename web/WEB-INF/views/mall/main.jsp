@@ -147,7 +147,7 @@
                     <a href="javascript:void(0)" class="nav-link active" data-tab="product_md_class">MD추천</a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link" data-tab="product_sp_class">인기상품</a>
+                    <a href="javascript:void(0)" class="nav-link" data-tab="product_popular_class">인기상품</a>
                 </li>
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-tab="product_new_class">신상품</a>
@@ -194,15 +194,15 @@
 
                     </div>
                 </div>
-                <div class="tab-content-item hidden" id="product_sp_class">
+                <div class="tab-content-item hidden" id="product_popular_class">
                     <div class="tab-content-item-inner">
                         <div class="category-wrap">
                             <div class="category-row">
-                                <span class="active" onclick="mdSlideCategorySelect('','product_sp_class')">ALL</span>
+                                <span class="active" onclick="mdSlideCategorySelect('','product_popular_class')">ALL</span>
                                 <c:if test="${not empty categoryList}">
                                 <c:forEach var="categoryList" items="${categoryList}" varStatus="status">
                                 <c:set var="categoryLineCut" value="${status.count%6}"></c:set>
-                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_sp_class')">${categoryList.pd_category_name}</span>
+                                <span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_popular_class')">${categoryList.pd_category_name}</span>
                                 <c:if test="${categoryLineCut  == 0}">
                             </div>
                             <div class="category-row">
