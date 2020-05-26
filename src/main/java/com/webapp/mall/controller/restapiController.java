@@ -1084,6 +1084,11 @@ public class restapiController {
     public HashMap<String, Object> productMainList(@RequestParam HashMap params, HttpSession session, SearchVO searchVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try{
+        	if(searchVO.getMainViewType().equals("product_popular_class")) {
+        		searchVO.setOrderByKey("sales_count");
+        		searchVO.setOrderByValue("DESC");
+        		searchVO.setMainViewType(null);
+        	}
             if(searchVO.getOrderByValue()==null || searchVO.getOrderByKey()==null){
                 searchVO.setOrderByKey("product_id");
                 searchVO.setOrderByValue("DESC");

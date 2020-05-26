@@ -524,6 +524,9 @@ $(document).on("click",".ra-num",function () {
                             '';
 
                     });
+                    if(!data.mdSlideCategorySelect || data.mdSlideCategorySelect.length == 0){
+                    	html += '<li>표시할 내용이 없습니다.</li>';
+                    }
                     $('.selected-list').html(html);
                     selectedList.reloadSlider();
                 }

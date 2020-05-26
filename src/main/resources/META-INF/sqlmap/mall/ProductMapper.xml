@@ -38,11 +38,18 @@
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 3) as file_3,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
                 (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
-            FROM product  where 1=1
+            FROM product  
+            ]]>
+            <if test='orderByKey =="sales_count"'>
+	            JOIN (select product_cd, COUNT(*) sales_count from payment GROUP BY product_cd) B
+				ON B.product_cd = product.product_cd
+			</if>
+			<![CDATA[
+			where 1=1
             and product_live_type is null
             and CASE WHEN product_validity_yn ='Y' THEN product_validity_start <= now() ELSE TRUE END
             and CASE WHEN product_validity_yn ='Y' THEN product_validity_end > now() ELSE TRUE END
-        ]]>
+            ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
