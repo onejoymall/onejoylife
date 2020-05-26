@@ -42,6 +42,17 @@
                     <span class="bar"></span>
                     <a href="">비밀번호 찾기</a>
                 </div>
+                <!-- 비회원 주문조회 -->
+                <div class="ttl-line"></div>
+                <div class="link-nonmem">
+                    <button type="button" class="nonmem-btn">비회원 주문조회</button>
+                </div>
+                <div class="nonmem">
+                    <form action="">
+                        <input type="text" class="non-num" placeholder="주문번호 입력">
+                        <button type="button" class="orderDetailGuestBtn">조회</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="mo-footer">
@@ -50,6 +61,13 @@
     </div>
 
     <script>
+	    $(document).ready(function(){
+	        // 비회원주문조회
+	        $(".nonmem-btn").click(function() {
+	            $(".nonmem").toggle(); 
+	        });
+	    });
+	    
         $('.btn-kakao-login').click(function () {
             window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');
         });
