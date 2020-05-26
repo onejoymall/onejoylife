@@ -3592,3 +3592,13 @@ function validationNumber(){
 }
 
 validationNumber();
+
+//문자열 숫자포함
+function isStrNumber(str){
+	return str.search(/[0-9]/g) >= 0;
+}
+
+//문자열 알파뱃포함
+function isStrAlphabet(str){
+	return str.search(/[a-zA-Z]/g) >= 0;
+}
