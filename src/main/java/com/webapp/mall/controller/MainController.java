@@ -103,7 +103,8 @@ public class MainController {
 
             model.addAttribute("giveawaylist", list);
 
-            //상품목록
+
+            //카테고리 상품목록
 
             searchVO.setDisplayRowCount(8);
             searchVO.setStaticRowEnd(8);
@@ -113,6 +114,19 @@ public class MainController {
             List<Map<String,Object>> productList = productDAO.getProductList(searchVO);
             model.addAttribute("productList", productList);
             model.addAttribute("searchVO", searchVO);
+
+            //MD추천 상품목록
+
+            searchVO.setDisplayRowCount(8);
+            searchVO.setStaticRowEnd(8);
+
+            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setMainViewType("product_md_class");
+            List<Map<String,Object>> productMDList = productDAO.getProductList(searchVO);
+            model.addAttribute("productMDList", productMDList);
+            model.addAttribute("searchVO", searchVO);
+
 
             //특가 상품목록
             searchVO.setDisplayRowCount(8);
