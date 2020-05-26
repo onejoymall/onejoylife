@@ -75,6 +75,9 @@ public class MobilePayment {
     @RequestMapping(value = "/SavePaymentMobile", method = RequestMethod.GET, produces = "application/json")
     public  String SavePaymentMobile(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
     	String rediectURL = "";
+    	if(params.get("error_msg") != null && !params.get("error_msg").equals("")) {
+    		return "redirect:/product/productDetail?product_cd="+params.get("product_cd");
+    	}
         try{
     		client = new IamportClient(apiKey, apiSecret);
     		Payment impPayment = client.paymentByImpUid((String)params.get("imp_uid")).getResponse();
@@ -168,6 +171,9 @@ public class MobilePayment {
     @RequestMapping(value = "/Save/PaymentOrdersMobile", method = RequestMethod.GET, produces = "application/json")
     public  String PaymentOrdersMobile(@RequestParam HashMap params, CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
     	String rediectURL = "";
+    	if(params.get("error_msg") != null && !params.get("error_msg").equals("")) {
+    		return "redirect:/MyPage/ShoppingBasket";
+    	}
         try{
         	client = new IamportClient(apiKey, apiSecret);
     		Payment impPayment = client.paymentByImpUid((String)params.get("imp_uid")).getResponse();

@@ -511,8 +511,8 @@ $(document).on("click",".ra-num",function () {
                             '             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +
                             '             <p class="info-product-name">'+productList.product_name+'</p>\n' +
                             '             <p class="info-price"><span class="price-before">\n' +
-                            '                '+productList.product_user_payment+'원</span>\n' +
-                            '                 <i class="right-arrow"></i>'+productList.product_payment+'원</p>\n' +
+                            '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
+                            '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                             '             <p class="info-score">\n' +
                             '                 <i class="star-ic"></i>\n' +
                             '                 <span class="score-number">4.5</span>\n' +
@@ -3592,3 +3592,18 @@ function validationNumber(){
 }
 
 validationNumber();
+
+//문자열 숫자포함
+function isStrNumber(str){
+	return str.search(/[0-9]/g) >= 0;
+}
+
+//문자열 알파뱃포함
+function isStrAlphabet(str){
+	return str.search(/[a-zA-Z]/g) >= 0;
+}
+
+//비화원 주문조회버튼
+$(".orderDetailGuestBtn").click(function(){
+	location.href = '/MyPage/OrderDetailGuest?order_no='+$(".non-num").val();
+});

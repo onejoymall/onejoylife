@@ -1107,6 +1107,17 @@ public class restapiController {
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
             searchVO.setProduct_sale_yn("Y");
             List<Map<String,Object>> list = productDAO.getProductList(searchVO);
+            if(list.size() < 8 && searchVO.getOrderByKey().equals("sales_count")) {
+            	searchVO.setOrderByKey("product_id");
+                searchVO.setOrderByValue("DESC");
+            	List<Map<String,Object>> addList = productDAO.getProductList(searchVO);
+            	for(Map<String,Object> addMap : addList) {
+            		list.add(addMap);
+            		if(list.size() >= 8) {
+            			break;
+            		}
+            	}
+            }
             resultMap.put("mdSlideCategorySelect",list);
         }catch (Exception e){
             e.printStackTrace();

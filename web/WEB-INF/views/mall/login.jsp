@@ -55,7 +55,17 @@
                 </div>
                 <div class="link-nonmem">
                     <p class="txt-p2 txt-w">ㆍ비회원 주문/배송 조회가 필요하신가요?</p>
-                    <a href="#" class="link-a">비회원 주문조회</a>
+                    <a href="#" class="link-a nonmem-btn">비회원 주문조회</a>
+                </div>
+                <!-- 비회원 주문조회 -->
+                <div class="nonmem">
+                    <form action="">
+                        <div class="nonmem-in">
+                            <p>주문번호</p>
+                            <input type="text" class="non-num">
+                        </div>
+                        <button type="button" class="orderDetailGuestBtn">조회</button>
+                    </form>
                 </div>
             </div>
         </form>
@@ -63,6 +73,11 @@
 </div>
 
 <script>
+	$(".nonmem-btn").click(function() {
+	    event.preventDefault();
+	    $(".nonmem").toggle(); 
+	});
+
     $('.kko-login-btn').click(function () {
         window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');
     });
