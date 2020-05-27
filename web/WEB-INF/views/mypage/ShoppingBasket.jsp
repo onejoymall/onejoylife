@@ -14,6 +14,7 @@
     <div class="page-box">
 
         <main class="clearfix main-tab">
+            <c:import url="/layout/scrollRight"/>
             <h2 class="head-h2">장바구니</h2>
             <div class="tab-box">
                 <p class="tab on" data-tab="t-box1">일반 <span>(${searchVO.totRow})</span></p>

@@ -316,14 +316,14 @@ input[class='styleClass']:checked + label
 }
 
 /* 오늘본상품 */
-.out-box {
+/*.out-box {
     position: fixed;
     right: 130px;
     top: 220px;
     width: 90px;
     text-align: center;
     z-index: 999;
-}
+}*/
 .out-h {
     height: 35px;
     background: #232a32;

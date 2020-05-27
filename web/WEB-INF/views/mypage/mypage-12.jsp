@@ -6,6 +6,7 @@
     <div class="wrap">
         <div class="page-box">
             <main class="clearfix">
+                <c:import url="/layout/scrollRight"/>
                 <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
                 <div class="right-contain">
                     <form name="defaultForm" id="defaultForm" method="POST">

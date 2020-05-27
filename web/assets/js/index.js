@@ -518,14 +518,6 @@ $('.main-title-box').click(function(){
         $(this).parents('.notice-data-item').addClass('active');
     }
 });
-//1:1
-$('.main-title-box').click(function(){
-    if($(this).parents('.qna-data-item').hasClass('active')){
-        $(this).parents('.qna-data-item').removeClass('active');
-    }else{
-        $(this).parents('.qna-data-item').addClass('active');
-    }
-});
 //FAQ
 $('.main-title-box').click(function(){
     if($(this).parents('.faq-data-item').hasClass('active')){

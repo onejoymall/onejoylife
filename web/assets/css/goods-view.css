@@ -18,6 +18,7 @@ button{
     white-space: nowrap;
 }
 .inner{
+    position: relative;
     margin:0 auto;
     width:1100px;
     padding:40px 0;
@@ -1036,4 +1037,13 @@ input:checked + label.ra-icon{
 .goods-information-wrap>.img-box>img{
 	width: 100%;
 	height: auto;
+}
+
+.out-box {
+    position: absolute;
+    left: 1120px;
+    top: 30px;
+    width: 90px;
+    text-align: center;
+    z-index: 99999;
 }

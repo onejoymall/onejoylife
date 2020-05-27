@@ -28,6 +28,7 @@ body{
     width:100%;
 }
 .inner{
+    position: relative;
     margin:0 auto;
     width:1100px;
     padding:40px 25px;
@@ -270,4 +271,12 @@ select.order-select::-ms-expand {
     color:#fff;
     background:#da394d;
     border:1px solid #da394d;
+}
+.out-box {
+    position: absolute;
+    left: 1120px;
+    top: 30px;
+    width: 90px;
+    text-align: center;
+    z-index: 99999;
 }

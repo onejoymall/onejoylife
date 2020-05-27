@@ -42,6 +42,7 @@
         </div>
         <div class="point-product-wrap">
             <div class="point-product-inner clearfix">
+            <c:import url="/layout/scrollRight"/>
                 <h4 class="main-section-h4">E-point 경품추천</h4>
                 <p class="special-price-more"><a href="<c:url value="/giveaway"/>">경품 더보기<i class="right-arrow"></i></a></p>
                 <ul class="point-product-list">

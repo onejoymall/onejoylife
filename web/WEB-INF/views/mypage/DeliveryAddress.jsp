@@ -9,8 +9,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
-    <div class="page-box">
+    <div class="page-box clearfix">
         <main>
+            <c:import url="/layout/scrollRight"/>
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
                 <form action="" method="POST" id="myDeliveryForm">

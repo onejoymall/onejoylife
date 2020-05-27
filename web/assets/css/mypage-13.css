@@ -1,6 +1,6 @@
 *{box-sizing: border-box; }
 body{font-family: "noto sans kr"!important;}
-main{overflow: hidden;}
+main{position:relative;}
 .wrap{width:100%;margin:0 auto;}
 .page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
 .h1-box {
@@ -283,4 +283,12 @@ tbody tr {
 }
 .ck-box input:checked + label .le-ck-txt{
     background:url(../img/icon/checked.png) no-repeat center / 20px;
+}
+.out-box {
+    position: absolute;
+    left: 1120px;
+    top: 30px;
+    width: 90px;
+    text-align: center;
+    z-index: 99999;
 }

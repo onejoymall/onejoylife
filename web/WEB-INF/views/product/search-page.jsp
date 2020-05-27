@@ -7,6 +7,7 @@
         <h2 class="main-section-title hide">main section</h2>
         <article class="epoint-gift-wrap">
             <div class="inner clearfix">
+                <c:import url="/layout/scrollRight"/>
                 <div class="inner-left">
                     <p>필터</p>
                     <div class="inner-filter1 category">
