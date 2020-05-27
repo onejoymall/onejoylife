@@ -1314,9 +1314,9 @@ public class restapiController {
      * 글 읽기 패스워드 확인
      */
     @RequestMapping(value = "/Board/PasswordCheck", method = RequestMethod.POST, produces = "application/json")
-    public Map<String,Object> boardPasswordCheck(HttpServletRequest request, ModelMap modelMap) throws  Exception{
-        String brdno = request.getParameter("brdno");
-        String password = request.getParameter("password");
+    public Map<String,Object> boardPasswordCheck(@RequestParam HashMap params,HttpServletRequest request, ModelMap modelMap) throws  Exception{
+        String brdno = (String)params.get("brdno");
+        String password =(String)params.get("password");
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
         try{

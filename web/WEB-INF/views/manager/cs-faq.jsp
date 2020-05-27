@@ -115,6 +115,7 @@
                 </form>
 				<form id="form2" name="form2"  method="get">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+                <input type="hidden" name="bgno" value="${bgInfo.bgno}">
                 </form>
             </div>
         </div>
