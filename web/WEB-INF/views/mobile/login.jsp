@@ -20,7 +20,7 @@
 <body>
     <div class="wrap">
         <div class="mo-main login-main clearfix">
-            <div class="mo-logo"><a href="/">onejoy life</a></div>
+            <a href="/"><div class="mo-logo"></div></a>
             <div class="mo-login-form">
                 <form name="defaultLoginForm" id="defaultLoginForm">
                     <input type="text" for="id-input" name="email" class="id-la" placeholder="아이디(이메일)">
@@ -108,5 +108,12 @@
             });
         })
     </script>
+    
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
+    <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
+    <script src='<c:url value="/assets/js/index.js"/>'></script>
+    <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
+    <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 </body>
 </html>
