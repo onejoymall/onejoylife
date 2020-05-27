@@ -41,7 +41,7 @@ public class BoardCtr {
      * 리스트.
      */
     @RequestMapping(value = "/Board/boardList")
-     public String boardList(@RequestParam HashMap params, BoardVO boardVO, SearchVO searchVO, ModelMap modelMap, HttpServletRequest request, HttpSession session )throws Exception {
+     public String boardList(@RequestParam HashMap params, BoardVO boardVO, ModelMap modelMap, HttpServletRequest request, HttpSession session )throws Exception {
         String returnString="";
         try{
             params.put("email",session.getAttribute("email"));
@@ -59,6 +59,7 @@ public class BoardCtr {
             if(boardVO.getDisplayRowCount()==null || boardVO.getDisplayRowCount() < 10){
                 boardVO.setDisplayRowCount(10);
             }
+            boardVO.setStaticRowEnd(10);
             boardVO.pageCalculate( boardSvc.selectBoardCount(boardVO) ); // startRow, endRow
 
             List<?> listview  = boardSvc.selectBoardList(boardVO);
