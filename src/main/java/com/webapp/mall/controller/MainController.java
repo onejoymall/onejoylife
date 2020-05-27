@@ -129,6 +129,27 @@ public class MainController {
             List<Map<String,Object>> productMDList = productDAO.getProductList(searchVO);
             model.addAttribute("productMDList", productMDList);
             model.addAttribute("searchVO", searchVO);
+            
+            //신상품 상품목록
+            searchVO.setDisplayRowCount(8);
+            searchVO.setStaticRowEnd(8);
+
+            searchVO.setProduct_sale_yn("Y");
+            searchVO.setMainViewType("product_new_class");
+            List<Map<String,Object>> productNewList = productDAO.getProductList(searchVO);
+            model.addAttribute("productNewList", productNewList);
+            model.addAttribute("searchVO", searchVO);
+            
+            //인기상품 상품목록
+            searchVO.setDisplayRowCount(8);
+            searchVO.setStaticRowEnd(8);
+
+            searchVO.setOrderByKey("sales_count");
+    		searchVO.setOrderByValue("DESC");
+    		searchVO.setMainViewType(null);
+            List<Map<String,Object>> productPopularList = productDAO.getProductList(searchVO);
+            model.addAttribute("productPopularList", productPopularList);
+            model.addAttribute("searchVO", searchVO);
 
 
             //특가 상품목록
@@ -166,8 +187,6 @@ public class MainController {
             params.put("pd_category_event_end","now()");
             List<Map<String,Object>> categoryEventListSub = categoryDAO.getCategoryEventList(params);
             model.addAttribute("categoryEventListSub",categoryEventListSub);
-
-
 
             //매인 배너
             params.put("pd_category_event_use_yn","");

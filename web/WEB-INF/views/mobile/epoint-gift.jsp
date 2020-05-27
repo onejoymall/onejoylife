@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:import url="/mobile/layout/sub-header"/>
+<c:import url="/mobile/layout/main-header"/>
     <section class="subheader">
         <div class="subTitle">E-point 경품추첨</div>
     </section>

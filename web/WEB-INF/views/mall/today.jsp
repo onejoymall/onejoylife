@@ -30,7 +30,11 @@
             <div class="banner-box">
 
             </div>
-            <p class="gift-amount">오늘의 특가 전체 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
+            <p class="gift-amount">오늘의 특가 
+				<c:if test="${searchVO.product_ct eq null}">전체</c:if>
+				<c:forEach var="categoryList" items="${categoryList}" varStatus="status">
+                    <c:if test="${searchVO.product_ct eq categoryList.pd_category_id}">${categoryList.pd_category_name}</c:if>
+                </c:forEach> 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
             <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">

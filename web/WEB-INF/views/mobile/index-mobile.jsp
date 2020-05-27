@@ -69,8 +69,8 @@
             <h4 class="mt-05">고민없이 선택하는 MD 강력 추천 상품!</h4>
         </div>
         <ul class="mainList-sm">
-            <c:if test="${not empty productList}">
-                <c:forEach var="productList" items="${productList}" varStatus="status" end="5">
+            <c:if test="${not empty productMDList}">
+                <c:forEach var="productList" items="${productMDList}" varStatus="status" end="5">
                     <li>
                         <a href="/product/productDetail?product_cd=${productList.product_cd}">
                             <div class="img-box">
@@ -87,7 +87,7 @@
                     </li>
                 </c:forEach>
             </c:if>
-            <c:if test="${empty productList}">
+            <c:if test="${empty productMDList}">
                 <li>표시할 내용이 없습니다.</li>
             </c:if>
         </ul>
@@ -121,8 +121,37 @@
             <h4 class="mt-05">망설이면 후회하는 원조이몰 인기 상품!</h4>
         </div>
         <ul class="mainList-sm">
-            <c:if test="${not empty productList}">
-                <c:forEach var="productList" items="${productList}" varStatus="status" end="5">
+            <c:if test="${not empty productPopularList}">
+                <c:forEach var="productList" items="${productPopularList}" varStatus="status" end="5">
+                    <a href="/product/productDetail?product_cd=${productList.product_cd}">
+                        <li>
+                            <div class="img-box">
+                                <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
+<%--                                <p class="saleBox">35%</p>--%>
+                                <a href="#" class="share-ic"></a>
+                            </div>
+                            <a href="#" class="mainList-sm-text">
+                                <p class="list-title">${productList.product_name}</p>
+                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
+                            </a>
+                        </li>
+                    </a>
+                </c:forEach>
+            </c:if>
+            <c:if test="${empty productPopularList}">
+                <li>표시할 내용이 없습니다.</li>
+            </c:if>
+        </ul>
+    </div>
+    <div class="mainList-wrap mt-1 clearfix">
+        <div class="wrap bg_grey2">
+            <h2 class="red">신상품</h2>
+            <!-- <h4 class="mt-05">망설이면 후회하는 원조이몰 인기 상품!</h4> -->
+        </div>
+        <ul class="mainList-sm">
+            <c:if test="${not empty productNewList}">
+                <c:forEach var="productList" items="${productNewList}" varStatus="status" end="5">
                     <a href="/product/productDetail?product_cd=${productList.product_cd}">
                         <li>
                             <div class="img-box">

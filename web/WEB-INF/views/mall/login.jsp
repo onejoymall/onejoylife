@@ -10,7 +10,7 @@
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="login-box">
-        <form  name="defaultLoginForm" id="defaultLoginForm">
+        <form  name="defaultLoginForm" id="defaultLoginForm" onsubmit="return false;">
             <h2 class="h2-box">로그인</h2>
             <div class="login-out">
                 <div class="login-in">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="login-but">
-                    <button type="button" title="login" class="login-on"><span>로그인</span>
+                    <button type="submit" title="login" class="login-on"><span>로그인</span>
                     </button>
                 </div>
 
