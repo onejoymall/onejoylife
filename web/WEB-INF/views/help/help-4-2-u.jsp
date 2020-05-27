@@ -7,7 +7,7 @@
             <main class="clearfix">
                 <%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
                 <div class="right-contain">
-                    <form action="" method="POST">
+                        <form id="form1" name="form1"  method="get">
                         <div class="r-sec1">
                             <p class="sec1-h1">1:1 문의하기</p>
                             <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변을 확인하실 수 있습니다.</p>
@@ -83,9 +83,8 @@
                             <p class="ex">
                                 <span>쇼핑몰 관련 1:1 문의하기 입니다.<br>매장 이용관련 불편사항은<a href="">[원조이몰 고객지원센터]</a>를 이용하여 글을 남겨주세요.</span>
                             </p>
-                            <form id="form1" name="form1"  method="get">
                                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-                            </form>
+                                <input type="hidden" name="bgno" value="${bgInfo.bgno}">
                             </ul>
                         </div>
                     </form>

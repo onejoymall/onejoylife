@@ -2637,14 +2637,16 @@ ul.submenu a{
 /*카테고리 start*/
 .category{
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    height:100%;
     visibility: hidden;
     opacity: 0;
     z-index: 10002;
     transition: .3s;
+    overflow: hidden;
 }
 .category.on{
     visibility: visible;
@@ -2656,6 +2658,7 @@ ul.submenu a{
     left: 0;
     width: 100%;
     height: 100vh;
+    height:100%;
     background: rgba(0,0,0,0.7);
     transition: .3s;
 }
@@ -2666,9 +2669,11 @@ ul.submenu a{
     left: -100%;
     width: 280px;
     height:100vh;
+    height:100%;
     background: #fff;
     z-index: 1550;
     transition: .3s;
+    overflow: hidden;
 }
 .category.on .content{
     left: 0px;
@@ -2766,6 +2771,7 @@ ul.submenu a{
     background:url(../../img/call-m-wh.svg) no-repeat center / 45px;
 }
 .cate-body{
+    height:calc(100% - 120px);
     height:calc(100vh - 120px);
     overflow-y:auto;
 }
@@ -2775,6 +2781,7 @@ ul.submenu a{
     line-height: 45px;
 }
 .cateList{
+    min-height:calc(100% - 207px);
     min-height:calc(100vh - 207px);
     padding-bottom:40px;
 }
@@ -2829,6 +2836,9 @@ ul.cateList a.noDp{
     width:100%;
     height:40px;
     background:#fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 .logout{
     display:block;
