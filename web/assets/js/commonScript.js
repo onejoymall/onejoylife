@@ -337,6 +337,7 @@ $(document).on("click",".ra-num",function () {
                 $('input:radio[name=banner_use_yn][value=\''+categorySelect.banner_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=event_use_yn][value=\''+categorySelect.event_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=pd_category_use_yn][value=\''+categorySelect.pd_category_use_yn+'\']').prop("checked",true);
+                $('input:radio[name=pd_category_main_view_sp][value=\''+categorySelect.pd_category_main_view_sp+'\']').prop("checked",true);
 
                 $('.file_link').attr('src',categorySelect.file_link);
                 $('.file_link2').attr('src',categorySelect.file_link2);
@@ -3590,7 +3591,6 @@ function validationNumber(){
 		$(this).val($(this).val().replace(/[^0-9.]/g,""))
 	});
 }
-
 validationNumber();
 
 //문자열 숫자포함

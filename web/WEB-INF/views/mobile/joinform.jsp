@@ -20,7 +20,7 @@
     <div class="wrap">
         <header class="header">
             <div class="top-inner">
-                <button class="back-arr"><i class="back-ic"></i></button>
+                <button class="back-arr" onclick="history.back();"><i class="back-ic"></i></button>
                 <p class="header-tit">회원가입</p>
             </div>
         </header>
@@ -35,7 +35,7 @@
                     <div class="join-cell">
                         <div class="join-cell-in">
                             <input type="text" name="email_auth_code" id="email_auth_code" placeholder="이메일 인증번호(4자리)" class="num-txt" readonly>
-                            <button type="button" class="btn-auth" id="mailSender"><span>인증번호</span></button>
+                            <button type="button" class="btn-auth" id="mailSender"><span>인증번호 요청</span></button>
 <%--                            <button type="button" class="btn-color"><span>60초</span></button>--%>
 <%--                            <button type="button" class="btn-color"><span>인증완료</span></button>--%>
                         </div>
