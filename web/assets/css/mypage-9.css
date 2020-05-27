@@ -1,6 +1,6 @@
 *{box-sizing: border-box; }
 body{font-family: "noto sans kr"!important;}
-main{overflow: hidden;}
+main{position: relative;}
 .page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
 .h1-box {
     padding: 70px 0 50px;
@@ -312,3 +312,11 @@ table {
 }
 
 
+.out-box {
+    position: absolute;
+    left: 1120px;
+    top: 30px;
+    width: 90px;
+    text-align: center;
+    z-index: 99999;
+}

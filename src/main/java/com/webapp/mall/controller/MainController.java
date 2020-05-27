@@ -320,6 +320,33 @@ public class MainController {
             return "layout/mainTopNav";
         }
     }
+    @RequestMapping(value = "/layout/scrollRight")
+    public String scrollRight(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
+        try{
+            searchVO.setDisplayRowCount(5);
+            searchVO.setStaticRowEnd(5);
+            searchVO.pageCalculate(cartDAO.getTopCartListCount(params));
+
+            //오늘 본 상품 출력시 적용
+            if(isEmpty((List<String>)session.getAttribute("today"))){
+
+            }else{
+                todayVO.setProduct_cd_array((List<String>)session.getAttribute("today"));
+                List<Map<String,Object>> todayList = productDAO.getProductTodayList(todayVO);
+                model.addAttribute("todayList", todayList);
+            }
+
+//            todayVO.setProduct_cd_array(new String[]{"string1"});
+
+
+            model.addAttribute("searchVO", searchVO);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+            return "layout/scrollRight";
+    }
     @RequestMapping(value = "/mobile/layout/main-header")
     public String MmainTopNav(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
         try{

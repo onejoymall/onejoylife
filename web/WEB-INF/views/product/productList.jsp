@@ -16,6 +16,7 @@
     <h2 class="main-section-title hide">main section</h2>
     <article class="epoint-gift-wrap">
         <div class="inner clearfix">
+            <c:import url="/layout/scrollRight"/>
             <h3>${categoryRowData.pd_category_name}</h3>
 <%--            <div class="txt-box">--%>
 <%--                <ul class="txt-box-ul">--%>

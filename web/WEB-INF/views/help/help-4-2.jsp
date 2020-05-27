@@ -153,10 +153,6 @@
                $("input[name='email-2']").attr('readonly', true); //readonly로 직접입력 막기.
            }
        });
-
-            $('.main-title-box').click(function(){
-                $(this).parent($('.notice-data-item')).toggleClass('active');
-            });
    });
 
         function readBoard(bgtype,brdno,objectThis){

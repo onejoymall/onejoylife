@@ -15,6 +15,7 @@
     <h2 class="main-section-title hide">main section</h2>
     <article class="epoint-gift-wrap">
         <div class="inner clearfix">
+            <c:import url="/layout/scrollRight"/>
             <h3>E-point 경품추첨</h3>
             <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">${searchVO.totRow}</span>개의 상품이 등록되어 있습니다.</p>
             <form id="form1" name="form1"  method="get">

@@ -151,10 +151,16 @@
                $("input[name='email-2']").attr('readonly', true); //readonly로 직접입력 막기.
            }
        });
-            $('.main-title-box').click(function(){
-                $(this).parent($('.notice-data-item')).toggleClass('active');
-            });
    });
+
+//1:1
+$('.main-title-box').click(function(){
+    if($(this).parents('.qna-data-item').hasClass('active')){
+        $(this).parents('.qna-data-item').removeClass('active');
+    }else{
+        $(this).parents('.qna-data-item').addClass('active');
+    }
+});
 
 
 

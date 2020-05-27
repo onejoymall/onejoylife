@@ -15,6 +15,7 @@
     <article class="goods-main">
         <h3 class="main-title hide">상품영역</h3>
         <div class="inner">
+            <c:import url="/layout/scrollRight"/>
             <div class="goods-slider-wrap">
                 <ul class="goods-slider">
                     <li><img src='${detail.file_1}'  ></li>

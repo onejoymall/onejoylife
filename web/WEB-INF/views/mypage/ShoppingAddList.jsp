@@ -11,8 +11,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
-    <div class="page-box">
+    <div class="page-box clearfix">
         <main>
+            <c:import url="/layout/scrollRight"/>
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
                 <%--                <%@ include file="/WEB-INF/views/layout/MyPageRightHeader.jsp" %>--%>

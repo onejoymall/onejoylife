@@ -1111,3 +1111,13 @@ input[type="radio"]+label, input[type="checkbox"]+label{
     height:16px;
     background:url(../img/icon/file.svg) center center no-repeat;
 }
+
+.out-box {
+    position: absolute;
+    left: 1120px;
+    top: -1000px;
+    width: 90px;
+    text-align: center;
+    z-index: 99999;
+
+}
