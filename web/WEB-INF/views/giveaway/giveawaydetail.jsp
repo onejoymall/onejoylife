@@ -338,7 +338,7 @@
         var relatedgoods = $('.related-goods').bxSlider({
             auto:false,
             mode:'horizontal',
-            slideWidth:330,
+            slideWidth:202,
             moveSlides:4,
             slideMargin:60,
             minSlides:4,

@@ -322,6 +322,7 @@ public class ProductController {
             	}
             }
             model.addAttribute("lineBannerList1", lineBannerList.get(0));
+            model.addAttribute("product_ct_arr",Arrays.asList(((String)list.get("product_ct")).split("\\|")));
         }catch (Exception e){
             e.printStackTrace();
         }

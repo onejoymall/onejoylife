@@ -205,6 +205,7 @@
         <if test="event_use_yn!=null and event_use_yn!=''">
             AND A.event_use_yn = #{event_use_yn}
             <![CDATA[AND A.event_end_date >= now()]]>
+            <![CDATA[AND A.event_start_date < now()]]>
         </if>
         <if test="pd_category_event_use_yn!=null and pd_category_event_use_yn!=''">
             AND A.pd_category_event_use_yn = #{pd_category_event_use_yn}
@@ -219,7 +220,7 @@
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM product_category_event  where 1=1 AND event_use_yn='Y'
+        FROM product_category_event  where 1=1 AND event_use_yn='Y' and event_end_date >= now() and event_start_date < now()
         ]]>
     </select>
     <delete id="deleteCategoryFile" parameterType="java.util.Map">

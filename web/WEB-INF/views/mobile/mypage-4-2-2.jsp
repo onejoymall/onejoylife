@@ -86,17 +86,22 @@
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" class="btn btn-redcover">결제하기</a></li>
+           <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
         </ul>
     </div>
 </form>
+
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, '')}" />
+<c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="noParamUrl" value="${baseURL}${requestPath}"/>
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     $("#submitPayment").on("click",function() {
-        if(!$('#le-ck').is(":checked")){
+        if(!$('#replysns').is(":checked")){
             $.toast({
                 text: "이용약관 동의 는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
@@ -115,7 +120,8 @@
                 buyer_name: "${delivery.order_user_name}",
                 buyer_tel: "${delivery.delivery_user_phone}",
                 buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
-                buyer_postcode: "${delivery.postcode}"
+                buyer_postcode: "${delivery.postcode}",
+                m_redirect_url: "${baseURL}/SavePaymentMobile?"+$('#defaultForm').serialize()+'&payment_class=GIVEAWAY'
             }, function (rsp) { // callback
                 var formData = $('#defaultForm').serialize()
                     +'&payment_class=GIVEAWAY'

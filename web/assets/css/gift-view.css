@@ -1046,3 +1046,12 @@ button{
     text-align: center;
     z-index: 99999;
 }
+/*20.05.28 추가*/
+.related-goods .img-box{
+    width:202px;
+    height:202px;
+}
+.related-goods .img-box img{
+    max-height:202px;
+    margin:0 auto;
+}
