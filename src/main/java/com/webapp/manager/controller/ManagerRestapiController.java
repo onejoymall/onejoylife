@@ -539,6 +539,9 @@ public class ManagerRestapiController {
             if(productVO.getGiveaway_name().isEmpty()){
                 error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
             }
+            if(productVO.getGiveaway_play_winner_point() == null || productVO.getGiveaway_play_winner_point() == 0){
+                error.put(messageSource.getMessage("giveaway_play_winner_point","ko"), messageSource.getMessage("error.required","ko"));
+            }
 //            if(productVO.getProduct_name_en().isEmpty()){
 //                error.put(messageSource.getMessage("product_name_en","ko"), messageSource.getMessage("error.required","ko"));
 //            }
@@ -548,15 +551,15 @@ public class ManagerRestapiController {
 //            if(productVO.getProduct_user_payment().is){
 //                error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
 //            }
-            if(productVO.getGiveaway_company_payment() == null){
-                error.put(messageSource.getMessage("product_company_payment","ko"), messageSource.getMessage("error.required","ko"));
-            }
-            if(productVO.getGiveaway_payment() == null){
-                error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
-            }
-            if(productVO.getGiveaway_user_payment() == null){
-            	error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
-            }
+            // if(productVO.getGiveaway_company_payment() == null){
+            //     error.put(messageSource.getMessage("product_company_payment","ko"), messageSource.getMessage("error.required","ko"));
+            // }
+            // if(productVO.getGiveaway_payment() == null){
+            //     error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
+            // }
+            // if(productVO.getGiveaway_user_payment() == null){
+            // 	error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
+            // }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -588,7 +591,7 @@ public class ManagerRestapiController {
                     mgProductDAO.insertProductFile(filelist,fileVO);
                 }
                 mgGiveawayDAO.insertGiveaway(productVO);
-                resultMap.put("redirectUrl","/Manager/GiveawayAdd");
+                resultMap.put("redirectUrl","/Manager/Giveaway");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -601,6 +604,12 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
+        	if(giveawayVO.getGiveaway_name().isEmpty()){
+                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(giveawayVO.getGiveaway_play_winner_point() == null || giveawayVO.getGiveaway_play_winner_point() == 0){
+                error.put(messageSource.getMessage("giveaway_play_winner_point","ko"), messageSource.getMessage("error.required","ko"));
+            }
 
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"giveaway");

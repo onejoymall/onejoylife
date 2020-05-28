@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <section class="main-section">
     <h2 class="main-section-title hide">main section</h2>
@@ -218,25 +220,25 @@
                     <!-- <p class="goods-name">SM-G05-ZR/SS</p>
                     <p class="goods-subtitle">일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p> -->
                     <table class="goods-information-table">
-                    	<c:if test="${!fn:endsWith(list.product_ct,'882') &&
-                    				  !fn:endsWith(list.product_ct,'32') &&
-                    				  !fn:endsWith(list.product_ct,'815') &&
-                    				  !fn:endsWith(list.product_ct,'51') &&
-                    				  !fn:endsWith(list.product_ct,'50') &&
-                    				  !fn:endsWith(list.product_ct,'152') &&
-                    				  !fn:endsWith(list.product_ct,'25') &&
-                    				  !fn:endsWith(list.product_ct,'461') &&
-                    				  !fn:endsWith(list.product_ct,'27') &&
-                    				  !fn:endsWith(list.product_ct,'122') &&
-                    				  !fn:endsWith(list.product_ct,'126') &&
-                    				  !fn:endsWith(list.product_ct,'906') &&
-                    				  !fn:endsWith(list.product_ct,'174')}">
+                    	<c:if test="${!afn:contains(product_ct_arr,'882') &&
+                    				  !afn:contains(product_ct_arr,'32') &&
+                    				  !afn:contains(product_ct_arr,'815') &&
+                    				  !afn:contains(product_ct_arr,'51') &&
+                    				  !afn:contains(product_ct_arr,'50') &&
+                    				  !afn:contains(product_ct_arr,'152') &&
+                    				  !afn:contains(product_ct_arr,'25') &&
+                    				  !afn:contains(product_ct_arr,'461') &&
+                    				  !afn:contains(product_ct_arr,'27') &&
+                    				  !afn:contains(product_ct_arr,'122') &&
+                    				  !afn:contains(product_ct_arr,'126') &&
+                    				  !afn:contains(product_ct_arr,'906') &&
+                    				  !afn:contains(product_ct_arr,'174')}">
 	                        <tr><th>1. 소재</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 색상</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 크기</th><td>상세페이지 참조</td></tr>
 							<tr><th>4. 제조자</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'882')}">
+						<c:if test="${afn:contains(product_ct_arr,'882')}">
 							<tr><th>1. 품명</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. KC 인증 필 유뮤(품질경영 및 공산품안전관리법상 안전º품질표시대상공산품에 한함)</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 색상</th><td>상세페이지 참조</td></tr>
@@ -251,7 +253,7 @@
 							<tr><th>10. 품질보증 기준</th><td>상세페이지 참조</td></tr>
 							<tr><th>11. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'32')}">
+						<c:if test="${afn:contains(product_ct_arr,'32')}">
 							<tr><th>1. 건강기능식품에 관한 법률에 따른 표시사항</th><td>상세페이지 참조</td></tr>
 							<tr><th>1-1. 식품의 유형</th><td>상세페이지 참조</td></tr>
 							<tr><th>1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
@@ -267,8 +269,8 @@
 							<tr><th>1-12. 수입식품에 해당하는 경우 "건강기능식품에 관한 법률에 따른 수입신고를 필함"의 문구</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'126') ||
-									  fn:endsWith(list.product_ct,'174')}">
+						<c:if test="${afn:contains(product_ct_arr,'126') ||
+									  afn:contains(product_ct_arr,'174')}">
 							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 전기용품 안전인증 필 유무(전기용품안전관리법상 안전인증대상전기용품, 자율안전확인대상전기용품, 공급자적합성확인대상전기용품에 한함)</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 정격전압, 소비전력, 에너지소비효율등급(에너지이용합리화법상 의무대상상품에 한함)</th><td>상세페이지 참조</td></tr>
@@ -281,7 +283,7 @@
 							<tr><th>10. 품질보증 기준</th><td>상세페이지 참조</td></tr>
 							<tr><th>11. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'122')}">
+						<c:if test="${afn:contains(product_ct_arr,'122')}">
 							<tr><th>1. 종류</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 소재</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 치수</th><td>상세페이지 참조</td></tr>
@@ -291,14 +293,14 @@
 							<tr><th>7. 품질보증기준</th><td>상세페이지 참조</td></tr>
 							<tr><th>8. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'27')}">
+						<c:if test="${afn:contains(product_ct_arr,'27')}">
 							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 법에 의한 인증, 허가 등을 받았음을 확인할 수 있는 경우 그에 대한 사항</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 제조국 또는 원산지</th><td>상세페이지 참조</td></tr>
 							<tr><th>4. 제조자, 수입품의 경우 수입자들 함께 표기</th><td>상세페이지 참조</td></tr>
 							<tr><th>5. A/S 책임자와 전화번호 또는 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'461')}">
+						<c:if test="${afn:contains(product_ct_arr,'461')}">
 							<tr><th>1. 용량 또는 중량</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 제품 주용 사양(피부타입, 색상(호,번) 등)</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 사용기한 또는 개봉 후 사용기간(개봉 후 사용기 간을 기재할 경우에는 제조연월일을 병행표기)</th><td>상세페이지 참조</td></tr>
@@ -313,7 +315,7 @@
 							<tr><th colspan="2">※ 사용기한을 기재하는 경우 ex)2013.10, 2013.10~2014.8., 2013.10~, 주문일로부터 1 년 이상 남음
 							<br>※ 제조연월일과 개봉 후 사용기간을 기재하는 경우 ex) 제조일 2011.10~2012.4, 개봉후 2 년내 사용 / 주문일로부터 1 년 이내, 개봉후 2 년내 사용</th></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'906')}">
+						<c:if test="${afn:contains(product_ct_arr,'906')}">
 							<tr><th>1. 소재/순도/밴드재질(시계의 경우)</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 중량</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 제조자, 수입품의 수입자를 함께 표기 (병행수입 의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
@@ -327,7 +329,7 @@
 							<tr><th>9. 품질보증 기준</th><td>상세페이지 참조</td></tr>
 							<tr><th>10. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'25')}">
+						<c:if test="${afn:contains(product_ct_arr,'25')}">
 							<tr><th>1. 식품위생버에 따른 표시사항</th><td>상세페이지 참조</td></tr>
 							<tr><th>1-1. 식품의 유형</th><td>상세페이지 참조</td></tr>
 							<tr><th>1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
@@ -340,7 +342,7 @@
 							<tr><th>1-9. 수입식품에 해당하는 경우 '식품위생법에 따른 수입신고를 필함'의 문구</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'152')}">
+						<c:if test="${afn:contains(product_ct_arr,'152')}">
 							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 동일모델의 출시년월</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 자동차관리법에 따른 자동차부품 자기인증 유무(인증 대상 자동차부품에 한함)</th><td>상세페이지 참조</td></tr>
@@ -351,8 +353,8 @@
 							<tr><th>8. 품질보증 기준</th><td>상세페이지 참조</td></tr>
 							<tr><th>9. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'50') ||
-									  fn:endsWith(list.product_ct,'51')}">
+						<c:if test="${afn:contains(product_ct_arr,'50') ||
+									  afn:contains(product_ct_arr,'51')}">
 							<tr><th>1. 포장단위별 용량(중량), 수량, 크기</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 생산자. 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 농수산물의 원산지 표시에 관한 법률에 따른 원산지</th><td>상세페이지 참조</td></tr>
@@ -366,7 +368,7 @@
 							<tr><th>7. 보관방법 또는 취급방법</th><td>상세페이지 참조</td></tr>
 							<tr><th>8. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
-						<c:if test="${fn:endsWith(list.product_ct,'815')}">
+						<c:if test="${afn:contains(product_ct_arr,'815')}">
 							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
 							<tr><th>2. 재질</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 구성품</th><td>상세페이지 참조</td></tr>
@@ -502,7 +504,7 @@
         $('.related-goods').bxSlider({
             // auto:false,
             mode:'horizontal',
-            slideWidth:330,
+            slideWidth:202,
             moveSlides:4,
             slideMargin:60,
             minSlides:4,

@@ -76,7 +76,11 @@ public class MobilePayment {
     public  String SavePaymentMobile(@RequestParam HashMap params,HttpServletRequest request,HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
     	String rediectURL = "";
     	if(params.get("error_msg") != null && !params.get("error_msg").equals("")) {
-    		return "redirect:/product/productDetail?product_cd="+params.get("product_cd");
+    		if(deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
+    			return "redirect:/product/productDetail?product_cd="+params.get("product_cd");
+    		}else {
+    			return "redirect:/MyPage/GiveawayWinningList";
+    		}
     	}
         try{
     		client = new IamportClient(apiKey, apiSecret);
@@ -93,7 +97,7 @@ public class MobilePayment {
 
             params.put("email",session.getAttribute("email"));
             //실제 결제승인이 이뤄졌거나, 가상계좌 발급이 성공된 경우, true
-            if(deliveryInfoVO.getSuccess() != null){
+            if(deliveryInfoVO.getSuccess()){
                 params.put("payment_status","W");
                 //가상계좌결제시 미결제로 상태변경
                 if(deliveryInfoVO.getPay_method().equals("vbank")){
@@ -108,18 +112,18 @@ public class MobilePayment {
                 deliveryInfoVO.setOrder_user_id( Integer.parseInt(numberGender.numberGen(6,1)));
                 rediectURL = "/MyPage/OrderDetailGuest?order_no="+deliveryInfoVO.getOrder_no();
             }else{
-                params.put("payment_user_id",userInfo.get("usr_id"));
-                params.put("point_paid_user_id",userInfo.get("usr_id"));
-                deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
-                //회원인 경우 보유포인트 확인
-
-
-                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
-                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
-                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
-                //상품결제 시 포인트 배율 확인 및 지급
-                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
-                if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+            	if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+	                params.put("payment_user_id",userInfo.get("usr_id"));
+	                params.put("point_paid_user_id",userInfo.get("usr_id"));
+	                deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
+	                
+	                //회원인 경우 보유포인트 확인
+	                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
+	                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+	                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
+	                
+	                //상품결제 시 포인트 배율 확인 및 지급
+	                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
                     BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
                     BigDecimal payment = new BigDecimal(getPaymentString);//구매금액
                     BigDecimal productPointRate = new BigDecimal((String)productInfo.get("product_point_rate"));//포인트배율
@@ -136,29 +140,29 @@ public class MobilePayment {
                         params.put("order_no",deliveryInfoVO.getOrder_no());
                         pointDAO.insertPoint(params);
                     }
+                    rediectURL = "/MyPage/OrderAndDelivery";
+                }else if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
+                	//경품 응모시 결제 상태 변경
+                    if(params.get("success").equals("false")){
+                        params.put("giveaway_payment_status","A");
+                    }else{
+                        params.put("giveaway_payment_status","B");
+                    }
+
+                    paymentDAO.updateGiveawayDeliveryStatus(params);
+                    rediectURL = "/MyPage/GiveawayWinningList";
                 }
-                rediectURL = "/MyPage/OrderAndDelivery";
             }
 
-
             paymentDAO.insertPayment(params);
-            paymentDAO.insertBundle(params);
-            
+            if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+            	paymentDAO.insertBundle(params);
+            }
             //쿠폰사용으로 변경
             if(params.get("coupon_cd") != null && !params.get("coupon_cd").equals("")) {
             	couponDAO.updateCouponUse(params);
             }
             
-            //경품 응모시 결제 상태 변경
-            if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
-                if(params.get("success").equals("false")){
-                    params.put("giveaway_payment_status","A");
-                }else{
-                    params.put("giveaway_payment_status","B");
-                }
-
-                paymentDAO.updateGiveawayDeliveryStatus(params);
-            }
             deliveryDAO.insertDelivery(deliveryInfoVO);
 
         }catch (Exception e){

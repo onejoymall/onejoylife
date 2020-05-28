@@ -772,26 +772,46 @@ public class MyPage {
     }
     //경품 결제
     @RequestMapping(value="/MyPage/giveawaypayment")
-    public String giveawaypayment(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
+    public String giveawaypayment(Model model, @RequestParam HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
 
         try{
-            params.put("order_no",request.getParameter("order_no"));
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             params.put("giveaway_cd",delivery.get("giveaway_cd"));
             params.put("product_cd",delivery.get("product_cd"));
             Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
-            //공급가
-            Integer texPayment = (Integer) detail.get("giveaway_user_payment");
+            
+            //과세구분
+            String giveaway_tex_class = (String)detail.get("giveaway_tex_class");
+            //경품추첨가
+            Integer texA = (Integer) detail.get("giveaway_play_winner_point");
+            //시가(원조이몰이익10%뺀가격)
+            double texB = Math.round(texA/1.1);
+            //공급가액
+            double texC= giveaway_tex_class.contains("A") ? Math.round(texB/1.1) : texB;
             //부가세
-            double texD = Math.round((texPayment/1.1)-((texPayment/1.1)/1.1));
-
+            double texD = texB - texC;
             //기타소득세
-            double texE = Math.round(((texPayment/1.1)/1.1)*0.22);
+            double texE = Math.round(texC*0.2);
             //주민세
-            double texF= Math.round(((texPayment/1.1)/1.1)*0.022);
+            double texF = Math.round(texC*0.02);
 
-            double Sum=texD+texE+texF;
-            String texSum = Double.toString(Sum);
+            double sum=0;
+            
+            if(giveaway_tex_class.contains("A")) {
+            	if(texA > 50000) {
+            		sum = texD+texE+texF;
+            	}else {
+            		sum = texD;
+            	}
+            }else {
+            	if(texA > 50000) {
+            		sum = texE+texF;
+            	}else {
+            		sum = 0;
+            	}
+            }
+            
+            int texSum = Integer.parseInt(String.valueOf(Math.round(sum)));
 //            Integer texSumOut = Integer.parseInt(texSum);
 
             model.addAttribute("postUrl", "/SavePayment");
