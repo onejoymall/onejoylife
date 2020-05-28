@@ -29,12 +29,12 @@
                         </div>
                         <div class="input-box2">
                             <div class="cla">
-                                <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+                                <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:if test="${param.start_date} != null"><c:out value="${param.start_date}"/></c:if><c:out value="${param.start_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
                             <p class="cla-p1"> ~ </p>
                             <div class="cla">
-                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:if test="${param.end_date} != null"><c:out value="${param.end_date}"/></c:if><c:out value="${param.end_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
                             <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">조회</a></p>

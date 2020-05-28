@@ -40,26 +40,13 @@ function deleteFavorite(product_cd) {
                         showText = index + " (은) " + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
-                    var filter = "win16|win32|win64|macintel|mac|";
-                    if(navigator.platform){
-                        if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'mid-center',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
-                        } else {
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'top-right',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
-                        }
-                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
                 });
 
             } else {
@@ -107,26 +94,13 @@ function addFavorite(product_cd){
                         showText = index + " (은) " + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
-                    var filter = "win16|win32|win64|macintel|mac|";
-                    if(navigator.platform){
-                        if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'mid-center',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
-                        } else {
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'top-right',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
-                        }
-                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
                 });
 
             } else {
@@ -138,7 +112,7 @@ function addFavorite(product_cd){
                     ],
 
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: false,
                 });
@@ -217,7 +191,7 @@ $('.mgPointPaid').on("click",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -227,7 +201,7 @@ $('.mgPointPaid').on("click",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -255,7 +229,7 @@ $('.modal-level-btn').on("click",function () {
         	$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -296,7 +270,7 @@ $('.modal-enable-menu-btn').on("click",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -306,7 +280,7 @@ $('.modal-enable-menu-btn').on("click",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -344,7 +318,7 @@ $('#deleteDeliveryInfo').on("click",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -354,7 +328,7 @@ $('#deleteDeliveryInfo').on("click",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -392,7 +366,7 @@ $('#updateDefaultDeliveryInfo').on("click",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -402,7 +376,7 @@ $('#updateDefaultDeliveryInfo').on("click",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -483,7 +457,7 @@ $("#updateDeliveryBtn").click(function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -493,7 +467,7 @@ $("#updateDeliveryBtn").click(function(){
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -529,7 +503,7 @@ $("#newDeliveryBtn").click(function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -538,7 +512,7 @@ $("#newDeliveryBtn").click(function(){
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -670,7 +644,7 @@ $("button[name=coupon-confirm-btn]").click(function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -680,7 +654,7 @@ $("button[name=coupon-confirm-btn]").click(function(){
             	$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 1000,
                     afterHidden: function () {
@@ -905,7 +879,7 @@ $("#couponBatchUpdateBtn").click(function(){
 		$.toast({
             text: "항목을 선택해주세요.",
             showHideTransition: 'plain', //펴짐
-            position: 'top-right',
+            position: 'bottom-right',
             heading: 'Error',
             icon: 'error'
         });
@@ -941,7 +915,7 @@ $('#coupon-update-batch-btn').on("click",function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -951,7 +925,7 @@ $('#coupon-update-batch-btn').on("click",function(){
             	$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 1000,
                     afterHidden: function () {
@@ -1018,7 +992,7 @@ $(".couponDownBtn").click(function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -1028,7 +1002,7 @@ $(".couponDownBtn").click(function(){
             	$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 1000,
                     afterHidden: function () {
@@ -1057,7 +1031,7 @@ $(document).on("click","#productqna",function () {
                 '<a href="/sign/signup">회원 가입 후 이용</a>',
             ],
             showHideTransition: 'plain', //펴짐
-            position: 'top-right',
+            position: 'bottom-right',
             icon: 'info',
             hideAfter: false
         });
