@@ -1118,6 +1118,6 @@ input[type="radio"]+label, input[type="checkbox"]+label{
     top: -1000px;
     width: 90px;
     text-align: center;
-    z-index: 99999;
+    z-index: 998;
 
 }

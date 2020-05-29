@@ -625,7 +625,7 @@ $(document).ready(function(){
                     '<a href="/sign/signup">회원 가입 후 이용</a>',
                 ],
                 showHideTransition: 'plain', //펴짐
-                position: 'mid-center',
+                position: 'bottom-right',
                 icon: 'info',
                 hideAfter: false
             });

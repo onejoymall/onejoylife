@@ -106,7 +106,7 @@
             $.toast({
                 text: "이용약관 동의 는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -157,7 +157,7 @@
                                     $.toast({
                                         text: showText,
                                         showHideTransition: 'plain', //펴짐
-                                        position: 'top-right',
+                                        position: 'bottom-right',
                                         heading: 'Error',
                                         icon: 'error'
                                     });
@@ -176,7 +176,7 @@
                     $.toast({
                         text: rsp.error_msg,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });

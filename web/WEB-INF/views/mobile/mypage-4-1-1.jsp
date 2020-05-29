@@ -338,7 +338,7 @@
             $.toast({
                 text: "주문자 성함을 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -347,7 +347,7 @@
             $.toast({
                 text: "이메일주소를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -356,7 +356,7 @@
             $.toast({
                 text: "휴대폰 번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -366,7 +366,7 @@
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -376,7 +376,7 @@
             $.toast({
                 text: "받으시는 분 성함을 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -385,7 +385,7 @@
             $.toast({
                 text: "배송 주소를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -394,7 +394,7 @@
             $.toast({
                 text: "이용약관 동의는 필수 항목입니다.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -458,7 +458,7 @@
 									$.toast({
 										text: showText,
 										showHideTransition: 'plain', //펴짐
-										position: 'top-right',
+										position: 'bottom-right',
 										heading: 'Error',
 										icon: 'error'
 									});
@@ -487,7 +487,7 @@
 												$.toast({
 													text: showText,
 													showHideTransition: 'plain', //펴짐
-													position: 'top-right',
+													position: 'bottom-right',
 													heading: 'Error',
 													icon: 'error'
 												});
@@ -510,7 +510,7 @@
 					$.toast({
 						text: rsp.error_msg,
 						showHideTransition: 'plain', //펴짐
-						position: 'top-right',
+						position: 'bottom-right',
 						heading: 'Error',
 						icon: 'error'
 					});
