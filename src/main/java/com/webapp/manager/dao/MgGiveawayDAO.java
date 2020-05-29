@@ -20,6 +20,10 @@ public class MgGiveawayDAO {
         Map<String,Object> getGiveawayViewDetail=sql.selectOne("mall.GiveawayMapper.getGiveawayDetail",params);
         return getGiveawayViewDetail;
     }
+    public Map<String,Object> getGiveawayPlayViewDetail(Map<String,Object> params) throws SQLException {
+    	Map<String,Object> getGiveawayPlayViewDetail=sql.selectOne("mall.GiveawayMapper.getGiveawayPlayDetail",params);
+    	return getGiveawayPlayViewDetail;
+    }
     public void insertGiveaway(GiveawayVO giveawayVO) throws SQLException{
         sql.insert("mall.GiveawayMapper.insertGiveaway",giveawayVO);
     }

@@ -5075,3 +5075,7 @@ select#list-sort{
     font-size: 16px;
     vertical-align: -1px;
 } 
+.mo-select {
+    width: 100%;
+    margin-bottom: 10px;
+}

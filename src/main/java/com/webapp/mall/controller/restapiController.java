@@ -686,6 +686,7 @@ public class restapiController {
                     }
                     resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
             	}else if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
+            		params.put("reg_no",params.get("reg_no1")+"-"+params.get("reg_no2"));
             		//경품 응모시 결제 상태 변경
                     if(params.get("success").equals("false")){
                         params.put("giveaway_payment_status","A");

@@ -39,6 +39,16 @@
                             </div>
                             <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">조회</a></p>
                         </div>
+                        <div class="input-box3">
+                            <select name="payment_status" >
+                                <c:if test="${not empty getSelectorList}">
+                                    <option value="">주문상태 선택</option>
+                                    <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                                    <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </div>
                     </div>
                     <p class="r-in-p2">조회일자를 설정하시면 최대 3개월 간의 주문내역을 조회하실 수 있습니다.</p>
                 </div>

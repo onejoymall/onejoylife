@@ -12,7 +12,7 @@
         </div>
         <div>
             <p class="c-sub-tit">배송중</p>
-            <p class="c-sub-num"><a href="<c:url value="/MyPage/OrderAndDelivery"/>"><span>${paymentCnt.rCnt}</span></a></p>
+            <p class="c-sub-num"><a href="<c:url value="/MyPage/OrderAndDelivery?payment_status=R"/>"><span>${paymentCnt.rCnt}</span></a></p>
         </div>
         <div>
             <p class="c-sub-tit">응모중인 경품</p>

@@ -59,8 +59,8 @@
         <hr>
         <p class="text-md mt-2 mb-05">주민등록번호</p>
         <div class="my-1">
-            <input type="number" class="width-40 mb-05"> <span>-</span>
-            <input type="number" class="width-40 mb-05">
+            <input type="number" class="width-40 mb-05" name="reg_no1"> <span>-</span>
+            <input type="number" class="width-40 mb-05" name="reg_no2">
             <input type="hidden" name="reg_no">
         </div>
     </section>
@@ -76,9 +76,10 @@
             <li>총 결제 금액</li>
             <li class="text-lg red"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /> <span>원</span></li>
             <input type="hidden" name="payment" value="${detail.giveaway_delivery_payment+texSum}">
-            <input type="hidden" name="order_no" value="${delivery.order_no}">
-            <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
-            <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
+                                    <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
+                                    <input type="hidden" name="order_no" value="${delivery.order_no}">
+                                    <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
+                                    <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
         </ul>
         <hr class="grey my-1">
         <input type="checkbox" id="replysns" class="b8 mb-2">
@@ -113,7 +114,7 @@
             IMP.request_pay({ // param
                 pg: "inicis",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid: "${delivery.order_user_id}",
+                merchant_uid: "${delivery.order_no}",
                 name: "${detail.giveaway_name}",
                 amount: ${detail.giveaway_delivery_payment+texSum},
                 buyer_email: "${sessionScope.email}",

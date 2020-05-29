@@ -82,8 +82,8 @@
                             <tr>
                                 <td>주민등록번호</td>
                                 <td>
-                                    <input type="number" class="sec2-in1"> <span>-</span>
-                                    <input type="number" class="sec2-in1">
+                                    <input type="number" class="sec2-in1" name="reg_no1" maxlength="6"> <span>-</span>
+                                    <input type="number" class="sec2-in1" name="reg_no2" maxlength="7">
                                     <input type="hidden" name="reg_no">
                                 </td>
                             </tr>
@@ -118,6 +118,7 @@
                                 <div class="txt-in2 in2-color">
                                     <p><span class="in2-font2"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /></span> 원</p>
                                     <input type="hidden" name="payment" value="${detail.giveaway_delivery_payment+texSum}">
+                                    <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
                                     <input type="hidden" name="order_no" value="${delivery.order_no}">
                                     <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
                                     <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
@@ -156,7 +157,7 @@
             IMP.request_pay({ // param
                 pg: "inicis",
                 pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid: "${delivery.order_user_id}",
+                merchant_uid: "${delivery.order_no}",
                 name: "${detail.giveaway_name}",
                 amount: ${detail.giveaway_delivery_payment+texSum},
                 buyer_email: "${sessionScope.email}",
@@ -226,5 +227,5 @@
         }
 
     });
-</script>
+    </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

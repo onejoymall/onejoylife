@@ -165,4 +165,21 @@ public class PopupController {
         	return "popup/review-update";
         }
     }
+    
+    @RequestMapping("/Popup/withholding")
+    public String withholding(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(!isEmpty(userInfo)){
+                params.put("usr_id",userInfo.get("usr_id"));
+            }
+            //경품 결제정보
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
+    	model.addAttribute("style", "tax-bill");
+    	return "popup/tax-withholding";
+    }
 }

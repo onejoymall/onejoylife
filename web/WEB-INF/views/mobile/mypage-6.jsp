@@ -31,6 +31,14 @@
             <button type="submit" class="date-btn">조회</button>
             </form>
         </div>
+        <select name="payment_status" id="mo-select" class="mo-select">
+            <c:if test="${not empty getSelectorList}">
+                <option value="">주문상태 선택</option>
+                <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
+                </c:forEach>
+            </c:if>
+        </select>
         <h2 class="py-1">주문상품</h2>
         <hr>
         <c:if test="${not empty paymentList}">

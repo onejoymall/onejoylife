@@ -132,14 +132,14 @@
                                                 </c:if>
 <%--                                                    <span class="dis-none">주문상세</span>--%>
                                                 <c:if test="${list.giveaway_payment_status !=  'A'}">
-                                                    <a href="#" id="SearchDelivery">
+                                                    <a href="javascript:void(0)" id="SearchDelivery" data-id="${list.order_no}">
                                                         <p class="lis-txt-box txt-color2">
                                                             <span>배송조회</span>
                                                         </p>
                                                     </a>
+                                                    <a href="javascript:withholding('${list.order_no}')"><p class="lis-txt-box">원천징수 영수증</p></a>
                                                 </c:if>
                                             </c:if>
-                                            <a href=""><p class="lis-txt-box">${list.giveaway_play_cd}</p></a>
                                         </td>
                                     </tr>
                                 </c:forEach>

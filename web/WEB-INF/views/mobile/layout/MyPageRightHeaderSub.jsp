@@ -12,7 +12,7 @@
         </ul>
         <ul class="status">
             <li>배송중인 상품</li>
-            <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>">${paymentCnt.rCnt} 장 <i class="ri-arrow-right-s-line"></i></a></li>
+            <li><a href="<c:url value="/MyPage/OrderAndDelivery?payment_status=R"/>">${paymentCnt.rCnt} 건 <i class="ri-arrow-right-s-line"></i></a></li>
         </ul>
         <ul class="status">
             <li>응모중인 상품</li>

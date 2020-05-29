@@ -517,6 +517,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    
     //경품등록
     @RequestMapping(value = "/Manager/GiveawayAddProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerGiveawayAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, GiveawayVO productVO, BoardVO boardInfo,FileVO fileVO){

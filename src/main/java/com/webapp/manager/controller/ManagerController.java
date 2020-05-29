@@ -311,8 +311,10 @@ public class ManagerController {
 
     //경품 참여 관리
    @RequestMapping(value = "/Manager/GiveawayPartList")
-   public String managerGiveawayPartList(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+   public String managerGiveawayPartList(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,DeliveryInfoVO deliveryInfoVO) throws Exception {
         try{
+        	deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
             searchVO.setDisplayRowCount(10);
             searchVO.setStaticRowEnd(10);
             searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
@@ -333,6 +335,19 @@ public class ManagerController {
             model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
             model.addAttribute("list", giveawayList);
             model.addAttribute("searchVO", searchVO);
+            
+          //택배사목록
+            //스위트레커 연동필요
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+            model.addAttribute("companyList", company);
         } catch (Exception e){
             e.printStackTrace();
         }
