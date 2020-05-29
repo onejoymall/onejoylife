@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
@@ -1312,9 +1309,9 @@ public class restapiController {
      * 글 읽기 패스워드 확인
      */
     @RequestMapping(value = "/Board/PasswordCheck", method = RequestMethod.POST, produces = "application/json")
-    public Map<String,Object> boardPasswordCheck(@RequestParam HashMap params,HttpServletRequest request, ModelMap modelMap) throws  Exception{
-        String brdno = (String)params.get("brdno");
-        String password =(String)params.get("password");
+    public HashMap<String,Object> boardPasswordCheck(@RequestParam HashMap params, HttpServletRequest request, ModelMap modelMap) throws  Exception{
+        String brdno = (String) params.get("brdno");
+        String password = (String) params.get("password");
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
         try{

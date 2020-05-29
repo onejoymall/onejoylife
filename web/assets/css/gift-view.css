@@ -1044,7 +1044,7 @@ button{
     top: 30px;
     width: 90px;
     text-align: center;
-    z-index: 99999;
+    z-index: 998;
 }
 /*20.05.28 추가*/
 .related-goods .img-box{
