@@ -480,7 +480,7 @@ function show(num){
 			$.toast({
                 text: "이미 선택된 쿠폰입니다.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -538,7 +538,7 @@ function show(num){
             $.toast({
                 text: "주문자 성함을 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -547,7 +547,7 @@ function show(num){
             $.toast({
                 text: "이메일주소를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -556,7 +556,7 @@ function show(num){
             $.toast({
                 text: "휴대폰 번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -566,7 +566,7 @@ function show(num){
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -576,7 +576,7 @@ function show(num){
             $.toast({
                 text: "받으시는 분 성함을 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
@@ -585,31 +585,18 @@ function show(num){
             $.toast({
                 text: "배송 주소를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
-                position: 'top-right',
+                position: 'bottom-right',
                 heading: 'Error',
                 icon: 'error'
             });
         } else if(!$('#replysns').is(":checked")){
-            var filter = "win16|win32|win64|macintel|mac|";
-            if(navigator.platform){
-                if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
-                    $.toast({
-                        text: "이용약관 동의는 필수 항목입니다.",
-                        showHideTransition: 'plain', //펴짐
-                        position: 'mid-center',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                } else {
-                    $.toast({
-                        text: "이용약관 동의는 필수 항목입니다.",
-                        showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                }
-            }
+            $.toast({
+                text: "이용약관 동의는 필수 항목입니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
         }else{
         	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + " 외 " + (cartList.length-1) + "건";
         	$("input[name=product_order_name]").val(product_name);
@@ -670,7 +657,7 @@ function show(num){
                                     $.toast({
                                         text: showText,
                                         showHideTransition: 'plain', //펴짐
-                                        position: 'top-right',
+                                        position: 'bottom-right',
                                         heading: 'Error',
                                         icon: 'error'
                                     });
@@ -699,7 +686,7 @@ function show(num){
                                                 $.toast({
                                                     text: showText,
                                                     showHideTransition: 'plain', //펴짐
-                                                    position: 'top-right',
+                                                    position: 'bottom-right',
                                                     heading: 'Error',
                                                     icon: 'error'
                                                 });
@@ -723,7 +710,7 @@ function show(num){
                     $.toast({
                         text: rsp.error_msg,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });

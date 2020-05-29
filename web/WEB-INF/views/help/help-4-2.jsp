@@ -67,7 +67,7 @@
                                                 </p>
                                            </div>
                                             <p class="answer-date">
-                                                <span class="answer-author">상담원 : <span id="rewriter"></span>
+                                                <span class="answer-author">상담원 : <span id="rewriter"></span></span>
                                                 <span class="answer-time">답변시간 : <span id="redate"></span></span>
                                             </p>
                                         </div>
@@ -156,34 +156,30 @@
    });
 
         function readBoard(bgtype,brdno,objectThis){
-           var toogleOpenStatus = objectThis.parent().parent().find('.active').length;
-           console.log(toogleOpenStatus)
-            if(toogleOpenStatus==1) {
-                objectThis.parent().toggleClass("active");
-            }else {
-                $(this).parent($('.notice-data-item')).toggleClass('active');
-                var formData = $('#form1').serialize();
-                var userInput = prompt("비밀번호입력?" + "");
-                $.ajax({
-                    url: "/Board/PasswordCheck",
-                    type: "post",
-                    data: {password: userInput}, formData,
-                    success: function (data) {
-                        if (data.status == "false") {
-                            alert(data.memo);
-                        } else {
-                            objectThis.parent($('.notice-data-box')).toggleClass('active');
-                            $('#boardMemoPrint').html(data.memo);
-                            $('#boardReMemoPrint').html(data.rememo);
-                            $('#rewriter').html(data.rewriter);
-                            $('#redate').html(data.redate);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr + status + error);
+            var toogleOpenStatus = objectThis.parent().parent().find('.active').length;
+            // console.log(toogleOpenStatus)
+            $(this).parent($('.notice-data-item')).toggleClass('active');
+            var userInput = prompt("비밀번호를 입력해주세요." + "");
+            var formData = {"password":userInput, "brdno": brdno};
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(formData),
+                url: "/Board/PasswordCheck?"+'&brdno='+brdno+'&password='+userInput,
+                success: function (data) {
+                    if (data.status == "false") {
+                        alert(data.memo);
+                    } else {
+                        objectThis.parent($('.notice-data-box')).toggleClass('active');
+                        $('#boardMemoPrint').html(data.memo);
+                        $('#boardReMemoPrint').html(data.rememo);
+                        $('#rewriter').html(data.rewriter);
+                        $('#redate').html(data.redate);
                     }
-                })
-            }
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr + status + error);
+                }
+            })
         }
 
     </script>

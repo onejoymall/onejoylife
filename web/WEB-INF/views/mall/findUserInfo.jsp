@@ -124,7 +124,7 @@
                         $.toast({
                             text: showText,
                             showHideTransition: 'plain', //펴짐
-                            position: 'top-right',
+                            position: 'bottom-right',
                             heading: 'Error',
                             icon: 'error'
                         });
@@ -135,7 +135,7 @@
                     $.toast({
                         text: "휴대폰인증은 준비중입니다.",
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -167,7 +167,7 @@
                         $.toast({
                             text: showText,
                             showHideTransition: 'plain', //펴짐
-                            position: 'top-right',
+                            position: 'bottom-right',
                             heading: 'Error',
                             icon: 'error'
                         });
@@ -177,7 +177,7 @@
                     $.toast({
                         text: data.success,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Success',
                         hideAfter : false,
                         icon: 'success'

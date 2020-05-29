@@ -143,7 +143,7 @@
                    		$.toast({
                             text: 'success',
                             showHideTransition: 'plain', //펴짐
-                            position: 'top-right',
+                            position: 'bottom-right',
                             icon: 'success',
                             hideAfter: 2000
                         });

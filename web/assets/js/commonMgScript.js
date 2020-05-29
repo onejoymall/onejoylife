@@ -98,7 +98,7 @@ $(document).on("click","#mgOptionAddSubmit",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -108,7 +108,7 @@ $(document).on("click","#mgOptionAddSubmit",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -170,7 +170,7 @@ $(document).on("click","#mgBrandAddSubmit",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -180,7 +180,7 @@ $(document).on("click","#mgBrandAddSubmit",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -218,7 +218,7 @@ $(document).on("click","#userGrantAddSubmit",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -228,7 +228,7 @@ $(document).on("click","#userGrantAddSubmit",function () {
                 $.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 2000,
                     afterHidden: function () {
@@ -267,7 +267,7 @@ $('#mgUserGrantListSubmit').on("click",function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -324,7 +324,7 @@ $(document).on("click","#gradeChange",function () {
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -501,7 +501,7 @@ $("input[name=product_delivery_area_yn]").click(function(){
 				$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 500,
                     afterHidden: function () {
@@ -540,7 +540,7 @@ $("#areaInsertBtn").click(function(){
                     $.toast({
                         text: showText,
                         showHideTransition: 'plain', //펴짐
-                        position: 'top-right',
+                        position: 'bottom-right',
                         heading: 'Error',
                         icon: 'error'
                     });
@@ -551,7 +551,7 @@ $("#areaInsertBtn").click(function(){
 				$.toast({
                     text: 'success',
                     showHideTransition: 'plain', //펴짐
-                    position: 'top-right',
+                    position: 'bottom-right',
                     icon: 'success',
                     hideAfter: 1000,
                     afterHidden: function () {
