@@ -18,11 +18,13 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta property="og:url" content="http://onejoy-life.com" />
+    <<meta property="og:url" content="http://onejoy-life.com" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="원조이라이프" />
     <meta property="og:description" content="" />
     <meta property="og:image" content="http://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
+    <meta property="og:image:width" content="1100" />
+    <meta property="og:image:height" content="265" />
     <link href="<c:url value="/assets/css/reset.css" />" rel="stylesheet" type="text/css">
     <link href="<c:url value="/assets/css/mobile/common-mobile.css" />" rel="stylesheet" type="text/css">
     <link href="<c:url value="/assets/css/mobile/commonSub.css" />"rel="stylesheet" type="text/css">
