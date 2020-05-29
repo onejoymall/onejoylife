@@ -30,7 +30,7 @@
                     <div class="rec2-in">
                         <p class="font-de1">배송중인 상품</p>
                         <p class="font-de2">
-                            <a href="<c:url value="/MyPage/OrderAndDelivery"/>">
+                            <a href="<c:url value="/MyPage/OrderAndDelivery?payment_status=R"/>">
                                 <span>${paymentCnt.rCnt}</span>
                             </a>
                         </p>

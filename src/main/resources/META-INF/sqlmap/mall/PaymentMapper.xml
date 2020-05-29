@@ -35,7 +35,8 @@
         password,
         delivery_hope_date,
         delivery_hope_time,
-        payment_order_quantity
+        payment_order_quantity,
+        reg_no
         )values (
          #{success},
          #{product_order_name},
@@ -57,7 +58,8 @@
         #{password},
         #{hope_date},
         #{hope_time},
-        #{payment_order_quantity}
+        #{payment_order_quantity},
+        #{reg_no}
         )
     </insert>
 
@@ -122,7 +124,7 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
             (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id
-        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
+        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 and A.product_cd is not null
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">

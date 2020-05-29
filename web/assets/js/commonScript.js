@@ -1238,7 +1238,7 @@ $(document).on("click",".ra-num",function () {
     //주문현황 선택
     function selectPayment(order_no){
         var file_link='';
-        $(".modal1").attr("style", "display:block");
+        $(".modal").attr("style", "display:block");
         // $('input:radio[name=store_reg_type]').eq(0).click();
         var html;
         jQuery.ajax({
@@ -1253,6 +1253,10 @@ $(document).on("click",".ra-num",function () {
                     }
                     if(index=="delivery_t_invoice"){
                         $('input[name=delivery_t_invoice]').val(item);
+                    }
+                    if(index=="payment_status" && item=="M"){
+                    	html='';
+                    	$('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="W" || item=="D" || item=="I"){
                         html='' +
@@ -2482,7 +2486,6 @@ $(document).on("click",".ra-num",function () {
         });
     }
 
-
     $(".modal-close").click(function(){
         $(".modal").attr("style", "display:none");
     });
@@ -2830,6 +2833,15 @@ $(document).on("click",".ra-num",function () {
 
         child = window.open('/Popup/DeliverySearch?order_no='+order_no,'_blank','width=750, height=900');
     });
+    
+    function withholding(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/withholding?order_no='+order_no,'_blank','width=1010, height=910');
+    }
     
     $('.review-write').click(function () {
         var child;

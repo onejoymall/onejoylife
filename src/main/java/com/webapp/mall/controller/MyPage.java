@@ -440,16 +440,15 @@ public class MyPage {
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            model.addAttribute("searchVO", searchVO);
-
-
+            model.addAttribute("searchVO", searchVO);            
 
             params.put("order_user_id",userInfo.get("usr_id"));
-
-
             List<Map<String,Object>> paymentList = paymentDAO.getPaymentList(params);
-
             model.addAttribute("paymentList", paymentList);
+            
+            params.put("code", "payment_status");
+            List<Map<String, Object>> getSelectorList = selectorDAO.getSelectorList(params);
+            model.addAttribute("getSelectorList", getSelectorList);
         }catch (Exception e){
             e.printStackTrace();
         }
