@@ -1055,3 +1055,11 @@ button{
     max-height:202px;
     margin:0 auto;
 }
+.buy-wrap{
+    position: relative;
+}
+.jq-toast-wrap{
+    position: absolute!important;
+    bottom:140px!important;
+    right:0px!important;
+}

@@ -220,6 +220,15 @@
                 <form id="form1" name="form1"  method="get">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                    <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                    <input type="hidden" name="displayRowCount">
+                    <input type="hidden" name="searchType" value="product_name" id="check2" checked>
+                    <input type="hidden" name="searchType" value="order_no" id="check3" checked>
+                    <input type="hidden" name="payment_status" value="${param.payment_status}">
+                    <input type="hidden" name="start_date" value="${param.start_date}">
+                    <input type="hidden" name="end_date" value="${param.end_date}">
+                    <input type="hidden" name="delivery_start_date" value="${param.delivery_start_date}">
+                    <input type="hidden" name="delivery_end_date" value="${param.delivery_end_date}">
                 </form>
             </div>
         </div>

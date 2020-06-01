@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <<meta property="og:url" content="http://onejoy-life.com" />
+    <meta property="og:url" content="http://onejoy-life.com" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="원조이라이프" />
     <meta property="og:description" content="" />
