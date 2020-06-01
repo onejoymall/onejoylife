@@ -257,7 +257,7 @@
                                         <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
                                             <%--                        <p class="sale-percent">35<span>%</span></p>--%>
                                             <%--                        <i class="share-ic"></i>--%>
-                                        <p class="info-production">${list.product_made_company_name}</p>
+<%--                                        <p class="info-production">${list.product_made_company_name}</p>--%>
                                         <p class="point-pdt-title">${list.product_name}</p>
                                     </a>
                                     <p class="info-price">

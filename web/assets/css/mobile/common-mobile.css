@@ -5079,3 +5079,8 @@ select#list-sort{
     width: 100%;
     margin-bottom: 10px;
 }
+
+.jq-toast-wrap.bottom-right{
+    bottom: 60px!important;
+    right: 20px!important;
+}
