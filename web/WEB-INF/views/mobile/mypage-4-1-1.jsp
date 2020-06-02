@@ -81,7 +81,7 @@
                 <c:set var="phoneNumber" value="" />
             </c:if>
             <c:if test="${not empty userInfo.phone}">
-                <c:set var="phoneNumber" value="${latestDelivery.delivery_user_tel}" />
+                <c:set var="phoneNumber" value="${latestDelivery.delivery_phone_tel}" />
             </c:if>
             <c:forEach items="${fn:split(phoneNumber, '-') }" var="item" varStatus="status">
                 <c:set target="${phoneMap}" property="key${status.count}" value="${item}" />
@@ -89,7 +89,7 @@
             </c:forEach>
         </p>
 
-        <select name="delivery_user_tel_a" id="delivery_user_tel_a" class="width-30 mb-05">
+        <select name="delivery_user_phone_a" id="delivery_user_phone_a" class="width-30 mb-05">
             <option value="010" <c:if test="${phoneMap.key1 eq \"010\"}">selected</c:if> >010</option>
             <option value="011" <c:if test="${phoneMap.key1 eq \"011\"}">selected</c:if>>011</option>
             <option value="016" <c:if test="${phoneMap.key1 eq \"016\"}">selected</c:if>>016</option>
@@ -98,10 +98,10 @@
             <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
         </select>
         <span> - </span>
-        <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" value="${phoneMap.key2}" class="delivery_user_tel width-30 mb-05" maxlength="4">
+        <input type="text" name="delivery_user_phone_b" id="delivery_user_phone_b" value="${phoneMap.key2}" class="delivery_user_phone width-30 mb-05" maxlength="4">
         <span> - </span>
-        <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" value="${phoneMap.key3}" class="delivery_user_tel width-30 mb-05" maxlength="4">
-        <input type="hidden" name="delivery_user_tel" id="delivery_user_tel" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.delivery_user_tel}</c:if>">
+        <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" value="${phoneMap.key3}" class="delivery_user_phone width-30 mb-05" maxlength="4">
+        <input type="hidden" name="delivery_user_phone" id="delivery_user_phone" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.delivery_user_phone}</c:if>">
 
         <p class="text-md mt-2 mb-05">전화 번호
             <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />

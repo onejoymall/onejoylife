@@ -40,8 +40,7 @@
                         <tr>
                             <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                             <td class="sec1-tbody-p1">
-                                <p>${paymentDetail.product_made_company_name} ${paymentDetail.product_name}</p>
-                                <p>${paymentDetail.product_made_company_model}</p>
+                                <p>${paymentDetail.product_name}</p>
                             </td>
                             <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                             <td><span>1</span></td>

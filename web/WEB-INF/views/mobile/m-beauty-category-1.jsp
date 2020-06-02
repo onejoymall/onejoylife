@@ -27,7 +27,9 @@
                 	<c:forEach var="list" items="${list}" varStatus="status">
                     <div class="point-product-item">
                         <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
-                            <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
+                            <div class="img-out">
+                                <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
+                            </div>
                             <p class="info-production">${list.product_made_company_name}</p>
                             <p class="point-pdt-title">${list.product_name}</p>
                         </a>
