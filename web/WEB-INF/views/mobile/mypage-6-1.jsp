@@ -24,9 +24,7 @@
             <ul class="pb-0">
                 <li><img src="${paymentDetail.file_1}" alt=""></li>
                 <li>
-                    <p>[${paymentDetail.product_made_company_name}]</p>
                     <h5>${paymentDetail.product_name}</h5>
-                    <p class="grey">${paymentDetail.product_made_company_model}</p>
                     <!-- <p class="option"><span>구성품</span> <br>
                     · 30mm 1.4 여친렌즈 <br>
                     · 추가배터리</p> -->

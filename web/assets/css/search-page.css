@@ -428,3 +428,18 @@ select.order-select::-ms-expand {
     text-align: center;
     z-index: 998;
 }
+
+.point-product-item a img, .event-product-item a img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.img-out{
+    overflow: hidden;
+    position: relative;
+    padding-top: 100%;
+}
