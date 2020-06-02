@@ -67,7 +67,7 @@
                                                 </p>
                                            </div>
                                             <p class="answer-date">
-                                                <span class="answer-author">상담원 : <span id="rewriter">${listview.rewriter}</span>
+                                                <span class="answer-author">상담원 : <span id="rewriter">${listview.rewriter}</span></span>
                                                 <span class="answer-time">답변시간 : <span id="redate">${listview.redate}</span></span>
                                             </p>
                                         </div>

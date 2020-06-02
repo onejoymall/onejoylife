@@ -24,13 +24,13 @@
             <p>E-POINT</p>
             <p><a href="<c:url value="/MyPage/ePoint"/>"><fmt:formatNumber value="${point_amount}" groupingUsed="true" /></a></p>
         </div>
-        <!-- <div class="clearfix">
+        <div class="clearfix">
             <p>OJT</p>
-            <p><a href="">999,999,999</a></p>
+            <p><a href="">준비중</a></p>
         </div>
         <div class="clearfix">
             <p>OJST</p>
-            <p><a href="">999,999,999</a></p>
-        </div> -->
+            <p><a href="">준비중</a></p>
+        </div>
     </div>
 </div>
