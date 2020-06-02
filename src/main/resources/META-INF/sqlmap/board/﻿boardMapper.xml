@@ -27,8 +27,14 @@
 
     <select id="selectBoard8Count" resultType="Integer" parameterType="com.webapp.board.common.SearchVO">
         SELECT COUNT(*)
-          FROM TBL_BOARD TB
-         <include refid="includeBoard"/>
+            FROM TBL_BOARD TB
+        <include refid="includeBoard"/>
+        <if test="usr_id != null and usr_id !=''">
+            AND TB.usr_id=#{usr_id}
+        </if>
+        <if test="usr_id == null">
+            AND TB.usr_id is null
+        </if>
     </select> 
     
     <select id="selectBoard8List" resultType="com.webapp.board.app.BoardVO" parameterType="com.webapp.board.common.SearchVO">
