@@ -4176,9 +4176,7 @@ select.order-select{
         margin-right:0;
     }
 }
-.point-product-item a img, .event-product-item a img{
-    width:100%;
-}
+
 .info-production{
     font-size:12px;
     color:#666;

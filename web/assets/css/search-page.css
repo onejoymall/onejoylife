@@ -353,9 +353,6 @@ select.order-select::-ms-expand {
 .row .point-product-item:last-child{
     margin:0;
 }
-.point-product-item a img{
-    width:100%;
-}
 .info-production{
     font-size:12px;
     color:#666;
