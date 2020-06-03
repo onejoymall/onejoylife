@@ -520,7 +520,7 @@
                 merchant_uid:$('input[name=order_no]').val(),
                 name: '${detail.product_name} ${option}',
                 amount: $('input[name=payment]').val(),
-                buyer_email: "${sessionScope.email}",
+                buyer_email: $('input[name=order_user_email]').val(),
                 buyer_name: $('#order_user_name').val(),
                 buyer_tel: $('#order_user_phone').val(),
                 buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),

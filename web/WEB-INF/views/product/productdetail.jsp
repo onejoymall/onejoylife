@@ -145,6 +145,19 @@
                         </button>
                     </div>
                     <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
+
+                    <c:if test="${sessionScope.email == 'test'}">
+                        <script type="text/javascript" >
+                            naver.NaverPayButton.apply({
+                            BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
+                            TYPE: "E", // 버튼 모음 종류 설정
+                            COLOR: 1, // 버튼 모음의 색 설정
+                            COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+                            ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
+                            "":""
+                            });
+                        </script>
+                    </c:if>
                 </form>
             </div>
         </div>

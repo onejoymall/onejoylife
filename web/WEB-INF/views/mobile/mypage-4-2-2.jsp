@@ -117,7 +117,7 @@
                 merchant_uid: "${delivery.order_no}",
                 name: "${detail.giveaway_name}",
                 amount: ${detail.giveaway_delivery_payment+texSum},
-                buyer_email: "${sessionScope.email}",
+                buyer_email: $('input[name=order_user_email]').val(),
                 buyer_name: "${delivery.order_user_name}",
                 buyer_tel: "${delivery.delivery_user_phone}",
                 buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
