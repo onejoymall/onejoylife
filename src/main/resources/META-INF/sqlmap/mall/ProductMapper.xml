@@ -271,6 +271,7 @@
 		LEFT JOIN user C
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
+		and A.product_cd = B.product_cd
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1) tmp
     </select>
