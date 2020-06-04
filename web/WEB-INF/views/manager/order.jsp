@@ -200,12 +200,15 @@
                                 <td><input type="checkbox" name="chk" value="${list.order_no}"></td>
                                 <td>${list.order_no}</td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
-                                <td>${list.email}</td>
+                                <td>
+                                    <c:if test="${not empty list.email}">${list.email}</c:if>
+                                    <c:if test="${empty list.email}">${list.order_user_email}</c:if>
+                                </td>
                                 <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>${list.delivery_t_invoice}</td>
                                 <td>${list.product_made_company_name}</td>
                                 <td>${list.product_name}</td>
-                                <td>1</td>
+                                <td>${list.payment_order_quantity}</td>
                                 <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
                                 <td>${list.payment_status_name}</td>
                                 <td>
@@ -221,7 +224,7 @@
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
                     <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
-                    <input type="hidden" name="displayRowCount">
+                    <input type="hidden" name="displayRowCount" value="${param.displayRowCount}">
                     <input type="hidden" name="searchType" value="product_name" id="check2" checked>
                     <input type="hidden" name="searchType" value="order_no" id="check3" checked>
                     <input type="hidden" name="payment_status" value="${param.payment_status}">
@@ -268,19 +271,19 @@
 
                             <tr>
                                 <th>주문번호</th>
-                                <td class="order_no">6549858</td>
+                                <td class="order_no"></td>
                             </tr>
                             <tr>
                                 <th>주문일</th>
-                                <td class="reg_date">2020-03-13</td>
+                                <td class="reg_date"></td>
                             </tr>
                             <tr>
                                 <th>주문자</th>
-                                <td class="email">unknown01</td>
+                                <td class="email order_user_email"></td>
                             </tr>
                             <tr>
                                 <th>배송일</th>
-                                <td class="delivery_start_date">2020-03-14</td>
+                                <td class="delivery_start_date"></td>
                             </tr>
                             <tr>
                                 <th>희망 배송일시</th>
@@ -292,23 +295,23 @@
                             </tr>
                             <tr>
                                 <th>상품명/옵션</th>
-                                <td class="product_name">제주 신선 한라봉/1KG</td>
+                                <td class="product_name"></td>
                             </tr>
                             <tr>
                                 <th>수량</th>
-                                <td class="payment_order_quantity">1</td>
+                                <td class="payment_order_quantity"></td>
                             </tr>
                             <tr>
                                 <th>결제수단</th>
-                                <td class="pay_method">카드</td>
+                                <td class="pay_method"></td>
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="payment">30,150원</td>
+                                <td class="payment"></td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td class="payment_status_name">배송완료</td>
+                                <td class="payment_status_name"></td>
                             </tr>
                         </tbody>
                     </table>

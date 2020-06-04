@@ -229,7 +229,7 @@
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>
-                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</ins></p>
+                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</ins></p>
                                 <div class="progress-wrap">
                                     <p class="progress-now">참여율 <b class="red">${list.parti_rate}%</b></p>
                                     <div class="progress-bar">

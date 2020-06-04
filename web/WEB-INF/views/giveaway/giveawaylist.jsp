@@ -45,7 +45,7 @@
 <%--                                <i class="share-ic"></i>--%>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
-                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</p>
+                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</p>
                             <p class="deadline">
                                 <c:set var="deadline" value="${fn:split(list.giveaway_validity,'~')}"/>
                                 <c:out value='~${deadline[1]}'/>

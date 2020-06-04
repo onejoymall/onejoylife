@@ -59,7 +59,7 @@
                             <p class="in-coin1 font-de1">OJT</p>
                             <p class="in-coin2 font-de2">
                                 <a href="#">
-                                	<span>준비중</span>
+                                	<span>0coin</span>
                                     <!-- <span>0</span>
                                     <span>coin</span> -->
                                 </a>

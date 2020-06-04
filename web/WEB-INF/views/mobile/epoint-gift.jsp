@@ -33,7 +33,7 @@
                             </div>
                             <a href="#" class="mainList-big-text">
                                 <p class="list-title"> ${list.giveaway_name}</p>
-                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> E-point</ins>
+                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</ins>
                                     <span class="day-c">
                                     <c:set var="deadline" value="${fn:split(list.giveaway_validity,'~')}"/>
                                     <c:out value='~${deadline[1]}'/>
