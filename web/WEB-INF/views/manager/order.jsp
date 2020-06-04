@@ -208,7 +208,7 @@
                                 <td>${list.delivery_t_invoice}</td>
                                 <td>${list.product_made_company_name}</td>
                                 <td>${list.product_name}</td>
-                                <td>1</td>
+                                <td>${list.payment_order_quantity}</td>
                                 <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
                                 <td>${list.payment_status_name}</td>
                                 <td>
@@ -299,19 +299,19 @@
                             </tr>
                             <tr>
                                 <th>수량</th>
-                                <td class="payment_order_quantity">1</td>
+                                <td class="payment_order_quantity"></td>
                             </tr>
                             <tr>
                                 <th>결제수단</th>
-                                <td class="pay_method">카드</td>
+                                <td class="pay_method"></td>
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="payment">30,150원</td>
+                                <td class="payment"></td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td class="payment_status_name">배송완료</td>
+                                <td class="payment_status_name"></td>
                             </tr>
                         </tbody>
                     </table>
