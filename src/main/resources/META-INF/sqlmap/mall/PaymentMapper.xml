@@ -123,7 +123,8 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
-            (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id
+            (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id,
+            (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 and A.product_cd is not null
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -179,6 +180,7 @@
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name,
             (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = A.pay_method) as pay_method_name,
+            (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,

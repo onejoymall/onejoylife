@@ -200,7 +200,10 @@
                                 <td><input type="checkbox" name="chk" value="${list.order_no}"></td>
                                 <td>${list.order_no}</td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
-                                <td>${list.email}</td>
+                                <td>
+                                    <c:if test="${not empty list.email}">${list.email}</c:if>
+                                    <c:if test="${empty list.email}">${list.order_user_email}</c:if>
+                                </td>
                                 <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>${list.delivery_t_invoice}</td>
                                 <td>${list.product_made_company_name}</td>
@@ -268,19 +271,19 @@
 
                             <tr>
                                 <th>주문번호</th>
-                                <td class="order_no">6549858</td>
+                                <td class="order_no"></td>
                             </tr>
                             <tr>
                                 <th>주문일</th>
-                                <td class="reg_date">2020-03-13</td>
+                                <td class="reg_date"></td>
                             </tr>
                             <tr>
                                 <th>주문자</th>
-                                <td class="email">unknown01</td>
+                                <td class="email order_user_email"></td>
                             </tr>
                             <tr>
                                 <th>배송일</th>
-                                <td class="delivery_start_date">2020-03-14</td>
+                                <td class="delivery_start_date"></td>
                             </tr>
                             <tr>
                                 <th>희망 배송일시</th>
@@ -292,7 +295,7 @@
                             </tr>
                             <tr>
                                 <th>상품명/옵션</th>
-                                <td class="product_name">제주 신선 한라봉/1KG</td>
+                                <td class="product_name"></td>
                             </tr>
                             <tr>
                                 <th>수량</th>
