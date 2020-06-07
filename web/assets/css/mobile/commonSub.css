@@ -124,3 +124,44 @@ input[type="number"]::placeholder{
     color: #9e9e9e;
     font-size: 14px;
 }
+.btn-auth {
+    display: block;
+    float: right;
+    width: calc(30% - 1px );
+    height: 46px;
+    background: #da394d;
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 2.8rem;
+}
+.loading-bar-wrap{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.7);
+    z-index: 99999999;
+}
+.loading-bar{
+    position:fixed;
+    top:calc(50% - 35px);
+    left:calc(50% - 35px);
+    width: 70px;
+    height: 70px;
+    border: 4px solid rgba(255, 83, 101, 0.31);
+    border-radius: 50%;
+    border-top-color: #ff233a;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+.hidden{
+    display: none!important;
+}
+@keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+}

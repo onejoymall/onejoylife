@@ -8,9 +8,9 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/mobile/common-mobile.css" rel="stylesheet" type="text/css">
-    <link href="../../assets/css/mobile/commonSub.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/mobile/common-mobile.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/mobile/commonSub.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
@@ -56,7 +56,7 @@
                         <input type="checkbox" id="join-ck" name="join-ck" class="save-ck">
                         <label for="join-ck"><p class="ck-txt">본인은 만 14세 이상이며, <a href="#" id="mo-btn2">원조이몰 이용약관</a>, <a href="#" id="mo-btn3">제3자동의 이용약관</a>, <a href="#" id="mo-btn4">개인정보 수집 및 이용</a>, <a href="#" id="mo-btn5">개인정보 제공</a> 내용을 확인하였으며, 동의합니다.</p></label>
                     </div>
-                    <button type="submit" id="formSignUpSubmit" class="btn-join">회원가입</button>
+                    <button type="button" id="formSignUpSubmit" class="btn-join">회원가입</button>
                 </form>
             </div>
         </div>
