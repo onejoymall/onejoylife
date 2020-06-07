@@ -160,8 +160,14 @@ input[type="number"]::placeholder{
     display: none!important;
 }
 @keyframes spin {
-    to { -webkit-transform: rotate(360deg); }
+    to { transform: rotate(360deg); }
 }
 @-webkit-keyframes spin {
     to { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+    to { -moz-transform: rotate(360deg); }
+}
+@-ms-keyframes spin {
+    to { -ms-transform: rotate(360deg); }
 }

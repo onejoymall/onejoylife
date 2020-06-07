@@ -38,9 +38,8 @@
                 <div class="login-search">
                     <a href="<c:url value="/sign/signup"/>" class="link-a">회원가입</a>
                     <span class="bar"></span>
-                    <a href="">아이디 찾기</a>
-                    <span class="bar"></span>
-                    <a href="">비밀번호 찾기</a>
+                    <a href="/sign/findUserInfo">아이디/비밀번호 찾기</a>
+
                 </div>
                 <!-- 비회원 주문조회 -->
                 <div class="ttl-line"></div>
