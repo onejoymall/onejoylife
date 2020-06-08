@@ -166,12 +166,13 @@
                         <colgroup>
                             <col width="3%">
                             <col width="5%">
+                            <col width="5%">
                             <col width="6%">
                             <col width="8%">
                             <col width="6%">
                             <col width="7%">
                             <col width="7%">
-                            <col width="33%">
+                            <col width="28%">
                             <col width="5%">
                             <col width="8%">
                             <col width="6%">
@@ -181,6 +182,7 @@
                             <tr>
                                 <td><input type="checkbox" id="all-chk" name="all-chk"></td>
                                 <td>주문번호</td>
+                                <td>결제번호</td>
                                 <td>주문일</td>
                                 <td>주문자</td>
                                 <td>배송등록일</td>
@@ -199,6 +201,7 @@
                            <tr>
                                 <td><input type="checkbox" name="chk" value="${list.order_no}"></td>
                                 <td>${list.order_no}</td>
+                                <td>${list.imp_uid}</td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>
                                     <c:if test="${not empty list.email}">${list.email}</c:if>
@@ -274,12 +277,24 @@
                                 <td class="order_no"></td>
                             </tr>
                             <tr>
+                                <th>결제번호</th>
+                                <td class="imp_uid"></td>
+                            </tr>
+                            <tr>
+                                <th>주문자 이름</th>
+                                <td class="order_user_name"></td>
+                            </tr>
+                            <tr>
                                 <th>주문일</th>
                                 <td class="reg_date"></td>
                             </tr>
                             <tr>
                                 <th>주문자</th>
                                 <td class="email order_user_email"></td>
+                            </tr>
+                            <tr>
+                                <th>수취인</th>
+                                <td class="delivery_user_name"></td>
                             </tr>
                             <tr>
                                 <th>배송일</th>

@@ -124,7 +124,9 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
             (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id,
-            (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email
+            (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
+            (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
+            (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 and A.product_cd is not null
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -146,6 +148,13 @@
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+    </select>
+    <select id="getPaymentListChk" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+          A.*
+        FROM payment A where order_no =#{order_no} AND password = #{password}
+        ]]>
     </select>
     <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
         <![CDATA[
@@ -185,12 +194,16 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5
+            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
+            (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
+            (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name
         FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="imp_uid != null">AND A.imp_uid=#{imp_uid}</if>
+        <if test="password != null">AND A.password = #{password}</if>
     </select>
     <select id="getTodaySummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT IFNULL(COUNT(*),0) orderCnt,
