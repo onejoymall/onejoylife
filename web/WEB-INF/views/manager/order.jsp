@@ -167,12 +167,13 @@
                             <col width="3%">
                             <col width="5%">
                             <col width="5%">
+                            <col width="5%">
                             <col width="6%">
                             <col width="8%">
                             <col width="6%">
                             <col width="7%">
                             <col width="7%">
-                            <col width="28%">
+                            <col width="23%">
                             <col width="5%">
                             <col width="8%">
                             <col width="6%">
@@ -184,6 +185,7 @@
                                 <td>주문번호</td>
                                 <td>결제번호</td>
                                 <td>주문일</td>
+                                <td>회원여부</td>
                                 <td>주문자</td>
                                 <td>배송등록일</td>
                                 <td>운송장번호</td>
@@ -203,6 +205,10 @@
                                 <td>${list.order_no}</td>
                                 <td>${list.imp_uid}</td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+                                <td>
+                                    <c:if test="${not empty list.email}">회원</c:if>
+                                    <c:if test="${empty list.email}">비회원</c:if>
+                                </td>
                                 <td>
                                     <c:if test="${not empty list.email}">${list.email}</c:if>
                                     <c:if test="${empty list.email}">${list.order_user_email}</c:if>
@@ -271,7 +277,6 @@
                                     <input type="text" name="delivery_t_invoice" placeholder="송장번호 입력">
                                 </td>
                             </tr>
-
                             <tr>
                                 <th>주문번호</th>
                                 <td class="order_no"></td>
