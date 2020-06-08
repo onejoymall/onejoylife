@@ -315,6 +315,7 @@ public class ManagerRestapiController {
                 }
                 params.put("work_history","관리자 > 선택삭제 > 관련테이블 : "+mgCommonVO.getTable_name() + "  삭제키 : "+ getChkArrValue);
                 mgSystemDAO.insertSystemHistory(params);
+//                mgSystemDAO.insertSystemDeleteHistory(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
@@ -1113,6 +1114,26 @@ public class ManagerRestapiController {
                 mgProductDAO.insertProductCopy(params);
                 mgProductDAO.insertProductFileCopy(params);
                 resultMap.put("redirectUrl","/Manager/Product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //경품 복사 등록
+    @RequestMapping(value = "/Manager/giveawayCopyProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> managerGiveawayCopyProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            String giveaway_cd = "G"+numberGender.numberGen(7,2);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                //등록될 키는 다시 만들어준다
+                params.put("giveaway_cd",giveaway_cd);
+                mgGiveawayDAO.insertGiveawayCopy(params);
+                resultMap.put("redirectUrl","/Manager/Giveaway");
             }
         }catch (Exception e){
             e.printStackTrace();
