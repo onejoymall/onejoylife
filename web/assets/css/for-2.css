@@ -223,3 +223,6 @@ input[id="id-r"] {
     border-color: #232a32;
     color:#232a32
 }
+#validateErrorPassword, #validateErrorPasswordCf{
+    color:#da394d;
+}

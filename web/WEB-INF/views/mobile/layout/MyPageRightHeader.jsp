@@ -28,9 +28,9 @@
             <p>OJT</p>
             <p><a href="">준비중</a></p>
         </div>
-        <div class="clearfix">
+        <%--<div class="clearfix">
             <p>OJST</p>
             <p><a href="">준비중</a></p>
-        </div>
+        </div>--%>
     </div>
 </div>

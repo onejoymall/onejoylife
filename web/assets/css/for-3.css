@@ -67,6 +67,7 @@ body{font-family: "noto sans kr"!important;}
     background: #232a32;width: 270px;
     height: 60px;
     margin: 0 auto;
+    text-align: center;
 }
 /* tab */
 .rd-box:nth-of-type(1), .rd-box:nth-of-type(1) ~ div:nth-of-type(1), 

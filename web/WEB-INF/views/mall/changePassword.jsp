@@ -75,15 +75,15 @@
                                 <p class="tit-id">비밀번호</p>
                                 <div class="la-box2 la-input">
                                     <input name="password" id="password" type="password" placeholder="">
-                                    <p class="none none-color">* 6~20자의 영문, 숫자를 조합하여 입력하여 주세요.</p>
-                                    <p class="none" id="validateErrorPassword">* 6~20자의 영문, 숫자를 조합하여 입력하여 주세요.</p>
+                                    <p class="none none-color"></p>
+                                    <p id="validateErrorPassword"></p>
                                 </div>
                             </div>
                             <div class="id-num1">
                                 <p class="tit-id">비밀번호 확인</p>
                                 <div class="la-box2 la-input">
                                     <input name="password_cf" id="password_cf" type="password" placeholder="">
-                                    <p class="none" id ="validateErrorPasswordCf">* 입력하신 비밀번호와 일치하지 않습니다. 정확하게 입력하여 주세요.</p>
+                                    <p id ="validateErrorPasswordCf"></p>
                                     <input type="hidden" name="email" value="${email}">
                                 </div>
                             </div>
@@ -136,5 +136,24 @@
             }
         });
     })
+    var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+    //패스워드 체크
+    $(document).on('keyup','input[name=password]',function () {
+        if(!$(this).val().match(mathPassword)){
+            $("#validateErrorPassword").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
+            $("#validateErrorPassword").removeClass("text-success");
+        }else{
+            $("#validateErrorPassword").addClass("text-success");
+        }
+    })
+   $(document).on('keyup','input[name=password_cf]',function () {
+       if(!$(this).val().match($('input[name=password]').val())){
+           $("#validateErrorPasswordCf").text(" * 비밀번호가 일치하지 않습니다.")
+           $("#validateErrorPasswordCf").removeClass("text-success");
+       }else{
+           $("#validateErrorPasswordCf").text(" * 비밀번호가 일치합니다.")
+           $("#validateErrorPasswordCf").addClass("text-success");
+       }
+   })
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
