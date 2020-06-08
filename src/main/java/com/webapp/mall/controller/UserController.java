@@ -134,12 +134,18 @@ public class UserController {
     }
     @RequestMapping(value = "/sign/findUserInfo")
     public String findUserInfo( ModelMap model,HttpServletRequest request)throws Exception{
+        Device device = DeviceUtils.getCurrentDevice(request);
         model.addAttribute("style", "for-1");
-        return "mall/findUserInfo";
+        if(device.isMobile()){
+            return "mobile/for-1";
+        } else {
+            return "mall/findUserInfo";
+        }
+
     }
     @RequestMapping(value = "/sign/changePassword")
     public String changePassword( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
-
+        Device device = DeviceUtils.getCurrentDevice(request);
         String redirectUrl ="mall/changePassword";
         try{
             String email = (String)params.get("email");
