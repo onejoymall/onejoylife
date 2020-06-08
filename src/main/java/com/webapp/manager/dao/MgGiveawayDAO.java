@@ -40,9 +40,6 @@ public class MgGiveawayDAO {
     public void insertGiveawayCopy(Map<String,Object> params) throws Exception{
         sql.insert("mall.GiveawayMapper.insertGiveawayCopy",params);
     }
-    public void insertProductFileCopy(Map<String,Object> params) throws Exception{
-        sql.insert("mall.ProductMapper.insertProductFileCopy",params);
-    }
     public void updateGiveaway(GiveawayVO giveawayVO) throws SQLException{
         sql.update("mall.GiveawayMapper.updateGiveaway",giveawayVO);
     }

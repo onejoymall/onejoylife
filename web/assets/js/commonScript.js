@@ -1019,6 +1019,46 @@ $(document).on("click",".ra-num",function () {
             }
         });
     })
+//경품카피
+    function giveawayCopy(giveaway_cd){
+        jQuery.ajax({
+            type: 'POST',
+            data: {"request_giveaway_cd":giveaway_cd},
+            url:'/Manager/giveawayCopyProc',
+            success: function (data) {
+                console.log(data.validateError)
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        // $('#validateError'+index).removeClass('none');
+                        // $('#validateError'+index).html('* '+item);
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        // $.toast().reset('all');//토스트 초기화
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    // loginAuth(data.access_token);
+                    location.href=data.redirectUrl;
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error");
+            }
+        });
+    }
     //경품수정
     $(document).on("click","#giveawayUpdate",function () {
         var formData = new FormData($('#defaultForm')[0]);
@@ -3458,7 +3498,79 @@ function isStrAlphabet(str){
 	return str.search(/[a-zA-Z]/g) >= 0;
 }
 
-//비화원 주문조회버튼
-$(".orderDetailGuestBtn").click(function(){
-	location.href = '/MyPage/OrderDetailGuest?order_no='+$(".non-num").val();
+//비회원 주문조회버튼
+/*
+$('#orderDetailGuestBtn').on("click",function () {
+    var formData = $('#orderForm').serialize();
+    var alertType;
+    var showText;
+
+    jQuery.ajax({
+        type: $('#orderForm').attr('method'),
+        url: '/MyPage/OrderDetailGuest',
+        data: formData,
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                console.log(data);
+                $.each(data.validateError, function (index, item) {
+                    console.log(data.validateError)
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                });
+
+            } else {
+                if (data.success) {
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                            location.href=data.redirectUrl+'?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
+                            // location.href='/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
+                            // location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
+                        }
+                    });
+                } else{
+                    if(data.redirectUrl){
+                        console.log(data.redirectUrl)
+                        location.href=data.redirectUrl+'?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
+                        // location.href='/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
+                        // location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
+                    }else{
+                        $.toast({
+                            text: "ERROR",
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error',
+                        });
+                    }
+                }
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+
+*/
+
+$("#orderDetailGuestBtn").click(function(){
+	location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
 });

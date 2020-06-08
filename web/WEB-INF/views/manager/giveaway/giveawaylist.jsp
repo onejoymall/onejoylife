@@ -149,7 +149,7 @@
 <%--                            <td></td>--%>
                             <td>${productList.giveaway_sale_yn_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="copy" onclick="productCopy('${productList.giveaway_cd}')">복사 등록</button>
+                                <button type="button" class="goods-list-btn" name="copy" onclick="giveawayCopy('${productList.giveaway_cd}')">복사 등록</button>
                                 <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${productList.giveaway_cd}')" >상세보기</button>
                             </td>
                         </tr>

@@ -45,7 +45,7 @@
                     <div class="sec4-txt">
                         <p class="txt-tit">최근 구매내역<span>최근주문3건(1개월내)</span></p>
                         <p class="mor-a">
-                            <a href="mypage-6.html">더보기 ></a>
+                            <a href="/MyPage/OrderAndDelivery">더보기 ></a>
                         </p>
                     </div>
                     <table class="sec4-lis">
