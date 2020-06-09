@@ -200,6 +200,7 @@
                             </th>
                             <td>
                                 <select name="delivery_t_code">
+                                    <option value="00">직접 배송</option>
                                 <c:forEach var="companyList" items="${companyList}" varStatus="status">
                                     <option value="${companyList.Code}">${companyList.Name}</option>
                                 </c:forEach>

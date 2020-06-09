@@ -38,9 +38,10 @@
                                 <th></th><td></td>
                                 <th>등급</th>
                                 <td>
-                                    <select name="src-grade">
+                                    <select name="level">
                                         <option value="전체">전체</option>
-                                        <option value="1">일반회원</option>
+                                        <option value="1">사용자</option>
+                                        <option value="9">매니저</option>
                                         <option value="10">관리자</option>
                                     </select>
                                 </td>
@@ -137,6 +138,12 @@
                 <form id="form1" name="form1"  method="get">
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                    <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                    <input type="hidden" name="searchType" value="email" id="chk2" checked>
+                    <input type="hidden" name="searchType" value="username" id="chk1">
+                    <input type="hidden" name="user_grant" value="${param.user_grant}">
+                    <input type="hidden" name="level" value="${param.level}">
+                    <input type="hidden" name="sex" value="${param.sex}">
                 </form>
             </div>
 
