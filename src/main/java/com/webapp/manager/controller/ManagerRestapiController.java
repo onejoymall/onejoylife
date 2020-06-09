@@ -422,12 +422,14 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
-            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
-                if(deliveryInfoVO.getDelivery_t_invoice() == null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
-                    error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
-                }
-                if(deliveryInfoVO.getDelivery_t_code() == null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
-                    error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+            if(deliveryInfoVO.getDelivery_t_code() != "00"){
+                if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
+                    if(deliveryInfoVO.getDelivery_t_invoice() == null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
+                        error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+                    }
+                    if(deliveryInfoVO.getDelivery_t_code() == null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
+                        error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+                    }
                 }
             }
             if(deliveryInfoVO.getDelivery_status()!=null && (deliveryInfoVO.getDelivery_status().equals("G") || deliveryInfoVO.getDelivery_status().equals("C"))){
