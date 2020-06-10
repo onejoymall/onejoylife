@@ -41,7 +41,7 @@ public class PopupController {
     @Autowired
     DeliveryDAO deliveryDAO;
     @Autowired
-    PaymentDAO PaymentDAO;
+    PaymentDAO paymentDAO;
     @Autowired
     ReviewDAO reviewDAO;
     
@@ -128,10 +128,11 @@ public class PopupController {
         return "popup/write-qna";
     }
 
+    //리뷰작성
     @RequestMapping("/Popup/review-write")
     public String writeReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO) throws Exception {
     	try {
-    		model.addAttribute("productDetail",PaymentDAO.getPaymentDetail(params));
+    		model.addAttribute("productDetail",paymentDAO.getPaymentDetail(params));
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
@@ -144,6 +145,7 @@ public class PopupController {
         }
     }
     
+    //리뷰 수정
     @RequestMapping("/Popup/review-update")
     public String updateReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
     	try {
@@ -166,6 +168,7 @@ public class PopupController {
         }
     }
     
+    //원천징수영수증
     @RequestMapping("/Popup/withholding")
     public String withholding(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
     	try {
@@ -176,6 +179,8 @@ public class PopupController {
                 params.put("usr_id",userInfo.get("usr_id"));
             }
             //경품 결제정보
+            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            model.addAttribute("detail", paymentDetail);
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
