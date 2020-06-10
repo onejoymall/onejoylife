@@ -3,10 +3,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -259,7 +256,7 @@ public class restapiController {
     }
     //로그인 처리 1
     @RequestMapping(value = "/sign/loginProc", method = RequestMethod.GET, produces = "application/json")
-    public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo,UserVO userVO){
+    public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo,HttpServletRequest request,UserVO userVO){
         Map<String, Object> postToken = null;
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
@@ -275,6 +272,12 @@ public class restapiController {
                 //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
                 Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
                 Object RefererUrl = session.getAttribute("RefererUrl");
+                String product_cd=null;
+                if (!isEmpty((List<String>)session.getAttribute("today"))){
+                    List<String> list = (List<String>)session.getAttribute("today");
+                    product_cd = list.get(list.size()-1);
+                }
+
                 if(!isEmpty(loginUserList)){
 
                     if(passwordEncoder.matches(password,(String)loginUserList.get("password"))){
@@ -291,11 +294,13 @@ public class restapiController {
                             //로그인 기록 저장
                             userVO.setLog_type("login");
                             userDAO.insertUserHistory(userVO);
-                           if(RefererUrl!=null){
-                               resultMap.put("redirectUrl",RefererUrl);
-                           }else{
-                               resultMap.put("redirectUrl", "/");
-                           }
+                            if(product_cd!= null){
+                                resultMap.put("redirectUrl", "/product/productDetail?product_cd="+product_cd);
+                            } else if(RefererUrl!=null) {
+                                resultMap.put("redirectUrl",RefererUrl);
+                            } else {
+                                resultMap.put("redirectUrl", "/");
+                            }
 
                         }
 
