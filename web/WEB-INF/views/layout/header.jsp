@@ -52,6 +52,7 @@
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js"/>"></script>
     <!-- timepicker -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script type="text/javascript" src="http://pay.naver.com/customer/js/naverPayButton.js" charset="UTF-8"></script>
     <script>
     //전역변수
     <c:if test="${not empty postUrl}">

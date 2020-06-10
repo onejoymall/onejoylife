@@ -40,7 +40,7 @@
             </ul>
             <div class="my-1">
                 <!-- <button class="btn">배송지 변경</button> -->
-                <c:if test="${paymentDetail.payment_status eq 'W'}">
+                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D'}">
                 <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderCancel?order_no=${paymentDetail.order_no}'">주문취소</button>
                 </c:if>
                 <c:if test="${paymentDetail.payment_status eq 'R'}">
