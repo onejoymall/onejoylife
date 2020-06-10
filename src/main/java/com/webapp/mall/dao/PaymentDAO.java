@@ -45,6 +45,10 @@ public class PaymentDAO {
         List<Map<String, Object>> getPaymentList = sql.selectList("mall.PaymentMapper.getPaymentList",params);
         return getPaymentList;
     }
+    public Map<String, Object> getPaymentListChk(Map<String, String> params) throws SQLException {
+        Map<String, Object> getPaymentListChk = sql.selectOne("mall.PaymentMapper.getPaymentListChk",params);
+        return getPaymentListChk;
+    }
     public Map<String,Object> getPaymentDetail(Map<String, String> params) throws SQLException{
         Map<String,Object> getPaymentDetail = sql.selectOne("mall.PaymentMapper.getPaymentDetail",params);
         return getPaymentDetail;

@@ -3499,7 +3499,6 @@ function isStrAlphabet(str){
 }
 
 //비회원 주문조회버튼
-/*
 $('#orderDetailGuestBtn').on("click",function () {
     var formData = $('#orderForm').serialize();
     var alertType;
@@ -3507,14 +3506,12 @@ $('#orderDetailGuestBtn').on("click",function () {
 
     jQuery.ajax({
         type: $('#orderForm').attr('method'),
-        url: '/MyPage/OrderDetailGuest',
+        url: '/OrderDetailGuestChk',
         data: formData,
         success: function (data) {
             if (data.validateError) {
                 $('.validateError').empty();
-                console.log(data);
                 $.each(data.validateError, function (index, item) {
-                    console.log(data.validateError)
                     if(index == "Error"){//일반에러메세지
                         alertType = "error";
                         showText = item;
@@ -3540,17 +3537,13 @@ $('#orderDetailGuestBtn').on("click",function () {
                         icon: 'success',
                         hideAfter: 2000,
                         afterHidden: function () {
-                            location.href=data.redirectUrl+'?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
-                            // location.href='/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
-                            // location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
+                            location.href = '/MyPage/OrderDetailGuest?imp_uid='+$('input[name=imp_uid]').val();
                         }
                     });
                 } else{
                     if(data.redirectUrl){
                         console.log(data.redirectUrl)
-                        location.href=data.redirectUrl+'?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
-                        // location.href='/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val()+'&password='+$('input[name=password]').val();
-                        // location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
+                        location.href = '/MyPage/OrderDetailGuest?imp_uid='+$('input[name=imp_uid]').val();
                     }else{
                         $.toast({
                             text: "ERROR",
@@ -3567,10 +3560,4 @@ $('#orderDetailGuestBtn').on("click",function () {
             alert("error");
         }
     });
-});
-
-*/
-
-$("#orderDetailGuestBtn").click(function(){
-	location.href = '/MyPage/OrderDetailGuest?order_no='+$('input[name=order_no]').val();
 });

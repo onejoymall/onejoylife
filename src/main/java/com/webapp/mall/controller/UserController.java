@@ -80,7 +80,6 @@ public class UserController {
 
         try{
             session.setAttribute("RefererUrl",request.getHeader("Referer"));
-
             Object siteUrl = request.getRequestURL().toString()
                     .replaceAll(" " , "")
                     .replace(request.getRequestURI(),"");

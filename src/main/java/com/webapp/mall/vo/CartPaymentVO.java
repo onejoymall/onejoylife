@@ -18,6 +18,15 @@ public class CartPaymentVO extends CommonVO {
    private String[] product_cds;
    private String[] coupon_cd;
    private String[] payment_order_quantity;
+   private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getError_msg() {
         return error_msg;

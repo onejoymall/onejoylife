@@ -153,7 +153,7 @@
         <![CDATA[
         SELECT
           A.*
-        FROM payment A where order_no =#{order_no} AND password = #{password}
+        FROM payment A where imp_uid=#{imp_uid} AND password = #{password}
         ]]>
     </select>
     <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
