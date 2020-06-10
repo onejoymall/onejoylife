@@ -47,9 +47,12 @@
                     <button type="button" class="nonmem-btn">비회원 주문조회</button>
                 </div>
                 <div class="nonmem">
-                    <form action="">
-                        <input type="text" class="non-num" placeholder="주문번호 입력">
-                        <button type="button" class="orderDetailGuestBtn">조회</button>
+                    <form name="orderForm" id="orderForm" method="post">
+                        <div>
+                            <input type="text" name="imp_uid" class="non-num" placeholder="주문번호 입력">
+                            <input type="password" name="password" class="non-num" placeholder="비밀번호 입력">
+                        </div>
+                        <button type="button" id="orderDetailGuestBtn">조회</button>
                     </form>
                 </div>
             </div>

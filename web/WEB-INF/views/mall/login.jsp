@@ -57,18 +57,20 @@
                     <p class="txt-p2 txt-w">ㆍ비회원 주문/배송 조회가 필요하신가요?</p>
                     <a href="#" class="link-a nonmem-btn">비회원 주문조회</a>
                 </div>
+        </form>
                 <!-- 비회원 주문조회 -->
                 <div class="nonmem">
-                    <form action="">
+                    <form name="orderForm" id="orderForm" method="post">
                         <div class="nonmem-in">
                             <p>주문번호</p>
-                            <input type="text" class="non-num">
+                            <input type="text" name="imp_uid">
+                            <p>비밀번호</p>
+                            <input type="password" name="password">
                         </div>
-                        <button type="button" class="orderDetailGuestBtn">조회</button>
+                        <button type="button" id="orderDetailGuestBtn">조회</button>
                     </form>
                 </div>
             </div>
-        </form>
     </div>
 </div>
 

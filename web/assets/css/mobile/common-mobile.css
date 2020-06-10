@@ -5057,43 +5057,38 @@ select#list-sort{
     margin: 30px auto;
     display: none;
 }
-.nonmem input {
+.nonmem div{
     width: 70%;
-    display: inline-block;
+    float: left;
+}
+.nonmem input {
+    width: 100%;
     height: 40px;
     border: 1px solid #ccc;
-    margin-right: 5px;
+    margin-bottom: 5px !important;
 }
 .nonmem button {
     width: calc(100% - 70% - 10px);
-    height: 39px;
-    display: inline-block;
-    background: #232a32;
+    margin-left: 10px;
+    height: 85px;
+    display: block;
+    background: #da394d;
     color: #fff;
     font-size: 16px;
-    vertical-align: -1px;
-} 
-.mo-select {
+    float: left;
+}
+input[type=password]{
+    border: 1px solid #ccc;
+    height: 40px;
+    line-height: 40px;
     width: 100%;
-    margin-bottom: 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+    padding: 0 1em;
+    border-radius: 0;
+    box-sizing: border-box;
 }
-
-.jq-toast-wrap.bottom-right{
-    bottom: 60px!important;
-    right: 20px!important;
-}
-
-.point-product-item a img, .event-product-item a img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.img-out{
-    overflow: hidden;
-    position: relative;
-    padding-top: 100%;
+input[type=password]::placeholder{
+    color: #999;
 }
