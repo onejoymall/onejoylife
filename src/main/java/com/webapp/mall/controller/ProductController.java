@@ -240,7 +240,6 @@ public class ProductController {
                 session.setAttribute("today",todayVO.getProduct_cd_array());
             }
 
-            session.setAttribute("product_cd", request.getParameter("product_cd"));
             Map<String,Object> list = productDAO.getProductViewDetail(params);
             
             model.addAttribute("list",list);
