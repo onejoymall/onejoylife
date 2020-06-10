@@ -3,8 +3,76 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
-
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<style>
+.npay_storebtn_bx{
+	zoom:2;
+}
+</style>
+<script type="text/javascript">
+	var delivery_payment_type = '${list.product_delivery_payment_type}';
+	function buy_nc(){
+		//옵션
+		var optionStr = ''
+		$("select[name=select_option_value]").each(function(idx){
+			optionStr += (idx != 0 ? "/" : "") + $(this).val();
+	    });
+	    if($("input[name=btn-option-value]").val()){
+	    	optionStr += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
+	    }
+	    if($("input[name=rd-option-value]").val()){
+	    	optionStr += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
+	    }
+	    
+	    //배송비
+	    var shipping_type = "";
+	    if($("input[name=product_delivery_payment]").val() == 0){
+	    	shipping_type = "FREE"
+	    }else{
+	    	if(delivery_payment_type == 'C'){
+	    		shipping_type = "ONDELIVERY";
+	    	}else{
+	    		shipping_type = "PAYED";
+	    	}
+	    }
+	    
+	    //상품갯수
+	    var item_uprice = '${list.product_payment}';
+	    var item_tprice = item_uprice * $("input[name=payment_order_quantity]").val();
+	    var total_price = item_tprice + (shipping_type == 'ONDELIVERY' ? 0 : parseInt($("input[name=product_delivery_payment]").val()));
+	    
+	    //데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: '${list.product_cd}',
+			ITEM_NAME: '${list.product_name}',
+			ITEM_COUNT: $("input[name=payment_order_quantity]").val(),
+			ITEM_UPRICE: item_uprice,
+			ITEM_TPRICE: item_tprice,
+			ITEM_OPTION: optionStr,
+			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
+			SHIPPING_TYPE: shipping_type,
+			TOTAL_PRICE: total_price,
+			BACK_URL: '' 
+		};
+
+		$.ajax({
+			crossOrigin : true,
+			url: "/api/naverPayOrderKey",
+			method: 'post',
+			data: formData,
+			success:function(order_id){
+		        location.href = "https://test-order.checkout.naver.com/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+</script>
 <section class="main-section">
     <h2 class="main-section-title hide">main section</h2>
     <article class="goods-main">
@@ -98,7 +166,7 @@
                             </div>
                             <div class="shipping-number">
                                 ${list.product_delivery_international_type_name} ${list.product_delivery_type_name} 
-                                <br>${list.product_delivery_payment_type_name} ${delivery.get("delivery_payment")}
+                                <br>${list.product_delivery_payment_type_name} ${delivery.delivery_payment}
                             </div>
                         </div>
                     </div>
@@ -150,11 +218,11 @@
                         <script type="text/javascript" >
                             naver.NaverPayButton.apply({
                             BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
-                            TYPE: "E", // 버튼 모음 종류 설정
+                            TYPE: "A", // 버튼 모음 종류 설정
                             COLOR: 1, // 버튼 모음의 색 설정
-                            COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+                            COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
                             ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
-                            "":""
+                            BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
                             });
                         </script>
                     </c:if>
@@ -661,7 +729,10 @@
             $('html,body').stop().animate({scrollTop:tt});
         });//click
     });
-
-
+</script>
+<script type="text/javascript">
+// 추가 정보 입력
+// wcs_do 함수 호출
+wcs_do();
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

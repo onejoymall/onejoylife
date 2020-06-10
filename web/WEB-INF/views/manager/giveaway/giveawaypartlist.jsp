@@ -155,9 +155,9 @@
                                     </td>
                                 </c:if>
                                 <td>
-	                                <c:if test="${not empty list.order_no}">
+	                                <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0 && not empty list.order_no}">
 	                                    <button type="button" class="goods-list-btn"  onclick="selectPayment('${list.order_no}')">상세보기</button>
-	                                    <%-- <button type="button" class="goods-list-btn"  onclick="withholding('${list.order_no}')">원천징수</button> --%>
+	                                    <button type="button" class="goods-list-btn"  onclick="withholding('${list.order_no}')">원천징수</button>
 	                                </c:if>
                                 </td>
                             </tr>
