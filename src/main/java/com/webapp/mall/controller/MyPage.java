@@ -16,6 +16,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.vo.CartPaymentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siot.IamportRestClient.IamportClient;
@@ -467,7 +469,7 @@ public class MyPage {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
-            
+
             client = new IamportClient(apiKey, apiSecret);
             Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
             paymentDetail.put("vbank_name",impPayment.getVbankName());
@@ -486,13 +488,15 @@ public class MyPage {
             return "mypage/OrderAndDeliveryDetail";
         }
     }
-    //주문상세
+    //주문상세 - 비회원
     @RequestMapping(value="/MyPage/OrderDetailGuest")
     public String myPageOrderAndDeliveryDetailGuest(HttpServletRequest request, Model model,@RequestParam HashMap params) {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            params.put("order_no", paymentDetail.get("order_no"));
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             model.addAttribute("paymentDetail", paymentDetail);
+            model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
             model.addAttribute("delivery", delivery);
         }catch (Exception e){
             e.printStackTrace();

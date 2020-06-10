@@ -1,15 +1,22 @@
 package com.webapp.mall.controller;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.response.Payment;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.*;
+import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,6 +58,11 @@ public class restapiSubController {
     private CommonDAO commonDAO;
     @Autowired
     private ProductDAO productDAO;
+    IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
 
     //폼의 메서드가 GET인지 POST 인지 꼭 확인
     @RequestMapping(value = "/sign/passcheck", method = RequestMethod.POST, produces = "application/json")
@@ -146,6 +158,31 @@ public class restapiSubController {
         }
         return resultMap;
 
+    }
+
+    //주문상세 - 비회원
+    @RequestMapping(value="/OrderDetailGuestChk", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    public HashMap<String, Object> myPageOrderAndDeliveryDetailGuestChk(HttpServletRequest request, CartPaymentVO cartPaymentVO, Model model, @RequestParam HashMap params){
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            params.put("imp_uid", cartPaymentVO.getImp_uid());
+            Map<String,Object> paymentData = paymentDAO.getPaymentListChk(params);
+            if(isEmpty(paymentData)){
+                error.put("Error", "주문정보가 일치하지 않습니다.");
+            } else if(!cartPaymentVO.getPassword().equals(paymentData.get("password"))){
+                error.put("Error", "주문 비밀번호가 일치하지 않습니다.");
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError", error);
+            } else {
+                resultMap.put("redirectUrl", "/mypage/OrderAndDeliveryDetail");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
     }
 
 
