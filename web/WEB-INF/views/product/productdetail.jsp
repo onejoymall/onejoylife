@@ -55,7 +55,7 @@
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
-			BACK_URL: '' 
+			BACK_URL: 'http://onejoy-life.com/' 
 		};
 
 		$.ajax({

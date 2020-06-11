@@ -2973,9 +2973,12 @@ ul.srcList li a:last-child{
     font-weight: 400;
     line-height: 30px;
 }
-div.img-box,div.img-box img{
+div.img-box,div.img-box img,
+div.img-out,div.img-out img,
+div.point-product-item img{
     width:100%;
 }
+
 .mainList-wrap .img-box{
     position: relative;
 }
