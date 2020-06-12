@@ -47,7 +47,9 @@
                         <c:set var="lineCut" value="${status.count%4}"></c:set>
                         <div class="point-product-item">
                             <a href="/product?product_ct=${eventList.pd_category_id}">
-                                <img src="${eventList.file_link5}" />
+                                <div class="img-out">
+                                    <img src="${eventList.file_link5}" />
+                                </div>
                                 <p class="point-pdt-title">${eventList.event_title}</p>
                             </a>
                         </div>
