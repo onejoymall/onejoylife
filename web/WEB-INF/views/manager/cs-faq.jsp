@@ -301,17 +301,17 @@
         });
         /*function faqSelect(bgno,brdno) {
             $('.modal1').attr("style","display:block");
-            var formData = JSON.stringify({"bgno":bgno,"brdno":brdno});
-            var dataList = commonAjaxListCall("POST","/Manager/BoardSelect?"+'bgno='+bgno+'&brdno='+brdno,formData);
+            var formData = {"bgno":bgno,"brdno":brdno};
+            var dataList = commonAjaxListCall("POST","/Manager/BoardSelect",formData);
             console.log(formData);
-            console.log(dataList.boardInfo);
             $.each(dataList.boardInfo,function (key,value) {
+            console.log(dataList.boardInfo);
                 if(key =="rememo"){
                     $('#summernoteBoard').summernote('code', value);
                 }
                 $('#boardUpdateForm input:hidden[name='+key+']').val(value);
                 $('#boardUpdateForm input:text[name='+key+']').val(value);
-                $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
+                $('#boardUpdateForm input:radio[name='+key+'][value='+value+']').prop('checked',true);
             })
         }*/
         function faqSelect (bgno,brdno){
@@ -320,15 +320,15 @@
             console.log(formData)
             jQuery.ajax({
                 type: 'POST',
-                url: '/Manager/BoardSelect?'+'bgno='+bgno+'&brdno='+brdno,
+                url: '/Manager/BoardSelect'+'?bgno='+bgno+'&brdno='+brdno,
+                dataType: 'json',
                 data: JSON.stringify(formData),
                 success: function (data) {
-                    console.log(formData)
                     console.log(data.boardInfo)
                     $.each(data.boardInfo, function (key, value) {
                         $('#boardUpdateForm input:hidden[name='+key+']').val(value);
                         $('#boardUpdateForm input:text[name='+key+']').val(value);
-                        $('#boardUpdateForm input:radio[name='+key+'][value="'+value+'"]').prop('checked',true);
+                        $('#boardUpdateForm input:radio[name='+key+'][value='+value+']').prop('checked',true);
                         if(key =="rememo"){
                             $('#summernoteBoard').summernote('code', value);
                         }
@@ -336,6 +336,7 @@
                 },
                 error: function (xhr, status, error) {
                     alert(xhr + status + error);
+                    console.log(xhr, status, error)
                 }
             });
         }
