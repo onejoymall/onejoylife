@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
 <main>
     <div class="main-content">
@@ -21,7 +23,7 @@
                         </span>
                     </span>
             </a>
-            <a href="/Manager/order?start_date=<fmt:formatDate value="${today}" pattern="YYYY-MM-dd"/>" class="content-sales pay">
+            <a href="/Manager/order?payment_status=W&start_date=<fmt:formatDate value="${today}" pattern="YYYY-MM-dd"/>" class="content-sales pay">
                 <span class="pay-icon"></span>
                 <span class="content-item-text">
                         <strong class="item-tit">
@@ -47,12 +49,17 @@
             </a>
         </div>
         <div class="main-title clearfix">
+        <%
+        Calendar mon = Calendar.getInstance();
+        mon.add(Calendar.MONTH , -1);
+        %>
+        	<c:set var="lastMonth" value="<%=mon.getTime()%>"/>
             <h3>주문 현황</h3>
             <span class="desc">(최근 1개월 기준)</span>
         </div>
         <div class="main-content-section clearfix">
             <div class="status">
-                <a href="/Manager/order?&payment_status=M" class="content-status order">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=M" class="content-status order">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.mCnt}" /></strong>
                             <span class="data-unit">입금전</span>
@@ -60,7 +67,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=D" class="content-status order">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=D" class="content-status order">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.dCnt}" /></strong>
                             <span class="data-unit">배송준비중</span>
@@ -68,7 +75,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=R" class="content-status order">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=R" class="content-status order">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.rCnt}" /></strong>
                             <span class="data-unit">배송중</span>
@@ -76,7 +83,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=O" class="content-status order">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=O" class="content-status order">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.oCnt}" /></strong>
                             <span class="data-unit">배송완료</span>
@@ -90,7 +97,7 @@
         </div>
         <div class="main-content-section clearfix">
             <div class="status">
-                <a href="/Manager/order?&payment_status=C" class="content-status cs">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=C" class="content-status cs">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.cCnt}" /></strong>
                             <span class="data-unit">취소</span>
@@ -98,7 +105,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=S" class="content-status cs">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=S" class="content-status cs">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.sCnt}" /></strong>
                             <span class="data-unit">교환</span>
@@ -106,7 +113,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=H" class="content-status cs">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=H" class="content-status cs">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.hCnt}" /></strong>
                             <span class="data-unit">반품</span>
@@ -114,7 +121,7 @@
                 </a>
             </div>
             <div class="status">
-                <a href="/Manager/order?&payment_status=G" class="content-status cs">
+                <a href="/Manager/order?start_date=<fmt:formatDate value="${lastMonth}" pattern="YYYY-MM-dd"/>&payment_status=G" class="content-status cs">
                         <span class="order-data">
                             <strong class="data-price"><fmt:formatNumber type="number" maxFractionDigits="3" value="${lastMonthSummary.gCnt}" /></strong>
                             <span class="data-unit">환불</span>

@@ -355,7 +355,7 @@
 <div class="modal-content2">
     <div class="dashboard">
         <div class="status">
-            <a href="/Manager/order?&payment_status=M" class="content-status order">
+            <a href="/Manager/order?&payment_status=M&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db1"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.mCnt}" /></span></strong>
                         <span class="data-unit">입금전</span>
@@ -363,7 +363,7 @@
             </a>
         </div>
         <div class="status">
-            <a href="/Manager/order?&payment_status=W" class="content-status order">
+            <a href="/Manager/order?&payment_status=W&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db2"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.wCnt}" /></span></strong>
                         <span class="data-unit">결제완료</span>
@@ -371,15 +371,15 @@
             </a>
         </div>
         <div class="status">
-            <a href="/Manager/order?&payment_status=D" class="content-status order">
+            <a href="/Manager/order?&payment_status=D&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
-                        <strong class="data-price"><span class="db3"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.dCnt + statusCount.iCnt}" /></span></strong>
+                        <strong class="data-price"><span class="db3"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.dCnt}" /></span></strong>
                         <span class="data-unit">배송준비중</span>
                     </span>
             </a>
         </div>
         <div class="status">
-            <a href="/Manager/order?&payment_status=R" class="content-status order">
+            <a href="/Manager/order?&payment_status=R&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db4"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.rCnt}" /></span></strong>
                         <span class="data-unit">배송중</span>
@@ -387,7 +387,7 @@
             </a>
         </div>
         <div class="status">
-            <a href="/Manager/order?&payment_status=O" class="content-status order">
+            <a href="/Manager/order?&payment_status=O&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db5"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.oCnt}" /></span></strong>
                         <span class="data-unit">배송완료</span>
@@ -395,7 +395,7 @@
             </a>
         </div>
         <div class="status2">
-            <a href="/Manager/order?&payment_status=C" class="content-status order">
+            <a href="/Manager/order?&payment_status=C&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db6"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.cCnt}" /></span></strong>
                         <span class="data-unit">결제취소</span>
@@ -403,7 +403,7 @@
             </a>
         </div>
         <div class="status2">
-            <a href="/Manager/order?&payment_status=F" class="content-status order">
+            <a href="/Manager/order?&payment_status=F&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db8"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.sCnt}" /></span>/<span class="db9"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.sCnt + statusCount.fCnt}" /></span></strong>
                         <span class="data-unit">교환완료/교환처리</span>
@@ -411,7 +411,7 @@
             </a>
         </div>
         <div class="status2">
-            <a href="/Manager/order?&payment_status=H" class="content-status order">
+            <a href="/Manager/order?&payment_status=H&start_date=${param.start_date}&end_date=${param.end_date}" class="content-status order">
                     <span class="order-data">
                         <strong class="data-price"><span class="db10"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.gCnt}" /></span>/<span class="db11"><fmt:formatNumber type="number" maxFractionDigits="3" value="${statusCount.gCnt + statusCount.hCnt}" /></span></strong>
                         <span class="data-unit">반품완료/반품처리</span>

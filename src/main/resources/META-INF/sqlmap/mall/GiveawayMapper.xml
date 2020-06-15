@@ -70,8 +70,8 @@
         <if test="giveaway_use_yn != null"> <![CDATA[AND A.giveaway_use_yn= #{giveaway_use_yn} ]]></if>
         <if test="giveaway_sale_yn != null"> <![CDATA[AND A.giveaway_sale_yn= #{giveaway_sale_yn} ]]></if>
         <if test="giveaway_name != null"> <![CDATA[AND A.giveaway_name like CONCAT('%',#{giveaway_name},'%') ]]></if>
-        <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
-        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
+        <!-- <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
+        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if> -->
         <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
         <if test="orderByKey == null"> order by giveaway_id DESC </if>
         LIMIT ${rowStart-1}, ${staticRowEnd}
@@ -87,8 +87,8 @@
         <if test="giveaway_use_yn != null"> <![CDATA[AND A.giveaway_use_yn= #{giveaway_use_yn} ]]></if>
         <if test="giveaway_sale_yn != null"> <![CDATA[AND A.giveaway_sale_yn= #{giveaway_sale_yn} ]]></if>
         <if test="giveaway_name != null"> <![CDATA[AND A.giveaway_name like CONCAT('%',#{giveaway_name},'%') ]]></if>
-        <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
-        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
+        <!-- <if test="parti_rate == null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
+        <if test="parti_rate != null"> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if> -->
     </select>
     <select id="getUserGiveawayPlayList" resultType="java.util.HashMap">
         <![CDATA[
