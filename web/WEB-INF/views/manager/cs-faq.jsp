@@ -199,6 +199,7 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <form name="boardUpdateForm" id="boardUpdateForm" action="<c:url value="/Manager/boardSave"/>" method="POST">
+            	<input type="hidden" name="bgno" value="<c:out value="${param.bgno}"/>">
                 <input type="hidden" name="brdno" >
                 <input type="hidden" name="reno" >
                 <div class="modal-body clearfix">
@@ -252,12 +253,12 @@
                                     <%--                                            <c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>--%>
                                     <%--                                    </c:forEach>--%>
 
-                                    <input type="file" name="uploadfile" multiple="" />
+                                    <input type="file" name="uploadfile"/>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="submit" class="btn-red">수정하기</button>
+                    <button type="button" class="btn-red" id="faqUpdateBtn">수정하기</button>
                 </div>
             </form>
         </div>
@@ -317,7 +318,6 @@
         function faqSelect (bgno,brdno){
             $('.modal1').attr("style","display:block");
             var formData = {"bgno":bgno,"brdno":brdno};
-            console.log(formData)
             jQuery.ajax({
                 type: 'POST',
                 url: '/Manager/BoardSelect'+'?bgno='+bgno+'&brdno='+brdno,
@@ -328,7 +328,9 @@
                     $.each(data.boardInfo, function (key, value) {
                         $('#boardUpdateForm input:hidden[name='+key+']').val(value);
                         $('#boardUpdateForm input:text[name='+key+']').val(value);
-                        $('#boardUpdateForm input:radio[name='+key+'][value='+value+']').prop('checked',true);
+                        if(key == 'question_type'){
+                        	$('#boardUpdateForm input:radio[name='+key+'][value='+value+']').prop('checked',true);
+                        }
                         if(key =="rememo"){
                             $('#summernoteBoard').summernote('code', value);
                         }

@@ -127,7 +127,7 @@
             (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
             (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
             (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name
-        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 and A.product_cd is not null
+        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -210,10 +210,10 @@
     </select>
     <select id="getTodaySummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT IFNULL(COUNT(*),0) orderCnt,
-				IFNULL(COUNT(*),0) - IFNULL(SUM(A.payment_status IN ('C','G')),0) payCnt,
+				IFNULL(COUNT(*),0) - IFNULL(SUM(A.payment_status IN ('C','G','M')),0) payCnt,
 				IFNULL(SUM(A.payment_status ='C'),0) refundCnt,
 				SUM(IFNULL(payment,0)) orderTotal, 
-				SUM(IFNULL(A.payment,0))-SUM(IFNULL(IF(A.payment_status IN ('C','G'),A.payment,0),0)) payTotal, 
+				SUM(IFNULL(A.payment,0))-SUM(IFNULL(IF(A.payment_status IN ('C','G','M'),A.payment,0),0)) payTotal, 
 				SUM(IFNULL(IF(A.payment_status IN ('C','G'),A.payment,0),0)) refundTotal
 		FROM payment A
 		WHERE DATE_FORMAT(A.reg_date,'%Y%m%d') = DATE_FORMAT(SYSDATE(),'%Y%m%d')

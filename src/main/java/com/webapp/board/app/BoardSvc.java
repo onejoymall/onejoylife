@@ -55,9 +55,11 @@ public class BoardSvc {
                 sqlSession.insert("deleteBoard8File", fparam);
             }
             
-            for (FileVO f : filelist) {
-                f.setParentPK(param.getBrdno());
-                sqlSession.insert("insertBoard8File", f);
+            if (filelist != null) {
+	            for (FileVO f : filelist) {
+	                f.setParentPK(param.getBrdno());
+	                sqlSession.insert("insertBoard8File", f);
+	            }
             }
             txManager.commit(status);
         } catch (TransactionException ex) {

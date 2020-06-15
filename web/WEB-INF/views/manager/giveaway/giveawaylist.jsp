@@ -121,8 +121,8 @@
                     <td name="detail">경품코드</td>
                     <td name="detail" colspan="2">경품명</td>
 <%--                    <td>카테고리</td>--%>
-                    <td>당첨포인트</td>
-                    <td>응모포인트</td>
+					<td>응모포인트</td>
+                    <td>당첨포인트</td>                    
 <%--                    <td>재고</td>--%>
                     <td>배송</td>
 <%--                    <td>구매수량</td>--%>
@@ -142,15 +142,16 @@
                             <td ><img src='${productList.file_1}' onerror="this.src='http://placehold.it/80x80'" height="80"></td>
                             <td style="border-left: none!important;">${productList.giveaway_name}</td>
 <%--                            <td>${productList.product_ct}</td>--%>
+							<td>${productList.sum_play_point}</td>
                             <td>${productList.giveaway_play_winner_point}</td>
-                            <td>${productList.sum_play_point}</td>
 <%--                            <td></td>--%>
                             <td>${productList.giveaway_delivery_type_name}</td>
 <%--                            <td></td>--%>
-                            <td>${productList.giveaway_sale_yn_name}</td>
+                            <td><c:if test="${productList.parti_rate < 100}">응모중</c:if>
+                            	<c:if test="${productList.parti_rate >= 100}">추첨완료</c:if></td>
                             <td>
                                 <button type="button" class="goods-list-btn" name="copy" onclick="giveawayCopy('${productList.giveaway_cd}')">복사 등록</button>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${productList.giveaway_cd}')" >상세보기</button>
+                                <c:if test="${productList.parti_rate < 100}"><button type="button" class="goods-list-btn" name="detail" onclick="defaultModalGiveaway('${productList.giveaway_cd}')" >상세보기</button></c:if>
                             </td>
                         </tr>
                     </c:forEach>
