@@ -1,20 +1,28 @@
 package com.webapp.manager.controller;
 
-import com.webapp.board.app.*;
-import com.webapp.board.common.FileUtil;
-import com.webapp.board.common.FileVO;
-import com.webapp.board.common.SearchVO;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardGroupVO;
+import com.webapp.board.app.BoardReplyVO;
+import com.webapp.board.app.BoardSvc;
+import com.webapp.board.app.BoardVO;
+import com.webapp.board.common.FileUtil;
+import com.webapp.board.common.FileVO;
+import com.webapp.board.common.SearchVO;
 @Controller
 public class MgBoardController {
     @Autowired
@@ -104,13 +112,17 @@ public class MgBoardController {
      * 글 저장.
      */
     @RequestMapping(value = "/Manager/boardSave")
-    public String boardSave(HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo) throws Exception{
+    public String boardSave(@RequestParam HashMap params, HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo) throws Exception{
         String[] fileno = request.getParameterValues("fileno");
         try{
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"board");
+            List<FileVO> filelist = null;
+            if(boardInfo.getUploadfile() != null) {
+            	filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"board");
+            }
 
             boardSvc.insertBoard(boardInfo, filelist, fileno);
+            boardSvc.insertBoardReply(boardReplyInfo);
             if(boardInfo.getBgtype()!=null){
                 if(boardInfo.getBgtype().equals("faq")){
                     if(boardInfo.getReno()!=null){

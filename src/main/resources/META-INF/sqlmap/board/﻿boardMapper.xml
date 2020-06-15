@@ -108,7 +108,8 @@
         UPDATE TBL_BOARD
            SET BRDTITLE=#{brdtitle}
              , BRDWRITER=#{brdwriter}
-             , BRDMEMO=#{brdmemo} 
+             , BRDMEMO=#{brdmemo}
+             , question_type = #{question_type} 
          WHERE BRDDELETEFLAG='N'
            AND BRDNO=#{brdno}
     </update> 

@@ -291,6 +291,9 @@ public class BoardVO extends SearchVO{
 	}
 
 	public String[] getAnswer_yn_arr() {
+		if(answer_yn == null) {
+			return null;
+		}
 		return answer_yn.split(",");
 	}
 

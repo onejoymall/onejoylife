@@ -305,7 +305,7 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                mgSystemDAO.insertSystemDeleteHistory(params);
+//                mgSystemDAO.insertSystemDeleteHistory(params);
                 mgCommonDAO.ListDelete(mgCommonVO);
                 params.put("email",session.getAttribute("email"));
                 params.put("user_ip",req.getRemoteAddr());

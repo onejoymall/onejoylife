@@ -3561,3 +3561,7 @@ $('#orderDetailGuestBtn').on("click",function () {
         }
     });
 });
+
+$("#faqUpdateBtn").click(function(){
+	location.href="/Manager/boardSave?"+$('form[name=boardUpdateForm]').serialize();
+});
