@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.webapp.manager.vo.MgSystemVO;
-import com.webapp.manager.vo.StoreVO;
+import com.webapp.manager.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.webapp.mall.vo.CartPaymentVO;
-import com.webapp.manager.vo.MgDeliveryVO;
-import com.webapp.manager.vo.MgProductCodeVO;
 
 @Repository
 public class MgSystemDAO {
@@ -35,6 +32,9 @@ public class MgSystemDAO {
     }
     public void insertSystemHistory(Map<String,Object> params) throws SQLException {
         sql.insert("mall.MgSystemMapper.insertSystemHistory",params);
+    }
+    public void insertSystemDeleteHistory(MgCommonVO mgCommonVO) throws SQLException {
+        sql.insert("mall.MgSystemMapper.insertSystemDeleteHistory",mgCommonVO);
     }
     public Map<String,Object> getSystemDelivery(MgDeliveryVO MgDeliveryVO) throws SQLException {
         Map<String,Object> getSystemDelivery=sql.selectOne("mall.MgSystemMapper.getSystemDelivery",MgDeliveryVO);
