@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
@@ -306,6 +305,7 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+                mgSystemDAO.insertSystemDeleteHistory(params);
                 mgCommonDAO.ListDelete(mgCommonVO);
                 params.put("email",session.getAttribute("email"));
                 params.put("user_ip",req.getRemoteAddr());
@@ -315,7 +315,6 @@ public class ManagerRestapiController {
                 }
                 params.put("work_history","관리자 > 선택삭제 > 관련테이블 : "+mgCommonVO.getTable_name() + "  삭제키 : "+ getChkArrValue);
                 mgSystemDAO.insertSystemHistory(params);
-//                mgSystemDAO.insertSystemDeleteHistory(params);
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
@@ -1808,8 +1807,6 @@ public class ManagerRestapiController {
 
             boardSvc.updateBoard8Read(brdno);
             BoardVO boardInfo = boardSvc.selectBoardOne(brdno);
-            List<?> listview = boardSvc.selectBoard8FileList(brdno);
-            List<?> replylist = boardSvc.selectBoard8ReplyList(brdno);
 
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardInfo.getBgno());
             if (bgInfo == null) {
@@ -1821,8 +1818,6 @@ public class ManagerRestapiController {
             }else{
                 resultMap.put("bgInfo",bgInfo);
                 resultMap.put("boardInfo",boardInfo);
-                resultMap.put("listview",listview);
-                resultMap.put("replylist",replylist);
             }
 
         }catch (Exception e){
