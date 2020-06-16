@@ -106,7 +106,7 @@
                                             </p>
                                         </div>
                                         <div class="faq-content-body-c">
-                                            <p>답변이 충분하지 않으셨다면 1:1 문의를 이용해주세요. <span><a href="help-4.html">1:1 문의하기</a></span></p>
+                                            <p>답변이 충분하지 않으셨다면 1:1 문의를 이용해주세요. <span><a href="/Board/boardList?bgno=15">1:1 문의하기</a></span></p>
                                         </div>
                                     </div>
                                 </div>
