@@ -52,6 +52,8 @@
 }
 .error-on{
     display: block;
+    font-size: 12px;
+    color: #DA394D;
 }
 .text-success  {
     color: #28a745!important;

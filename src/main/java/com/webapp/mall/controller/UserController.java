@@ -158,13 +158,22 @@ public class UserController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return redirectUrl;
+        if(device.isMobile()){
+            redirectUrl = "mobile/for-2";
+            return redirectUrl;
+        } else{
+            return redirectUrl;
+        }
     }
     @RequestMapping(value = "/sign/changePasswordDone")
     public String changePasswordDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+        Device device = DeviceUtils.getCurrentDevice(request);
         model.addAttribute("style", "for-3");
-        return "mall/changePasswordDone";
+        if(device.isMobile()){
+            return "mobile/for-3";
+        } else{
+            return "mall/changePasswordDone";
+        }
     }
     @RequestMapping(value = "/sign/signUpDone")
     public String signUpDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
