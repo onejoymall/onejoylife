@@ -23,16 +23,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
         	.antMatchers("/resources/**")
             .antMatchers("/assets/**")
-                .antMatchers("/Board/**")
-//        	.antMatchers("/**/introView.do")
+//            .antMatchers("/Board/**")
+//        	  .antMatchers("/**/introView.do")
 //            .antMatchers("/api/pay/multilanglist")
 //            .antMatchers("/api/assist/order")
 //            .antMatchers("/api/assist/result")
-            .antMatchers("/login")
-            .antMatchers("/loginProc")
-            .antMatchers("/signup")
-            .antMatchers("/index")
-            .antMatchers("/authemail")
+//            .antMatchers("/login")
+//            .antMatchers("/loginProc")
+//            .antMatchers("/signup")
+//            .antMatchers("/index")
+//            .antMatchers("/authemail")
         	.antMatchers("/");
     }
 

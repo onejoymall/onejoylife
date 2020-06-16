@@ -3565,3 +3565,74 @@ $('#orderDetailGuestBtn').on("click",function () {
 $("#faqUpdateBtn").click(function(){
 	location.href="/Manager/boardSave?"+$('form[name=boardUpdateForm]').serialize();
 });
+
+//경품배송입력폼 다음단계
+$('#formSubmitGiveaway').on("click",function () {
+    var formData = $('#defaultFormGiveaway').serialize();
+    formData += "&giveaway_cd=" + $("input[name=giveaway_cd1]").val() + "&giveaway_play_cd=" + $("input[name=giveaway_play_cd1]").val();
+    var alertType;
+    var showText;
+
+    jQuery.ajax({
+        type: $('#defaultFormGiveaway').attr('method'),
+        url: postUrl,
+        // enctype: 'multipart/form-data',
+        data: formData,
+        success: function (data) {
+            // console.log(data.validateError)
+            if (data.validateError) {
+                $('.validateError').empty();
+                console.log(data);
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                if (data.success) {
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                        	location.href=data.redirectUrl;
+                        }
+                    });
+                } else{
+                	if(data.redirectUrl){
+                		location.href=data.redirectUrl;	
+                	}else{
+                		$.toast({
+                            text: "ERROR",
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error',
+                        });
+                	}
+                }
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});

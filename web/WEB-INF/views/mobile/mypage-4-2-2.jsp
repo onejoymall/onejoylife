@@ -30,11 +30,7 @@
             </ul>
             <ul class="options">
                 <li>상품 공급가</li>
-                <li><fmt:formatNumber value="${detail.giveaway_user_payment}" groupingUsed="true" /> <span>원</span></li>
-            </ul>
-            <ul class="options">
-                <li>최대응모포인트</li>
-                <li><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /> <span>P</span></li>
+                <li><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /> <span>원</span></li>
             </ul>
             <%--<hr class="grey my-1">
             <ul class="options mb-1">

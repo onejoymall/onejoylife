@@ -16,11 +16,11 @@
 
 
         <main class="clearfix">
-            <form name="defaultForm" id="defaultForm" method="POST">
-                <input name="product_cd"  type="hidden" value="<c:out value="${param.product_cd}"/>">
-                <input name="giveaway_cd"  type="hidden" value="<c:out value="${param.giveaway_cd}"/>">
-                <input name="giveaway_play_cd"  type="hidden" value="<c:out value="${param.giveaway_play_cd}"/>">
-                <input name="order_no"  type="hidden" value="<c:out value="${order_no}"/>">
+            <form name="defaultFormGiveaway" id="defaultFormGiveaway" method="POST">
+            	<input name="product_cd"  type="hidden" value="">
+                <input name="giveaway_cd1"  type="hidden" value="${giveaway_cd}">
+                <input name="giveaway_play_cd1"  type="hidden" value="${giveaway_play_cd}">
+                <input name="order_no"  type="hidden" value="${order_no}">
                 <h2 class="head-h2">정보입력</h2>
                 <div class="in-box">
                     <div class="sec1">
@@ -200,7 +200,7 @@
                         <p class="sec3-in2">※ 소득세법에 의해 경품금액 5만원 이상 경우 제세공과금 (소득세 및 주민세) 22%와 부가세10%는 고객(본인) 부담 입니다.</p>
                     </div>
                     <div class="sec4">
-                        <a href="#" id="formSubmit">다음단계</a>
+                        <a href="#" id="formSubmitGiveaway">다음단계</a>
                     </div>
                 </div>
             </form>
@@ -227,6 +227,5 @@
         var phoneC = $("#delivery_user_tel_c").val();
         $("#delivery_user_tel").val(phoneA+"-"+phoneB+"-"+phoneC);
     })
-
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

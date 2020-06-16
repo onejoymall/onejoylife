@@ -21,8 +21,7 @@
                             <colgroup>
                                 <col style="width: 150px;">
                                 <col style="width: 260px;">
-                                <col style="width: 100px;">
-                                <col style="width: 100px;">
+                                <col style="width: 200px;">
                                 <col style="width: 100px;">
                                 <col style="width: 100px;">
                             </colgroup>
@@ -31,7 +30,6 @@
                                 <td></td>
                                 <td>상품정보</td>
                                 <td>상품 공급가</td>
-                                <td>최대응모포인트</td>
                                 <td>수량</td>
                                 <td>당첨번호</td>
                             </tr>
@@ -45,8 +43,7 @@
                                     <p>${detail.giveaway_model_name}</p>
 <%--                                    <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                 </td>
-                                <td><span><fmt:formatNumber value="${detail.giveaway_user_payment}" groupingUsed="true" /></span>원</td>
-                                <td><span><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /> P</span></td>
+                                <td><span><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /></span>원</td>
                                 <td><span>1</span></td>
                                 <td><span>${delivery.giveaway_play_cd}</span></td>
                             </tr>
