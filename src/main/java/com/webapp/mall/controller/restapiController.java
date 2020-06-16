@@ -449,7 +449,7 @@ public class restapiController {
 			if (passwordCf == null || passwordCf.isEmpty()) {
 				error.put("PasswordCf", messageSource.getMessage("error.required", "ko"));
 			}
-			if (password.equals(passwordCf) && !email.isEmpty()) {
+			if (password.equals(passwordCf) && !email.isEmpty() && !passwordCf.isEmpty()) {
 				params.put("password", passwordEncoder.encode((String) params.get("password")));
 				userDAO.updatePasswordChange(params);
 				resultMap.put("url", "/sign/changePasswordDone");
@@ -457,6 +457,7 @@ public class restapiController {
 				error.put("PasswordCf", messageSource.getMessage("error.inpPwdCfm", "ko"));
 			}
 			resultMap.put("validateError", error);
+
 		} catch (Exception e) {
 			resultMap.put("status", "fail");
 			resultMap.put("e", e);
