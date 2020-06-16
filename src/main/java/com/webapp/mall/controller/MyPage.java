@@ -83,7 +83,6 @@ public class MyPage {
     //MyPage 해더
     @RequestMapping(value="/MyPage/RightHeader")
     public String RightHeader(Model model, HashMap params, HttpSession session, HttpServletRequest request) throws SQLException {
-
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
@@ -709,18 +708,22 @@ public class MyPage {
     @RequestMapping(value="/MyPage/GiveawayWinningList")
     public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session, HttpServletRequest request) throws SQLException {
 
-        params.put("email",session.getAttribute("email"));
-        Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-        params.put("giveaway_play_user_id",userInfo.get("usr_id"));
-        searchVO.setDisplayRowCount(5);
-        searchVO.setStaticRowEnd(5);
-        searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
-        params.put("rowStart",searchVO.getRowStart());
-        params.put("staticRowEnd",searchVO.getStaticRowEnd());
-
-        List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
-        model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
-        model.addAttribute("list", giveawayList);
+    	try {
+	        params.put("email",session.getAttribute("email"));
+	        Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+	        params.put("giveaway_play_user_id",userInfo.get("usr_id"));
+	        searchVO.setDisplayRowCount(5);
+	        searchVO.setStaticRowEnd(5);
+	        searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
+	        params.put("rowStart",searchVO.getRowStart());
+	        params.put("staticRowEnd",searchVO.getStaticRowEnd());
+	
+	        List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
+	        model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
+	        model.addAttribute("list", giveawayList);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+		}
         model.addAttribute("searchVO", searchVO);
         model.addAttribute("leftNavOrder", 11);
         model.addAttribute("style", "mypage-11");
@@ -734,7 +737,7 @@ public class MyPage {
     }
     //경품 참여 정보입력
     @RequestMapping(value="/MyPage/giveawayform")
-    public String giveawayform(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
+    public String giveawayform(Model model, @RequestParam HashMap params, HttpServletRequest request,HttpSession session) throws Exception {
         params.put("email",session.getAttribute("email"));
         Map<String, Object> userInfo = userDAO.getLoginUserList(params);
         try {
@@ -760,6 +763,8 @@ public class MyPage {
                 model.addAttribute("delivery",delivery );
                 model.addAttribute("latestDelivery",latestDelivery );
                 model.addAttribute("detail",detail );
+                model.addAttribute("giveaway_cd",params.get("giveaway_cd") );
+                model.addAttribute("giveaway_play_cd",params.get("giveaway_play_cd") );
             }
         }catch (Exception e){
             e.printStackTrace();

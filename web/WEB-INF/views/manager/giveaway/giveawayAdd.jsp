@@ -10,7 +10,7 @@
 <%--                <button type="button" name="goods-add-bulk" class="btn-red"><i class="exel-ic"></i>대량 등록</button>--%>
             </div>
             <div class="main-hd-btn-wrap left">
-                <button type="button" name="back" class="btn-default" onclick="location.href='/Manager/Product'"><i class="arrow-left-ic"></i>리스트로 돌아가기</button>
+                <button type="button" name="back" class="btn-default" onclick="location.href='/Manager/Giveaway'"><i class="arrow-left-ic"></i>리스트로 돌아가기</button>
             </div>
         </div>
         <div class="goods-detail-wrap">

@@ -39,14 +39,14 @@
                                 <th>등급</th>
                                 <td>
                                     <select name="level">
-                                        <option value="전체">전체</option>
-                                        <option value="1">사용자</option>
-                                        <option value="9">매니저</option>
-                                        <option value="10">관리자</option>
+                                        <option value="" <c:if test="${param.level == ''}">selected</c:if>>전체</option>
+                                        <option value="1" <c:if test="${param.level == '1'}">selected</c:if>>사용자</option>
+                                        <option value="9" <c:if test="${param.level == '9'}">selected</c:if>>매니저</option>
+                                        <option value="10" <c:if test="${param.level == '10'}">selected</c:if>>관리자</option>
                                     </select>
                                 </td>
 
-                                <th>성별</th>
+                                <!-- <th>성별</th>
                                 <td class="age-margin">
                                     <input type="radio" name="sex" id="age-all" checked="">
                                     <label for="age-all">전체</label>
@@ -54,7 +54,7 @@
                                     <label for="age-wom">여자</label>
                                     <input type="radio" name="asex" id="age-man" value="남자">
                                     <label for="age-man">남자</label>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

@@ -9,11 +9,11 @@
 </section>
 
 <section class="wrap">
-    <form name="defaultForm" id="defaultForm" method="POST">
-    <input name="product_cd"  type="hidden" value="<c:out value="${param.product_cd}"/>">
-    <input name="giveaway_cd"  type="hidden" value="<c:out value="${param.giveaway_cd}"/>">
-    <input name="giveaway_play_cd"  type="hidden" value="<c:out value="${param.giveaway_play_cd}"/>">
-    <input name="order_no"  type="hidden" value="<c:out value="${order_no}"/>">
+    <form name="defaultFormGiveaway" id="defaultFormGiveaway" method="POST">
+    	<input name="product_cd"  type="hidden" value="">
+	    <input name="giveaway_cd1"  type="hidden" value="${giveaway_cd}">
+	    <input name="giveaway_play_cd1"  type="hidden" value="${giveaway_play_cd}">
+	    <input name="order_no"  type="hidden" value="${order_no}">
     <h2 class="pb-1">주문자 정보</h2>
     <hr>
     <p class="text-md mt-2 mb-05">주문하시는 분</p>
@@ -139,7 +139,7 @@
 </section>
 <div class="bottomBtns">
     <ul>
-       <li><a href="#" id="formSubmit" class="btn ">다음단계</a></li>
+       <li><a href="#" id="formSubmitGiveaway" class="btn ">다음단계</a></li>
     </ul>
 </div>
 
