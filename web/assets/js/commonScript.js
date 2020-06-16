@@ -821,7 +821,7 @@ $(document).on("click",".ra-num",function () {
     $(document).on("click",".cartPaymentOrder",function () {
         $('#defaultForm').attr("action","/product/productPaymentCart");
         if($(this).attr("data-id") =='allCheck'){
-        	$("#tr-ck1-1").trigger("click");
+        	if(!$("#tr-ck1-1").is(":checked")) $("#tr-ck1-1").trigger("click");
             $('input[name=chk]').prop("checked",true);
         }
         if($('input[name=chk]:checked').length <= 0){

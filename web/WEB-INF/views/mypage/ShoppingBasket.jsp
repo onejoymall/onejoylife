@@ -181,6 +181,14 @@ $(function(){
 		});
 		computePayment(checkIds);
 	})
+	$('input[name=chk], #tr-ck1-1').prop("checked",true);
+	var checkIds=[];
+	$('input[type=checkbox][name=chk]').each(function (index) {
+		if($(this).is(":checked")){
+			checkIds.push($(this).val());
+		}
+	});
+	computePayment(checkIds);
 });
 	
 function computePayment(ids){
