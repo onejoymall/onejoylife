@@ -99,6 +99,7 @@ public class MainController {
                 giveawayVO.setDisplayRowCount(3);
                 giveawayVO.setStaticRowEnd(3);
             }
+            giveawayVO.setParti_rate(1);
             giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());

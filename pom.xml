@@ -34,6 +34,12 @@
         </repository>
     </repositories>
     <dependencies>
+    <!-- mysql -->
+    	<dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.5</version>
+        </dependency>
     	<!-- 썸네일추출  -->
     	<dependency>
             <groupId>org.jcodec</groupId>

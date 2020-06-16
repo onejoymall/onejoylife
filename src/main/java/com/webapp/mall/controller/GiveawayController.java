@@ -44,6 +44,9 @@ public class GiveawayController {
     @RequestMapping(value="/giveaway")
     public String giveawayList(Model model, HttpSession session, HashMap params, GiveawayVO giveawayVO,HttpServletRequest request) {
         try{
+        	if(giveawayVO.getParti_rate() == null) {
+        		giveawayVO.setParti_rate(1);
+        	}
             //사용자 아이디 확인 후 전달
 //            params.put("email",session.getAttribute("email"));
 //            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
