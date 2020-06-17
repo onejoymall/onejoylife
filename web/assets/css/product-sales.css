@@ -12,7 +12,7 @@ main{
     min-width: 1400px;
     font-size:12px;
     font-family: '맑은 고딕', 'Malgun Gothic', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
-    word-break: keep-all;
+    word-break: break-all;
 }
 .main-content {
     width: 100%;
