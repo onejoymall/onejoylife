@@ -8,7 +8,7 @@ body{
     font-size:14px;
     font-family: 'Noto Sans KR';
     background-color:#fff;
-    word-break: keep-all;
+    word-break: break-all;
 }
 .main-section{
     margin:0 auto;
