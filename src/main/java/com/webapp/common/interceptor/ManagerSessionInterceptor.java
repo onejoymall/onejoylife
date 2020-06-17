@@ -15,8 +15,8 @@ public class ManagerSessionInterceptor extends HandlerInterceptorAdapter {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-	    logger.error("===========================          START         ===========================");
-	    logger.error(" Request URI \t:  " + request.getRequestURI());
+	    logger.debug("===========================          START         ===========================");
+	    logger.debug(" Request URI \t:  " + request.getRequestURI());
 	   //RestApi 사용시 (관리자단에 token 인증시 사용)
 //	    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -40,6 +40,6 @@ public class ManagerSessionInterceptor extends HandlerInterceptorAdapter {
 	 
 	 @Override
 	 public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-	    logger.error("===========================          END           ===========================");
+	    logger.debug("===========================          END           ===========================");
 	 }
 }

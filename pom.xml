@@ -65,18 +65,18 @@
         </dependency>
 
         <!-- Spring -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework-version}</version>
             <exclusions>
-                <!-- Exclude Commons Logging in favor of SLF4j -->
+                Exclude Commons Logging in favor of SLF4j
                 <exclusion>
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -126,13 +126,37 @@
             <version>${org.aspectj-version}</version>
         </dependency>
 
+		<!-- LogBack dependencies --> 
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<dependency>                                    
+			<groupId>org.slf4j</groupId>                
+			<artifactId>jcl-over-slf4j</artifactId>     
+			<version>1.7.25</version>  
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
+		<dependency>
+		    <groupId>com.googlecode.log4jdbc</groupId>
+		    <artifactId>log4jdbc</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		<!-- log4jdbc-log4j2 -->
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+		    <version>1.16</version>
+		</dependency>
+				
         <!-- Logging -->
         <dependency>
             <groupId>org.lazyluke</groupId>
             <artifactId>log4jdbc-remix</artifactId>
             <version>0.2.7</version>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j-version}</version>
@@ -172,7 +196,7 @@
                 </exclusion>
             </exclusions>
             <scope>runtime</scope>
-        </dependency>
+        </dependency> -->
         <!-- @Inject -->
         <dependency>
             <groupId>javax.inject</groupId>

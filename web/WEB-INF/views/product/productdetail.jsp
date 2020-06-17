@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
-<style>
+<!-- <style>
 .npay_storebtn_bx{
 	zoom:2;
 }
-</style>
+</style> -->
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
