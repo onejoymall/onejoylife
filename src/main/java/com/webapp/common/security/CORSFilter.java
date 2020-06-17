@@ -32,7 +32,7 @@ public class CORSFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        logger.error("CORS filter request is " + req.getRequestURL());
+        logger.debug("CORS filter request is " + req.getRequestURL());
 
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");

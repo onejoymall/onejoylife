@@ -11,22 +11,23 @@
    						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
    						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" >
      
-    <bean id="dataSourceSpied" class="org.apache.ibatis.datasource.pooled.PooledDataSource" >
-        <property name="driver" value="${jdbc.driver}"></property>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="${jdbc.driver}"></property>
         <property name="url" value="${jdbc.url}"></property>
         <property name="username" value="${jdbc.username}"></property> 
         <property name="password" value="${jdbc.password}"></property>
         
-        <property name="poolMaximumActiveConnections" value="20"/>
+        <!-- <property name="poolMaximumActiveConnections" value="20"/>
         <property name="poolMaximumIdleConnections" value="20"/>
         <property name="poolMaximumCheckoutTime" value="20000"/>
         <property name="poolPingEnabled" value="true"/>
         <property name="poolPingQuery" value="select 1"/>
         <property name="poolPingConnectionsNotUsedFor" value="43200"/>
-        <property name="poolTimeToWait" value="30000"/>
+        <property name="poolTimeToWait" value="30000"/> -->
     </bean>
     
-    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <!-- jdbc로그어댑터 -->
+    <!-- <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
         <constructor-arg ref="dataSourceSpied" />
         <property name="logFormatter">
             <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
@@ -34,7 +35,7 @@
                 <property name="sqlPrefix" value="SQL         :  "/>
             </bean>
         </property>
-    </bean>
+    </bean> -->
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
