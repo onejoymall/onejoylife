@@ -71,4 +71,8 @@ public class ProductDAO {
 	public void updateProductHistory(Map<String, Object> params) {
 		sql.insert("mall.ProductMapper.updateProductHistory", params);
 	}
+	public List<Map<String, Object>> getNaverProductList(HashMap params) {
+		List<Map<String, Object>> getNaverProductList = sql.selectList("mall.ProductMapper.getNaverProductList", params);
+		return getNaverProductList;
+	}
 }

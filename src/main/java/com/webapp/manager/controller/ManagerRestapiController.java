@@ -536,7 +536,7 @@ public class ManagerRestapiController {
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/giveaway/"+ft.format(new Date())+"/");
             //
-            String product_cd = "G"+numberGender.numberGen(7,2);
+            String product_cd = "G"+numberGender.numberGen(7,1);
             productVO.setGiveaway_cd(product_cd);
 
             if(productVO.getGiveaway_name().isEmpty()){
@@ -1032,7 +1032,7 @@ public class ManagerRestapiController {
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
             //
-            String product_cd = "P"+numberGender.numberGen(7,2);
+            String product_cd = "P"+numberGender.numberGen(7,1);
             productVO.setProduct_cd(product_cd);
 
 
@@ -1106,7 +1106,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-            String product_cd = "P"+numberGender.numberGen(7,2);
+            String product_cd = "P"+numberGender.numberGen(7,1);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -1127,7 +1127,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-            String giveaway_cd = "G"+numberGender.numberGen(7,2);
+            String giveaway_cd = "G"+numberGender.numberGen(7,1);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -1405,7 +1405,7 @@ public class ManagerRestapiController {
 
         try{
             if(mgBrandVO.getProduct_brand().isEmpty()) {
-                mgBrandVO.setProduct_brand("B"+numberGender.numberGen(7,2));
+                mgBrandVO.setProduct_brand("B"+numberGender.numberGen(7,1));
             }
             if(mgBrandVO.getProduct_brand_name().isEmpty()){
                 error.put(messageSource.getMessage("product_brand_name","ko"), messageSource.getMessage("error.required","ko"));
