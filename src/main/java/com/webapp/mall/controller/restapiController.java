@@ -433,29 +433,37 @@ public class restapiController {
 	// 패스워드 초기화 2
 
 	@RequestMapping(value = "/sign/changePasswordProc", method = RequestMethod.GET, produces = "application/json")
-
 	public HashMap<String, Object> changePasswordProc(@RequestParam HashMap params, HttpServletRequest request) {
 
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String email = (String) params.get("email");
 		String password = (String) params.get("password");
 		String passwordCf = (String) params.get("password_cf");
+		String basePassword = numberGender.numberGen(4, 2);
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
 
-			if (password == null || password.isEmpty()) {
-				error.put("Password", messageSource.getMessage("error.required", "ko"));
-			}
-			if (passwordCf == null || passwordCf.isEmpty()) {
-				error.put("PasswordCf", messageSource.getMessage("error.required", "ko"));
-			}
-			if (password.equals(passwordCf) && !email.isEmpty() && !passwordCf.isEmpty()) {
-				params.put("password", passwordEncoder.encode((String) params.get("password")));
-				userDAO.updatePasswordChange(params);
-				resultMap.put("url", "/sign/changePasswordDone");
-			} else {
-				error.put("PasswordCf", messageSource.getMessage("error.inpPwdCfm", "ko"));
-			}
+			if(password==null || password.isEmpty()){
+                error.put("Error", messageSource.getMessage("error.required","ko"));
+            }
+            if(passwordCf==null || passwordCf.isEmpty()){
+                error.put("Error", messageSource.getMessage("error.required","ko"));
+            }
+            if(!password.equals(passwordCf)){
+                error.put("Error", messageSource.getMessage("error.inpPwdCfm", "ko"));
+            }
+            if(email.isEmpty() || email==null){
+                error.put("Error", messageSource.getMessage("수신된 이메일을 다시 확인하세요", "ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                params.put("password", passwordEncoder.encode((String)params.get("password")));
+                params.put("password_change_code", basePassword);
+                userDAO.updatePasswordChange(params);
+                userDAO.updatePasswordChangeCode(params);
+                resultMap.put("url","/sign/changePasswordDone");
+            }
 			resultMap.put("validateError", error);
 
 		} catch (Exception e) {

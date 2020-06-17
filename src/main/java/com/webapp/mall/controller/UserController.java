@@ -28,8 +28,10 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,18 +145,26 @@ public class UserController {
 
     }
     @RequestMapping(value = "/sign/changePassword")
-    public String changePassword( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+    public String changePassword(ModelMap model, HttpServletResponse res, HttpServletRequest request, @RequestParam HashMap params)throws Exception{
         Device device = DeviceUtils.getCurrentDevice(request);
         String redirectUrl ="mall/changePassword";
+        PrintWriter out = res.getWriter();
+        res.setContentType("text/html; charset=UTF-8");
         try{
             String email = (String)params.get("email");
             String password_change_code = (String)params.get("password_change_code");
-//            Map<String,Object> userInfo = userDAO.getEmailAuthList(params);
+            Map<String,Object> userInfo = userDAO.getEmailAuthList(params);
+
             if(isEmpty(params)){
                 redirectUrl = "redirect:/sign/findUserInfo";
+            } else if(isEmpty(userInfo)){
+//                redirectUrl = "redirect:/";
+                out.println("<script>alert('유효하지 않은 페이지 입니다.'); location.href='/';</script>");
+                out.flush();
+            } else {
+                model.addAttribute("email",email);
+                model.addAttribute("style", "for-2");
             }
-            model.addAttribute("email",email);
-            model.addAttribute("style", "for-2");
         }catch (Exception e){
             e.printStackTrace();
         }
