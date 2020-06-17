@@ -1080,7 +1080,7 @@ public class ManagerRestapiController {
                 if(!isEmpty(filelist4)){
                     fileVO.setFileorder(4);
                     mgProductDAO.deleteProductFile(filelist4,fileVO);
-                    mgProductDAO.insertProductFile(filelist5,fileVO);
+                    mgProductDAO.insertProductFile(filelist4,fileVO);
                 }
                 if(!isEmpty(filelist5)){
                     fileVO.setFileorder(5);
