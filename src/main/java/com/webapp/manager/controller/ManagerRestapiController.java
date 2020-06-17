@@ -1134,6 +1134,7 @@ public class ManagerRestapiController {
                 //등록될 키는 다시 만들어준다
                 params.put("giveaway_cd",giveaway_cd);
                 mgGiveawayDAO.insertGiveawayCopy(params);
+                mgGiveawayDAO.insertGiveawayFileCopy(params);
                 resultMap.put("redirectUrl","/Manager/Giveaway");
             }
         }catch (Exception e){
