@@ -527,6 +527,10 @@
          from giveaway where giveaway_cd = #{request_giveaway_cd}
 
     </insert>
+    <insert id="insertGiveawayFileCopy" parameterType="java.util.Map">
+        insert into product_file (key_id,file_name,real_name,file_size,file_link,file_order)
+        select #{giveaway_cd},file_name,real_name,file_size,file_link,file_order from product_file where key_id =#{request_giveaway_cd}
+    </insert>
     <insert id="insertGiveawayPlay" parameterType="com.webapp.mall.vo.GiveawayVO">
 
        <![CDATA[
