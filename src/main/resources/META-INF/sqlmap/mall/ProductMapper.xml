@@ -925,4 +925,16 @@
 		ORDER BY reg_date DESC
 		LIMIT 1
     </update>
+    
+    <select id="getNaverProductList" parameterType="hashmap" resultType="hashmap">
+    	select A.*,
+    		(SELECT Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
+			(SELECT Z.pd_category_name FROM product_category Z WHERE Z.pd_category_id = SUBSTRING_INDEX(A.product_ct, '|', 1)) as product_category_name,
+			SUBSTRING_INDEX(A.product_ct, '|', 1) as product_category_id
+    	from product A
+    	where 1=1
+    	<foreach item="item" index="index" collection="itemIds" separator="," open="AND product_cd in (" close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

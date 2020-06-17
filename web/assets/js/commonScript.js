@@ -2340,7 +2340,7 @@ $(document).on("click",".ra-num",function () {
         });
     //상품 상세보기 시 기존 저장된 카테고리 출력
     function categorySplit(arrDataCt,arrDataNewPa,arrDataMbPa,arrDataSpPa){
-        console.log(arrDataCt);
+        console.log(arrDataCt,arrDataSpPa);
         var ctText ='';
         var newPaChecked="";
         var mbPaChecked="";
@@ -2348,7 +2348,7 @@ $(document).on("click",".ra-num",function () {
         var categoryData;
         arrDataNewPa = arrDataNewPa.split("|");
         arrDataMbPa = arrDataMbPa.split("|");
-        arrDataSpPa = arrDataSpPa.split("|");
+        arrDataSpPa = arrDataSpPa ? arrDataSpPa.split("|") : [];
 
         $.each(arrDataCt.split("|"),function (key,value) {
             categoryData = commonAjaxListCall("POST","/Manager/viewCategoryDetail",{"pd_category_id":value});

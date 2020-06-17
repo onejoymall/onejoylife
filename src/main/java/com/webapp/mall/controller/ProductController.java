@@ -292,8 +292,10 @@ public class ProductController {
             //옵션
             params.put("product_option_style",list.get("product_option_style"));
             params.put("product_option_input",list.get("product_option_input"));
-            String option = getOption(params);
-            model.addAttribute("option",option);
+            if(list.get("product_option_yn") != null && list.get("product_option_yn").equals("Y")) {
+	            String option = getOption(params);
+	            model.addAttribute("option",option);
+            }
             //리뷰
 //            model.addAllAttributes("reviews",reviewDAO.get)
             //서비스안내
@@ -362,7 +364,11 @@ public class ProductController {
             
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
-            model.addAttribute("scoreAvg", Arrays.stream(scoreArr).average().getAsDouble());            
+            if(isEmpty(list)) {
+            	model.addAttribute("scoreAvg", 0.0);
+            }else {
+            	model.addAttribute("scoreAvg", Arrays.stream(scoreArr).average().getAsDouble());
+            }
     	}catch (Exception e){
     		e.printStackTrace();
     	}
@@ -690,58 +696,55 @@ public class ProductController {
                         "<div class=\"goods-point-row\">\n" +
                         "   <div class=\"point-title\">&nbsp;</div>\n" +
                         "</div>";
-            }
-            for(int z=0;z < splitArray.length;z++){
+                for(int z=0;z < splitArray.length;z++){
 
-                String[] splitNextArray =splitArray[z]
-                        .split("\\{");
-                String[] splitThirdArray = splitNextArray[1]
-                        .replaceAll("\\}", "")
-                        .split("\\|");
-                if(splitStyleArray[z].equals("P") || splitStyleArray[z].isEmpty()){
-                    outText += "" +
-                            "<select name=\"select_option_value\" class=\"option-box width-100 my-1\">"
-                            + "<option selected>옵션 선택</option>";
-                    //옵션 스타일에 따라 다르게
-                    for (int i = 0; i < splitThirdArray.length; i++) {
+                    String[] splitNextArray =splitArray[z]
+                            .split("\\{");
+                    String[] splitThirdArray = splitNextArray[1]
+                            .replaceAll("\\}", "")
+                            .split("\\|");
+                    if(splitStyleArray[z].equals("P") || splitStyleArray[z].isEmpty()){
                         outText += "" +
-                                "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";
-                    }
-                    outText += "" +
-                            "</select>";
-                }
-                if(splitStyleArray[z].equals("B")){
-                    outText += "" +
-                            "<div class=\"option-box2 mb-1\">" +
-                            "<div class=\"point-title text-gray\">" + splitNextArray[0] + " 선택 </div>\n" +
-                            "<div class=\"optionBtn-wrap\">\n";
-
-                    for (int i = 0; i < splitThirdArray.length; i++) {
-                        outText += ""  +
-                                "   <button type=\"button\" class=\"optionBtn\" name=\"btnOption\">"+splitThirdArray[i]+"</button>";
-                    }
-                    outText += "" +
-                                "</div>\n" +
-                            " </div>";
-                }
-                if(splitStyleArray[z].equals("R")){
-                    outText += "" +
-                            "<div class=\"option-box2 mb-1\">" +
-                            " <div class=\"point-title text-gray\">" +
-                            ""+splitNextArray[0]+" 선택 </div>"
-                            + "<div class=\"optionBtn-wrap\">\n";
-
-                    for (int i = 0; i < splitThirdArray.length; i++) {
+                                "<select name=\"select_option_value\" class=\"option-box width-100 my-1\">"
+                                + "<option selected>옵션 선택</option>";
+                        //옵션 스타일에 따라 다르게
+                        for (int i = 0; i < splitThirdArray.length; i++) {
+                            outText += "" +
+                                    "   <option value=\""+splitThirdArray[i]+"\">"+splitThirdArray[i]+"</option>\n";
+                        }
                         outText += "" +
-                            "<input class=\"optionRd\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
+                                "</select>";
                     }
-                    outText += "" +
-                                "</div></div>\n" ;
+                    if(splitStyleArray[z].equals("B")){
+                        outText += "" +
+                                "<div class=\"option-box2 mb-1\">" +
+                                "<div class=\"point-title text-gray\">" + splitNextArray[0] + " 선택 </div>\n" +
+                                "<div class=\"optionBtn-wrap\">\n";
+
+                        for (int i = 0; i < splitThirdArray.length; i++) {
+                            outText += ""  +
+                                    "   <button type=\"button\" class=\"optionBtn\" name=\"btnOption\">"+splitThirdArray[i]+"</button>";
+                        }
+                        outText += "" +
+                                    "</div>\n" +
+                                " </div>";
+                    }
+                    if(splitStyleArray[z].equals("R")){
+                        outText += "" +
+                                "<div class=\"option-box2 mb-1\">" +
+                                " <div class=\"point-title text-gray\">" +
+                                ""+splitNextArray[0]+" 선택 </div>"
+                                + "<div class=\"optionBtn-wrap\">\n";
+
+                        for (int i = 0; i < splitThirdArray.length; i++) {
+                            outText += "" +
+                                "<input class=\"optionRd\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
+                        }
+                        outText += "" +
+                                    "</div></div>\n" ;
+                    }
                 }
             }
-
-
-
         }catch (Exception e){
             e.printStackTrace();
         }

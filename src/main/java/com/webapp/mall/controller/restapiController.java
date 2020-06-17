@@ -3,6 +3,7 @@ package com.webapp.mall.controller;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -17,7 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,7 +169,7 @@ public class restapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                String basePassword = numberGender.numberGen(4,2);
+                String basePassword = numberGender.numberGen(4,1);
                 //중복이 아니면 메일전송
                 mailSender.sendSimpleMessage(userVO.getEmail(), subject, memo+" : "+basePassword);
                 //메일이 정상 적으로 전송되면 회원 이메일과 인증코드를 저장하고 상태를 변경한다.
@@ -362,7 +365,7 @@ public class restapiController {
 		String phone = (String) params.get("phone");
 		String subject = messageSource.getMessage("sendMail.passwordChangeTitle", "ko");//
 		memo = messageSource.getMessage("sendMail.passwordChangeContent", "ko");//
-		String basePassword = numberGender.numberGen(4, 2);
+		String basePassword = numberGender.numberGen(4, 1);
 		Object siteUrl = request.getRequestURL().toString().replace(request.getRequestURI(), "");
 		try {
 			email = (String) params.get("email");
@@ -1365,7 +1368,7 @@ public class restapiController {
 				params.put("delivery_user_phone", phone);
 				params.put("order_user_phone", phone);
 				params.put("delivery_user_tel", tel);
-				params.put("order_no", "PD-MYPAGE-" + numberGender.numberGen(6, 2));
+				params.put("order_no", "PD-MYPAGE-" + numberGender.numberGen(6, 1));
 				params.put("order_user_name", params.get("delivery_user_name"));
 				params.put("order_user_email", session.getAttribute("email"));
 				deliveryDAO.insertDeliveryAddress(params);
@@ -1733,4 +1736,56 @@ public class restapiController {
     	}
     	return orderKey;
     }
+	
+	// 네이버페이 상품정보 업데이트 XML
+		@RequestMapping(value = "/api/naverPayProductXML", produces = "application/json")
+	    public void naverPayProductXML(@RequestParam HashMap params, @RequestParam(value = "ITEM_ID", required = false) String[] itemIds, HttpServletRequest request,HttpServletResponse response, HttpSession session,QnaVO qnaVO) throws ServletException, IOException{
+			response.setContentType("application/xml;charset=UTF-8");
+			Writer writer = response.getWriter();
+			writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+			writer.write("<response>\r\n");
+			
+			params.put("itemIds", itemIds);
+			List<Map<String,Object>> productList = productDAO.getNaverProductList(params);
+			for(Map<String,Object> product:productList) {
+				writer.write(String.format("<item id=\"%s\">\r\n", product.get("product_cd")));
+				writer.write(String.format("<name><![CDATA[%s]]></name>\r\n", product.get("product_name")));
+				writer.write(String.format("<url><![CDATA[%s]]></url>\r\n", "http://onejoy-life.com/product/productDetail?product_cd="+product.get("product_cd")));
+				writer.write(String.format("<description><![CDATA[%s]]></description>\r\n", ""));
+				writer.write(String.format("<image><![CDATA[%s]]></image>\r\n", "http://onejoy-life.com/"+product.get("file_1")));
+				writer.write(String.format("<thumb><![CDATA[%s]]></thumb>\r\n", "http://onejoy-life.com/"+product.get("file_1")));
+				if (product.get("product_option_yn") != null && product.get("product_option_yn").equals("Y")) {
+					String splitString = (String) params.get("product_option_input");
+		            String[] splitArray =splitString.split("\\/\\/");
+		            
+					writer.write("<options>\r\n");
+					for (int i=0;i<splitArray.length;++i) {
+						String[] splitNextArray =splitArray[i].split("\\{");
+		                String[] splitThirdArray = splitNextArray[1].replaceAll("\\}", "").split("\\|");
+		                
+						writer.write(String.format("<option name=\"%s\">\r\n", splitNextArray[0]));
+						
+						for (int j=0;j<splitThirdArray.length;++j) {
+							writer.write(String.format("<select><![CDATA[%s]]></select>\r\n", splitThirdArray[j]));
+						}
+						
+						writer.write("</option>\r\n");
+					}
+					writer.write("</options>\r\n");
+				}
+				writer.write(String.format("<price>%d</price>\r\n", product.get("product_payment")));
+				if(product.get("product_stock_use_yn") != null && product.get("product_stock_use_yn").equals("Y")) {
+					writer.write(String.format("<quantity>%d</quantity>\r\n", product.get("product_stock_quantity")));
+				}else {
+					writer.write(String.format("<quantity>%d</quantity>\r\n", 999999));
+				}
+				writer.write("<category>\r\n");
+				writer.write(String.format("<first id=\"%s\"><![CDATA[%s]]></first>\r\n", product.get("product_category_id"), product.get("product_category_name")));
+				writer.write("</category>\r\n");
+				writer.write("</item>\r\n");
+			}
+			writer.write("</response>");
+			writer.flush();
+			writer.close();
+	    }
 }
