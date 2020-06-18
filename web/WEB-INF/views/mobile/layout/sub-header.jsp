@@ -53,6 +53,7 @@
     <script type="text/javascript" src="http://pay.naver.com/customer/js/mobile/naverPayButton.js" charset="UTF8"></script>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <script type="text/javascript" src="http://test-pay.naver.com/customer/js/mobile/naverPayButton.js" charset="UTF-8"></script>
 </head>
 <script>
     //전역변수

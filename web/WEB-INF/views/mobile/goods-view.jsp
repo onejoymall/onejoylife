@@ -4,9 +4,79 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
 
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<style>
+.npay_storebtn_bx{
+	zoom:1.4;
+}
+</style>
+<script type="text/javascript">
+	var delivery_payment_type = '${list.product_delivery_payment_type}';
+	function buy_nc(){
+		//옵션
+		var optionStr = [""];
+		$("select[name=select_option_value]").each(function(idx){
+			optionStr[0] += (idx != 0 ? "/" : "") + $(this).val();
+	    });
+	    if($("input[name=btn-option-value]").val()){
+	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
+	    }
+	    if($("input[name=rd-option-value]").val()){
+	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
+	    }
+	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
+	    
+	    //배송비
+	    var shipping_type = "";
+	    if($("input[name=product_delivery_payment]").val() == 0){
+	    	shipping_type = "FREE"
+	    }else{
+	    	if(delivery_payment_type == 'C'){
+	    		shipping_type = "ONDELIVERY";
+	    	}else{
+	    		shipping_type = "PAYED";
+	    	}
+	    }
+	    
+	    //상품갯수
+	    var item_uprice = '${list.product_payment}';
+	    var item_tprice = item_uprice * $("input[name=payment_order_quantity]").val();
+	    var total_price = item_tprice + (shipping_type == 'ONDELIVERY' ? 0 : parseInt($("input[name=product_delivery_payment]").val()));
+	    
+	    //데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: ['${list.product_cd}'],
+			ITEM_NAME: ['${list.product_name}'],
+			ITEM_COUNT: [$("input[name=payment_order_quantity]").val()],
+			ITEM_UPRICE: [item_uprice],
+			ITEM_TPRICE: [item_tprice],
+			ITEM_OPTION: optionStr,
+			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
+			SHIPPING_TYPE: shipping_type,
+			TOTAL_PRICE: total_price,
+			BACK_URL: 'http://onejoy-life.com/' 
+		};
+
+		$.ajax({
+			url: "/api/naverPayOrderKey",
+			method: 'post',
+			data: formData,
+			success:function(order_id){
+		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+</script>
 <div class="underPurchase">
     <div class="content">
         <form name="defaultForm" id="defaultForm" method="POST" action="/product/productPayment">
+        <input type="hidden" name="product_delivery_payment" value="${deliveryPayment}">
         <div class="closeBox">
             <button type="button" class="closeBtn"></button>
         </div>
@@ -61,20 +131,16 @@
                 </li>--%>
                 <c:if test="${sessionScope.email == 'test'}">
                 <p>
-                    <script type="text/javascript">
-                        naver.NaverPayButton.apply({
-                        BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
-                        TYPE: "MA", // 버튼 모음 종류 설정
-                        COLOR: 1, // 버튼 모음의 색 설정
-                        COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
-                        ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
-                        BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
-                        BUY_BUTTON_LINK_URL:"http://mydomain.com/buy/url/", // 링크 주소 (필요한 경우만 사용)
-                        WISHLIST_BUTTON_HANDLER:wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
-                        WISHLIST_BUTTON_LINK_URL:"http://mydomain.com/wishlist/popup/url/", // 찜하기 팝업링크 주소
-                        "":""
-                        })
-                    </script>
+                   <script type="text/javascript" >
+				       naver.NaverPayButton.apply({
+			               BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
+			               TYPE: "E", // 버튼 모음 종류 설정
+			               COLOR: 1, // 버튼 모음의 색 설정
+			               COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+			               ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
+			               BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+			           });
+		           </script>
                 </p>
                 </c:if>
             </ul>
@@ -750,5 +816,9 @@ function move(num){
 }
 </script>
 
-
+<script type="text/javascript">
+// 추가 정보 입력
+// wcs_do 함수 호출
+wcs_do();
+</script>
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
