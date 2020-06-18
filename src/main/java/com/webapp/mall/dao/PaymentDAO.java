@@ -95,4 +95,8 @@ public class PaymentDAO {
             }
         }
 	}
+	public List<Map<String, Object>> getPaymentBundleList(HashMap params) {
+		List<Map<String, Object>> getPaymentBundle = sql.selectList("mall.PaymentMapper.getPaymentBundleList",params);
+        return getPaymentBundle;
+	}
 }

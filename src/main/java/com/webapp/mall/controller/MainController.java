@@ -157,6 +157,7 @@ public class MainController {
             searchVO.setDisplayRowCount(8);
             searchVO.setStaticRowEnd(8);
 
+            searchVO.setOrderByKey(null);
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
             searchVO.setProduct_sale_yn("Y");
             searchVO.setMainViewType("product_sp_class");

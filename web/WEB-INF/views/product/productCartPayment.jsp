@@ -313,7 +313,7 @@
 		                                    <div class="sel-box">
 		                                        <select name="coupon_cd" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
 		                                        	<c:if test="${not empty cartPaymentList.enableCouponList}">
-		                                        		<option value="">선택 안함</option>
+		                                        		<option value=" ">선택 안함</option>
 		                                        		<c:forEach var="list" items="${cartPaymentList.enableCouponList}" varStatus="status">
 		                                            		<option value="${list.coupon_cd}" 
 	                                            			 data-type="${list.coupon_sale_type}" 
@@ -325,7 +325,7 @@
 		                                            	</c:forEach>
 		                                            </c:if>
 		                                            <c:if test="${empty cartPaymentList.enableCouponList}">
-		                                            	<option value="">사용가능 쿠폰이 없습니다.</option>
+		                                            	<option value=" ">사용가능 쿠폰이 없습니다.</option>
 		                                            </c:if>
 		                                        </select>
 		                                    </div>
@@ -622,7 +622,7 @@
   	function applyCoupon(){
   		var disCoupon = 0;
   		$(".couponBox").each(function(index) {
-  			if($(this).val()){
+  			if($(this).val().trim()){
   				var option = $(this).children("option[value="+$(this).val()+"]");
   				var saleType = option.attr("data-type");
   				var saleCalCondition = option.attr("data-sale-condition");
@@ -785,7 +785,7 @@
                                     data: $('#defaultForm').serialize(),
                                     // enctype: 'multipart/form-data',
                                     success: function (data) {
-                                        if (data.validateError) {
+                                        /* if (data.validateError) {
                                             $('.validateError').empty();
                                             $.each(data.validateError, function (index, item) {
                                                 // $('#validateError'+index).removeClass('none');
@@ -806,7 +806,7 @@
                                                     icon: 'error'
                                                 });
                                             });
-                                        }
+                                        } */
                                     },
                                     error: function (xhr, status, error) {
                                         alert("error");
