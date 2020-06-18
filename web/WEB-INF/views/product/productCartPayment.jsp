@@ -88,14 +88,14 @@
                             <tr >
                                 <td>주문확인용 비밀번호 입력</td>
                                 <td>
-                                    <input type="password" name="password" class="sec1-in1">
+                                    <input type="password" id="password" name="password" class="sec1-in1">
                                     <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
                                 </td>
                             </tr>
                             <tr class="bor-none">
                                 <td>주문확인용 비밀번호 입력 확인</td>
                                 <td>
-                                    <input type="password"  name="password_cf" class="sec1-in1">
+                                    <input type="password" id="password_cf" name="password_cf" class="sec1-in1">
                                     <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
                                 </td>
                             </tr>
@@ -676,8 +676,8 @@
                 icon: 'error'
             });
         }
-            <c:if test="${empty sessionScope.email}">
-        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+        <c:if test="${empty sessionScope.email}">
+        else if($('#password').val() == "" || $('#password_cf').val() == ""){
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
@@ -686,7 +686,7 @@
                 icon: 'error'
             });
         }
-            </c:if>
+        </c:if>
         else if($('#delivery_user_name').val() == ""){
             $.toast({
                 text: "받으시는 분 성함을 입력해주세요.",

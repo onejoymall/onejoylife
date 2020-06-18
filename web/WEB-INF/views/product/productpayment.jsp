@@ -88,7 +88,7 @@
                             <tr class="bor-none">
                                 <td>주문확인용 비밀번호 입력 확인</td>
                                 <td>
-                                    <input type="password" id="password_ch" name="password_cf" class="sec1-in1">
+                                    <input type="password" id="password_cf" name="password_cf" class="sec1-in1">
                                     <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
                                 </td>
                             </tr>
@@ -474,7 +474,7 @@
             });
         }
         <c:if test="${empty sessionScope.email}">
-        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+        else if($('#password').val() == "" || $('#password_cf').val() == ""){
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
