@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <div class="wrap">
     <div class="page-box">
         <main>
@@ -37,13 +38,14 @@
                         </tr>
                         </thead>
                         <tbody class="sec1-tbody">
+                        <c:if test="${fn:length(paymentBundleList) <= 1}">
                         <tr>
                             <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                             <td class="sec1-tbody-p1">
                                 <p>${paymentDetail.product_name}</p>
                             </td>
-                            <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
-                            <td><span>1</span></td>
+                            <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                            <td><span>${paymentDetail.payment_order_quantity}</span></td>
                             <td><span>${paymentDetail.payment_status_name}</span></td>
                             <td class="sec1-tbody-p2">
 
@@ -66,6 +68,39 @@
 
                             </td>
                         </tr>
+                        </c:if>
+                        <c:if test="${fn:length(paymentBundleList) > 1}">
+	                        <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
+	                        <tr>
+	                            <td><img src="${list.file_1}" style="width: 80px;"/></td>
+	                            <td class="sec1-tbody-p1">
+	                                <p>${list.product_name}</p>
+	                            </td>
+	                            <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
+	                            <td><span>${list.payment_order_quantity}</span></td>
+	                            <c:if test="${status.index == 0 }">
+		                            <td rowspan="${fn:length(paymentBundleList)}"><span>${paymentDetail.payment_status_name}</span></td>
+		                            <td rowspan="${fn:length(paymentBundleList)}" class="sec1-tbody-p2">
+		
+		                                <div class="p2-box1">
+		<%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
+		                                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D'}">
+		                                    <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
+		
+		                                </c:if>
+		                                <c:if test="${paymentDetail.payment_status eq 'R'}">
+		                                    <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${paymentDetail.order_no}">배송조회</a></p>
+		                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
+		                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
+		                                </c:if>
+		<%--                                    <p><a href="">판매자 문의</a></p>--%>
+		                                </div>
+		
+		                            </td>
+	                            </c:if>
+	                        </tr>
+	                        </c:forEach>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>
@@ -139,7 +174,7 @@
                             <td class="body-td-tit2">주문금액</td>
                             <td class="body-td-txt"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                             <td class="body-td-tit2">상품금액</td>
-                            <td class="body-td-txt"><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                            <td class="body-td-txt"><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원 <c:if test="${fn:length(paymentBundleList) > 1}"> 외 ${fn:length(paymentBundleList) - 1}건</c:if></td>
                         </tr>
                         <tr>
                             <td class="body-td-tit2">결제금액</td>

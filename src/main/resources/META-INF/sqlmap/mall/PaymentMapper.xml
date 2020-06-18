@@ -275,4 +275,13 @@
             #{refund_account}
         )
     </insert>
+    
+    <select id="getPaymentBundleList" resultType="hashmap" parameterType="hashmap">
+    	SELECT A.*, B.*,
+			(SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1
+		FROM payment_bundle A
+		JOIN product B
+		ON A.product_cd = B.product_cd
+		WHERE A.order_no = #{order_no}
+    </select>
 </mapper>

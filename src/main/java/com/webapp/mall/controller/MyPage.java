@@ -468,6 +468,8 @@ public class MyPage {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            model.addAttribute("paymentBundleList", paymentBundleList);
 
             client = new IamportClient(apiKey, apiSecret);
             Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
@@ -494,6 +496,10 @@ public class MyPage {
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             params.put("order_no", paymentDetail.get("order_no"));
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            
+            List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            model.addAttribute("paymentBundleList", paymentBundleList);
+            
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
             model.addAttribute("delivery", delivery);

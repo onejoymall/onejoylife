@@ -695,7 +695,7 @@ public class restapiController {
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
 			// 결제번호생성
-			params.put("payment_cd", "PM" + numberGender.numberGen(6, 1));
+			params.put("payment_cd", "PM" + numberGender.numberGen(7, 1));
 
 			params.put("email", session.getAttribute("email"));
 			// 실제 결제승인이 이뤄졌거나, 가상계좌 발급이 성공된 경우, true
@@ -755,6 +755,7 @@ public class restapiController {
 					resultMap.put("redirectUrl", "/MyPage/GiveawayWinningList");
 				}
 			}
+			
 
 			paymentDAO.insertPayment(params);
 			if (deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
@@ -779,7 +780,7 @@ public class restapiController {
 
 		try {
 			// 결제번호생성
-			params.put("payment_cd", "PM" + numberGender.numberGen(6, 1));
+			params.put("payment_cd", "PO" + numberGender.numberGen(7, 1));
 
 			params.put("email", session.getAttribute("email"));
 			// 실제 결제승인이 이뤄졌거나, 가상계좌 발급이 성공된 경우, true
@@ -818,17 +819,16 @@ public class restapiController {
 						pointDAO.insertPoint(params);
 					}
 				}
-
 				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
-				params.put("payment_order_quantity", params.get("quantity_total"));
-				paymentDAO.insertPayment(params);
-
-				cartPaymentVO.setPayment_cd((String) params.get("payment_cd"));
-				cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
-				paymentDAO.insertCartBundle(cartPaymentVO);
-				cartDAO.CartPaymentListDelete(cartPaymentVO);
 			}
 
+			params.put("payment_order_quantity", params.get("quantity_total"));
+			paymentDAO.insertPayment(params);
+
+			cartPaymentVO.setPayment_cd((String) params.get("payment_cd"));
+			cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
+			paymentDAO.insertCartBundle(cartPaymentVO); 
+			cartDAO.CartPaymentListDelete(cartPaymentVO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

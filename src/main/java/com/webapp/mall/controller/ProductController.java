@@ -395,7 +395,7 @@ public class ProductController {
                 cartPaymentVO.setCart_user_id(usr_id);
             }
             //주문번호생성
-            String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
+            String order_no = "PO-ORDER-"+numberGender.numberGen(7,1);
             model.addAttribute("order_no",order_no);
 
 
@@ -462,7 +462,7 @@ public class ProductController {
         	}
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-            String order_no = "PD-ORDER-"+numberGender.numberGen(6,1);
+            String order_no = "PD-ORDER-"+numberGender.numberGen(7,1);
             params.put("product_cd",request.getParameter("product_cd"));
             params.put("product_live_type", "on");
             Map<String,Object> detail = productDAO.getProductViewDetail(params);

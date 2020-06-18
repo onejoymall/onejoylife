@@ -23,7 +23,7 @@
         delete from product_cart where cart_cd in
         <foreach collection="chk" item="item" open="(" separator="," close=")">
         #{item}
-        </foreach> and cart_user_id=#{cart_user_id}
+        </foreach>
     </delete>
 
     <select id="getPaymentCartSum" parameterType="com.webapp.mall.vo.CartPaymentVO" resultType="java.util.Map">
