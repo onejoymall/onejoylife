@@ -14,16 +14,17 @@
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
 		//옵션
-		var optionStr = ''
+		var optionStr = [""];
 		$("select[name=select_option_value]").each(function(idx){
-			optionStr += (idx != 0 ? "/" : "") + $(this).val();
+			optionStr[0] += (idx != 0 ? "/" : "") + $(this).val();
 	    });
 	    if($("input[name=btn-option-value]").val()){
-	    	optionStr += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
+	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
 	    }
 	    if($("input[name=rd-option-value]").val()){
-	    	optionStr += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
+	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
 	    }
+	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
 	    
 	    //배송비
 	    var shipping_type = "";
@@ -46,11 +47,11 @@
 		var formData = {
 			SHOP_ID: 'np_xqqgk375177',
 			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
-			ITEM_ID: '${list.product_cd}',
-			ITEM_NAME: '${list.product_name}',
-			ITEM_COUNT: $("input[name=payment_order_quantity]").val(),
-			ITEM_UPRICE: item_uprice,
-			ITEM_TPRICE: item_tprice,
+			ITEM_ID: ['${list.product_cd}'],
+			ITEM_NAME: ['${list.product_name}'],
+			ITEM_COUNT: [$("input[name=payment_order_quantity]").val()],
+			ITEM_UPRICE: [item_uprice],
+			ITEM_TPRICE: [item_tprice],
 			ITEM_OPTION: optionStr,
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
@@ -59,7 +60,6 @@
 		};
 
 		$.ajax({
-			crossOrigin : true,
 			url: "/api/naverPayOrderKey",
 			method: 'post',
 			data: formData,

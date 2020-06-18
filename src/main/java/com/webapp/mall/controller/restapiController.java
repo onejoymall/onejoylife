@@ -1697,7 +1697,28 @@ public class restapiController {
 
 	// 네이버페이 주문키받아오기
 	@RequestMapping(value = "/api/naverPayOrderKey", method = RequestMethod.POST, produces = "application/json")
-    public String naverPayOrderKey(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO){
+    public String naverPayOrderKey(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO,
+    		@RequestParam(value = "ITEM_ID[]", required = false) String[] itemIds,
+    		@RequestParam(value = "ITEM_NAME[]", required = false) String[] itemNmaes,
+    		@RequestParam(value = "ITEM_COUNT[]", required = false) String[] itemCounts,
+    		@RequestParam(value = "ITEM_UPRICE[]", required = false) String[] itemUPrices,
+    		@RequestParam(value = "ITEM_TPRICE[]", required = false) String[] itemTPrices,
+    		@RequestParam(value = "ITEM_OPTION[]", required = false) String[] itemOptions){
+		params.put("ITEM_ID",itemIds);
+		params.put("ITEM_NAME",itemNmaes);
+		params.put("ITEM_COUNT",itemCounts);
+		params.put("ITEM_UPRICE",itemUPrices);
+		params.put("ITEM_TPRICE",itemTPrices);
+		params.put("ITEM_OPTION",itemOptions);
+		
+		if(params.containsKey("ITEM_ID[]")){
+			params.remove("ITEM_ID[]");
+			params.remove("ITEM_NAME[]");
+			params.remove("ITEM_COUNT[]");
+			params.remove("ITEM_UPRICE[]");
+			params.remove("ITEM_TPRICE[]");
+			params.remove("ITEM_OPTION[]");
+		}
     	String orderKey = "";
     	try {
     		URL url = new URL("https://test-pay.naver.com/customer/api/order.nhn");
@@ -1713,12 +1734,16 @@ public class restapiController {
             //HashMap으로 전달받은 파라미터가 null이 아닌경우 버퍼에 넣어준다
             if (params != null) {
 
-                Set key = params.keySet();
+                Set<String> keys = params.keySet();
 
-                for (Iterator iterator = key.iterator(); iterator.hasNext();) {
-                    String keyName = (String) iterator.next();
-                    String valueName = (String) params.get(keyName);
-                    buffer.append(keyName).append("=").append(valueName).append("&");
+                for (String key:keys) {
+                    if(params.get(key).getClass().isArray()) {
+                    	for(String value:(String[])params.get(key)) {
+                    		buffer.append(key).append("=").append(value).append("&");
+                    	}
+                    }else {
+                    	buffer.append(key).append("=").append(params.get(key)).append("&");
+                    }
                 }
             }
     		Writer writer = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");

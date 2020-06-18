@@ -3,6 +3,123 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
+<style>
+.npay_storebtn_bx{
+	margin-top: 15px !important;
+	zoom:1.4;
+}
+</style>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+	function buy_nc(){
+		if($('input[name=chk]:checked').length <= 0){
+            $.toast({
+                heading: '결제 할 상품을 선택하세요.',
+                // text: [
+                //     '<a href="/sign/signup">회원 가입 후 이용</a>',
+                //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                // ],
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                icon: 'info',
+            });
+            return;
+        }
+		
+		var item_ids = [];
+		var item_names = [];
+		var item_counts = [];
+		var item_uprices = [];
+		var item_tprices = [];
+		var item_options = [];
+		
+		var shipping_price = 0;
+		var shipping_type = "";
+		var total_price = 0;
+		
+		var checkIds=[];
+		$('input[type=checkbox][name=chk]').each(function (index) {
+			if($(this).is(":checked")){
+				checkIds.push($(this).val());
+			}
+		});
+
+		var payment=0;
+		var discount=0;
+		var delivery=0;
+		var total=0;
+		
+		var storeDeliveryList = {};
+		checkIds.forEach(function(id){
+			var cart = cartList.find(function(el){
+				return el.cart_cd == id
+			});
+			
+			item_ids.push(cart.product_cd);
+			item_names.push(cart.product_name);
+			item_counts.push(cart.payment_order_quantity);
+			item_uprices.push(cart.product_payment);
+			item_tprices.push(cart.product_payment * cart.payment_order_quantity);
+			item_options.push(' ');
+			
+			payment += cart.product_user_payment*cart.payment_order_quantity;
+			discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
+			if(!cart.product_delivery_bundle_yn || cart.product_delivery_bundle_yn == 'N'){ //묶음배송체크
+				delivery += parseInt(cart.delivery_payment);
+			}else{
+				if(storeDeliveryList.hasOwnProperty(cart.product_store_id)){ //키가있다면 가장비싼배송비
+					if(storeDeliveryList[cart.product_store_id] < cart.delivery_payment) { 
+						storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment) 
+	    			}
+				}else{ //키가없다면 키추가
+					storeDeliveryList[cart.product_store_id] = parseInt(cart.delivery_payment)
+				}
+			}
+		});
+		
+		$.each(storeDeliveryList,function(key,val){
+			delivery += val;
+		});
+		
+		if(delivery == 0){
+	    	shipping_type = "FREE"
+	    }else{
+	    	shipping_type = "PAYED";
+	    }
+		shipping_price = delivery;
+		total_price = payment-discount+delivery;
+
+	    //데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: item_ids,
+			ITEM_NAME: item_names,
+			ITEM_COUNT: item_counts,
+			ITEM_UPRICE: item_uprices,
+			ITEM_TPRICE: item_tprices,
+			ITEM_OPTION: item_options,
+			SHIPPING_PRICE: shipping_price,
+			SHIPPING_TYPE: shipping_type,
+			TOTAL_PRICE: total_price,
+			BACK_URL: 'http://onejoy-life.com/' 
+		};
+
+		$.ajax({
+			crossOrigin : true,
+			url: "/api/naverPayOrderKey",
+			method: 'post',
+			data: formData,
+			success:function(order_id){
+		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+</script>
 
     <section class="subheader">
         <div class="subTitle">장바구니</div>
@@ -120,6 +237,16 @@
             <li>원결제예정금액</li>
             <li class="txtRed sum-span4"></li>
         </ul>
+        <script type="text/javascript" >
+	       naver.NaverPayButton.apply({
+               BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
+               TYPE: "E", // 버튼 모음 종류 설정
+               COLOR: 1, // 버튼 모음의 색 설정
+               COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+               ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
+               BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+           });
+          </script>
     </section>
     <div class="bottomBtns">
         <ul>
@@ -152,6 +279,14 @@ $(function(){
 		});
 		computePayment(checkIds);
 	})
+	$('input[name=chk], #tr-ck1-1').prop("checked",true);
+	var checkIds=[];
+	$('input[type=checkbox][name=chk]').each(function (index) {
+		if($(this).is(":checked")){
+			checkIds.push($(this).val());
+		}
+	});
+	computePayment(checkIds);
 });
 	
 function computePayment(ids){
@@ -190,5 +325,11 @@ function computePayment(ids){
 	$(".sum-span3").html('+ ' + delivery.toLocaleString('en') + '<span>원</span>');
 	$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span>원</span>');
 }
+</script>
+
+<script type="text/javascript">
+// 추가 정보 입력
+// wcs_do 함수 호출
+wcs_do();
 </script>
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

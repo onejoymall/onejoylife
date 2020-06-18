@@ -96,10 +96,10 @@
 			TOTAL_PRICE: total_price,
 			BACK_URL: 'http://onejoy-life.com/' 
 		};
-return formData;
+
 		$.ajax({
 			crossOrigin : true,
-			url: "https://test-pay.naver.com/customer/api/order.nhn",
+			url: "/api/naverPayOrderKey",
 			method: 'post',
 			data: formData,
 			success:function(order_id){
