@@ -58,6 +58,9 @@
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>
+                                <c:if test="${paymentDetail.payment_status eq 'O'}">
+                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
+                                </c:if>
 <%--                                    <p><a href="">판매자 문의</a></p>--%>
                                 </div>
 
@@ -90,10 +93,12 @@
                             <td class="body-td-tit1">배송시 요청사항</td>
                             <td class="body-td-txt"><span>${delivery.delivery_message}</span></td>
                         </tr>
+                        <c:if test="${not empty paymentDetail.delivery_hope_date}">
                         <tr>
                             <td class="body-td-tit1">희망 배송일시</td>
                             <td class="body-td-txt"><span>${paymentDetail.delivery_hope_date} ${paymentDetail.delivery_hope_time}</span></td>
                         </tr>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>

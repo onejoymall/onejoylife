@@ -59,10 +59,10 @@
         </c:forEach>
         <c:if test="${empty sessionScope.email}">
             <p class="text-md mt-2 mb-05">주문확인용 비밀번호 입력</p>
-                <input type="password" name="password" class="sec1-in1">
+                <input type="password" id="password" name="password" class="sec1-in1">
                 <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
             <p class="text-md mt-2 mb-05">주문확인용 비밀번호 입력 확인</p>
-                <input type="password"  name="password_cf" class="sec1-in1">
+                <input type="password" id="password_cf" name="password_cf" class="sec1-in1">
                 <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
         </c:if>
         
@@ -562,7 +562,7 @@ function show(num){
             });
         }
             <c:if test="${empty sessionScope.email}">
-        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+        else if($('#password').val() == "" || $('#password_cf').val() == ""){
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐
