@@ -362,7 +362,7 @@
             });
         }
         <c:if test="${empty sessionScope.email}">
-        else if($('#password').val() == "" || $('#password_ch').val() == ""){
+        else if($('#password').val() == "" || $('#password_cf').val() == ""){
             $.toast({
                 text: "주문확인용 비밀번호를 입력해주세요.",
                 showHideTransition: 'plain', //펴짐

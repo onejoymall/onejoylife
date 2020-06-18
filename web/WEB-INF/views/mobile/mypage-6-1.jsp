@@ -52,6 +52,9 @@
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${paymentDetail.order_no}'">교환신청 하기</button>
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
 				</c:if>
+                <c:if test="${paymentDetail.payment_status eq 'O'}">
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
+                </c:if>
             </div>
         </ul>
         
@@ -65,6 +68,10 @@
         <h3>${delivery.postcode} ${delivery.roadAddress} ${delivery.extraAddress}</h3>
         <p class="grey pt-2 pb-05">배송시 요청사항	</p>
         <h3>${delivery.delivery_message}</h3>
+        <c:if test="${not empty paymentDetail.delivery_hope_date}">
+            <p class="grey pt-2 pb-05">희망 배송일시</p>
+            <h3>${paymentDetail.delivery_hope_date} ${paymentDetail.delivery_hope_time}</h3>
+        </c:if>
         
         <ul class="flexbetween pb-1 mt-4">
             <li><h2>결제 정보</h2></li>

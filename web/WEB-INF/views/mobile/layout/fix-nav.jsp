@@ -36,7 +36,12 @@
         <c:import url="/layout/mainTopNav"/>
         <div class="logoutWrap">
            <hr>
-            <a href="<c:url value="/sign/logout"/>" class="logout">로그아웃 <i class="ri-logout-box-r-line"></i></a>
+            <c:if test="${sessionScope.login}">
+                <a href="<c:url value="/sign/logout"/>" class="logout">로그아웃 <i class="ri-logout-box-r-line"></i></a>
+            </c:if>
+            <c:if test="${!sessionScope.login}">
+                <a href="<c:url value="/sign/login"/>" class="logout">로그인 <i class="ri-logout-box-r-line"></i></a>
+            </c:if>
             <button type="button" class="language">국가선택</button>
         </div>
          </div>

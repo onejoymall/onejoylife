@@ -27,8 +27,8 @@
                     <input type="password" for="pw-input" name="password" class="id-la" placeholder="비밀번호">
                     <span class="error" id="loginCheckError">회원 아이디 또는 비밀번호가 일치하지 않습니다.</span>
                     <div class="check-save">
-                        <input type="checkbox" id="id-save" class="save-ck">
-                        <label for="id-save"><span class="ck-img"></span> 아이디 저장</label>
+                        <input type="checkbox" id="saveid" class="save-ck">
+                        <label for="saveid"><span class="ck-img"></span> 아이디 저장</label>
                         <input type="checkbox" id="auto-login" class="save-ck">
                         <label for="auto-login"><span class="ck-img"></span>자동 로그인</label>
                     </div>
@@ -117,5 +117,6 @@
     <script src='<c:url value="/assets/js/index.js"/>'></script>
     <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
     <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
+    <script src='<c:url value="/assets/js/commonScriptSub.js"/>'></script>
 </body>
 </html>

@@ -551,6 +551,8 @@ public class restapiController {
 			Integer giveaMinPoint = (Integer) giveaway.get("giveaway_play_min_point");
 			Integer giveaMaxPoint = (Integer) giveaway.get("giveaway_play_max_point");
 			Integer giveaWinnerPoint = (Integer) giveaway.get("giveaway_play_winner_point");
+			Integer sum_play_point = giveawayDAO.getGiveawayPlaySumPoint(params);
+			Integer rest = giveaWinnerPoint - sum_play_point;
 			if (giveaMinPoint != null && giveaMinPoint != 0) {
 				if (giveaMinPoint > usedPoint) {
 					error.put("Error", "경품 응모 최소 포인트 보다 응모하신 금액이 작습니다.");
@@ -563,6 +565,9 @@ public class restapiController {
 			}
 			if(giveaWinnerPoint < usedPoint){
 				error.put("Error", "경품 추첨 포인트를 초과하였습니다.");
+			}
+			if(rest < usedPoint){
+				error.put("Error", "남은 경품 포인트를 초과하였습니다.");
 			}
 
 
