@@ -118,8 +118,9 @@
                                     <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
                                     <input type="hidden" name="order_no" value="${delivery.order_no}">
                                     <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
+                                    <input type="hidden" name="product_order_name" value="${detail.giveaway_name}">
                                     <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
-
+                                    <input type="hidden" name="payment_order_quantity" value="1"/>
                                 </div>
                             </div>
                         </div>

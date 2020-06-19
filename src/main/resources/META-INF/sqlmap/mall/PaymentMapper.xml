@@ -110,7 +110,7 @@
     <![CDATA[
         SELECT
         	IF(A.product_order_name is not null,A.product_order_name,B.product_name) as product_name,
-            A.*,B.*,
+            A.*,B.*,C.*,
             (select Z.username from user Z where Z.usr_id=A.payment_user_id) as username,
             (select Z.email from user Z where Z.usr_id=A.payment_user_id) as email,
             (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
@@ -123,11 +123,14 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
+            (select Z.file_link from product_file Z where Z.key_id = C.giveaway_cd and Z.file_order = 1) as file_6,
             (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id,
             (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
             (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
             (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name
-        FROM payment A left join product B on (B.product_cd = A.product_cd) where 1=1 
+        FROM payment A left join product B on (B.product_cd = A.product_cd)
+        left join giveaway C on (C.giveaway_cd = A.giveaway_cd)
+        where 1=1
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -195,6 +198,7 @@
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
+            (select Z.file_link from product_file Z where Z.key_id = C.giveaway_cd and Z.file_order = 1) as file_6,
             (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
             (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name,
             (select D.postcode from delivery_info D where A.order_no = D.order_no) as postcode,
