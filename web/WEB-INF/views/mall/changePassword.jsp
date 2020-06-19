@@ -136,24 +136,25 @@
             }
         });
     })
-    var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+    // var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+    var regExp = /^[a-zA-Z0-9]{6,20}$/;
     //패스워드 체크
-    $(document).on('keyup','input[name=password]',function () {
-        if(!$(this).val().match(mathPassword)){
-            $("#validateErrorPassword").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
+    $(document).on('input','input[name=password],input[name=password_cf]',function () {
+    	var pw = $('input[name=password]').val();
+    	var pw_cf = $('input[name=password_cf]').val();
+        if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+            $("#validateErrorPassword").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
             $("#validateErrorPassword").removeClass("text-success");
         }else{
-            $("#validateErrorPassword").addClass("text-success");
+        	$("#validateErrorPassword").text('');
+        	if(pw != pw_cf){
+                $("#validateErrorPasswordCf").text(" * 비밀번호가 일치하지 않습니다.");
+                $("#validateErrorPasswordCf").removeClass("text-success");
+            }else{
+            	$("#validateErrorPasswordCf").text(" * 비밀번호가 일치합니다.");
+                $("#validateErrorPasswordCf").addClass("text-success");
+            }
         }
     })
-   $(document).on('keyup','input[name=password_cf]',function () {
-       if(!$(this).val().match($('input[name=password]').val())){
-           $("#validateErrorPasswordCf").text(" * 비밀번호가 일치하지 않습니다.")
-           $("#validateErrorPasswordCf").removeClass("text-success");
-       }else{
-           $("#validateErrorPasswordCf").text(" * 비밀번호가 일치합니다.")
-           $("#validateErrorPasswordCf").addClass("text-success");
-       }
-   })
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

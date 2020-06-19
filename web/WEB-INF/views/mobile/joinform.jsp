@@ -170,26 +170,54 @@
                 }
             });
         })
-        var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+       /* var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+        */
+        var regExp = /^[a-zA-Z0-9]{6,20}$/;
         //패스워드 체크
-        $(document).on('keyup','input[name=password]',function () {
-            if(!$(this).val().match(mathPassword)){
+        $(document).on('input','input[name=password],input[name=password_cf]',function () {
+            var pw = $('input[name=password]').val();
+            var pw_cf = $('input[name=password_cf]').val();
+            if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
                 $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
                 $('#passwordValidation').addClass("error-on");
                 $("#passwordValidation").removeClass("text-success");
             }else{
-                $("#passwordValidation").addClass("text-success");
+                $("#passwordValidation").text('');
+                if(pw != pw_cf){
+                    $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+                    $('#password_cfValidation').addClass("error-on");
+                    $("#password_cfValidation").removeClass("text-success");
+                }else{
+                    $("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+                    $("#password_cfValidation").addClass("text-success");
+                }
             }
         })
-        $(document).on('keyup','input[name=password_cf]',function () {
-            if(!$(this).val().match($('input[name=password]').val())){
-                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
-                $('#password_cfValidation').addClass("error-on");
-                $("#password_cfValidation").removeClass("text-success");
-            }else{
-                $("#password_cfValidation").addClass("text-success");
+        function validationNumber(){
+            //숫자만입력받게
+            $(document).on("input",".onlyNumber",function(){
+                $(this).val($(this).val().replace(/[^0-9]/g,""))
+            });
+            //숫자와|만입력받게
+            $(document).on("input",".onlyNumberAndPipe",function(){
+                $(this).val($(this).val().replace(/[^0-9|]/g,""))
+            });
+            //숫자와.만입력받게
+            $(document).on("input",".onlyNumberAndDot",function(){
+                $(this).val($(this).val().replace(/[^0-9.]/g,""))
+            });
             }
-        })
+            validationNumber();
+
+            //문자열 숫자포함
+            function isStrNumber(str){
+            return str.search(/[0-9]/g) >= 0;
+            }
+
+            //문자열 알파뱃포함
+            function isStrAlphabet(str){
+            return str.search(/[a-zA-Z]/g) >= 0;
+        }
         //인증하기
         $(document).on('click',"#mailauth",function () {
             $('.error').html('');

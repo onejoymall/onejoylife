@@ -483,6 +483,15 @@
                 icon: 'error'
             });
         }
+        else if($('#password').val() != $('#password_cf').val()){
+        	$.toast({
+                text: "주문확인용 비밀번호가 일치하지 않습니다.",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+        }
         </c:if>
         else if($('#delivery_user_name').val() == ""){
             $.toast({
@@ -658,15 +667,15 @@
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.")
+            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
             $("#passwordValidation").removeClass("text-success");
         }else{
         	$("#passwordValidation").text('');
         	if(pw != pw_cf){
-                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.")
+                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
                 $("#password_cfValidation").removeClass("text-success");
             }else{
-            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.")
+            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
                 $("#password_cfValidation").addClass("text-success");	
             }
         }
