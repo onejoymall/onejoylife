@@ -377,10 +377,12 @@ public class ManagerRestapiController {
 
         try {
             Map<String,Object> list = paymentDAO.getPaymentDetail(params);
+            List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
                 resultMap.put("list",list);
+                resultMap.put("paymentBundleList",paymentBundleList);
 //                resultMap.put("deliveryInfoVO",deliveryInfoVO);
 //                resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
