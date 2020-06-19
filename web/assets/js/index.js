@@ -110,6 +110,7 @@ $(document).ready(function(){
         });
         $(".modal-close").click(function(){
             $(".modal").attr("style", "display:none");
+            $(".uploadModal").attr("style", "display:none");
             $('body').css("overflow", "auto");
         });
 
