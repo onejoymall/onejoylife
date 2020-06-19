@@ -108,8 +108,9 @@
             (select Z.code_name from code Z where Z.code = 'giveaway_payment_status' and Z.code_value=A.giveaway_payment_status) as giveaway_payment_status_name,
             (select Z.giveaway_winner_user_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id,
             IFNULL((SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = (SELECT payment_status FROM payment Z WHERE Z.giveaway_cd = A.giveaway_cd AND Z.payment_user_id = A.giveaway_play_user_id)),'결제전') payment_status_name,
+            (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1,
             (SELECT Z.order_no FROM payment Z WHERE Z.giveaway_cd = A.giveaway_cd AND Z.payment_user_id = A.giveaway_play_user_id) order_no
-        FROM giveaway_play_history A  where 1=1
+        FROM giveaway_play_history A where 1=1
         ]]>
         <if test="giveaway_play_status != null and giveaway_play_status !=''"><![CDATA[AND A.giveaway_play_status = #{giveaway_play_status} ]]></if>
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>

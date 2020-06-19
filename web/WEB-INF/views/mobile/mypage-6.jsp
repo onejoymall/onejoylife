@@ -46,7 +46,12 @@
             <ul class="product pb-0">
                 <h5><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></h5>
                 <ul class="pb-0">
-                    <li><a href="/product/productDetail?product_cd=${paymentList.product_cd}"><img src="${paymentList.file_1}" alt=""></a></li>
+                    <c:if test="${not empty paymentList.giveaway_id}">
+                        <li><a href="/giveaway/giveawaydetail?giveaway_id=${paymentList.giveaway_id}"><img src="${paymentList.file_6}" alt=""></a></li>
+                    </c:if>
+                    <c:if test="${not empty paymentList.product_cd}">
+                        <li><a href="/product/productDetail?product_cd=${paymentList.product_cd}"><img src="${paymentList.file_1}" alt=""></a></li>
+                    </c:if>
                     <li>
                        <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}" class="mb-1">${paymentList.order_no}</a>
                         <p>${paymentList.product_made_company_name}</p>
@@ -56,7 +61,7 @@
                 </ul>
                 <ul class="options">
                     <li>상품금액</li>
-                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <span>원</span></li>
+                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /><span>원</span></li>
                 </ul>
                 <ul class="options">
                     <li>수량</li>
