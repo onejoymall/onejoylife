@@ -85,7 +85,7 @@
                                         <td class="my-lis-2">
                                             <a href="/giveaway/giveawaydetail?giveaway_cd=${list.giveaway_cd}">
 <%--                                                <div class="my-lis-img1"></div>--%>
-                                                <div style="width: 90px;height: 90px;background: url(/assets/img/${list.giveaway_detail_image}) no-repeat center / cover;"></div>
+                                                <div style="width: 90px;height: 90px;background: url(${list.file_1}) no-repeat center / cover;"></div>
                                                 <div class="my-lis-txt">
                                                     <p>${list.giveaway_brand}</p>
                                                     <p class="lis-font-w">${list.giveaway_name}</p>

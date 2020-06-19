@@ -318,7 +318,7 @@
                             </tr>
                             <tr>
                                 <th>상품명/옵션</th>
-                                <td class="product_name"></td>
+                                <td class="product_name giveaway_name"></td>
                             </tr>
                             <tr>
                                 <th>수량</th>
@@ -423,7 +423,8 @@
         </div>
     </div>
 </div>
-<div class="uploadModal"><!--20.06.19 다운로드 모달 추가-->
+<!--20.06.19 다운로드 모달 추가-->
+<%--<div class="uploadModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>엑셀 다운로드</h2>
@@ -459,7 +460,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>--%>
 <script>
     $('.order-select').on("change",function () {
         $('input[name=displayRowCount]').val($(this).val());

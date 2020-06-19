@@ -60,7 +60,7 @@
                     <h5><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/><br><fmt:formatDate value="${list.reg_date}" pattern="HH:mm"/></h5>
                     <ul class="pb-0">
                         <li>
-                            <a href="/giveaway/giveawaydetail?giveaway_cd=${list.giveaway_cd}"><img src="/assets/img/${list.giveaway_detail_image}" onerror="this.src='http://placehold.it/80'" alt=""></a></li>
+                            <a href="/giveaway/giveawaydetail?giveaway_cd=${list.giveaway_cd}"><img src="${list.file_1}" onerror="this.src='http://placehold.it/80'" alt=""></a></li>
                         <li>
                             <p>${list.giveaway_brand}</p>
                             <h5>${list.giveaway_name}</h5>

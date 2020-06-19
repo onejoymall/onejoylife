@@ -88,16 +88,28 @@
                                             <p><a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}">${paymentList.order_no}</a></p>
                                         </td>
                                         <td class="my-lis-2">
-                                            <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
-                                                <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
-                                                <div class="my-lis-txt">
-                                                    <p>${paymentList.product_made_company_name}</p>
-                                                    <p class="lis-font-w">${paymentList.product_name}</p>
-                                                    <p>${paymentList.product_model}</p>
-                                                </div>
-                                            </a>
+                                            <c:if test="${not empty paymentList.giveaway_cd}">
+                                                <a href="/giveaway/giveawaydetail?giveaway_id=${paymentList.giveaway_id}">
+                                                    <div style="width: 22%;height: 90px;background: url(${paymentList.file_6}) no-repeat center / cover;"></div>
+                                                    <div class="my-lis-txt">
+                                                        <p>${paymentList.product_made_company_name}</p>
+                                                        <p class="lis-font-w">${paymentList.product_name}</p>
+                                                        <p>${paymentList.product_model}</p>
+                                                    </div>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${not empty paymentList.product_cd}">
+                                                <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
+                                                    <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
+                                                    <div class="my-lis-txt">
+                                                        <p>${paymentList.product_made_company_name}</p>
+                                                        <p class="lis-font-w">${paymentList.product_name}</p>
+                                                        <p>${paymentList.product_model}</p>
+                                                    </div>
+                                                </a>
+                                            </c:if>
                                         </td>
-                                        <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /></span><span>원</span></td>
+                                        <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
                                         <td class="pointer">
