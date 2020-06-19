@@ -252,7 +252,7 @@ body{
 
 /*modal*/
 /* 모달 팝업창 */
-.modal{
+.modal, .uploadModal{
     display: none;
     position: fixed;
     z-index: 999999;

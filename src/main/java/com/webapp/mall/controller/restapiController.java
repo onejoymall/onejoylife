@@ -719,6 +719,7 @@ public class restapiController {
 					params.put("point_paid_user_id", userInfo.get("usr_id"));
 
 					// 회원인 경우 보유포인트 확인
+					params.put("product_live_type", "on");
 					Map<String, Object> productInfo = productDAO.getProductViewDetail(params);
 					String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
 					String getPaymentString = Integer.toString((Integer) productInfo.get("product_payment"));

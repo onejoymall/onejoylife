@@ -1329,6 +1329,22 @@ $(document).on("click",".ra-num",function () {
                     }
                     // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
+                
+                if(data.paymentBundleList && data.paymentBundleList.length > 1 ) {
+                	var product_made_company_name_html = '';
+                	var product_name_html = '';
+                	var payment_order_quantity_html = '';
+                	
+                	data.paymentBundleList.forEach(function(el, idx){
+                		product_made_company_name_html += (idx == 0 ? '' : '<br>') + (el.product_made_company_name ? el.product_made_company_name : '-');
+                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name;
+                		payment_order_quantity_html += (idx == 0 ? '' : '<br>') + el.payment_order_quantity;
+                	});
+                	
+                	$(".product_made_company_name").html(product_made_company_name_html);
+                	$(".product_name").html(product_name_html);
+                	$(".payment_order_quantity").html(payment_order_quantity_html);
+                }
             },
             error: function (xhr, status, error) {
                 alert(error);
@@ -3636,3 +3652,8 @@ $('#formSubmitGiveaway').on("click",function () {
         }
     });
 });
+
+//일괄등록/수정버튼
+$(".uploadModalBtn").click(function(){
+	$(".uploadModal").attr("style", "display:block");
+})
