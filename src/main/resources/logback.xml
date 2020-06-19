@@ -22,23 +22,23 @@
 			</pattern>
 		</encoder>
 	</appender>
-	<logger name="org.springframework" level="DEBUG" >
+	<logger name="org.springframework" level="ERROR" >
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</logger>
 	
 	<!-- mybatis query log setting -->
-	<logger name="jdbc" level="DEBUG" />
-	<logger name="jdbc.sqlonly" level="DEBUG" />
-	<logger name="jdbc.sqltiming" level="DEBUG" />
-	<logger name="jdbc.audit" level="DEBUG" />
-	<logger name="jdbc.resultset" level="DEBUG" />
-	<logger name="jdbc.resultsettable" level="DEBUG" />
-	<logger name="jdbc.connection" level="DEBUG" />
+	<logger name="jdbc" level="OFF" />
+	<logger name="jdbc.sqlonly" level="OFF" />
+	<logger name="jdbc.sqltiming" level="OFF" />
+	<logger name="jdbc.audit" level="OFF" />
+	<logger name="jdbc.resultset" level="OFF" />
+	<logger name="jdbc.resultsettable" level="OFF" />
+	<logger name="jdbc.connection" level="OFF" />
 
  	
 	<!-- turn OFF all logging (children can override) -->
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</root>
