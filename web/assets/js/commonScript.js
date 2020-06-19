@@ -228,29 +228,38 @@ $('.plus').click(function () {
 });
 
 //날짜 지정
-function setDatepickerToday(datepicker,mt,dt) { var d = new Date(); datepicker.datepicker("setDate", new Date(d.getFullYear(), d.getMonth()+mt, d.getDate()+dt) ); }
+function setDatepickerToday(datepicker,mt,dt) {
+    var d = new Date();
+    datepicker.datepicker("setDate", new Date(d.getFullYear(), d.getMonth()+mt, d.getDate()+dt) );
+}
+
 $(document).on("click",".ra-num",function () {
     $('.ra-num').removeClass("on");
     $(this).addClass("on");
     if($(this).attr("data-id")=="con1"){
         setDatepickerToday($('input[name=start_date]'),0,0);
         setDatepickerToday($('input[name=end_date]'),0,0);
+        $('input[name=date_pick_con]').val('con1');
     }
     if($(this).attr("data-id")=="con2"){
         setDatepickerToday($('input[name=start_date]'),0,-7);
         setDatepickerToday($('input[name=end_date]'),0,0);
+        $('input[name=date_pick_con]').val('con2');
     }
     if($(this).attr("data-id")=="con3"){
         setDatepickerToday($('input[name=start_date]'),-1,0);
         setDatepickerToday($('input[name=end_date]'),0,0);
+        $('input[name=date_pick_con]').val('con3');
     }
     if($(this).attr("data-id")=="con4"){
         setDatepickerToday($('input[name=start_date]'),-3,0);
         setDatepickerToday($('input[name=end_date]'),0,0);
+        $('input[name=date_pick_con]').val('con4');
     }
     if($(this).attr("data-id")=="con5"){
         setDatepickerToday($('input[name=start_date]'),-6,0);
         setDatepickerToday($('input[name=end_date]'),0,0);
+        $('input[name=date_pick_con]').val('con5');
     }
 });
 
@@ -2774,6 +2783,7 @@ $(document).on("click",".ra-num",function () {
     //다음 지도
         new daum.Postcode({
             oncomplete: function(data) {
+                console.log(data)
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
@@ -2788,6 +2798,10 @@ $(document).on("click",".ra-num",function () {
                 }
                 // 건물명이 있고, 공동주택일 경우 추가한다.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 건물명이 있고, 공동주택 아닌경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'N'){
                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
@@ -3680,3 +3694,4 @@ $(".uploadExcelBtn").click(function(){
         }
 	})
 })
+

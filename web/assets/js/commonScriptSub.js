@@ -553,24 +553,28 @@ $(".sec2-ov>p>label").click(function(){
         url: '/payment/getDeliveryAddress',
         data: "deliveryType="+deliverytype,
         success: function (data) {
-        	$.each(data.delivery,function(index, item){
-        		if(index != "order_no" &&
-				   index != "product_cd"){
-        			$("input[name="+index+"]").val(item);
-        		}
-        		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
-        			var number = item.split("-");
-        			['a','b','c'].forEach(function(el,idx){
-        				$("input[name="+index+"_"+el+"]").val(number[idx]);
-        			});
-        		}
-        	});
+
+            if(data.delivery!=null ) {
+                $.each(data.delivery, function (index, item) {
+                    if (index != "order_no" &&
+                        index != "product_cd") {
+                        $("input[name=" + index + "]").val(item);
+                    }
+                    if (index == "delivery_user_phone" || index == "delivery_user_tel") {
+                        var number = item.split("-");
+                        ['a', 'b', 'c'].forEach(function (el, idx) {
+                            $("input[name=" + index + "_" + el + "]").val(number[idx]);
+                        });
+                    }
+                });
+            }
         },
         error: function (xhr, status, error) {
             console.log(error,xhr,status );
         },
     });
 });
+
 $(".sec2-ov>p>label:eq(0)").trigger("click");
 //배송지정보 불러오기 모바일
 $("input[name=selectAddress]").click(function(){
@@ -599,18 +603,20 @@ $("input[name=selectAddress]").click(function(){
         url: '/payment/getDeliveryAddress',
         data: "deliveryType="+deliverytype,
         success: function (data) {
-        	$.each(data.delivery,function(index, item){
-        		if(index != "order_no" &&
-				   index != "product_cd"){
-        			$("input[name="+index+"]").val(item);
-        		}
-        		if(index=="delivery_user_phone" || index=="delivery_user_tel"){
-        			var number = item.split("-");
-        			['a','b','c'].forEach(function(el,idx){
-        				$("input[name="+index+"_"+el+"]").val(number[idx]);
-        			});
-        		}
-        	});
+            if(data.delivery!=null ) {
+                $.each(data.delivery,function(index, item){
+                    if(index != "order_no" &&
+                        index != "product_cd"){
+                        $("input[name="+index+"]").val(item);
+                    }
+                    if(index=="delivery_user_phone" || index=="delivery_user_tel"){
+                        var number = item.split("-");
+                        ['a','b','c'].forEach(function(el,idx){
+                            $("input[name="+index+"_"+el+"]").val(number[idx]);
+                        });
+                    }
+                });
+            }
         },
         error: function (xhr, status, error) {
             console.log(error,xhr,status );

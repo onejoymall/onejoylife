@@ -14,8 +14,8 @@
         <if test="point_id != null"> <![CDATA[AND A.point_id= #{point_id} ]]></if>
         <if test="point_paid_user_id != null"> <![CDATA[AND A.point_paid_user_id= #{point_paid_user_id} ]]></if>
         <if test="point_paid_type != null"> <![CDATA[AND A.point_paid_type= #{point_paid_type} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
         <![CDATA[ order by point_id desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
     </select>
@@ -29,8 +29,8 @@
         <if test="point_id != null"> <![CDATA[AND point_id= #{point_id} ]]></if>
         <if test="point_paid_user_id != null"> <![CDATA[AND point_paid_user_id= #{point_paid_user_id} ]]></if>
         <if test="point_paid_type != null"> <![CDATA[AND point_paid_type= #{point_paid_type} ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="point_paid_product_cd != null"> <![CDATA[AND point_paid_product_cd= #{point_paid_product_cd} ]]></if>
     </select>
     <select id="getPointAmount" resultType="java.lang.Integer" parameterType="java.util.Map">

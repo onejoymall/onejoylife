@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="mall.PaymentMapper">
+<mapper namespace="mall.MyPageMapper">
 	<select id="getUserPaymentStatusCount" parameterType="hashmap" resultType="hashmap">
 		SELECT sum(A.payment_status = 'M') as mCnt,
 				 sum(A.payment_status = 'w') as wCnt,
@@ -12,105 +12,28 @@
 		FROM payment A
 		WHERE A.payment_user_id = #{payment_user_id}
 	</select>
-	
-    <insert id="insertPayment" parameterType="java.util.Map">
-        insert into payment(
-        success,
-        product_order_name,
-        imp_uid,
-        payment_user_id,
-        merchant_uid,
-        pay_method,
-        pg_provider,
-        pg_type,
-        error_msg,
-        payment_cd,
-        order_no,
-        product_cd,
-        giveaway_cd,
-        payment,
-        payment_type_cd,
-        payment_status,
-        customs_clearance_number,
-        password,
-        delivery_hope_date,
-        delivery_hope_time,
-        payment_order_quantity,
-        reg_no
-        )values (
-         #{success},
-         #{product_order_name},
-         #{imp_uid},
-         #{payment_user_id},
-         #{merchant_uid},
-         #{pay_method},
-         #{pg_provider},
-         #{pg_type},
-         #{error_msg},
-        #{payment_cd},
-        #{order_no},
-        #{product_cd},
-        #{giveaway_cd},
-        #{payment},
-        #{payment_type_cd},
-        #{payment_status},
-        #{customs_clearance_number},
-        #{password},
-        #{hope_date},
-        #{hope_time},
-        #{payment_order_quantity},
-        #{reg_no}
-        )
-    </insert>
+    <select id="getPaymentListChk" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+          A.*
+        FROM payment A where imp_uid=#{imp_uid} AND password = #{password}
+        ]]>
+    </select>
 
-    <insert id="paymentOrders" parameterType="hashmap">
-        insert into payment_bundle(
-        product_cd,
-        payment_cd,
-        order_no,
-        cart_cd,
-        payment_type_cd,
-        payment_order_quantity
-        )values (
-        #{product_cd},
-        #{payment_cd},
-        #{order_no},
-        #{cart_cd},
-        #{payment_type_cd},
-        #{payment_order_quantity}
-        )
-    </insert>
-    <insert id="insertBundle" parameterType="hashmap">
-        insert into payment_bundle(
-	        product_cd,
-	        payment_cd,
-	        order_no,
-	        cart_cd,
-	        payment_type_cd,
-	        payment_order_quantity,
-	        coupon_cd
-        )values (
-	        #{product_cd},
-	        #{payment_cd},
-	        #{order_no},
-	        #{cart_cd},
-	        #{payment_type_cd},
-	        #{payment_order_quantity},
-        	#{coupon_cd}
-        )
-    </insert>
-
-
-
-    <update id="updateGiveawayDeliveryStatus" parameterType="java.util.Map">
-        update giveaway_play_history set giveaway_payment_status = #{giveaway_payment_status} where giveaway_play_cd=#{giveaway_play_cd}
-    </update>
-
-    <select id="getPaymentList" resultType="java.util.HashMap">
+    <select id="getMyPagePaymentList" parameterType="com.webapp.mall.vo.MyPageVO" resultType="java.util.HashMap">
     <![CDATA[
         SELECT
         	IF(A.product_order_name is not null,A.product_order_name,B.product_name) as product_name,
-            A.*,B.*,C.*,
+        	A.order_no,
+        	A.reg_date,
+        	A.payment_order_quantity,
+        	A.payment,
+        	A.payment_status,
+        	B.product_cd,
+            B.product_payment,
+		 	C.giveaway_cd,
+            C.giveaway_id,
+            C.giveaway_payment,
             (select Z.username from user Z where Z.usr_id=A.payment_user_id) as username,
             (select Z.email from user Z where Z.usr_id=A.payment_user_id) as email,
             (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
@@ -119,11 +42,6 @@
             (SELECT Z.store_name FROM store Z where Z.supplier_cd = B.product_supplier) as product_made_company_name,
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 2) as file_2,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 3) as file_3,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 4) as file_4,
-            (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 5) as file_5,
-            (select Z.file_link from product_file Z where Z.key_id = C.giveaway_cd and Z.file_order = 1) as file_6,
             (select Z.review_id from product_review Z where Z.order_no = A.order_no) as review_id,
             (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
             (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
@@ -132,54 +50,25 @@
         left join giveaway C on (C.giveaway_cd = A.giveaway_cd)
         where 1=1
         ]]>
-        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-		  	<if test='item == "product_name"'>
-		      	IF(A.product_order_name is not null,A.product_order_name,B.product_name) LIKE CONCAT('%', #{searchKeyword},'%' ) 
-		    </if>
-		    <if test='item != "product_name"'>
-		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
-	        </if>
-	      </foreach>
-	    </if>
-        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
-        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= date_format(#{delivery_start_date},'%y-%m-%d 00:00:00') ]]></if>
-        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= date_format(date_add(#{delivery_start_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
-        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
-        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
-        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
-    <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+      	<if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= ${payment_user_id} ]]></if>
+		<if test="rowStart > 0"><![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${displayRowCount} ]]></if>
     </select>
-    <select id="getPaymentListChk" resultType="java.util.HashMap">
-        <![CDATA[
-        SELECT
-          A.*
-        FROM payment A where imp_uid=#{imp_uid} AND password = #{password}
-        ]]>
-    </select>
-    <select id="getPaymentListCount" parameterType="java.util.Map" resultType="Integer">
+    <select id="getMyPagePaymentListCount" parameterType="com.webapp.mall.vo.MyPageVO" resultType="Integer">
         <![CDATA[
         SELECT
             count(*) as cnt
         FROM payment A  left join product B on (B.product_cd = A.product_cd) where 1=1
         ]]>
-        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
-	      </foreach>
-	    </if>
-        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
-        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
-        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
-        <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= date_format(#{delivery_start_date},'%y-%m-%d 00:00:00') ]]></if>
-        <if test="delivery_end_date != null and delivery_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= date_format(date_add(#{delivery_start_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
-        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
-        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
-        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+
+		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+		<if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+		<if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= ${payment_user_id} ]]></if>
     </select>
-    <select id="getPaymentDetail" resultType="java.util.HashMap" parameterType="java.util.Map" >
+    <select id="getMyPagePaymentDetail" parameterType="com.webapp.mall.vo.MyPageVO" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
             A.*,B.*,C.*,
@@ -212,6 +101,8 @@
         <if test="imp_uid != null">AND A.imp_uid=#{imp_uid}</if>
         <if test="password != null">AND A.password = #{password}</if>
     </select>
+
+
     <select id="getTodaySummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT IFNULL(COUNT(*),0) orderCnt,
 				IFNULL(COUNT(*),0) - IFNULL(SUM(A.payment_status IN ('C','G','M')),0) payCnt,
@@ -251,35 +142,6 @@
 		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>
-    <update id="updatePayment" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
-        update payment set
-        payment_status = #{payment_status}
-        where order_no=#{merchant_uid}
-    </update>
-    <update id="updatePaymentManger" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
-        update payment set
-        payment_status = #{payment_status}
-        where order_no=#{order_no}
-    </update>
-    <insert id="insertPaymentRefund" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
-        insert into payment_refund
-        (
-            merchant_uid,
-            cancel_request_amount,
-            reason,
-            refund_holder,
-            refund_bank,
-            refund_account
-        )values(
-            #{merchant_uid},
-            #{cancel_request_amount},
-            #{reason},
-            #{refund_holder},
-            #{refund_bank},
-            #{refund_account}
-        )
-    </insert>
-    
     <select id="getPaymentBundleList" resultType="hashmap" parameterType="hashmap">
     	SELECT A.*, B.*,
 			(SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1,
