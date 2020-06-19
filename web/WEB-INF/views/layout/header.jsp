@@ -89,6 +89,7 @@
         <li><a href="/MyPage/DashBoard">MyPage</a></li>
         <li><a href="/Help/csinfo">고객센터</a></li>
         <li><a href="/sign/logout">로그아웃</a></li>
+<%--        <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li>--%>
         <li class="language-nav"><a href="">국가선택</a>
             <ul>
                 <li><a href="">한국</a></li>
