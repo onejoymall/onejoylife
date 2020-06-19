@@ -417,7 +417,6 @@ $('.uploadBtn').on('change', function(object){
     var sel_file;
     var thisObject = $(this);
     var filename = thisObject.val().split('/').pop().split('\\').pop();
-    console.log(object.target);
     var files = object.target.files;
     var filesArr =Array.prototype.slice.call(files);
     filesArr.forEach(function (f) {
@@ -441,7 +440,6 @@ $('.uploadBtn').on('change', function(object){
         reader.readAsDataURL(f);
     })
 });
-
 $('.uploadBtnVideo').on('change', function(object){
     var sel_file;
     var thisObject = $(this);
@@ -475,6 +473,34 @@ $('.uploadBtnVideo').on('change', function(object){
         reader.readAsDataURL(f);
     })
 });
+$('.uploadBtnExcel').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    filesArr.forEach(function (f) {
+        if(!filename.match(/^.+\.xlsx?$/)){
+            alert("엑셀파일만 등록 가능합니다.");
+            return false;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var imgDisplayType ='copy';
+            // if(imgDisplayType =="copy"){
+            //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+            //     $('.uploadBtn').siblings('.fileName').val(filename);
+            // }else{
+                thisObject.parent().siblings('img').attr("src",e.target.result);
+                thisObject.siblings('.fileName').val(filename);
+            // }
+
+        }
+        reader.readAsDataURL(f);
+    })
+});
+
 $(".basicNoToolbar").summernote({
     height: 100,
     toolbar: false,

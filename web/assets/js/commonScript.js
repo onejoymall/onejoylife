@@ -3657,3 +3657,26 @@ $('#formSubmitGiveaway').on("click",function () {
 $(".uploadModalBtn").click(function(){
 	$(".uploadModal").attr("style", "display:block");
 })
+//업로드양식다운
+$(".downlaodTemplateBtn").click(function(){
+	location.href="/downloadFile/"+$(this).attr("data-id");
+})
+//엑셀업로드
+$(".uploadExcelBtn").click(function(){
+	var url = "/uploadExcelFile/"+$(this).attr("data-id");
+	var formData = new FormData($('#excelUploadForm')[0]);
+	$.ajax({
+		method: "post",
+		url: url,
+		enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        success: function(data){
+        	
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr, status, error);
+        }
+	})
+})

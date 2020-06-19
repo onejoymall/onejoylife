@@ -427,10 +427,10 @@
 <%--<div class="uploadModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>엑셀 다운로드</h2>
+                <h2>엑셀 업로드</h2>
                 <button type="button" class="modal-close">x</button>
             </div>
-            <form action="" method="POST">
+            <form id="excelUploadForm" action="" method="POST">
                 <div class="modal-body clearfix">
                    <table class="goods-detail-table">
                       <colgroup>
@@ -440,7 +440,7 @@
                         <tbody>
                             <tr>
                                <th>양식</th>
-                               <td><button class="btn-default" type="button"><i class="exel-ic"></i>양식 다운받기</button></td>
+                               <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="order"><i class="exel-ic"></i>양식 다운받기</button></td>
                            </tr>
                            <tr>
                               
@@ -449,14 +449,14 @@
                                <div class="fileBox">
                                    <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly" placeholder="엑셀 파일 첨부">
                                    <label for="uploadBtn" class="btn_file">파일선택</label>
-                                   <input type="file" id="uploadBtn" name="uploadBtn" class="uploadBtn">
+                                   <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtnExcel">
                                </div>
                                </td>
                            </tr>
                         </tbody>
                        
                    </table>
-                    <button class="btn-red">등록하기</button>
+                    <button class="btn-red uploadExcelBtn" type="button" data-id="order">등록/수정 하기</button>
                 </div>
             </form>
         </div>
