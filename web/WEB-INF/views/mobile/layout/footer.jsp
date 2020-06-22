@@ -41,7 +41,7 @@
 
     <!-- Toastr -->
     <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
-
+	<script src='<c:url value="/assets/js/toastr.js"/>'></script>
 
     <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
     <script src='<c:url value="/assets/js/commonScriptSub.js"/>'></script>

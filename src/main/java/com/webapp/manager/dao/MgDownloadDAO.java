@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapp.board.common.SearchVO;
 import com.webapp.manager.vo.MgCommonVO;
@@ -35,4 +36,22 @@ public class MgDownloadDAO {
     	List<Map<String,Object>> getReturnedDtoList = sql.selectList("mall.MgDownloadMapper.getReturnedDtoList",mgCommonVO);
     	return getReturnedDtoList;
     }
+
+    @Transactional
+	public void upadteOrderBatch(List<Map<String, Object>> list) throws SQLException {
+		for(Map<String, Object> map:list) {
+			sql.update("mall.MgDownloadMapper.updateOrder", map);
+		}
+	}
+    @Transactional
+    public void upadteGiveawayPartBatch(List<Map<String, Object>> list) throws SQLException {
+    	for(Map<String, Object> map:list) {
+    		sql.update("mall.MgDownloadMapper.upadteGiveawayPart", map);
+    	}
+    }
+
+	public List<Map<String, Object>> getGiveawayPartDtoList(MgCommonVO mgCommonVO) {
+		List<Map<String,Object>> getGiveawayPartDtoList = sql.selectList("mall.MgDownloadMapper.getGiveawayPartDtoList",mgCommonVO);
+    	return getGiveawayPartDtoList;
+	}
 }

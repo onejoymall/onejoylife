@@ -68,6 +68,13 @@
  </div>
 
     <script>
+    $('.logout').click(function (e) {
+    	if('${sessionScope.token}'){
+    		e.preventDefault();
+	        location.href='https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout';
+	    }
+    });
+    
     $(function(){
 
     $('.language').on('click',function(){

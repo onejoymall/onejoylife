@@ -37,6 +37,7 @@
     <link rel='stylesheet' href='<c:url value="/assets/css/common/common.css"/>'/>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <link href="<c:url value="/assets/css/toastr.css"/>" rel="stylesheet" type="text/css">
     <!-- timepicker -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
@@ -88,8 +89,8 @@
         <li><a href="/MyPage/OrderAndDelivery">주문배송</a></li>
         <li><a href="/MyPage/DashBoard">MyPage</a></li>
         <li><a href="/Help/csinfo">고객센터</a></li>
-        <li><a href="/sign/logout">로그아웃</a></li>
-<%--        <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li>--%>
+        <li><a href="/sign/logout" class="logoutBtn">로그아웃</a></li>
+        <!-- <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li> -->
         <li class="language-nav"><a href="">국가선택</a>
             <ul>
                 <li><a href="">한국</a></li>
@@ -109,4 +110,13 @@
         </div>
     </div>
     <c:import url="/layout/mainTopNav"/>
+    <script>
+    $('.logoutBtn').click(function (e) {
+    	if('${sessionScope.token}'){
+    		e.preventDefault();
+	        location.href='https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout';
+	    }
+    });
+
+    </script>
 </header>

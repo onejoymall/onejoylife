@@ -134,35 +134,33 @@ $(document).on("click","#paymentSubmit",function () {
                 stack: false
             });
         } else if(isLogin==''){
-            $.toast({
-                heading: '비회원 주문 중입니다.',
-                text: [
-                    '<a href="/sign/login">로그인 후 이용</a>',
-                    '<a href="/sign/signup">회원 가입 후 이용</a>',
-                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-                ],
-                showHideTransition: 'plain', //펴짐
-                position: 'bottom-right',
-                icon: 'info',
-                hideAfter: false
-            });
+        	toastr.options = {
+    	        closeButton: true,
+    	        progressBar: false,
+    	        showMethod: 'slideDown',
+    	        timeOut: 0
+    	    }
+    	    toastr.info([
+                '<a href="/sign/login">로그인 후 이용</a><br>',
+                '<a href="/sign/signup">회원 가입 후 이용</a><br>',
+                '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+            ], '비회원 주문 중입니다.')
         }else{
             $('#defaultForm').submit();
         }
     } else {
         if(isLogin==''){
-            $.toast({
-                heading: '비회원 주문 중입니다.',
-                text: [
-                    '<a href="/sign/login">로그인 후 이용</a>',
-                    '<a href="/sign/signup">회원 가입 후 이용</a>',
-                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-                ],
-                showHideTransition: 'plain', //펴짐
-                position: 'bottom-right',
-                icon: 'info',
-                hideAfter: false
-            });
+        	toastr.options = {
+    	        closeButton: true,
+    	        progressBar: false,
+    	        showMethod: 'slideDown',
+    	        timeOut: 0
+    	    }
+    	    toastr.info([
+                '<a href="/sign/login">로그인 후 이용</a><br>',
+                '<a href="/sign/signup">회원 가입 후 이용</a><br>',
+                '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+            ], '비회원 주문 중입니다.')
         }else{
             $('#defaultForm').submit();
         }
@@ -505,7 +503,7 @@ $(document).on("click",".ra-num",function () {
                             '             <i class="share-ic"></i>\n' +
                             '         </div>\n' +
                             '         <div class="product-info">\n' +
-                            '             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +
+                            /*'             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +*/
                             '             <p class="info-product-name">'+productList.product_name+'</p>\n' +
                             '             <p class="info-price"><span class="price-before">\n' +
                             '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
@@ -557,11 +555,11 @@ $(document).on("click",".ra-num",function () {
                                 '             <i class="share-ic"></i>\n' +
                                 '         </div>\n' +
                                 '         <div class="product-info">\n' +
-                                '             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +
+                                /*'             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +*/
                                 '             <p class="info-product-name">'+productList.product_name+'</p>\n' +
                                 '             <p class="info-price"><span class="price-before">\n' +
-                                '                '+productList.product_user_payment+'원</span>\n' +
-                                '                 <i class="right-arrow"></i>'+productList.product_payment+'원</p>\n' +
+                                '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
+                                '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                                 '             <p class="info-score">\n' +
                                 '                 <i class="star-ic"></i>\n' +
                                 '                 <span class="score-number">4.5</span>\n' +
@@ -720,30 +718,26 @@ $(document).on("click",".ra-num",function () {
                                     showText = index + " (은) " + item;
                                 }
                                 // $.toast().reset('all');//토스트 초기화
-                                $.toast({
-                                    text: showText,
-                                    showHideTransition: 'plain', //펴짐
-                                    position: 'bottom-right',
-                                    heading: 'Error',
-                                    icon: 'error'
-                                });
+                                toastr.options = {
+                        	        closeButton: true,
+                        	        progressBar: false,
+                        	        showMethod: 'slideDown',
+                        	        timeOut: 2000
+                        	    }
+                        	    toastr.error(showText, 'Error')
                             });
 
                         } else {
-                            $.toast({
-                                heading: '등록 성공!',
-                                text: [
-                                    '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                    '<a href="">쇼핑 계속!</a>',
-                                ],
-
-                                showHideTransition: 'plain', //펴짐
-                                position: 'bottom-right',
-                                icon: 'success',
-                                hideAfter: false,
-                            });
-                            // loginAuth(data.access_token);
-                            // location.href=data.redirectUrl;
+                        	toastr.options = {
+                    	        closeButton: true,
+                    	        progressBar: false,
+                    	        showMethod: 'slideDown',
+                    	        timeOut: 0
+                    	    }
+                    	    toastr.success([
+                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a><br>',
+                                '<a href="">쇼핑 계속!</a>',
+                            ], '등록 성공!')
                         }
                     },
                     error: function (xhr, status, error) {
@@ -770,29 +764,27 @@ $(document).on("click",".ra-num",function () {
                                 showText = index + " (은) " + item;
                             }
                             // $.toast().reset('all');//토스트 초기화
-                            $.toast({
-                                text: showText,
-                                showHideTransition: 'plain', //펴짐
-                                position: 'bottom-right',
-                                heading: 'Error',
-                                icon: 'error'
-                            });
+                            toastr.options = {
+                    	        closeButton: true,
+                    	        progressBar: false,
+                    	        showMethod: 'slideDown',
+                    	        timeOut: 2000
+                    	    }
+                    	    toastr.error(showText, 'Error')
                         });
 
                     } else {
 
-                        $.toast({
-                            heading: '등록 성공!',
-                            text: [
-                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
-                                '<a href="">쇼핑 계속!</a>',
-                            ],
-
-                            showHideTransition: 'plain', //펴짐
-                            position: 'bottom-right',
-                            icon: 'success',
-                            hideAfter: false,
-                        });
+                    	toastr.options = {
+                	        closeButton: true,
+                	        progressBar: false,
+                	        showMethod: 'slideDown',
+                	        timeOut: 0
+                	    }
+                	    toastr.success([
+                            '<a href="/MyPage/ShoppingBasket">장바구니 이동</a><br>',
+                            '<a href="">쇼핑 계속!</a>',
+                        ], '등록 성공!')
                     }
                         // loginAuth(data.access_token);
                         // location.href=data.redirectUrl;
@@ -2628,17 +2620,16 @@ $(document).on("click",".ra-num",function () {
     //경품응모
    $('#giveaway_apply').on("click",function () {
        if(isLogin==''){
-            $.toast({
-                heading: '비회원입니다.',
-                text: [
-                    '<a href="/sign/login">로그인 후 이용</a>',
-                    '<a href="/sign/signup">회원 가입 후 이용</a>',
-                ],
-                showHideTransition: 'plain', //펴짐
-                position: 'bottom-right',
-                icon: 'info',
-                hideAfter: false
-            });
+    	   toastr.options = {
+       	        closeButton: true,
+       	        progressBar: false,
+       	        showMethod: 'slideDown',
+       	        timeOut: 0
+       	    }
+       	    toastr.info([
+                '<a href="/sign/login">로그인 후 이용</a><br>',
+                '<a href="/sign/signup">회원 가입 후 이용</a>',
+            ], '비회원입니다')
         } else {
 
             var formData = $('#defaultForm').serialize();
@@ -3687,10 +3678,43 @@ $(".uploadExcelBtn").click(function(){
         processData: false, // 필수
         contentType: false, // 필수
         success: function(data){
-        	
+        	console.log(data);
+        	$(".uploadModal").attr("style", "display:none");
+        	if(data.success){
+        		$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                    	if(data.redirectUrl)
+                    		location.href = data.redirectUrl;
+                    	else
+                    		location.reload();
+                    }
+                });
+        	}else{
+        		console.log(data.e);
+        		$.toast({
+                    text: "ERROR",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    heading: 'Error',
+                    icon: 'error'
+                });
+        	}
         },
         error: function (xhr, status, error) {
-            console.log(xhr, status, error);
+        	$(".uploadModal").attr("style", "display:none");
+        	console.log(xhr, status, error);
+        	$.toast({
+                text: "ERROR",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
         }
 	})
 })
