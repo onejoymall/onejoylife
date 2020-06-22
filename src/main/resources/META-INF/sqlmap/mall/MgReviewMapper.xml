@@ -20,8 +20,8 @@
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 	      </foreach>
 	    </if>
-	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+		<if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <![CDATA[ order by A.review_answer is not null, A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
 	</select>
 	<select id="getReviewListCount" parameterType="com.webapp.board.common.SearchVO" resultType="Integer">
@@ -37,8 +37,8 @@
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 	      </foreach>
 	    </if>
-	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+		<if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
 	</select>
 	<select id="getReviewDetail" parameterType="hashmap" resultType="hashmap">
 		SELECT DATE_FORMAT(A.reg_date,'%Y.%m.%d (%H:%i:%s)') reg_date,

@@ -11,7 +11,7 @@
 		<c:forEach var="i" begin="${searchVO.pageStart}" end="${searchVO.pageEnd}" step="1" varStatus="status">
             <c:choose>
                 <c:when test="${i eq searchVO.page}">
-					<a href=""><c:out value="${i}"/></a>
+					<a href="" class="active"><c:out value="${i}"/></a>
                 </c:when>
                 <c:otherwise>
 					<a href="javascript:fnSubmitForm(${i});"><c:out value="${i}"/></a>
@@ -25,7 +25,7 @@
 		</c:if>
 		</div>
 	</div>
-	<input type="hidden" name="page" id="page" value="" />
+	<input type="hidden" name="page" id="page" value="${searchVO.page}" />
 		
 	<script type="text/javascript">
 	function fnSubmitForm(page){ 

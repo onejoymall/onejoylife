@@ -16,7 +16,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.CartPaymentVO;
+import com.webapp.mall.vo.MyPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -35,15 +37,6 @@ import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.CartDAO;
-import com.webapp.mall.dao.CouponDAO;
-import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.GiveawayDAO;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.dao.PointDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.ReviewDAO;
-import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 @Controller
 public class MyPage {
@@ -67,6 +60,8 @@ public class MyPage {
     CartDAO cartDAO;
     @Autowired
     PaymentDAO paymentDAO;
+    @Autowired
+    MyPageDAO myPageDAO;
     @Autowired
     ReviewDAO reviewDAO;
     IamportClient client;
@@ -430,21 +425,20 @@ public class MyPage {
     }
     //주문배송조회
     @RequestMapping(value="/MyPage/OrderAndDelivery")
-    public String myPageOrderAndDelivery(Model model,@RequestParam HashMap params,HttpSession session,SearchVO searchVO,HttpServletRequest request) throws Exception{
+    public String myPageOrderAndDelivery(Model model, @RequestParam HashMap params, HttpSession session, MyPageVO myPageVO, HttpServletRequest request) throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            params.put("payment_user_id",userInfo.get("usr_id"));
-            //페이징
-            searchVO.setDisplayRowCount(5);
-            searchVO.setStaticRowEnd(5);
-            searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
-            params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            model.addAttribute("searchVO", searchVO);            
 
-            params.put("order_user_id",userInfo.get("usr_id"));
-            List<Map<String,Object>> paymentList = paymentDAO.getPaymentList(params);
+            myPageVO.setPayment_user_id((Integer)userInfo.get("usr_id"));
+            //페이징
+            myPageVO.setDisplayRowCount(5);
+            model.addAttribute("searchVO", myPageVO);
+
+            //목록 수량
+            myPageVO.pageCalculate(myPageDAO.getMyPagePaymentListCount(myPageVO));
+            //목록 생성
+            List<Map<String,Object>> paymentList = myPageDAO.getMyPagePaymentList(myPageVO);
             model.addAttribute("paymentList", paymentList);
             
             params.put("code", "payment_status");

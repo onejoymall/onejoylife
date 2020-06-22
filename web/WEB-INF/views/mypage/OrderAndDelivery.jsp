@@ -16,16 +16,17 @@
             <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
             <div class="right-contain">
                 <c:import url="/MyPage/RightHeader"/>
-                <form id="form1" name="form1"  method="get">
+                <form id="form1" name="form1" method="get">
+                    <input type="hidden" name="date_pick_con">
                 <div class="r-input-box">
                     <p class="r-in-p1">주문현황</p>
 
                     <div class="r-in-box">
                         <div class="input-box1">
-                            <p class="ra-num on" data-id="con1">오늘</p>
-                            <p class="ra-num" data-id="con2">1주일</p>
-                            <p class="ra-num" data-id="con3">1개월</p>
-                            <p class="ra-num" data-id="con4">3개월</p>
+                            <p class="ra-num <c:if test="${param.date_pick_con=='con1'}">on</c:if>" data-id="con1">오늘</p>
+                            <p class="ra-num <c:if test="${param.date_pick_con=='con2'}">on</c:if>" data-id="con2">1주일</p>
+                            <p class="ra-num <c:if test="${param.date_pick_con=='con3'}">on</c:if>" data-id="con3">1개월</p>
+                            <p class="ra-num <c:if test="${param.date_pick_con=='con4'}">on</c:if>" data-id="con4">3개월</p>
                         </div>
                         <div class="input-box2">
                             <div class="cla">
@@ -94,7 +95,7 @@
                                                     <div class="my-lis-txt">
                                                         <p>${paymentList.product_made_company_name}</p>
                                                         <p class="lis-font-w">${paymentList.product_name}</p>
-                                                        <p>${paymentList.product_model}</p>
+<%--                                                        <p>${paymentList.product_model}</p>--%>
                                                     </div>
                                                 </a>
                                             </c:if>
@@ -104,12 +105,18 @@
                                                     <div class="my-lis-txt">
                                                         <p>${paymentList.product_made_company_name}</p>
                                                         <p class="lis-font-w">${paymentList.product_name}</p>
-                                                        <p>${paymentList.product_model}</p>
+<%--                                                        <p>${paymentList.product_model}</p>--%>
                                                     </div>
                                                 </a>
                                             </c:if>
                                         </td>
-                                        <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+                                        <td class="lis-font-w">
+                                            <span>
+                                                <fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" />
+                                                <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" />
+                                            </span>
+                                            <span>원</span>
+                                        </td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
                                         <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
                                         <td class="pointer">

@@ -604,3 +604,7 @@ input[class='styleClass']:checked + label
 .bx-wrapper .bx-controls-direction a {
     z-index: 998!important;
 }
+.num > a.active {
+    text-decoration: underline;
+    color: #848484 !important;
+}
