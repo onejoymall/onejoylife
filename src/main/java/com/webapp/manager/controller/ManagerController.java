@@ -351,9 +351,11 @@ public class ManagerController {
         } catch (Exception e){
             e.printStackTrace();
         }
+        model.addAttribute("Pk", "giveaway_play_id");
         model.addAttribute("style", "order");
         model.addAttribute("topNav", 2);
         model.addAttribute("postUrl", "/Manager/GiveawayPartList");
+        
 
        return "manager/giveaway/giveawaypartlist";
     }

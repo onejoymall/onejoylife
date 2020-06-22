@@ -8,7 +8,7 @@
             <div class="main-header">
                 <h2 name="detail">주문현황관리</h2>
                 <div class="main-hd-btn-wrap">
-                	<button type="button" class="uploadModalBtn"><i class="exel-ic"></i>일괄 등록/수정</button>
+                	<button type="button" class="uploadModalBtn"><i class="exel-ic"></i>일괄 수정</button>
                 </div>
             </div>
             <div class="dashboard-wrap">
@@ -424,43 +424,43 @@
     </div>
 </div>
 <!--20.06.19 다운로드 모달 추가-->
-<%--<div class="uploadModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>엑셀 업로드</h2>
-                <button type="button" class="modal-close">x</button>
-            </div>
-            <form id="excelUploadForm" action="" method="POST">
-                <div class="modal-body clearfix">
-                   <table class="goods-detail-table">
-                      <colgroup>
-                            <col width="20%">
-                            <col width="80%">
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                               <th>양식</th>
-                               <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="order"><i class="exel-ic"></i>양식 다운받기</button></td>
-                           </tr>
-                           <tr>
-                              
-                               <th>업로드</th>
-                               <td>
-                               <div class="fileBox">
-                                   <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly" placeholder="엑셀 파일 첨부">
-                                   <label for="uploadBtn" class="btn_file">파일선택</label>
-                                   <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtnExcel">
-                               </div>
-                               </td>
-                           </tr>
-                        </tbody>
-                       
-                   </table>
-                    <button class="btn-red uploadExcelBtn" type="button" data-id="order">등록/수정 하기</button>
-                </div>
-            </form>
+<div class="uploadModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>엑셀 업로드</h2>
+            <button type="button" class="modal-close">x</button>
         </div>
-    </div>--%>
+        <form id="excelUploadForm" action="" method="POST">
+            <div class="modal-body clearfix">
+               <table class="goods-detail-table">
+                  <colgroup>
+                        <col width="20%">
+                        <col width="80%">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                           <th>양식</th>
+                           <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="order"><i class="exel-ic"></i>양식 다운받기</button></td>
+                       </tr>
+                       <tr>
+                          
+                           <th>업로드</th>
+                           <td>
+                           <div class="fileBox">
+                               <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly" placeholder="엑셀 파일 첨부">
+                               <label for="uploadBtn" class="btn_file">파일선택</label>
+                               <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtnExcel">
+                           </div>
+                           </td>
+                       </tr>
+                    </tbody>
+                   
+               </table>
+                <button class="btn-red uploadExcelBtn" type="button" data-id="order">수정 하기</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     $('.order-select').on("change",function () {
         $('input[name=displayRowCount]').val($(this).val());

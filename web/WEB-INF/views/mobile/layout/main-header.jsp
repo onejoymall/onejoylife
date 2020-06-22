@@ -38,6 +38,7 @@
     <script src="<c:url value="/assets/js/common-mobile.js" />"></script>
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <link href="<c:url value="/assets/css/toastr.css"/>" rel="stylesheet" type="text/css">
     <!-- timepicker -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 

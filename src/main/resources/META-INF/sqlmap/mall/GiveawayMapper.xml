@@ -95,7 +95,7 @@
     <select id="getUserGiveawayPlayList" resultType="java.util.HashMap">
         <![CDATA[
         select
-        A.*,
+        A.*, C.*, B.*,
             (select Z.email from user Z where Z.usr_id = A.giveaway_play_user_id) as email,
             (select Z.giveaway_detail_image from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_detail_image,
             (select Z.giveaway_brand from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_brand,
@@ -107,10 +107,14 @@
             (select Z.code_name from code Z where Z.code = 'giveaway_play_status' and Z.code_value=A.giveaway_play_status) as giveaway_play_status_name,
             (select Z.code_name from code Z where Z.code = 'giveaway_payment_status' and Z.code_value=A.giveaway_payment_status) as giveaway_payment_status_name,
             (select Z.giveaway_winner_user_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id,
-            IFNULL((SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = (SELECT payment_status FROM payment Z WHERE Z.giveaway_cd = A.giveaway_cd AND Z.payment_user_id = A.giveaway_play_user_id)),'결제전') payment_status_name,
-            (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1,
-            (SELECT Z.order_no FROM payment Z WHERE Z.giveaway_cd = A.giveaway_cd AND Z.payment_user_id = A.giveaway_play_user_id) order_no
-        FROM giveaway_play_history A where 1=1
+            IFNULL((SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = (SELECT payment_status FROM payment Z WHERE Z.order_no = B.order_no)),'결제전') payment_status_name,
+            (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1
+        FROM giveaway_play_history A 
+		LEFT join delivery_info B
+		ON A.giveaway_play_cd = B.giveaway_play_cd
+		LEFT JOIN payment C
+		ON B.order_no = C.order_no
+		where 1=1
         ]]>
         <if test="giveaway_play_status != null and giveaway_play_status !=''"><![CDATA[AND A.giveaway_play_status = #{giveaway_play_status} ]]></if>
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>
@@ -120,7 +124,7 @@
         <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="cast_start_date != null and cast_start_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) >= #{cast_start_date} ]]></if>
         <if test="cast_end_date != null and cast_end_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) <= #{cast_end_date} ]]></if>
-        order by reg_date desc
+        order by A.reg_date desc
         LIMIT ${rowStart-1}, ${staticRowEnd}
     </select>
     <select id="getUserGiveawayPlayListCount" resultType="java.lang.Integer">
@@ -129,12 +133,14 @@
             count(*)
         FROM giveaway_play_history A  where 1=1
         ]]>
-        <if test="giveaway_play_status != null"> <![CDATA[AND A.giveaway_play_status= #{giveaway_play_status} ]]></if>
+        <if test="giveaway_play_status != null and giveaway_play_status !=''"><![CDATA[AND A.giveaway_play_status = #{giveaway_play_status} ]]></if>
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>
         <if test="giveaway_cd != null"> <![CDATA[AND giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_play_user_id != null"> <![CDATA[AND giveaway_play_user_id= #{giveaway_play_user_id} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="cast_start_date != null and cast_start_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) >= #{cast_start_date} ]]></if>
+        <if test="cast_end_date != null and cast_end_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) <= #{cast_end_date} ]]></if>
     </select>
     <insert id="insertGiveaway" parameterType="com.webapp.mall.vo.GiveawayVO">
 

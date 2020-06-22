@@ -413,7 +413,6 @@ public class ManagerRestapiController {
                 resultMap.put("redirectUrl","/Manager/order");
             }
         } catch (Exception e) {
-
             resultMap.put("e", e);
         }
         return resultMap;

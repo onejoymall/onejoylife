@@ -36,9 +36,51 @@
 	    </foreach>
     order by reg_date desc
   </select>
+  <select id="getGiveawayPartDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
+    <![CDATA[
+        select
+        	date_format(B.delivery_start_date,'%Y-%m-%d') delivery_start_date,
+        	date_format(A.reg_date,'%Y-%m-%d') reg_date,
+        	date_format(C.reg_date,'%Y-%m-%d') payment_reg_date,
+        	A.*, C.*, B.*,
+            (select Z.email from user Z where Z.usr_id = A.giveaway_play_user_id) as email,
+            (select Z.giveaway_detail_image from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_detail_image,
+            (select Z.giveaway_brand from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_brand,
+            (select Z.giveaway_model_name from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_model_name,
+            (select Z.giveaway_name from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_name,
+            (select Z.giveaway_cd from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_cd,
+            (select Z.giveaway_name from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as product_name,
+            (select Z.giveaway_play_winner_point from giveaway Z where Z.giveaway_cd=A.giveaway_cd) as giveaway_play_winner_point,
+            date_format((select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd),'%Y-%m-%d') as giveaway_winner_reg_date,
+            (select Z.code_name from code Z where Z.code = 'giveaway_play_status' and Z.code_value=A.giveaway_play_status) as giveaway_play_status_name,
+            (select Z.code_name from code Z where Z.code = 'giveaway_payment_status' and Z.code_value=A.giveaway_payment_status) as giveaway_payment_status_name,
+            (select Z.giveaway_winner_user_id from giveaway_winner Z where Z.giveaway_play_id=A.giveaway_play_id ) as winner_id,
+            IFNULL((SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = (SELECT payment_status FROM payment Z WHERE Z.order_no = B.order_no)),'결제전') payment_status_name,
+            (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1,
+            (SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = C.payment_status ) AS payment_status_name,
+            (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = C.pay_method) as pay_method_name
+        FROM giveaway_play_history A 
+		LEFT join delivery_info B
+		ON A.giveaway_play_cd = B.giveaway_play_cd
+		LEFT JOIN payment C
+		ON B.order_no = C.order_no
+		where ${pk} in
+        ]]>
+    <!-- <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        A.${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if> -->
+	    <foreach collection="chk" item="item" open="(" separator="," close=")">
+	         #{item}
+	    </foreach>
+    order by A.reg_date desc
+  </select>
   <select id="getOrderDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
         SELECT 
+        	date_format(B.delivery_start_date,'%Y-%m-%d') delivery_start_date,
+        	date_format(A.reg_date,'%Y-%m-%d') reg_date,
             A.*,B.*, C.*,
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'M' AND Z.product_class_code = C.product_made_company_cd) AS product_made_company_name,
             (SELECT Z.store_name FROM store Z WHERE Z.supplier_cd = C.product_supplier) AS product_supplier_name,
@@ -47,6 +89,7 @@
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'T' AND Z.product_class_code = C.product_trend) AS product_trend_name,
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'O' AND Z.product_class_code = C.product_origin) AS product_origin_name,
             (SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = A.payment_status ) AS payment_status_name,
+            (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = A.pay_method) as pay_method_name,
             (SELECT if(SUBSTRING_INDEX(C.product_tex_class, '|', 1) = 'A','과세상품',Z.code_name) FROM code Z WHERE Z.code = 'product_tex_class' AND Z.code_value = SUBSTRING_INDEX(C.product_tex_class, '|', 1) ) AS product_tex_class_name,
             if(SUBSTRING_INDEX(C.product_tex_class, '|', -1) IN ('A','B','C'),NULL,SUBSTRING_INDEX(C.product_tex_class, '|', -1)) AS product_tex
             
@@ -91,4 +134,47 @@
 	    </foreach>
     order by reg_date desc
   </select>
+  <update id="updateOrder" parameterType="hashmap">
+	  UPDATE payment A, delivery_info B SET
+			A.payment_status = #{payment_status},
+			B.order_user_name = #{order_user_name},
+			B.order_user_phone = #{order_user_phone},
+			B.delivery_user_name = #{delivery_user_name},
+			B.delivery_user_phone = #{delivery_user_phone},
+			B.delivery_user_tel = #{delivery_user_tel},
+			B.postcode = #{postcode},
+			B.roadAddress = #{roadAddress},
+			B.extraAddress = #{extraAddress},
+			B.jibunAddress = #{jibunAddress},
+			B.delivery_message = #{delivery_message},
+			A.delivery_hope_date = #{delivery_hope_date},
+			A.delivery_hope_time = #{delivery_hope_time},
+			B.delivery_t_code = #{delivery_t_code},
+			B.delivery_t_invoice = #{delivery_t_invoice},
+			B.delivery_start_date = #{delivery_start_date}
+		WHERE A.order_no = B.order_no
+		AND A.order_no = #{order_no}
+  </update>
+  <update id="upadteGiveawayPart" parameterType="hashmap">
+	  UPDATE giveaway_play_history C, payment A, delivery_info B SET
+			A.payment_status = #{payment_status},
+			B.order_user_name = #{order_user_name},
+			B.order_user_phone = #{order_user_phone},
+			B.delivery_user_name = #{delivery_user_name},
+			B.delivery_user_phone = #{delivery_user_phone},
+			B.delivery_user_tel = #{delivery_user_tel},
+			B.postcode = #{postcode},
+			B.roadAddress = #{roadAddress},
+			B.extraAddress = #{extraAddress},
+			B.jibunAddress = #{jibunAddress},
+			B.delivery_message = #{delivery_message},
+			A.delivery_hope_date = #{delivery_hope_date},
+			A.delivery_hope_time = #{delivery_hope_time},
+			B.delivery_t_code = #{delivery_t_code},
+			B.delivery_t_invoice = #{delivery_t_invoice},
+			B.delivery_start_date = #{delivery_start_date}
+		WHERE C.giveaway_play_cd = B.giveaway_play_cd
+		AND B.order_no = A.order_no
+		AND C.giveaway_play_id = #{giveaway_play_id}
+  </update>
 </mapper>

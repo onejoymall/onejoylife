@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +26,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.support.CurlPost;
 import com.webapp.manager.dao.MgDownloadDAO;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.ProductVO;
@@ -41,10 +47,16 @@ import com.webapp.manager.vo.ProductVO;
 public class MgExcelRestController {
     @Autowired
     MgDownloadDAO mgDownloadDAO;
+    @Value("${t_key}")
+    private String t_key;
+    @Value("${t_url}")
+    private String t_url;
     
     @RequestMapping(value = "/{type}/downloadExcelFile")
     public void productDownloadExcelFile(@RequestParam HashMap params, @PathVariable String type, MgCommonVO mgCommonVO, Model model, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
     	try {
+    		Map<String, Object> companylist = null;
+        	List<Map<String, Object>> companys = null;
     		List<Map<String, Object>> list = null;
     		switch(type) {
     			//상품 엑셀선택다운
@@ -57,9 +69,42 @@ public class MgExcelRestController {
 	    			list = mgDownloadDAO.getGiveawayDtoList(mgCommonVO);
 					break;
 				
+				//경품참여 엑셀선택다운
+	    		case "giveawayPart": 
+	    			companylist = CurlPost.curlPostFn(
+	                        t_url+"/api/v1/companylist?t_key="+t_key,
+	                        "",
+	                        "",
+	                        "get"
+	                );
+	    			companys = (List)companylist.get("Company");
+	    			
+	    			list = mgDownloadDAO.getGiveawayPartDtoList(mgCommonVO);
+	    			for(Map<String,Object> map : list) {
+	    				List<Map<String, Object>> company = companys.stream().filter(item -> item.get("Code").equals(map.get("delivery_t_code"))).collect(Collectors.toList());
+	    				if(company != null && !company.isEmpty()) {
+	    					map.put("delivery_t_code_name",company.get(0).get("Name"));
+	    				}
+	    			}
+	    			break;
+	    			
 				//주문 엑셀선택다운
 	    		case "order": 
+	    			companylist = CurlPost.curlPostFn(
+	                        t_url+"/api/v1/companylist?t_key="+t_key,
+	                        "",
+	                        "",
+	                        "get"
+	                );
+	    			companys = (List)companylist.get("Company");
+	    			
 	    			list = mgDownloadDAO.getOrderDtoList(mgCommonVO);
+	    			for(Map<String,Object> map : list) {
+	    				List<Map<String, Object>> company = companys.stream().filter(item -> item.get("Code").equals(map.get("delivery_t_code"))).collect(Collectors.toList());
+	    				if(company != null && !company.isEmpty()) {
+	    					map.put("delivery_t_code_name",company.get(0).get("Name"));
+	    				}
+	    			}
 					break;
 					
 				//쿠폰 엑셀선택다운
@@ -95,15 +140,54 @@ public class MgExcelRestController {
     }
     
     //주문 엑셀업로드
+    @Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor = {RuntimeException.class, Exception.class})
+    @ResponseBody
     @RequestMapping(value = "/uploadExcelFile/{type}")
-    public void uploadExcelFile(Model model, MgCommonVO mgCommonVO, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO,@PathVariable String type,
+    public HashMap<String, Object> uploadExcelFile(Model model, MgCommonVO mgCommonVO, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO,@PathVariable String type,
     		@RequestParam(value="uploadfile", required=false) MultipartFile uploadFile) throws Exception {
-    	try {
-    		List<Map<String,Object>> list = parseExcelToList(uploadFile);
-    		
-    	}catch (Exception e) {
-    		e.printStackTrace();	
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+		List<Map<String,Object>> list = parseExcelToList(uploadFile);
+		
+		switch(type) {
+			//상품 엑셀업로드
+    		case "product": 
+				break;
+				
+			//경품 엑셀업로드
+    		case "giveaway": 
+				break;
+			
+			//경품참여 엑셀업로드
+    		case "giveawayPart": 
+    			mgDownloadDAO.upadteGiveawayPartBatch(list);
+    			break;
+    			
+			//주문 엑셀업로드
+    		case "order": 
+    			mgDownloadDAO.upadteOrderBatch(list);
+				break;
+				
+			//쿠폰 엑셀업로드
+    		case "coupon": 
+    			break;
+    			
+    		//환불/교환 엑셀업로드
+    		case "returned": 
+    			break;
+    			
+    		//qna 엑셀업로드
+    		case "qna": 
+    			break;
+    			
+    		//1:1 엑셀업로드
+    		case "oneToOne": 
+    			break;
 		}
+		resultMap.put("success","success");
+		
+    	return resultMap;
     }
 
     //엑셀다운
@@ -159,7 +243,7 @@ public class MgExcelRestController {
 	            if(null != cell) {
 	            	String value = "";
 	            	if( cell.getCellType() == CellType.FORMULA ) {
-	                    value = cell.getCellFormula();
+	                    value = cell.getCellFormula() + "";
 	                }else if( cell.getCellType() == CellType.NUMERIC ) {
 	                    value = cell.getNumericCellValue() + "";
 	                }else if( cell.getCellType() == CellType.STRING ) {
@@ -171,6 +255,7 @@ public class MgExcelRestController {
 	                }else if( cell.getCellType() == CellType.BLANK ) {
 	                    value = "";
 	                }
+	            	if(value.equals("")) value = null;
 	            	map.put(columnNames[j], value);
 	            }
             }
