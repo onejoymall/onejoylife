@@ -41,7 +41,7 @@
 
     String g_conf_ENC_KEY      = "E66DCEB95BFBD45DF9DFAEEBCB092B5DC2EB3BF0";
     
-    String g_conf_Ret_URL      = "http://onejoy-life/sign/kcpcert_proc_res";
+    String g_conf_Ret_URL      = "http://onejoy-life.com/sign/kcpcert_proc_res";
     
     /* ============================================================================== */
     /* =   02. 인증 테스트/상요 설정                                                = */
