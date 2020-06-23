@@ -3682,7 +3682,6 @@ $(".uploadExcelBtn").click(function(){
         processData: false, // 필수
         contentType: false, // 필수
         success: function(data){
-        	console.log(data);
         	$(".uploadModal").attr("style", "display:none");
         	if(data.success){
         		$.toast({
