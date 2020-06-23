@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.MainPageMapper">
+    <select id="getMainGiveawayList" resultType="java.util.HashMap" parameterType="com.webapp.mall.vo.GiveawayVO">
+        <![CDATA[
+        select
+            A.giveaway_id,
+            A.giveaway_name,
+            A.giveaway_payment,
+            A.giveaway_validity,
+            A.giveaway_play_winner_point,
+            ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) as parti_rate,
+            ifnull((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) sum_play_point,
+            ifnull((select count(1) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) , 0) player_count,
+            (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1
+        FROM giveaway A  where A.giveaway_use_yn='Y' and A.giveaway_sale_yn='Y'
+        ]]>
+        <if test='parti_rate == "1"'> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) < 100 ]]></if>
+        <if test='parti_rate == "100"'> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
+        order by giveaway_id desc
+        LIMIT ${displayRowCount}
+    </select>
+    <select id="getMainProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                A.product_cd,
+                A.product_name,
+                A.product_user_payment,
+                A.product_payment,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.product_made_company_cd) as product_made_company_name,
+                (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1
+            FROM product A
+        ]]>
+        <if test='orderByKey =="sales_count"'>
+            JOIN (select product_cd, COUNT(*) sales_count from payment GROUP BY product_cd) B
+            ON B.product_cd = A.product_cd
+        </if>
+        <![CDATA[
+            where A.product_live_type is null
+            and CASE WHEN product_validity_yn ='Y' THEN A.product_validity_start >= date_format(now(),'%y-%m-%d 00:00:00') ELSE TRUE END
+            and CASE WHEN product_validity_yn ='Y' THEN A.product_validity_end <= date_format(date_add(now(),interval 1 day),'%y-%m-%d 00:00:00') ELSE TRUE END
+        ]]>
+
+        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
+        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
+        <if test="product_ct != null and product_ct != ''"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
+        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        order by product_id desc
+        LIMIT ${displayRowCount}
+    </select>
+</mapper>
