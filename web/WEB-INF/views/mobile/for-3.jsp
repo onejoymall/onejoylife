@@ -32,13 +32,13 @@
     </header>
     <section class="subheader">
         <ul class="taps">
-            <li><a href="javascript:show(1)" id="tap1" class="ready">아이디 찾기</a></li>
-            <li><a href="javascript:show(2)" id="tap2" class="active">비밀번호 찾기</a></li>
+            <li><a href="javascript:void(1)" id="tap1" class="">아이디 찾기</a></li>
+            <li><a href="javascript:void(2)" id="tap2" class="">비밀번호 찾기</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
-        <p class="id-pw-tit">등록하신 ID는<br> <span>gildonhong@naver.co.kr</span> 입니다.</p>
-        <button type="button" class="id-pw-btn">로그인</button>
+        <p class="id-pw-tit">등록하신 ID는<br> <span>${id}</span> 입니다.</p>
+        <button type="button" onclick="location.href='<c:url value="/sign/login"/>'" class="id-pw-btn">로그인</button>
     </section>
     <section class="wrap clearfix" id="list">
         <p class="id-pw-tit">신규로 입력하신<br> 비밀번호로 변경이 완료되었습니다.</p>
@@ -48,16 +48,9 @@
 <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>
 <script>
 $(document).ready(function(){
-    $('#write').hide();
-    $('#list').show();
-    $('.qna').on('click',function(){
-        $(this).addClass('active');
-        $('.qna').not($(this)).removeClass('active');
-    })
-    $('#date li a').on('click',function(){
-        $(this).addClass('active');
-        $('#date li a').not($(this)).removeClass('active');
-    })
+	var no = <c:if test="${not empty id}">1</c:if>
+	<c:if test="${empty id}">2</c:if>;
+	show(no);
 });
 /**
  * 탭 function

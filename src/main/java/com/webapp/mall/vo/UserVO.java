@@ -10,6 +10,7 @@ public class UserVO {
     private String user_privacy_policy;
     private String email_privacy_policy;
     private String log_type;
+    private String phone;
 
     public String getLog_type() {
         return log_type;
@@ -82,4 +83,12 @@ public class UserVO {
     public void setPassword_cf(String password_cf) {
         this.password_cf = password_cf;
     }
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

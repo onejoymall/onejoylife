@@ -121,6 +121,14 @@ public class UserController {
             return "mall/signup";
         }
     }
+    @RequestMapping(value = "/sign/kcpcert_proc_req")
+    public String kcpcertProcReq(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
+    	return "mall/kcpcert_proc_req";
+    }
+    @RequestMapping(value = "/sign/kcpcert_proc_res")
+    public String kcpcertProcRes(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
+    	return "mall/kcpcert_proc_res";
+    }
     @RequestMapping(value = "/mobile/signup")
     public String mobilejoinform(@RequestParam HashMap params, ModelMap model, HttpServletRequest request) throws Exception {
         try{
@@ -179,6 +187,9 @@ public class UserController {
     public String changePasswordDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
         Device device = DeviceUtils.getCurrentDevice(request);
         model.addAttribute("style", "for-3");
+        if(params.get("email") != null && !params.get("email").equals("")) {
+        	model.addAttribute("id", params.get("email"));
+        }
         if(device.isMobile()){
             return "mobile/for-3";
         } else{
