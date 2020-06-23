@@ -27,9 +27,13 @@ import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +49,8 @@ import com.webapp.manager.vo.ProductVO;
 
 @Controller
 public class MgExcelRestController {
+	@Autowired
+    private DataSourceTransactionManager txManager;
     @Autowired
     MgDownloadDAO mgDownloadDAO;
     @Value("${t_key}")
@@ -145,47 +151,56 @@ public class MgExcelRestController {
     @RequestMapping(value = "/uploadExcelFile/{type}")
     public HashMap<String, Object> uploadExcelFile(Model model, MgCommonVO mgCommonVO, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO,@PathVariable String type,
     		@RequestParam(value="uploadfile", required=false) MultipartFile uploadFile) throws Exception {
+    	DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = txManager.getTransaction(def);
+        
     	HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
-        
-		List<Map<String,Object>> list = parseExcelToList(uploadFile);
-		
-		switch(type) {
-			//상품 엑셀업로드
-    		case "product": 
-				break;
-				
-			//경품 엑셀업로드
-    		case "giveaway": 
-				break;
+        try {
+			List<Map<String,Object>> list = parseExcelToList(uploadFile);
 			
-			//경품참여 엑셀업로드
-    		case "giveawayPart": 
-    			mgDownloadDAO.upadteGiveawayPartBatch(list);
-    			break;
-    			
-			//주문 엑셀업로드
-    		case "order": 
-    			mgDownloadDAO.upadteOrderBatch(list);
-				break;
+			switch(type) {
+				//상품 엑셀업로드
+	    		case "product": 
+					break;
+					
+				//경품 엑셀업로드
+	    		case "giveaway": 
+					break;
 				
-			//쿠폰 엑셀업로드
-    		case "coupon": 
-    			break;
-    			
-    		//환불/교환 엑셀업로드
-    		case "returned": 
-    			break;
-    			
-    		//qna 엑셀업로드
-    		case "qna": 
-    			break;
-    			
-    		//1:1 엑셀업로드
-    		case "oneToOne": 
-    			break;
+				//경품참여 엑셀업로드
+	    		case "giveawayPart": 
+	    			mgDownloadDAO.upadteGiveawayPartBatch(list);
+	    			break;
+	    			
+				//주문 엑셀업로드
+	    		case "order": 
+	    			mgDownloadDAO.upadteOrderBatch(list);
+					break;
+					
+				//쿠폰 엑셀업로드
+	    		case "coupon": 
+	    			break;
+	    			
+	    		//환불/교환 엑셀업로드
+	    		case "returned": 
+	    			break;
+	    			
+	    		//qna 엑셀업로드
+	    		case "qna": 
+	    			break;
+	    			
+	    		//1:1 엑셀업로드
+	    		case "oneToOne": 
+	    			break;
+			}
+			resultMap.put("success","success");
+			txManager.commit(status);
+        }catch (Exception e) {
+        	resultMap.put("e",e);
+        	txManager.rollback(status);
 		}
-		resultMap.put("success","success");
 		
     	return resultMap;
     }
