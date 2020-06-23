@@ -23,15 +23,15 @@
         </div>
         <form action="" method="POST">
             <div class="tab-box">
-                <input type="radio" name="rd" id="rd1" class="rd-box ready" >
-                <label for="rd1">아이디(이메일) 찾기</label>
-                <input type="radio" name="rd" id="rd2" class="rd-box" checked>
-                <label for="rd2">비밀번호 찾기</label>
+                <input type="radio" name="rd" id="rd1" class="rd-box" <c:if test="${not empty id}">checked</c:if>>
+                <label for="rd">아이디(이메일) 찾기</label>
+                <input type="radio" name="rd" id="rd2" class="rd-box" <c:if test="${empty id}">checked</c:if>>
+                <label for="rd">비밀번호 찾기</label>
                 <div class="for-id">
                     <div class="box-in">
-                        <p class="tit-id">회원님께서 등록하신 ID는 <span>gildonhong@naver.co.kr</span>입니다.</p>
+                        <p class="tit-id">회원님께서 등록하신 ID는 <span>${id}</span>입니다.</p>
                         <div class="but-type2">
-                            <a href="#" class="but-1">로그인</a>
+                            <a href="<c:url value="/sign/login"/>" class="but-1" id="redirectLogin">로그인</a>
                         </div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@
     <insert id="insertUser" parameterType="String">
         <![CDATA[
         insert into user(
-        username,email,password,lastname,firstname,email_auth_code,email_auth_status,refferal_code,iso_code,phone,level,group_id)
+        username,email,password,lastname,firstname,email_auth_code,email_auth_status,refferal_code,iso_code,phone,level,group_id,sex,birth)
       VALUES (
         #{username},
         #{email},
@@ -46,7 +46,9 @@
         #{iso_code},
         #{phone},
         #{level},
-        #{group_id}
+        #{group_id},
+        #{sex},
+        #{birth}
         )
         ]]>
     </insert>

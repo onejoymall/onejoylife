@@ -247,6 +247,9 @@ public class restapiController {
             if(userVO.getPassword_cf().isEmpty()){
                 error.put("password_cf", messageSource.getMessage("error.required","ko"));
             }
+            if(userVO.getPhone().isEmpty()){
+            	error.put("phone", messageSource.getMessage("error.required","ko"));
+            }
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -423,7 +426,7 @@ public class restapiController {
 				resultMap.put("validateError", error);
 				error.put("Error", messageSource.getMessage("error.userNotFound", "ko"));
 			} else {
-				resultMap.put("redirectUrl", "/sign/findPassword");
+				resultMap.put("email", userInfo.get("email"));
 			}
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
