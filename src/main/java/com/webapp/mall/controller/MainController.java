@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.dao.*;
+import com.webapp.manager.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -27,11 +29,6 @@ import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.CartDAO;
-import com.webapp.mall.dao.GiveawayDAO;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.BannerDAO;
@@ -40,6 +37,8 @@ import com.webapp.manager.dao.ConfigDAO;
 @Controller
 @RequestMapping("/")
 public class MainController {
+    @Autowired
+    private MainPageDAO mainPageDAO;
 	@Autowired
     private NumberGender numberGender;
 	@Autowired
@@ -63,7 +62,7 @@ public class MainController {
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO, BoardVO boardVO) throws Exception {
+    public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO, BoardVO boardVO, ProductVO productVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
 //        Map<String, String> param = new HashMap<String, String>();
 
@@ -94,77 +93,53 @@ public class MainController {
             //경품목록
             if(device.isMobile()){
                 giveawayVO.setDisplayRowCount(4);
-                giveawayVO.setStaticRowEnd(4);
             } else {
                 giveawayVO.setDisplayRowCount(3);
-                giveawayVO.setStaticRowEnd(3);
             }
             giveawayVO.setParti_rate(1);
-            giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            List<Map<String,Object>> list = giveawayDAO.getGiveawayList(giveawayVO);
+            List<Map<String,Object>> list = mainPageDAO.getMainGiveawayList(giveawayVO);
 
             model.addAttribute("giveawaylist", list);
 
+            //상품공통
+            productVO.setProduct_use_yn("Y");
+            productVO.setProduct_sale_yn("Y");
 
             //카테고리 상품목록
-
-            searchVO.setDisplayRowCount(8);
-            searchVO.setStaticRowEnd(8);
-
-            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
-            searchVO.setProduct_sale_yn("Y");
-            List<Map<String,Object>> productList = productDAO.getProductList(searchVO);
+            productVO.setDisplayRowCount(8);
+            List<Map<String,Object>> productList = mainPageDAO.getMainProductList(productVO);
             model.addAttribute("productList", productList);
-            model.addAttribute("searchVO", searchVO);
 
             //MD추천 상품목록
-
-            searchVO.setDisplayRowCount(8);
-            searchVO.setStaticRowEnd(8);
-
-            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
-            searchVO.setProduct_sale_yn("Y");
-            searchVO.setMainViewType("product_md_class");
-            List<Map<String,Object>> productMDList = productDAO.getProductList(searchVO);
+            productVO.setDisplayRowCount(8);
+            productVO.setMainViewType("product_md_class");//추천 영역 노출여부
+            List<Map<String,Object>> productMDList = mainPageDAO.getMainProductList(productVO);
             model.addAttribute("productMDList", productMDList);
-            model.addAttribute("searchVO", searchVO);
             
             //신상품 상품목록
-            searchVO.setDisplayRowCount(8);
-            searchVO.setStaticRowEnd(8);
-
-            searchVO.setProduct_sale_yn("Y");
+            productVO.setDisplayRowCount(8);
             searchVO.setMainViewType("product_new_class");
-            List<Map<String,Object>> productNewList = productDAO.getProductList(searchVO);
+            List<Map<String,Object>> productNewList = mainPageDAO.getMainProductList(productVO);
             model.addAttribute("productNewList", productNewList);
-            model.addAttribute("searchVO", searchVO);
             
             //인기상품 상품목록
-            searchVO.setDisplayRowCount(8);
-            searchVO.setStaticRowEnd(8);
+            productVO.setDisplayRowCount(8);
 
-            searchVO.setOrderByKey("sales_count");
-    		searchVO.setOrderByValue("DESC");
-    		searchVO.setMainViewType(null);
-            List<Map<String,Object>> productPopularList = productDAO.getProductList(searchVO);
+            productVO.setOrderByKey("sales_count");
+            productVO.setOrderByValue("DESC");
+            productVO.setMainViewType(null);
+            List<Map<String,Object>> productPopularList = mainPageDAO.getMainProductList(productVO);
             model.addAttribute("productPopularList", productPopularList);
-            model.addAttribute("searchVO", searchVO);
 
 
             //특가 상품목록
-            searchVO.setDisplayRowCount(8);
-            searchVO.setStaticRowEnd(8);
-
-            searchVO.setOrderByKey(null);
-            searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
-            searchVO.setProduct_sale_yn("Y");
-            searchVO.setMainViewType("product_sp_class");
-            List<Map<String,Object>> productSpList = productDAO.getProductList(searchVO);
+            productVO.setDisplayRowCount(8);
+            productVO.setOrderByKey(null);
+            productVO.setMainViewType("product_sp_class");
+            List<Map<String,Object>> productSpList = mainPageDAO.getMainProductList(productVO);
             model.addAttribute("productSpList", productSpList);
-            model.addAttribute("searchVO", searchVO);
-
 
             //카테고리 목록
             params.put("pd_category_main_view","Y");
