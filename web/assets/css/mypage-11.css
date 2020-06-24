@@ -400,3 +400,9 @@ table {
     text-align: center;
     z-index: 998;
 }
+.my-lis-outer{
+    width: calc(70% + 20px);
+}
+.red-box{
+    float:left
+}

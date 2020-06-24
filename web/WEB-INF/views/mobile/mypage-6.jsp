@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
-<form id="form1" name="form1"  method="post">
+<form id="form1" name="form1"  method="get">
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
 	</section>
@@ -17,19 +17,17 @@
         </ul>
         <div class="date-box">
             <div class="input-box2">
-            <form>
                 <div class="cla">
-                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
                 <p class="cla-p1"> ~ </p>
                 <div class="cla">
-                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
             <button type="submit" class="date-btn">조회</button>
-            </form>
         </div>
         <select name="payment_status" id="mo-select" class="mo-select">
             <c:if test="${not empty getSelectorList}">
@@ -97,6 +95,7 @@
         	표시할 내용이 없습니다.
         	<hr>
         </c:if>
+        <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
     </section>
     </form>
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

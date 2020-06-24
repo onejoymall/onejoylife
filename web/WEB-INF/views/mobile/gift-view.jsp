@@ -165,7 +165,7 @@
            <li>응모 포인트</li>
            <li class="">
                <form name="defaultForm" id="defaultForm" method="post">
-                   <input type="number" class="epoint" id="point" name="point" value="${detail.giveaway_payment}">
+                   <input type="number" class="epoint" id="point" name="point" value="${detail.giveaway_play_winner_point - detail.sum_play_point}">
                    <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span></span>
                    <input type="hidden" id="giveaway_id" name="giveaway_id" value='${requestScope.giveaway_id}'>
                    <input type="hidden" id="giveaway_cd" name="giveaway_cd" value='${detail.giveaway_cd}'>
@@ -175,7 +175,7 @@
        </ul>
        <ul class="flexbetween py-05">
            <li>응모 E-point</li>
-           <li class="text-lg text-bold red"><fmt:formatNumber value="${detail.giveaway_payment}" groupingUsed="true" /><span class="text-sm"> point</span></li>
+           <li class="text-lg text-bold red"><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /><span class="text-sm"> point</span></li>
        </ul>
         <ul class="winner-wrap flexbetween py-05">
             <li><h3><i class="win-icon"></i></h3></li>

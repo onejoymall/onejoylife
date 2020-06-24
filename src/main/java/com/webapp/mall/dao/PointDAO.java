@@ -17,8 +17,8 @@ public class PointDAO {
         return getPointList;
     }
 
-    public Map<String, Object> getPointListCount(Map<String, String> params) throws SQLException {
-        Map<String, Object> getPointListCount=sql.selectOne("mall.PointMapper.getPointListCount",params);
+    public Integer getPointListCount(Map<String, String> params) throws SQLException {
+    	Integer getPointListCount=sql.selectOne("mall.PointMapper.getPointListCount",params);
         return getPointListCount;
     }
     public Integer getPointAmount(Map<String, String> params) throws SQLException {

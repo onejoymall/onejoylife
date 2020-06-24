@@ -146,8 +146,8 @@
             </ul>
         </div>
         <ul class="footerBtns">
-            <li><a href="#" onclick="addShoppingBasket('${list.product_cd}')">장바구니</a></li>
-            <li><a href="#" id="paymentSubmit">바로구매</a></li>
+            <li><a href="#" onclick="addShoppingBasketM('${list.product_cd}')">장바구니</a></li>
+            <li><a href="#" id="paymentSubmitM">바로구매</a></li>
         </ul>
             <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
         </form>

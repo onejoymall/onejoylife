@@ -11,36 +11,38 @@
         </section>
         <ul class="taps">
             <li><a href="javascript:show(1)" id="tap1" class="active">경품</a></li>
-            <li><a href="javascript:show(2)" id="tap2">이벤트</a></li>
+            <%-- <li><a href="javascript:show(2)" id="tap2">이벤트</a></li> --%>
+            <li><a href="javascript:void(0)" class="ready" id="tap2">이벤트</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
-        <select class="full text-center mb-02">
+    <form id="form1" name="form1">
+        <!-- <select class="full text-center mb-02">
             <option value="0" selected>전체</option>
             <option value="1">진행중</option>
             <option value="2">추첨완료</option>
             <option value="3">당첨</option>
-        </select>
+        </select> -->
         <ul class="btns">
-            <li><a href="#" class="active" data-id="con1">오늘</a></li>
-            <li><a href="#" data-id="con2">1주일</a></li>
-            <li><a href="#" data-id="con3">1개월</a></li>
-            <li><a href="#" data-id="con4">3개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
 <%--            <li><a href="#" data-id="con2">기간설정</a></li>--%>
         </ul>
         <div class="date-box">
             <div class="input-box2">
                 <div class="cla">
-                    <input type="text" id="from_date" name="from_date" class="date_pick">
+                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
                 <p class="cla-p1"> ~ </p>
                 <div class="cla">
-                    <input type="text" id="to_date" name="to_date" class="date_pick">
+                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="button" class="date-btn">조회</button>
+            <button type="submit" class="date-btn">조회</button>
         </div>
         <table>
             <colgroup>
@@ -75,6 +77,7 @@
                         <c:if test="${empty list.giveaway_winner_reg_date && empty list.winner_id}">
                             <td>
                                 <li>진행중</li>
+                                <span class="grey text-xs">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
                             </td>
                         </c:if>
                         <c:if test="${not empty list.giveaway_winner_reg_date && empty list.winner_id}">
@@ -88,8 +91,6 @@
                         </c:if>
 <%--                        <li>진행중<span class="grey text-xs">(2019.04.15)</span></li>--%>
                         <li>
-                            <button class="btn">참여자 내역</button>
-                            <button class="btn">내 응모번호</button>
 <%--                            <button class="btn btn-blue">다른경품 더보기</button>--%>
 
                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
@@ -117,9 +118,7 @@
             </ul>
         </c:if>
         <hr>
-        <form id="form1" name="form1"  method="get">
-            <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
-            <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+        <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
         </form>
     </section>
     <section class="wrap clearfix" id="list">

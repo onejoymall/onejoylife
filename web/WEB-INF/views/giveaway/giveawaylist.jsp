@@ -17,7 +17,7 @@
         <div class="inner clearfix">
             <c:import url="/layout/scrollRight"/>
             <h3>E-point 경품추첨</h3>
-            <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">${searchVO.totRow}</span>개의 상품이 등록되어 있습니다.</p>
+            <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
             <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
@@ -45,7 +45,7 @@
 <%--                                <i class="share-ic"></i>--%>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
-                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</p>
+                            <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> 원</p>
                             <p class="deadline">
                                 <c:set var="deadline" value="${fn:split(list.giveaway_validity,'~')}"/>
                                 <c:out value='~${deadline[1]}'/>

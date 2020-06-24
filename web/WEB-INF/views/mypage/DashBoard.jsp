@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %>'
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box clearfix">
         <main>

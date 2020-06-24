@@ -50,7 +50,7 @@
             </ul>
             <ul class="options mb-1">
                 <li>수량</li>
-                <li>1 <span>개</span></li>
+                <li>${paymentDetail.payment_order_quantity} <span>개</span></li>
             </ul>
             <div class="my-1">
                 <!-- <button class="btn">배송지 변경</button> -->
