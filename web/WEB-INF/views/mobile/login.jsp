@@ -29,8 +29,8 @@
                     <div class="check-save">
                         <input type="checkbox" id="saveid" class="save-ck">
                         <label for="saveid"><span class="ck-img"></span> 아이디 저장</label>
-                        <input type="checkbox" id="auto-login" class="save-ck">
-                        <label for="auto-login"><span class="ck-img"></span>자동 로그인</label>
+                        <!-- <input type="checkbox" id="auto-login" class="save-ck">
+                        <label for="auto-login"><span class="ck-img"></span>자동 로그인</label> -->
                     </div>
                     <button type="button" title="login" class="btn-login">로그인</button>
                 </form>
