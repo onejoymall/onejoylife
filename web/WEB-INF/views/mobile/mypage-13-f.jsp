@@ -39,6 +39,7 @@
                          		${list.jibunAddress}</span></p>
                         <p>
                         	<span>${list.delivery_user_name}</span>
+                        	<br>${list.delivery_alias}
                         	<c:if test="${list.default_delivery_info_yn == 'Y'}">
                      		<span class="basic-r">(기본)</span>
                       		</c:if>

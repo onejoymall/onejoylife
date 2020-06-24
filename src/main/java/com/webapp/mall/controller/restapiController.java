@@ -1301,7 +1301,7 @@ public class restapiController {
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
 			} else {
-				resultMap.put("deliveryInfo", deliveryDAO.getDeliveryDetail(params));
+				resultMap.put("deliveryInfo", deliveryDAO.getUserDeliveryDetail(params));
 			}
 		} catch (Exception e) {
 
@@ -1318,6 +1318,9 @@ public class restapiController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
+			if (params.get("delivery_alias").equals(null) || params.get("delivery_alias").equals("")) {
+				error.put("배송지 별명", messageSource.getMessage("error.required", "ko"));
+			}
 			if (params.get("delivery_user_name").equals(null) || params.get("delivery_user_name").equals("")) {
 				error.put("받으시는분", messageSource.getMessage("error.required", "ko"));
 			}
@@ -1365,6 +1368,9 @@ public class restapiController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
+			if (params.get("delivery_alias").equals(null) || params.get("delivery_alias").equals("")) {
+				error.put("배송지 별명", messageSource.getMessage("error.required", "ko"));
+			}
 			if (params.get("delivery_user_name").equals(null) || params.get("delivery_user_name").equals("")) {
 				error.put("받으시는분", messageSource.getMessage("error.required", "ko"));
 			}

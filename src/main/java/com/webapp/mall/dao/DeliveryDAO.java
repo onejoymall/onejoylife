@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,5 +66,9 @@ public class DeliveryDAO {
     	Map<String,Object> getLastDelivery = sql.selectOne("mall.DeliveryMapper.getLastDelivery",params);
     	return getLastDelivery;
     }
+	public Object getUserDeliveryDetail(HashMap params) {
+		Map<String,Object> getUserDeliveryDetail = sql.selectOne("mall.DeliveryMapper.getUserDeliveryDetail",params);
+        return getUserDeliveryDetail;
+	}
 
 }

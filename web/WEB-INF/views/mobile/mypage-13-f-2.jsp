@@ -10,6 +10,9 @@
     
     <section class="wrap">
     	<form id="form2">
+    	<p class="text-md mt-2 mb-05">배송지 별명</p>
+        <input type="text" name="delivery_alias" class="width-100 mb-05"/>
+        
         <p class="text-md mt-2 mb-05">받으시는 분</p>
         <input type="text" name="delivery_user_name" class="width-100 mb-05"/>
         <input type="hidden" name="order_no" value="${param.orderNo}"/>
@@ -41,13 +44,14 @@
         <input type="text" name="delivery_user_tel_c" class="width-30 mb-05" maxlength="4">
         
         <p class="text-md mt-2 mb-05">주소</p>
-        <div class="input-group mb-05">
+        <%-- <div class="input-group mb-05">
             <input type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
             <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button>
-         </div>
-         <input type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
-         <input type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
-         <input type="hidden" name="jibunAddress" id="jibunAddress">
+         </div> --%>
+         <input placeholder="우편번호" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+         <input placeholder="도로명주소" type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
+         <input placeholder="상세주소" type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
+         <input type="hidden" name="jibunAddress" id="jibunAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.jibunAddress}</c:if>">
 
          <input type="checkbox" id="le-ck1" name="defaultYn" value="Y">
          <label for="le-ck1" class="mt-2">기본배송지로 설정</label>

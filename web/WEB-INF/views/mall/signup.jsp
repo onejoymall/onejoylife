@@ -233,7 +233,7 @@
                         <input type="checkbox" name="option" id="ch">
                         <label for="ch">
                             <div class="ch-p-box">
-                                <p>본인은 <strong>만 14세 이상</strong>이며, <a href="#default-modal" rel="modal:open">원조이몰 이용약관,</a><a href="#default-modal2" rel="modal:open"> 제3자동의 이용약관,</a><a href="#default-modal3" rel="modal:open"> 개인정보 수집 및 이용,</a><a href="#default-modal4" rel="modal:open"> 개인정보 제공,</a> 내용을 확인하였으며, 동의합니다.</p>
+                                <p>본인은 <strong>만 14세 이상</strong>이며, <a href="#default-modal" rel="modal:open">원조이몰 이용약관,</a><a href="#default-modal2" rel="modal:open"> 제3자동의 이용약관,</a><a href="#default-modal3" rel="modal:open"> 개인정보 수집 및 이용</a> 개인정보 제공 내용을 확인하였으며, 이에 동의합니다.</p>
                             </div>
                         </label>
                     </div>
@@ -251,14 +251,16 @@
 </div>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.610.0.min.js"></script>
 <script>
-
+	var pwCheck = false;
    $('#formSignUpSubmit').on("click",function () {
        var password = $('#password').val();
        var password_cf = $('#password_cf').val();
        var formData = $('#defaultJoinform').serialize();
         $('.er').html('');
 
-       if($('#ch').is(":checked")) {
+       if(!pwCheck){
+    	   $('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+       }else if($('#ch').is(":checked")) {
            $('.loading-bar-wrap').removeClass("hidden");
                jQuery.ajax({
                    type:"GET",
@@ -343,17 +345,20 @@
    var regExp = /^[a-zA-Z0-9]{6,20}$/;
     //패스워드 체크
     $(document).on('input','input[name=password],input[name=password_cf]',function () {
+    	pwCheck = false;
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
             $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
             $("#passwordValidation").removeClass("text-success");
+            $("#password_cfValidation").text('');
         }else{
         	$("#passwordValidation").text('');
         	if(pw != pw_cf){
                 $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
                 $("#password_cfValidation").removeClass("text-success");
             }else{
+            	pwCheck = true;
             	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
                 $("#password_cfValidation").addClass("text-success");
             }

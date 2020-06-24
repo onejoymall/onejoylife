@@ -127,6 +127,7 @@ main{overflow: hidden;}
     width: 120px;
 }
 .input-ty {
+	margin-top: 5px;
     width: 235px;
     height: 35px;
     border: 1px solid #aaa;
@@ -266,4 +267,11 @@ input[id="ch3"] {
     background: #fff;
     border: 1px solid #232a32;
     color: #232a32;
+}
+.input-phone{
+	float: left;
+	margin-right: 10px;
+}
+#phoneBtn{
+	float: left;
 }

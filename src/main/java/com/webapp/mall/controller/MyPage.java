@@ -16,9 +16,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.CartPaymentVO;
-import com.webapp.mall.vo.MyPageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -27,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siot.IamportRestClient.IamportClient;
@@ -37,7 +33,18 @@ import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.CartDAO;
+import com.webapp.mall.dao.CouponDAO;
+import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.MyPageDAO;
+import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.dao.PointDAO;
+import com.webapp.mall.dao.ProductDAO;
+import com.webapp.mall.dao.ReviewDAO;
+import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.MyPageVO;
 @Controller
 public class MyPage {
     @Autowired
@@ -853,11 +860,18 @@ public class MyPage {
     }
     //회원정보 변경
     @RequestMapping(value="/MyPage/mypage-12-1")
-    public String myPageModifyUserInfoForm(Model model, HttpServletRequest request) {
+    public String myPageModifyUserInfoForm(Model model, HttpServletRequest request,@RequestParam HashMap params, HttpSession session) {
         model.addAttribute("leftNavOrder", 12);
         model.addAttribute("style", "mypage-12-1");
         model.addAttribute("postUrl", "/sign/modifyuser");
         Device device = DeviceUtils.getCurrentDevice(request);
+        try {
+	        params.put("email",session.getAttribute("email"));
+	        Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+	        model.addAttribute("userInfo", userInfo);
+        }catch (Exception e) {
+        	e.printStackTrace();
+		}
         if(device.isMobile()){
             return "mobile/mypage-12-1";
         } else {

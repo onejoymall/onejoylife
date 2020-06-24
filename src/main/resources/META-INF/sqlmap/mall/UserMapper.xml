@@ -111,13 +111,15 @@
     </update>
 
     <update id="updatePasswordChangeMember" parameterType="com.webapp.mall.vo.UserVO">
-        <![CDATA[
         update user set
-        password=#{newpassword},
-        user_privacy_policy=#{user_privacy_policy},
-        email_privacy_policy=#{email_privacy_policy}
+	        <if test="newpassword != null and newpassword != ''" >password=#{newpassword},</if>
+	        user_privacy_policy=#{user_privacy_policy},
+	        email_privacy_policy=#{email_privacy_policy},
+	        phone = #{phone},
+	        sex = #{sex},
+	        birth = #{birth},
+	        username = #{username}
         where email = #{email}
-        ]]>
     </update>
 
 <!--    <update id="privacy_policy" parameterType="com.webapp.mall.vo.UserVO">

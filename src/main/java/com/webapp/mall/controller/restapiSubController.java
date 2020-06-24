@@ -106,33 +106,11 @@ public class restapiSubController {
 
         try {
             userVO.setEmail((String)session.getAttribute("email"));
-            //params.put("password", passwordEncoder.encode((String)params.get("password")));
-            params.put("email", session.getAttribute("email"));
-
-            if(userVO.getNewpassword().isEmpty()) {
-                error.put("신규 비밀번호", "(는) 필수 입력값 입니다.");
-            }
-            if(userVO.getRenewpassword().isEmpty()) {
-                error.put("신규 비밀번호 확인", "(는) 필수 입력값 입니다.");
-            }
-            if(userVO.getPassword().isEmpty()){
-                error.put("password", "현재 비밀번호를 입력해주세요.");
-            } else {
-                if(!userVO.getNewpassword().equals(userVO.getRenewpassword())){
-                    error.put("신규 비밀번호와 비밀번호 확인", "(는) 일치하지 않습니다.");
-                }
-                params.put("password", null);
-                Map<String, Object> userData= userDAO.getLoginUserList(params);
-                if (isEmpty(userData)) {
-                    error.put("email", "등록된 이메일이 없습니다.");
-                } else {
-
-                    //데이터베이스에 저장된 패스워드 일치 확인
-                    if(!passwordEncoder.matches(userVO.getPassword(),(String)userData.get("password"))) {
-                        error.put("password", "계정정보가 일치하지 않습니다.");
-                    }
-                }
-
+            Map<String,String> map = new HashMap<>();
+            map.put("email",(String)session.getAttribute("email"));
+            Map<String, Object> userData= userDAO.getLoginUserList(map);
+            if (isEmpty(userData)) {
+                error.put("email", "등록된 이메일이 없습니다.");
             }
 
             if(userVO.getUser_privacy_policy() == null){
@@ -142,17 +120,16 @@ public class restapiSubController {
                 userVO.setEmail_privacy_policy("N");
             }
 
-
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                userVO.setNewpassword(passwordEncoder.encode(userVO.getNewpassword()));
+            	if(userVO.getNewpassword() != null && !userVO.getNewpassword().equals("")) {
+            		userVO.setNewpassword(passwordEncoder.encode(userVO.getNewpassword()));
+            	}
                 userDAO.updatePasswordChangeMember(userVO);
                 resultMap.put("success", true);
                 resultMap.put("redirectUrl","/MyPage/mypage-12-1");
             }
-
-
         } catch (Exception e) {
             resultMap.put("e", e);
         }

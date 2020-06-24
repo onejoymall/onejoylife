@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
-	<form action="" method="POST" id="myDeliveryForm">
+	<form method="GET" id="myDeliveryForm" action="/MyPage/DeliveryAddressUpdate">
     <section class="subheader">
     <input type="hidden" name="product_delivery_International_type" value="A"/>
         <div class="subTitle">배송지 관리</div>
@@ -23,7 +23,7 @@
             <thead class="lis-head">
                 <tr>
                     <th colspan="2" class="c-btn">
-                        <button type="submit" formaction="/MyPage/DeliveryAddressUpdate" >선택주소지 수정</button>
+                        <button type="button" id="updateDeliveryInfoM">선택주소지 수정</button>
                         <button type="button" id="deleteDeliveryInfo">선택주소지 삭제</button>
                     </th>
                 </tr>
@@ -39,6 +39,7 @@
                          		${list.jibunAddress}</span></p>
                         <p>
                         	<span>${list.delivery_user_name}</span>
+                        	<br>${list.delivery_alias}
                         	<c:if test="${list.default_delivery_info_yn == 'Y'}">
                      		<span class="basic-r">(기본)</span>
                       		</c:if>
@@ -59,6 +60,7 @@
             <button type="button" id="updateDefaultDeliveryInfo">기존배송지로 등록</button>
         </div>
     </section>
+    </form>
 <script>
 $(document).ready(function(){
     $('#write').show();
@@ -88,7 +90,14 @@ function show(num){
         $('#tap2').addClass('active');
     }
 }
+$("#updateDeliveryInfoM").click(function(){
+	var formData = $("#myDeliveryForm").serialize();
+	if(!formData.includes("orderNo=")){
+		alert("배송지를 선택해주세요.");
+		return;
+	}
+	$("#myDeliveryForm").submit();
+});
 </script>
-</html>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

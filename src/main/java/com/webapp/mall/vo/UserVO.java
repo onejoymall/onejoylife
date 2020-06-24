@@ -11,6 +11,9 @@ public class UserVO {
     private String email_privacy_policy;
     private String log_type;
     private String phone;
+    private String sex;
+    private String birth;
+    private String username;
 
     public String getLog_type() {
         return log_type;
@@ -90,5 +93,29 @@ public class UserVO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

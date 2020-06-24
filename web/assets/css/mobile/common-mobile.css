@@ -3893,7 +3893,6 @@ ul.txt-a {
 .pass-error {
     color: #DA394D;
     font-size: 12px;
-    display: none;
 }
 input[type="password"] {
     width: 100%;
@@ -5094,4 +5093,7 @@ input[type=password]{
 }
 input[type=password]::placeholder{
     color: #999;
+}
+.bg-success {
+    background: #28a745!important;;
 }

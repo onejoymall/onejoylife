@@ -22,18 +22,19 @@
                             <p class="ck-p on" data-id="/MyPage/DeliveryAddress">국내 배송주소</p>
                             <p class="ck-p" data-id="/MyPage/DeliveryAddressForeign">해외 배송주소</p>
                         </div>
-                        <p class="sec1-p">상품 구매 시 사용하실 배송지 정보를 관리하실 수 있습니다.</p>
+                        <p class="sec1-p">상품 구매 시 사용하실 배송지 정보를 최대 5개까지 관리하실 수 있습니다.</p>
                         <table class="tab on" id="sec-ck1">
                             <colgroup>
                             	<col style="width: 115px;">
                                 <col style=" width: 175px;">
-                                <col style="width: 419px;">
+                                <col style="width: 100px;">
+                                <col style="width: 319px;">
                                 <col style=" width: 195px;">
                             </colgroup>
                             <thead>
                             <tr class="sec1-tr">
                                 <td>선택</td>
-                                <!-- <td>배송지명</td> -->
+                                <td>배송지 별명</td>
                                 <td>받는사람</td>
                                 <td>주소</td>
                                 <td>연락처</td>
@@ -48,10 +49,13 @@
 	                                    <label for="${list.order_no}" class="ra-icon"></label>
 	                                </td>
 	                                <td>
-	                                	${list.delivery_user_name}
+	                                	${list.delivery_alias}
 	                                	<c:if test="${list.default_delivery_info_yn == 'Y'}">
                                 		<span class="td-clolr">(기본)</span>
 	                                	</c:if>
+	                                </td>
+	                                <td>
+	                                	${list.delivery_user_name}
 	                                </td>
 	                                <td>
 	                                	<span>
@@ -105,6 +109,14 @@
                 <thead>
                 </thead>
                 <tbody>
+                	<tr class="body-tr">
+                        <td class="body-td1">
+                            배송지 별명
+                        </td>
+                        <td  class="body-td2">
+                            <input type="text" name="delivery_alias"/>
+                        </td>
+                    </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
                             받으시는분
@@ -140,12 +152,23 @@
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_tel_a" id="">
-                                <option value="010" >010</option>
-                                <option value="011" >011</option>
-                                <option value="016" >016</option>
-                                <option value="017" >017</option>
-                                <option value="018" >018</option>
-                                <option value="019" >019</option>
+                                <option value="02">02</option>
+								<option value="031">031</option>
+								<option value="032">032</option>
+								<option value="033">033</option>
+								<option value="041">041</option>
+								<option value="042">042</option>
+								<option value="043">043</option>
+								<option value="044">044</option>
+								<option value="051">051</option>
+								<option value="052">052</option>
+								<option value="053">053</option>
+								<option value="054">054</option>
+								<option value="055">055</option>
+								<option value="061">061</option>
+								<option value="062">062</option>
+								<option value="063">063</option>
+								<option value="064">064</option>
                             </select>
                             <span> - </span>
                             <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b"  maxlength="4">
@@ -159,11 +182,12 @@
                         </td>
                         <td class="body-td2 td-m">
                             <div class="input-group">
-                                <input type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+                                <input placeholder="우편번호" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
                                 <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button>
                             </div>
-                            <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
-                             <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                            <p class="mar-p2"><input placeholder="도로명주소" type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                             <p class="mar-p2"><input placeholder="상세주소" type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                             <p>* 위 칸에 상세주소를 추가로 입력하세요</p>
                              <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
                              
                         </td>
@@ -184,7 +208,7 @@
                 </tbody>
             </table>
             <div class="btn-box">
-                <button type="button" class="btn-redcover" id="newDeliveryBtn">등록</button>
+                <button type="button" class="btn-redcover btn-redcover1" id="newDeliveryBtn">등록</button>
              </div>
         </div>
     </div>
@@ -206,6 +230,14 @@
                 <thead>
                 </thead>
                 <tbody>
+                	<tr class="body-tr">
+                        <td class="body-td1">
+                            배송지 별명
+                        </td>
+                        <td  class="body-td2">
+                            <input type="text" name="delivery_alias"/>
+                        </td>
+                    </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
                             받으시는분
@@ -241,12 +273,23 @@
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_tel_a" id="">
-                                <option value="010" >010</option>
-                                <option value="011" >011</option>
-                                <option value="016" >016</option>
-                                <option value="017" >017</option>
-                                <option value="018" >018</option>
-                                <option value="019" >019</option>
+                                <option value="02">02</option>
+								<option value="031">031</option>
+								<option value="032">032</option>
+								<option value="033">033</option>
+								<option value="041">041</option>
+								<option value="042">042</option>
+								<option value="043">043</option>
+								<option value="044">044</option>
+								<option value="051">051</option>
+								<option value="052">052</option>
+								<option value="053">053</option>
+								<option value="054">054</option>
+								<option value="055">055</option>
+								<option value="061">061</option>
+								<option value="062">062</option>
+								<option value="063">063</option>
+								<option value="064">064</option>
                             </select>
                             <span> - </span>
                             <input type="text" name="delivery_user_tel_b"  maxlength="4">
@@ -260,11 +303,12 @@
                         </td>
                         <td class="body-td2 td-m">
                             <div class="input-group">
-                                <input type="text" name="postcode" id="postcode_modi" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+                                <input placeholder="우편번호" type="text" name="postcode" id="postcode_modi" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
                                 <button type="button" class="grey" id="daumMapCall2">우편번호 찾기</button>
                             </div>
-                            <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
-                             <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                            <p class="mar-p2"><input placeholder="도로명주소" type="text" class="sec2-in2" name="roadAddress" id="roadAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                             <p class="mar-p2"><input placeholder="상세주소" type="text" class="sec2-in2" name="extraAddress" id="extraAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                             <p>* 위 칸에 상세주소를 추가로 입력하세요</p>
                              <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress_modi"></p>
                              
                         </td>

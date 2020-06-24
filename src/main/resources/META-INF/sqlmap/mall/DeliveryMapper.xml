@@ -31,13 +31,14 @@
     </select>
     <select id="getUserDeliveryList" resultType="java.util.Map" parameterType="java.util.Map">
 	   	SELECT *
-		FROM delivery_info A
+		FROM delivery_info_user A
 		WHERE A.delivery_visible_yn = 'Y' 
 		AND A.order_user_email = #{email}
 		<if test="international != null and international != ''">
 		AND product_delivery_International_type = #{international}
 		</if>
 		ORDER BY A.default_delivery_info_yn = 'Y' DESC, A.reg_date desc
+		limit 5
     </select>
     <insert id="insertDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into delivery_info(
@@ -98,7 +99,8 @@
     </insert>
     
     <insert id="insertDeliveryAddress" parameterType="java.util.Map">
-        insert into delivery_info(
+        insert into delivery_info_user(
+        delivery_alias,
         order_no,
         order_user_name,
         order_user_email,
@@ -112,6 +114,7 @@
         jibunAddress,
         product_delivery_International_type
         )values(
+        #{delivery_alias},
         #{order_no},
         #{order_user_name},
         #{order_user_email},
@@ -127,6 +130,7 @@
         )
         on duplicate KEY update
 
+		delivery_alias = #{delivery_alias},
         order_no = #{order_no},
 		order_user_name = #{order_user_name},
 		order_user_email = #{order_user_email},
@@ -150,6 +154,15 @@
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
         <if test="orderNo != null"> <![CDATA[AND A.order_no= #{orderNo} ]]></if>
     </select>
+    <select id="getUserDeliveryDetail" resultType="java.util.Map" parameterType="java.util.Map">
+        select A.*
+        from delivery_info_user A where 1=1
+        <if test="giveaway_cd != null"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
+        <if test="order_user_id != null"> <![CDATA[AND A.order_user_id= #{order_user_id} ]]></if>
+        <if test="product_cd != null"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+        <if test="orderNo != null"> <![CDATA[AND A.order_no= #{orderNo} ]]></if>
+    </select>
     <update id="updateDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update delivery_info set
         delivery_status = #{delivery_status}
@@ -164,7 +177,7 @@
     </select>
     <select id="getDefaultDelivery" parameterType="hashmap" resultType="hashmap">
     	SELECT *
-		FROM delivery_info A
+		FROM delivery_info_user A
 		WHERE A.order_user_email = #{email}
 		AND A.default_delivery_info_yn = 'Y'
 		ORDER BY A.reg_date DESC
@@ -176,20 +189,21 @@
 		WHERE order_no = #{orderNo}
     </update>
     <update id="enabledDefaultDelivery" parameterType="java.util.Map">
-        UPDATE delivery_info SET
+        UPDATE delivery_info_user SET
 		default_delivery_info_yn = 'Y'
 		WHERE 1=1
 		and order_no = #{orderNo}
 		and order_user_email = #{email}
     </update>
     <update id="disabledDefaultDelivery" parameterType="java.util.Map">
-        UPDATE delivery_info SET
+        UPDATE delivery_info_user SET
 		default_delivery_info_yn = 'N'
 		WHERE 1=1
 		and order_user_email = #{email}
     </update>
     <update id="updateDeliveryAddress" parameterType="java.util.Map">
-        UPDATE delivery_info SET
+        UPDATE delivery_info_user SET
+        delivery_alias = #{delivery_alias},
 		delivery_user_name = #{delivery_user_name},
 		delivery_user_phone = #{delivery_user_phone},
 		delivery_user_tel = #{delivery_user_tel},

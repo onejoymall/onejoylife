@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 	<div class="point-box clearfix">
-    <p><span>${sessionScope.email}</span>님<a href="<c:url value="/MyPage/Coupon"/>" class="setting-i"></a></p>
+    <p><span>${sessionScope.email}</span>님<a href="<c:url value="/MyPage/mypage-12"/>" class="setting-i"></a></p>
     <div class="coupon clearfix">
         <div>
             <p class="c-sub-tit">쿠폰</p>

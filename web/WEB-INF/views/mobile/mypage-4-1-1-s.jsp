@@ -122,12 +122,23 @@
             </c:forEach>
         </p>
         <select name="delivery_user_tel_a" id="delivery_user_tel_a" class="width-30 mb-05">
-            <option value="010" <c:if test="${phoneMap.key1 eq \"010\"}">selected</c:if> >010</option>
-            <option value="011" <c:if test="${phoneMap.key1 eq \"011\"}">selected</c:if>>011</option>
-            <option value="016" <c:if test="${phoneMap.key1 eq \"016\"}">selected</c:if>>016</option>
-            <option value="017" <c:if test="${phoneMap.key1 eq \"017\"}">selected</c:if>>017</option>
-            <option value="018" <c:if test="${phoneMap.key1 eq \"018\"}">selected</c:if>>018</option>
-            <option value="019" <c:if test="${phoneMap.key1 eq \"019\"}">selected</c:if>>019</option>
+            <option value="02" <c:if test="${phoneMap.key1 eq \"02\"}">selected</c:if>>02</option>
+			<option value="031" <c:if test="${phoneMap.key1 eq \"031\"}">selected</c:if>>031</option>
+			<option value="032" <c:if test="${phoneMap.key1 eq \"032\"}">selected</c:if>>032</option>
+			<option value="033" <c:if test="${phoneMap.key1 eq \"033\"}">selected</c:if>>033</option>
+			<option value="041" <c:if test="${phoneMap.key1 eq \"041\"}">selected</c:if>>041</option>
+			<option value="042" <c:if test="${phoneMap.key1 eq \"042\"}">selected</c:if>>042</option>
+			<option value="043" <c:if test="${phoneMap.key1 eq \"043\"}">selected</c:if>>043</option>
+			<option value="044" <c:if test="${phoneMap.key1 eq \"044\"}">selected</c:if>>044</option>
+			<option value="051" <c:if test="${phoneMap.key1 eq \"051\"}">selected</c:if>>051</option>
+			<option value="052" <c:if test="${phoneMap.key1 eq \"052\"}">selected</c:if>>052</option>
+			<option value="053" <c:if test="${phoneMap.key1 eq \"053\"}">selected</c:if>>053</option>
+			<option value="054" <c:if test="${phoneMap.key1 eq \"054\"}">selected</c:if>>054</option>
+			<option value="055" <c:if test="${phoneMap.key1 eq \"055\"}">selected</c:if>>055</option>
+			<option value="061" <c:if test="${phoneMap.key1 eq \"061\"}">selected</c:if>>061</option>
+			<option value="062" <c:if test="${phoneMap.key1 eq \"062\"}">selected</c:if>>062</option>
+			<option value="063" <c:if test="${phoneMap.key1 eq \"063\"}">selected</c:if>>063</option>
+			<option value="064" <c:if test="${phoneMap.key1 eq \"064\"}">selected</c:if>>064</option>
         </select>
         <span> - </span>
         <input type="text" name="delivery_user_tel_b" id="delivery_user_tel_b" value="${phoneMap.key2}" class="delivery_user_tel width-30 mb-05" maxlength="4">
@@ -148,7 +159,9 @@
          <select class="full mt-05 mb-05" name="delivery_message_select" id="delivery_message_select" >
              <option value="" disabled selected>요청사항</option>
              <option value="">직접 받고 부재 시 문 앞</option>
-                          <option value="self">직접입력</option>
+             <option value="">경비실</option>
+             <option value="">택배함</option>
+             <option value="self">직접입력</option>
          </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
         
