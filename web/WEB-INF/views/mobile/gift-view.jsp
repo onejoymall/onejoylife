@@ -158,7 +158,7 @@
                <li class="text-lg"><fmt:formatNumber value="${point_amount}" groupingUsed="true" /> point</li>
             </c:if>
             <c:if test="${!sessionScope.login}">
-                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트학인</a>
+                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트확인</a>
             </c:if>
         </ul>
        <ul class="flexbetween py-05">

@@ -98,7 +98,7 @@
         <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="coupon_paid_class_cd != null and coupon_paid_class_cd != ''"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
-        <if test="coupon_paid_user_id != null and coupon_paid_user_id != ''"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
+        <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]>
         <if test="coupon_use_range != null and coupon_use_range != ''"> <![CDATA[AND B.coupon_use_range= #{coupon_use_range} ]]></if>
     </select>
     <select id="getUserCouponListCount" resultType="Integer">
@@ -125,7 +125,7 @@
         <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="coupon_paid_class_cd != null and coupon_paid_class_cd != ''"> <![CDATA[AND A.coupon_paid_class_cd= #{coupon_paid_class_cd} ]]></if>
-        <if test="coupon_paid_user_id != null and coupon_paid_user_id != ''"> <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]></if>
+        <![CDATA[AND A.coupon_paid_user_id= #{coupon_paid_user_id} ]]>
         <if test="coupon_condition != null and coupon_condition != ''"> <![CDATA[AND A.coupon_condition= #{coupon_condition} ]]></if>
     </select>
     <select id="getCouponDetail" resultType="java.util.HashMap" parameterType="java.util.HashMap">
