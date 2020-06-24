@@ -187,7 +187,7 @@ tbody {
     margin: 5% auto;
 }
 .content-in {
-    margin: 30px 30px;
+    margin: 20px 20px;
     text-align: center;
 }
 .modal-close-address {
@@ -257,6 +257,15 @@ tbody tr {
     color: #fff;
     font-size: 18px;
     margin-top: 30px;
+}
+.btn-redcover1 {
+    width: 200px;
+    height: 50px;
+    border: 1px solid #232a32;
+    background: #232a32;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 0px !important;
 }
 
 /* ck */

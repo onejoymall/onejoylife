@@ -300,6 +300,10 @@ $('.modal-enable-menu-btn').on("click",function () {
 //배송지 선택삭제
 $('#deleteDeliveryInfo').on("click",function () {
     var formData = $('#myDeliveryForm').serialize();
+    if(!formData.includes("orderNo=")){
+    	alert("배송지를 선택해주세요.");
+    	return;
+    }
     jQuery.ajax({
         type: 'POST',
         url: '/MyPage/DeliveryAddressDelete',
@@ -401,7 +405,7 @@ $("#addDeliveryInfo").click(function(){
     $("select[name=delivery_user_phone_a]").val('010');
     $("input[name=delivery_user_phone_b]").val('');
     $("input[name=delivery_user_phone_c]").val('');
-    $("select[name=delivery_user_tel_a]").val('010');
+    $("select[name=delivery_user_tel_a]").val('02');
     $("input[name=delivery_user_tel_b]").val('');
     $("input[name=delivery_user_tel_c]").val('');
     $("input[name=postcode]").val('');
@@ -414,8 +418,12 @@ $("#addDeliveryInfo").click(function(){
 //배송지 수정 모달
 $("#updateDeliveryInfo").click(function(){
     event.preventDefault();
-    $(".modal2").attr("style", "display:block");
     var formData = $('#myDeliveryForm').serialize();
+    if(!formData.includes("orderNo=")){
+    	alert("배송지를 선택해주세요.");
+    	return;
+    }
+    $(".modal2").attr("style", "display:block");
     jQuery.ajax({
         type: 'POST',
         url: '/MyPage/getDeliveryDetail',

@@ -191,7 +191,7 @@
                     </div>
                     <div class="join-ck-box clearfix">
                         <input type="checkbox" id="join-ck" name="join-ck" class="save-ck">
-                        <label for="join-ck"><p class="ck-txt">본인은 만 14세 이상이며, <a href="#" id="mo-btn2">원조이몰 이용약관</a>, <a href="#" id="mo-btn3">제3자동의 이용약관</a>, <a href="#" id="mo-btn4">개인정보 수집 및 이용</a>, <a href="#" id="mo-btn5">개인정보 제공</a> 내용을 확인하였으며, 동의합니다.</p></label>
+                        <label for="join-ck"><p class="ck-txt">본인은 만 14세 이상이며, <a href="#" id="mo-btn2">원조이몰 이용약관</a>, <a href="#" id="mo-btn3">제3자동의 이용약관</a>, <a href="#" id="mo-btn4">개인정보 수집 및 이용</a> 개인정보 제공 내용을 확인하였으며, 이에 동의합니다.</p></label>
                     </div>
                     <button type="button" id="formSignUpSubmit" class="btn-join">회원가입</button>
                 </form>

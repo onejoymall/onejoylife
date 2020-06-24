@@ -64,7 +64,7 @@
                 <form action="/product/search-page" id="main-search-form" name="main-search-form" method="get">
                     <input type="text" id="main-search" name="product_name" class="input-text" value="${param.product_name}">
                     <button id="main-search-btn" type="submit" class="search-btn"></button>
-                <c:if test="${not empty param.product_ct}">
+                <c:if test="${fn:contains(header.referer, 'search-page') && not empty param.product_ct}">
                     <input type="hidden" name="product_ct" value="${param.product_ct}">
                 </c:if>
                 <c:if test="${not empty param.product_delivery_International_type}">
