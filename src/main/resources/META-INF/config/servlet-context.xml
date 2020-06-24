@@ -63,6 +63,7 @@
 			<mvc:exclude-mapping path="/MyPage/ShoppingBasket" />
 			<mvc:exclude-mapping path="/MyPage/OrderCancel" />
 			<mvc:exclude-mapping path="/MyPage/OrderDetailGuest" />
+			<mvc:exclude-mapping path="/webhook/**" />
 			<beans:bean id="commonInterceptor" class="com.webapp.common.interceptor.SessionInterceptor"></beans:bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
