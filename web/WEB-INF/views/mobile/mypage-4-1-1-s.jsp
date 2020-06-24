@@ -159,7 +159,9 @@
          <select class="full mt-05 mb-05" name="delivery_message_select" id="delivery_message_select" >
              <option value="" disabled selected>요청사항</option>
              <option value="">직접 받고 부재 시 문 앞</option>
-                          <option value="self">직접입력</option>
+             <option value="">경비실</option>
+             <option value="">택배함</option>
+             <option value="self">직접입력</option>
          </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
         

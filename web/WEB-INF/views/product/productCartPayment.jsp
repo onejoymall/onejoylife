@@ -228,6 +228,8 @@
                                     <select name="delivery_message_select" id="delivery_message_select" >
                                         <option value="">배송시 요청사항 (선택사항)</option>
                                         <option value="">직접 받고 부재 시 문 앞</option>
+                                        <option value="">경비실</option>
+                                        <option value="">택배함</option>
                                         <option value="self">직접입력</option>
                                     </select>
 
