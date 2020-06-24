@@ -411,6 +411,13 @@ public class ProductController {
             	parameter.put("product_payment",map.get("product_payment"));
             	parameter.put("coupon_use_range", "O");
                 
+            	//사용가능쿠폰
+                if(!isEmpty(userInfo)){
+                	params.put("coupon_paid_id",userInfo.get("usr_id"));
+                }else {
+                	//조회안되도록
+                	params.put("coupon_paid_id","9999999");
+                }
                 //사용가능쿠폰
                 List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(parameter);
                 map.put("enableCouponList",enableCouponList);
@@ -523,6 +530,12 @@ public class ProductController {
             params.put("coupon_use_range", "P");
             
             //사용가능쿠폰
+            if(!isEmpty(userInfo)){
+            	params.put("coupon_paid_id",userInfo.get("usr_id"));
+            }else {
+            	//조회안되도록
+            	params.put("coupon_paid_id","9999999");
+            }
             List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(params);
             model.addAttribute("enableCouponList",enableCouponList);
             

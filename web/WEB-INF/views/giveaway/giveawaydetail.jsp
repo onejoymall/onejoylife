@@ -78,12 +78,12 @@
                                 보유포인트 <fmt:formatNumber value="${point_amount}" groupingUsed="true" /> Point
                             </c:if>
                             <c:if test="${!sessionScope.login}">
-                                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트학인</a>
+                                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트확인</a>
                             </c:if>
                             / 응모포인트</span>
                         <div class="total-quantity">
                             <form name="defaultForm" id="defaultForm" method="post">
-                                <input type="number" id="point" name="point" value='${detail.giveaway_payment}'><span>  Point</span>
+                                <input type="number" id="point" name="point" value='${detail.giveaway_play_winner_point - detail.sum_play_point}'><span>  Point</span>
                                 <input type="hidden" id="point_amount" name="point_amount" value='${point_amount}'><span></span>
                                 <input type="hidden" id="giveaway_id" name="giveaway_id" value='${requestScope.giveaway_id}'>
                                 <input type="hidden" id="giveaway_cd" name="giveaway_cd" value='${detail.giveaway_cd}'>

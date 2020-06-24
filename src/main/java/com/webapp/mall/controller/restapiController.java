@@ -995,7 +995,7 @@ public class restapiController {
 				deliveryInfoVO.setPayment_status("C");
 				deliveryDAO.updateDelivery(deliveryInfoVO);
 				paymentDAO.updatePayment(deliveryInfoVO);
-				paymentDAO.insertPaymentRefund(deliveryInfoVO);
+//				paymentDAO.insertPaymentRefund(deliveryInfoVO);
 			}
 
 		} catch (Exception e) {
