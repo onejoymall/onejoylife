@@ -34,12 +34,12 @@
                         </div>
                         <div class="input-box2">
                             <div class="cla">
-                                <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+                                <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
                             <p class="cla-p1"> ~ </p>
                             <div class="cla">
-                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
                             <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">조회</a></p>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="con on" id="con1">
                         <div class="r-sec4">
-                            <div class="sec4-txt">
+                            <!-- <div class="sec4-txt">
                                 <div class="txt-right">
                                     <p>총<span>25건</span></p>
                                     <select name="" id="">
@@ -56,7 +56,7 @@
                                         <option value="">사용<span> (-)</span></option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <table class="sec4-lis">
                                 <colgroup>
                                     <col style="width: 100px;">

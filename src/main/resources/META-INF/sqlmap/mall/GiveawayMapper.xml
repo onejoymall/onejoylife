@@ -120,8 +120,8 @@
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>
         <if test="giveaway_cd != null"> <![CDATA[AND giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_play_user_id != null"> <![CDATA[AND giveaway_play_user_id= #{giveaway_play_user_id} ]]></if>
-        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="cast_start_date != null and cast_start_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) >= #{cast_start_date} ]]></if>
         <if test="cast_end_date != null and cast_end_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) <= #{cast_end_date} ]]></if>
         order by A.reg_date desc
@@ -137,8 +137,8 @@
         <if test="giveaway_play_id != null"> <![CDATA[AND A.giveaway_play_id= #{giveaway_play_id} ]]></if>
         <if test="giveaway_cd != null"> <![CDATA[AND giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_play_user_id != null"> <![CDATA[AND giveaway_play_user_id= #{giveaway_play_user_id} ]]></if>
-        <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="cast_start_date != null and cast_start_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) >= #{cast_start_date} ]]></if>
         <if test="cast_end_date != null and cast_end_date !=''"><![CDATA[AND (select Z.reg_date from giveaway_winner Z where Z.giveaway_cd=A.giveaway_cd) <= #{cast_end_date} ]]></if>
     </select>

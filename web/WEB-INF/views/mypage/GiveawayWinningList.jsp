@@ -19,7 +19,7 @@
                 <div class="ojt-tab-box">
                     <div class="ojt-tab">
                         <p class="ojt-but on2" data-id2="ojt1">경품</p>
-                        <p class="ojt-but" data-id2="ojt2">이벤트</p>
+                        <p class="ojt-but ready" data-id2="ojt2">이벤트</p>
                     </div>
                 </div>
                 <div class="ojt-tabbox on2" id="ojt1">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="con on" id="con1">
                         <div class="r-sec4">
-                            <div class="sec4-txt">
+                            <%-- <div class="sec4-txt">
                                 <div class="txt-right">
                                     <p>총<span>${listCnt}건</span></p>
                                     <select name="" id="">
@@ -57,7 +57,7 @@
                                         <option value="">당첨</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --%>
                             <table class="sec4-lis">
                                 <colgroup>
                                     <col style="width: 125px;">
@@ -86,20 +86,24 @@
                                             <a href="/giveaway/giveawaydetail?giveaway_cd=${list.giveaway_cd}">
 <%--                                                <div class="my-lis-img1"></div>--%>
                                                 <div style="width: 90px;height: 90px;background: url(${list.file_1}) no-repeat center / cover;"></div>
-                                                <div class="my-lis-txt">
-                                                    <p>${list.giveaway_brand}</p>
-                                                    <p class="lis-font-w">${list.giveaway_name}</p>
-                                                    <p>${list.giveaway_model_name}</p>
+                                                <div class="my-lis-outer">
+	                                                <div class="my-lis-txt">
+	                                                    <p>${list.giveaway_brand}</p>
+	                                                    <p class="lis-font-w">${list.giveaway_name}</p>
+	                                                    <p>${list.giveaway_model_name}</p>
+	                                                </div>
                                                 </div>
-
-                                                <div class="red-box">
-                                                    <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                                        <span>${list.giveaway_payment_status_name}</span>
-                                                        <%--                                                    <span class="dis-none">결제완료</span>--%>
-                                                        <%--                                                    <span class="dis-none">상품준비중</span>--%>
-                                                        <%--                                                    <span class="dis-none">배송중</span>--%>
-                                                        <%--                                                    <span class="dis-none">배송완료</span>--%>
-                                                    </c:if>
+												
+												<div class="my-lis-outer">
+	                                                <div class="red-box">
+	                                                    <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
+	                                                        <span>${list.giveaway_payment_status_name}</span>
+	                                                        <%--                                                    <span class="dis-none">결제완료</span>--%>
+	                                                        <%--                                                    <span class="dis-none">상품준비중</span>--%>
+	                                                        <%--                                                    <span class="dis-none">배송중</span>--%>
+	                                                        <%--                                                    <span class="dis-none">배송완료</span>--%>
+	                                                    </c:if>
+	                                                </div>
                                                 </div>
                                             </a>
                                         </td>
@@ -604,14 +608,14 @@
         $(this).addClass('on1');
         $("#"+tab_id1).addClass('on1');
     })
-    $('.ojt-tab p').click(function(){
+    /* $('.ojt-tab p').click(function(){
         var tab_id2 = $(this).attr('data-id2');
 
         $('.ojt-tab p').removeClass('on2');
         $('.right-contain .ojt-tabbox').removeClass('on2');
         $(this).addClass('on2');
         $("#"+tab_id2).addClass('on2');
-    })
+    }) */
     var child;
     $('.click-span').click(function(){
         if(child != undefined){

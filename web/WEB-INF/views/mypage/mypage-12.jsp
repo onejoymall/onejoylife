@@ -9,7 +9,7 @@
                 <c:import url="/layout/scrollRight"/>
                 <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
                 <div class="right-contain">
-                    <form name="defaultForm" id="defaultForm" method="POST">
+                    <form name="defaultForm" id="defaultForm" method="POST" onsubmit="return false;">
                         <p class="sec1-h1">회원정보 확인</p>
                         <div class="r-sec1">
                             <p class="sec-p">회원님의 안전한 개인정보 보호를 위해 비밀번호를 다시 한번 확인 합니다.</p>
@@ -37,12 +37,13 @@
                             </table>
                         </div>
                         <div class="r-sec2">
-                            <button type="button" id="formSubmit">확인</button>
+                            <button type="submit" id="formSubmit">확인</button>
                         </div>
                     </form>
                 </div>   
             </main>   
         </div>     
     </div>
-
+<script>
+</script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

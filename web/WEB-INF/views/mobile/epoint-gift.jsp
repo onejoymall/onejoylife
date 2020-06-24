@@ -7,7 +7,7 @@
         <div class="subTitle">E-point 경품추첨</div>
     </section>
     <section class="wrap category-wrap">
-        <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number">1,017</span>개의 상품이 등록되어 있습니다.</p>
+        <p class="gift-amount">경품 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
 
         <article class="epoint-gift-wrap">
             <div class="inner clearfix">
@@ -33,7 +33,7 @@
                             </div>
                             <a href="#" class="mainList-big-text">
                                 <p class="list-title"> ${list.giveaway_name}</p>
-                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</ins>
+                                <p><ins><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> 원</ins>
                                     <span class="day-c">
                                     <c:set var="deadline" value="${fn:split(list.giveaway_validity,'~')}"/>
                                     <c:out value='~${deadline[1]}'/>

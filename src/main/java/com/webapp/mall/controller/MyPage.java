@@ -198,21 +198,21 @@ public class MyPage {
     }
     //이포인트
     @RequestMapping(value="/MyPage/ePoint")
-    public String myPagePoint(Model model,HttpServletRequest request,HttpSession session,HashMap params,SearchVO searchVO) throws SQLException {
+    public String myPagePoint(Model model,HttpServletRequest request,HttpSession session,@RequestParam HashMap params,SearchVO searchVO) throws SQLException {
         try{
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);
-            searchVO.pageCalculate(giveawayDAO.getUserGiveawayPlayListCount(params));
-            params.put("rowStart",searchVO.getRowStart());
-            params.put("staticRowEnd",searchVO.getStaticRowEnd());
-            model.addAttribute("searchVO", searchVO);
 
             //사용자 아이디 확인 후 전달
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             params.put("point_paid_user_id",userInfo.get("usr_id"));
+            searchVO.pageCalculate(pointDAO.getPointListCount(params));
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("staticRowEnd",searchVO.getStaticRowEnd());
             List<Map<String,Object>> list = pointDAO.getPointList(params);
             model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -501,6 +501,10 @@ public class MyPage {
             List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
             model.addAttribute("paymentBundleList", paymentBundleList);
             
+            client = new IamportClient(apiKey, apiSecret);
+            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+            paymentDetail.put("vbank_name",impPayment.getVbankName());
+            paymentDetail.put("vbank_num",impPayment.getVbankNum());
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
             model.addAttribute("delivery", delivery);
@@ -713,7 +717,7 @@ public class MyPage {
     }
     //경품담청내역
     @RequestMapping(value="/MyPage/GiveawayWinningList")
-    public String myPageGiveawayWinningList(Model model, SearchVO searchVO,HashMap params,HttpSession session, HttpServletRequest request) throws SQLException {
+    public String myPageGiveawayWinningList(Model model, SearchVO searchVO,@RequestParam HashMap params,HttpSession session, HttpServletRequest request) throws SQLException {
 
     	try {
 	        params.put("email",session.getAttribute("email"));

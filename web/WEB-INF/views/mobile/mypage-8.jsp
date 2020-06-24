@@ -14,22 +14,22 @@
             <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
             <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
         </ul>
+        <form id="form2">
         <div class="date-box">
             <div class="input-box2">
-            <form id="form2">
                 <div class="cla">
-                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
                 <p class="cla-p1"> ~ </p>
                 <div class="cla">
-                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
             <button type="submit" class="date-btn">조회</button>
-            </form>
         </div>
+        </form>
         <hr>
         <c:if test="${not empty list}">
         <c:forEach var="list" items="${list}">
@@ -63,6 +63,7 @@
         <hr>
         </c:forEach>
         </c:if>
+        <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
     </section>
     
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

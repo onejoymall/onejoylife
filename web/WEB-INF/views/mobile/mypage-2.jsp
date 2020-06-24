@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
-<form id="form1" name="form1"  method="post">
+<form id="form1" name="form1"  method="get">
     <section class="subheader">
         <div class="subTitle">E.POINT 조회</div>
         <c:import url="/MyPage/RightHeaderSub"/>
@@ -13,27 +13,26 @@
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
-        <select class="full text-center mb-02">
+        <!-- <select class="full text-center mb-02">
             <option value="0" selected>전체</option>
             <option value="1">적립(+)</option>
             <option value="2">사용(-)</option>
-        </select>
+        </select> -->
         <ul class="btns">
-            <li><a href="#" class="active">오늘</a></li>
-            <li><a href="#">1주일</a></li>
-            <li><a href="#">1개월</a></li>
-            <li><a href="#">3개월</a></li>
-            <li><a href="#">기간설정</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
         </ul>
         <div class="date-box">
             <div class="input-box2">
                 <div class="cla">
-                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/> ">
+                    <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
                 <p class="cla-p1"> ~ </p>
                 <div class="cla">
-                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
+                    <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
@@ -71,13 +70,14 @@
                 </c:if>
             </tbody>
         </table>
-        <ul class="centerBtns mt-3">
+            <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+        <!-- <ul class="centerBtns mt-3">
             <li><a href="#"><i class="ri-arrow-left-s-line"></i></a></li>
             <li><a href="#" class="active">1</a></li>
             <li><a href="#">2</a></li>
             <li><a href="#">3</a></li>
             <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
-        </ul>
+        </ul> -->
     </section>
     </form>
     <%-- <section class="wrap clearfix" id="list">

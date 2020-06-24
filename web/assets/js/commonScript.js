@@ -122,17 +122,16 @@ $(document).on("click","#paymentSubmit",function () {
 
     if(max != 0){
         if (order < min || order > max ) {
-            $.toast({
-                heading : '최소/최대 주문 수량을 확인해주세요.',
-                text: [
-                    '최소 : ' + min,
-                    '최대 : ' + max,
-                ],
-                showHideTransition: 'plain', //펴짐
-                position: 'bottom-right',
-                icon: 'error',
-                stack: false
-            });
+            toastr.options = {
+        	        closeButton: true,
+    	        progressBar: false,
+    	        showMethod: 'slideDown',
+    	        timeOut: 0
+    	    }
+    	    toastr.error([
+                '최소 : ' + min,
+                '최대 : ' + max,
+            ], '최소/최대 주문 수량을 확인해주세요.')
         } else if(isLogin==''){
         	toastr.options = {
     	        closeButton: true,
@@ -165,6 +164,61 @@ $(document).on("click","#paymentSubmit",function () {
             $('#defaultForm').submit();
         }
     }
+})
+//비회원 결제모바일
+$(document).on("click","#paymentSubmitM",function () {
+	
+	var order = $('input[name=payment_order_quantity]').val();
+	var max = $('input[name=order_max]').val();
+	var min = $('input[name=order_min]').val();
+	
+	if(max != 0){
+		if (order < min || order > max ) {
+			$.toast({
+				heading : '최소/최대 주문 수량을 확인해주세요.',
+				text: [
+					'최소 : ' + min,
+					'최대 : ' + max,
+					],
+					showHideTransition: 'plain', //펴짐
+					position: 'bottom-right',
+					icon: 'error',
+					stack: false
+			});
+		} else if(isLogin==''){
+			$.toast({
+                heading: '비회원 주문 중입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                icon: 'info',
+                hideAfter: false
+            });
+		}else{
+			$('#defaultForm').submit();
+		}
+	} else {
+		if(isLogin==''){
+			$.toast({
+                heading: '비회원 주문 중입니다.',
+                text: [
+                    '<a href="/sign/login">로그인 후 이용</a>',
+                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                ],
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                icon: 'info',
+                hideAfter: false
+            });
+		}else{
+			$('#defaultForm').submit();
+		}
+	}
 })
 //찜
 $('.favorite').click(function(){
@@ -796,29 +850,128 @@ $(document).on("click",".ra-num",function () {
         }
 
     }
-    //장바구니 전체 주문
-    $(document).on("click","#allOrder",function () {
-        $('input[name=chk]').prop("checked",true);
-        $('#defaultForm').attr("action","/product/productPaymentCart")
-        if(isLogin==''){
-            $.toast({
-                heading: '비회원 주문 중입니다.',
-                text: [
-                    '<a href="/sign/signup">회원 가입 후 이용</a>',
-                    '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
-                ],
-                showHideTransition: 'plain', //펴짐
-                position: 'bottom-right',
-                icon: 'info',
-                hideAfter: false
-            });
-        }else{
+    //장바구니 등록 모바일
+    function addShoppingBasketM(product_cd) {
+    	var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
+    	var order = $('input[name=payment_order_quantity]').val() ? $('input[name=payment_order_quantity]').val() : 1;
+    	var max = $('input[name=order_max]').val();
+    	var min = $('input[name=order_min]').val();
+    	if(max != 0) {
+    		if (order < min || order > max) {
+    			$.toast({
+    				heading : '최소/최대 주문 수량을 확인해주세요.',
+    				text: [
+    					'최소 : ' + min,
+    					'최대 : ' + max,
+    					],
+    					showHideTransition: 'plain', //펴짐
+    					position: 'bottom-right',
+    					heading: 'Error',
+    					icon: 'error',
+    					stack: false
+    			});
+    		} else {
+    			jQuery.ajax({
+    				type: 'POST',
+    				data: formData,
+    				url:'/cart/addcart',
+    				success: function (data) {
+    					if (data.validateError) {
+    						$('.validateError').empty();
+    						$.each(data.validateError, function (index, item) {
+    							// $('#validateError'+index).removeClass('none');
+    							// $('#validateError'+index).html('* '+item);
+    							if(index == "Error"){//일반에러메세지
+    								alertType = "error";
+    								showText = item;
+    							}else{
+    								alertType = "error";
+    								showText = index + " (은) " + item;
+    							}
+    							// $.toast().reset('all');//토스트 초기화
+    							$.toast({
+                                    text: showText,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'bottom-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+    						});
+    						
+    					} else {
+    						$.toast({
+                                heading: '등록 성공!',
+                                text: [
+                                    '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                    '<a href="">쇼핑 계속!</a>',
+                                ],
 
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                icon: 'success',
+                                hideAfter: false,
+                            });
+    					}
+    				},
+    				error: function (xhr, status, error) {
+    					alert("error");
+    				}
+    			});
+    		}
+    	} else {
+    		jQuery.ajax({
+    			type: 'POST',
+    			data: formData,
+    			url:'/cart/addcart',
+    			success: function (data) {
+    				if (data.validateError) {
+    					$('.validateError').empty();
+    					$.each(data.validateError, function (index, item) {
+    						// $('#validateError'+index).removeClass('none');
+    						// $('#validateError'+index).html('* '+item);
+    						if(index == "Error"){//일반에러메세지
+    							alertType = "error";
+    							showText = item;
+    						}else{
+    							alertType = "error";
+    							showText = index + " (은) " + item;
+    						}
+    						// $.toast().reset('all');//토스트 초기화
+    						$.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                heading: 'Error',
+                                icon: 'error'
+                            });
+    					});
+    					
+    				} else {
+    					
+    					$.toast({
+                            heading: '등록 성공!',
+                            text: [
+                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                '<a href="">쇼핑 계속!</a>',
+                            ],
 
-            $('#defaultForm').submit();
-        }
-
-    })
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            icon: 'success',
+                            hideAfter: false,
+                        });
+    				}
+    				// loginAuth(data.access_token);
+    				// location.href=data.redirectUrl;
+    			},
+    			error: function (xhr, status, error) {
+    				alert("error");
+    			}
+    		});
+    	}
+    	
+    }
+    //장바구니 주문버튼
     $(document).on("click",".cartPaymentOrder",function () {
         $('#defaultForm').attr("action","/product/productPaymentCart");
         if($(this).attr("data-id") =='allCheck'){
