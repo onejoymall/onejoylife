@@ -529,6 +529,9 @@ public class MyPage {
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
+            params.put("code","kcp_bank_code");
+            List<Map<String,Object>> getSelectorList = selectorDAO.getSelectorList(params);
+            model.addAttribute("getSelectorList",getSelectorList);
         }catch (Exception e){
             e.printStackTrace();
         }
