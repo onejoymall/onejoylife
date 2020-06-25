@@ -81,4 +81,7 @@ public class MgSystemDAO {
 		List<Map<String,Object>> getSupplierList=sql.selectList("mall.MgSystemMapper.getSupplierList",params);
     	return getSupplierList;
 	}
+	public void deleteProductCode(MgProductCodeVO mgProductCodeVO) {
+		sql.insert("mall.MgSystemMapper.deleteProductCode",mgProductCodeVO);
+	}
 }

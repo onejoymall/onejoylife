@@ -110,12 +110,9 @@
     <![CDATA[
         SELECT
         	IF(A.product_order_name is not null,A.product_order_name,B.product_name) as product_name,
-            A.*,B.*,C.*,
+            A.*,B.*,C.*,D.*,
             (select Z.username from user Z where Z.usr_id=A.payment_user_id) as username,
             (select Z.email from user Z where Z.usr_id=A.payment_user_id) as email,
-            (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
-            (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
-            (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
             (SELECT Z.store_name FROM store Z where Z.supplier_cd = B.product_supplier) as product_made_company_name,
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
             (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
@@ -130,6 +127,8 @@
             (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name
         FROM payment A left join product B on (B.product_cd = A.product_cd)
         left join giveaway C on (C.giveaway_cd = A.giveaway_cd)
+        LEFT JOIN delivery_info D ON(A.order_no = D.order_no)
+        LEFT JOIN store E ON(B.product_store_id = E.store_id)
         where 1=1
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -163,11 +162,20 @@
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM payment A  left join product B on (B.product_cd = A.product_cd) where 1=1
+        FROM payment A left join product B on (B.product_cd = A.product_cd)
+        left join giveaway C on (C.giveaway_cd = A.giveaway_cd)
+        LEFT JOIN delivery_info D ON(A.order_no = D.order_no)
+        LEFT JOIN store E ON(B.product_store_id = E.store_id)
+        where 1=1
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+		  	<if test='item == "product_name"'>
+		      	IF(A.product_order_name is not null,A.product_order_name,B.product_name) LIKE CONCAT('%', #{searchKeyword},'%' ) 
+		    </if>
+		    <if test='item != "product_name"'>
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	        </if>
 	      </foreach>
 	    </if>
         <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>

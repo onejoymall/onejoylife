@@ -25,7 +25,7 @@
             </c:forEach> 
             카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
         <article class="epoint-gift-wrap">
-                <div class="sort-tab clearfix">
+                <div class="inner clearfix">
                     <div class="sort-tab-left">
                         <c:if test="${not empty param.product_ct}">
                             <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '1'}">active</c:if>" onclick="location.href='<c:url value="/mall/today?product_ct=${param.product_ct}&sortOrder=1"/>'">랭킹순</button>
@@ -43,7 +43,7 @@
                         </c:if>
                     </div>
                 </div>
-                <div class="point-product-list">
+                <div class="point-product-list clearfix">
                 	<c:if test="${not empty list}">
                 	<c:forEach var="list" items="${list}" varStatus="status">
                     <div class="point-product-item">
@@ -66,9 +66,10 @@
                 </div>
             <form id="form1" name="form1"  method="get">
                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+                <c:if test="${not empty param.product_ct}">
+                	<input type="hidden" name="product_ct" value="${param.product_ct}">
+                </c:if>
             </form>
-
-            </div>
         </article>
     </section>
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

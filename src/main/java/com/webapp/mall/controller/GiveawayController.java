@@ -60,6 +60,8 @@ public class GiveawayController {
                 giveawayVO.setOrderByKey("giveaway_id");
                 giveawayVO.setOrderByValue("DESC");
             }
+            giveawayVO.setGiveaway_use_yn("Y");
+            giveawayVO.setGiveaway_sale_yn("Y");
             giveawayVO.pageCalculate(giveawayDAO.getGiveawayListCount(giveawayVO));
             params.put("rowStart",giveawayVO.getRowStart());
             params.put("staticRowEnd",giveawayVO.getStaticRowEnd());
