@@ -117,29 +117,29 @@ public class MobilePayment {
 	                params.put("point_paid_user_id",userInfo.get("usr_id"));
 	                deliveryInfoVO.setOrder_user_id((Integer)userInfo.get("usr_id"));
 	                
-	                //회원인 경우 보유포인트 확인
-	                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
-	                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
-	                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
-	                
-	                //상품결제 시 포인트 배율 확인 및 지급
-	                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
-                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
-                    BigDecimal payment = new BigDecimal(getPaymentString);//구매금액
-                    BigDecimal productPointRate = new BigDecimal((String)productInfo.get("product_point_rate"));//포인트배율
-                    BigDecimal hPersent = new BigDecimal("100");//백분율
-                    if(productPointRate.compareTo(BigDecimal.ZERO) == 1){
-
-                        BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
-                        params.put("point_amount",userPoint.add(pointMultiply));
-                        params.put("point_paid_memo",productInfo.get("product_name"));
-                        params.put("point_add",pointMultiply);
-                        params.put("point_paid_user_id",userInfo.get("usr_id"));
-                        params.put("point_paid_type","P");
-                        params.put("point_paid_product_cd",productInfo.get("product_cd"));
-                        params.put("order_no",deliveryInfoVO.getOrder_no());
-                        pointDAO.insertPoint(params);
-                    }
+//	                //회원인 경우 보유포인트 확인
+//	                Map<String,Object> productInfo =productDAO.getProductViewDetail(params);
+//	                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+//	                String getPaymentString = Integer.toString((Integer)productInfo.get("product_payment"));
+//	                
+//	                //상품결제 시 포인트 배율 확인 및 지급
+//	                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
+//                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
+//                    BigDecimal payment = new BigDecimal(getPaymentString);//구매금액
+//                    BigDecimal productPointRate = new BigDecimal((String)productInfo.get("product_point_rate"));//포인트배율
+//                    BigDecimal hPersent = new BigDecimal("100");//백분율
+//                    if(productPointRate.compareTo(BigDecimal.ZERO) == 1){
+//
+//                        BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
+//                        params.put("point_amount",userPoint.add(pointMultiply));
+//                        params.put("point_paid_memo",productInfo.get("product_name"));
+//                        params.put("point_add",pointMultiply);
+//                        params.put("point_paid_user_id",userInfo.get("usr_id"));
+//                        params.put("point_paid_type","P");
+//                        params.put("point_paid_product_cd",productInfo.get("product_cd"));
+//                        params.put("order_no",deliveryInfoVO.getOrder_no());
+//                        pointDAO.insertPoint(params);
+//                    }
                     rediectURL = "/MyPage/OrderAndDelivery";
                 }else if(deliveryInfoVO.getPayment_class().equals("GIVEAWAY")){
                 	params.put("reg_no",params.get("reg_no1")+"-"+params.get("reg_no2"));
@@ -211,27 +211,27 @@ public class MobilePayment {
                 params.put("payment_user_id",userInfo.get("usr_id"));
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
                 
-                //회원인 경우 보유포인트 확인
-                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
-                //상품결제 시 포인트 배율 확인 및 지급
-                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
-                if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
-                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
-                    if(params.get("point_add") != null && !params.get("point_add").equals("") && !params.get("point_add").equals("0")){
-                    	BigDecimal pointMultiply = new BigDecimal((String)params.get("point_add")); //구매포인트
-                        params.put("point_amount",userPoint.add(pointMultiply));
-                        params.put("point_paid_memo",params.get("product_order_name"));
-                        params.put("point_add",pointMultiply);
-                        params.put("point_paid_user_id",userInfo.get("usr_id"));
-                        params.put("point_paid_type","O");
-                        params.put("order_no",deliveryInfoVO.getOrder_no());
-                        pointDAO.insertPoint(params);
-                    }
-                }
-                
-                rediectURL = "/MyPage/OrderAndDelivery";
-                params.put("payment_order_quantity", params.get("quantity_total"));
-                paymentDAO.insertPayment(params);
+//                //회원인 경우 보유포인트 확인
+//                String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+//                //상품결제 시 포인트 배율 확인 및 지급
+//                //상품결제시 에만 포인트 지급 입력된 값이 있을떼만
+//                if(deliveryInfoVO.getPayment_class().equals("PRODUCT")){
+//                    BigDecimal userPoint = new BigDecimal(getPointAmountString);//보유포인트
+//                    if(params.get("point_add") != null && !params.get("point_add").equals("") && !params.get("point_add").equals("0")){
+//                    	BigDecimal pointMultiply = new BigDecimal((String)params.get("point_add")); //구매포인트
+//                        params.put("point_amount",userPoint.add(pointMultiply));
+//                        params.put("point_paid_memo",params.get("product_order_name"));
+//                        params.put("point_add",pointMultiply);
+//                        params.put("point_paid_user_id",userInfo.get("usr_id"));
+//                        params.put("point_paid_type","O");
+//                        params.put("order_no",deliveryInfoVO.getOrder_no());
+//                        pointDAO.insertPoint(params);
+//                    }
+//                }
+//                
+//                rediectURL = "/MyPage/OrderAndDelivery";
+//                params.put("payment_order_quantity", params.get("quantity_total"));
+//                paymentDAO.insertPayment(params);
                 
                 cartPaymentVO.setPayment_cd((String)params.get("payment_cd"));
                 cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));

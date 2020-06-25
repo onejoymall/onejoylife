@@ -77,7 +77,7 @@
                         <c:if test="${empty list.giveaway_winner_reg_date && empty list.winner_id}">
                             <td>
                                 <li>진행중</li>
-                                <span class="grey text-xs">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
+                                
                             </td>
                         </c:if>
                         <c:if test="${not empty list.giveaway_winner_reg_date && empty list.winner_id}">
@@ -87,7 +87,9 @@
                             </td>
                         </c:if>
                         <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                            <li><div class="win-icon"></div><span class="grey text-xs">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span></li>
+                            <li><span class="txt-active">당첨</span></li>
+                            <c:if test="${list.giveaway_payment_status !=  'A'}"><p class="txt-s"><span>(${list.payment_status_name})</span></p></c:if>
+                            <span class="grey text-xs">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
                         </c:if>
 <%--                        <li>진행중<span class="grey text-xs">(2019.04.15)</span></li>--%>
                         <li>
@@ -96,13 +98,23 @@
                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
                                 <c:if test="${list.giveaway_payment_status eq 'A'}">
                                     <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
-                                        <button class="btn btn-red">경품받기</button>
+                                        <button type="button" class="btn btn-red">경품받기</button>
                                     </a>
                                 </c:if>
                                 <c:if test="${list.giveaway_payment_status !=  'A'}">
                                     <a href="#" id="SearchDelivery">
-                                        <button class="btn btn-red">배송조회</button>
+                                        <button type="button" class="btn btn-red">배송조회</button>
                                     </a>
+                                    <c:if test="${list.payment_status == 'M' && list.pay_method == 'vbank'}">
+	                                    <a href="javascript:vbankNoCheck('${list.imp_uid}')" >
+	                                    	<button type="button" class="btn">가상계좌 확인</button>
+	                                    </a>
+                                    </c:if>
+                                    <c:if test="${list.payment_status != 'M' }">
+                                    	<a href="javascript:withholding('${list.order_no}')">
+                                    		<button type="button" class="btn">원천징수 영수증</button>
+                                   		</a>
+                                    </c:if>
                                 </c:if>
                             </c:if>
                         </li>

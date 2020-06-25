@@ -230,6 +230,10 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <form id="saveDelivery" name="saveDelivery">
+            <input type="hidden" name="reason"/>
+            <input type="hidden" name="refund_account"/>
+            <input type="hidden" name="refund_bank"/>
+            <input type="hidden" name="refund_holder"/>
             <div class="modal-body clearfix">
                 <div class="goods-detail-wrap">
                     <div class="right">

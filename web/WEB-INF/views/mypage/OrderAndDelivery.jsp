@@ -131,7 +131,7 @@
                                             <div class="lis-txt-box lis-txt-box1-2">
                                                 <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
                                             </div>
-                                            <c:if test="${paymentList.payment_status eq 'R'}">
+                                            <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
                                                 <div class="lis-txt-box lis-txt-box1-3">
                                                     <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.order_no}">배송조회</a>
                                                 </div>

@@ -201,7 +201,15 @@
                                 <td class="body-td-tit" rowspan="3">환불계좌</td>
                                 <td class="body-td-txt2 pad-top">은행명</td>
                                 <td class="pad-top">
-                                    <input name="refund_bank" type="text" class="select-op">
+                                    <!-- <input name="refund_bank" type="text" class="select-op"> -->
+                                    <select name="refund_bank" class="select-op">
+                                        <c:if test="${not empty getSelectorList}">
+                                            <option value="">은행명</option>
+                                            <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                                                <option value="${getSelectorList.code_value}" >${getSelectorList.code_name}</option>
+                                            </c:forEach>
+                                        </c:if>
+                                    </select>
                                 </td>
                             </tr>
                             <tr>

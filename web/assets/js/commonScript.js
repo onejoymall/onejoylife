@@ -1373,6 +1373,7 @@ $(document).on("click",".ra-num",function () {
             url: '/Manager/selectDeliveryRefund',
             data: {"order_no":order_no},
             success: function (data) {
+            	$('#setButton').html('');
                 $.each(data.list, function (index, item) {
                     $('.' + index).html(item);
                     if(index=="delivery_t_code"){
@@ -1383,10 +1384,6 @@ $(document).on("click",".ra-num",function () {
                     }
                     if(index=="payment_status" && item=="W"){
                         html='<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>';
-                        $('#setButton').html(html);
-                    }
-                    if(index=="payment_status" && item=="F"){
-                        html='<button type="button" name="cancel" class="btn-red cancelbtn on" onclick="refundCancel(\''+$.trim(order_no)+'\',\'S\')">교환완료</button>';
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="H"){
@@ -1421,6 +1418,7 @@ $(document).on("click",".ra-num",function () {
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
                     }
+                    $('input:hidden[name^="'+index+'"]').val(item);
                     // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },
@@ -3928,3 +3926,21 @@ $(".uploadExcelBtn").click(function(){
 	})
 })
 
+function vbankNoCheck(imp_uid){
+	$.ajax({
+		method: 'post',
+		data: 'imp_uid='+imp_uid,
+		url: '/api/vbankNoCheck',
+		success: function(data){
+			if(data.success){
+				alert(data.vbank_name+"  "+data.vbank_num);
+			}else{
+				alert("ERROR");
+			}
+		},
+		error: function(e){
+			alert("ERROR");
+			console.log(e);
+		}
+	})
+}
