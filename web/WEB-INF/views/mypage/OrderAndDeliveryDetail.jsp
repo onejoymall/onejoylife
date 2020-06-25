@@ -63,12 +63,12 @@
                                     <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
 
                                 </c:if>
-                                <c:if test="${paymentDetail.payment_status eq 'R'}">
+                                <c:if test="${paymentDetail.payment_status eq 'R' || paymentDetail.payment_status eq 'S'}">
                                     <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${paymentDetail.order_no}">배송조회</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>
-                                <c:if test="${paymentDetail.payment_status eq 'O' || paymentDetail.payment_status eq 'S'}">
+                                <c:if test="${paymentDetail.payment_status eq 'O'}">
                                 	<p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>

@@ -31,18 +31,20 @@
                                 <p class="ra-num" data-id="con3">1개월</p>
                                 <p class="ra-num" data-id="con4">3개월</p>
                             </div>
+                            <form id="form2" name="form2"  method="get">
                             <div class="input-box2">
                                 <div class="cla">
-                                    <input type="text" name="start_date" id="from_date" class="date_pick">
+                                    <input type="text" name="start_date" id="from_date" class="date_pick" value="${param.start_date}">
                                     <div class="cla-img1"></div>
                                 </div>
                                 <p class="cla-p1"> ~ </p>
                                 <div class="cla">
-                                    <input type="text" name="end_date" id="to_date" class="date_pick">
+                                    <input type="text" name="end_date" id="to_date" class="date_pick" value="${param.end_date}">
                                     <div class="cla-img1"></div>
                                 </div>
-                                <p class="cla-p2"><a href="">조회</a></p>
+                                <p class="cla-p2"><a href="javascript:$('#form2').submit();">조회</a></p>
                             </div>
+                            </form>
                         </div>
                     </div>
                     <div class="con on" id="con1">
@@ -88,16 +90,16 @@
                                                 <div style="width: 90px;height: 90px;background: url(${list.file_1}) no-repeat center / cover;"></div>
                                                 <div class="my-lis-outer">
 	                                                <div class="my-lis-txt">
-	                                                    <p>${list.giveaway_brand}</p>
+	                                                    <%-- <p>${list.giveaway_brand}</p> --%>
 	                                                    <p class="lis-font-w">${list.giveaway_name}</p>
-	                                                    <p>${list.giveaway_model_name}</p>
+	                                                    <%-- <p>${list.giveaway_model_name}</p> --%>
 	                                                </div>
                                                 </div>
 												
 												<div class="my-lis-outer">
 	                                                <div class="red-box">
 	                                                    <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-	                                                        <span>${list.giveaway_payment_status_name}</span>
+	                                                        <%-- <span>${list.giveaway_payment_status_name}</span> --%>
 	                                                        <%--                                                    <span class="dis-none">결제완료</span>--%>
 	                                                        <%--                                                    <span class="dis-none">상품준비중</span>--%>
 	                                                        <%--                                                    <span class="dis-none">배송중</span>--%>
@@ -120,7 +122,9 @@
                                         </td>
                                         </c:if>
                                         <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                            <td><div class="win-icon"></div><p class="txt-s"><span>(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span></p></td>
+                                            <td><div class="win-icon"></div>
+                                            <c:if test="${list.giveaway_payment_status !=  'A'}"><p class="txt-s"><span>(${list.payment_status_name})</span></p></c:if>
+                                            <p class="txt-s"><span>(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span></p></td>
                                         </c:if>
 
                                         <td>
@@ -141,7 +145,12 @@
                                                             <span>배송조회</span>
                                                         </p>
                                                     </a>
-                                                    <a href="javascript:withholding('${list.order_no}')"><p class="lis-txt-box">원천징수 영수증</p></a>
+                                                    <c:if test="${list.payment_status == 'M' && list.pay_method == 'vbank'}">
+                                                    	<a href="javascript:vbankNoCheck('${list.imp_uid}')"><p class="lis-txt-box">가상계좌 확인</p></a>
+                                                    </c:if>
+                                                    <c:if test="${list.payment_status != 'M' }">
+                                                    	<a href="javascript:withholding('${list.order_no}')"><p class="lis-txt-box">원천징수 영수증</p></a>
+                                                    </c:if>
                                                 </c:if>
                                             </c:if>
                                         </td>
@@ -162,6 +171,8 @@
                             <form id="form1" name="form1"  method="get">
                                 <jsp:include page="/WEB-INF/views/common/pagingforSubmitList.jsp" />
                                 <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                                <input type="hidden" name="start_date" value="<c:out value="${param.start_date}"/>">
+                                <input type="hidden" name="end_date" value="<c:out value="${param.end_date}"/>">
                             </form>
                         </div>
                     </div>
@@ -592,7 +603,7 @@
         });
         $(".date_pick").datepicker();
     });
-    $('.input-box1 p').click(function(){
+    /* $('.input-box1 p').click(function(){
         var tab_id = $(this).attr('data-id');
 
         $('.input-box1 p').removeClass('on');
@@ -607,7 +618,7 @@
         $('.ojt-tabbox .con2-1').removeClass('on1');
         $(this).addClass('on1');
         $("#"+tab_id1).addClass('on1');
-    })
+    }) */
     /* $('.ojt-tab p').click(function(){
         var tab_id2 = $(this).attr('data-id2');
 

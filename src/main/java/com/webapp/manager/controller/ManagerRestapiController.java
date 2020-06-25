@@ -5,7 +5,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,15 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
-import com.webapp.board.app.BoardGroupSvc;
-import com.webapp.board.app.BoardGroupVO;
-import com.webapp.board.app.BoardSvc;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,36 +32,54 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
+import com.webapp.board.app.BoardGroupSvc;
+import com.webapp.board.app.BoardGroupVO;
+import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
-import com.webapp.common.security.model.UserInfo;
-
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.*;
-import com.webapp.mall.vo.*;
-import com.webapp.manager.dao.*;
-import com.webapp.manager.vo.*;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static org.springframework.util.CollectionUtils.isEmpty;
+import com.webapp.mall.dao.CouponDAO;
+import com.webapp.mall.dao.DeliveryDAO;
+import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.dao.PointDAO;
+import com.webapp.mall.dao.RefundDAO;
+import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.QnaVO;
+import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.dao.BannerDAO;
+import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.ConfigDAO;
+import com.webapp.manager.dao.MgBrandDAO;
+import com.webapp.manager.dao.MgCommonDAO;
+import com.webapp.manager.dao.MgCouponDAO;
+import com.webapp.manager.dao.MgGiveawayDAO;
+import com.webapp.manager.dao.MgOptionDAO;
+import com.webapp.manager.dao.MgPointDAO;
+import com.webapp.manager.dao.MgProductDAO;
+import com.webapp.manager.dao.MgReviewDAO;
+import com.webapp.manager.dao.MgStoreDAO;
+import com.webapp.manager.dao.MgSystemDAO;
+import com.webapp.manager.dao.MgUserDAO;
+import com.webapp.manager.dao.MgUserGrantDAO;
+import com.webapp.manager.dao.QnaDAO;
+import com.webapp.manager.vo.CouponVO;
+import com.webapp.manager.vo.MgBrandVO;
+import com.webapp.manager.vo.MgCommonVO;
+import com.webapp.manager.vo.MgOptionVO;
+import com.webapp.manager.vo.MgPointVO;
+import com.webapp.manager.vo.MgUserVO;
+import com.webapp.manager.vo.ProductVO;
+import com.webapp.manager.vo.StoreVO;
 
 @RestController
 public class ManagerRestapiController {
@@ -81,6 +93,8 @@ public class ManagerRestapiController {
     QnaDAO qnaDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private PointDAO pointDAO;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -123,6 +137,11 @@ public class ManagerRestapiController {
     private MgSystemDAO mgSystemDAO;
     @Autowired
     private CouponDAO couponDAO;
+    IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
     @Value("${downloadPath}")
     private String downloadPath;
     @Value("${downloadEditorPath}")
@@ -452,14 +471,50 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-
+            	//배송완료시 포인트지급
+            	if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
+            		Map<String, Object> payment = paymentDAO.getPaymentDetail(params);
+            		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            		params.put("point_paid_user_id",payment.get("payment_user_id"));
+            		
+            		//결제확인
+            		client = new IamportClient(apiKey, apiSecret);
+    	            Payment impPayment = client.paymentByImpUid((String)payment.get("imp_uid")).getResponse();
+    	            if(impPayment.getStatus().equals("paid")) {
+	            		long sumAddPoint = 0;
+	            		for(Map<String, Object> paymentBundle:paymentBundleList) {
+	            			if(paymentBundle.get("product_point_class").equals("P")) { //적립율기준
+	            				int product_payment = Integer.parseInt(String.valueOf(paymentBundle.get("product_payment")));
+	            				int payment_order_quantity = Integer.parseInt(String.valueOf(paymentBundle.get("payment_order_quantity")));
+	            				double product_point_rate = Double.parseDouble(String.valueOf(paymentBundle.get("product_point_rate")));
+	            				
+	            				long addPoint = Math.round((product_payment * payment_order_quantity * product_point_rate / 100));
+	            				sumAddPoint += addPoint;
+	            			}else {
+	            				//미개발
+	            			}
+	            		}
+	            		
+	            		Map<String, Object> pointParam = new HashMap<>();
+	            		String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+	            		BigDecimal userPoint = new BigDecimal(getPointAmountString);
+	            		BigDecimal pointMultiply = new BigDecimal(sumAddPoint); // 구매포인트
+	            		pointParam.put("point_amount", userPoint.add(pointMultiply));
+	            		pointParam.put("point_paid_memo", payment.get("product_order_name"));
+	            		pointParam.put("point_add", pointMultiply);
+	            		pointParam.put("point_paid_user_id", payment.get("payment_user_id"));
+	            		pointParam.put("point_paid_type", ((String)payment.get("order_no")).substring(0, 2).equals("PO") ? "O" : "P");
+	            		pointParam.put("order_no", payment.get("order_no"));
+	            		pointDAO.insertPoint(pointParam);
+    	            }
+            	}
                 deliveryDAO.updateDeliveryManager(deliveryInfoVO);
                 paymentDAO.updatePaymentManger(deliveryInfoVO);
                 resultMap.put("success",messageSource.getMessage("success.done","ko"));
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
-
+        	e.printStackTrace();
             resultMap.put("e", e);
         }
         return resultMap;

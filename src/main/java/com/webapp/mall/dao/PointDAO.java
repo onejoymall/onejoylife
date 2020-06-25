@@ -25,8 +25,8 @@ public class PointDAO {
         Integer getPointAmount=sql.selectOne("mall.PointMapper.getPointAmount",params);
         return getPointAmount;
     }
-    public void insertPoint(Map<String, String> params) throws SQLException {
-        sql.insert("mall.PointMapper.insertPoint",params);
+    public void insertPoint(Map<String, Object> pointParam) throws SQLException {
+        sql.insert("mall.PointMapper.insertPoint",pointParam);
     }
 
     public int updatePoint(Map<String, String> params) throws SQLException {

@@ -33,6 +33,7 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
     <if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -81,6 +82,7 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
     <if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -129,6 +131,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -177,6 +180,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -223,6 +227,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -265,6 +270,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -285,6 +291,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -299,6 +306,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -317,6 +325,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -333,6 +342,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -349,6 +359,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -363,6 +374,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -383,6 +395,7 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -409,6 +422,7 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -439,6 +453,7 @@
 	left JOIN product C
 	ON A.product_CD = C.product_CD
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -460,6 +475,7 @@
 	left JOIN product_category D
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1)
 	where 1=1
+	and A.order_no NOT LIKE 'GW%'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )

@@ -11,6 +11,7 @@
 				 ifnull(sum(A.payment_status = 'O'),0) as oCnt
 		FROM payment A
 		WHERE A.payment_user_id = #{payment_user_id}
+		and A.order_no NOT LIKE 'GW%'
 	</select>
 	
     <insert id="insertPayment" parameterType="java.util.Map">
@@ -130,6 +131,7 @@
         LEFT JOIN delivery_info D ON(A.order_no = D.order_no)
         LEFT JOIN store E ON(B.product_store_id = E.store_id)
         where 1=1
+        and A.order_no NOT LIKE 'GW%'
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -167,6 +169,7 @@
         LEFT JOIN delivery_info D ON(A.order_no = D.order_no)
         LEFT JOIN store E ON(B.product_store_id = E.store_id)
         where 1=1
+        and A.order_no NOT LIKE 'GW%'
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -229,6 +232,7 @@
 				SUM(IFNULL(IF(A.payment_status IN ('C','G'),A.payment,0),0)) refundTotal
 		FROM payment A
 		WHERE DATE_FORMAT(A.reg_date,'%Y%m%d') = DATE_FORMAT(SYSDATE(),'%Y%m%d')
+		and A.order_no NOT LIKE 'GW%'
     </select>
     <select id="getLastMonthSummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -241,6 +245,7 @@
 				SUM(IF(A.payment_status = 'G',1,0)) gCnt
 		FROM payment A
 		WHERE A.reg_date BETWEEN DATE_ADD(SYSDATE(), INTERVAL -1 MONTH) AND SYSDATE()
+		and A.order_no NOT LIKE 'GW%'
     </select>
     <select id="getStatusCount" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -256,6 +261,7 @@
 				SUM(IF(A.payment_status = 'G',1,0)) gCnt
 		FROM payment A
 		WHERE 1=1
+		and A.order_no NOT LIKE 'GW%'
 		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>

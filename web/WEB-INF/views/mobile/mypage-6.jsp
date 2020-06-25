@@ -74,7 +74,7 @@
                     <li>${paymentList.payment_status_name}</li>
                     <li>
                         <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
-                        <c:if test="${paymentList.payment_status eq 'R'}">
+                        <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
                             <button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >배송조회</button>
                         </c:if>
                         <c:if test="${paymentList.payment_status == 'O'}">

@@ -547,7 +547,7 @@
                     <tr>
                         <th>적립금</th>
                         <td >
-                            <input class="onlyNumber" type="text" id="goods-savings" name="product_point_rate">
+                            <input class="onlyNumberAndDot" type="text" id="goods-savings" name="product_point_rate">%
                             <span class="cc">* 값을 입력하지 않으면 '기본 설정 사용'으로 저장됩니다.</span>
                         </td>
                     </tr>
@@ -556,8 +556,8 @@
                         <td >
                             <input type="radio" id="goods-savings-p" name="product_point_class" value="P" checked>
                             <label for="goods-savings-p">상품 금액에 비례</label>
-                            <input type="radio" id="goods-savings-w" name="product_point_class" value="W">
-                            <label for="goods-savings-w">임의 금액</label>
+                            <!-- <input type="radio" id="goods-savings-w" name="product_point_class" value="W">
+                            <label for="goods-savings-w">임의 금액</label> -->
                         </td>
                     </tr>
                     <tr>

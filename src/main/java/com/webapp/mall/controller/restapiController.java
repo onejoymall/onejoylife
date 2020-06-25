@@ -112,6 +112,11 @@ public class restapiController {
 	private MgSystemDAO mgSystemDAO;
 	@Autowired
 	private CouponDAO couponDAO;
+	IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
 	@Value("${downloadPath}")
 	private String downloadPath;
 	@Value("${downloadEditorPath}")
@@ -315,9 +320,10 @@ public class restapiController {
                             //로그인 기록 저장
                             userVO.setLog_type("login");
                             userDAO.insertUserHistory(userVO);
-                            if(product_cd!= null){
-                                resultMap.put("redirectUrl", "/product/productDetail?product_cd="+product_cd);
-                            } else if(RefererUrl!=null) {
+//                            if(product_cd!= null){
+//                                resultMap.put("redirectUrl", "/product/productDetail?product_cd="+product_cd);
+//                            } else 
+                        	if(RefererUrl!=null) {
                                 resultMap.put("redirectUrl",RefererUrl);
                             } else {
                                 resultMap.put("redirectUrl", "/");
@@ -722,29 +728,29 @@ public class restapiController {
 					params.put("point_paid_user_id", userInfo.get("usr_id"));
 
 					// 회원인 경우 보유포인트 확인
-					params.put("product_live_type", "on");
-					Map<String, Object> productInfo = productDAO.getProductViewDetail(params);
-					String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
-					String getPaymentString = Integer.toString((Integer) productInfo.get("product_payment"));
-
-					// 상품결제 시 포인트 배율 확인 및 지급
-					// 상품결제시 에만 포인트 지급 입력된 값이 있을떼만
-					BigDecimal userPoint = new BigDecimal(getPointAmountString);// 보유포인트
-					BigDecimal payment = new BigDecimal(getPaymentString);// 구매금액
-					BigDecimal productPointRate = new BigDecimal((String) productInfo.get("product_point_rate"));// 포인트배율
-					BigDecimal hPersent = new BigDecimal("100");// 백분율
-					if (productPointRate.compareTo(BigDecimal.ZERO) == 1) {
-
-						BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
-						params.put("point_amount", userPoint.add(pointMultiply));
-						params.put("point_paid_memo", productInfo.get("product_name"));
-						params.put("point_add", pointMultiply);
-						params.put("point_paid_user_id", userInfo.get("usr_id"));
-						params.put("point_paid_type", "P");
-						params.put("point_paid_product_cd", productInfo.get("product_cd"));
-						params.put("order_no", deliveryInfoVO.getOrder_no());
-						pointDAO.insertPoint(params);
-					}
+//					params.put("product_live_type", "on");
+//					Map<String, Object> productInfo = productDAO.getProductViewDetail(params);
+//					String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+//					String getPaymentString = Integer.toString((Integer) productInfo.get("product_payment"));
+//
+//					// 상품결제 시 포인트 배율 확인 및 지급
+//					// 상품결제시 에만 포인트 지급 입력된 값이 있을떼만
+//					BigDecimal userPoint = new BigDecimal(getPointAmountString);// 보유포인트
+//					BigDecimal payment = new BigDecimal(getPaymentString);// 구매금액
+//					BigDecimal productPointRate = new BigDecimal((String) productInfo.get("product_point_rate"));// 포인트배율
+//					BigDecimal hPersent = new BigDecimal("100");// 백분율
+//					if (productPointRate.compareTo(BigDecimal.ZERO) == 1) {
+//
+//						BigDecimal pointMultiply = productPointRate.multiply(payment).divide(hPersent);
+//						params.put("point_amount", userPoint.add(pointMultiply));
+//						params.put("point_paid_memo", productInfo.get("product_name"));
+//						params.put("point_add", pointMultiply);
+//						params.put("point_paid_user_id", userInfo.get("usr_id"));
+//						params.put("point_paid_type", "P");
+//						params.put("point_paid_product_cd", productInfo.get("product_cd"));
+//						params.put("order_no", deliveryInfoVO.getOrder_no());
+//						pointDAO.insertPoint(params);
+//					}
 					resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
 				} else if (deliveryInfoVO.getPayment_class().equals("GIVEAWAY")) {
 					params.put("reg_no", params.get("reg_no1") + "-" + params.get("reg_no2"));
@@ -806,22 +812,22 @@ public class restapiController {
 				params.put("point_paid_user_id", userInfo.get("usr_id"));
 
 				// 회원인 경우 보유포인트 확인
-				String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+//				String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
 				// 상품결제 시 포인트 배율 확인 및 지급
 				// 상품결제시 에만 포인트 지급 입력된 값이 있을떼만
 				if (deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
-					BigDecimal userPoint = new BigDecimal(getPointAmountString);// 보유포인트
-					if (params.get("point_add") != null && !params.get("point_add").equals("")
-							&& !params.get("point_add").equals("0")) {
-						BigDecimal pointMultiply = new BigDecimal((String) params.get("point_add")); // 구매포인트
-						params.put("point_amount", userPoint.add(pointMultiply));
-						params.put("point_paid_memo", params.get("product_order_name"));
-						params.put("point_add", pointMultiply);
-						params.put("point_paid_user_id", userInfo.get("usr_id"));
-						params.put("point_paid_type", "O");
-						params.put("order_no", deliveryInfoVO.getOrder_no());
-						pointDAO.insertPoint(params);
-					}
+//					BigDecimal userPoint = new BigDecimal(getPointAmountString);// 보유포인트
+//					if (params.get("point_add") != null && !params.get("point_add").equals("")
+//							&& !params.get("point_add").equals("0")) {
+//						BigDecimal pointMultiply = new BigDecimal((String) params.get("point_add")); // 구매포인트
+//						params.put("point_amount", userPoint.add(pointMultiply));
+//						params.put("point_paid_memo", params.get("product_order_name"));
+//						params.put("point_add", pointMultiply);
+//						params.put("point_paid_user_id", userInfo.get("usr_id"));
+//						params.put("point_paid_type", "O");
+//						params.put("order_no", deliveryInfoVO.getOrder_no());
+//						pointDAO.insertPoint(params);
+//					}
 				}
 				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
 			}
@@ -1710,6 +1716,35 @@ public class restapiController {
 			}
 		} catch (Exception e) {
 
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
+	
+	//경품 가상계좌 확인
+	@RequestMapping(value = "/api/vbankNoCheck", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> vbankNoCheck(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+		
+		try {
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				// 로그인 확인
+				params.put("email", session.getAttribute("email"));
+				Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+				params.put("usr_id", userInfo.get("usr_id"));
+				
+				client = new IamportClient(apiKey, apiSecret);
+	            Payment impPayment = client.paymentByImpUid((String)params.get("imp_uid")).getResponse();
+	            resultMap.put("vbank_name",impPayment.getVbankName());
+	            resultMap.put("vbank_num",impPayment.getVbankNum());
+				
+				resultMap.put("success", "success");
+			}
+		} catch (Exception e) {
 			resultMap.put("e", e);
 		}
 		return resultMap;

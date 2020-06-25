@@ -94,6 +94,7 @@
             if(SUBSTRING_INDEX(C.product_tex_class, '|', -1) IN ('A','B','C'),NULL,SUBSTRING_INDEX(C.product_tex_class, '|', -1)) AS product_tex
             
         FROM payment A 
+        and A.order_no NOT LIKE 'GW%'
         LEFT JOIN delivery_info B
         ON A.order_no = B.order_no
         LEFT JOIN product C

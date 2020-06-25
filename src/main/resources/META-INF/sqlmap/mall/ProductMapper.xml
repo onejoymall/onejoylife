@@ -256,6 +256,7 @@
 		LEFT JOIN user C
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
+		and A.order_no NOT LIKE 'GW%'
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1
 		ORDER BY COUNT(A.product_cd) desc
@@ -271,6 +272,7 @@
 		LEFT JOIN user C
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
+		and A.order_no NOT LIKE 'GW%'
 		and A.product_cd = B.product_cd
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1) tmp
@@ -279,6 +281,7 @@
 		SELECT date_format(A.reg_date,'%Y-%m-%d') reg_date
 		FROM payment A
 		WHERE A.payment_user_id = #{coupon_paid_user_id}
+		and A.order_no NOT LIKE 'GW%'
 		ORDER BY reg_date DESC
 		LIMIT 1
     </select>

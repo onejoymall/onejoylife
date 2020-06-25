@@ -58,7 +58,8 @@
             point_add,
             point_paid_user_id,
             point_paid_type,
-            point_paid_product_cd)
+            point_paid_product_cd,
+            order_no)
             VALUES (
             #{point_amount},
             #{point_paid_memo},
@@ -66,7 +67,8 @@
             #{point_add},
             #{point_paid_user_id},
             #{point_paid_type},
-            #{point_paid_product_cd}
+            #{point_paid_product_cd},
+            #{order_no}
             )
             ]]>
 
