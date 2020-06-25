@@ -1,6 +1,6 @@
 package com.webapp.mall.vo;
 
-public class IamPortVO {
+public class IamPortVO extends DeliveryInfoVO{
     String imp_uid;
     String merchant_uid;
     String status;

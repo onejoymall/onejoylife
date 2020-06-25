@@ -36,7 +36,7 @@ public class WebHookRestController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			iamPortDAO.insertWebHook(iamPortVO);
-
+			deliveryInfoVO.setMerchant_uid(iamPortVO.getMerchant_uid());
 			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("paid")) {
 				deliveryInfoVO.setPayment_status("W");
 				paymentDAO.updatePayment(deliveryInfoVO);
