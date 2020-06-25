@@ -24,14 +24,9 @@ public class IamPortDAO {
     @Autowired
     private DataSourceTransactionManager txManager;
     public void insertWebHook(IamPortVO iamPortVO) throws SQLException {
-        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        TransactionStatus status = txManager.getTransaction(def);
-        try{
-            sql.insert("iamport.iamPortMapper.insertWebHook",iamPortVO);
-        } catch (TransactionException ex) {
-            txManager.rollback(status);
-            System.out.println("데이터 저장 오류: " + ex.toString());
-        }
+        sql.insert("iamport.iamPortMapper.insertWebHook",iamPortVO);
+    }
+    public void webhookUpdatePayment(IamPortVO iamPortVO) throws SQLException {
+        sql.update("iamport.iamPortMapper.webhookUpdatePayment",iamPortVO);
     }
 }

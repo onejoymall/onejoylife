@@ -1,21 +1,18 @@
 package com.webapp.mall.controller;
 
+import com.siot.IamportRestClient.IamportClient;
 import com.webapp.mall.dao.IamPortDAO;
+import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.IamPortVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.siot.IamportRestClient.IamportClient;
-import com.webapp.mall.dao.PaymentDAO;
-import com.webapp.mall.vo.DeliveryInfoVO;
-
-import java.util.HashMap;
-import java.util.Map;
-
-@RestController
+@Controller
 public class WebHookController {
 	@Autowired
 	private IamPortDAO iamPortDAO;
@@ -37,14 +34,15 @@ public class WebHookController {
 	 */
 
 	//아이엠포트에서 json 방식은 안됨 x-www-form-urlencoded 로 사용해야함
-	@RequestMapping(value =  "/webhook", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded")
-	public ResponseEntity<String> IamPortWebHook(IamPortVO iamPortVO,DeliveryInfoVO deliveryInfoVO,HttpStatus httpStatus){
+	@RequestMapping(value =  "/webhook", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<String> IamPortWebHook(@RequestBody String body,IamPortVO iamPortVO,DeliveryInfoVO deliveryInfoVO,HttpStatus httpStatus) throws Exception{
 		try {
 			iamPortDAO.insertWebHook(iamPortVO);
 
 			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("paid")) {
-    			deliveryInfoVO.setPayment_status("W");
-    			paymentDAO.updatePayment(deliveryInfoVO);
+				deliveryInfoVO.setPayment_status("W");
+				paymentDAO.updatePayment(deliveryInfoVO);
 			}
 			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("ready")) {
 				deliveryInfoVO.setPayment_status("M");
@@ -58,6 +56,12 @@ public class WebHookController {
 			e.printStackTrace();
 			return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-    	return new ResponseEntity<>("success", HttpStatus.OK);
+//		try {
+//			iamPortDAO.webhookUpdatePayment(iamPortVO);
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }
