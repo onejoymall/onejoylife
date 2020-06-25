@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jcodec.common.DictionaryCompressor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -985,10 +986,16 @@ public class restapiController {
 //            IamportResponse<AccessToken> auth_response = client.getAuth();
 			String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
 			CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); // merchant_uid를 통한
-																									// 전액취소
+
+			cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
+			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
+			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
+			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
+
+			// 전액취소
 			// cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
 
-			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
 
 			if (payment_response.getResponse() == null) {
 				error.put("Error", payment_response.getMessage());
