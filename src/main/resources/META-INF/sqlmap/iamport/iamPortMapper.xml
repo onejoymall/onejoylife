@@ -5,4 +5,15 @@
     <insert id="insertWebHook" parameterType="com.webapp.mall.vo.IamPortVO">
     	insert into iamport_webhook (imp_uid,merchant_uid,status) values(#{imp_uid},#{merchant_uid},#{status})
     </insert>
+    <update id="webhookUpdatePayment" parameterType="com.webapp.mall.vo.IamPortVO">
+          update payment set payment_status= (
+            select
+                case
+                    WHEN status = 'paid'
+                        THEN 'W'
+                    WHEN status = 'cancelled'
+                        THEN 'C'
+                    ELSE 'M' end as status
+            from iamport_webhook where merchant_uid=#{merchant_uid} order by reg_date limit 1) where order_no = #{merchant_uid};
+    </update>
 </mapper>
