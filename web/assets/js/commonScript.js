@@ -1706,6 +1706,7 @@ $(document).on("click",".ra-num",function () {
                                     '<td>'+value.product_class_code+'</td>' +
                                     '<td>'+value.product_class_name+'</td>' +
                                     '<td>'+value.product_class_code_type_name+'</td>' +
+                                    '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
                                     '</tr>';
                             })
                             $('.dataListView').html(html);
@@ -2650,11 +2651,9 @@ $(document).on("click",".ra-num",function () {
                 console.log(data.list)
                 resultData=data.list;
                 $.each(data.list, function (index, item) {
-                    $('input[name^="'+index+'"]').val(item);
                     $('#'+index).val(item);
                     if(index=="giveaway_html"){
                         $('#summernote').summernote('code', item);
-
                     }
                     if(index=="giveaway_mobile_html"){
                         $('#summernote2').summernote('code', item);
@@ -2671,6 +2670,12 @@ $(document).on("click",".ra-num",function () {
                     if(index=="giveaway_service_info"){
                         $('#editor6').summernote('code', item);
                     }
+                    
+                    $('input:hidden[name^="'+index+'"]').val(item);
+                    $('input:text[name^="'+index+'"]').val(item);
+                    $('select[name='+index+']').val(item);
+                    $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+                    $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                 });
                 /*var ele1 =$('input[name^="file_1"]').val();
                 var ele2 =$('input[name^="file_2"]').val();
@@ -3252,6 +3257,7 @@ $(".codeSrc").click(function(e){
             '<td>'+value.product_class_code+'</td>' +
             '<td>'+value.product_class_name+'</td>' +
             '<td>'+value.product_class_code_type_name+'</td>' +
+            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
             '</tr>';
     })
     $('.dataListView').html(html);
@@ -3278,6 +3284,7 @@ $(".srcButton").click(function(e){
             '<td>'+value.product_class_code+'</td>' +
             '<td>'+value.product_class_name+'</td>' +
             '<td>'+value.product_class_code_type_name+'</td>' +
+            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
             '</tr>';
     })
     $('.dataListView').html(html);
@@ -3285,30 +3292,76 @@ $(".srcButton").click(function(e){
 });
 
 function callTableTrStyle(type){
-    $(".codeSrcTable tbody tr").on("click",function(){
+    $(".codeSrcTable tbody tr td").not(".codeSrcTable tbody tr td:last-child").on("click",function(){
         $(".codeSrcTable tbody tr").removeClass('active');
-        $(this).addClass('active');
+        $(this).parent('tr').addClass('active');
         if(type == "O"){
-            $('input[name=product_origin]').val( $(this).attr("data-id"));
+            $('input[name=product_origin]').val( $(this).parent('tr').attr("data-id"));
         }
         if(type == "B"){
-            $('input[name=product_brand]').val( $(this).attr("data-id"));
+            $('input[name=product_brand]').val( $(this).parent('tr').attr("data-id"));
         }
         if(type == "M"){
-            $('input[name=product_made_company_cd]').val( $(this).attr("data-id"));
+            $('input[name=product_made_company_cd]').val( $(this).parent('tr').attr("data-id"));
         }
         if(type == "T"){
-            $('input[name=product_trend]').val( $(this).attr("data-id"));
+            $('input[name=product_trend]').val( $(this).parent('tr').attr("data-id"));
         }
         if(type == "S"){
-            $('input[name=product_supplier]').val( $(this).attr("data-id"));
-            $('input[name=product_store_id]').val( $(this).attr("store-id").substr(0,$(this).attr("store-id").length-1));
+            $('input[name=product_supplier]').val( $(this).parent('tr').attr("data-id"));
+            $('input[name=product_store_id]').val( $(this).parent('tr').attr("store-id").substr(0,$(this).parent('tr').attr("store-id").length-1));
         }
 
         $(".codeSrcModal").attr("style", "display:none");
         $('body').css("overflow", "auto");
     });
+    
+    $(".codeSrcTable tbody tr td p a.codeUpdate").on("click",function(){
+    	if(type == 'S'){
+    		alert("입점업체 관리에서 진행해주세요.");
+    		return;
+    	}
 
+    	var class_code = prompt("수정 할 코드명을 입력하세요.")
+    	if(class_code){
+    		commonAjaxListCall('POST','/Save/codeUpdate',{"product_class_code_type":type,"product_class_name":class_code,"product_class_code":$(this).attr("data-id")});
+    		
+    		var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":type});
+    	    var html;
+    	    $.each(dataList.getProductCodeList,function (key,value) {
+    	        html +='' +
+    	            '<tr data-id="'+value.product_class_code+'" store-id="'+value.product_class_name.split("ID:")[1]+'">' +
+    	            '<td><div class="codeRadio"></div></td>' +
+    	            '<td>'+value.product_class_code+'</td>' +
+    	            '<td>'+value.product_class_name+'</td>' +
+    	            '<td>'+value.product_class_code_type_name+'</td>' +
+    	            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
+    	            '</tr>';
+    	    })
+    	    $('.dataListView').html(html);
+    	    callTableTrStyle(type);
+    	}
+    });
+    $(".codeSrcTable tbody tr td p a.codeDelete").on("click",function(){
+    	if(confirm("삭제하시겠습니까?")){
+    		commonAjaxListCall('POST','/Save/codeDelete',{"product_class_code_type":type,"product_class_code":$(this).attr("data-id")});
+    		
+    		var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":type});
+    	    var html;
+    	    $.each(dataList.getProductCodeList,function (key,value) {
+    	        html +='' +
+    	            '<tr data-id="'+value.product_class_code+'" store-id="'+value.product_class_name.split("ID:")[1]+'">' +
+    	            '<td><div class="codeRadio"></div></td>' +
+    	            '<td>'+value.product_class_code+'</td>' +
+    	            '<td>'+value.product_class_name+'</td>' +
+    	            '<td>'+value.product_class_code_type_name+'</td>' +
+    	            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
+    	            '</tr>';
+    	    })
+    	    $('.dataListView').html(html);
+    	    callTableTrStyle(type);
+    	}
+    });
 }
 //저장 후 결과만
 function commonAjaxSaveCall(type,url,formData,popup){

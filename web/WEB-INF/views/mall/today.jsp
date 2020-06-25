@@ -27,9 +27,9 @@
             </c:if>
                 </ul>
             </div>
-            <div class="banner-box">
+            <!-- <div class="banner-box">
 
-            </div>
+            </div> -->
             <p class="gift-amount">오늘의 특가 
 				<c:if test="${searchVO.product_ct eq null}">전체</c:if>
 				<c:forEach var="categoryList" items="${categoryList}" varStatus="status">
@@ -99,6 +99,9 @@
                 </div>
 
                 <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+                <c:if test="${not empty param.product_ct}">
+                	<input type="hidden" name="product_ct" value="${param.product_ct}">
+                </c:if>
                 <%--                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">--%>
             </form>
         </div>

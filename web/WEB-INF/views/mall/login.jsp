@@ -62,7 +62,7 @@
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div class="nonmem-in">
-                            <p>주문번호</p>
+                            <p>결제번호</p>
                             <input type="text" name="imp_uid">
                             <p>비밀번호</p>
                             <input type="password" name="password">

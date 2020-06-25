@@ -839,6 +839,7 @@ public class ManagerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        model.addAttribute("params", params);
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "order");
         model.addAttribute("postUrl", "/Manager/order");

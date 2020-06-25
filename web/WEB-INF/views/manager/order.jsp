@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
     <main>
         <div class="main-content">
@@ -21,10 +22,22 @@
                         <input type="hidden" name="displayRowCount">
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
+                            <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
                             <label for="check2">상품명</label>
-                            <input type="checkbox" name="searchType" value="order_no" id="check3" checked>
+                            <input type="checkbox" name="searchType" value="A.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.order_no')}">checked</c:if>>
                             <label for="check3">주문번호</label>
+                            <input type="checkbox" name="searchType" value="order_user_name" id="check4" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'order_user_name')}">checked</c:if>>
+                            <label for="check4">주문자명</label>
+                            <input type="checkbox" name="searchType" value="delivery_user_name" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_name')}">checked</c:if>>
+                            <label for="check5">수취인명</label>
+                            <input type="checkbox" name="searchType" value="delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_t_invoice')}">checked</c:if>>
+                            <label for="check6">운송장번호</label>
+                            <input type="checkbox" name="searchType" value="delivery_user_phone" id="check7" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_phone')}">checked</c:if>>
+                            <label for="check7">핸드폰번호</label>
+                            <input type="checkbox" name="searchType" value="order_user_email" id="check8" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'order_user_email')}">checked</c:if>>
+                            <label for="check8">이메일</label>
+                            <input type="checkbox" name="searchType" value="store_name" id="check9" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'store_name')}">checked</c:if>>
+                            <label for="check9">공급사명</label>
                         </div>
                     </div>
                     <table class="keyword-src-table">
@@ -173,10 +186,11 @@
                             <col width="5%">
                             <col width="6%">
                             <col width="8%">
+                            <col width="5%">
                             <col width="6%">
-                            <col width="7%">
-                            <col width="7%">
-                            <col width="23%">
+                            <col width="6%">
+                            <col width="6%">
+                            <col width="20%">
                             <col width="5%">
                             <col width="8%">
                             <col width="6%">
@@ -189,6 +203,7 @@
                                 <td>결제번호</td>
                                 <td>주문일</td>
                                 <td>회원여부</td>
+                                <td>이메일</td>
                                 <td>주문자</td>
                                 <td>배송등록일</td>
                                 <td>운송장번호</td>
@@ -212,10 +227,8 @@
                                     <c:if test="${not empty list.email}">회원</c:if>
                                     <c:if test="${empty list.email}">비회원</c:if>
                                 </td>
-                                <td>
-                                    <c:if test="${not empty list.email}">${list.email}</c:if>
-                                    <c:if test="${empty list.email}">${list.order_user_email}</c:if>
-                                </td>
+                                <td>${list.email}</td>
+                                <td>${list.order_user_name}</td>
                                 <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>${list.delivery_t_invoice}</td>
                                 <td>${list.product_made_company_name}</td>
@@ -237,8 +250,9 @@
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
                     <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                     <input type="hidden" name="displayRowCount" value="${param.displayRowCount}">
-                    <input type="hidden" name="searchType" value="product_name" id="check2" checked>
-                    <input type="hidden" name="searchType" value="order_no" id="check3" checked>
+                    <c:forEach items="${params.searchTypeArr}" var="list">
+                    	<input type="hidden" name="searchType" value="${list}">	
+                    </c:forEach>
                     <input type="hidden" name="payment_status" value="${param.payment_status}">
                     <input type="hidden" name="start_date" value="${param.start_date}">
                     <input type="hidden" name="end_date" value="${param.end_date}">

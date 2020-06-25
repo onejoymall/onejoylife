@@ -54,7 +54,7 @@
             </ul>
             <div class="my-1">
                 <!-- <button class="btn">배송지 변경</button> -->
-                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D'}">
+                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
                 <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderCancel?order_no=${paymentDetail.order_no}'">주문취소</button>
                 </c:if>
                 <c:if test="${paymentDetail.payment_status eq 'R'}">
@@ -62,7 +62,8 @@
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${paymentDetail.order_no}'">교환신청 하기</button>
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
 				</c:if>
-                <c:if test="${paymentDetail.payment_status eq 'O'}">
+                <c:if test="${paymentDetail.payment_status eq 'O' || paymentDetail.payment_status eq 'S'}">
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${paymentDetail.order_no}'">교환신청 하기</button>
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
                 </c:if>
             </div>

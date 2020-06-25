@@ -49,7 +49,7 @@
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div>
-                            <input type="text" name="imp_uid" class="non-num" placeholder="주문번호 입력">
+                            <input type="text" name="imp_uid" class="non-num" placeholder="결제번호 입력">
                             <input type="password" name="password" class="non-num" placeholder="비밀번호 입력">
                         </div>
                         <button type="button" id="orderDetailGuestBtn">조회</button>

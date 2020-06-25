@@ -71,7 +71,7 @@ $(document).ready(function(){
     });
     //시간
     $(function(){
-        if($('.time_pick').length < 0){
+        if($('.time_pick').length > 0){
             $('.time_pick').timepicker({
                 timeFormat: 'hh:mm p',
                 interval: 60,

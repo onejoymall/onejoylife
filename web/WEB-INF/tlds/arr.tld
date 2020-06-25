@@ -12,7 +12,11 @@
     <function>
         <name>contains</name>
         <function-class>com.webapp.common.support.ArrUtil</function-class>
-        <function-signature>boolean contains(java.util.List,java.lang.Object)
-        </function-signature>
+        <function-signature>boolean contains(java.util.List,java.lang.Object)</function-signature>
+    </function>
+    <function>
+        <name>containsA</name>
+        <function-class>com.webapp.common.support.ArrUtil</function-class>
+        <function-signature>boolean contains(java.lang.String[],java.lang.Object)</function-signature>
     </function>
 </taglib>

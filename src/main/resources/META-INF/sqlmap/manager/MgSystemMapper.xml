@@ -192,6 +192,11 @@
     product_class_use_yn=#{product_class_use_yn}
 
   </insert>
+  <delete id="deleteProductCode" parameterType="com.webapp.manager.vo.MgProductCodeVO">
+    delete from product_class_code
+    where product_class_code_type=#{product_class_code_type}
+    and product_class_code=#{product_class_code}
+  </delete>
   <update id="updateDeliveryArea" parameterType="hashmap">
   	UPDATE store_delivery SET
   		product_delivery_area_yn = #{product_delivery_area_yn}

@@ -1151,14 +1151,16 @@
                     <colgroup>
                         <col width="5%">
                         <col width="10%">
-                        <col width="70%">
-                        <col width="15%">
+                        <col width="50%">
+                        <col width="13%">
+                        <col width="12%">
                     </colgroup>
                     <thead>
                     <td></td>
                     <td>분류코드</td>
                     <td>분류코드명</td>
                     <td>종류</td>
+                    <td>관리</td>                    
                     </thead>
                     <tbody class="dataListView">
 

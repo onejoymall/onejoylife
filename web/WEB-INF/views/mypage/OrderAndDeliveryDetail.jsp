@@ -59,7 +59,7 @@
 
                                 <div class="p2-box1">
 <%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
-                                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D'}">
+                                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
                                     <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
 
                                 </c:if>
@@ -68,7 +68,8 @@
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>
-                                <c:if test="${paymentDetail.payment_status eq 'O'}">
+                                <c:if test="${paymentDetail.payment_status eq 'O' || paymentDetail.payment_status eq 'S'}">
+                                	<p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
                                     <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
                                 </c:if>
 <%--                                    <p><a href="">판매자 문의</a></p>--%>
