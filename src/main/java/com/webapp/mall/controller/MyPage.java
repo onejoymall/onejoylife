@@ -609,7 +609,9 @@ public class MyPage {
             List<Map<String,Object>> company = (List)companylist.get("Company");
             model.addAttribute("companyList", company);
 
-
+            params.put("code","kcp_bank_code");
+            List<Map<String,Object>> getSelectorList = selectorDAO.getSelectorList(params);
+            model.addAttribute("getSelectorList",getSelectorList);
         }catch (Exception e){
             e.printStackTrace();
         }

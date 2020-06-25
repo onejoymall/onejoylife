@@ -7,13 +7,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jcodec.common.DictionaryCompressor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardSvc;
@@ -984,6 +982,7 @@ public class restapiController {
 			String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
 			client = new IamportClient(test_api_key, test_api_secret);
 //            IamportResponse<AccessToken> auth_response = client.getAuth();
+			
 			String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
 			CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); // merchant_uid를 통한
 
@@ -993,8 +992,10 @@ public class restapiController {
 			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
 
 			// 전액취소
-			// cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
-
+			Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+            if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+            
 			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
 
 			if (payment_response.getResponse() == null) {

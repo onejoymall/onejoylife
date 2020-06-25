@@ -1418,6 +1418,7 @@ $(document).on("click",".ra-num",function () {
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
                     }
+                    $('input:hidden[name^="'+index+'"]').val(item);
                     // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
             },

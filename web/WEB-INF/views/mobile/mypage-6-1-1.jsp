@@ -54,7 +54,15 @@
         <h2 class="pb-1 mt-4">환불 계좌</h2>
         <hr class="pb-1">
         <p class="text-md mt-1 mb-05">은행명</p>
-        <input name="refund_bank" type="text" class="select-op">
+        <!-- <input name="refund_bank" type="text" class="select-op"> -->
+        <select name="refund_bank" class="select-op">
+            <c:if test="${not empty getSelectorList}">
+                <option value="">은행명</option>
+                <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
+                    <option value="${getSelectorList.code_value}" >${getSelectorList.code_name}</option>
+                </c:forEach>
+            </c:if>
+        </select>
         <p class="text-md mt-1 mb-05">계좌 번호</p>
         <input type="text" name="refund_account"  class="select-op">
         <p class="text-md mt-1 mb-05">예금주</p>
@@ -67,9 +75,4 @@
     </div>
     </form>
     
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
-    <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
-    <script src='<c:url value="/assets/js/index.js"/>'></script>
-    <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
-    <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
+    <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

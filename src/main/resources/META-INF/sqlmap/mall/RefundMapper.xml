@@ -41,9 +41,9 @@
 	        #{roadAddress},
 	        #{jibunAddress},
 	        #{extraAddress},
-	        #{refund_bank_name},
-	        #{refund_account_number},
-	        #{refund_account_holder},
+	        #{refund_bank},
+	        #{refund_account},
+	        #{refund_holder},
 	        #{refund_delivery_t_code},
 	        #{refund_delivery_t_invoice},
 	        #{refund_send_type},
@@ -64,9 +64,9 @@
 			roadAddress = #{roadAddress},
 			jibunAddress = #{jibunAddress},
 			extraAddress = #{extraAddress},
-			refund_bank_name = #{refund_bank_name},
-			refund_account_number = #{refund_account_number},
-			refund_account_holder = #{refund_account_holder},
+			refund_bank_name = #{refund_bank},
+			refund_account_number = #{refund_account},
+			refund_account_holder = #{refund_holder},
 			refund_delivery_t_code = #{refund_delivery_t_code},
 			refund_delivery_t_invoice = #{refund_delivery_t_invoice},
 			refund_send_type = #{refund_send_type},
@@ -84,7 +84,7 @@
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
-        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G')
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
@@ -96,7 +96,7 @@
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G')
+        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
         ]]>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>

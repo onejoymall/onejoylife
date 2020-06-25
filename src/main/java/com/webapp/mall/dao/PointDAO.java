@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,5 +38,10 @@ public class PointDAO {
         int deletePoint = sql.delete("mall.PointMapper.deletePoint",params);
         return deletePoint;
     }
+
+	public Map<String, Object> getPointOrderNo(HashMap params) {
+		Map<String, Object> getPointOrderNo = sql.selectOne("mall.PointMapper.getPointOrderNo",params);
+        return getPointOrderNo;
+	}
 
 }

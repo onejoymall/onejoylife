@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -43,6 +44,7 @@ import com.webapp.board.app.BoardVO;
 import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
@@ -137,6 +139,8 @@ public class ManagerRestapiController {
     private MgSystemDAO mgSystemDAO;
     @Autowired
     private CouponDAO couponDAO;
+    @Autowired
+    private SelectorDAO selectorDAO;
     IamportClient client;
     @Value("${api_key}")
     private String apiKey;
@@ -351,10 +355,52 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
-
+        	//반품완료 결제취소
+        	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
+        		client = new IamportClient(apiKey, apiSecret);
+        		String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
+        		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); // merchant_uid를 통한
+        		
+        		cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
+        		if(deliveryInfoVO.getRefund_account() != null && !deliveryInfoVO.getRefund_account().equals("")) {
+        			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
+        		}
+        		if(deliveryInfoVO.getRefund_bank() != null && !deliveryInfoVO.getRefund_bank().equals("")) {
+        			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
+        		}
+        		if(deliveryInfoVO.getRefund_holder() != null && !deliveryInfoVO.getRefund_holder().equals("")) {
+        			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
+        		}
+        		
+        		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+                if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+                
+        		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
+        		if (payment_response.getResponse() == null) {
+    				error.put("Error", payment_response.getMessage());
+    			}
+        	}
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+            	//반품시 포인트 환수
+            	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
+            		Map<String,Object> pointMap = pointDAO.getPointOrderNo(params);
+            		params.put("point_paid_user_id",pointMap.get("point_paid_user_id"));
+            		
+            		Map<String, Object> pointParam = new HashMap<>();
+            		String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+            		BigDecimal userPoint = new BigDecimal(getPointAmountString);
+            		BigDecimal pointMultiply = new BigDecimal(String.valueOf(pointMap.get("point_add"))); // 구매포인트
+            		pointParam.put("point_amount", userPoint.subtract(pointMultiply));
+            		pointParam.put("point_paid_memo", pointMap.get("point_paid_memo")+"(반품 환수)");
+            		pointParam.put("point_use", pointMultiply);
+            		pointParam.put("point_paid_user_id", pointMap.get("point_paid_user_id"));
+            		pointParam.put("point_paid_type", pointMap.get("point_paid_type"));
+            		pointParam.put("order_no", pointMap.get("order_no"));
+            		pointDAO.insertPoint(pointParam);
+            	}
                 deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
                 deliveryDAO.updateDelivery(deliveryInfoVO);
                 paymentDAO.updatePayment(deliveryInfoVO);
@@ -362,7 +408,7 @@ public class ManagerRestapiController {
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
-
+        	e.printStackTrace();
             resultMap.put("e", e);
         }
         return resultMap;
@@ -375,6 +421,15 @@ public class ManagerRestapiController {
 
         try {
             Map<String,Object> list = refundDAO.getDeliveryRefundDetail(deliveryInfoVO);
+            list.put("refund_account",list.get("refund_account_number"));
+            list.put("refund_bank",list.get("refund_bank_name"));
+            list.put("refund_holder",list.get("refund_account_holder"));
+            params.put("code","kcp_bank_code");
+            List<Map<String,Object>> getSelectorList = selectorDAO.getSelectorList(params);
+            List<Map<String, Object>> bankCode = getSelectorList.stream().filter(item -> item.get("code_value").equals(list.get("refund_bank_name"))).collect(Collectors.toList());
+            if(bankCode != null && !bankCode.isEmpty()) {
+            	list.put("refund_bank_name",bankCode.get(0).get("code_name"));
+			}
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -461,8 +516,11 @@ public class ManagerRestapiController {
                 client = new IamportClient(test_api_key, test_api_secret);
                 String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
                 CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
-                //cancel_data.setEscrowConfirmed(true); //에스크로 구매확정 후 취소인 경우 true설정
 
+                Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+                if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+                
                 IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
                 if(payment_response.getResponse()==null){
                     error.put("Error", payment_response.getMessage());
