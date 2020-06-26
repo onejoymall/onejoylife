@@ -41,16 +41,18 @@
                         <c:if test="${fn:length(paymentBundleList) <= 1}">
                         <tr>
                             <c:if test="${not empty paymentDetail.file_6}">
-                                <td><img src="${paymentDetail.file_6}" style="width: 80px;"/></td>
+                                <td><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" style="width: 80px;"/></a></td>
                             </c:if>
                             <c:if test="${not empty paymentDetail.file_1}">
-                                <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
+                                <td><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_1}" style="width: 80px;"/></a></td>
                             </c:if>
                             <td class="sec1-tbody-p1">
+                            	<a href="/product/productDetail?product_cd=${paymentDetail.product_cd}">
                                 <p>
                                     <c:if test="${not empty paymentDetail.product_name}">${paymentDetail.product_name}</c:if>
                                     <c:if test="${not empty paymentDetail.giveaway_name}">${paymentDetail.giveaway_name}</c:if>
                                 </p>
+                                </a>
                             </td>
                             <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
                             <td><span>${paymentDetail.payment_order_quantity}</span></td>

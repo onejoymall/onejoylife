@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
-<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 <!-- <style>
 .npay_storebtn_bx{
 	zoom:2;
@@ -56,7 +55,7 @@
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
-			BACK_URL: 'http://onejoy-life.com/' 
+			BACK_URL: 'http://onejoy-life.com/product/productDetail?product_cd=${list.product_cd}' 
 		};
 
 		$.ajax({
@@ -206,6 +205,7 @@
                         <input type="hidden" name="order_min" value="${list.product_min_limit}" />
                         <input type="hidden" name="product_delivery_bundle_yn" value="${list.product_delivery_bundle_yn}" />
                         <input type="hidden" name="product_store_id" value="${list.product_store_id}" />
+                        <input type="hidden" name="product_option_required" value="${list.product_option_required}" />
                         <button class="favorite" type="button" data-id="${list.product_cd}">
 
                                 <i class="heart-empty <c:if test="${heart}">heart-full</c:if>"> </i>
@@ -218,9 +218,9 @@
                         <script type="text/javascript" >
                             naver.NaverPayButton.apply({
 	                            BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
-	                            TYPE: "A", // 버튼 모음 종류 설정
+	                            TYPE: "MA", // 버튼 모음 종류 설정
 	                            COLOR: 1, // 버튼 모음의 색 설정
-	                            COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+	                            COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
 	                            ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
 	                            BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
                             });
@@ -729,10 +729,5 @@
             $('html,body').stop().animate({scrollTop:tt});
         });//click
     });
-</script>
-<script type="text/javascript">
-// 추가 정보 입력
-// wcs_do 함수 호출
-wcs_do();
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

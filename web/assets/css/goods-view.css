@@ -1060,3 +1060,16 @@ input:checked + label.ra-icon{
 .buy-wrap{
     position: relative;
 }
+.ra-btn-op{
+    display:inline-block;
+    font-size: 16px;
+    padding: 4px 10px;
+    margin-right: 5px;
+    background: #e9e9e9;
+    line-height: normal;
+    cursor: pointer;
+}
+input[type="radio"]:checked + .ra-btn-op{
+    background-color:#da394d;
+    color:#fff;
+}
