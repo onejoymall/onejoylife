@@ -32,10 +32,10 @@
                     <p class="cou-font">쿠폰 받기</p>
                     <table>
                         <colgroup>
-                            <col style="width:247px">
-                            <col style="width:247px">
-                            <col style="width:200px">
-                            <col style="width:200px">
+                            <col style="width:25%">
+                            <col style="width:35%">
+                            <col style="width:25%">
+                            <col style="width:15%">
                         </colgroup>
                         <thead class="cou-header">
                             <tr>
@@ -49,10 +49,19 @@
                             <c:if test="${not empty userDownloadCouponList}">
 				            <c:forEach var="list" items="${userDownloadCouponList}">
 				            	<td><span>${list.coupon_name}</span></td>
-                                <td>
+                                <td style="text-align: left!important;">
                                 	<span>
                                 	<c:if test="${not empty list.coupon_use_min_amount}">
-                                    	<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}
+                                    	<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}<br>
+                                    </c:if>
+                                    <c:if test="${empty list.coupon_use_min_amount}">
+                                       <span class="text-bold">금액</span>&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음<br>
+                                    </c:if>
+                                     <c:if test="${not empty list.category_name}">
+                                         카테고리&nbsp;&nbsp;:&nbsp;&nbsp;${list.category_name}<br>
+                                     </c:if>
+                                    <c:if test="${empty list.category_name}">
+                                        카테고리&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음<br>
                                     </c:if>
                                     </span>
                                 </td>

@@ -54,7 +54,8 @@
     </select>
     <select id="getUserDownloadCouponList" resultType="java.util.HashMap">
         <![CDATA[
-        SELECT *
+        SELECT *,
+        (SELECT GROUP_CONCAT(Z.pd_category_name) FROM product_category Z WHERE find_in_set(Z.pd_category_id,replace(A.coupon_ct,'|',','))) category_name
 		FROM coupon A
 		WHERE A.coupon_cd NOT IN (SELECT Z.coupon_cd FROM coupon_paid_history Z WHERE Z.coupon_paid_user_id = #{coupon_paid_user_id})
 		AND SYSDATE() BETWEEN A.coupon_valid_date_start AND date_add(A.coupon_valid_date_end, INTERVAL 1 DAY)
