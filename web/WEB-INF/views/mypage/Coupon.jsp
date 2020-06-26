@@ -32,10 +32,10 @@
                     <p class="cou-font">쿠폰 받기</p>
                     <table>
                         <colgroup>
-                            <col style="width:25%">
-                            <col style="width:35%">
-                            <col style="width:25%">
-                            <col style="width:15%">
+                            <col style="width:247px">
+                            <col style="width:247px">
+                            <col style="width:200px">
+                            <col style="width:200px">
                         </colgroup>
                         <thead class="cou-header">
                             <tr>
@@ -101,9 +101,18 @@
                                     <td><fmt:formatDate value="${userCouponList.reg_date}" pattern="yyyy.MM.dd HH:mm"/></td>
                                     <td>${userCouponList.coupon_name}</td>
                                     <td>
-										<c:if test="${not empty userCouponList.coupon_use_min_amount}">
-                                    	<fmt:formatNumber value="${userCouponList.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}
-	                                    </c:if>
+                                        <c:if test="${not empty userCouponList.coupon_use_min_amount}">
+                                            <fmt:formatNumber value="${userCouponList.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition}<br>
+                                        </c:if>
+                                        <c:if test="${empty userCouponList.coupon_use_min_amount}">
+                                            <span class="text-bold">금액</span>&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음<br>
+                                        </c:if>
+                                        <c:if test="${not empty userCouponList.category_name}">
+                                            카테고리&nbsp;&nbsp;:&nbsp;&nbsp;${userCouponList.category_name}<br>
+                                        </c:if>
+                                        <c:if test="${empty userCouponList.category_name}">
+                                            카테고리&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음<br>
+                                        </c:if>
                                   	</td>
                                   	<td>
 				                    	<c:if test="${userCouponList.coupon_sale_type eq 'amount'}"><fmt:formatNumber value="${userCouponList.coupon_sale_payment}" groupingUsed="true" />원</c:if>
