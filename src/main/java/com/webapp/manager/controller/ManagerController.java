@@ -874,6 +874,7 @@ public class ManagerController {
             deliveryInfoVO.pageCalculate(refundDAO.getDeliveryRefundListCount(deliveryInfoVO));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getDisplayRowCount());
+            params.put("searchTypeArr",deliveryInfoVO.getSearchTypeArr());
             List<Map<String,Object>> list = refundDAO.getDeliveryRefundList(deliveryInfoVO);
             //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(
@@ -892,6 +893,7 @@ public class ManagerController {
             
             model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
+            model.addAttribute("params", params);
         } catch (Exception e) {
             e.printStackTrace();
         }

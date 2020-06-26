@@ -14,12 +14,28 @@
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
                     <div class="keyword-src-wrap">
-                        <input type="text" class="keyword-src" name="keyword-src">
+                        <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                         <input type="hidden" name="displayRowCount">
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
-                            <label for="check2">상품명</label>
+                            <%-- <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
+                            <label for="check2">상품명</label> --%>
+                            <input type="checkbox" name="searchType" value="A.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.order_no')}">checked</c:if>>
+                            <label for="check3">상점주문번호</label>
+                            <input type="checkbox" name="searchType" value="imp_uid" id="check10" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'imp_uid')}">checked</c:if>>
+                            <label for="check10">주문번호</label>
+                            <%-- <input type="checkbox" name="searchType" value="order_user_name" id="check4" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'order_user_name')}">checked</c:if>>
+                            <label for="check4">주문자명</label> --%>
+                            <%-- <input type="checkbox" name="searchType" value="delivery_user_name" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_name')}">checked</c:if>>
+                            <label for="check5">수취인명</label>
+                            <input type="checkbox" name="searchType" value="delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_t_invoice')}">checked</c:if>>
+                            <label for="check6">운송장번호</label>
+                            <input type="checkbox" name="searchType" value="delivery_user_phone" id="check7" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_phone')}">checked</c:if>>
+                            <label for="check7">핸드폰번호</label>
+                            <input type="checkbox" name="searchType" value="order_user_email" id="check8" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'order_user_email')}">checked</c:if>>
+                            <label for="check8">이메일</label>
+                            <input type="checkbox" name="searchType" value="store_name" id="check9" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'store_name')}">checked</c:if>>
+                            <label for="check9">공급사명</label> --%>
                         </div>
                     </div>
                     <table class="keyword-src-table">
@@ -178,7 +194,7 @@
                     <thead>
                         <tr>
                             <td><input type="checkbox" id="all-chk" name="all-chk"></td>
-                            <td>주문번호</td>
+                            <td>상점주문번호</td>
                             <td>주문일</td>
                             <td>주문자</td>
                             <td>배송일</td>

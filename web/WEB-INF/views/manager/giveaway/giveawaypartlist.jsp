@@ -211,7 +211,7 @@
                         </tr>
 
                         <tr>
-                            <th>주문번호</th>
+                            <th>상점주문번호</th>
                             <td class="order_no"></td>
                         </tr>
                         <tr>

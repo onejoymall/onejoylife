@@ -62,10 +62,10 @@
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div class="nonmem-in">
-                            <p>결제번호</p>
-                            <input type="text" name="imp_uid">
+                            <p>주문번호</p>
+                            <input type="text" name="imp_uid" placeholder="imp로 시작하는 주문번호">
                             <p>비밀번호</p>
-                            <input type="password" name="password">
+                            <input type="password" name="password" placeholder="결제시 입력한 비밀번호">
                         </div>
                         <button type="button" id="orderDetailGuestBtn">조회</button>
                     </form>

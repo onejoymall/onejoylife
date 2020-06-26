@@ -25,7 +25,9 @@
                             <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
                             <label for="check2">상품명</label>
                             <input type="checkbox" name="searchType" value="A.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.order_no')}">checked</c:if>>
-                            <label for="check3">주문번호</label>
+                            <label for="check3">상점주문번호</label>
+                            <input type="checkbox" name="searchType" value="imp_uid" id="check10" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'imp_uid')}">checked</c:if>>
+                            <label for="check10">주문번호</label>
                             <input type="checkbox" name="searchType" value="order_user_name" id="check4" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'order_user_name')}">checked</c:if>>
                             <label for="check4">주문자명</label>
                             <input type="checkbox" name="searchType" value="delivery_user_name" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_name')}">checked</c:if>>
@@ -199,8 +201,8 @@
                         <thead>
                             <tr>
                                 <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                                <td>상점주문번호</td>
                                 <td>주문번호</td>
-                                <td>결제번호</td>
                                 <td>주문일</td>
                                 <td>회원여부</td>
                                 <td>이메일</td>
@@ -295,11 +297,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>주문번호</th>
+                                <th>상점주문번호</th>
                                 <td class="order_no"></td>
                             </tr>
                             <tr>
-                                <th>결제번호</th>
+                                <th>주문번호</th>
                                 <td class="imp_uid"></td>
                             </tr>
                             <tr>

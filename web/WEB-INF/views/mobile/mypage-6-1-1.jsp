@@ -11,7 +11,7 @@
         <h2 class="pb-1">취소신청</h2>
         <hr class="pb-1">
         <ul class="flexbetween pb-1">
-            <li>주문번호</li>
+            <li>상점주문번호</li>
             <li class="red">${paymentDetail.order_no}</li>
             <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
             <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
