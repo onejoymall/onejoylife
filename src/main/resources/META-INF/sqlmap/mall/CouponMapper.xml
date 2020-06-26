@@ -87,7 +87,6 @@
 		AND (B.coupon_issue_date IS NULL OR SYSDATE() > B.coupon_issue_date)
         ]]>
 		<if test="product_payment != null and product_payment !=''"> AND if(B.coupon_use_min_amount IS NULL,1,#{product_payment} >= B.coupon_use_min_amount)</if>
-        <if test="coupon_paid_id != null and coupon_paid_id !=''"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
         <if test="coupon_cd != null and coupon_cd != ''"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
         <if test="coupon_ct != null and coupon_ct != ''">
         	<foreach collection="coupon_ct" item="item" separator="OR" open="AND (" close=")">
@@ -114,7 +113,6 @@
 		AND (B.coupon_issue_date IS NULL OR SYSDATE() > B.coupon_issue_date)
         ]]>
 
-        <if test="coupon_paid_id != null and coupon_paid_id !=''"> <![CDATA[AND A.coupon_paid_id= #{coupon_id} ]]></if>
         <if test="coupon_cd != null and coupon_cd != ''"> <![CDATA[AND coupon_cd= #{coupon_cd} ]]></if>
         <if test="coupon_ct != null and coupon_ct != ''">
         	<foreach collection="coupon_ct" item="item" separator="OR" open="AND (" close=")">

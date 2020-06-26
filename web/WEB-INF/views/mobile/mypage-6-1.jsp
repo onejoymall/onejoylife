@@ -27,18 +27,20 @@
            <h5>${paymentDetail.payment_status_name}</h5>
             <ul class="pb-0">
                 <c:if test="${not empty paymentDetail.file_6}">
-                    <li><img src="${paymentDetail.file_6}" alt=""></li>
+                    <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" alt=""></a></li>
                 </c:if>
                 <c:if test="${not empty paymentDetail.file_6}">
-                    <li><img src="${paymentDetail.file_1}" alt=""></li>
+                    <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_1}" alt=""></a></li>
                 </c:if>
                 <li>
+                <a href="/product/productDetail?product_cd=${paymentDetail.product_cd}">
                     <if test="${not empty paymentDetail.giveaway_name}">
                         <h5>${paymentDetail.giveaway_name}</h5>
                     </if>
                     <if test="${not empty paymentDetail.product_name}">
                         <h5>${paymentDetail.product_name}</h5>
                     </if>
+                </a>
                     <!-- <p class="option"><span>구성품</span> <br>
                     · 30mm 1.4 여친렌즈 <br>
                     · 추가배터리</p> -->

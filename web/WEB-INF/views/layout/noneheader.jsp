@@ -50,6 +50,17 @@
         var postUrl = '<c:url value="${postUrl}"/> ';
     </c:if>
     </script>
+    <script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+
+	<script type='text/javascript'> 
+	
+	if(!wcs_add) var wcs_add = {};
+	
+	wcs_add['wa'] = 's_1e285b9b3844';
+	
+	wcs.inflow('onejoy-life.com');
+	
+	</script>
 </head>
 <body>
 
