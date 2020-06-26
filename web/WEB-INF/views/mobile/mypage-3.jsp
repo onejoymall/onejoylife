@@ -81,6 +81,26 @@
                         <p><span><fmt:formatDate value="${userCouponList.coupon_valid_date_start}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${userCouponList.coupon_valid_date_end}" pattern="yyyy.MM.dd"/></span></p>
                     </td>
                  </tr>
+                <tr>
+                    <td class="lis-td-con" colspan="2">
+                        <c:if test="${not empty list.coupon_use_min_amount}">
+                            <p><span>(<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition})</span></p>
+                        </c:if>
+                        <c:if test="${empty list.coupon_use_min_amount}">
+                            <p><span class="text-bold">금액</span>&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음</p>
+                        </c:if>
+                        <p>
+                            <span class="text-bold">카테고리</span> :
+                            <c:if test="${not empty userCouponList.category_name}">
+                                ${userCouponList.category_name}
+                            </c:if>
+                            <c:if test="${empty userCouponList.category_name}">
+                                제한 없음
+                            </c:if>
+                        </p>
+                    </td>
+                </tr>
+
                 </c:forEach>
             </c:if>
             <c:if test="${empty userCouponList}">

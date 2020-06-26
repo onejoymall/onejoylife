@@ -78,7 +78,8 @@
         <![CDATA[
         SELECT
             A.*,
-			B.*
+			B.*,
+			(SELECT GROUP_CONCAT(Z.pd_category_name) FROM product_category Z WHERE find_in_set(Z.pd_category_id,replace(B.coupon_ct,'|',','))) category_name
         FROM coupon_paid_history A  
         JOIN coupon B
         ON A.coupon_cd = B.coupon_cd
