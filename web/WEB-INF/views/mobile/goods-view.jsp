@@ -16,7 +16,7 @@
 		var optionStr = [""];
 		option_required_list.forEach(function(el,idx){
 			if($(".option"+idx).attr("type") == 'radio'){
-				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx+":checked").val() ? $(".option"+idx+":checked").val() : '');
 			}else{
 				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
 			}
