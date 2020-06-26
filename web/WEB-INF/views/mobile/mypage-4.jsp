@@ -59,7 +59,7 @@
 			item_counts.push(cart.payment_order_quantity);
 			item_uprices.push(cart.product_payment);
 			item_tprices.push(cart.product_payment * cart.payment_order_quantity);
-			item_options.push(' ');
+			item_options.push(cart.option_name ? cart.option_name : ' ');
 			
 			payment += cart.product_user_payment*cart.payment_order_quantity;
 			discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
@@ -154,24 +154,20 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <p>${list.product_brand}</p>
+                                    <%-- <p>${list.product_brand}</p> --%>
                                     <h5>${list.product_name}</h5>
-                                    <p class="grey">${list.product_model_name}</p>
-                                    <%--<p class="option"><span>구성품</span> <br>
-                                    · 30mm 1.4 여친렌즈 <br>
-                                    · 추가배터리</p>--%>
+                                    <%-- <p class="grey">${list.product_model_name}</p> --%>
+                                    <p class="option"><span><c:if test="${not empty list.option_name}">${list.option_name}</c:if>
+										<c:if test="${empty list.option_name}">-</c:if></span></p>
                                 </li>
                             </ul>
                             <h2><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
     <%--                        <button class="btn-black btn">옵션변경</button>--%>
                             <button class="btn x" data-id="${list.product_cd}">삭제</button>
                             <select name="payment_order_quantity" value="${list.payment_order_quantity}" class="half payment_order_quantity" data-id="${list.cart_cd}">
-                                <option value="1" <c:if test="${list.payment_order_quantity eq '1'}"> selected</c:if>>1</option>
-                                <option value="2" <c:if test="${list.payment_order_quantity eq '2'}"> selected</c:if>>2</option>
-                                <option value="3" <c:if test="${list.payment_order_quantity eq '3'}"> selected</c:if>>3</option>
-                                <option value="4" <c:if test="${list.payment_order_quantity eq '4'}"> selected</c:if>>4</option>
-                                <option value="5" <c:if test="${list.payment_order_quantity eq '5'}"> selected</c:if>>5</option>
-                                <option value="6" <c:if test="${list.payment_order_quantity eq '6'}"> selected</c:if>>6</option>
+                                <c:forEach var="i" begin="1" end="100">
+                               		<option value="${i}" <c:if test="${list.payment_order_quantity eq i}"> selected</c:if>>${i}</option>
+                                </c:forEach>
                             </select>
                             <input type="hidden" name="order_max" value="${list.product_max_limit}" />
                             <input type="hidden" name="order_min" value="${list.product_min_limit}" />

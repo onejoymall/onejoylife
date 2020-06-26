@@ -18,6 +18,7 @@ public class CartPaymentVO extends CommonVO {
    private String[] product_cds;
    private String[] coupon_cd;
    private String[] payment_order_quantity;
+   private String[] option_name;
    private String password;
 
     public String getPassword() {
@@ -162,6 +163,14 @@ public class CartPaymentVO extends CommonVO {
 
 	public void setProduct_cds(String[] product_cds) {
 		this.product_cds = product_cds;
+	}
+
+	public String[] getOption_name() {
+		return option_name;
+	}
+
+	public void setOption_name(String[] option_name) {
+		this.option_name = option_name;
 	}
 
 }

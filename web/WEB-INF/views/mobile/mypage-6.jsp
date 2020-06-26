@@ -52,9 +52,9 @@
                     </c:if>
                     <li>
                        <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}" class="mb-1">${paymentList.order_no}</a>
-                        <p>${paymentList.product_made_company_name}</p>
-                        <h5>${paymentList.product_name}</h5>
-                        <p class="grey">${paymentList.product_model}</p>
+                        <%-- <p>${paymentList.product_made_company_name}</p> --%>
+                        <h5><a href="/product/productDetail?product_cd=${paymentList.product_cd}" style="text-decoration: none; color:black;">${paymentList.product_name}</a></h5>
+                        <%-- <p class="grey">${paymentList.product_model}</p> --%>
                     </li>
                 </ul>
                 <ul class="options">

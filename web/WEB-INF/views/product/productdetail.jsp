@@ -12,17 +12,40 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		//옵션
+		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var isOptionCheck = false;
 		var optionStr = [""];
-		$("select[name=select_option_value]").each(function(idx){
-			optionStr[0] += (idx != 0 ? "/" : "") + $(this).val();
-	    });
-	    if($("input[name=btn-option-value]").val()){
-	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
-	    }
-	    if($("input[name=rd-option-value]").val()){
-	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
-	    }
+		option_required_list.forEach(function(el,idx){
+			if($(".option"+idx).attr("type") == 'radio'){
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
+			}else{
+				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+			}
+			
+			if(el == 'T'){
+				if($(".option"+idx).attr("type") == 'radio'){
+					if(!$(".option"+idx+":checked").val()){
+						isOptionCheck = true;
+					}
+				}else{
+					if(!$(".option"+idx).val()){
+						isOptionCheck = true;
+					}
+				}
+			}
+		})
+		
+		if(isOptionCheck){
+			toastr.options = {
+	    	        closeButton: true,
+		        progressBar: false,
+		        showMethod: 'slideDown',
+		        timeOut: 0
+		    }
+		    toastr.error("", '옵션은 필수사항입니다.');
+			return;
+		}
+		
 	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
 	    
 	    //배송비
@@ -206,6 +229,7 @@
                         <input type="hidden" name="product_delivery_bundle_yn" value="${list.product_delivery_bundle_yn}" />
                         <input type="hidden" name="product_store_id" value="${list.product_store_id}" />
                         <input type="hidden" name="product_option_required" value="${list.product_option_required}" />
+                        <input type="hidden" name="option_name"/>
                         <button class="favorite" type="button" data-id="${list.product_cd}">
 
                                 <i class="heart-empty <c:if test="${heart}">heart-full</c:if>"> </i>
@@ -687,7 +711,7 @@
             $('.arrow-down').toggleClass('arrow-up');
             $('.option-list').toggleClass('display-block')
         });*/
-        $('.optionBtn').click(function(){
+        /* $('.optionBtn').click(function(){
             $(this).siblings('.optionBtn').removeClass('on');
             $(this).addClass('on');
             var btnOptionValue = "";
@@ -702,7 +726,20 @@
             	raOptionValue += (idx != 0 ? "/" : "") + $(this).val();
             });
             $("input[name=rd-option-value]").val(raOptionValue);
-        })
+        }) */
+        $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+        	$(".option"+idx).on("input",function(){
+        		var option_name = ""
+        		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+    	    		if($(".option"+index).attr("type") == 'radio'){
+    	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
+    				}else{
+    					option_name += (index != 0 ? "/" : "") + $(".option"+index).val();
+    				}
+       			})
+        		$("input[name=option_name]").val(option_name);
+        	});
+    	});
 
         $('.favorite').click(function(){
             $(this).children('i').toggleClass('heart-full');

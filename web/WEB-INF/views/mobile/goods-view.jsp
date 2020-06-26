@@ -11,17 +11,41 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		//옵션
+		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var isOptionCheck = false;
 		var optionStr = [""];
-		$("select[name=select_option_value]").each(function(idx){
-			optionStr[0] += (idx != 0 ? "/" : "") + $(this).val();
-	    });
-	    if($("input[name=btn-option-value]").val()){
-	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=btn-option-value]").val();
-	    }
-	    if($("input[name=rd-option-value]").val()){
-	    	optionStr[0] += (optionStr ? '/' : '') + $("input[name=rd-option-value]").val();
-	    }
+		option_required_list.forEach(function(el,idx){
+			if($(".option"+idx).attr("type") == 'radio'){
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
+			}else{
+				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+			}
+			
+			if(el == 'T'){
+				if($(".option"+idx).attr("type") == 'radio'){
+					if(!$(".option"+idx+":checked").val()){
+						isOptionCheck = true;
+					}
+				}else{
+					if(!$(".option"+idx).val()){
+						isOptionCheck = true;
+					}
+				}
+			}
+		})
+		
+		if(isOptionCheck){
+			$.toast({
+				heading : '옵션은 필수사항입니다.',
+				text: '',
+				showHideTransition: 'plain', //펴짐
+				position: 'bottom-right',
+				icon: 'error',
+				stack: false
+			});
+			return;
+		}
+		
 	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
 	    
 	    //배송비
@@ -99,6 +123,8 @@
                            <button type="button" class="button number-plus"></button>
                             <input type="hidden" name="order_max" value="${list.product_max_limit}" />
                             <input type="hidden" name="order_min" value="${list.product_min_limit}" />
+                            <input type="hidden" name="product_option_required" value="${list.product_option_required}" />
+                            <input type="hidden" name="option_name"/>
                         </div>
                     </li>
                     <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">원</span></h3></li>
@@ -673,7 +699,7 @@ $(document).ready(function(){
 //        pager:false,
 //        touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
 //    });
-    $('.optionBtn').click(function(){
+    /* $('.optionBtn').click(function(){
         $(this).siblings('.optionBtn').removeClass('on');
         $(this).addClass('on');
         var btnOptionValue = "";
@@ -688,7 +714,20 @@ $(document).ready(function(){
         	raOptionValue += (idx != 0 ? "/" : "") + $(this).val();
         });
         $("input[name=rd-option-value]").val(raOptionValue);
-    })
+    }) */
+    $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+    	$(".option"+idx).on("input",function(){
+    		var option_name = ""
+    		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+	    		if($(".option"+index).attr("type") == 'radio'){
+	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
+				}else{
+					option_name += (index != 0 ? "/" : "") + $(".option"+index).val();
+				}
+   			})
+    		$("input[name=option_name]").val(option_name);
+    	});
+	});
     
     $('.goodsQna').on('click',function(){
         $(this).addClass('active');
