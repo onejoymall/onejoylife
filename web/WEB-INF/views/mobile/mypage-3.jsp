@@ -34,6 +34,15 @@
 	                        <c:if test="${not empty list.coupon_use_min_amount}">
                             	<p><span>(<fmt:formatNumber value="${list.coupon_use_min_amount}" groupingUsed="true" /> ${message_coupon_payment_condition})</span></p>
                             </c:if>
+                            <c:if test="${empty list.coupon_use_min_amount}">
+                            <p><span class="text-bold">금액</span>&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음</p>
+                            </c:if>
+                            <c:if test="${not empty list.category_name}">
+                            <p>카테고리&nbsp;&nbsp;:&nbsp;&nbsp;${list.category_name}</p>
+                            </c:if>
+                            <c:if test="${empty list.category_name}">
+                            <p>카테고리&nbsp;&nbsp;:&nbsp;&nbsp;제한 없음<</p>
+                            </c:if>
 	                        <p><span> ~ ${list.coupon_valid_date_end}</span></p>
 	                    </td>
 	                    <td><button type="button" class="btn couponDownBtn" data-id="${list.coupon_cd}">받기</button></td>
