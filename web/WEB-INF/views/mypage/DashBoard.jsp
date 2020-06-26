@@ -59,7 +59,7 @@
                         </colgroup>
                         <thead class="lis-head">
                         <tr>
-                            <th>주문일/주문번호</th>
+                            <th>주문일/상점주문번호</th>
                             <th>상품정보</th>
                             <th>상품금액</th>
                             <th>수량</th>

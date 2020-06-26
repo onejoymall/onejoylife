@@ -17,7 +17,7 @@
             <div class="right-contain">
                 <div class="r-sec1">
                     <p class="sec1-h1">주문 상세내역</p>
-                    <p class="sec1-p1">주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>결제번호 : <span>${paymentDetail.imp_uid}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p></p>
+                    <p class="sec1-p1">상점주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문번호 : <span>${paymentDetail.imp_uid}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p></p>
                     <table>
                         <colgroup>
                             <col style="width: 150px;">

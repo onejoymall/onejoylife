@@ -11,7 +11,7 @@
         <h2 class="pb-1">반품신청</h2>
         <hr class="pb-1">
         <ul class="flexbetween pb-1">
-            <li>주문번호</li>
+            <li>상점주문번호</li>
             <li class="red">${paymentDetail.order_no}</li>
         </ul>
         <ul class="flexbetween mb-1">

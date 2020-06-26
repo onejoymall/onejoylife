@@ -85,6 +85,11 @@
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
             (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
         FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>
@@ -98,6 +103,11 @@
             count(*) as cnt
         FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
         ]]>
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>

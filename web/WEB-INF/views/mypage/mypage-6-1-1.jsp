@@ -10,7 +10,7 @@
                     <form name="defaultForm" id="defaultForm" method="POST">
                         <div class="r-sec1">
                             <p class="sec1-h1">취소신청</p>
-                            <p class="sec1-p1">주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
+                            <p class="sec1-p1">상점주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
                             <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
                             <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
                             <table>
