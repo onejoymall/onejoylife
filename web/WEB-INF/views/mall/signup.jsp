@@ -84,12 +84,13 @@
 
              var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
              var position = ",left=" + leftpos + ", top="    + toppos;
+
              var AUTH_POP = window.open('','auth_popup', winopts + position);
             }
             
             auth_form.target = "auth_popup"; // !!주의 고정값 ( 리턴받을때 사용되는 타겟명입니다.)
             auth_form.action = "./kcpcert_proc_req"; // 인증창 호출 및 결과값 리턴 페이지 주소
-            
+            window.name='window';
             auth_form.submit();
             return true;
         }
