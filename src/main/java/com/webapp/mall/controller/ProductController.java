@@ -509,21 +509,21 @@ public class ProductController {
                 Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
                 model.addAttribute("userInfo",userInfo );
                 model.addAttribute("latestDelivery",latestDelivery );
-                String options = "";
-                if(select_option_value != null && select_option_value.length > 0) {
-                	options += String.join("/", select_option_value);
-                }
-                if(params.get("btn-option-value") != null && !params.get("btn-option-value").equals("")) {
-                	if(options.equals(""))  options += params.get("btn-option-value"); 
-                	else					options += "/"+params.get("btn-option-value");
-                }
-            	if(params.get("rd-option-value") != null && !params.get("rd-option-value").equals("")) {
-            		if(options.equals(""))  options += params.get("rd-option-value"); 
-                	else					options += "/"+params.get("rd-option-value");
-                }
-                model.addAttribute("option",new String(options.getBytes("8859_1"), "UTF-8"));
+//                String options = "";
+//                if(select_option_value != null && select_option_value.length > 0) {
+//                	options += String.join("/", select_option_value);
+//                }
+//                if(params.get("btn-option-value") != null && !params.get("btn-option-value").equals("")) {
+//                	if(options.equals(""))  options += params.get("btn-option-value"); 
+//                	else					options += "/"+params.get("btn-option-value");
+//                }
+//            	if(params.get("rd-option-value") != null && !params.get("rd-option-value").equals("")) {
+//            		if(options.equals(""))  options += params.get("rd-option-value"); 
+//                	else					options += "/"+params.get("rd-option-value");
+//                }
             }
             
+            model.addAttribute("option",new String(((String)params.get("option_name")).getBytes("8859_1"), "UTF-8"));
             //보유 쿠폰
             params.put("coupon_paid_user_id",params.get("order_user_id"));
             params.put("coupon_ct", ((String)detail.get("product_ct")).split("\\|"));
@@ -732,7 +732,7 @@ public class ProductController {
                         outText += "" +
                                 "<div class=\"option-box2 mb-1\">" +
                                 "<div class=\"point-title text-gray\">" + splitNextArray[0] + " 선택 </div>\n" +
-                                "<div class=\"optionBtn-wrap option"+z+"\">\n";
+                                "<div class=\"optionBtn-wrap\">\n";
 
                         for (int i = 0; i < splitThirdArray.length; i++) {
                             outText += ""  +

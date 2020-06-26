@@ -115,9 +115,8 @@ $(document).on("click",".favoriteSubmit",function () {
 
 //비회원 결제
 $(document).on("click","#paymentSubmit",function () {
-	var option_required_list = [];
+	var option_required_list = $("input[name=product_option_required").val().split("|");
 	var isOptionCheck = false;
-	option_required_list = $("input[name=product_option_required").val().split("|");
 	option_required_list.forEach(function(el,idx){
 		if(el == 'T'){
 			if($(".option"+idx).attr("type") == 'radio'){
@@ -194,6 +193,33 @@ $(document).on("click","#paymentSubmit",function () {
 })
 //비회원 결제모바일
 $(document).on("click","#paymentSubmitM",function () {
+	var option_required_list = $("input[name=product_option_required").val().split("|");
+	var isOptionCheck = false;
+	option_required_list.forEach(function(el,idx){
+		if(el == 'T'){
+			if($(".option"+idx).attr("type") == 'radio'){
+				if(!$(".option"+idx+":checked").val()){
+					isOptionCheck = true;
+				}
+			}else{
+				if(!$(".option"+idx).val()){
+					isOptionCheck = true;
+				}
+			}
+		}
+	})
+	
+	if(isOptionCheck){
+		$.toast({
+			heading : '옵션은 필수사항입니다.',
+			text: '',
+			showHideTransition: 'plain', //펴짐
+			position: 'bottom-right',
+			icon: 'error',
+			stack: false
+		});
+		return;
+	}
 	
 	var order = $('input[name=payment_order_quantity]').val();
 	var max = $('input[name=order_max]').val();
@@ -762,7 +788,44 @@ $(document).on("click",".ra-num",function () {
     });
     //장바구니 등록
     function addShoppingBasket(product_cd) {
-        var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
+    	if($("input[name=product_option_required").val()){
+	    	var option_required_list = $("input[name=product_option_required").val().split("|");
+	    	var isOptionCheck = false;
+	    	var optionStr = "";
+	    	option_required_list.forEach(function(el,idx){
+	    		if($(".option"+idx).attr("type") == 'radio'){
+					optionStr += (idx != 0 ? "/" : "") + $(".option"+idx+":checked").val();
+				}else{
+					optionStr += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+				}
+	    		
+	    		if(el == 'T'){
+	    			if($(".option"+idx).attr("type") == 'radio'){
+	    				if(!$(".option"+idx+":checked").val()){
+	    					isOptionCheck = true;
+	    				}
+	    			}else{
+	    				if(!$(".option"+idx).val()){
+	    					isOptionCheck = true;
+	    				}
+	    			}
+	    		}
+	    	})
+	    	
+	    	if(isOptionCheck){
+	    		toastr.options = {
+	        	        closeButton: true,
+	    	        progressBar: false,
+	    	        showMethod: 'slideDown',
+	    	        timeOut: 0
+	    	    }
+	    	    toastr.error("", '옵션은 필수사항입니다.');
+	    		return;
+	    	}
+	    	optionStr = optionStr ? optionStr : ' ';
+    	}
+    	
+        var formData = 'option_name='+(optionStr ? optionStr : ' ')+'&product_cd='+product_cd+"&"+$('#defaultForm').serialize();
         var order = $('input[name=payment_order_quantity]').val() ? $('input[name=payment_order_quantity]').val() : 1;
         var max = $('input[name=order_max]').val();
         var min = $('input[name=order_min]').val();
@@ -879,7 +942,45 @@ $(document).on("click",".ra-num",function () {
     }
     //장바구니 등록 모바일
     function addShoppingBasketM(product_cd) {
-    	var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
+    	if($("input[name=product_option_required").val()){
+	    	var option_required_list = $("input[name=product_option_required").val().split("|");
+	    	var isOptionCheck = false;
+	    	var optionStr = "";
+	    	option_required_list.forEach(function(el,idx){
+	    		if($(".option"+idx).attr("type") == 'radio'){
+					optionStr += (idx != 0 ? "/" : "") + $(".option"+idx+":checked").val();
+				}else{
+					optionStr += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+				}
+	    		
+	    		if(el == 'T'){
+	    			if($(".option"+idx).attr("type") == 'radio'){
+	    				if(!$(".option"+idx+":checked").val()){
+	    					isOptionCheck = true;
+	    				}
+	    			}else{
+	    				if(!$(".option"+idx).val()){
+	    					isOptionCheck = true;
+	    				}
+	    			}
+	    		}
+	    	})
+	    	
+	    	if(isOptionCheck){
+	    		$.toast({
+	    			heading : '옵션은 필수사항입니다.',
+	    			text: '',
+	    			showHideTransition: 'plain', //펴짐
+	    			position: 'bottom-right',
+	    			icon: 'error',
+	    			stack: false
+	    		});
+	    		return;
+	    	}
+	    	optionStr = optionStr ? optionStr : ' ';
+    	}
+    	
+    	var formData = 'option_name='+(optionStr ? optionStr : ' ')+'&product_cd='+product_cd+"&"+$('#defaultForm').serialize();
     	var order = $('input[name=payment_order_quantity]').val() ? $('input[name=payment_order_quantity]').val() : 1;
     	var max = $('input[name=order_max]').val();
     	var min = $('input[name=order_min]').val();

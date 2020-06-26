@@ -9,7 +9,7 @@ $(function() {
 $('.addAllCart').on("click",function(){
     product_cds = [];
     $.each($('input[name=chk]'),function(idx, item){
-        if($(this).prop("checked")) addShoppingBasket($(this).val());
+        if($(this).prop("checked")) addShoppingBasketM($(this).val());
     });
 });
 
@@ -63,7 +63,7 @@ function deleteFavorite(product_cd) {
 $('.addChkCart').on("click",function(){
 	product_cds = [];
     $.each($('input[name=chk]'),function(idx, item){
-    	if($(this).prop("checked")) addShoppingBasket($(this).val());
+    	if($(this).prop("checked")) addShoppingBasketM($(this).val());
     });
 });
 //자주구매하는상품 선택 찜 버튼

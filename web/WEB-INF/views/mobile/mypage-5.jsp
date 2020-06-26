@@ -25,8 +25,10 @@
             <c:forEach var="list" items="${list}" varStatus="status">
             <ul class="basket">
 	            <li>
+	            	<c:if test="${list.product_option_yn !='Y' }">
 	                <input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}">
 	                <label for="body-ck1-${status.index}"></label>
+	                </c:if>
 	            </li>
 	            <li>
 	                <ul>
@@ -36,13 +38,19 @@
                         </a>
                         </li>
 	                    <li>
-	                        <p>${list.product_brand}</p>
+	                        <%-- <p>${list.product_brand}</p> --%>
 	                        <h5>${list.product_name}</h5>
-	                        <p class="grey">${list.product_model_name}</p>
+	                        <%-- <p class="grey">${list.product_model_name}</p> --%>
 	                    </li>
 	                </ul>
 	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
-	                <button class="btn-blue btn" onclick="addShoppingBasket('${list.product_cd}')">장바구니 담기</button>
+	                <c:if test="${list.product_option_yn !='Y' }">
+	                <button type="button" class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">장바구니 담기</button>
+	                </c:if>
+	                <c:if test="${list.product_option_yn =='Y' }">
+	                <button type="button" class="btn-red btn" onclick="deleteFavorite('${list.product_cd}')">옵션선택하러가기</button>
+	                <button type="button" class="btn-blue btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">옵션선택하러가기</button>
+	                </c:if>
 	            </li>
 				<input type="hidden" name="payment_order_quantity" value="1">
 	        </ul>

@@ -85,7 +85,8 @@ public class PaymentDAO {
 			map.put("cart_cd",cartPaymentVO.getChk()[i]);
 			map.put("payment_type_cd",cartPaymentVO.getPayment_type_cd());
 			map.put("payment_order_quantity",cartPaymentVO.getPayment_order_quantity()[i]);
-			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i]);
+			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i].trim());
+			map.put("option_name",cartPaymentVO.getOption_name()[i].trim());
             sql.insert("mall.PaymentMapper.insertBundle", map);
             
             //쿠폰사용으로 변경

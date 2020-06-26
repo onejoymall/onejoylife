@@ -69,7 +69,8 @@
         FROM product_cart  where cart_user_id = #{cart_user_id}
 
         ]]>
-        <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="product_cd != null and product_cd != ''"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
+        <if test="option_name != null and option_name !=''"> <![CDATA[AND option_name= #{option_name} ]]></if>
     </select>
 
     <select id="getCartSum" parameterType="java.util.Map" resultType="java.util.Map">

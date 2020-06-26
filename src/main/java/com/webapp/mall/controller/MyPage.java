@@ -674,6 +674,7 @@ public class MyPage {
         	}
         	Integer favCnt = productDAO.getFavoritesProductListCount(params);
         	List<Map<String,Object>> list = null;
+        	List<Map<String,Object>> productList = null;
         	if(favCnt > 0) {
         		searchVO.pageCalculate(favCnt);
         		params.put("displayRowCount", searchVO.getDisplayRowCount());
@@ -687,16 +688,24 @@ public class MyPage {
 
                 searchVO.pageCalculate(1);
                 searchVO.setProduct_sale_yn("Y");
-                List<Map<String,Object>> productList = productDAO.getProductList(searchVO);
+                productList = productDAO.getProductList(searchVO);
                 model.addAttribute("productList", productList);
                 model.addAttribute("searchVO", searchVO);
         	}
 
-            for(Map<String,Object> map : list) {
-            	map.put("payment_order_quantity",1);
-            	Integer deliveryPayment = deliveryPayment(map);
-                map.put("deliveryPayment",deliveryPayment);
-            }
+        	if(list != null) {
+	            for(Map<String,Object> map : list) {
+	            	map.put("payment_order_quantity",1);
+	            	Integer deliveryPayment = deliveryPayment(map);
+	                map.put("deliveryPayment",deliveryPayment);
+	            }
+        	}else {
+        		for(Map<String,Object> map : productList) {
+	            	map.put("payment_order_quantity",1);
+	            	Integer deliveryPayment = deliveryPayment(map);
+	                map.put("deliveryPayment",deliveryPayment);
+	            }
+        	}
             model.addAttribute("list", list);
             model.addAttribute("table_name", "product_payment_history");
             model.addAttribute("Pk", "product_cd");

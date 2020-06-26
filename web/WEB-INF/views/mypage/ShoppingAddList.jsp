@@ -53,16 +53,20 @@
                                     <c:if test="${not empty list}">
                                         <c:forEach var="list" items="${list}" varStatus="status">
                                             <tr>
-                                                <td><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                                <td>
+                                                	<c:if test="${list.product_option_yn !='Y' }">
+                                                	<input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label>
+                                                	</c:if>
+                                               	</td>
                                                 <td>
                                                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                                                         <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
                                                     </a>
                                                 </td>
                                                 <td class="p-box">
-                                                    <p>${list.product_brand}</p>
+                                                    <%-- <p>${list.product_brand}</p> --%>
                                                     <p>${list.product_name}</p>
-                                                    <p>${list.product_model_name}</p>
+                                                    <%-- <p>${list.product_model_name}</p> --%>
                                                         <%--                                        <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                                 </td>
                                                     <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
@@ -71,7 +75,13 @@
                                                     <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
 <%--                                                <td><button class="x" data-id="${list.product_cd}"></button></td>--%>
                                                 <td>
-                                                    <a href="javascript:void(0);" onclick="addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
+                                                	<c:if test="${list.product_option_yn !='Y' }">deleteFavorite
+                                                    <a href="javascript:void(0);" onclick="addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
+                                                    </c:if>
+                                                	<c:if test="${list.product_option_yn =='Y' }">
+                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >삭제하기</p></a>
+                                                    <a href="javascript:void(0);" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';"><p class="lis-txt-box txt-color1" >옵션선택하기</p></a>
+                                                    </c:if>
                                                 </td>
                                                 <input type="hidden" name="payment_order_quantity" value="1">
                                             </tr>
