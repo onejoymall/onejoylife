@@ -8,6 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <c:import url="/mobile/layout/m_modal"/>
+<script type='text/javascript'> 
+
+wcs_do();
+
+</script>
 <footer class="pb-5 bg_grey2">
     <ul class="ftmenu bg_red">
         <li><a href="<c:url value="/Help/csinfo"/>">고객센터</a></li>

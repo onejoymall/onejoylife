@@ -98,7 +98,7 @@
                                         </c:if>
                                     </td>
                                     <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
-                                    <td class="lis-font-w"><span>1</span></td>
+                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
                                     <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
                                     <td class="pointer">
 

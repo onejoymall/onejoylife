@@ -3,6 +3,7 @@ package com.webapp.mall.controller;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +112,7 @@ public class GiveawayController {
             
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
+            model.addAttribute("product_ct_arr",Arrays.asList(((String)detail.get("giveaway_ct")).split("\\|")));
             
           //띠배너
             params.put("banner_type","product_line");

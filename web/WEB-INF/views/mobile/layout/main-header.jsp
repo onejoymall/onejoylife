@@ -42,6 +42,17 @@
     <!-- timepicker -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
+	<script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+
+	<script type='text/javascript'> 
+	
+	if(!wcs_add) var wcs_add = {};
+	
+	wcs_add['wa'] = 's_1e285b9b3844';
+	
+	wcs.inflow('onejoy-life.com');
+	
+	</script>
     </head>
     <script>
         //전역변수

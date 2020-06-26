@@ -115,7 +115,34 @@ $(document).on("click",".favoriteSubmit",function () {
 
 //비회원 결제
 $(document).on("click","#paymentSubmit",function () {
-
+	var option_required_list = [];
+	var isOptionCheck = false;
+	option_required_list = $("input[name=product_option_required").val().split("|");
+	option_required_list.forEach(function(el,idx){
+		if(el == 'T'){
+			if($(".option"+idx).attr("type") == 'radio'){
+				if(!$(".option"+idx+":checked").val()){
+					isOptionCheck = true;
+				}
+			}else{
+				if(!$(".option"+idx).val()){
+					isOptionCheck = true;
+				}
+			}
+		}
+	})
+	
+	if(isOptionCheck){
+		toastr.options = {
+    	        closeButton: true,
+	        progressBar: false,
+	        showMethod: 'slideDown',
+	        timeOut: 0
+	    }
+	    toastr.error("", '옵션은 필수사항입니다.');
+		return;
+	}
+	
     var order = $('input[name=payment_order_quantity]').val();
     var max = $('input[name=order_max]').val();
     var min = $('input[name=order_min]').val();
