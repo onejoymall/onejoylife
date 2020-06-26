@@ -55,6 +55,17 @@
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
     <link href="<c:url value="/assets/css/toastr.css"/>" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://test-pay.naver.com/customer/js/mobile/naverPayButton.js" charset="UTF-8"></script>
+    <script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+
+	<script type='text/javascript'> 
+	
+	if(!wcs_add) var wcs_add = {};
+	
+	wcs_add['wa'] = 's_1e285b9b3844';
+	
+	wcs.inflow('onejoy-life.com');
+	
+	</script>
 </head>
 <script>
     //전역변수

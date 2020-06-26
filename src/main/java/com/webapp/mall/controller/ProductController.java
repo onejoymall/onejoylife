@@ -718,8 +718,8 @@ public class ProductController {
                             .split("\\|");
                     if(splitStyleArray[z].equals("P") || splitStyleArray[z].isEmpty()){
                         outText += "" +
-                                "<select name=\"select_option_value\" class=\"option-box width-100 my-1\">"
-                                + "<option selected>옵션 선택</option>";
+                                "<select name=\"select_option_value\" class=\"option-box width-100 my-1 option"+z+"\">"
+                                + "<option value=\"\" selected>옵션 선택</option>";
                         //옵션 스타일에 따라 다르게
                         for (int i = 0; i < splitThirdArray.length; i++) {
                             outText += "" +
@@ -732,11 +732,11 @@ public class ProductController {
                         outText += "" +
                                 "<div class=\"option-box2 mb-1\">" +
                                 "<div class=\"point-title text-gray\">" + splitNextArray[0] + " 선택 </div>\n" +
-                                "<div class=\"optionBtn-wrap\">\n";
+                                "<div class=\"optionBtn-wrap option"+z+"\">\n";
 
                         for (int i = 0; i < splitThirdArray.length; i++) {
                             outText += ""  +
-                                    "   <button type=\"button\" class=\"optionBtn\" name=\"btnOption\">"+splitThirdArray[i]+"</button>";
+                            		"<input class=\"optionRd option"+z+"\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-btn-op\">"+splitThirdArray[i]+"</label>";                                    
                         }
                         outText += "" +
                                     "</div>\n" +
@@ -751,7 +751,7 @@ public class ProductController {
 
                         for (int i = 0; i < splitThirdArray.length; i++) {
                             outText += "" +
-                                "<input class=\"optionRd\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
+                                "<input class=\"optionRd option"+z+"\" type=\"radio\" id=\"rdOption"+z+i+"\" name=\"rdOption"+z+"\" value=\""+splitThirdArray[i]+"\"><label for=\"rdOption"+z+i+"\" class=\"ra-icon\">"+splitThirdArray[i]+"</label>";
                         }
                         outText += "" +
                                     "</div></div>\n" ;

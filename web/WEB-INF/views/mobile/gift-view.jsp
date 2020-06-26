@@ -200,42 +200,172 @@
     <section class="wrap">
         <div class="my-1" id="content02">
             <h3 class="mb-1">상품 필수정보</h3>
-            <hr class="mb-1">
+            <!-- <hr class="mb-1">
             <h2 class="mb-05">SM-G05-ZR/SS</h2>
-            <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p>
+            <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p> -->
         </div>
-        <div class="my-1 bg_grey p-2">
-            <p class="grey pb-05">정격전압 (v)</p>
-            <h3>220</h3>
-            <p class="grey pt-2 pb-05">소비전력 (W)</p>
-            <h3>420</h3>
-            <p class="grey pt-2 pb-05">에너지소비효율등급</p>
-            <h3>3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음</h3>
-            <p class="grey pt-2 pb-05">동일모델 출시년월</p>
-            <h3>2017년 10월</h3>
-            <p class="grey pt-2 pb-05">품질보증기준</p>
-            <h3>관련법 및 소비자 분쟁해결 기준에 따름</h3>
-            <p class="grey pt-2 pb-05">크기 (mm)</p>
-            <h3>가로 : 630, 세로 : 690, 높이 : 1050</h3>
-            <p class="grey pt-2 pb-05">무게 (kg)</p>
-            <h3>47</h3>
-            <p class="grey pt-2 pb-05">색상</p>
-            <h3>실버</h3>
-            <p class="grey pt-2 pb-05">제조사</p>
-            <h3>삼성전자</h3>
-            <p class="grey pt-2 pb-05">제조국가</p>
-            <h3>태국</h3>
-            <p class="grey pt-2 pb-05">수입자</p>
-            <h3>삼성전자</h3>
-            <p class="grey pt-2 pb-05">A / S 책임자 (전화번호)</p>
-            <h3>삼성전자 (1588-3366)</h3>
-            <p class="grey pt-2 pb-05">사양</p>
-            <h3>태국</h3>
-            <p class="grey pt-2 pb-05">KC 전파적합성 인증</p>
-            <h3>kc마크MSIP-REI-WAF700SD</h3>
-            <p class="grey pt-2 pb-05">KC 전기용품 안전인증</p>
-            <h3>kc마크HU07310-17049C</h3>
-        </div>
+        <div class="my-1 bg_grey p-2 ">
+             <c:if test="${!fn:endsWith(list.product_ct,'882') &&
+                 				  !fn:endsWith(list.product_ct,'32') &&
+                 				  !fn:endsWith(list.product_ct,'815') &&
+                 				  !fn:endsWith(list.product_ct,'51') &&
+                 				  !fn:endsWith(list.product_ct,'50') &&
+                 				  !fn:endsWith(list.product_ct,'152') &&
+                 				  !fn:endsWith(list.product_ct,'25') &&
+                 				  !fn:endsWith(list.product_ct,'461') &&
+                 				  !fn:endsWith(list.product_ct,'27') &&
+                 				  !fn:endsWith(list.product_ct,'122') &&
+                 				  !fn:endsWith(list.product_ct,'126') &&
+                 				  !fn:endsWith(list.product_ct,'906') &&
+                 				  !fn:endsWith(list.product_ct,'174')}">
+                <p class="grey pt-2 pb-05">1. 소재</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 색상</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 크기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조자</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'882')}">
+				<p class="grey pt-2 pb-05">1. 품명</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. KC 인증 필 유뮤(품질경영 및 공산품안전관리법상 안전º품질표시대상공산품에 한함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 색상</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 구성품</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 주요 소재</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05"> ＊ 구성품 별 제조자가 다른 경우 각 구성품의 제조자, 수입자</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 제조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05"> ＊ 구성품 별 제조자가 다른 경우 각 구성품의 제조자, 수입자</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 크기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. 배송º설치비용</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">10. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">11. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'32')}">
+				<p class="grey pt-2 pb-05">1. 건강기능식품에 관한 법률에 따른 표시사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-1. 식품의 유형</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-3. 제조연월일, 유통기한 또는 품질유지기한</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-4. 포장단위별 용량(중량), 수량</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-5. 원재료명 및 함량(농수산물의 원산지 표시에 관한 법률에 따른 원산지 표시 포함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-6. 영양성분</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-7. 기능정보</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-8. 섭취량, 섭취방법 및 섭취 시 주의사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-9. 질병의 예방 및 치료를 위한 의약품이 아니라는 내용의 표현</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-10. 유전자재조합식품에 해당하는 경우의 표시</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-11. 표시광고 사전심의필</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-12. 수입식품에 해당하는 경우 "건강기능식품에 관한 법률에 따른 수입신고를 필함"의 문구</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 소비자상담 관련 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'126') ||
+						  fn:endsWith(list.product_ct,'174')}">
+				<p class="grey pt-2 pb-05">1. 품명 및 모델명</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 전기용품 안전인증 필 유무(전기용품안전관리법상 안전인증대상전기용품, 자율안전확인대상전기용품, 공급자적합성확인대상전기용품에 한함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 정격전압, 소비전력, 에너지소비효율등급(에너지이용합리화법상 의무대상상품에 한함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 동일모델의 출시년월</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 제조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 크기(형태 및 실외기 포함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 냉난방면적</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. 추가설치비용</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">10. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">11. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'122')}">
+				<p class="grey pt-2 pb-05">1. 종류</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 소재</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 치수</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조자, 수입품의 경우 수입자들 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 재조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 취급시 주의사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 품질보증기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'27')}">
+				<p class="grey pt-2 pb-05">1. 품명 및 모델명</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 법에 의한 인증, 허가 등을 받았음을 확인할 수 있는 경우 그에 대한 사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 제조국 또는 원산지</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조자, 수입품의 경우 수입자들 함께 표기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. A/S 책임자와 전화번호 또는 소비자상담 관련 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'461')}">
+				<p class="grey pt-2 pb-05">1. 용량 또는 중량</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 제품 주용 사양(피부타입, 색상(호,번) 등)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 사용기한 또는 개봉 후 사용기간(개봉 후 사용기 간을 기재할 경우에는 제조연월일을 병행표기)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 사용방법</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 제조자 및 제조판매업자</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 제조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 주요성분(유기농 화장품의 경우 유기농 원료 함량 표함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 기능성 화장품의 경우 화장품법에 따른 식품의약 품안전청 심사 필 유무(미백, 주름개선, 자외선차단 등)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. 사용할 때 주의사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">10. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">11. 소비자상담관련 전화번호</p><h3>상세페이지 참조</h3>
+				<tr><th colspan="2">※ 사용기한을 기재하는 경우 ex)2013.10, 2013.10~2014.8., 2013.10~, 주문일로부터 1 년 이상 남음
+				<br>※ 제조연월일과 개봉 후 사용기간을 기재하는 경우 ex) 제조일 2011.10~2012.4, 개봉후 2 년내 사용 / 주문일로부터 1 년 이내, 개봉후 2 년내 사용</th></tr>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'906')}">
+				<p class="grey pt-2 pb-05">1. 소재/순도/밴드재질(시계의 경우)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 중량</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 제조자, 수입품의 수입자를 함께 표기 (병행수입 의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조국(원산지와 가공지 등이 다를 경우 함께 표기)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 치수</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 착용 시 주의사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 주요사양</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7-1. 귀금속, 보석류 - 등급</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7-2. 시계-기능, 방수 등</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 보증서 제공여부</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">10. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'25')}">
+				<p class="grey pt-2 pb-05">1. 식품위생버에 따른 표시사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-1. 식품의 유형</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-3. 제조연월일, 유통기한 또는 품질유지기한</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-4. 포장단위별 용량(중량), 수량</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-5. 원재료명 및 함량(농수산물의 원산지 표시에 관한 법률에 따른 원산지 표시 포함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-6. 영양성분(식품위생법에 따른 영양성분 표시대상식품에 한함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-7. 유전자재조합식품에 해당하는 경우에 표시</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-8. 영유아식 또는 체중조절식품 등에 해당하는 경우 표시광고 사전심의필</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">1-9. 수입식품에 해당하는 경우 '식품위생법에 따른 수입신고를 필함'의 문구</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 소비자상담 관련 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'152')}">
+				<p class="grey pt-2 pb-05">1. 품명 및 모델명</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 동일모델의 출시년월</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 자동차관리법에 따른 자동차부품 자기인증 유무(인증 대상 자동차부품에 한함)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 제조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 크기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 적용차종</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'50') ||
+						  fn:endsWith(list.product_ct,'51')}">
+				<p class="grey pt-2 pb-05">1. 포장단위별 용량(중량), 수량, 크기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 생산자. 수입품의 경우 수입자를 함께 표기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 농수산물의 원산지 표시에 관한 법률에 따른 원산지</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 제조연월일(포장지 또는 생산연도), 유통기한 또는 품질유지기한</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 관련벙상 표시사항</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5-1. 농산물 - 농산물품질관리법상 유전자변형농산물 표시, 지리적표시</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5-2. 축산물 - 축산법에 따른 등급 표시, 쇠고기의 경우 이력관리에 따른 표시 유무</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5-3. 수산물 -  수산물품질관리법상 유전자변형수산물 표시, 지리적표시</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5-4. 수입식품에 해당하는 경우 '식품위생법에 따른 수입신고를 필함'의 문구</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 상품구성</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 보관방법 또는 취급방법</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 소비자상담 관련 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+			<c:if test="${fn:endsWith(list.product_ct,'815')}">
+				<p class="grey pt-2 pb-05">1. 품명 및 모델명</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">2. 재질</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">3. 구성품</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">4. 크기</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">5. 동일모델의 출시년월</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">6. 제조자, 수입품의 수입자를 함께 표기 (병행수입 의 경우 병행수입 여부로 대체 가능)</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">7. 제조국</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">8. 식품위생법에 따른 수입 기구-용기의 경우 '식품위생법에 따른 수입신고를 필함'의 문구</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">9. 품질보증 기준</p><h3>상세페이지 참조</h3>
+				<p class="grey pt-2 pb-05">10. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
+			</c:if>
+         </div>
         <div class="mt-4 mb-2" id="content03">
             <h3 class="mb-1">경품응모/당첨방식/세금</h3>
             <hr>
