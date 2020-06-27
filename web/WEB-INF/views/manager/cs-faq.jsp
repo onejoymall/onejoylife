@@ -140,7 +140,10 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><input type="text" name="brdwriter" id="brdwriter" value="관리자"></td>
+                                <td>
+                                    <input type="text" name="brdwriter" id="brdwriter" value="관리자">
+                                    <input type="hidden" name="rewriter"  value="관리자">
+                                </td>
                             </tr>
                             <tr>
                                 <th>분류</th>
@@ -202,6 +205,7 @@
             	<input type="hidden" name="bgno" value="<c:out value="${param.bgno}"/>">
                 <input type="hidden" name="brdno" >
                 <input type="hidden" name="reno" >
+                <input type="hidden" name="bgtype" value="faq">
                 <div class="modal-body clearfix">
                     <table class="goods-detail-table">
                         <colgroup>
@@ -211,7 +215,10 @@
                         <tbody>
                             <tr>
                                 <th>작성자</th>
-                                <td><input type="text" name="brdwriter"  value="관리자"></td>
+                                <td>
+                                    <input type="text" name="brdwriter"  value="관리자">
+                                    <input type="hidden" name="rewriter"  value="관리자">
+                                </td>
                             </tr>
                             <tr>
                                 <th>분류</th>

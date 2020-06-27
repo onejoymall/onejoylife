@@ -56,5 +56,19 @@
         </main>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#brdmemo').summernote({
+            // tabsize: 2,
+            height: 350,
+            lang: 'ko-KR',
+            callbacks: {
+                onImageUpload : function(files) {
+                    uploadSummernoteImageFile(files[0],this);
+                }
+            }
+        });
+    })
 
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
