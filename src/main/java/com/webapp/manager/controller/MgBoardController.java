@@ -114,6 +114,7 @@ public class MgBoardController {
     @RequestMapping(value = "/Manager/boardSave")
     public String boardSave(@RequestParam HashMap params, HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo) throws Exception{
         String[] fileno = request.getParameterValues("fileno");
+
         try{
             FileUtil fs = new FileUtil();
             List<FileVO> filelist = null;
@@ -122,9 +123,11 @@ public class MgBoardController {
             }
 
             boardSvc.insertBoard(boardInfo, filelist, fileno);
-            boardSvc.insertBoardReply(boardReplyInfo);
+
             if(boardInfo.getBgtype()!=null){
                 if(boardInfo.getBgtype().equals("faq")){
+                    boardReplyInfo.setBrdno(boardInfo.getBrdno());
+                    boardSvc.insertBoardReply(boardReplyInfo);
                     if(boardInfo.getReno()!=null){
                         boardReplyInfo.setReno(boardInfo.getReno());
                     }
