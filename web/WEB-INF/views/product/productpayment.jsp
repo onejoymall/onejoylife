@@ -429,6 +429,7 @@
                 <input type="hidden" name="coupon_cd" value="">
                 <input type="hidden" name="coupon_paid_user_id" value="">
                 <input type="hidden" name="product_order_name" value="${detail.product_name} ${option}"/>
+                <input type="hidden" name="option_name" value="${option}"/>                
             </form>
         </main>
     </div>

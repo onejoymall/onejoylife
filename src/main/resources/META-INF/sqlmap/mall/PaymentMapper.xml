@@ -89,7 +89,8 @@
 	        cart_cd,
 	        payment_type_cd,
 	        payment_order_quantity,
-	        coupon_cd
+	        coupon_cd,
+	        option_name
         )values (
 	        #{product_cd},
 	        #{payment_cd},
@@ -97,7 +98,8 @@
 	        #{cart_cd},
 	        #{payment_type_cd},
 	        #{payment_order_quantity},
-        	#{coupon_cd}
+        	#{coupon_cd},
+        	#{option_name}
         )
     </insert>
 

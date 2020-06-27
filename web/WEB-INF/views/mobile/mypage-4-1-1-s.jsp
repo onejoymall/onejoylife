@@ -194,6 +194,7 @@
                     <%-- <p>${cartPaymentList.product_made_company_name}</p> --%>
                     <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
                     	<h5>${cartPaymentList.product_name}</h5>
+                    	<p class="option"><span><c:if test="${not empty cartPaymentList.option_name}">${cartPaymentList.option_name}</c:if></span></p>
                    	</a>
                     <%-- <p class="grey">${cartPaymentList.product_model}</p> --%>
                 </li>
@@ -212,6 +213,7 @@
                 <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                 <input type="hidden" name="product_cds[]" value="${cartPaymentList.product_cd}">
                 <input type="hidden" name="payment_order_quantity[]" value="${cartPaymentList.payment_order_quantity}">
+                <input type="hidden" name="option_name[]" value="${not empty cartPaymentList.option_name ? cartPaymentList.option_name : ''}">
                 <li><fmt:formatNumber value="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" groupingUsed="true" /><span> 원</span></li>
             </ul>
             <ul class="options">
@@ -219,7 +221,7 @@
                 <li>
 	                <select name="coupon_cd[]" class="couponBox" data-id="${status.index}" data-payment="${cartPaymentList.product_payment*cartPaymentList.payment_order_quantity}" data-user-payment="${cartPaymentList.product_user_payment*cartPaymentList.payment_order_quantity}">
 	                	<c:if test="${not empty cartPaymentList.enableCouponList}">
-	                		<option value="">선택 안함</option>
+	                		<option value=" ">선택 안함</option>
 	                		<c:forEach var="list" items="${cartPaymentList.enableCouponList}" varStatus="status">
 	                    		<option value="${list.coupon_cd}" 
 	                   			 data-type="${list.coupon_sale_type}" 
@@ -231,7 +233,7 @@
 	                    	</c:forEach>
 	                    </c:if>
 	                    <c:if test="${empty cartPaymentList.enableCouponList}">
-	                    	<option value="">사용가능 쿠폰이 없습니다.</option>
+	                    	<option value=" ">사용가능 쿠폰이 없습니다.</option>
 	                    </c:if>
 	                </select>
                 </li>
@@ -511,7 +513,7 @@ function show(num){
 	function applyCoupon(){
 		var disCoupon = 0;
 		$(".couponBox").each(function(index) {
-			if($(this).val()){
+			if($(this).val().trim()){
 				var option = $(this).children("option[value="+$(this).val()+"]");
 				var saleType = option.attr("data-type");
 				var saleCalCondition = option.attr("data-sale-condition");

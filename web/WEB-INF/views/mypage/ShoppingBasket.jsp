@@ -51,7 +51,7 @@
 			item_counts.push(cart.payment_order_quantity);
 			item_uprices.push(cart.product_payment);
 			item_tprices.push(cart.product_payment * cart.payment_order_quantity);
-			item_options.push('');
+			item_options.push(cart.option_name ? cart.option_name : ' ');
 			
 			payment += cart.product_user_payment*cart.payment_order_quantity;
 			discount += (cart.product_user_payment-cart.product_payment)*cart.payment_order_quantity;
@@ -135,10 +135,11 @@
                             <col style="width: 50px;">
                             <col style="width: 150px;">
                             <col style="width: 370px;">
+                            <col style="width: 100px;">
                             <col style="width: 120px;">
                             <col style="width: 120px;">
                             <col style="width: 290px;">
-                            <col style="width: 170px;">
+                            <col style="width: 70px;">
 <%--                            <col style="width: 50px;">--%>
                         </colgroup>
                         <thead>
@@ -146,7 +147,7 @@
                             <td><input type="checkbox" id="tr-ck1-1"><label for="tr-ck1-1" class="tr-icon"></label></td>
                             <td></td>
                             <td>상품정보</td>
-<%--                            <td>옵션병경</td>--%>
+							<td>옵션</td>
                             <td>수량</td>
                             <td>소비자가</td>
                             <td>상품가격</td>
@@ -169,12 +170,15 @@
                                         </a>
                                     </td>
                                     <td class="p-box">
-                                        <p>${list.product_brand}</p>
+                                        <%-- <p>${list.product_brand}</p> --%>
                                         <p>${list.product_name}</p>
-                                        <p>${list.product_model_name}</p>
+                                        <%-- <p>${list.product_model_name}</p> --%>
 <%--                                        <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                     </td>
-<%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
+									<td>
+										<c:if test="${not empty list.option_name}">${list.option_name}</c:if>
+										<c:if test="${empty list.option_name}">-</c:if>
+									</td>
                                     <td>
                                         <input type="number" name="payment_order_quantity" value="${list.payment_order_quantity}" class="num-box payment_order_quantity" data-id="${list.cart_cd}">
                                         <input type="hidden" name="order_max" value="${list.product_max_limit}" />

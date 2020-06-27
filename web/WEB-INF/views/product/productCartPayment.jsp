@@ -315,6 +315,7 @@
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="product_cds" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
+                                            <input type="hidden" name="option_name[]" value="${not empty cartPaymentList.option_name ? cartPaymentList.option_name : ''}">
                                         </td>
                                         <td>
                                             <button type="button" class="del" value="${cartPaymentList.cart_cd}"></button>

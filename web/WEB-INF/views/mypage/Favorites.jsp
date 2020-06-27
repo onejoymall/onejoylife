@@ -52,14 +52,18 @@
                             
                             <c:forEach var="list" items="${list}" varStatus="status">
                                 <tr>
-                                    <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td class="my-lis-1">
+                                    	<c:if test="${list.product_option_yn !='Y' }">
+                                    	<input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label>
+                                    	</c:if>
+                                   	</td>
                                     <td class="my-lis-2">
                                     	<a href="/product/productDetail?product_cd=${list.product_cd}">
 	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
 	                                        <div class="my-lis-txt">
-		                                        <p>${list.product_made_company_name}</p>
+		                                        <%-- <p>${list.product_made_company_name}</p> --%>
 		                                        <p class="lis-font-w">${list.product_name}</p>
-		                                        <p>${list.product_model_name}</p>
+		                                        <%-- <p>${list.product_model_name}</p> --%>
                                       		</div>
                                         </a>
                                     </td>
@@ -70,9 +74,15 @@
 				                            <input type="hidden" name="payment_order_quantity" value="1">
 				                            <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
 			                            </form>
+			                            <c:if test="${list.product_option_yn !='Y' }">
                                         <a href="javascript:void(0)" class="favoriteSubmit"><p class="lis-txt-box txt-color2">바로결제</p></a>
                                         <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
-                                        <a href="javascript:addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                        <a href="javascript:addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                        </c:if>
+			                            <c:if test="${list.product_option_yn =='Y' }">
+                                        <a href="/product/productDetail?product_cd=${list.product_cd}"><p class="lis-txt-box txt-color2">옵션선택하기</p></a>
+                                        <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
+                                        </c:if>
                                     </td>
                                 </tr>
                                 <input type="hidden" name="payment_order_quantity" value="1">
@@ -118,10 +128,13 @@
                         </tr>
                         </thead>
                         <tbody class="lis-body">
-                            <form name="defaultform" id="defaultForm" method="POST">
                                 <c:forEach var="list" items="${productList}" varStatus="status">
                                 <tr>
-                                    <td class="my-lis-1"><input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label></td>
+                                    <td class="my-lis-1">
+                                    	<c:if test="${list.product_option_yn !='Y' }">
+                                    	<input type="checkbox" id="body-ck1-${status.index}" name="chk" value="${list.product_cd}"><label for="body-ck1-${status.index}"></label>
+                                    	</c:if>
+                                   	</td>
                                     <td class="my-lis-2">
                                     	<a href="/product/productDetail?product_cd=${list.product_cd}">
 	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
@@ -139,13 +152,18 @@
 				                            <input type="hidden" name="payment_order_quantity" value="1">
 				                            <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
 			                            </form>
+                                        <c:if test="${list.product_option_yn !='Y' }">
                                         <a href="javascript:void(0)" class="favoriteSubmit"><p class="lis-txt-box txt-color2">바로결제</p></a>
                                         <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
-                                        <a href="javascript:addShoppingBasket('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                        <a href="javascript:addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1">장바구니 담기</p></a>
+                                        </c:if>
+			                            <c:if test="${list.product_option_yn =='Y' }">
+                                        <a href="/product/productDetail?product_cd=${list.product_cd}"><p class="lis-txt-box txt-color2">옵션선택하기</p></a>
+                                        <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">찜하기</p></a>
+                                        </c:if>
                                     </td>
                                 </tr>
                                 </c:forEach>
-                            </form>
                         </tbody>
                     </table>
                     </c:if>
