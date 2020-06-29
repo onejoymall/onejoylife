@@ -619,8 +619,11 @@ function show(num){
         	$('input[name=order_no]').val('PO-ORDER-'+numberGen(7));
         	var formData = $('#defaultForm').serialize()
             				+'&payment_class=PRODUCT';
-
-        	console.log(formData);
+			var formDataM = ""
+			$("input[name=chk]").each(function(){
+				formDataM += "&chk[]="+$(this).val();
+			});
+			formDataM += '&order_no='+$("input[name=order_no]").val() 
         	jQuery.ajax({
                 type: "POST",
                 url: "/Save/PaymentOrders",
@@ -666,7 +669,7 @@ function show(num){
                                     "amount" : $('input[name=payment]').val(),
                                 },
                             ],
-                            m_redirect_url: "${baseURL}/Save/PaymentOrderSuccessMobile?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
+                            m_redirect_url: "${baseURL}/Save/PaymentOrderSuccessMobile?payment_class=PRODUCT"+formDataM
                         }, function (rsp) {
                             if(rsp.success){
                             	location.href=data.redirectUrl;

@@ -2,27 +2,16 @@ package com.webapp.mall.controller;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,19 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.Payment;
-import com.webapp.board.common.SearchVO;
-import com.webapp.common.dao.SelectorDAO;
-import com.webapp.common.support.CurlPost;
-import com.webapp.common.support.MessageSource;
 import com.webapp.common.support.NumberGender;
 import com.webapp.mall.dao.CartDAO;
 import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.IamPortDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
@@ -51,6 +35,8 @@ import com.webapp.mall.vo.GiveawayVO;
 public class MobilePayment {
 	@Autowired
     private NumberGender numberGender;
+	@Autowired
+	private IamPortDAO iamPortDAO;
 	@Autowired
 	private ProductDAO productDAO;
 	@Autowired
@@ -246,7 +232,7 @@ public class MobilePayment {
         return "redirect:"+rediectURL;
     }
     
-    //장바구니 결제 처리
+    // 장바구니 결제성공시 장바구니에서 상품삭제 모바일
     @RequestMapping(value = "/Save/PaymentOrderSuccessMobile", method = RequestMethod.GET, produces = "application/json")
     public  String PaymentOrderSuccessMobile(@RequestParam HashMap params, CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
     	String rediectURL = "";
@@ -263,7 +249,51 @@ public class MobilePayment {
             }else{
                 rediectURL = "/MyPage/OrderAndDelivery";
             }
+            client = new IamportClient(apiKey, apiSecret);
+			Payment impPayment = client.paymentByImpUid(cartPaymentVO.getImp_uid()).getResponse();
+			
+			if(impPayment != null) {
+				iamPortDAO.updateIamportWebHook(impPayment);
+			}
 			cartDAO.CartPaymentListDelete(cartPaymentVO);
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return "redirect:"+rediectURL;
+    }
+    
+    // 상품상세 결제성공시 상태값 2중체크 모바일
+    @RequestMapping(value = "/Save/PaymentSuccessMobile", method = RequestMethod.GET, produces = "application/json")
+    public  String PaymentSuccessMobile(@RequestParam HashMap params, CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+    	String rediectURL = "";
+    	if(params.get("error_msg") != null && !params.get("error_msg").equals("")) {
+    		if(deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
+    			return "redirect:/product/productDetail?product_cd="+params.get("product_cd");
+    		}else {
+    			return "redirect:/MyPage/GiveawayWinningList";
+    		}
+    	}
+    	
+    	try{
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(isEmpty(userInfo)){
+    			//비회원 주문시 사용자아이디 임시 저장
+    			rediectURL = "/MyPage/OrderDetailGuest?order_no="+deliveryInfoVO.getOrder_no();
+    		}else{
+    			rediectURL = "/MyPage/OrderAndDelivery";
+    		}
+    		client = new IamportClient(apiKey, apiSecret);
+    		Payment impPayment = client.paymentByImpUid(cartPaymentVO.getImp_uid()).getResponse();
+    		
+    		if(impPayment != null) {
+    			iamPortDAO.updateIamportWebHook(impPayment);
+    		}
+    		
+    		if(!deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
+    			rediectURL = "/MyPage/GiveawayWinningList";
+    		}
     	}catch (Exception e){
     		e.printStackTrace();
     	}

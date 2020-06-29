@@ -171,7 +171,7 @@
                             buyer_tel: "${delivery.delivery_user_phone}",
                             buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
                             buyer_postcode: "${delivery.postcode}",
-                            m_redirect_url: "${baseURL}"+data.redirectUrl
+                            m_redirect_url: "${baseURL}/Save/PaymentSuccessMobile?payment_class=GIVEAWAY"
                         }, function (rsp) {
                             if(rsp.success){
                             	location.href=data.redirectUrl;

@@ -23,12 +23,17 @@
 		</encoder>
 	</appender>
 	<logger name="org.springframework" level="ERROR" >
+	<!-- <logger name="org.springframework" level="WARN" > -->
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</logger>
 	
 	<!-- mybatis query log setting -->
 	<logger name="jdbc" level="OFF" />
+	<!-- <logger name="jdbc" level="WARN" >
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger> -->
 	<logger name="jdbc.sqlonly" level="OFF" />
 	<!-- <logger name="jdbc.sqlonly" level="DEBUG" >
 		<appender-ref ref="CONSOLE"/>

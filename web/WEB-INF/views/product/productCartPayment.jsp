@@ -783,11 +783,11 @@
                         }, function (rsp) {
                             if(rsp.success){
                             	$.ajax({
-                            		method:'post',
-                            		data:formData,
+                            		method: 'post',
+                            		data: formData+'&imp_uid='+rsp.imp_uid,
                             		url: '/Save/PaymentOrderSuccess',
                             		success: function(res){
-                            			location.href=data.redirectUrl;
+                           				location.href=data.redirectUrl;
                             		},
                             		error: function(e){
                             			console.log(e);
