@@ -96,12 +96,12 @@
 <%--                            <button class="btn btn-blue">다른경품 더보기</button>--%>
 
                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
-                                <c:if test="${list.giveaway_payment_status eq 'A'}">
+                                <c:if test="${list.giveaway_payment_status eq 'A' || list.payment_status == 'N'}">
                                     <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
                                         <button type="button" class="btn btn-red">경품받기</button>
                                     </a>
                                 </c:if>
-                                <c:if test="${list.giveaway_payment_status !=  'A'}">
+                                <c:if test="${list.giveaway_payment_status !=  'A' && list.payment_status != 'N'}">
                                     <a href="#" id="SearchDelivery">
                                         <button type="button" class="btn btn-red">배송조회</button>
                                     </a>

@@ -140,6 +140,21 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	var regCheck = true;
+	var regExp1 = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))$/;
+	var regExp2 = /^[1-4][0-9]{6}$/;
+	$(document).on('input','input[name=reg_no1],input[name=reg_no2]',function () {
+		regCheck = true;
+    	var reg1 = $('input[name=reg_no1]').val();
+    	var reg2 = $('input[name=reg_no2]').val();
+
+		if(!regExp1.test(reg1) || !regExp2.test(reg2)){
+			regCheck = true;
+		}else{
+			regCheck = false;
+		}
+    })
+    
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     $("#submitPayment").on("click",function() {
@@ -151,79 +166,74 @@
                 heading: 'Error',
                 icon: 'error'
             });
+        }else if(regCheck){
+        	$.toast({
+                text: "주민등록번호를 확인해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
         }else{
-            IMP.request_pay({ // param
-                pg: "inicis",
-                pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid: "${delivery.order_no}",
-                name: "${detail.giveaway_name}",
-                amount: ${detail.giveaway_delivery_payment+texSum},
-                buyer_email: "${sessionScope.email}",
-                buyer_name: "${delivery.order_user_name}",
-                buyer_tel: "${delivery.delivery_user_phone}",
-                buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
-                buyer_postcode: "${delivery.postcode}"
-            }, function (rsp) { // callback
-                var formData = $('#defaultForm').serialize()
-                    +'&payment_class=GIVEAWAY'
-                    +'&success='+rsp.success
-                    +'&imp_uid='+rsp.imp_uid
-                    +'&merchant_uid='+rsp.merchant_uid
-                    +'&pg_provider='+rsp.pg_provider
-                    +'&pay_method='+rsp.pay_method
-                    +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg;
-
-                var alertType;
-                var showText;
-                if(rsp.success){
-                    jQuery.ajax({
-                        type: "POST",
-                        url: postUrl,
-                        data: formData,
-                        success: function (data) {
-
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'bottom-right',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
-
-                            } else {
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
+        	var formData = $('#defaultForm').serialize()
+            				+'&payment_class=GIVEAWAY';
+            
+        	jQuery.ajax({
+                type: "POST",
+                url: "/SavePayment",
+                data: formData,
+                success: function (data) {
+                    if (data.validateError) {
+                        $('.validateError').empty();
+                        $.each(data.validateError, function (index, item) {
+                            if(index == "Error"){//일반에러메세지
+                                alertType = "error";
+                                showText = item;
+                            }else{
+                                alertType = "error";
+                                showText = index + " (은) " + item;
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
-                }else{
-                    $.toast({
-                        text: rsp.error_msg,
-                        showHideTransition: 'plain', //펴짐
-                        position: 'bottom-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
+                            // $.toast().reset('all');//토스트 초기화
+                            $.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                heading: 'Error',
+                                icon: 'error'
+                            });
+                        });
+                    } else {
+                    	IMP.request_pay({ // param
+                            pg: "kcp",
+                            pay_method:$('input[name=payment_type_cd]:checked').val(),
+                            merchant_uid: "${delivery.order_no}",
+                            name: "${detail.giveaway_name}",
+                            amount: ${detail.giveaway_delivery_payment+texSum},
+                            buyer_email: "${sessionScope.email}",
+                            buyer_name: "${delivery.order_user_name}",
+                            buyer_tel: "${delivery.delivery_user_phone}",
+                            buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
+                            buyer_postcode: "${delivery.postcode}"
+                        }, function (rsp) {
+                            if(rsp.success){
+                            	location.href=data.redirectUrl;
+                            }else{
+                                $.toast({
+                                    text: rsp.error_msg,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'bottom-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
                 }
             });
         }
-
     });
     </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

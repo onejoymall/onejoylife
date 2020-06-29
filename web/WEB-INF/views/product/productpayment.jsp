@@ -576,9 +576,19 @@
                                 },
                             ],
                         }, function (rsp) {
-                            if(rsp.success){
-                            	location.href=data.redirectUrl;
-                            }else{p
+                        	if(rsp.success){
+                            	$.ajax({
+                            		method: 'post',
+                            		data: formData+'&imp_uid='+rsp.imp_uid,
+                            		url: '/Save/PaymentSuccess',
+                            		success: function(res){
+                           				location.href=data.redirectUrl;
+                            		},
+                            		error: function(e){
+                            			console.log(e);
+                            		}
+                            	});
+                            }else{
                                 $.toast({
                                     text: rsp.error_msg,
                                     showHideTransition: 'plain', //펴짐

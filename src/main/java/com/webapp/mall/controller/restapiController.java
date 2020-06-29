@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.PagedDataList;
 import com.siot.IamportRestClient.response.Payment;
 import com.webapp.board.app.BoardGroupSvc;
 import com.webapp.board.app.BoardSvc;
@@ -52,6 +51,7 @@ import com.webapp.mall.dao.CommonDAO;
 import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.GiveawayDAO;
+import com.webapp.mall.dao.IamPortDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.ProductDAO;
@@ -73,6 +73,8 @@ import com.webapp.manager.vo.ProductVO;
 public class restapiController {
 	@Autowired
 	private BoardSvc boardSvc;
+	@Autowired
+	private IamPortDAO iamPortDAO;
 	@Autowired
 	private BoardGroupSvc boardGroupSvc;
 	@Autowired
@@ -702,6 +704,9 @@ public class restapiController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
+			if (deliveryInfoVO.getPayment_class().equals("PRODUCT")) {
+				deliveryDAO.insertDelivery(deliveryInfoVO);
+			}
 			// 결제번호생성
 			params.put("payment_cd", "PM" + numberGender.numberGen(7, 1));
 
@@ -723,12 +728,7 @@ public class restapiController {
 				} else if (deliveryInfoVO.getPayment_class().equals("GIVEAWAY")) {
 					params.put("reg_no", params.get("reg_no1") + "-" + params.get("reg_no2"));
 					// 경품 응모시 결제 상태 변경
-					if (params.get("success").equals("false")) {
-						params.put("giveaway_payment_status", "A");
-					} else {
-						params.put("giveaway_payment_status", "B");
-					}
-
+					params.put("giveaway_payment_status", "B");
 					paymentDAO.updateGiveawayDeliveryStatus(params);
 					resultMap.put("redirectUrl", "/MyPage/GiveawayWinningList");
 				}
@@ -744,6 +744,8 @@ public class restapiController {
 				couponDAO.updateCouponUse(params);
 			}
 		} catch (Exception e) {
+			error.put("Error",e.getMessage());
+			resultMap.put("validateError", error);
 			e.printStackTrace();
 		}
 		return resultMap;
@@ -757,6 +759,7 @@ public class restapiController {
 		HashMap<String, Object> error = new HashMap<String, Object>();
 
 		try {
+			deliveryDAO.insertDelivery(deliveryInfoVO);
 			// 결제번호생성
 			params.put("payment_cd", "PO" + numberGender.numberGen(7, 1));
 
@@ -780,8 +783,9 @@ public class restapiController {
 			cartPaymentVO.setPayment_cd((String) params.get("payment_cd"));
 			cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
 			paymentDAO.insertCartBundle(cartPaymentVO);
-			deliveryDAO.insertDelivery(deliveryInfoVO);
 		} catch (Exception e) {
+			error.put("Error",e.getMessage());
+			resultMap.put("validateError", error);
 			e.printStackTrace();
 		}
 		return resultMap;
@@ -791,7 +795,29 @@ public class restapiController {
 	public HashMap<String, Object> PaymentOrderSuccess(@RequestParam HashMap params, CartPaymentVO cartPaymentVO,
 			ModelMap model, HttpSession session, DeliveryInfoVO deliveryInfoVO, GiveawayVO giveawayVO) {
 		try {
+			client = new IamportClient(apiKey, apiSecret);
+			Payment impPayment = client.paymentByImpUid(cartPaymentVO.getImp_uid()).getResponse();
+			
+			if(impPayment != null) {
+				iamPortDAO.updateIamportWebHook(impPayment);
+			}
 			cartDAO.CartPaymentListDelete(cartPaymentVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	//상품상세 결제성공시 상태값 2중체크
+	@RequestMapping(value = "/Save/PaymentSuccess", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> PaymentSuccess(@RequestParam HashMap params, CartPaymentVO cartPaymentVO,
+			ModelMap model, HttpSession session, DeliveryInfoVO deliveryInfoVO, GiveawayVO giveawayVO) {
+		try {
+			client = new IamportClient(apiKey, apiSecret);
+			Payment impPayment = client.paymentByImpUid(cartPaymentVO.getImp_uid()).getResponse();
+			
+			if(impPayment != null) {
+				iamPortDAO.updateIamportWebHook(impPayment);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

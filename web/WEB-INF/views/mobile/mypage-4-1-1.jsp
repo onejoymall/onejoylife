@@ -462,7 +462,7 @@
                                     "amount" : $('input[name=payment]').val(),
                                 },
                             ],
-                            m_redirect_url: "${baseURL}"+data.redirectUrl
+                            m_redirect_url: "${baseURL}/Save/PaymentSuccessMobile?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
                         }, function (rsp) {
                             if(rsp.success){
                             	location.href=data.redirectUrl;
