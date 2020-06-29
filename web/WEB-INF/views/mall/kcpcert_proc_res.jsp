@@ -184,7 +184,7 @@
                 try
                 {
                     opener.auth_data( document.form_auth ); // 부모창으로 값 전달
-
+                    window.name='window';
                     window.close();// 팝업 닫기
                 }
                 catch(e)
