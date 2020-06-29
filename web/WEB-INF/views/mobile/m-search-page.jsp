@@ -51,6 +51,13 @@
             </div>
                 <form id="form1" name="form1"  method="get">
                     <input type="hidden" name="product_name" value="${param.product_name}">
+                    <input type="hidden" name="product_score" value="${param.product_score}">
+                    <input type="hidden" name="product_option_color" value="${param.product_option_color}">
+                    <input type="hidden" name="product_delivery_International_type" value="${param.product_delivery_International_type}">
+                    <input type="hidden" name="product_delivery_payment_class" value="${param.product_delivery_payment_class}">
+                    <input type="hidden" name="product_brand" value="${param.product_brand}">
+                    <input type="hidden" name="searchToPayment" value="${param.searchToPayment}">
+                    <input type="hidden" name="searchBePayment" value="${param.searchBePayment}">
                     <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                 </form>
         </article>
