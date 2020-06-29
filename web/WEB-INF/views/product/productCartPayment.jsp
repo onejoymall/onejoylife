@@ -315,7 +315,7 @@
                                             <input type="hidden" name="product_cd" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="product_cds" value="${cartPaymentList.product_cd}">
                                             <input type="hidden" name="payment_order_quantity" value="${cartPaymentList.payment_order_quantity}">
-                                            <input type="hidden" name="option_name[]" value="${not empty cartPaymentList.option_name ? cartPaymentList.option_name : ''}">
+                                            <input type="hidden" name="option_name" value="${not empty cartPaymentList.option_name ? cartPaymentList.option_name : ''}">
                                         </td>
                                         <td>
                                             <button type="button" class="del" value="${cartPaymentList.cart_cd}"></button>
@@ -731,119 +731,72 @@
         }else{
         	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + " 외 " + (cartList.length-1) + "건";
         	$("input[name=product_order_name]").val(product_name);
+        	$('input[name=order_no]').val('PO-ORDER-'+numberGen(7));
+        	var formData = $('#defaultForm').serialize()
+            				+'&payment_class=PRODUCT';
 
-            // loginAuth(data.access_token);
-            // location.href=data.redirectUrl;
-            IMP.request_pay({ // param
-                pg: "kcp",
-                pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid:$('input[name=order_no]').val(),
-                name: product_name,
-                amount: $('input[name=payment]').val(),
-                buyer_email: $('input[name=order_user_email]').val(),
-                buyer_name: $('#order_user_name').val(),
-                buyer_tel: $('#order_user_phone').val(),
-                buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
-                buyer_postcode: $('#postcode').val(),
-                escrow:$('#escrow').is(":checked"),
-                kcpProducts : [
-                    {
-                        "orderNumber" : $('input[name=order_no]').val(),
-                        "name" : cartList,
-                        "quantity" : $('input[name=quantity_total]').val(),
-                        "amount" : $('input[name=payment]').val(),
-                    },
-                ],
-            }, function (rsp) { // callback
-                var formData = $('#defaultForm').serialize()
-                    +'&payment_class=PRODUCT'
-                    +'&success='+rsp.success
-                    +'&imp_uid='+rsp.imp_uid
-                    +'&merchant_uid='+rsp.merchant_uid
-                    +'&pg_provider='+rsp.pg_provider
-                    +'&pay_method='+rsp.pay_method
-                    +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg;
-
-                var alertType;
-                var showText;
-                if(rsp.success){
-                	jQuery.ajax({
-                        type: "POST",
-                        url: "/Save/PaymentOrders",
-                        data: formData,
-                        success: function (data) {
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'bottom-right',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
-
-                            } else {
-                                jQuery.ajax({
-                                    type: "POST",
-                                    url: "/SaveDeliveInfo",
-                                    data: $('#defaultForm').serialize(),
-                                    // enctype: 'multipart/form-data',
-                                    success: function (data) {
-                                        /* if (data.validateError) {
-                                            $('.validateError').empty();
-                                            $.each(data.validateError, function (index, item) {
-                                                // $('#validateError'+index).removeClass('none');
-                                                // $('#validateError'+index).html('* '+item);
-                                                if (index == "Error") {//일반에러메세지
-                                                    alertType = "error";
-                                                    showText = item;
-                                                } else {
-                                                    alertType = "error";
-                                                    showText = index + " (은) " + item;
-                                                }
-
-                                                $.toast({
-                                                    text: showText,
-                                                    showHideTransition: 'plain', //펴짐
-                                                    position: 'bottom-right',
-                                                    heading: 'Error',
-                                                    icon: 'error'
-                                                });
-                                            });
-                                        } */
-                                    },
-                                    error: function (xhr, status, error) {
-                                        alert("error");
-                                    }
-                                });
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
+        	jQuery.ajax({
+                type: "POST",
+                url: "/Save/PaymentOrders",
+                data: formData,
+                success: function (data) {
+                    if (data.validateError) {
+                        $('.validateError').empty();
+                        $.each(data.validateError, function (index, item) {
+                            if(index == "Error"){//일반에러메세지
+                                alertType = "error";
+                                showText = item;
+                            }else{
+                                alertType = "error";
+                                showText = index + " (은) " + item;
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
-                    /* commonAjaxCall("POST","/Save/PaymentOrders",formData) */
-                }else{
-                    $.toast({
-                        text: rsp.error_msg,
-                        showHideTransition: 'plain', //펴짐
-                        position: 'bottom-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
+                            // $.toast().reset('all');//토스트 초기화
+                            $.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                heading: 'Error',
+                                icon: 'error'
+                            });
+                        });
+                    } else {
+                    	IMP.request_pay({ // param
+                    		pg: "kcp",
+                            pay_method:$('input[name=payment_type_cd]:checked').val(),
+                            merchant_uid:$('input[name=order_no]').val(),
+                            name: product_name,
+                            amount: $('input[name=payment]').val(),
+                            buyer_email: $('input[name=order_user_email]').val(),
+                            buyer_name: $('#order_user_name').val(),
+                            buyer_tel: $('#order_user_phone').val(),
+                            buyer_addr: $('#roadAddress').val() + $('#extraAddress').val(),
+                            buyer_postcode: $('#postcode').val(),
+                            escrow:$('#escrow').is(":checked"),
+                            kcpProducts : [
+                                {
+                                    "orderNumber" : $('input[name=order_no]').val(),
+                                    "name" : product_name,
+                                    "quantity" : $('input[name=quantity_total]').val(),
+                                    "amount" : $('input[name=payment]').val(),
+                                },
+                            ],
+                        }, function (rsp) {
+                            if(rsp.success){
+                            	location.href=data.redirectUrl;
+                            }else{
+                                $.toast({
+                                    text: rsp.error_msg,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'bottom-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
                 }
             });
         }

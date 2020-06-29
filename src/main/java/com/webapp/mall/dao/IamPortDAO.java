@@ -1,5 +1,6 @@
 package com.webapp.mall.dao;
 
+import com.siot.IamportRestClient.response.Payment;
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.IamPortVO;
@@ -29,4 +30,7 @@ public class IamPortDAO {
     public void webhookUpdatePayment(IamPortVO iamPortVO) throws SQLException {
         sql.update("iamport.iamPortMapper.webhookUpdatePayment",iamPortVO);
     }
+	public void updateIamportWebHook(Payment impPayment) {
+		sql.update("iamport.iamPortMapper.updateIamportWebHook",impPayment);
+	}
 }

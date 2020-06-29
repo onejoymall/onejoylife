@@ -25,6 +25,7 @@
         <hr class="grey">
         <ul class="product pb-0">
            <h5>${paymentDetail.payment_status_name}</h5>
+           <c:if test="${fn:length(paymentBundleList) <= 1}">
             <ul class="pb-0">
                 <c:if test="${not empty paymentDetail.file_6}">
                     <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" alt=""></a></li>
@@ -54,6 +55,32 @@
                 <li>수량</li>
                 <li>${paymentDetail.payment_order_quantity} <span>개</span></li>
             </ul>
+            </c:if>
+            <c:if test="${fn:length(paymentBundleList) > 1}">
+            	<c:forEach var="list" items="${paymentBundleList}" varStatus="status">
+	            	<ul class="pb-0">
+		                <c:if test="${not empty list.file_1}">
+		                    <li><a href="/product/productDetail?product_cd=${list.product_cd}"><img src="${list.file_1}" alt=""></a></li>
+		                </c:if>
+		                <li>
+		                <a href="/product/productDetail?product_cd=${list.product_cd}">
+		                        <h5>${list.product_name}</h5>
+		                </a>
+		                    <!-- <p class="option"><span>구성품</span> <br>
+		                    · 30mm 1.4 여친렌즈 <br>
+		                    · 추가배터리</p> -->
+		                </li>
+		            </ul>
+		            <ul class="options">
+		                <li>상품금액</li>
+		                <li><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span>원</span></li>
+		            </ul>
+		            <ul class="options mb-1">
+		                <li>수량</li>
+		                <li>${list.payment_order_quantity} <span>개</span></li>
+		            </ul>
+            	</c:forEach>
+            </c:if>
             <div class="my-1">
                 <!-- <button class="btn">배송지 변경</button> -->
                 <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">

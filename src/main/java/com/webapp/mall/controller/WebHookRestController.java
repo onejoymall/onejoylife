@@ -1,6 +1,7 @@
 package com.webapp.mall.controller;
 
 import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.response.Payment;
 import com.webapp.mall.dao.IamPortDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
@@ -20,6 +21,11 @@ public class WebHookRestController {
 	private IamPortDAO iamPortDAO;
 	@Autowired 
 	private PaymentDAO paymentDAO;
+	IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
 
 	/**
 	 * 결제가 승인되었을 때(모든 결제 수단) - (status : paid)
@@ -36,22 +42,14 @@ public class WebHookRestController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			iamPortDAO.insertWebHook(iamPortVO);
-			deliveryInfoVO.setMerchant_uid(iamPortVO.getMerchant_uid());
-			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("paid")) {
-				deliveryInfoVO.setPayment_status("W");
-				paymentDAO.updatePayment(deliveryInfoVO);
-			}
-			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("ready")) {
-				deliveryInfoVO.setPayment_status("M");
-				paymentDAO.updatePayment(deliveryInfoVO);
-			}
-			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("cancelled")) {
-				deliveryInfoVO.setPayment_status("C");
-				paymentDAO.updatePayment(deliveryInfoVO);
+			client = new IamportClient(apiKey, apiSecret);
+			Payment impPayment = client.paymentByImpUid(iamPortVO.getImp_uid()).getResponse();
+			
+			if(impPayment != null) {
+				iamPortDAO.updateIamportWebHook(impPayment);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-//			return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		resultMap.put("body", "success");
