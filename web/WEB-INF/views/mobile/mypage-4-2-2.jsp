@@ -72,10 +72,12 @@
             <li>총 결제 금액</li>
             <li class="text-lg red"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /> <span>원</span></li>
             <input type="hidden" name="payment" value="${detail.giveaway_delivery_payment+texSum}">
-                                    <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
-                                    <input type="hidden" name="order_no" value="${delivery.order_no}">
-                                    <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
-                                    <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
+            <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
+            <input type="hidden" name="order_no" value="${delivery.order_no}">
+            <input type="hidden" name="giveaway_cd" value="${delivery.giveaway_cd}">
+            <input type="hidden" name="giveaway_play_cd" value="${delivery.giveaway_play_cd}">
+            <input type="hidden" name="product_order_name" value="${detail.giveaway_name}">
+            <input type="hidden" name="payment_order_quantity" value="1"/>
         </ul>
         <hr class="grey my-1">
         <input type="checkbox" id="replysns" class="b8 mb-2">
@@ -83,7 +85,7 @@
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
+           <li><a href="javascript:void(0)" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
         </ul>
     </div>
 </form>
@@ -95,6 +97,21 @@
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	var regCheck = true;
+	var regExp1 = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))$/;
+	var regExp2 = /^[1-4][0-9]{6}$/;
+	$(document).on('input','input[name=reg_no1],input[name=reg_no2]',function () {
+		regCheck = true;
+		var reg1 = $('input[name=reg_no1]').val();
+		var reg2 = $('input[name=reg_no2]').val();
+	
+		if(!regExp1.test(reg1) || !regExp2.test(reg2)){
+			regCheck = true;
+		}else{
+			regCheck = false;
+		}
+	})
+
     var IMP = window.IMP; // 생략해도 괜찮습니다.
     IMP.init("imp78484974");
     $("#submitPayment").on("click",function() {
@@ -106,80 +123,75 @@
                 heading: 'Error',
                 icon: 'error'
             });
+        }else if(regCheck){
+        	$.toast({
+                text: "주민등록번호를 확인해주세요.",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
         }else{
-            IMP.request_pay({ // param
-                pg: "inicis",
-                pay_method:$('input[name=payment_type_cd]:checked').val(),
-                merchant_uid: "${delivery.order_no}",
-                name: "${detail.giveaway_name}",
-                amount: ${detail.giveaway_delivery_payment+texSum},
-                buyer_email: $('input[name=order_user_email]').val(),
-                buyer_name: "${delivery.order_user_name}",
-                buyer_tel: "${delivery.delivery_user_phone}",
-                buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
-                buyer_postcode: "${delivery.postcode}",
-                m_redirect_url: "${baseURL}/SavePaymentMobile?"+$('#defaultForm').serialize()+'&payment_class=GIVEAWAY'
-            }, function (rsp) { // callback
-                var formData = $('#defaultForm').serialize()
-                    +'&payment_class=GIVEAWAY'
-                    +'&success='+rsp.success
-                    +'&imp_uid='+rsp.imp_uid
-                    +'&merchant_uid='+rsp.merchant_uid
-                    +'&pg_provider='+rsp.pg_provider
-                    +'&pay_method='+rsp.pay_method
-                    +'&pg_type='+rsp.pg_type
-                    +'&error_msg='+rsp.error_msg;
+        	var formData = $('#defaultForm').serialize()
+							+'&payment_class=GIVEAWAY';
 
-                var alertType;
-                var showText;
-                if(rsp.success){
-                    jQuery.ajax({
-                        type: "POST",
-                        url: postUrl,
-                        data: formData,
-                        success: function (data) {
-
-                            if (data.validateError) {
-                                $('.validateError').empty();
-                                $.each(data.validateError, function (index, item) {
-                                    if(index == "Error"){//일반에러메세지
-                                        alertType = "error";
-                                        showText = item;
-                                    }else{
-                                        alertType = "error";
-                                        showText = index + " (은) " + item;
-                                    }
-                                    // $.toast().reset('all');//토스트 초기화
-                                    $.toast({
-                                        text: showText,
-                                        showHideTransition: 'plain', //펴짐
-                                        position: 'bottom-right',
-                                        heading: 'Error',
-                                        icon: 'error'
-                                    });
-                                });
-
-                            } else {
-                                // loginAuth(data.access_token);
-                                location.href=data.redirectUrl;
+        	jQuery.ajax({
+                type: "POST",
+                url: "/SavePayment",
+                data: formData,
+                success: function (data) {
+                    if (data.validateError) {
+                        $('.validateError').empty();
+                        $.each(data.validateError, function (index, item) {
+                            if(index == "Error"){//일반에러메세지
+                                alertType = "error";
+                                showText = item;
+                            }else{
+                                alertType = "error";
+                                showText = index + " (은) " + item;
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            alert("error");
-                        }
-                    });
-                }else{
-                    $.toast({
-                        text: rsp.error_msg,
-                        showHideTransition: 'plain', //펴짐
-                        position: 'bottom-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
+                            // $.toast().reset('all');//토스트 초기화
+                            $.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                heading: 'Error',
+                                icon: 'error'
+                            });
+                        });
+                    } else {
+                    	IMP.request_pay({ // param
+                            pg: "kcp",
+                            pay_method:$('input[name=payment_type_cd]:checked').val(),
+                            merchant_uid: "${delivery.order_no}",
+                            name: "${detail.giveaway_name}",
+                            amount: ${detail.giveaway_delivery_payment+texSum},
+                            buyer_email: "${sessionScope.email}",
+                            buyer_name: "${delivery.order_user_name}",
+                            buyer_tel: "${delivery.delivery_user_phone}",
+                            buyer_addr: "${delivery.roadAddress}${delivery.extraAddress}",
+                            buyer_postcode: "${delivery.postcode}",
+                            m_redirect_url: "${baseURL}"+data.redirectUrl
+                        }, function (rsp) {
+                            if(rsp.success){
+                            	location.href=data.redirectUrl;
+                            }else{
+                                $.toast({
+                                    text: rsp.error_msg,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'bottom-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("error");
                 }
             });
         }
-
     });
 
 $(document).ready(function(){

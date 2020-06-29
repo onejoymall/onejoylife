@@ -131,7 +131,7 @@
 <%--                                            <a href=""><p class="lis-txt-box">참여자 내역</p></a>--%>
                                             <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0}">
 
-                                                <c:if test="${list.giveaway_payment_status eq 'A'}">
+                                                <c:if test="${list.giveaway_payment_status eq 'A' || list.payment_status == 'N'}">
                                                     <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
                                                         <p class="lis-txt-box txt-color2">
                                                             <span>경품받기</span>
@@ -139,7 +139,7 @@
                                                     </a>
                                                 </c:if>
 <%--                                                    <span class="dis-none">주문상세</span>--%>
-                                                <c:if test="${list.giveaway_payment_status !=  'A'}">
+                                                <c:if test="${list.giveaway_payment_status !=  'A' && list.payment_status != 'N'}">
                                                     <a href="javascript:void(0)" id="SearchDelivery" data-id="${list.order_no}">
                                                         <p class="lis-txt-box txt-color2">
                                                             <span>배송조회</span>
