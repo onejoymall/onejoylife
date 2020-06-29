@@ -12,6 +12,7 @@
 		FROM payment A
 		WHERE A.payment_user_id = #{payment_user_id}
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	</select>
     <select id="getPaymentListChk" resultType="java.util.HashMap">
         <![CDATA[
@@ -51,6 +52,7 @@
         left join giveaway C on (C.giveaway_cd = A.giveaway_cd)
         where 1=1
         and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
         ]]>
 		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
@@ -64,6 +66,7 @@
             count(*) as cnt
         FROM payment A  left join product B on (B.product_cd = A.product_cd) where 1=1
         and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
         ]]>
 
 		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
@@ -98,6 +101,7 @@
             (select D.extraAddress from delivery_info D where A.order_no = D.order_no) as extraAddress
         FROM payment A left join product B on (B.product_cd = A.product_cd) left join giveaway C on (C.giveaway_cd = A.giveaway_cd) where 1=1
         and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
         ]]>
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
         <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
@@ -117,6 +121,7 @@
 		FROM payment A
 		WHERE DATE_FORMAT(A.reg_date,'%Y%m%d') = DATE_FORMAT(SYSDATE(),'%Y%m%d')
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     </select>
     <select id="getLastMonthSummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -130,6 +135,7 @@
 		FROM payment A
 		WHERE A.reg_date BETWEEN DATE_ADD(SYSDATE(), INTERVAL -1 MONTH) AND SYSDATE()
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     </select>
     <select id="getStatusCount" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -146,6 +152,7 @@
 		FROM payment A
 		WHERE 1=1
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>

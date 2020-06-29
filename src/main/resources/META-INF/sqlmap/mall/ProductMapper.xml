@@ -257,6 +257,7 @@
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1
 		ORDER BY COUNT(A.product_cd) desc
@@ -273,6 +274,7 @@
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 		and A.product_cd = B.product_cd
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1) tmp
@@ -282,6 +284,7 @@
 		FROM payment A
 		WHERE A.payment_user_id = #{coupon_paid_user_id}
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 		ORDER BY reg_date DESC
 		LIMIT 1
     </select>

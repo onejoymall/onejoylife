@@ -12,6 +12,7 @@
 		FROM payment A
 		WHERE A.payment_user_id = #{payment_user_id}
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	</select>
 	
     <insert id="insertPayment" parameterType="java.util.Map">
@@ -134,6 +135,7 @@
         LEFT JOIN store E ON(B.product_store_id = E.store_id)
         where 1=1
         and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -172,6 +174,7 @@
         LEFT JOIN store E ON(B.product_store_id = E.store_id)
         where 1=1
         and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -235,6 +238,7 @@
 		FROM payment A
 		WHERE DATE_FORMAT(A.reg_date,'%Y%m%d') = DATE_FORMAT(SYSDATE(),'%Y%m%d')
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     </select>
     <select id="getLastMonthSummary" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -248,6 +252,7 @@
 		FROM payment A
 		WHERE A.reg_date BETWEEN DATE_ADD(SYSDATE(), INTERVAL -1 MONTH) AND SYSDATE()
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     </select>
     <select id="getStatusCount" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -264,6 +269,7 @@
 		FROM payment A
 		WHERE 1=1
 		and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>
