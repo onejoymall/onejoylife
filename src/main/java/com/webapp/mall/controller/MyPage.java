@@ -503,10 +503,12 @@ public class MyPage {
             List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
             model.addAttribute("paymentBundleList", paymentBundleList);
             
-            client = new IamportClient(apiKey, apiSecret);
-            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
-            paymentDetail.put("vbank_name",impPayment.getVbankName());
-            paymentDetail.put("vbank_num",impPayment.getVbankNum());
+            if(paymentDetail.get("imp_uid") != null && !paymentDetail.get("imp_uid").equals("")) {
+	            client = new IamportClient(apiKey, apiSecret);
+	            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+	            paymentDetail.put("vbank_name",impPayment.getVbankName());
+	            paymentDetail.put("vbank_num",impPayment.getVbankNum());
+            }
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("postUrl","/Manager/ManagerSign/ManagerLoginProc");
             model.addAttribute("delivery", delivery);
