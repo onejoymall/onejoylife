@@ -303,7 +303,7 @@
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
+           <li><a href="javascript:void(0)" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
             <input type="hidden" name="payment" value="9999999">
             <input type="hidden" name="product_order_name" value="상품이름">
             <input type="hidden" name="point_add" value="포인트">
@@ -666,7 +666,7 @@ function show(num){
                                     "amount" : $('input[name=payment]').val(),
                                 },
                             ],
-                            m_redirect_url: "${baseURL}"+data.redirectUrl
+                            m_redirect_url: "${baseURL}/Save/PaymentOrderSuccessMobile?"+$('#defaultForm').serialize()+'&payment_class=PRODUCT'
                         }, function (rsp) {
                             if(rsp.success){
                             	location.href=data.redirectUrl;

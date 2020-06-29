@@ -782,7 +782,17 @@
                             ],
                         }, function (rsp) {
                             if(rsp.success){
-                            	location.href=data.redirectUrl;
+                            	$.ajax({
+                            		method:'post',
+                            		data:formData,
+                            		url: '/Save/PaymentOrderSuccess',
+                            		success: function(res){
+                            			location.href=data.redirectUrl;
+                            		},
+                            		error: function(e){
+                            			console.log(e);
+                            		}
+                            	});
                             }else{
                                 $.toast({
                                     text: rsp.error_msg,

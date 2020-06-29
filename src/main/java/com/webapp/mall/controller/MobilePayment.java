@@ -245,4 +245,28 @@ public class MobilePayment {
         }
         return "redirect:"+rediectURL;
     }
+    
+    //장바구니 결제 처리
+    @RequestMapping(value = "/Save/PaymentOrderSuccessMobile", method = RequestMethod.GET, produces = "application/json")
+    public  String PaymentOrderSuccessMobile(@RequestParam HashMap params, CartPaymentVO cartPaymentVO, ModelMap model, HttpSession session,DeliveryInfoVO deliveryInfoVO,GiveawayVO giveawayVO){
+    	String rediectURL = "";
+    	if(params.get("error_msg") != null && !params.get("error_msg").equals("")) {
+    		return "redirect:/MyPage/ShoppingBasket";
+    	}
+    	try{
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+                //비회원 주문시 사용자아이디 임시 저장
+                rediectURL = "/MyPage/OrderDetailGuest?order_no="+deliveryInfoVO.getOrder_no();
+            }else{
+                rediectURL = "/MyPage/OrderAndDelivery";
+            }
+			cartDAO.CartPaymentListDelete(cartPaymentVO);
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return "redirect:"+rediectURL;
+    }
 }

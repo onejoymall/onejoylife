@@ -779,13 +779,23 @@ public class restapiController {
 
 			cartPaymentVO.setPayment_cd((String) params.get("payment_cd"));
 			cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
-			paymentDAO.insertCartBundle(cartPaymentVO); 
-			cartDAO.CartPaymentListDelete(cartPaymentVO);
+			paymentDAO.insertCartBundle(cartPaymentVO);
 			deliveryDAO.insertDelivery(deliveryInfoVO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resultMap;
+	}
+	// 장바구니 결제성공시 장바구니에서 상품삭제
+	@RequestMapping(value = "/Save/PaymentOrderSuccess", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> PaymentOrderSuccess(@RequestParam HashMap params, CartPaymentVO cartPaymentVO,
+			ModelMap model, HttpSession session, DeliveryInfoVO deliveryInfoVO, GiveawayVO giveawayVO) {
+		try {
+			cartDAO.CartPaymentListDelete(cartPaymentVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// 교환
