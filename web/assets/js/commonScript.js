@@ -4054,6 +4054,7 @@ $(".uploadExcelBtn").click(function(){
 	})
 })
 
+//가상계좌확인
 function vbankNoCheck(imp_uid){
 	$.ajax({
 		method: 'post',
@@ -4071,4 +4072,13 @@ function vbankNoCheck(imp_uid){
 			console.log(e);
 		}
 	})
+}
+
+//난수생성
+function numberGen(len){
+	var numStr = '';
+	for(var i=0; i<len; i++){
+		numStr += Math.floor(Math.random() * 10)+'';
+	}
+	return numStr;
 }

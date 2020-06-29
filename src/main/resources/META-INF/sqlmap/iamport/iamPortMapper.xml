@@ -5,6 +5,20 @@
     <insert id="insertWebHook" parameterType="com.webapp.mall.vo.IamPortVO">
     	insert into iamport_webhook (imp_uid,merchant_uid,status) values(#{imp_uid},#{merchant_uid},#{status})
     </insert>
+    <update id="updateIamportWebHook" parameterType="com.siot.IamportRestClient.response.Payment">
+    	update payment SET
+    		imp_uid = #{imp_uid},
+    		success = true,
+    		merchant_uid = #{merchant_uid},
+    		pay_method = #{pay_method},
+    		payment_type_cd = #{pay_method},
+    		pg_provider = #{pg_provider},
+    		payment_status = case when #{status} = 'paid' then 'W'
+    							  when #{status} = 'ready' then 'M'
+    							  when #{status} = 'cancelled' then 'C'
+    							  else #{status} end
+    	where order_no = #{merchant_uid}
+    </update>
     <update id="webhookUpdatePayment" parameterType="com.webapp.mall.vo.IamPortVO">
           update payment set payment_status= (
             select
