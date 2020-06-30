@@ -4194,6 +4194,11 @@ select.order-select{
     line-height: normal;
     color:#000;
     margin-bottom:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .point-pdt-title:hover{
     text-decoration: underline;

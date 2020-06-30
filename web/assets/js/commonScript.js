@@ -1566,6 +1566,7 @@ $(document).on("click",".ra-num",function () {
             url: '/Manager/selectPayment',
             data: {"order_no":order_no},
             success: function (data) {
+            	console.log(data);
                 $.each(data.list, function (index, item) {
                     $('.' + index).html(item);
                     if(index=="delivery_t_code"){
@@ -1617,12 +1618,12 @@ $(document).on("click",".ra-num",function () {
                 	
                 	data.paymentBundleList.forEach(function(el, idx){
                 		product_made_company_name_html += (idx == 0 ? '' : '<br>') + (el.product_made_company_name ? el.product_made_company_name : '-');
-                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name;
+                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name + (el.option_name ? ' '+el.option_name : '');
                 		payment_order_quantity_html += (idx == 0 ? '' : '<br>') + el.payment_order_quantity;
                 	});
                 	
                 	$(".product_made_company_name").html(product_made_company_name_html);
-                	$(".product_name").html(product_name_html);
+                	$(".product_order_name").html(product_name_html);
                 	$(".payment_order_quantity").html(payment_order_quantity_html);
                 }
             },

@@ -49,9 +49,9 @@ public class CouponDAO {
         int insertCouponPaidHistory = sql.insert("mall.CouponMapper.insertCouponPaidHistory",params);
         return insertCouponPaidHistory;
     }
-    public int updateCouponUse(Map<String, String> params) throws SQLException {
-        int updateCouponUse = sql.update("mall.CouponMapper.updateCouponUse",params);
-        return updateCouponUse;
+    public int updateCouponHistory(Map<String, Object> params) throws SQLException {
+        int updateCouponHistory = sql.update("mall.CouponMapper.updateCouponHistory",params);
+        return updateCouponHistory;
     }
     public int deleteCoupon(Map<String, String> params) throws SQLException {
         int deleteCoupon = sql.delete("mall.CouponMapper.deleteCoupon",params);

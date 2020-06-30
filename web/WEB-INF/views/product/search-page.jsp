@@ -283,14 +283,39 @@
                                 </c:if>
                             </div>
                         </div>
+                        <c:if test="${not empty param.product_name}">
                         <input type="hidden" name="product_name" value="${param.product_name}">
+                        </c:if>
+                        <c:if test="${not empty param.product_ct}">
+                        <input type="hidden" name=product_ct value="${param.product_ct}">
+                        </c:if>
+                        <c:if test="${not empty param.product_score}">
                         <input type="hidden" name="product_score" value="${param.product_score}">
+                        </c:if>
+                        <c:if test="${not empty param.product_option_color}">
                         <input type="hidden" name="product_option_color" value="${param.product_option_color}">
+                        </c:if>
+                        <c:if test="${not empty param.product_delivery_International_type}">
                         <input type="hidden" name="product_delivery_International_type" value="${param.product_delivery_International_type}">
+                        </c:if>
+                        <c:if test="${not empty param.product_delivery_payment_class}">
                         <input type="hidden" name="product_delivery_payment_class" value="${param.product_delivery_payment_class}">
+                        </c:if>
+                        <c:if test="${not empty param.product_brand}">
                         <input type="hidden" name="product_brand" value="${param.product_brand}">
+                        </c:if>
+                        <c:if test="${not empty param.searchToPayment}">
                         <input type="hidden" name="searchToPayment" value="${param.searchToPayment}">
+                        </c:if>
+                        <c:if test="${not empty param.searchBePayment}">
                         <input type="hidden" name="searchBePayment" value="${param.searchBePayment}">
+                        </c:if>
+                        <c:if test="${not empty param.orderByKey}">
+                        <input type="hidden" name="orderByKey" value="${param.orderByKey}">
+                        </c:if>
+                        <c:if test="${not empty param.orderByValue}">
+                        <input type="hidden" name="orderByValue" value="${param.orderByValue}">
+                        </c:if>
                         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                         <%--                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">--%>
                     </form>

@@ -215,16 +215,60 @@
                             <td class="order_no"></td>
                         </tr>
                         <tr>
+                            <th>주문번호</th>
+                            <td class="imp_uid"></td>
+                        </tr>
+                        <tr>
+                            <th>주문자</th>
+                            <td class="order_user_email"></td>
+                        </tr>
+                        <tr>
                             <th>주문일</th>
                             <td class="reg_date"></td>
                         </tr>
                         <tr>
-                            <th>주문자</th>
-                            <td class="email"></td>
+                            <th>주문자명</th>
+                            <td class="order_user_name"></td>
+                        </tr>
+                        <tr>
+                            <th>수취인</th>
+                            <td class="delivery_user_name"></td>
+                        </tr>
+                        <tr>
+                            <th>수취인 핸드폰번호</th>
+                            <td class="delivery_user_phone"></td>
+                        </tr>
+                        <tr>
+                            <th>수취인 전화번호</th>
+                            <td class="delivery_user_tel"></td>
+                        </tr>
+                        <tr>
+                            <th>수취인 주소</th>
+                            <td>(<span class="postcode"></span>) <span class="roadAddress"></span> <span class="extraAddress"></span></td>
+                        </tr>
+                        <tr>
+                            <th>배송메세지</th>
+                            <td class="delivery_message"></td>
                         </tr>
                         <tr>
                             <th>배송일</th>
                             <td class="delivery_start_date"></td>
+                        </tr>
+                        <tr>
+                            <th>희망 배송일시</th>
+                            <td><span class="delivery_hope_date"></span> <span class="delivery_hope_time"></span></td>
+                        </tr>
+                        <tr>
+                            <th>공급사</th>
+                            <td class="product_made_company_name">-</td>
+                        </tr>
+                        <tr>
+                            <th>상품명/옵션</th>
+                            <td class="product_order_name giveaway_name"></td>
+                        </tr>
+                        <tr>
+                            <th>수량</th>
+                            <td class="payment_order_quantity"></td>
                         </tr>
                         <tr>
                             <th>결제수단</th>

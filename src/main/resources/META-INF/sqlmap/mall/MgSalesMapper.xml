@@ -34,6 +34,7 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     <if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -83,6 +84,7 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
     <if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -132,6 +134,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -181,6 +184,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -228,6 +232,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -271,6 +276,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -292,6 +298,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -307,6 +314,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -326,6 +334,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -343,6 +352,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -360,6 +370,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1
@@ -375,6 +386,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
     <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 	GROUP BY 1) A
@@ -396,6 +408,7 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -423,6 +436,7 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1) 
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword != null and searchKeyword != ''">
     	AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
     </if>
@@ -454,6 +468,7 @@
 	ON A.product_CD = C.product_CD
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -476,6 +491,7 @@
 	ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1)
 	where 1=1
 	and A.order_no NOT LIKE 'GW%'
+and A.payment_status != 'N'
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )

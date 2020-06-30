@@ -610,7 +610,7 @@
 
     	$(".couponBox").each(function(index) {
 	   		if($(this).attr("data-id") != curIdx){ //선택한셀렉트제외 같은쿠폰이있다면
-	   			  if($(this).val() && $(this).val() == couponCd){
+	   			  if($(this).val().trim() && $(this).val() == couponCd){
 	   				  isDup = true;
 	   			  }
 	   		}
@@ -624,7 +624,7 @@
                 heading: 'Error',
                 icon: 'error'
             });
-    		$(this).val('').trigger("click");
+    		$(this).val(' ').trigger("click");
     		return;
     	}else{
     		applyCoupon();

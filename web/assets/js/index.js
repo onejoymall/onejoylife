@@ -48,7 +48,7 @@ $(document).ready(function(){
         $("#"+tab_id).addClass('on');
     });
 });
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('.goods-list-tab th').click(function(){
         var data_id = $(this).attr('data-tab');
         $('.goods-list-tab th').removeClass('on');
@@ -56,7 +56,7 @@ $(document).ready(function(){
         $(this).addClass('on');
         $("#"+data_id).addClass('on');
     });
-});
+});*/
     // 달력
     $(function() { 
         $.datepicker.setDefaults({

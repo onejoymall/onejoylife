@@ -374,7 +374,7 @@
                     <tr>
                         <th>상품명<span class="cc-red">&#40;필수&#41;</span></th>
                         <td>
-                            <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다.</span></p>
+                            <p class="cc2"><span class="cc">* 최대 250byte 까지만 등록됩니다. 상품명이 너무 긴 경우(100자이상) 화면에따라 줄임처리(...) 될 수 있습니다.</span></p>
                             <input type="text" id="product_name" name="product_name">
                         </td>
                     </tr>

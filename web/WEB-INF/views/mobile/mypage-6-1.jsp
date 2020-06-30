@@ -30,7 +30,7 @@
                 <c:if test="${not empty paymentDetail.file_6}">
                     <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" alt=""></a></li>
                 </c:if>
-                <c:if test="${not empty paymentDetail.file_6}">
+                <c:if test="${not empty paymentDetail.file_1}">
                     <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_1}" alt=""></a></li>
                 </c:if>
                 <li>

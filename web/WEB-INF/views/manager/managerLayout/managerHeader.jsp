@@ -183,7 +183,7 @@
                 </li>
                 </c:if>
                 <c:if test="${afn:contains(menuList, '38')}">
-                <li <c:if test="${topNav == 3}">class="active" </c:if>><a href="">업체관리</a>
+                <li <c:if test="${topNav == 3}">class="active" </c:if>><a href="/Manager/company-app">업체관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/company-app">업체관리</a>
                             <ul>
@@ -195,7 +195,7 @@
                 </li>
                 </c:if>
                 <c:if test="${afn:contains(menuList, '39') || afn:contains(menuList, '40')}">
-                <li <c:if test="${topNav == 4}">class="active" </c:if>><a href="">주문관리</a>
+                <li <c:if test="${topNav == 4}">class="active" </c:if>><a href="/Manager/order">주문관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/order">주문관리</a>
                             <ul>
@@ -211,7 +211,7 @@
                 </li>
                 </c:if>
                 <c:if test="${afn:contains(menuList, '18') || afn:contains(menuList, '19') || afn:contains(menuList, '20')}">
-                <li <c:if test="${topNav == 5}">class="active" </c:if>><a href="">매출관리</a>
+                <li <c:if test="${topNav == 5}">class="active" </c:if>><a href="/Manager/class-sales">매출관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '18')}">
                         <li><a href="/Manager/class-sales">분류별 매출현황</a></li>
@@ -226,7 +226,7 @@
                 </li>
                 </c:if>
                 <c:if test="${afn:contains(menuList, '22') || afn:contains(menuList, '23') || afn:contains(menuList, '24')}">
-                <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="">회원관리</a>
+                <li <c:if test="${topNav == 6}">class="active" </c:if>><a href="/Manager/member-management">회원관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '22')}">
                         <li><a href="/Manager/member-management">회원관리</a></li>
@@ -247,7 +247,7 @@
 <%--                    </ul>--%>
 <%--                </li>--%>
 				<c:if test="${afn:contains(menuList, '24')}">
-                <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="">정산관리</a>
+                <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="/Manager/calculate-company">정산관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/calculate-company">업체별 정산내역</a>
 <%--                            <ul>--%>
@@ -265,7 +265,7 @@
                 			  afn:contains(menuList, '43') ||
                 			  afn:contains(menuList, '27') ||
                 			  afn:contains(menuList, '28')}">
-                <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="">CS관리</a>
+                <li <c:if test="${topNav == 9}">class="active" </c:if>><a href="/Manager/listQna">CS관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '24')}">
                         <li><a href="/Manager/listQna">상품 QA</a></li>
