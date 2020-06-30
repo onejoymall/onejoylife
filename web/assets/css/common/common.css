@@ -608,3 +608,17 @@ input[class='styleClass']:checked + label
     text-decoration: underline;
     color: #848484 !important;
 }
+
+.point-pdt-title{
+    width:100%;
+    font-size:14px;
+    font-weight: 400;
+    line-height: normal;
+    color:#000;
+    margin-bottom:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

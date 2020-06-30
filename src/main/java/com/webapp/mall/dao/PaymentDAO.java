@@ -88,12 +88,6 @@ public class PaymentDAO {
 			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i].trim());
 			map.put("option_name",cartPaymentVO.getOption_name()[i].trim());
             sql.insert("mall.PaymentMapper.insertBundle", map);
-            
-            //쿠폰사용으로 변경
-            if(map.get("coupon_cd") != null && !map.get("coupon_cd").equals("")) {
-            	map.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
-            	sql.update("mall.CouponMapper.updateCouponUse",map);
-            }
         }
 	}
 	public List<Map<String, Object>> getPaymentBundleList(HashMap params) {

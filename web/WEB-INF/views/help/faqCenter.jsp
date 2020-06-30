@@ -118,6 +118,12 @@
                         </li>
                     </ul>
                     <form id="form1" name="form1"  method="get">
+	                    <c:if test="${not empty param.question_type}">
+	                        <input type="hidden" name="question_type" value="${param.question_type}">
+                        </c:if>
+	                    <c:if test="${not empty param.searchKeyword}">
+	                        <input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+                        </c:if>
                         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
                     </form>
                 </div>

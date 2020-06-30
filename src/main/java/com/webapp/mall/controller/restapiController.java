@@ -739,10 +739,6 @@ public class restapiController {
 				paymentDAO.insertBundle(params);
 				deliveryDAO.insertDelivery(deliveryInfoVO);
 			}
-			// 쿠폰사용으로 변경
-			if (params.get("coupon_cd") != null && !params.get("coupon_cd").equals("")) {
-				couponDAO.updateCouponUse(params);
-			}
 		} catch (Exception e) {
 			error.put("Error",e.getMessage());
 			resultMap.put("validateError", error);

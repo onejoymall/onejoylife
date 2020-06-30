@@ -282,6 +282,8 @@
                 <input type="hidden" name="order_no" value="${order_no}">
                 <input type="hidden" name="product_cd" value="${detail.product_cd}">
                 <input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}">
+                <input type="hidden" name="coupon_cd" value="">
+                <input type="hidden" name="coupon_paid_user_id" value="">
                 <input type="hidden" name="product_order_name" value="${detail.product_name} ${option}"/>
                 <input type="hidden" name="option_name" value="${option}"/>
 

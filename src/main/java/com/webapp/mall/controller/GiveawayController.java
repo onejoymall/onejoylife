@@ -109,7 +109,6 @@ public class GiveawayController {
             params.put("delivery_payment",detail.get("giveaway_delivery_payment"));
             Map<String,Object> delivery = giveawayDelivery(params);
             
-            
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
             model.addAttribute("product_ct_arr",Arrays.asList(((String)detail.get("giveaway_ct")).split("\\|")));

@@ -51,7 +51,7 @@
             <h4>${listview.brdmemo}</h4>
         </div>
        <div class="faqAnswer">
-            <p>${listview.rememo} <span><a href="#" class="btn btn-sm">1:1 문의하기</a></span></p>
+            <p>${listview.rememo} <span><a href="/Board/boardList?bgno=15" class="btn btn-sm">1:1 문의하기</a></span></p>
            <%--<div class="faqFile">
                <a href="#"><i class="ri-attachment-2"></i> 설치신청서.DOC</a>
            </div>--%>
@@ -69,6 +69,15 @@
         <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
     </ul>--%>
 </section>
+<form id="form1" name="form1"  method="get">
+ <c:if test="${not empty param.question_type}">
+     <input type="hidden" name="question_type" value="${param.question_type}">
+    </c:if>
+ <c:if test="${not empty param.searchKeyword}">
+     <input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+    </c:if>
+    <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
+</form>
 <!--
     <div class="bottomBtns">
         <ul>
@@ -77,7 +86,6 @@
         </ul>
     </div>
 -->
-    </div>
 
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

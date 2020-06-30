@@ -1,19 +1,21 @@
 package com.webapp.mall.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.Payment;
+import com.webapp.mall.dao.CouponDAO;
 import com.webapp.mall.dao.IamPortDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.IamPortVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 public class WebHookRestController {
@@ -21,6 +23,8 @@ public class WebHookRestController {
 	private IamPortDAO iamPortDAO;
 	@Autowired 
 	private PaymentDAO paymentDAO;
+	@Autowired 
+	private CouponDAO couponDAO;
 	IamportClient client;
     @Value("${api_key}")
     private String apiKey;
@@ -47,6 +51,20 @@ public class WebHookRestController {
 			
 			if(impPayment != null) {
 				iamPortDAO.updateIamportWebHook(impPayment);
+			}
+			if(iamPortVO.getStatus() != null && (iamPortVO.getStatus().equals("paid") || iamPortVO.getStatus().equals("ready"))) {
+				Map<String,Object> param = new HashMap<>();
+				param.put("coupon_use_yn","Y");
+				param.put("order_no",iamPortVO.getMerchant_uid());
+				
+				couponDAO.updateCouponHistory(param);
+			}
+			if(iamPortVO.getStatus() != null && iamPortVO.getStatus().equals("cancelled")) {
+				Map<String,Object> param = new HashMap<>();
+				param.put("coupon_use_yn","N");
+				param.put("order_no",iamPortVO.getMerchant_uid());
+				
+				couponDAO.updateCouponHistory(param);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

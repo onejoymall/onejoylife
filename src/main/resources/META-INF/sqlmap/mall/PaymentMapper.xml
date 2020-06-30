@@ -219,7 +219,11 @@ and A.payment_status != 'N'
             (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name,
             (select D.postcode from delivery_info D where A.order_no = D.order_no) as postcode,
             (select D.roadAddress from delivery_info D where A.order_no = D.order_no) as roadAddress,
-            (select D.extraAddress from delivery_info D where A.order_no = D.order_no) as extraAddress
+            (select D.extraAddress from delivery_info D where A.order_no = D.order_no) as extraAddress,
+            (select D.delivery_user_phone from delivery_info D where A.order_no = D.order_no) as delivery_user_phone,
+            (select D.delivery_user_tel from delivery_info D where A.order_no = D.order_no) as delivery_user_tel,
+            (select D.delivery_message from delivery_info D where A.order_no = D.order_no) as delivery_message
+            
         FROM payment A left join product B on (B.product_cd = A.product_cd) left join giveaway C on (C.giveaway_cd = A.giveaway_cd) where 1=1
         ]]>
         <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
