@@ -5,3 +5,4 @@ target/
 MANIFEST.MF
 .classpath
 .idea/
+/bin/

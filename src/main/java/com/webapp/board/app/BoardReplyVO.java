@@ -16,9 +16,6 @@ public class BoardReplyVO {
         return brdno;
     }
     
-    
-    
-    
     public void setBrdno(String brdno) {
         this.brdno = brdno;
     }
