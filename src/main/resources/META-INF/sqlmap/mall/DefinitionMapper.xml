@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mall.DefinitionMapper">
+
+    <select id="getDefinitionList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT A.*,B.*
+        FROM product_definition A
+        LEFT JOIN product_category B
+        ON A.product_ct = B.pd_category_id
+        where 1=1
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
+	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="store_id != null and store_id !=''">and store_id = #{store_id}</if>
+        <if test='category1 != null and category1 != ""'>
+		    AND (
+		    	product_ct = #{category1}
+		    	OR product_ct = #{category2}
+		    	OR product_ct = #{category3}
+		    )
+	    </if>
+        order by A.reg_date desc 
+		LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    <select id="getDefinitionCount" parameterType="java.util.HashMap" resultType="int">
+        SELECT count(*) cnt
+        FROM product_definition A
+        where 1=1
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if>
+	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="store_id != null and store_id !=''">and store_id = #{store_id}</if>
+        <if test='category1 != null and category1 != ""'>
+		    AND (
+		    	product_ct = #{category1}
+		    	OR product_ct = #{category2}
+		    	OR product_ct = #{category3}
+		    )
+	    </if>
+    </select>
+    <insert id="insertDefinition" parameterType="hashmap">
+    	insert into product_definition(
+    	
+    	)values(
+    	
+    	)
+    </insert>
+    <update id="updateDefinition" parameterType="hashmap">
+    	update product_definition set
+    	
+    	where product_definition_id = #{product_definition_id}
+    </update>
+</mapper>

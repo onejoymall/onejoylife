@@ -591,3 +591,45 @@ $("#areaInsertBtn").click(function(){
         },
 	});
 });
+
+//상품정보고시 + x
+$(document).on('click', '.product_definition_add_btn', function(){
+	var html = '<p class="product_definition">' +
+                    '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+                    '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+                    '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+                    '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+                '</p>';
+	$(this).parent().after(html);
+});
+$(document).on('click', '.product_definition_del_btn', function(){
+	if($('.product_definition_del_btn').length > 1){
+		$(this).parent().remove();
+	}
+});
+$(document).on('click', '.giveaway_definition_add_btn', function(){
+	var html = '<p class="giveaway_definition">' +
+                    '<input type="text" name="giveaway_definition_key" placeholder="ex) 에너지소비효율등급">' +
+                    '<input type="text" name="giveaway_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+                    '<button type="button" class="goods-list-btn giveaway_definition_add_btn">+</button>' +
+                    '<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
+                '</p>';
+	$(this).parent().after(html);
+});
+$(document).on('click', '.giveaway_definition_del_btn', function(){
+	if($('.giveaway_definition_del_btn').length > 1){
+		$(this).parent().remove();
+	}
+});
+
+//상품정보고시 모달버튼
+$(document).on("click",".definitionBtn",function () {
+	var id = $(this).attr("data-id");
+	
+	if(id){
+		var text = "수정";
+	}else{
+		var text = "등록";
+	}
+	
+});

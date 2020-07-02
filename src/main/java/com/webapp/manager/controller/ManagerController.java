@@ -39,6 +39,7 @@ import com.webapp.mall.vo.QnaVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
+import com.webapp.manager.dao.DefinitionDAO;
 import com.webapp.manager.dao.MgBrandDAO;
 import com.webapp.manager.dao.MgCouponDAO;
 import com.webapp.manager.dao.MgOptionDAO;
@@ -62,6 +63,8 @@ import com.webapp.manager.vo.StoreVO;
 public class ManagerController {
     @Autowired
     QnaDAO qnaDAO;
+    @Autowired
+    DefinitionDAO definitionDAO;
     @Autowired
     SelectorDAO selectorDAO;
     @Autowired
@@ -1253,5 +1256,33 @@ public class ManagerController {
         }
         model.addAttribute("style","qna");
         return "manager/qna";
+    }
+    
+    //상품정보고시설정
+    @RequestMapping(value = "/Manager/product-definition")
+    public String mgProductDefinition(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session, SearchVO searchVO) throws Exception {
+        Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(adminLogin.equals("admin")){
+                mgDeliveryVO.setStore_id("admin");
+                params.put("store_id","admin");
+            }
+            params.put("searchTypeArr",searchVO.getSearchTypeArr());
+            searchVO.setDisplayRowCount(10);
+            searchVO.pageCalculate(definitionDAO.getDefinitionCount(params));
+            params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+            List<Map<String, Object>> list = definitionDAO.getDefinitionList(params);
+            model.addAttribute("list", list);
+            model.addAttribute("searchVO", searchVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("table_name", "product_definition");
+        model.addAttribute("Pk", "product_definition_id");
+        model.addAttribute("topNav", 2);
+        model.addAttribute("style", "product-definition");
+        model.addAttribute("params", params);
+        return "/manager/product-definition";
     }
 }

@@ -730,3 +730,19 @@ input[name="goods-name"], input[name="goods-name-eng"], input[name="goods-name-m
     text-align: center;
     margin-left: 5px;
 }
+.redBtn{
+	background-color: #da394d;
+}
+input[name=product_definition_key], input[name=giveaway_definition_key]{
+	width: 20%;
+	margin-right: 10px;
+	display: inline-block;
+}
+input[name=product_definition_value], input[name=giveaway_definition_value]{
+	width: 30%;
+	margin-right: 10px;
+	display: inline-block;
+}
+.product_definition_add_btn, .giveaway_definition_add_btn{
+	margin-right: 5px;
+}

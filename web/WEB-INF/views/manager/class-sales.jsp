@@ -235,26 +235,26 @@
        	        });
        	    });
         	$('.keyword-src-table tbody #categorySearch select:nth-child(2)').on("change",function(){
-           	        //소분류 초기화
-           	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
-           	        var uppper_code =$(this).val();
-           	        console.log(uppper_code)
-           	        jQuery.ajax({
-           	            type: 'POST',
-           	            url: '/Manager/productCategoryList',
-           	            data: {"pd_category_upper_code":uppper_code},
-           	            success: function (data) {
-          	                    var html="<option value='-1'>--</option>"
-          	                    data.list.forEach(function(el){
-          	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
-          	                    });
-          	                    $(".keyword-src-table tbody #categorySearch select:nth-child(3)").html(html);
-           	            },
-           	            error: function (xhr, status, error) {
-           	                alert(error);
-           	            }
-           	        });
-           	    });
+       	        //소분류 초기화
+       	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
+       	        var uppper_code =$(this).val();
+       	        console.log(uppper_code)
+       	        jQuery.ajax({
+       	            type: 'POST',
+       	            url: '/Manager/productCategoryList',
+       	            data: {"pd_category_upper_code":uppper_code},
+       	            success: function (data) {
+      	                    var html="<option value='-1'>--</option>"
+      	                    data.list.forEach(function(el){
+      	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+      	                    });
+      	                    $(".keyword-src-table tbody #categorySearch select:nth-child(3)").html(html);
+       	            },
+       	            error: function (xhr, status, error) {
+       	                alert(error);
+       	            }
+       	        });
+       	    });
         	
         })//로드끝
         </script>

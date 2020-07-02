@@ -109,6 +109,8 @@ public class ProductVO extends SearchVO {
     String product_validity_end;
     String product_stock_use_yn;
     Integer product_stock_quantity;
+    String product_definition_key;
+    String product_definition_value;
 
     public String getProduct_stock_use_yn() {
         return product_stock_use_yn;
@@ -940,5 +942,21 @@ public class ProductVO extends SearchVO {
 
 	public void setProduct_store_id(String product_store_id) {
 		this.product_store_id = product_store_id;
+	}
+
+	public String getProduct_definition_key() {
+		return product_definition_key;
+	}
+
+	public void setProduct_definition_key(String product_definition_key) {
+		this.product_definition_key = product_definition_key;
+	}
+
+	public String getProduct_definition_value() {
+		return product_definition_value;
+	}
+
+	public void setProduct_definition_value(String product_definition_value) {
+		this.product_definition_value = product_definition_value;
 	}
 }
