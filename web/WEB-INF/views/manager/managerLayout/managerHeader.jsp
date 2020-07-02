@@ -117,7 +117,8 @@
                 			  afn:contains(menuList, '35') ||
                 			  afn:contains(menuList, '36') ||
                 			  afn:contains(menuList, '37') ||
-                			  afn:contains(menuList, '45')}">
+                			  afn:contains(menuList, '45') ||
+                			  afn:contains(menuList, '50')}">
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '29') || afn:contains(menuList, '30')}">
@@ -156,7 +157,7 @@
                             </ul>
                         </li>
                         </c:if>
-                        <c:if test="${afn:contains(menuList, '34') || afn:contains(menuList, '35') || afn:contains(menuList, '36')}">
+                        <c:if test="${afn:contains(menuList, '34') || afn:contains(menuList, '35') || afn:contains(menuList, '36') || afn:contains(menuList, '50')}">
                         <li><a href="/Manager/option-product">상품속성관리</a>
                             <ul>
                             	<c:if test="${afn:contains(menuList, '34')}">
@@ -167,6 +168,9 @@
                                 </c:if>
                                 <c:if test="${afn:contains(menuList, '36')}">
                                 <li><a href="/Manager/option-brand">브랜드등록</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '50')}">
+                                <li><a href="/Manager/product-definition">상품정보고시설정</a></li>
                                 </c:if>
                             </ul>
                         </li>

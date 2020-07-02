@@ -181,6 +181,8 @@
             product_stock_quantity,
             product_store_id,
             product_store_id as product_user_ud,
+            product_definition_key,
+            product_definition_value,
             (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
             (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
@@ -392,7 +394,9 @@ and A.payment_status != 'N'
         product_payment_class_value,
         product_use_member_yn,
         product_validity_start,
-        product_validity_end
+        product_validity_end,
+        product_definition_key,
+        product_definition_value
        )values(
         #{product_cd},
         #{product_store_id},
@@ -492,7 +496,9 @@ and A.payment_status != 'N'
         #{product_payment_class_value},
         #{product_use_member_yn},
         #{product_validity_start},
-        #{product_validity_end}
+        #{product_validity_end},
+        #{product_definition_key},
+        #{product_definition_value}
        )
 
     </insert>
@@ -595,7 +601,9 @@ and A.payment_status != 'N'
         product_payment_class_value,
         product_use_member_yn,
         product_validity_start,
-        product_validity_end
+        product_validity_end,
+        product_definition_key,
+        product_definition_value
         )
         select
         #{product_cd},
@@ -803,7 +811,9 @@ and A.payment_status != 'N'
         product_payment_class_value=#{product_payment_class_value},
         product_use_member_yn=#{product_use_member_yn},
         product_validity_start=#{product_validity_start},
-        product_validity_end=#{product_validity_end}
+        product_validity_end=#{product_validity_end},
+        product_definition_key = #{product_definition_key},
+        product_definition_value = #{product_definition_value}
         where product_cd =#{product_cd}
         ]]>
     </update>

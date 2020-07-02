@@ -106,6 +106,8 @@ public class GiveawayVO extends SearchVO {
     public Integer giveaway_play_winner_point;
     public Integer giveaway_play_max_point;
     public Integer parti_rate;
+    public String giveaway_definition_key;
+    public String giveaway_definition_value;
 
     public Integer getParti_rate() {
         return parti_rate;
@@ -931,4 +933,20 @@ public class GiveawayVO extends SearchVO {
     public void setGiveaway_play_user_id(Integer giveaway_play_user_id) {
         this.giveaway_play_user_id = giveaway_play_user_id;
     }
+
+	public String getGiveaway_definition_key() {
+		return giveaway_definition_key;
+	}
+
+	public void setGiveaway_definition_key(String giveaway_definition_key) {
+		this.giveaway_definition_key = giveaway_definition_key;
+	}
+
+	public String getGiveaway_definition_value() {
+		return giveaway_definition_value;
+	}
+
+	public void setGiveaway_definition_value(String giveaway_definition_value) {
+		this.giveaway_definition_value = giveaway_definition_value;
+	}
 }

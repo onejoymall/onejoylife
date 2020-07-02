@@ -18,7 +18,7 @@
 			if($(".option"+idx).attr("type") == 'radio'){
 				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx+":checked").val() ? $(".option"+idx+":checked").val() : '');
 			}else{
-				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx).val() ? $(".option"+idx).val() : '');
 			}
 			
 			if(el == 'T'){
@@ -74,7 +74,7 @@
 			ITEM_COUNT: [$("input[name=payment_order_quantity]").val()],
 			ITEM_UPRICE: [item_uprice],
 			ITEM_TPRICE: [item_tprice],
-			ITEM_OPTION: optionStr,
+			ITEM_OPTION: [optionStr],
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
@@ -87,6 +87,43 @@
 			data: formData,
 			success:function(order_id){
 		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+	//찜하기
+	function wishlist_nc(){
+		var item_uprice = '${list.product_payment}';
+		var item_image = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_thumb = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_url = "http://onejoy-life.com/product/productDetail?product_cd=" + '${list.product_cd}';
+		
+		//데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: ['${list.product_cd}'],
+			ITEM_NAME: ['${list.product_name}'],
+			ITEM_DESC: [' '],
+			ITEM_UPRICE: [item_uprice],
+			ITEM_IMAGE: [item_image],
+			ITEM_THUMB: [item_thumb],
+			ITEM_URL: [item_url] 
+		};
+
+		$.ajax({
+			url: "/api/naverPayWishKey",
+			method: 'post',
+			data: formData,
+			success:function(item_ids){
+				var queryStrItemId = ""; 
+				item_ids.forEach(function(id){
+					queryStrItemId += "ITEM_ID="+id+"&"
+				});
+				window.open("https://test-pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267");
 			},
 			error:function(e){
 				alert("error");
@@ -163,6 +200,7 @@
 			               COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
 			               ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
 			               BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+			               WISHLIST_BUTTON_HANDLER:wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
 			           });
 		           </script>
                 </p>
