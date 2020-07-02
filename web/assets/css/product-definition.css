@@ -368,3 +368,26 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 .cc{font-weight: 100; margin-left:10px;color:#999;}
 .cc-red{font-weight: 100; margin-left:7px;color:#fd5353}
 .cc2{font-weight: 600;margin-bottom:10px;}
+.category{
+    min-width: 120px;
+    height: 25px;
+}
+.cc2 a{
+    color:#da394d;
+}
+input[name=product_definition_key], input[name=giveaway_definition_key]{
+	width: 20%;
+	margin-right: 10px;
+	display: inline-block;
+}
+input[name=product_definition_value], input[name=giveaway_definition_value]{
+	width: 30%;
+	margin-right: 10px;
+	display: inline-block;
+}
+.product_definition_add_btn, .giveaway_definition_add_btn{
+	margin-right: 5px;
+}
+.redBtn{
+	background-color: #da394d;
+}

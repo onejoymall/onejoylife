@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -61,6 +62,7 @@ import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
+import com.webapp.manager.dao.DefinitionDAO;
 import com.webapp.manager.dao.MgBrandDAO;
 import com.webapp.manager.dao.MgCommonDAO;
 import com.webapp.manager.dao.MgCouponDAO;
@@ -87,6 +89,8 @@ import com.webapp.manager.vo.StoreVO;
 public class ManagerRestapiController {
     @Autowired
     private BoardSvc boardSvc;
+    @Autowired
+    private DefinitionDAO definitionDAO;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
     @Autowired
@@ -810,7 +814,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
-
+            params.put("pd_category_main_view","Y");
             List<Map<String,Object>> list = categoryDAO.getCategoryList(params);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -2008,6 +2012,23 @@ public class ManagerRestapiController {
                 bannerDAO.updateBanner(params);
                 resultMap.put("success", "success");
                 resultMap.put("redirectUrl", "/Manager/banner");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    //상품정보고시 선택
+    @RequestMapping(value = "/Manager/definitionDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> definitionDetail(@RequestParam HashMap params, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+            Map<String,Object> list = definitionDAO.getDefinitionDetail(params);
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("list",list);
             }
         } catch (Exception e) {
             resultMap.put("e", e);
