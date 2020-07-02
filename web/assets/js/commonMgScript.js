@@ -623,13 +623,53 @@ $(document).on('click', '.giveaway_definition_del_btn', function(){
 });
 
 //상품정보고시 모달버튼
-$(document).on("click",".definitionBtn",function () {
+$(document).on("click",".definitionModalBtn",function () {
 	var id = $(this).attr("data-id");
-	
+	var text = '';
+	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. <a>※쉼표(,) 사용금지</a></p>';
 	if(id){
-		var text = "수정";
+		text = "수정";
+		var detail = commonAjaxListCall("post","/Manager/definitionDetail",{"product_definition_id": id}).list;
+		
+		var keys = detail['product_definition_key'].split(",");
+    	var vals = detail['product_definition_value'].split(",");
+    	keys.forEach(function(el, idx){
+    		html += '<p class="product_definition">' +
+                        '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급" value="' + keys[idx] + '">' +
+                        '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음" value="' + vals[idx] + '">' +
+                        '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+                        '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+                    '</p>';
+    	});
+    	
+    	if(detail.up_up_code){
+    		$(".category1").val(detail.up_up_code).trigger("change");
+    		setTimeout(function(){
+    			$(".category2").val(detail.up_code).trigger("change");
+    			setTimeout(function(){
+    				$(".category3").val(detail.cur_code).trigger("change");
+    			},50);
+			},50);
+    	}else if(detail.up_code){
+    		$(".category1").val(detail.up_code).trigger("change");
+    		setTimeout(function(){
+    			$(".category2").val(detail.cur_code).trigger("change");
+    		},50);
+    	}else{
+    		$(".category1").val(detail.cur_code).trigger("change");
+    	}
 	}else{
-		var text = "등록";
+		text = "등록";
+		html += '<p class="product_definition">' +
+		            '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+		            '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+		            '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+		            '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+		        '</p>';
+		$(".category1").val('').trigger("change");
 	}
 	
+	$(".product_definition_td").html(html);
+	$("#definitionModalTitle").text(text);
+	$("#definitionModalBtnSpan").text(text);
 });

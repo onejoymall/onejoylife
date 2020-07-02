@@ -5,7 +5,10 @@
 <mapper namespace="mall.DefinitionMapper">
 
     <select id="getDefinitionList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT A.*,B.*
+        SELECT A.*,B.*,
+			if((SELECT Z.pd_category_upper_code FROM product_category Z WHERE Z.pd_category_id = B.pd_category_upper_code) != 0, (SELECT Z.pd_category_name FROM product_category Z WHERE Z.pd_category_id = (SELECT Z.pd_category_upper_code FROM product_category Z WHERE Z.pd_category_id = B.pd_category_upper_code)), NULL) AS up_up_code_name,
+			if(B.pd_category_upper_code != 0, (SELECT Z.pd_category_name FROM product_category Z WHERE Z.pd_category_id = B.pd_category_upper_code), NULL) AS up_code_name,
+			B.pd_category_name AS cur_code_name
         FROM product_definition A
         LEFT JOIN product_category B
         ON A.product_ct = B.pd_category_id
@@ -48,6 +51,17 @@
 		    )
 	    </if>
     </select>
+    <select id="getDefinitionDetail" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,B.*,
+				if((SELECT Z.pd_category_upper_code FROM product_category Z WHERE Z.pd_category_id = B.pd_category_upper_code) != 0, (SELECT Z.pd_category_upper_code FROM product_category Z WHERE Z.pd_category_id = B.pd_category_upper_code), NULL) AS up_up_code,
+				if(B.pd_category_upper_code != 0, B.pd_category_upper_code, NULL) AS up_code,
+				B.pd_category_id AS cur_code
+				
+		FROM product_definition A
+		LEFT JOIN product_category B
+		ON A.product_ct = B.pd_category_id
+		WHERE A.product_definition_id = #{product_definition_id}
+    </select> 
     <insert id="insertDefinition" parameterType="hashmap">
     	insert into product_definition(
     	

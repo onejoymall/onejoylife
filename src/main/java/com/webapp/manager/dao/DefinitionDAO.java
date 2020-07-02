@@ -1,6 +1,7 @@
 package com.webapp.manager.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,4 +21,8 @@ public class DefinitionDAO {
     	Integer getDefinitionCount = sql.selectOne("mall.DefinitionMapper.getDefinitionCount",params);
     	return getDefinitionCount;
     }
+	public Map<String, Object> getDefinitionDetail(HashMap params) {
+		Map<String, Object> getDefinitionDetail = sql.selectOne("mall.DefinitionMapper.getDefinitionDetail",params);
+		return getDefinitionDetail;
+	}
 }

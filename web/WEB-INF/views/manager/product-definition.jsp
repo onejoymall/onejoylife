@@ -10,7 +10,7 @@
                 <div class="main-hd-btn-wrap">
 <%--                    <button type="button" name="detail">제조사 등록</button>--%>
 <%--                    <button type="button" name="detail">공급사 등록</button>--%>
-                    <button type="button" name="detail">상품정보고시 등록</button>
+                    <button type="button" name="detail" class="definitionModalBtn">상품정보고시 등록</button>
 <%--                    <button type="button" name="detail">트랜드 등록</button>--%>
 <%--                    <button type="button" name="detail">자체분류 등록</button>--%>
                 </div>
@@ -116,10 +116,20 @@
                            <tr>
                                 <td><input type="checkbox" id="chk" name="chk" value="${list.product_definition_id}"></td>
                                 <td>${list.product_definition_id}</td>
-                                <td>${list.pd_category_name}</td>
+                                <td>
+                                	<c:if test="${not empty list.up_up_code_name}">
+                                		${list.up_up_code_name} > ${list.up_code_name} > ${list.cur_code_name}
+                                	</c:if>
+                                	<c:if test="${empty list.up_up_code_name && not empty list.up_code_name}">
+                                		${list.up_code_name} > ${list.cur_code_name}
+                                	</c:if>
+                                	<c:if test="${empty list.up_up_code_name && empty list.up_code_name}">
+                                		${list.cur_code_name}
+                                	</c:if>
+                                </td>
                                 <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                                 <td>
-                                    <button type="button" class="goods-list-btn definitionBtn" data-id="${list.product_definition_id}">상세보기</button>
+                                    <button type="button" name="detail" class="goods-list-btn definitionModalBtn" data-id="${list.product_definition_id}">상세보기</button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -138,7 +148,7 @@
     <div class="modal">
         <div class="modal-content">
             <div class="modal-header">
-               <h2>상품정보고시 <span>등록</span></h2>
+               <h2>상품정보고시 <span id="definitionModalTitle">등록</span></h2>
                 <button type="button" class="modal-close">×</button>
             </div>
             <form name="mgBrandAdd" id="mgBrandAdd" method="post">
@@ -153,13 +163,13 @@
                             <tr>
                                 <th>카테고리<span class="cc-red">&#40;필수&#41;</span></th>
                                 <td>
-                                	<select class="category1" name="category1">
+                                	<select class="category category1" name="category1">
                                     <option value=''>--</option>
                                     </select>
-                                    <select class="category2" name="category2">
+                                    <select class="category category2" name="category2">
                                     <option value=''>--</option>
                                     </select>
-                                    <select class="category3" name="category3">
+                                    <select class="category category3" name="category3">
                                     <option value=''>--</option>
                                     </select>
                                 </td>
@@ -167,13 +177,13 @@
                             </tr>
                             <tr>
                                 <th>상품정보고시</th>
-                                <td>
+                                <td class="product_definition_td">
 									
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-red definitionBtn">등록하기</button>
+                    <button type="button" name="detail" class="btn-red definitionBtn" data-id="insert"><span id="definitionModalBtnSpan"></span>하기</button>
                 </div>
             </form>
         </div>
@@ -190,18 +200,21 @@
                 data.list.forEach(function(el){
                 	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
                 });
-                $(".keyword-src-table tbody #categorySearch select:nth-child(1)").html(html);
+                $(".category1").html(html);
             },
             error: function (xhr, status, error) {
                 alert(error);
             }
         });
-    	$('.keyword-src-table tbody #categorySearch select:nth-child(1)').on("change",function(){
+    	$('.category1').on("change",function(){
    	        //소분류 초기화
-   	        $('.keyword-src-table tbody #categorySearch select:nth-child(2)').empty();
-   	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
-   	        var uppper_code =$(this).val();
-   	        
+   	        $('.category2').empty();
+   	        $('.category3').empty();
+   	     	var uppper_code = -1;
+   	     	if($(this).val()){
+   	        	uppper_code =$(this).val();
+   	     	}
+
    	        jQuery.ajax({
    	            type: 'POST',
    	            url: '/Manager/productCategoryList',
@@ -212,18 +225,21 @@
   	                    data.list.forEach(function(el){
   	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
   	                    });
-  	                    $(".keyword-src-table tbody #categorySearch select:nth-child(2)").html(html);
+  	                    $(".category2").html(html);
    	            },
    	            error: function (xhr, status, error) {
    	                alert(error);
    	            }
    	        });
    	    });
-    	$('.keyword-src-table tbody #categorySearch select:nth-child(2)').on("change",function(){
+    	$('.category2').on("change",function(){
    	        //소분류 초기화
-   	        $('.keyword-src-table tbody #categorySearch select:nth-child(3)').empty();
-   	        var uppper_code =$(this).val();
-   	        console.log(uppper_code)
+   	        $('.category3').empty();
+   	     	var uppper_code = -1;
+	     	if($(this).val()){
+	        	uppper_code =$(this).val();
+	     	}
+	     	
    	        jQuery.ajax({
    	            type: 'POST',
    	            url: '/Manager/productCategoryList',
@@ -233,7 +249,7 @@
   	                    data.list.forEach(function(el){
   	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
   	                    });
-  	                    $(".keyword-src-table tbody #categorySearch select:nth-child(3)").html(html);
+  	                    $(".category3").html(html);
    	            },
    	            error: function (xhr, status, error) {
    	                alert(error);
