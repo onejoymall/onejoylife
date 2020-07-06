@@ -18,8 +18,8 @@
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 	      </foreach>
 	    </if>
-	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	    <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="store_id != null and store_id !=''">and store_id = #{store_id}</if>
         <if test='category1 != null and category1 != ""'>
 		    AND (
@@ -40,8 +40,8 @@
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 	      </foreach>
 	    </if>
-	    <if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-	    <if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+	    <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="store_id != null and store_id !=''">and store_id = #{store_id}</if>
         <if test='category1 != null and category1 != ""'>
 		    AND (
@@ -64,14 +64,24 @@
     </select> 
     <insert id="insertDefinition" parameterType="hashmap">
     	insert into product_definition(
-    	
+    		store_id,
+    		product_ct,
+    		product_definition_key,
+    		product_definition_value
     	)values(
-    	
+    		#{store_id},
+    		#{product_ct},
+    		#{product_definition_key},
+    		#{product_definition_value}
     	)
     </insert>
     <update id="updateDefinition" parameterType="hashmap">
     	update product_definition set
-    	
+    		store_id = #{store_id},
+    		product_ct = #{product_ct},
+    		product_definition_key = #{product_definition_key},
+    		product_definition_value = #{product_definition_value},
+    		update_date = sysdate()
     	where product_definition_id = #{product_definition_id}
     </update>
 </mapper>

@@ -627,8 +627,11 @@ $(document).on("click",".definitionModalBtn",function () {
 	var id = $(this).attr("data-id");
 	var text = '';
 	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. <a>※쉼표(,) 사용금지</a></p>';
+	$("input[name=product_definition_id]").val('');
+	
 	if(id){
 		text = "수정";
+		$(".definitionInsertUpdateBtn").attr("data-id","update");
 		var detail = commonAjaxListCall("post","/Manager/definitionDetail",{"product_definition_id": id}).list;
 		
 		var keys = detail['product_definition_key'].split(",");
@@ -658,8 +661,11 @@ $(document).on("click",".definitionModalBtn",function () {
     	}else{
     		$(".category1").val(detail.cur_code).trigger("change");
     	}
+    	
+    	$("input[name=product_definition_id]").val(detail.product_definition_id);
 	}else{
 		text = "등록";
+		$(".definitionInsertUpdateBtn").attr("data-id","insert");
 		html += '<p class="product_definition">' +
 		            '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
 		            '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
@@ -672,4 +678,30 @@ $(document).on("click",".definitionModalBtn",function () {
 	$(".product_definition_td").html(html);
 	$("#definitionModalTitle").text(text);
 	$("#definitionModalBtnSpan").text(text);
+});
+
+//상품정보고시 등록&수정
+$(document).on("click",".definitionInsertUpdateBtn",function () {
+	var isDefinitionCheck = false;
+	$(".product_definition").each(function(el){
+	    $(this).children('input').each(function(el){
+	        if(!$(this).val()) isDefinitionCheck = true;
+	    })
+	});
+	
+	if(isDefinitionCheck) {
+        $.toast({
+            text: "상품정보고시 는(은) 필수항목입니다",
+            showHideTransition: 'plain', //펴짐
+            position: 'bottom-right',
+            heading: 'Error',
+            icon: 'error'
+        });
+		return;
+	}
+	
+	var type = $(this).attr("data-id");
+	var formData =  $("#mgDefinitionForm").serialize();
+	console.log('/Manager/'+type+"Definition");
+	commonAjaxCall('post','/Manager/'+type+"Definition",formData);
 });

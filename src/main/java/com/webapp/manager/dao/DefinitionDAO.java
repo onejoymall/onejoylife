@@ -21,8 +21,14 @@ public class DefinitionDAO {
     	Integer getDefinitionCount = sql.selectOne("mall.DefinitionMapper.getDefinitionCount",params);
     	return getDefinitionCount;
     }
-	public Map<String, Object> getDefinitionDetail(HashMap params) {
+	public Map<String, Object> getDefinitionDetail(Map<String, Object> params) {
 		Map<String, Object> getDefinitionDetail = sql.selectOne("mall.DefinitionMapper.getDefinitionDetail",params);
 		return getDefinitionDetail;
+	}
+	public void insertDefinition(Map<String, Object> params) {
+		sql.insert("mall.DefinitionMapper.insertDefinition",params);
+	}
+	public void updateDefinition(Map<String, Object> params) {
+		sql.insert("mall.DefinitionMapper.updateDefinition",params);
 	}
 }

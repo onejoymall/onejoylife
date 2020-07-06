@@ -102,7 +102,7 @@
 			method: 'post',
 			data: formData,
 			success:function(order_id){
-		        location.href = "https://test-order.checkout.naver.com/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+		        location.href = "https://order.checkout.naver.com/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
 			},
 			error:function(e){
 				alert("error");
@@ -256,18 +256,16 @@
                     <div class="but-box">
                         <button type="button" class="but1 cartPaymentOrder" data-id="allCheck">전체 주문하기</button>
                         <button type="button" class="but2 cartPaymentOrder" data-id="selectCheck">선택 주문하기</button>
-                        <c:if test="${sessionScope.email == 'test'}">
-	                        <script type="text/javascript" >
-	                        naver.NaverPayButton.apply({
-	                            BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
-	                            TYPE: "MA", // 버튼 모음 종류 설정
-	                            COLOR: 1, // 버튼 모음의 색 설정
-	                            COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
-	                            ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
-	                            BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
-                            });
-	                        </script>
-	                    </c:if>
+                        <script type="text/javascript" >
+                        naver.NaverPayButton.apply({
+                            BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
+                            TYPE: "MA", // 버튼 모음 종류 설정
+                            COLOR: 1, // 버튼 모음의 색 설정
+                            COUNT: 1, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+                            ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
+                            BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+                           });
+                        </script>
                     </div>
                 </form>
             </div>

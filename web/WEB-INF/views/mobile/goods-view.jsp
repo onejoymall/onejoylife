@@ -86,7 +86,7 @@
 			method: 'post',
 			data: formData,
 			success:function(order_id){
-		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+		        location.href = "https://m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
 			},
 			error:function(e){
 				alert("error");
@@ -123,7 +123,7 @@
 				item_ids.forEach(function(id){
 					queryStrItemId += "ITEM_ID="+id+"&"
 				});
-				window.open("https://test-pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267");
+				window.open("https://pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267");
 			},
 			error:function(e){
 				alert("error");
@@ -190,7 +190,6 @@
                 <li>
                     <h2 class="red">4,500<span class="text-sm">원</span></h2>
                 </li>--%>
-                <c:if test="${sessionScope.email == 'test'}">
                 <p>
                    <script type="text/javascript" >
 				       naver.NaverPayButton.apply({
@@ -204,7 +203,6 @@
 			           });
 		           </script>
                 </p>
-                </c:if>
             </ul>
         </div>
         <ul class="footerBtns">
