@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var option_required_list = $("input[name=product_option_required]").val().split("|");
 		var isOptionCheck = false;
 		var optionStr = [""];
 		option_required_list.forEach(function(el,idx){
@@ -21,7 +21,6 @@
 			}else{
 				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx).val() ? $(".option"+idx).val() : '');
 			}
-			
 			if(el == 'T'){
 				if($(".option"+idx).attr("type") == 'radio'){
 					if(!$(".option"+idx+":checked").val()){
@@ -34,7 +33,7 @@
 				}
 			}
 		})
-		
+
 		if(isOptionCheck){
 			toastr.options = {
 	    	        closeButton: true,
@@ -46,7 +45,8 @@
 			return;
 		}
 	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
-	    
+
+
 	    //배송비
 	    var shipping_type = "";
 	    if($("input[name=product_delivery_payment]").val() == 0){
@@ -73,7 +73,7 @@
 			ITEM_COUNT: [$("input[name=payment_order_quantity]").val()],
 			ITEM_UPRICE: [item_uprice],
 			ITEM_TPRICE: [item_tprice],
-			ITEM_OPTION: [optionStr],
+			ITEM_OPTION: optionStr,
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
@@ -619,6 +619,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </article>
 </section>
 <script>
@@ -759,10 +760,10 @@
             });
             $("input[name=rd-option-value]").val(raOptionValue);
         }) */
-        $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+        $("input[name=product_option_required]").val().split("|").forEach(function(el,idx){
         	$(".option"+idx).on("input",function(){
         		var option_name = ""
-        		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+        		$("input[name=product_option_required]").val().split("|").forEach(function(element,index){
     	    		if($(".option"+index).attr("type") == 'radio'){
     	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
     				}else{

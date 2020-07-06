@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var option_required_list = $("input[name=product_option_required]").val().split("|");
 		var isOptionCheck = false;
 		var optionStr = [""];
 		option_required_list.forEach(function(el,idx){
@@ -74,7 +74,7 @@
 			ITEM_COUNT: [$("input[name=payment_order_quantity]").val()],
 			ITEM_UPRICE: [item_uprice],
 			ITEM_TPRICE: [item_tprice],
-			ITEM_OPTION: [optionStr],
+			ITEM_OPTION: optionStr,
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
@@ -123,7 +123,7 @@
 				item_ids.forEach(function(id){
 					queryStrItemId += "ITEM_ID="+id+"&"
 				});
-				window.open("https://pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267");
+				location.href = "https://m.pay.naver.com/mobile/customer/wishList.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267";
 			},
 			error:function(e){
 				alert("error");
@@ -751,10 +751,10 @@ $(document).ready(function(){
         });
         $("input[name=rd-option-value]").val(raOptionValue);
     }) */
-    $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+    $("input[name=product_option_required]").val().split("|").forEach(function(el,idx){
     	$(".option"+idx).on("input",function(){
     		var option_name = ""
-    		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+    		$("input[name=product_option_required]").val().split("|").forEach(function(element,index){
 	    		if($(".option"+index).attr("type") == 'radio'){
 	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
 				}else{
