@@ -17,6 +17,7 @@
                                 <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>" class="<c:if test="${leftNavOrder == 6}">active</c:if>">주문/배송 조회</a></li>
 <%--                                <li><a href="<c:url value="/MyPage/OrderCancels"/>" class="<c:if test="${leftNavOrder == 7}">active</c:if>">취소/재결제/교환/반품</a></li>--%>
                                 <li><a href="<c:url value="/MyPage/Reviews"/>" class="<c:if test="${leftNavOrder == 8}">active</c:if>">나의 상품평 보기</a></li>
+                                <li><a href="<c:url value="/MyPage/Qna"/>" class="<c:if test="${leftNavOrder == 14}">active</c:if>">나의 QnA 보기</a></li>
                                 <li><a href="<c:url value="/MyPage/Favorites"/>" class="<c:if test="${leftNavOrder == 9}">active</c:if>">자주 구매하는 상품</a></li>
                             </ul>
                         </li>

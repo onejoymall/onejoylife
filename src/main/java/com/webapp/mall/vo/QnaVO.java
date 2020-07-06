@@ -19,8 +19,47 @@ public class QnaVO extends SearchVO {
     private String qna_rewrite_id;
     private String reg_date;
     private String qna_rewrite_memo;
+    private String file_1;
+    private String product_made_company_name;
+    private String reg_date_fulltime;
+    private String reg_date1;
+    
+    
 
-    public String getQna_rewrite_memo() {
+    
+    public String getReg_date1() {
+		return reg_date1;
+	}
+
+	public void setReg_date1(String reg_date1) {
+		this.reg_date1 = reg_date1;
+	}
+
+	public String getReg_date_fulltime() {
+		return reg_date_fulltime;
+	}
+
+	public void setReg_date_fulltime(String reg_date_fulltime) {
+		this.reg_date_fulltime = reg_date_fulltime;
+	}
+
+	public String getProduct_made_company_name() {
+		return product_made_company_name;
+	}
+
+	public void setProduct_made_company_name(String product_made_company_name) {
+		this.product_made_company_name = product_made_company_name;
+	}
+
+	public String getFile_1() {
+		return file_1;
+	}
+
+	public void setFile_1(String file_1) {
+		this.file_1 = file_1;
+	}
+
+	public String getQna_rewrite_memo() {
         return qna_rewrite_memo;
     }
 

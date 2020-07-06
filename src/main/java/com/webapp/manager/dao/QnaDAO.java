@@ -33,4 +33,17 @@ public class QnaDAO {
     public void updateQna(QnaVO qnaVO) throws SQLException{
         sql.insert("mall.QnaMapper.updateQna",qnaVO);
     }
+    
+    public void deleteQna(QnaVO qnaVO) throws SQLException{
+        sql.delete("mall.QnaMapper.deleteQna",qnaVO);
+    }
+    
+    public void deleteMypageQna(QnaVO qnaVO) throws SQLException{
+        sql.delete("mall.QnaMapper.deleteMypageQna",qnaVO);
+    }
+    public void updateMypageQna(QnaVO qnaVO) throws SQLException{
+        sql.insert("mall.QnaMapper.updateMypageQna",qnaVO);
+    }
+    
+ 
 }

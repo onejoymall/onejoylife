@@ -1452,7 +1452,6 @@ $(document).on("click",".ra-num",function () {
             });
     		return;
     	}
-    	
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -1518,7 +1517,7 @@ $(document).on("click",".ra-num",function () {
             });
     		return;
     	}
-    	
+   
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -2290,6 +2289,7 @@ $(document).on("click",".ra-num",function () {
     }
     //에디터
     $(document).ready(function (){
+		if( $('#summernote').length > 0){
         $('#summernote').summernote({
             placeholder: 'Hello stand alone ui',
             tabsize: 2,
@@ -2301,62 +2301,74 @@ $(document).on("click",".ra-num",function () {
                 }
             }
         });
-        $('#summernote2').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 320,
-            lang: 'ko-KR',
-            callbacks: {
-                onImageUpload : function(files) {
-                    uploadSummernoteImageFile(files[0],this);
-                }
-            }
-        });
-        $('#editor3').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            lang: 'ko-KR',
-            callbacks: {
-                onImageUpload : function(files) {
-                    uploadSummernoteImageFile(files[0],this);
-                }
-            } // default: 'en-US'
-        });
-        $('#editor4').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            lang: 'ko-KR',
-            callbacks: {
-                onImageUpload : function(files) {
-                    uploadSummernoteImageFile(files[0],this);
-                }
-            }
-        });
-        $('#editor5').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            lang: 'ko-KR',
-            callbacks: {
-                onImageUpload : function(files) {
-                    uploadSummernoteImageFile(files[0],this);
-                }
-            }
-        });
-        $('#editor6').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            lang: 'ko-KR',
-            callbacks: {
-                onImageUpload : function(files) {
-                    uploadSummernoteImageFile(files[0],this);
-                }
-            }
-        });
+		}
+		if( $('#summernote2').length > 0){
+	        $('#summernote2').summernote({
+	            placeholder: 'Hello stand alone ui',
+	            tabsize: 2,
+	            height: 320,
+	            lang: 'ko-KR',
+	            callbacks: {
+	                onImageUpload : function(files) {
+	                    uploadSummernoteImageFile(files[0],this);
+	                }
+	            }
+	        });
+		}
+		if( $('#editor3').length > 0){
+	        $('#editor3').summernote({
+	            placeholder: 'Hello stand alone ui',
+	            tabsize: 2,
+	            height: 120,
+	            lang: 'ko-KR',
+	            callbacks: {
+	                onImageUpload : function(files) {
+	                    uploadSummernoteImageFile(files[0],this);
+	                }
+	            } // default: 'en-US'
+	        });
+		}
+		if( $('#editor4').length > 0){
+	        $('#editor4').summernote({
+	            placeholder: 'Hello stand alone ui',
+	            tabsize: 2,
+	            height: 120,
+	            lang: 'ko-KR',
+	            callbacks: {
+	                onImageUpload : function(files) {
+	                    uploadSummernoteImageFile(files[0],this);
+	                }
+	            }
+	        });
+		}
+		if( $('#editor5').length > 0){
+	        $('#editor5').summernote({
+	            placeholder: 'Hello stand alone ui',
+	            tabsize: 2,
+	            height: 120,
+	            lang: 'ko-KR',
+	            callbacks: {
+	                onImageUpload : function(files) {
+	                    uploadSummernoteImageFile(files[0],this);
+	                }
+	            }
+	        });
+		}
+		if( $('#editor6').length > 0){
+	        $('#editor6').summernote({
+	            placeholder: 'Hello stand alone ui',
+	            tabsize: 2,
+	            height: 120,
+	            lang: 'ko-KR',
+	            callbacks: {
+	                onImageUpload : function(files) {
+	                    uploadSummernoteImageFile(files[0],this);
+	                }
+	            }
+	        });
+		}
     });
+
     function categoryProc(){
         //분류저장
         var product_ct='';
@@ -2705,6 +2717,7 @@ $(document).on("click",".ra-num",function () {
 			                            '</p>';
                         	});
                         	$(".product_definition_td").html(html);
+
                         }else{
                         	if(index=="product_delivery_class" && item=="T"){
                                 $('.shippingFee-detail-wrap').remove();
@@ -2937,7 +2950,7 @@ $(document).on("click",".ra-num",function () {
 		                           '<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
 		                       '</p>';
                 	$(".giveaway_definition_td").html(html);
-                }
+                } 
                 /*var ele1 =$('input[name^="file_1"]').val();
                 var ele2 =$('input[name^="file_2"]').val();
                 var ele3 =$('input[name^="file_3"]').val();
@@ -3383,6 +3396,8 @@ $(document).on("click",".ra-num",function () {
         child = window.open('/Popup/review-update?order_no='+order_no,'_blank','width=750, height=900');
     });
     
+
+
     $('.review-delete').click(function () {
     	if(confirm("삭제하시겠습니까?")){
     		var order_no = $(this).attr("data-id");
@@ -3412,6 +3427,53 @@ $(document).on("click",".ra-num",function () {
     		return false;
     	}
     });
+
+    $('.qna-update').click(function () {
+        var child;
+        var qna_id=$(this).attr("data-id");
+
+
+        if(child != undefined){
+            child.close()
+        }
+
+        child = window.open('/Popup/update-qna?qna_id='+qna_id,'_blank','width=750, height=900');
+    });
+
+	//Q&A삭제
+    $('.qna-delete').click(function () {
+    	if(confirm("삭제하시겠습니까?")){
+    		var qna_id = $(this).attr("data-id");
+    		jQuery.ajax({
+    	        type: 'POST',
+    	        data: "qna_id="+qna_id,
+    	        url:'/delete/deleteQna',
+    	        success: function (data) {
+    	        	if(data.success){
+    	                $.toast({
+    	                    text: 'success',
+    	                    showHideTransition: 'plain', //펴짐
+    	                    position: 'bottom-right',
+    	                    icon: 'success',
+    	                    hideAfter: 2000,
+    	                    afterHidden: function () {
+    	                        location.reload();
+    	                    }
+    	                });
+    	            }
+    	        },
+    	        error: function (xhr, status, error) {
+    	            alert("error");
+    	        }
+    	    });
+    	}else{
+    		return false;
+    	}
+
+    });
+
+
+
 
 
     $('input[name=product_delivery_International_type]').on("click",function () {
@@ -3735,6 +3797,82 @@ $('#qnaWriteSubmit').on("click",function () {
     commonAjaxSaveCall("POST","/Save/writeQna",formData,true)
     opener.parent.callQnalist($('input[name=product_cd]').val(),1);
 })
+//Q&A 수정
+$(document).on("click","#qnaModifySubmit",function () {//jmjm
+    var formData = new FormData($('#defaultForm')[0]);
+	if(confirm("수정하시겠습니까?")){
+    //수정중인 페이징 기억
+	    formData.append("page", $('input[name=page]').val() ? $('input[name=page]').val() : 1);
+	    jQuery.ajax({
+	        type: 'POST',
+	        enctype: 'multipart/form-data',
+	        data: formData,
+	        processData: false, // 필수
+	        contentType: false, // 필수
+	        url:'/modify/updateQna',
+	        success: function (data) {
+	            console.log(data)
+	            if (data.validateError) {
+	                $('.validateError').empty();
+	                $.each(data.validateError, function (index, item) {
+	                    // $('#validateError'+index).removeClass('none');
+	                    // $('#validateError'+index).html('* '+item);
+	                    if(index == "Error"){//일반에러메세지
+	                        alertType = "error";
+	                        showText = item;
+	                    }else{
+	                        alertType = "error";
+	                        showText = index + " (은) " + item;
+	                    }
+	                    // $.toast().reset('all');//토스트 초기화
+	                    $.toast({
+	                        text: showText,
+	                        showHideTransition: 'plain', //펴짐
+	                        position: 'bottom-right',
+	                        heading: 'Error',
+	                        icon: 'error'
+	                    });
+	                });
+	
+	            } else {
+	                // loginAuth(data.access_token);
+	                // location.href=data.redirectUrl;
+	                $.toast({
+	                    text: 'success',
+	                    showHideTransition: 'plain', //펴짐
+	                    position: 'bottom-right',
+	                    icon: 'success',
+	                    hideAfter: 1000,
+	                    afterHidden: function () {
+	                        // location.href = data.redirectUrl;
+	                        
+						  opener.location.reload();
+
+ 					       window.close();
+
+
+							
+	                    }
+	                });
+	            }
+	        },
+	        error: function (xhr, status, error) {
+	            console.log("xhr >> "+xhr+" status >> "+ status+" error >> "+ error)
+	        }
+	    });
+	}else{
+    	return false;
+    }
+
+})
+
+
+
+	
+
+
+
+
 $(document).on("click",'#toastLoginLink',function () {
     opener.location.href='/sign/login';
     window.close();
@@ -3881,6 +4019,7 @@ $('#updateStockSubmit').on("click",function () {
 
 })
 
+
 //클립보드복사
 function copyToClipboard(val) {
   var t = document.createElement("textarea");
@@ -3946,6 +4085,13 @@ function selectBanner(banner_id){
         }
 	})
 }
+
+
+
+
+
+
+
 
 //배너 등록
 $(document).on("click","#formBannerSubmit",function () {

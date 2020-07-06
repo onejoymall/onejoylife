@@ -45,6 +45,8 @@ import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.MyPageVO;
+import com.webapp.mall.vo.QnaVO;
+import com.webapp.manager.dao.QnaDAO;
 @Controller
 public class MyPage {
     @Autowired
@@ -71,6 +73,9 @@ public class MyPage {
     MyPageDAO myPageDAO;
     @Autowired
     ReviewDAO reviewDAO;
+    @Autowired
+    QnaDAO qnaDAO;
+    
     IamportClient client;
     @Value("${api_key}")
     private String apiKey;
@@ -662,6 +667,47 @@ public class MyPage {
             return "mobile/mypage-8";
         } else {
         	return "mypage/Reviews";
+        }
+    }
+  //QnA
+    @RequestMapping(value="/MyPage/Qna")
+    public String myPageQna(@RequestParam HashMap params, Model model, SearchVO searchVO, HttpServletRequest request,
+    		HttpSession session,QnaVO qnaVO) {
+    	Device device = DeviceUtils.getCurrentDevice(request);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	try {
+    		 
+    		 qnaVO.setEmail((String)session.getAttribute("email"));
+    		 params.put("email",session.getAttribute("email"));
+    		
+             // 로그인 확인
+    		 Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		 if (!isEmpty(userInfo)) {
+    			 resultMap.put("usr_id", userInfo.get("usr_id"));
+    		 }
+    		 //페이징	 
+    		 Integer listCnt = qnaDAO.getQnaListCount(qnaVO);
+			 qnaVO.setDisplayRowCount(10);
+			 qnaVO.setStaticRowEnd(10);
+			 qnaVO.pageCalculate(listCnt);
+			 List<Map<String, Object>> list = qnaDAO.getQnaList(qnaVO);
+      
+             model.addAttribute("list", list);
+             model.addAttribute("searchVO", qnaVO);
+    		
+    	}catch(Exception e){
+    		  e.printStackTrace();
+    	}
+
+        model.addAttribute("leftNavOrder", 14);
+        model.addAttribute("style", "mypage-8");
+
+        if(device.isMobile()){
+            return "mobile/mypage-10";
+        } else {
+        	return "mypage/Qna";
         }
     }
     //자주 구매하는 상품
