@@ -1771,7 +1771,7 @@ public class restapiController {
 	    		}
     		}
     		params.put("NAVER_INFLOW_CODE", naverInflowCode);
-    		URL url = new URL("https://test-pay.naver.com/customer/api/order.nhn");
+    		URL url = new URL("https://pay.naver.com/customer/api/order.nhn");
     		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
     		conn.setDoInput(true);
     		conn.setDoOutput(true);
@@ -1851,7 +1851,7 @@ public class restapiController {
 	    		}
     		}
     		params.put("NAVER_INFLOW_CODE", naverInflowCode);
-			URL url = new URL("https://test-pay.naver.com/customer/api/wishlist.nhn");
+			URL url = new URL("https://pay.naver.com/customer/api/wishlist.nhn");
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
