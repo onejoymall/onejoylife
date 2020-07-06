@@ -63,7 +63,7 @@ body{font-family: "noto sans kr"!important; line-height: 1.8rem;min-width: 600px
 }
 .form-box2 > select:nth-of-type(2),
 .form-box2 > input {
-    width: 70px;
+    width: 200px;
     height: 30px;
     border: 1px solid #aaa;
 }
@@ -166,4 +166,10 @@ input[id="rd2"]:checked + label
     font-weight: 300;
     line-height: 1.5rem;
     color: #888;
+}
+.cc{
+	font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #989898;
+    margin: 10px 0 20px;
 }

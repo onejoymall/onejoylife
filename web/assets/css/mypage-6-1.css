@@ -155,7 +155,7 @@ main{overflow: hidden;}
 .r-sec4{
     overflow: hidden;
 }
-.sec4-ca{
+/* .sec4-ca{
     float: right;
     width: 100px;
     height: 27px;
@@ -168,7 +168,7 @@ main{overflow: hidden;}
 .sec4-ca > a {
     display: block;
     line-height: 1.5rem;
-} 
+} */ 
 .txt-color{
     color: #da394d;
     font-weight: 700;
@@ -312,4 +312,22 @@ main{overflow: hidden;}
 }
 .td1-p2  {
     text-align: left;
+}
+/* 영수증 */
+.sec4-ca{
+    float: right;
+    width: 100%;
+    margin-top: 10px;
+}
+.sec4-ca > a {
+    height: 27px;
+    border: 1px solid #232a32;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-align: center;
+    display: block;
+    line-height: 16px;
+    float: right;
+    padding: 5px;
+    margin-right: 5px;
 }

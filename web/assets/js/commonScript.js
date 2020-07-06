@@ -3327,6 +3327,42 @@ $(document).on("click",".ra-num",function () {
     	child = window.open('/Popup/withholding?order_no='+order_no,'_blank','width=1010, height=910');
     }
     
+    function cashReceipt(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/cashReceipt?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
+    function salesStatement(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/salesStatement?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
+    function transactionStatement(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/transactionStatement?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
+    function normalReceipt(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/normalReceipt?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
     $('.review-write').click(function () {
         var child;
         var order_no=$(this).attr("data-id");
@@ -4217,3 +4253,54 @@ function numberGen(len){
 	}
 	return numStr;
 }
+
+//현금영수증 팝업 확인버튼
+$("#cashReceiptsBtn").click(function(){
+	var formData = $("#cashReceiptsForm").serialize();
+	$.ajax({
+		type:"post",
+		data: formData,
+		url: '/api/receipts',
+		success: function(data){
+			if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                });
+
+            } else {
+                if (data.success) {
+                	alert("처리되었습니다.");
+                	self.close();
+                } else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                }
+            }
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+});
