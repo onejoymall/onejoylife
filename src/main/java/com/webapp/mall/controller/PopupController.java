@@ -8,7 +8,9 @@ import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.ReviewDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.dao.QnaDAO;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +46,8 @@ public class PopupController {
     PaymentDAO paymentDAO;
     @Autowired
     ReviewDAO reviewDAO;
+    @Autowired
+    QnaDAO qnaDAO;
     
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
@@ -126,6 +130,20 @@ public class PopupController {
         model.addAttribute("style", "write-qna");
         Device device = DeviceUtils.getCurrentDevice(request);
         return "popup/write-qna";
+    }
+    //상품문의Q&A 수정 팝업
+    @RequestMapping("/Popup/update-qna")
+    public String updateQna(ModelMap model, QnaVO qnaVO) throws Exception {
+        try {
+        	 Map<String,Object>detail =qnaDAO.getQnaDetail(qnaVO);
+             //resultMap.put("detail", detail);
+            model.addAttribute("detail",detail);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("style", "write-qna");
+     //   Device device = DeviceUtils.getCurrentDevice(request);
+        return "popup/update-qna";
     }
 
     //리뷰작성
