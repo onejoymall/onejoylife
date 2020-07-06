@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -2013,4 +2026,60 @@ public class restapiController {
 			writer.flush();
 			writer.close();
 	    }
+		
+		//아임포트 현금영수증발행
+		@RequestMapping(value = "/api/receipts", method = RequestMethod.POST, produces = "application/json")
+		public HashMap<String, Object> receipts(@RequestParam HashMap params, HttpServletRequest request,
+				HttpSession session) {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			HashMap<String, Object> error = new HashMap<String, Object>();
+			
+			if (params.get("identifier") == null || params.get("identifier").equals("")) {
+				error.put(messageSource.getMessage("identifier", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
+			
+			try {
+				if (!isEmpty(error)) {
+					resultMap.put("validateError", error);
+				} else {
+					client = new IamportClient(apiKey, apiSecret);
+					String token = client.getAuth().getResponse().getToken();
+					
+					HttpClient client = HttpClientBuilder.create().build();
+					HttpPost post = new HttpPost("https://api.iamport.kr/receipts/"+params.get("imp_uid"));
+					post.addHeader("Authorization",token);
+					
+					// 로그인 확인
+					params.put("email", session.getAttribute("email"));
+					Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+					
+					ArrayList<NameValuePair> entity = new ArrayList<>();
+					if (params != null) {
+						Set<String> keys = params.keySet();
+						for (String key:keys) {
+							if(key.equals("imp_uid") || key.equals("email")) continue;
+							
+							entity.add(new BasicNameValuePair(key, (String)params.get(key)));
+						}
+					}
+					
+					post.setEntity(new UrlEncodedFormEntity(entity, "UTF-8"));
+					HttpResponse restResponse = client.execute(post);
+					
+					String content = EntityUtils.toString(restResponse.getEntity());
+					
+					if(restResponse.getStatusLine().getStatusCode() != 200) {
+						error.put("Error",new JSONObject(content).toMap().get("message"));
+						resultMap.put("validateError", error);
+					}else {
+						resultMap.put("data",new JSONObject(content).toMap());
+						resultMap.put("success","success");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				resultMap.put("e", e);
+			}
+			return resultMap;
+		}
 }

@@ -205,4 +205,84 @@ public class PopupController {
     	model.addAttribute("style", "tax-bill");
     	return "popup/tax-withholding";
     }
+    
+    //현금영수증신청
+    @RequestMapping("/Popup/cashReceipt")
+    public String cashReceipt(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(!isEmpty(userInfo)){
+    			params.put("usr_id",userInfo.get("usr_id"));
+    		}
+
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "cash-receipts");
+    	return "popup/cash-receipts";
+    }
+    
+    //매출전표
+    @RequestMapping("/Popup/salesStatement")
+    public String salesStatement(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(!isEmpty(userInfo)){
+    			params.put("usr_id",userInfo.get("usr_id"));
+    		}
+
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "mypage-4-1-2(4)");
+    	return "popup/sales-statement";
+    }
+    
+    //거래명세서
+    @RequestMapping("/Popup/transactionStatement")
+    public String transactionStatement(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(!isEmpty(userInfo)){
+    			params.put("usr_id",userInfo.get("usr_id"));
+    		}
+
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "mypage-4-1-2(5)");
+    	return "popup/transaction-statement";
+    }
+    
+    //일반영수증
+    @RequestMapping("/Popup/normalReceipt")
+    public String normalReceipt(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(!isEmpty(userInfo)){
+    			params.put("usr_id",userInfo.get("usr_id"));
+    		}
+
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "mypage-4-1-2(2)");
+    	return "popup/normal-receipts";
+    }
 }
