@@ -2018,21 +2018,89 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-    //상품정보고시 선택
-    @RequestMapping(value = "/Manager/definitionDetail", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> definitionDetail(@RequestParam HashMap params, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    //상품정보고시 등록
+    @RequestMapping(value = "/Manager/insertDefinition", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> insertDefinition(@RequestParam HashMap params, HttpServletRequest request, HttpServletResponse response, HttpSession session, ProductVO productVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
-            Map<String,Object> list = definitionDAO.getDefinitionDetail(params);
-            if(!isEmpty(error)){
+        	//임시
+        	params.put("store_id","admin");
+        	
+        	if(params.get("category1") == null || params.get("category1").equals("")){
+                error.put(messageSource.getMessage("product_ct", "ko"), messageSource.getMessage("error.required","ko"));
+            }
+        	
+        	if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                resultMap.put("list",list);
+	        	if(params.get("category3") != null && !params.get("category3").equals("")) {
+	        		params.put("product_ct",params.get("category3"));
+	        	}else if(params.get("category2") != null && !params.get("category2").equals("")) {
+	        		params.put("product_ct",params.get("category2"));
+	        	}else {
+	        		params.put("product_ct",params.get("category1"));
+	        	}
+	        	
+	        	params.put("product_definition_key",productVO.getProduct_definition_key());
+	        	params.put("product_definition_value",productVO.getProduct_definition_value());
+	        	definitionDAO.insertDefinition(params);
             }
         } catch (Exception e) {
-            resultMap.put("e", e);
+        	e.printStackTrace();
+            resultMap.put("validateError",e);
         }
         return resultMap;
+    }
+  //상품정보고시 수정
+    @RequestMapping(value = "/Manager/updateDefinition", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> updateDefinition(@RequestParam HashMap params, HttpServletRequest request, HttpServletResponse response, HttpSession session,ProductVO productVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try {
+        	//임시
+        	params.put("store_id","admin");
+        	
+        	if(params.get("category1") == null || params.get("category1").equals("")){
+                error.put(messageSource.getMessage("product_ct", "ko"), messageSource.getMessage("error.required","ko"));
+            }
+        	
+        	if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+	        	if(params.get("category3") != null && !params.get("category3").equals("")) {
+	        		params.put("product_ct",params.get("category3"));
+	        	}else if(params.get("category2") != null && !params.get("category2").equals("")) {
+	        		params.put("product_ct",params.get("category2"));
+	        	}else {
+	        		params.put("product_ct",params.get("category1"));
+	        	}
+        	
+	        	params.put("product_definition_key",productVO.getProduct_definition_key());
+	        	params.put("product_definition_value",productVO.getProduct_definition_value());
+            	definitionDAO.updateDefinition(params);
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+            resultMap.put("validateError",e);
+        }
+        return resultMap;
+    }
+    //상품정보고시 선택
+    @RequestMapping(value = "/Manager/definitionDetail", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> definitionDetail(@RequestParam HashMap params, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	try {
+    		Map<String,Object> list = definitionDAO.getDefinitionDetail(params);
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			resultMap.put("list",list);
+    		}
+    	} catch (Exception e) {
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
     }
 }

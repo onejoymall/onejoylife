@@ -110,7 +110,7 @@
 			method: 'post',
 			data: formData,
 			success:function(order_id){
-		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+		        location.href = "https://m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
 			},
 			error:function(e){
 				alert("error");
@@ -232,7 +232,6 @@
             <li>원결제예정금액</li>
             <li class="txtRed sum-span4"></li>
         </ul>
-        <c:if test="${sessionScope.email == 'test'}">
         <script type="text/javascript" >
 	       naver.NaverPayButton.apply({
                BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
@@ -243,7 +242,6 @@
                BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
            });
           </script>
-          </c:if>
     </section>
     <div class="bottomBtns">
         <ul>

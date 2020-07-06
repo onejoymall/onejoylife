@@ -151,9 +151,10 @@
                <h2>상품정보고시 <span id="definitionModalTitle">등록</span></h2>
                 <button type="button" class="modal-close">×</button>
             </div>
-            <form name="mgBrandAdd" id="mgBrandAdd" method="post">
+            <form name="mgDefinitionForm" id="mgDefinitionForm" method="post">
                 <div class="modal-body clearfix">
                     <h3>상품정보고시 정보</h3>
+                    <input type="hidden" name="product_definition_id"/>
                     <table class="goods-detail-table">
                         <colgroup>
                             <col width="142px">
@@ -183,7 +184,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" name="detail" class="btn-red definitionBtn" data-id="insert"><span id="definitionModalBtnSpan"></span>하기</button>
+                    <button type="button" name="detail" class="btn-red definitionInsertUpdateBtn" data-id="insert"><span id="definitionModalBtnSpan"></span>하기</button>
                 </div>
             </form>
         </div>
