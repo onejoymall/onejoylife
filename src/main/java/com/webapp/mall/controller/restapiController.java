@@ -1589,7 +1589,7 @@ public class restapiController {
 		return resultMap;
 	}
 
-	// Q&A 저장
+	//myPage Q&A 저장
 	@RequestMapping(value = "/Save/writeQna", method = RequestMethod.POST, produces = "application/json")
 	public HashMap<String, Object> writeQna(@RequestParam HashMap params, HttpServletRequest request,
 			HttpSession session, QnaVO qnaVO) {
@@ -1621,6 +1621,76 @@ public class restapiController {
 			}
 		} catch (Exception e) {
 
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
+	
+	//myPage Q&A 수정저장
+	@RequestMapping(value = "/modify/updateQna", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> updateQna(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session, QnaVO qnaVO) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+		try {
+			params.put("email", session.getAttribute("email"));
+			// 로그인 확인
+			Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+			if (!isEmpty(userInfo)) {
+				params.put("usr_id", userInfo.get("usr_id"));
+				qnaVO.setQna_writer_id((Integer) userInfo.get("usr_id"));
+			} else {
+				resultMap.put("isLogin", false);
+				error.put("Info", messageSource.getMessage("error.noLoginInfo", "ko"));
+			}
+			if (qnaVO.getQna_title().isEmpty() || qnaVO.getQna_title().equals("")) {
+				error.put(messageSource.getMessage("qna_title", "ko"),
+						messageSource.getMessage("error.required", "ko"));
+			}
+			if (qnaVO.getQna_memo().isEmpty() || qnaVO.getQna_memo().equals("")) {
+				error.put(messageSource.getMessage("qna_memo", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				qnaDAO.updateMypageQna(qnaVO);
+				resultMap.put("success", "success");
+				resultMap.put("redirectUrl", "/MyPage/Qna");
+			}
+		} catch (Exception e) {
+
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
+	// myPage Q&A 삭제 
+	@RequestMapping(value = "/delete/deleteQna", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> deleteQna(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session, QnaVO qnaVO) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+		try {
+			params.put("email", session.getAttribute("email"));
+			// 로그인 확인
+			Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+			if (!isEmpty(userInfo)) {
+				params.put("usr_id", userInfo.get("usr_id"));
+				qnaVO.setQna_writer_id((Integer) userInfo.get("usr_id"));
+			} else {
+				resultMap.put("isLogin", false);
+				error.put("Info", messageSource.getMessage("error.noLoginInfo", "ko"));
+			}
+
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				qnaDAO.deleteMypageQna(qnaVO);
+				resultMap.put("success", "success");
+				resultMap.put("redirectUrl", "/MyPage/Qna");
+			}
+		} catch (Exception e) {
 			resultMap.put("e", e);
 		}
 		return resultMap;
@@ -1760,7 +1830,7 @@ public class restapiController {
 			params.remove("ITEM_OPTION[]");
 		}
     	String orderKey = "";
-    	try {
+	    try {
     		//네이버쿠키전달
     		String naverInflowCode = "";
     		if(request.getCookies() != null) {
@@ -1810,7 +1880,7 @@ public class restapiController {
     		e.printStackTrace();
     	}
     	return orderKey;
-    }
+	}
 	
 	// 네이버페이 찜키받아오기
 	@RequestMapping(value = "/api/naverPayWishKey", method = RequestMethod.POST, produces = "application/json")

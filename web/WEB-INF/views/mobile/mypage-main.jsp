@@ -25,6 +25,7 @@
                         <li><a href="<c:url value="/MyPage/ShoppingAddList"/>">찜목록</a></li>
                         <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>">주문/배송조회</a></li>
                         <li><a href="<c:url value="/MyPage/Reviews"/>">나의 상품평보기</a></li>
+                        <li><a href="<c:url value="/MyPage/Qna"/>">나의 QnA보기</a></li>
                         <li><a href="<c:url value="/MyPage/Favorites"/>">자주 구매하는 상품</a></li>
                     </ul>
                 </li>

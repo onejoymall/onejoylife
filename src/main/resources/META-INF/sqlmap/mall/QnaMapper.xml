@@ -4,6 +4,8 @@
 
 <mapper namespace="mall.QnaMapper">
     <select id="getQnaList" parameterType="com.webapp.mall.vo.QnaVO" resultType="com.webapp.mall.vo.QnaVO">
+     /*getQnaList*/
+     
         <![CDATA[
         select
              A.qna_id,
@@ -18,7 +20,7 @@
              A.qna_rewrite_memo,
              A.qna_rewrite_reg_date,
              DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
-
+             DATE_FORMAT(A.reg_date,'%Y.%m.%d %H:%i:%s') reg_date1,
             CONCAT(
                     left(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1),
                     length(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'@', 1))-1),
@@ -29,12 +31,18 @@
                    '.',
                    SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.qna_writer_id),'.', -1)
                ) email,
+             
+            (select Z.file_link from product_file Z where Z.key_id=A.product_cd and Z.file_order =1) as file_1,
             (select Z.store_name from  store Z where Z.store_id=A.qna_rewrite_id) rewriter_name,
             (select Z.product_name from  product Z where Z.product_cd=A.product_cd) product_name,
+            (select Z.product_made_company_name from  product_made_company Z, product B where Z.product_made_company_cd=B.product_made_company_cd AND B.product_cd = A.product_cd ) product_made_company_name,
             (select Z.code_name from code Z where Z.code='question_type' and Z.code_value=A.qna_type) qna_type_name
             from product_qna A
             where 1=1
+            
         ]]>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_cd != null and product_cd !=''"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
         order by A.reg_date DESC
@@ -76,12 +84,15 @@
         <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
     </select>
     <select id="getQnaListCount" parameterType="com.webapp.mall.vo.QnaVO" resultType="Integer">
+     /*getQnaListCount*/
         <![CDATA[
             select
             count(*) cnt
             from product_qna A
             where 1=1
         ]]>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_cd != null and product_cd !=''"> <![CDATA[AND A.product_cd= #{product_cd} ]]></if>
         <if test="qna_writer_id != null and qna_writer_id !=''"> <![CDATA[AND A.qna_writer_id= #{qna_writer_id} ]]></if>
     </select>
@@ -105,6 +116,15 @@
             #{qna_writer_id}
         )
     </insert>
+    <update id="updateMypageQna" parameterType="com.webapp.mall.vo.QnaVO">
+
+       update product_qna set
+        qna_rewrite_reg_date=now(),
+        qna_memo=#{qna_memo},
+        qna_title=#{qna_title}
+        where qna_id=#{qna_id}
+    </update>
+    
     <update id="updateQna" parameterType="com.webapp.mall.vo.QnaVO">
         update product_qna set
         qna_rewrite_reg_date=now(),
@@ -112,4 +132,12 @@
         qna_rewrite_memo=#{qna_rewrite_memo}
         where qna_id=#{qna_id}
     </update>
+    
+    <delete id="deleteQna" parameterType="com.webapp.mall.vo.QnaVO">
+    	delete from product_qna where qna_id = #{qna_id} and usr_id = #{usr_id}
+    </delete>
+    
+    <delete id="deleteMypageQna" parameterType="com.webapp.mall.vo.QnaVO">
+    	delete from product_qna where qna_id = #{qna_id}
+    </delete>
 </mapper>
