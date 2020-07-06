@@ -330,21 +330,28 @@
                             <input type="text" id="sp-replace-text" name="product_payment_memo" placeholder="200byte까지 등록 가능. ex) 임시 품절 상품" disabled>
                         </td>
                     </tr>
-                        <tr>
-                            <th>판매 기간 사용 여부</th>
-                            <td>
-                                <input type="radio" id="product_validity_y" name="product_validity_yn" value="Y">
-                                <label for="product_validity_y">사용함</label>
-                                <input type="radio" id="product_validity_n" name="product_validity_yn" value="N" checked>
-                                <label for="product_validity_n">사용 안 함</label>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th>판매 기간 사용 여부</th>
+                        <td>
+                            <input type="radio" id="product_validity_y" name="product_validity_yn" value="Y">
+                            <label for="product_validity_y">사용함</label>
+                            <input type="radio" id="product_validity_n" name="product_validity_yn" value="N" checked>
+                            <label for="product_validity_n">사용 안 함</label>
+                        </td>
+                    </tr>
                     <tr>
                         <th>판매 기간</th>
                         <td>
                             <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
                             </p>
                             <input type="text" id="goods-sDate-start" name="product_validity_start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="product_validity_end" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품정보고시</th>
+                        <td class="product_definition_td">
+                            <p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a>
+                            </p>
                         </td>
                     </tr>
                     </tbody>
@@ -1173,6 +1180,13 @@
 <script type="text/javascript" src="/assets/js/index.js"></script>
 <script>
 $(function(){
+	var html = '<p class="product_definition">' +
+				    '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+				    '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+				    '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+				    '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+				'</p>';
+	$(".product_definition_td").append(html);
 	$("input[name=product_live_type]").on("input click",function(){
 		var type=$(this).val();
 		if(type){

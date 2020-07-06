@@ -12,16 +12,15 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var option_required_list = $("input[name=product_option_required]").val().split("|");
 		var isOptionCheck = false;
 		var optionStr = [""];
 		option_required_list.forEach(function(el,idx){
 			if($(".option"+idx).attr("type") == 'radio'){
 				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx+":checked").val() ? $(".option"+idx+":checked").val() : '');
 			}else{
-				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx).val() ? $(".option"+idx).val() : '');
 			}
-			
 			if(el == 'T'){
 				if($(".option"+idx).attr("type") == 'radio'){
 					if(!$(".option"+idx+":checked").val()){
@@ -34,7 +33,7 @@
 				}
 			}
 		})
-		
+
 		if(isOptionCheck){
 			toastr.options = {
 	    	        closeButton: true,
@@ -45,9 +44,9 @@
 		    toastr.error("", '옵션은 필수사항입니다.');
 			return;
 		}
-		
 	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
-	    
+
+
 	    //배송비
 	    var shipping_type = "";
 	    if($("input[name=product_delivery_payment]").val() == 0){
@@ -86,7 +85,41 @@
 			method: 'post',
 			data: formData,
 			success:function(order_id){
-		        location.href = "https://test-order.checkout.naver.com/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+		        location.href = "https://order.checkout.naver.com/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+	//찜하기
+	function wishlist_nc(){
+		var item_uprice = '${list.product_payment}';
+		var item_image = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_thumb = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_url = "http://onejoy-life.com/product/productDetail?product_cd=" + '${list.product_cd}';
+		
+		//데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: ['${list.product_cd}'],
+			ITEM_NAME: ['${list.product_name}'],
+			ITEM_DESC: [' '],
+			ITEM_UPRICE: [item_uprice],
+			ITEM_IMAGE: [item_image],
+			ITEM_THUMB: [item_thumb],
+			ITEM_URL: [item_url] 
+		};
+
+		$.ajax({
+			url: "/api/naverPayWishKey",
+			method: 'post',
+			data: formData,
+			success:function(item_id){
+				console.log(item_id);
+				window.open("https://pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&ITEM_ID="+item_id, "", "scrollbars=yes,width=400,height=267");
 			},
 			error:function(e){
 				alert("error");
@@ -238,18 +271,17 @@
                     </div>
                     <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
 
-                    <c:if test="${sessionScope.email == 'test'}">
-                        <script type="text/javascript" >
-                            naver.NaverPayButton.apply({
-	                            BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
-	                            TYPE: "MA", // 버튼 모음 종류 설정
-	                            COLOR: 1, // 버튼 모음의 색 설정
-	                            COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
-	                            ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
-	                            BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
-                            });
-                        </script>
-                    </c:if>
+                    <script type="text/javascript" >
+                        naver.NaverPayButton.apply({
+                         BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
+                         TYPE: "MA", // 버튼 모음 종류 설정
+                         COLOR: 1, // 버튼 모음의 색 설정
+                         COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
+                         ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
+                         BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+                         WISHLIST_BUTTON_HANDLER:wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
+                        });
+                    </script>
                 </form>
             </div>
         </div>
@@ -338,7 +370,7 @@
                     				  !afn:contains(product_ct_arr,'126') &&
                     				  !afn:contains(product_ct_arr,'906') &&
                     				  !afn:contains(product_ct_arr,'174')}">
-	                        <tr><th>1. 소재</th><td>상세페이지 참조</td></tr>
+	                        <tr><th>1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재1. 소재</th><td>상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조상세페이지 참조</td></tr>
 							<tr><th>2. 색상</th><td>상세페이지 참조</td></tr>
 							<tr><th>3. 크기</th><td>상세페이지 참조</td></tr>
 							<tr><th>4. 제조자</th><td>상세페이지 참조</td></tr>
@@ -587,6 +619,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </article>
 </section>
 <script>
@@ -727,10 +760,10 @@
             });
             $("input[name=rd-option-value]").val(raOptionValue);
         }) */
-        $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+        $("input[name=product_option_required]").val().split("|").forEach(function(el,idx){
         	$(".option"+idx).on("input",function(){
         		var option_name = ""
-        		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+        		$("input[name=product_option_required]").val().split("|").forEach(function(element,index){
     	    		if($(".option"+index).attr("type") == 'radio'){
     	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
     				}else{

@@ -591,3 +591,117 @@ $("#areaInsertBtn").click(function(){
         },
 	});
 });
+
+//상품정보고시 + x
+$(document).on('click', '.product_definition_add_btn', function(){
+	var html = '<p class="product_definition">' +
+                    '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+                    '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+                    '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+                    '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+                '</p>';
+	$(this).parent().after(html);
+});
+$(document).on('click', '.product_definition_del_btn', function(){
+	if($('.product_definition_del_btn').length > 1){
+		$(this).parent().remove();
+	}
+});
+$(document).on('click', '.giveaway_definition_add_btn', function(){
+	var html = '<p class="giveaway_definition">' +
+                    '<input type="text" name="giveaway_definition_key" placeholder="ex) 에너지소비효율등급">' +
+                    '<input type="text" name="giveaway_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+                    '<button type="button" class="goods-list-btn giveaway_definition_add_btn">+</button>' +
+                    '<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
+                '</p>';
+	$(this).parent().after(html);
+});
+$(document).on('click', '.giveaway_definition_del_btn', function(){
+	if($('.giveaway_definition_del_btn').length > 1){
+		$(this).parent().remove();
+	}
+});
+
+//상품정보고시 모달버튼
+$(document).on("click",".definitionModalBtn",function () {
+	var id = $(this).attr("data-id");
+	var text = '';
+	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. <a>※쉼표(,) 사용금지</a></p>';
+	$("input[name=product_definition_id]").val('');
+	
+	if(id){
+		text = "수정";
+		$(".definitionInsertUpdateBtn").attr("data-id","update");
+		var detail = commonAjaxListCall("post","/Manager/definitionDetail",{"product_definition_id": id}).list;
+		
+		var keys = detail['product_definition_key'].split(",");
+    	var vals = detail['product_definition_value'].split(",");
+    	keys.forEach(function(el, idx){
+    		html += '<p class="product_definition">' +
+                        '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급" value="' + keys[idx] + '">' +
+                        '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음" value="' + vals[idx] + '">' +
+                        '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+                        '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+                    '</p>';
+    	});
+    	
+    	if(detail.up_up_code){
+    		$(".category1").val(detail.up_up_code).trigger("change");
+    		setTimeout(function(){
+    			$(".category2").val(detail.up_code).trigger("change");
+    			setTimeout(function(){
+    				$(".category3").val(detail.cur_code).trigger("change");
+    			},50);
+			},50);
+    	}else if(detail.up_code){
+    		$(".category1").val(detail.up_code).trigger("change");
+    		setTimeout(function(){
+    			$(".category2").val(detail.cur_code).trigger("change");
+    		},50);
+    	}else{
+    		$(".category1").val(detail.cur_code).trigger("change");
+    	}
+    	
+    	$("input[name=product_definition_id]").val(detail.product_definition_id);
+	}else{
+		text = "등록";
+		$(".definitionInsertUpdateBtn").attr("data-id","insert");
+		html += '<p class="product_definition">' +
+		            '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+		            '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+		            '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+		            '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+		        '</p>';
+		$(".category1").val('').trigger("change");
+	}
+	
+	$(".product_definition_td").html(html);
+	$("#definitionModalTitle").text(text);
+	$("#definitionModalBtnSpan").text(text);
+});
+
+//상품정보고시 등록&수정
+$(document).on("click",".definitionInsertUpdateBtn",function () {
+	var isDefinitionCheck = false;
+	$(".product_definition").each(function(el){
+	    $(this).children('input').each(function(el){
+	        if(!$(this).val()) isDefinitionCheck = true;
+	    })
+	});
+	
+	if(isDefinitionCheck) {
+        $.toast({
+            text: "상품정보고시 는(은) 필수항목입니다",
+            showHideTransition: 'plain', //펴짐
+            position: 'bottom-right',
+            heading: 'Error',
+            icon: 'error'
+        });
+		return;
+	}
+	
+	var type = $(this).attr("data-id");
+	var formData =  $("#mgDefinitionForm").serialize();
+	console.log('/Manager/'+type+"Definition");
+	commonAjaxCall('post','/Manager/'+type+"Definition",formData);
+});

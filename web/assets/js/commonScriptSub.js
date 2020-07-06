@@ -719,8 +719,8 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        			});
 	        		}else if(index == 'coupon_sale_type'){ //혜택구분
 	        			$("input[name="+index+"][value="+item+"]").trigger("click");
-	        			$(`input[name=coupon_sale_payment]`).val(coupon.coupon_sale_payment);
-	        			$(`input[name=coupon_sale_rate]`).val(coupon.coupon_sale_rate);
+	        			$('input[name=coupon_sale_payment]').val(coupon.coupon_sale_payment);
+	        			$('input[name=coupon_sale_rate]').val(coupon.coupon_sale_rate);
 	        		}else if(index == 'coupon_use_range' ||	
 	        				 index == 'coupon_dup_yn' ||
 	        				 index == 'login_alert_yn' ||
@@ -733,8 +733,8 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition1]").val("T").trigger('change');
 	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
 	        				$("input[name=coupon_issue_time][value"+coupon.coupon_issue_time+"]").trigger("click");
-                            $(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
-                            $(`input[name=coupon_issued_target_id]`).val(coupon.coupon_issued_target_id);
+                            $('input[name=coupon_issue_date]').val(coupon.coupon_issue_date);
+                            $('input[name=coupon_issued_target_id]').val(coupon.coupon_issued_target_id);
 	        				break;
 	        			}
 	        			case 'J':{
@@ -746,16 +746,16 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition2]").val("D").trigger('change');
 	        				if(coupon.coupon_min_amount) $("select[name=box2-out-select1]").val("box2-in1-2").trigger("change");
 	        				else $("select[name=box2-out-select1]").val("box2-in1-1").trigger("change");
-	        				$(`input[name=coupon_min_amount]`).val(coupon.coupon_min_amount);
+	        				$('input[name=coupon_min_amount]').val(coupon.coupon_min_amount);
 	        				if(coupon.coupon_issue_order_end){
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
 	        				}
 	        				else {
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
 	        				}
-	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				$('input[name=coupon_issue_order_end]').val(coupon.coupon_issue_order_end);
 	        				break;
 	        			}
 	        			case 'B':{
@@ -763,14 +763,14 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition2]").val("B").trigger('change');
 	        				if(coupon.coupon_issue_time == 'B'){
 	        					$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
-	        					$(`input[name=coupon_anniversary_before]`).val(coupon.coupon_anniversary_before);
+	        					$('input[name=coupon_anniversary_before]').val(coupon.coupon_anniversary_before);
 	        				}
 	        				break;
 	        			}
 	        			case 'R':{
 	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
 	        				$("select[name=coupon_condition2]").val("R").trigger('change');
-	        				$(`input[name=coupon_review_condition]`).val(coupon.coupon_review_condition);
+	        				$('input[name=coupon_review_condition]').val(coupon.coupon_review_condition);
 	        				break;
 	        			}
 	        			case 'C':{
@@ -778,46 +778,46 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition2]").val("C").trigger('change');
 	        				if(coupon.coupon_min_amount) $("select[name=box2-out-select1]").val("box2-in1-2").trigger("change");
 	        				else $("select[name=box2-out-select1]").val("box2-in1-1").trigger("change");
-	        				$(`input[name=coupon_min_amount]`).val(coupon.coupon_min_amount);
+	        				$('input[name=coupon_min_amount]').val(coupon.coupon_min_amount);
 	        				if(coupon.coupon_issue_order_end){
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
 	        				}
 	        				else {
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
 	        				}
-	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				$('input[name=coupon_issue_order_end]').val(coupon.coupon_issue_order_end);
 	        				break;
 	        			}
 	        			case 'F':{
 	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
 	        				$("select[name=coupon_condition2]").val("F").trigger('change');
 	        				if(coupon.coupon_issue_order_end){
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
 	        				}
 	        				else {
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
 	        				}
-	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				$('input[name=coupon_issue_order_end]').val(coupon.coupon_issue_order_end);
 	        				break;
 	        			}
 	        			case 'S':{
 	        				$("select[name=coupon_condition1]").val("next2").trigger('change');
 	        				$("select[name=coupon_condition2]").val("S").trigger('change');
 	        				$("input[name=coupon_buy_count_condition][value="+coupon.coupon_buy_count_condition+"]").trigger("click");
-	        				$(`input[name=coupon_min_buy_count]`).val(coupon.coupon_min_buy_count);
+	        				$('input[name=coupon_min_buy_count]').val(coupon.coupon_min_buy_count);
 	        				if(coupon.coupon_issue_order_end){
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
-	        					$(`input[name=iss-day][value=D2]`).trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
+	        					$('input[name=iss-day][value=D2]').trigger("click");
 	        				}
 	        				else {
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
-	        					$(`input[name=iss-day][value=D1]`).trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
+	        					$('input[name=iss-day][value=D1]').trigger("click");
 	        				}
-	        				$(`input[name=coupon_issue_order_end]`).val(coupon.coupon_issue_order_end);
+	        				$('input[name=coupon_issue_order_end]').val(coupon.coupon_issue_order_end);
 	        				break;
 	        			}
 	        			case 'L':{
@@ -825,7 +825,7 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        				$("select[name=coupon_condition3]").val("L").trigger('change');
 	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
 	        				$("input[name=coupon_issue_time][value="+coupon.coupon_issue_time+"]").trigger("click");
-	        				$(`input[name=coupon_issue_date]`).val(coupon.coupon_issue_date);
+	        				$('input[name=coupon_issue_date]').val(coupon.coupon_issue_date);
 	        				break;
 	        			}
 	        			case 'M':{

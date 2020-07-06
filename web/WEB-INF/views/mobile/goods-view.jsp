@@ -11,14 +11,14 @@
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
 	function buy_nc(){
-		var option_required_list = $("input[name=product_option_required").val().split("|");
+		var option_required_list = $("input[name=product_option_required]").val().split("|");
 		var isOptionCheck = false;
 		var optionStr = [""];
 		option_required_list.forEach(function(el,idx){
 			if($(".option"+idx).attr("type") == 'radio'){
 				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx+":checked").val() ? $(".option"+idx+":checked").val() : '');
 			}else{
-				optionStr[0] += (idx != 0 ? "/" : "") + $(".option"+idx).val();
+				optionStr[0] += (idx != 0 ? "/" : "") + ($(".option"+idx).val() ? $(".option"+idx).val() : '');
 			}
 			
 			if(el == 'T'){
@@ -86,7 +86,44 @@
 			method: 'post',
 			data: formData,
 			success:function(order_id){
-		        location.href = "https://test-m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+		        location.href = "https://m.pay.naver.com/mobile/customer/order.nhn?ORDER_ID="+order_id+"&SHOP_ID=np_xqqgk375177&TOTAL_PRICE="+total_price;
+			},
+			error:function(e){
+				alert("error");
+			}
+		})
+		return;
+	}
+	//찜하기
+	function wishlist_nc(){
+		var item_uprice = '${list.product_payment}';
+		var item_image = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_thumb = "http://onejoy-life.com/" + '${list.file_1}';
+		var item_url = "http://onejoy-life.com/product/productDetail?product_cd=" + '${list.product_cd}';
+		
+		//데이터
+		var formData = {
+			SHOP_ID: 'np_xqqgk375177',
+			CERTI_KEY: 'FC4BA46C-56EB-4BB6-B089-18DC8FF1CA1A',
+			ITEM_ID: ['${list.product_cd}'],
+			ITEM_NAME: ['${list.product_name}'],
+			ITEM_DESC: [' '],
+			ITEM_UPRICE: [item_uprice],
+			ITEM_IMAGE: [item_image],
+			ITEM_THUMB: [item_thumb],
+			ITEM_URL: [item_url] 
+		};
+
+		$.ajax({
+			url: "/api/naverPayWishKey",
+			method: 'post',
+			data: formData,
+			success:function(item_ids){
+				var queryStrItemId = ""; 
+				item_ids.forEach(function(id){
+					queryStrItemId += "ITEM_ID="+id+"&"
+				});
+				location.href = "https://m.pay.naver.com/mobile/customer/wishList.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267";
 			},
 			error:function(e){
 				alert("error");
@@ -153,7 +190,6 @@
                 <li>
                     <h2 class="red">4,500<span class="text-sm">원</span></h2>
                 </li>--%>
-                <c:if test="${sessionScope.email == 'test'}">
                 <p>
                    <script type="text/javascript" >
 				       naver.NaverPayButton.apply({
@@ -163,10 +199,10 @@
 			               COUNT: 2, // 버튼 개수 설정. 구매하기 버튼만 있으면(장바구니 페이지) 1, 찜하기 버튼도 있으면(상품 상세 페이지) 2를 입력.
 			               ENABLE: "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
 			               BUY_BUTTON_HANDLER: buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
+			               WISHLIST_BUTTON_HANDLER:wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
 			           });
 		           </script>
                 </p>
-                </c:if>
             </ul>
         </div>
         <ul class="footerBtns">
@@ -715,10 +751,10 @@ $(document).ready(function(){
         });
         $("input[name=rd-option-value]").val(raOptionValue);
     }) */
-    $("input[name=product_option_required").val().split("|").forEach(function(el,idx){
+    $("input[name=product_option_required]").val().split("|").forEach(function(el,idx){
     	$(".option"+idx).on("input",function(){
     		var option_name = ""
-    		$("input[name=product_option_required").val().split("|").forEach(function(element,index){
+    		$("input[name=product_option_required]").val().split("|").forEach(function(element,index){
 	    		if($(".option"+index).attr("type") == 'radio'){
 	    			option_name += (index != 0 ? "/" : "") + ($(".option"+index+":checked").val() ? $(".option"+index+":checked").val() : '');
 				}else{

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1760,7 +1761,17 @@ public class restapiController {
 		}
     	String orderKey = "";
     	try {
-    		URL url = new URL("https://test-pay.naver.com/customer/api/order.nhn");
+    		//네이버쿠키전달
+    		String naverInflowCode = "";
+    		if(request.getCookies() != null) {
+	    		for(Cookie co:request.getCookies()) {
+	    			if(co.getName().equals("NA_CO")) {
+	    				naverInflowCode = co.getValue();
+	    			}
+	    		}
+    		}
+    		params.put("NAVER_INFLOW_CODE", naverInflowCode);
+    		URL url = new URL("https://pay.naver.com/customer/api/order.nhn");
     		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
     		conn.setDoInput(true);
     		conn.setDoOutput(true);
@@ -1800,6 +1811,86 @@ public class restapiController {
     	}
     	return orderKey;
     }
+	
+	// 네이버페이 찜키받아오기
+	@RequestMapping(value = "/api/naverPayWishKey", method = RequestMethod.POST, produces = "application/json")
+	public String[] naverPayWishKey(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,QnaVO qnaVO,
+			@RequestParam(value = "ITEM_ID[]", required = false) String[] itemIds,
+			@RequestParam(value = "ITEM_NAME[]", required = false) String[] itemNmaes,
+			@RequestParam(value = "ITEM_DESC[]", required = false) String[] itemCounts,
+			@RequestParam(value = "ITEM_UPRICE[]", required = false) String[] itemUPrices,
+			@RequestParam(value = "ITEM_IMAGE[]", required = false) String[] itemTPrices,
+			@RequestParam(value = "ITEM_THUMB[]", required = false) String[] itemOptions,
+			@RequestParam(value = "ITEM_URL[]", required = false) String[] itemUrls){
+		params.put("ITEM_ID",itemIds);
+		params.put("ITEM_NAME",itemNmaes);
+		params.put("ITEM_COUNT",itemCounts);
+		params.put("ITEM_UPRICE",itemUPrices);
+		params.put("ITEM_IMAGE",itemTPrices);
+		params.put("ITEM_THUMB",itemOptions);
+		params.put("ITEM_URL",itemUrls);
+		
+		if(params.containsKey("ITEM_ID[]")){
+			params.remove("ITEM_ID[]");
+			params.remove("ITEM_NAME[]");
+			params.remove("ITEM_COUNT[]");
+			params.remove("ITEM_UPRICE[]");
+			params.remove("ITEM_IMAGE[]");
+			params.remove("ITEM_THUMB[]");
+			params.remove("ITEM_URL[]");
+		}
+		String wishKey = "";
+		try {
+			//네이버쿠키전달
+    		String naverInflowCode = "";
+    		if(request.getCookies() != null) {
+	    		for(Cookie co:request.getCookies()) {
+	    			if(co.getName().equals("NA_CO")) {
+	    				naverInflowCode = co.getValue();
+	    			}
+	    		}
+    		}
+    		params.put("NAVER_INFLOW_CODE", naverInflowCode);
+			URL url = new URL("https://pay.naver.com/customer/api/wishlist.nhn");
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+			conn.setUseCaches(false);
+			conn.setRequestMethod("POST");
+			conn.addRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+			
+			StringBuffer buffer = new StringBuffer();
+			
+			//HashMap으로 전달받은 파라미터가 null이 아닌경우 버퍼에 넣어준다
+			if (params != null) {
+				
+				Set<String> keys = params.keySet();
+				
+				for (String key:keys) {
+					if(params.get(key).getClass().isArray()) {
+						for(String value:(String[])params.get(key)) {
+							buffer.append(key).append("=").append(value).append("&");
+						}
+					}else {
+						buffer.append(key).append("=").append(params.get(key)).append("&");
+					}
+				}
+			}
+			Writer writer = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+			writer.write(buffer.toString());
+			writer.flush();
+			
+			int respCode = conn.getResponseCode();
+			if (respCode != 200) {
+				throw new RuntimeException(String.format("NC Response fail : %d %s", respCode, conn.getResponseMessage()));
+			}
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			wishKey = reader.readLine();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return wishKey.split(",");
+	}
 	
 	// 네이버페이 상품정보 업데이트 XML
 		@RequestMapping(value = "/api/naverPayProductXML", produces = "application/json")

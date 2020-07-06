@@ -1245,6 +1245,28 @@ $(document).on("click",".ra-num",function () {
     }
     //상품수정
     $(document).on("click","#productUpdate",function () {
+    	var isDefinitionCheck = false;
+    	if($(".product_definition").length == 1 && !$("input[name=product_definition_key]").val() && !$("input[name=product_definition_value]").val()){
+    		isDefinitionCheck = false;
+    	}else{
+	    	$(".product_definition").each(function(el){
+	    	    $(this).children('input').each(function(el){
+	    	        if(!$(this).val()) isDefinitionCheck = true;
+	    	    })
+	    	});
+    	}
+    	
+    	if(isDefinitionCheck) {
+            $.toast({
+                text: "상품정보고시 는(은) 필수항목입니다",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+    		return;
+    	}
+    	
         var formData = new FormData($('#defaultForm')[0]);
         //수정중인 페이징 기억
         formData.append("page", $('input[name=page]').val() ? $('input[name=page]').val() : 1);
@@ -1343,6 +1365,28 @@ $(document).on("click",".ra-num",function () {
     }
     //경품수정
     $(document).on("click","#giveawayUpdate",function () {
+    	var isDefinitionCheck = false;
+    	if($(".giveaway_definition").length == 1 && !$("input[name=giveaway_definition_key]").val() && !$("input[name=giveaway_definition_value]").val()){
+    		isDefinitionCheck = false;
+    	}else{
+	    	$(".giveaway_definition").each(function(el){
+	    	    $(this).children('input').each(function(el){
+	    	        if(!$(this).val()) isDefinitionCheck = true;
+	    	    })
+	    	});
+    	}
+    	
+    	if(isDefinitionCheck) {
+            $.toast({
+                text: "상품정보고시 는(은) 필수항목입니다",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+    		return;
+    	}
+    	
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -1387,6 +1431,28 @@ $(document).on("click",".ra-num",function () {
     })
     //경품등록
     $(document).on("click","#formGiveawaySubmit",function () {
+    	var isDefinitionCheck = false;
+    	if($(".giveaway_definition").length == 1 && !$("input[name=giveaway_definition_key]").val() && !$("input[name=giveaway_definition_value]").val()){
+    		isDefinitionCheck = false;
+    	}else{
+	    	$(".giveaway_definition").each(function(el){
+	    	    $(this).children('input').each(function(el){
+	    	        if(!$(this).val()) isDefinitionCheck = true;
+	    	    })
+	    	});
+    	}
+    	
+    	if(isDefinitionCheck) {
+            $.toast({
+                text: "상품정보고시 는(은) 필수항목입니다",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+    		return;
+    	}
+    	
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -1431,6 +1497,28 @@ $(document).on("click",".ra-num",function () {
     })
     //상품등록
     $(document).on("click","#formProductSubmit",function () {
+    	var isDefinitionCheck = false;
+    	if($(".product_definition").length == 1 && !$("input[name=product_definition_key]").val() && !$("input[name=product_definition_value]").val()){
+    		isDefinitionCheck = false;
+    	}else{
+	    	$(".product_definition").each(function(el){
+	    	    $(this).children('input').each(function(el){
+	    	        if(!$(this).val()) isDefinitionCheck = true;
+	    	    })
+	    	});
+    	}
+    	
+    	if(isDefinitionCheck) {
+            $.toast({
+                text: "상품정보고시 는(은) 필수항목입니다",
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                heading: 'Error',
+                icon: 'error'
+            });
+    		return;
+    	}
+    	
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -1451,7 +1539,7 @@ $(document).on("click",".ra-num",function () {
                             showText = item;
                         }else{
                             alertType = "error";
-                            showText = index + " (은) " + item;
+                            showText = index + " 는(은) " + item;
                         }
                         // $.toast().reset('all');//토스트 초기화
                         $.toast({
@@ -2577,6 +2665,7 @@ $(document).on("click",".ra-num",function () {
     //상품상세보기
     function defaultModal (product_cd){
         $('#addCategoryView').children().remove();
+        $(".product_definition_td").empty();
             var file_link='';
             $("#modelDetail").attr("style", "display:block");
             var resultData;
@@ -2602,6 +2691,20 @@ $(document).on("click",".ra-num",function () {
                         }
                         else if(index=="product_service_info"){
                             $('#editor6').summernote('code', item);
+                        }else if(index=="product_definition_key" || index=="product_definition_value"){
+                        	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a></p>';
+                        	
+                        	var keys = resultData['product_definition_key'].split(",");
+                        	var vals = resultData['product_definition_value'].split(",");
+                        	keys.forEach(function(el, idx){
+                        		html += '<p class="product_definition">' +
+			                                '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급" value="' + keys[idx] + '">' +
+			                                '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음" value="' + vals[idx] + '">' +
+			                                '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+			                                '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+			                            '</p>';
+                        	});
+                        	$(".product_definition_td").html(html);
                         }else{
                         	if(index=="product_delivery_class" && item=="T"){
                                 $('.shippingFee-detail-wrap').remove();
@@ -2617,6 +2720,16 @@ $(document).on("click",".ra-num",function () {
                             $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                         }
                     });
+                    if(!$(".product_definition_td").html()){
+                    	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a></p>'+
+			         			   '<p class="product_definition">' +
+			                           '<input type="text" name="product_definition_key" placeholder="ex) 에너지소비효율등급">' +
+			                           '<input type="text" name="product_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+			                           '<button type="button" class="goods-list-btn product_definition_add_btn">+</button>' +
+			                           '<button type="button" class="goods-list-btn redBtn product_definition_del_btn">x</button>' +
+			                       '</p>';
+                    	$(".product_definition_td").html(html);
+                    }
                     $('input[name^="product_validity_end"]').val(data.list.product_validity_end);
                     $('input:radio[name=product_validity_yn][value=\'' + data.list.product_validity_yn + '\']').prop('checked',true);
 
@@ -2767,6 +2880,8 @@ $(document).on("click",".ra-num",function () {
     }
     //경품상세보기
     function defaultModalGiveaway (giveaway_cd){
+    	$('#addCategoryView').children().remove();
+    	$(".giveaway_definition_td").empty();
         var file_link='';
         $(".modal").attr("style", "display:block");
         var resultData;
@@ -2781,29 +2896,48 @@ $(document).on("click",".ra-num",function () {
                     $('#'+index).val(item);
                     if(index=="giveaway_html"){
                         $('#summernote').summernote('code', item);
-                    }
-                    if(index=="giveaway_mobile_html"){
+                    }else if(index=="giveaway_mobile_html"){
                         $('#summernote2').summernote('code', item);
-                    }
-                    if(index=="giveaway_payment_info"){
+                    }else if(index=="giveaway_payment_info"){
                         $('#editor3').summernote('code', item);
-                    }
-                    if(index=="giveaway_delivery_info"){
+                    }else if(index=="giveaway_delivery_info"){
                         $('#editor4').summernote('code', item);
-                    }
-                    if(index=="giveaway_change_info"){
+                    }else if(index=="giveaway_change_info"){
                         $('#editor5').summernote('code', item);
-                    }
-                    if(index=="giveaway_service_info"){
+                    }else if(index=="giveaway_service_info"){
                         $('#editor6').summernote('code', item);
+                    }else if(index=="giveaway_definition_key" || index=="giveaway_definition_value"){
+                    	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a></p>';
+                    	
+                    	var keys = resultData['giveaway_definition_key'].split(",");
+                    	var vals = resultData['giveaway_definition_value'].split(",");
+                    	keys.forEach(function(el, idx){
+                    		html += '<p class="giveaway_definition">' +
+		                                '<input type="text" name="giveaway_definition_key" placeholder="ex) 에너지소비효율등급" value="' + keys[idx] + '">' +
+		                                '<input type="text" name="giveaway_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음" value="' + vals[idx] + '">' +
+		                                '<button type="button" class="goods-list-btn giveaway_definition_add_btn">+</button>' +
+		                                '<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
+		                            '</p>';
+                    	});
+                    	$(".giveaway_definition_td").html(html);
+                    }else{
+	                    $('input:hidden[name^="'+index+'"]').val(item);
+	                    $('input:text[name^="'+index+'"]').val(item);
+	                    $('select[name='+index+']').val(item);
+	                    $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+	                    $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                     }
-                    
-                    $('input:hidden[name^="'+index+'"]').val(item);
-                    $('input:text[name^="'+index+'"]').val(item);
-                    $('select[name='+index+']').val(item);
-                    $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
-                    $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                 });
+                if(!$(".giveaway_definition_td").html()){
+                	var html = '<p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a></p>'+
+		         			   '<p class="giveaway_definition">' +
+		                           '<input type="text" name="giveaway_definition_key" placeholder="ex) 에너지소비효율등급">' +
+		                           '<input type="text" name="giveaway_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+		                           '<button type="button" class="goods-list-btn giveaway_definition_add_btn">+</button>' +
+		                           '<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
+		                       '</p>';
+                	$(".giveaway_definition_td").html(html);
+                }
                 /*var ele1 =$('input[name^="file_1"]').val();
                 var ele2 =$('input[name^="file_2"]').val();
                 var ele3 =$('input[name^="file_3"]').val();

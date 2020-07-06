@@ -181,6 +181,8 @@
             product_stock_quantity,
             product_store_id,
             product_store_id as product_user_ud,
+            product_definition_key,
+            product_definition_value,
             (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
             (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
@@ -218,8 +220,8 @@
         ]]>
 
         <if test="pd_payment_user_id != null"> <![CDATA[AND A.coupon_id= #{pd_payment_user_id} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
         <if test="pd_payment_amount != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
         <if test="product_name != null"> <![CDATA[AND product_name= #{product_name} ]]></if>
@@ -234,8 +236,8 @@
         ]]>
 
         <if test="pd_payment_user_id != null"> <![CDATA[AND A.coupon_id= #{pd_payment_user_id} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_cd != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
         <if test="pd_payment_amount != null"> <![CDATA[AND product_cd= #{product_cd} ]]></if>
         <if test="product_name != null"> <![CDATA[AND product_name= #{product_name} ]]></if>
@@ -392,7 +394,9 @@ and A.payment_status != 'N'
         product_payment_class_value,
         product_use_member_yn,
         product_validity_start,
-        product_validity_end
+        product_validity_end,
+        product_definition_key,
+        product_definition_value
        )values(
         #{product_cd},
         #{product_store_id},
@@ -492,7 +496,9 @@ and A.payment_status != 'N'
         #{product_payment_class_value},
         #{product_use_member_yn},
         #{product_validity_start},
-        #{product_validity_end}
+        #{product_validity_end},
+        #{product_definition_key},
+        #{product_definition_value}
        )
 
     </insert>
@@ -595,7 +601,9 @@ and A.payment_status != 'N'
         product_payment_class_value,
         product_use_member_yn,
         product_validity_start,
-        product_validity_end
+        product_validity_end,
+        product_definition_key,
+        product_definition_value
         )
         select
         #{product_cd},
@@ -803,7 +811,9 @@ and A.payment_status != 'N'
         product_payment_class_value=#{product_payment_class_value},
         product_use_member_yn=#{product_use_member_yn},
         product_validity_start=#{product_validity_start},
-        product_validity_end=#{product_validity_end}
+        product_validity_end=#{product_validity_end},
+        product_definition_key = #{product_definition_key},
+        product_definition_value = #{product_definition_value}
         where product_cd =#{product_cd}
         ]]>
     </update>

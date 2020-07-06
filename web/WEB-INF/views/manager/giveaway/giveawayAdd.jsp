@@ -269,6 +269,13 @@
                             <input type="text" id="sp-replace-text" name="giveaway_payment_memo" placeholder="200byte까지 등록 가능. ex) 임시 품절 상품" disabled>
                         </td>
                     </tr>
+                    <tr>
+                        <th>상품정보고시</th>
+                        <td class="giveaway_definition_td">
+                            <p class="cc2">상품 필수정보에 들어가는정보입니다. 내용입력하지 않으면 카테고리별 기본설정이사용됩니다. <a>※쉼표(,) 사용금지</a>
+                            </p>
+                        </td>
+                    </tr>
                     <%--                    <tr>--%>
                     <%--                        <th>판매 기간</th>--%>
                     <%--                        <td>--%>
@@ -895,4 +902,15 @@
         </div>
     </div>
 </main>
+<script type="text/javascript">
+$(function(){
+	var html = '<p class="giveaway_definition">' +
+					'<input type="text" name="giveaway_definition_key" placeholder="ex) 에너지소비효율등급">' +
+					'<input type="text" name="giveaway_definition_value" placeholder="ex) 3 *에너지소비효율등급은 출하시점에 따라 변동될 수 있음">' +
+					'<button type="button" class="goods-list-btn giveaway_definition_add_btn">+</button>' +
+					'<button type="button" class="goods-list-btn redBtn giveaway_definition_del_btn">x</button>' +
+				'</p>';
+	$(".giveaway_definition_td").append(html);
+});
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
