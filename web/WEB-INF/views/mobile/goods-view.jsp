@@ -123,7 +123,7 @@
 				item_ids.forEach(function(id){
 					queryStrItemId += "ITEM_ID="+id+"&"
 				});
-				location.href = "https://test-m.pay.naver.com/customer/wishlistPopup.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267";
+				location.href = "https://test-m.pay.naver.com/mobile/customer/wishList.nhn?SHOP_ID=np_xqqgk375177&"+queryStrItemId, "", "scrollbars=yes,width=400,height=267";
 			},
 			error:function(e){
 				alert("error");
