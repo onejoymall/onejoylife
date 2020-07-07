@@ -30,6 +30,54 @@
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
+    <select id="getMailUserList" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+          A.*
+        FROM user A where 1=1
+        ]]>
+        <if test="user_grant != null and user_grant != ''">
+            AND A.user_grant in (
+                <foreach collection="user_grant" item="item" index="index" separator=",">
+                    ${item}
+                </foreach>
+            )
+        </if>
+        <if test="age_class != null and age_class != ''">
+            <foreach collection="age_class" item="item" index="index" open="AND(" close=")" separator="OR">
+                <if test="item != 40">
+                    (DATE_FORMAT(NOW(),'%Y') - SUBSTRING(A.birth, 1, 4)) between ${item} AND ${item}+10
+                </if>
+                <if test="item == 40">
+                    (DATE_FORMAT(NOW(),'%Y') - SUBSTRING(A.birth, 1, 4)) >= ${item}
+                </if>
+            </foreach>
+        </if>
+        <if test="sex != null and sex != ''">
+            AND A.sex in(
+                <foreach collection="sex" item="item" index="index" separator=",">
+                    ${item}
+                </foreach>
+            )
+        </if>
+        <if test="product_ct != null and product_ct != ''">
+            AND (select DISTINCT D.product_ct FROM product D JOIN product_history E ON (D.product_cd = E.product_current)
+                where SUBSTRING_INDEX(D.product_ct, '|', 1) in(
+                <foreach collection="product_ct" item="item" index="index" separator=",">
+                    ${item}
+                </foreach>
+                )
+                AND A.usr_id = E.usr_id GROUP BY A.usr_id
+            )
+        </if>
+        <if test="product_class == 'payment'">
+        AND (select B.payment_user_id FROM payment B where A.usr_id = B.payment_user_id GROUP BY 1)
+        </if>
+        <if test="product_class == 'product_cart'">
+        AND (select C.cart_user_id FROM product_cart C where A.usr_id = C.cart_user_id GROUP BY 1)
+        </if>
+        <if test="email_privacy_policy != null and email_privacy_policy == 'exception' and email_privacy_policy != ''">AND A.email_privacy_policy = 'Y'</if>
+    </select>
     <insert id="insertUser" parameterType="String">
         <![CDATA[
         insert into user(

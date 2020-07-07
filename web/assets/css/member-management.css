@@ -157,7 +157,7 @@ input[type="radio"]{
     position:relative;
 }
 .list-sort-wrap .left{
-    width:50%;
+    width:60%;
     position:absolute; top:0; left:0;
 }
 .list-sort-wrap .right{
@@ -245,7 +245,7 @@ input[type="radio"]{
     margin-bottom: 40px;
 }
 /* 모달 */
-.modal, .modal1, .modal2, .modal3{
+.modal, .modal1, .modal2, .modal3, .modal4, .modal5, .modal6{
     display: none;
     position: fixed;
     z-index: 999999;
@@ -411,3 +411,8 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 	zoom: 1.5;
 }
 /*동현 end*/
+
+/* sms, 이메일, 푸시 */
+.modal-body input[type="checkbox"] {
+    vertical-align: -8px;
+}

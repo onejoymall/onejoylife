@@ -311,12 +311,28 @@ $(function(){
         $(".modal2").attr("style", "display:none");
         $('body').css("overflow", "auto");
     });
-    $("button[name='detail2-1']").click(function(){
-        $(".modal2").attr("style", "display:block");
+    $("button[name='detail4']").click(function(){
+        $(".modal4").attr("style", "display:block");
         $('body').css("overflow", "hidden");
     });
-    $(".modal-close").click(function(){
-        $(".modal2").attr("style", "display:none");
+    $(".modal-close, .cancle").click(function(){
+        $(".modal4").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+    $("button[name='detail5']").click(function(){
+        $(".modal5").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal-close, .cancle").click(function(){
+        $(".modal5").attr("style", "display:none");
+        $('body').css("overflow", "auto");
+    });
+    $("button[name='detail6']").click(function(){
+        $(".modal6").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+    });
+    $(".modal-close, .cancle").click(function(){
+        $(".modal6").attr("style", "display:none");
         $('body').css("overflow", "auto");
     });
     $("button[name='detail3']").click(function(){
