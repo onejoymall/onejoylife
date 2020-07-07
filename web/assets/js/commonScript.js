@@ -1653,6 +1653,18 @@ $(document).on("click",".ra-num",function () {
             url: '/Manager/selectPayment',
             data: {"order_no":order_no},
             success: function (data) {
+            	var leftHtml = '';
+            	if(data.impPayment.status == 'paid'){
+            		leftHtml += '<button type="button" class="btn-gray" onclick="taxInvoice(\'' + data.list.order_no + '\');">세금계산서</button>' +
+            					'<button type="button" class="btn-gray" onclick="normalReceipt(\'' + data.list.order_no + '\');">영수증</button>' +
+            					'<button type="button" class="btn-gray" onclick="transactionStatement(\'' + data.list.order_no + '\');">거래명세서</button>';
+            		if(data.impPayment.payMethod == 'card'){
+            			leftHtml += '<button type="button" class="btn-gray" onclick="salesStatement(\'' + data.list.order_no + '\');">매출전표</button>';
+            		}else{
+            			leftHtml += '<button type="button" class="btn-gray" onclick="cashReceipt(\'' + data.list.order_no + '\');">현금영수증</button>';
+            		}
+            	}
+            	$("#setDefaultButton").html(leftHtml);
             	console.log(data);
                 $.each(data.list, function (index, item) {
                     $('.' + index).html(item);
@@ -3349,13 +3361,22 @@ $(document).on("click",".ra-num",function () {
     	child = window.open('/Popup/cashReceipt?order_no='+order_no,'_blank','width=1010, height=910');
     }
     
+    function taxInvoice(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxInvoice?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
     function salesStatement(order_no){
     	var child;
     	if(child != undefined){
     		child.close()
     	}
     	
-    	child = window.open('/Popup/salesStatement?order_no='+order_no,'_blank','width=1010, height=910');
+    	child = window.open('/Popup/salesStatement?order_no='+order_no,'_blank','width=600, height=1350');
     }
     
     function transactionStatement(order_no){
@@ -3364,7 +3385,7 @@ $(document).on("click",".ra-num",function () {
     		child.close()
     	}
     	
-    	child = window.open('/Popup/transactionStatement?order_no='+order_no,'_blank','width=1010, height=910');
+    	child = window.open('/Popup/transactionStatement?order_no='+order_no,'_blank','width=1010, height=1250');
     }
     
     function normalReceipt(order_no){
@@ -3373,7 +3394,7 @@ $(document).on("click",".ra-num",function () {
     		child.close()
     	}
     	
-    	child = window.open('/Popup/normalReceipt?order_no='+order_no,'_blank','width=1010, height=910');
+    	child = window.open('/Popup/normalReceipt?order_no='+order_no,'_blank','width=750, height=800');
     }
     
     $('.review-write').click(function () {

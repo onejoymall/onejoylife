@@ -5,42 +5,98 @@
 
     <main class="clearfix">
         <div class="header-top">
-            <p>현금영수증</p>
+            <p>거래명세서</p>
         </div>
         <div class="body-mar">
-            <p class="body-tit">현금영수증 신청</p>
-            <p class="body-txt1">2007년 3월 1일부터 '현금영수증 자진 발급제'가 시행됨에 따라 현금 결제 후 별도로 신청을 하지 않으셔도 현금영수증이 자동 발급됩니다. 별도로 신청하지 않고 자동 발급된 현금영수증을 본인의 것으로 전환하고 싶으신 경우 이후에 국세청 사이트에서 신청하시면 됩니다. '현금영수증 자진발급제'에 관한 자세한 내용은 국세청사이트에서 확인하시기 바랍니다.</p>
-            <a href="">국세청 현금영수증 사이트 바로가기</a>
-            <p class="body-txt2">현금영수증을 신청하시거나 다른 분의 명의로 신청하시려면 주민등록번호나 휴대폰 번호를 입력해 주시기 바랍니다.</p>
-            
-                <form action="" name="cashReceiptsForm" id="cashReceiptsForm">
-                <input type="hidden" name="imp_uid" value="${detail.imp_uid}"/>
-                    <div class="form-out">
-                        <div class="form-box1">
-                            <input type="radio" id="rd1" name="type" value="person" checked="checked">
-                            <label for="rd1"><span class="ra-txt">소득공제용(일반개인용)</span></label>
-                            <input type="radio" id="rd2" name="type" value="company">
-                            <label for="rd2"><span class="ra-txt">지출증빙용(사업자용)</span></label>
-                        </div>
-                        <div class="form-box2">
-                            <select name="identifier_type" id="identifier_type">
-                                <option value="phone">휴대폰번호</option>
-                                <option value="person">주민등록번호</option>
-                                <option value="business">사업자등록번호</option>
-                            </select>
-                            <input type="text" name="identifier">
-                            <p class="cc">- 없이 입력하세요</p>
-                        </div>
-                    </div>
-                    <div class="but-box">
-                        <button class="but1" type="button" id="cashReceiptsBtn">확인</button>
-                        <button class="but2" type="button" onclick="self.close();">취소</button>
-                    </div>
-                </form>
-            <p class="f-tit">현금영수증 제도란?</p>
-            <p>2005년 1월 1일부터 현금영수증 가맹점에서 물건을 구입할 때 소비자가 현금과 함께 카드<br> (적립식카드,신용카드 등), 핸드폰번호 등을 제시하면, 가맹점은 현금영수증 발급장치를<br> 통해 현금영수증을 발급하고 현금결제 건별 내역은 국세청에 통보되는 제도입니다.</p>
-            <p class="f-tit">세금계산서 신청</p>
-            <p>마이페이지 > 영수증 신청 > 발급</p>
+            <table>
+                <p class="body-tit">거래명세표</p>
+                <colgroup>
+                    <col style="width: 25px;">
+                    <col style="width: 80px;">
+                    <col style="width: 142px;">
+                    <col style="width: 80px;">
+                    <col style="width: 142px;">
+                    <col style="width: 25px;">
+                    <col style="width: 80px;">
+                    <col style="width: 142px;">
+                    <col style="width: 80px;">
+                    <col style="width: 143px;">
+                </colgroup>
+                <tbody class="t-body1">
+                    <tr class="tr-tit">
+                        <td rowspan="4">공<br>급<br>자</td>
+                        <td>사업자<br>등록번호</td>
+                        <td colspan="3"><span>487-88-01223</span></td>
+                        <td rowspan="4">공<br>급<br>받<br>는<br>자</td>
+                        <td>성명</td>
+                        <td colspan="3"><span>${userInfo.username}</span></td>
+                    </tr>
+                    <tr>
+                        <td>상호<br>(법인명)</td>
+                        <td><span>원조이라이프</span></td>
+                        <td>성명</td>
+                        <td><span>김수현</span></td>
+                        <td>핸드폰번호</td>
+                        <td colspan="3"><span>${userInfo.phone}</span></td>
+                    </tr>
+                    <tr class="tr-tit">
+                        <td>사업장<br>주소</td>
+                        <td colspan="3"><span>(우:1605-1) 서울시 서초구 서리풀길4, 4층<br> (서초동 영호빌딩)</span></td>
+                        <td rowspan="2">주소</td>
+                        <td rowspan="2" colspan="3">(${detail.postcode}) ${detail.roadAddress} ${detail.extraAddress}<span></span></td>
+                    </tr>
+                    <tr>
+                        <td>업태</td>
+                        <td><span>도소매</span></td>
+                        <td>종목</td>
+                        <td><span>전자상거래</span></td>
+                        <!-- <td>업태</td>
+                        <td><span><input type="text"></span></td>
+                        <td>종목</td>
+                        <td><span><input type="text"></span></td> -->
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <colgroup>
+                    <col style="width: 105px;">
+                    <col style="width: 364px;">
+                    <col style="width: 105px;">
+                    <col style="width: 222px;">
+                    <col style="width: 143px;">
+                </colgroup>
+                <tbody class="t-body1">
+                    <tr class="tr-tit">
+                        <td>거래일자</td>
+                        <td>상품명</td>
+                        <td>수량</td>
+                        <td>상품가격</td>
+                        <td>비고</td>
+                    </tr>
+                    <c:forEach var="list" items="${paymentBundleList}">
+                    	<tr>
+	                        <td><span><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></span></td>
+	                        <td><span>${list.product_name}</span></td>
+	                        <td><span>${list.payment_order_quantity}</span></td>
+	                        <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원</span></td>
+	                        <td><span></span></td>
+	                    </tr>
+                    </c:forEach>
+                    <tr>
+                        <td colspan="5"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">실제 총 결제 금액</td>
+                        <td colspan="2"><span><fmt:formatNumber value="${detail.payment}" groupingUsed="true" />원</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="txt-p">* 거래명세표는 원조이라이프의 거래내역을 보여주며 세금계산서와 같은 법적 효력은 없습니다.</p>
+            <p class="txt-p">* 부가세 신고용 증빙은 현금영수증이나 신용카드전표를 활용하시기 바랍니다.</p>
+            <div class="but-box">
+                <button class="but1" type="button" onclick="window.print();">인쇄</button>
+                <button class="but2" type="button" onclick="self.close();">확인</button>
+            </div>
         </div>
         <div class="mar-f">
             <div class="mar-txt">

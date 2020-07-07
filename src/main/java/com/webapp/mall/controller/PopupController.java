@@ -1,5 +1,8 @@
 package com.webapp.mall.controller;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.security.model.UserInfo;
 import com.webapp.common.support.CurlPost;
@@ -11,7 +14,17 @@ import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.QnaDAO;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.bouncycastle.math.raw.Mod;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -24,9 +37,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import static org.springframework.util.CollectionUtils.isEmpty;
 @Controller
 public class PopupController {
@@ -48,6 +65,12 @@ public class PopupController {
     ReviewDAO reviewDAO;
     @Autowired
     QnaDAO qnaDAO;
+
+    IamportClient client;
+    @Value("${api_key}")
+    private String apiKey;
+    @Value("${api_secret}")
+    private String apiSecret;
     
     @RequestMapping("/Popup/DeliverySearch")
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
@@ -238,6 +261,21 @@ public class PopupController {
     		}
 
     		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		
+    		client = new IamportClient(apiKey, apiSecret);
+			String token = client.getAuth().getResponse().getToken();
+			
+			HttpClient client = HttpClientBuilder.create().build();
+			HttpPost post = new HttpPost("https://api.iamport.kr/payments/imp_260211693205");
+			post.addHeader("Authorization",token);
+			
+			HttpResponse restResponse = client.execute(post);
+			
+			String content = EntityUtils.toString(restResponse.getEntity());
+			
+			if(restResponse.getStatusLine().getStatusCode() == 200) {
+				model.addAttribute("impPayment",new JSONObject(content).toMap().get("response"));
+			}
     		model.addAttribute("detail", paymentDetail);
     	}catch (Exception e) {
     		e.printStackTrace();
@@ -258,7 +296,10 @@ public class PopupController {
     		}
 
     		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
     		model.addAttribute("detail", paymentDetail);
+    		model.addAttribute("paymentBundleList", paymentBundleList);
+    		model.addAttribute("userInfo", userInfo);
     	}catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -279,10 +320,32 @@ public class PopupController {
 
     		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
     		model.addAttribute("detail", paymentDetail);
+    		model.addAttribute("userInfo", userInfo);
     	}catch (Exception e) {
     		e.printStackTrace();
     	}
     	model.addAttribute("style", "mypage-4-1-2(2)");
     	return "popup/normal-receipts";
+    }
+    
+    //세금계산서발행
+    @RequestMapping("/Popup/taxInvoice")
+    public String taxInvoice(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		params.put("email",session.getAttribute("email"));
+    		//로그인 확인
+    		Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+    		if(!isEmpty(userInfo)){
+    			params.put("usr_id",userInfo.get("usr_id"));
+    		}
+
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		model.addAttribute("detail", paymentDetail);
+    		model.addAttribute("userInfo", userInfo);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "tax-bill");
+    	return "popup/tax-invoice";
     }
 }

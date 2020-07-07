@@ -1,46 +1,132 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
 
     <main class="clearfix">
         <div class="header-top">
-            <p>현금영수증</p>
+            <p>신용카드</p>
         </div>
         <div class="body-mar">
-            <p class="body-tit">현금영수증 신청</p>
-            <p class="body-txt1">2007년 3월 1일부터 '현금영수증 자진 발급제'가 시행됨에 따라 현금 결제 후 별도로 신청을 하지 않으셔도 현금영수증이 자동 발급됩니다. 별도로 신청하지 않고 자동 발급된 현금영수증을 본인의 것으로 전환하고 싶으신 경우 이후에 국세청 사이트에서 신청하시면 됩니다. '현금영수증 자진발급제'에 관한 자세한 내용은 국세청사이트에서 확인하시기 바랍니다.</p>
-            <a href="">국세청 현금영수증 사이트 바로가기</a>
-            <p class="body-txt2">현금영수증을 신청하시거나 다른 분의 명의로 신청하시려면 주민등록번호나 휴대폰 번호를 입력해 주시기 바랍니다.</p>
-            
-                <form action="" name="cashReceiptsForm" id="cashReceiptsForm">
-                <input type="hidden" name="imp_uid" value="${detail.imp_uid}"/>
-                    <div class="form-out">
-                        <div class="form-box1">
-                            <input type="radio" id="rd1" name="type" value="person" checked="checked">
-                            <label for="rd1"><span class="ra-txt">소득공제용(일반개인용)</span></label>
-                            <input type="radio" id="rd2" name="type" value="company">
-                            <label for="rd2"><span class="ra-txt">지출증빙용(사업자용)</span></label>
-                        </div>
-                        <div class="form-box2">
-                            <select name="identifier_type" id="identifier_type">
-                                <option value="phone">휴대폰번호</option>
-                                <option value="person">주민등록번호</option>
-                                <option value="business">사업자등록번호</option>
-                            </select>
-                            <input type="text" name="identifier">
-                            <p class="cc">- 없이 입력하세요</p>
-                        </div>
-                    </div>
-                    <div class="but-box">
-                        <button class="but1" type="button" id="cashReceiptsBtn">확인</button>
-                        <button class="but2" type="button" onclick="self.close();">취소</button>
-                    </div>
-                </form>
-            <p class="f-tit">현금영수증 제도란?</p>
-            <p>2005년 1월 1일부터 현금영수증 가맹점에서 물건을 구입할 때 소비자가 현금과 함께 카드<br> (적립식카드,신용카드 등), 핸드폰번호 등을 제시하면, 가맹점은 현금영수증 발급장치를<br> 통해 현금영수증을 발급하고 현금결제 건별 내역은 국세청에 통보되는 제도입니다.</p>
-            <p class="f-tit">세금계산서 신청</p>
-            <p>마이페이지 > 영수증 신청 > 발급</p>
+            <table>
+                <p class="body-tit">신용카드 매출전표</p>
+                <colgroup>
+                    <col style="width: 180px;">
+                    <col style="width: 180px;">
+                    <col style="width: 180px;">
+                </colgroup>
+                <tbody class="t-body1">
+                    <tr class="tr-tit">
+                        <td>승인번호</td>
+                        <td>카드종류</td>
+                        <td>카드번호</td>
+                    </tr>
+                    <tr>
+                        <td><span>${impPayment.apply_num}</span></td>
+                        <td><span>${impPayment.card_name}</span></td>
+                        <td><span>${fn:substring(impPayment.card_number,0,4)}-${fn:substring(impPayment.card_number,4,6)}**-****-${fn:substring(impPayment.card_number,12,16)}</span></td>
+                    </tr>
+                    <tr class="tr-tit">
+                        <td>결제일자</td>
+                        <td>거래종류</td>
+                        <td>할부</td>
+                    </tr>
+                    <tr>
+                        <td><span><fmt:formatDate value="${detail.reg_date}" pattern="yyyy.MM.dd HH:mm:ss"/></span></td>
+                        <td><span>신용승인</span></td>
+                        <td>
+	                        <span>
+	                        	<c:if test="${impPayment.card_quota == 0}">일시불</c:if>
+	                        	<c:if test="${impPayment.card_quota != 0}">${impPayment.card_quota}</c:if>
+	                        </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <colgroup>
+                    <col style="width: 270px;">
+                    <col style="width: 270px;">
+                </colgroup>
+                <tbody class="t-body2">
+                    <tr class="tr-tit">
+                        <td colspan="2" class="bor-non">상품명</td>
+                    </tr>
+                    <tr >
+                        <td colspan="2" class="bor-non"><span>${impPayment.name}</span></td>
+                    </tr>
+                    <tr class="tr-tit">
+                    	<td>주문번호</td>
+                        <td>상점주문번호</td>
+                    </tr>
+                    <tr>
+                        <td><span>${impPayment.imp_uid}</span></td>
+                        <td><span>${impPayment.merchant_uid}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <p class="body-tit">판매자 정보</p>
+                <colgroup>
+                    <col style="width: 270px;">
+                    <col style="width: 270px;">
+                </colgroup>
+                <tbody class="t-body2">
+                    <tr class="tr-tit">
+                        <td>가맹점명</td>
+                        <td>대표자명</td>
+                    </tr>
+                    <tr>
+                        <td><span>(주)원조이</span></td>
+                        <td><span>김수현</span></td>
+                    </tr>
+                    <tr class="tr-tit">
+                        <td>전화번호</td>
+                        <td>사업자등록번호</td>
+                    </tr>
+                    <tr>
+                        <td><span>1811-9590</span></td>
+                        <td><span>487-88-01223</span></td>
+                    </tr>
+                    <tr class="tr-tit">
+                        <td colspan="2" class="bor-non">주소</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="bor-non"><span>(우:1605-1) 서울시 서초구 서리풀길4, 4층 (서초동 영호빌딩)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <p class="body-tit">금액</p>
+                <colgroup>
+                    <col style="width: 270px;">
+                    <col style="width: 270px;">
+                </colgroup>
+                <tbody class="t-body2">
+                    <tr>
+                        <td class="tr-tit">승인금액</td>
+                        <td><span><fmt:formatNumber value="${impPayment.amount}" groupingUsed="true" /></span></td>
+                    </tr>
+                    <tr>
+                        <td class="tr-tit">공급가액</td>
+                        <td><span><fmt:formatNumber value="${impPayment.amount * 0.89}" groupingUsed="true" /></span></td>
+                    </tr>
+                    <tr>
+                        <td class="tr-tit">부가세액</td>
+                        <td><span><fmt:formatNumber value="${impPayment.amount * 0.11}" groupingUsed="true" /></span></td>
+                    </tr>
+                    <tr class="tr-color">
+                        <td class="tr-tit">합계</td>
+                        <td><span><fmt:formatNumber value="${impPayment.amount}" groupingUsed="true" /></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="txt-p">본 영수증은 (주)원조이에서 발행한 것이며, 부가가치세법 제 46조에 따른 신용카드 매출전표입니다.</p>
+            <div class="but-box">
+                <button class="but1" type="button" onclick="window.print();">인쇄</button>
+                <button class="but2" type="button" onclick="self.close();">확인</button>
+            </div>
         </div>
         <div class="mar-f">
             <div class="mar-txt">

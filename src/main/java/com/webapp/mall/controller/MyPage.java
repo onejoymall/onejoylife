@@ -482,6 +482,7 @@ public class MyPage {
 	            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
 	            paymentDetail.put("vbank_name",impPayment.getVbankName());
 	            paymentDetail.put("vbank_num",impPayment.getVbankNum());
+	            model.addAttribute("impPayment", impPayment);
             }
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
