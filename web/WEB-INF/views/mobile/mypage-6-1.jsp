@@ -127,6 +127,35 @@
         <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">결제수단</p>
         <h3>${paymentDetail.pay_method_name} ${paymentDetail.vbank_name} ${paymentDetail.vbank_num}</h3>
+        
+        <!--20.07.06 추가~-->
+        <hr class="mt-4">
+        <section class="subheader bg_grey py-1">
+        	<c:if test="${impPayment.status == 'paid'}">
+	            <ul class="calculator p-1">
+	                <li>영수증</li>
+	                <li><a href="javascript:normalReceipt('${paymentDetail.order_no}');">출력하기 <i class="ri-arrow-right-s-line"></i></a></li>
+	            </ul>
+           </c:if>
+           <c:if test="${impPayment.status == 'paid' && impPayment.payMethod != 'card'}">
+	            <ul class="calculator p-1">
+	                <li>현금영수증</li>
+	                <li><a href="javascript:cashReceipt('${paymentDetail.order_no}');">신청하기 <i class="ri-arrow-right-s-line"></i></a></li>
+	            </ul>
+           </c:if>
+           <c:if test="${impPayment.status == 'paid'}">
+	            <ul class="calculator p-1">
+	                <li>거래명세서</li>
+	                <li><a href="javascript:transactionStatement('${paymentDetail.order_no}');">출력하기 <i class="ri-arrow-right-s-line"></i></a></li>
+	            </ul>
+            </c:if>
+			<c:if test="${impPayment.status == 'paid' && impPayment.payMethod == 'card'}">
+	            <ul class="calculator p-1">
+	                <li>매출전표</li>
+	                <li><a href="javascript:salesStatement('${paymentDetail.order_no}');">출력하기 <i class="ri-arrow-right-s-line"></i></a></li>
+	            </ul>
+	        </c:if>
+        </section>
     </section>
     <div class="bottomBtns">
         <ul>

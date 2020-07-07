@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -33,6 +35,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.baroservice.api.BarobillApiProfile;
+import com.baroservice.api.BarobillApiService;
+import com.baroservice.ws.ArrayOfTaxInvoiceTradeLineItem;
+import com.baroservice.ws.InvoiceParty;
+import com.baroservice.ws.TaxInvoice;
+import com.baroservice.ws.TaxInvoiceTradeLineItem;
 import com.google.gson.JsonObject;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.request.CancelData;
@@ -84,6 +92,7 @@ import com.webapp.manager.vo.MgPointVO;
 import com.webapp.manager.vo.MgUserVO;
 import com.webapp.manager.vo.ProductVO;
 import com.webapp.manager.vo.StoreVO;
+import com.webapp.manager.vo.TaxVO;
 
 @RestController
 public class ManagerRestapiController {
@@ -154,6 +163,8 @@ public class ManagerRestapiController {
     private String downloadPath;
     @Value("${downloadEditorPath}")
     private String downloadEditorPath;
+    @Value("${barobill_key}")
+    private String barobillKey;
     @Autowired
     private MailSender mailSender;
 
@@ -456,6 +467,9 @@ public class ManagerRestapiController {
         try {
             Map<String,Object> list = paymentDAO.getPaymentDetail(params);
             List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            client = new IamportClient(apiKey, apiSecret);
+            Payment impPayment = client.paymentByImpUid((String)list.get("imp_uid")).getResponse();
+            resultMap.put("impPayment", impPayment);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -2103,4 +2117,181 @@ public class ManagerRestapiController {
     	}
     	return resultMap;
     }
+    
+  //바로빌 세금계산서 발행
+  	@RequestMapping(value = "/api/taxInvoice", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoice(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		
+//  		if (params.get("identifier") == null || params.get("identifier").equals("")) {
+//  			error.put(messageSource.getMessage("identifier", "ko"), messageSource.getMessage("error.required", "ko"));
+//  		}
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				RegistAndIssueTaxInvoice();
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+  	
+  	//세금계산서 국세청전송
+  	public void RegistAndIssueTaxInvoice() throws RemoteException, MalformedURLException {
+
+		String certKey = barobillKey;                                //인증키
+
+		TaxInvoice taxInvoice = new TaxInvoice();
+
+		taxInvoice.setIssueDirection(1);                    //1-정발행, 2-역발행(위수탁 세금계산서는 정발행만 허용)
+		taxInvoice.setTaxInvoiceType(1);                    //1-세금계산서, 2-계산서, 4-위수탁세금계산서, 5-위수탁계산서
+
+		//-------------------------------------------
+		//과세형태
+		//-------------------------------------------
+		//TaxInvoiceType 이 1,4 일 때 : 1-과세, 2-영세
+		//TaxInvoiceType 이 2,5 일 때 : 3-면세
+		//-------------------------------------------
+		taxInvoice.setTaxType(1);
+
+		taxInvoice.setTaxCalcType(1);                        //세율계산방법 : 1-절상, 2-절사, 3-반올림
+		taxInvoice.setPurposeType(2);                        //1-영수, 2-청구
+
+		//-------------------------------------------
+		//수정사유코드
+		//-------------------------------------------
+		//공백-일반세금계산서, 1-기재사항의 착오 정정, 2-공급가액의 변동, 3-재화의 환입, 4-계약의 해제, 5-내국신용장 사후개설, 6-착오에 의한 이중발행
+		//-------------------------------------------
+		taxInvoice.setModifyCode("");
+
+		taxInvoice.setKwon("");                                //별지서식 11호 상의 [권] 항목
+		taxInvoice.setHo("");                                //별지서식 11호 상의 [호] 항목
+		taxInvoice.setSerialNum("");                        //별지서식 11호 상의 [일련번호] 항목
+
+		//-------------------------------------------
+		//공급가액 총액
+		//-------------------------------------------
+		taxInvoice.setAmountTotal("");
+
+		//-------------------------------------------
+		//세액합계
+		//-------------------------------------------
+		//taxInvoice.TaxType 이 2 또는 3 으로 셋팅된 경우 0으로 입력
+		//-------------------------------------------
+		taxInvoice.setTaxTotal("");
+
+		//-------------------------------------------
+		//합계금액
+		//-------------------------------------------
+		//공급가액 총액 + 세액합계 와 일치해야 합니다.
+		//-------------------------------------------
+		taxInvoice.setTotalAmount("");
+
+		taxInvoice.setCash("");                                //현금
+		taxInvoice.setChkBill("");                            //수표
+		taxInvoice.setNote("");                                //어음
+		taxInvoice.setCredit("");                            //외상미수금
+
+		taxInvoice.setRemark1("");
+		taxInvoice.setRemark2("");
+		taxInvoice.setRemark3("");
+
+		taxInvoice.setWriteDate("");                        //작성일자 (YYYYMMDD), 공백입력 시 Today로 작성됨.
+
+		//-------------------------------------------
+		//공급자 정보 - 정발행시 세금계산서 작성자
+		//-------------------------------------------
+		taxInvoice.setInvoicerParty(new InvoiceParty());
+
+		taxInvoice.getInvoicerParty().setMgtNum("");        //필수입력 - 연동사부여 문서키
+		taxInvoice.getInvoicerParty().setCorpNum("");        //필수입력 - 연계사업자 사업자번호 ('-' 제외, 10자리)
+		taxInvoice.getInvoicerParty().setTaxRegID("");
+		taxInvoice.getInvoicerParty().setCorpName("");        //필수입력
+		taxInvoice.getInvoicerParty().setCEOName("");        //필수입력
+		taxInvoice.getInvoicerParty().setAddr("");
+		taxInvoice.getInvoicerParty().setBizType("");
+		taxInvoice.getInvoicerParty().setBizClass("");
+		taxInvoice.getInvoicerParty().setContactID("");        //필수입력 - 담당자 바로빌 아이디
+		taxInvoice.getInvoicerParty().setContactName("");    //필수입력
+		taxInvoice.getInvoicerParty().setTEL("");
+		taxInvoice.getInvoicerParty().setHP("");
+		taxInvoice.getInvoicerParty().setEmail("");            //필수입력
+
+		//-------------------------------------------
+		//공급받는자 정보 - 역발행시 세금계산서 작성자
+		//-------------------------------------------
+		taxInvoice.setInvoiceeParty(new InvoiceParty());
+
+		taxInvoice.getInvoiceeParty().setCorpNum("");        //필수입력
+		taxInvoice.getInvoiceeParty().setTaxRegID("");
+		taxInvoice.getInvoiceeParty().setCorpName("");        //필수입력
+		taxInvoice.getInvoiceeParty().setCEOName("");        //필수입력
+		taxInvoice.getInvoiceeParty().setAddr("");
+		taxInvoice.getInvoiceeParty().setBizType("");
+		taxInvoice.getInvoiceeParty().setBizClass("");
+		taxInvoice.getInvoiceeParty().setContactID("");
+		taxInvoice.getInvoiceeParty().setContactName("");    //필수입력
+		taxInvoice.getInvoiceeParty().setTEL("");
+		taxInvoice.getInvoiceeParty().setHP("");
+		taxInvoice.getInvoiceeParty().setEmail("");
+
+		//-------------------------------------------
+		//수탁자 정보 - 입력하지 않음
+		//-------------------------------------------
+		taxInvoice.setBrokerParty(new InvoiceParty());
+
+		taxInvoice.getBrokerParty().setCorpNum("");
+		taxInvoice.getBrokerParty().setTaxRegID("");
+		taxInvoice.getBrokerParty().setCorpName("");
+		taxInvoice.getBrokerParty().setCEOName("");
+		taxInvoice.getBrokerParty().setAddr("");
+		taxInvoice.getBrokerParty().setBizType("");
+		taxInvoice.getBrokerParty().setBizClass("");
+		taxInvoice.getBrokerParty().setContactID("");
+		taxInvoice.getBrokerParty().setContactName("");
+		taxInvoice.getBrokerParty().setTEL("");
+		taxInvoice.getBrokerParty().setHP("");
+		taxInvoice.getBrokerParty().setEmail("");
+
+		//-------------------------------------------
+		//품목
+		//-------------------------------------------
+		ArrayOfTaxInvoiceTradeLineItem arrayOfTaxInvoiceTradeLineItem = new ArrayOfTaxInvoiceTradeLineItem();
+
+		for (int i = 0; i < 4; i++) {
+			TaxInvoiceTradeLineItem taxInvoiceTradeLineItem = new TaxInvoiceTradeLineItem();
+			taxInvoiceTradeLineItem.setPurchaseExpiry("");        //YYYYMMDD
+			taxInvoiceTradeLineItem.setName("");
+			taxInvoiceTradeLineItem.setInformation("");
+			taxInvoiceTradeLineItem.setChargeableUnit("");
+			taxInvoiceTradeLineItem.setUnitPrice("");
+			taxInvoiceTradeLineItem.setAmount("");
+			taxInvoiceTradeLineItem.setTax("");
+			taxInvoiceTradeLineItem.setDescription("");
+
+			arrayOfTaxInvoiceTradeLineItem.getTaxInvoiceTradeLineItem().add(taxInvoiceTradeLineItem);
+		}
+
+		taxInvoice.setTaxInvoiceTradeLineItems(arrayOfTaxInvoiceTradeLineItem);
+
+		//-------------------------------------------
+
+		boolean sendSms = false;                        //문자 발송여부 (공급받는자 정보의 HP 항목이 입력된 경우에만 발송됨)
+
+		boolean forceIssue = false;                        //가산세가 예상되는 세금계산서 발행 여부
+
+		String mailTitle = "";                            //전송되는 이메일의 제목 설정 (공백 시 바로빌 기본 제목으로 전송됨)
+
+		//-------------------------------------------
+		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.TESTBED);
+		int result = barobillApiService.taxInvoice.registAndIssueTaxInvoice(certKey, taxInvoice.getInvoicerParty().getCorpNum(), taxInvoice, sendSms, forceIssue, mailTitle);
+
+		System.out.println(result);
+	}
 }

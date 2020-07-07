@@ -196,10 +196,18 @@
                         </tbody>
                     </table>
                     <div class="sec4-ca">
-                        <a href="javascript:normalReceipt('${paymentDetail.order_no}');" class="sec4-but">영수증 출력하기</a>
-                        <a href="javascript:cashReceipt('${paymentDetail.order_no}');" class="sec4-but">현금 영수증 신청하기</a>
-                        <a href="javascript:salesStatement('${paymentDetail.order_no}');" class="sec4-but">거래명세서 출력하기</a>
-                        <a href="javascript:transactionStatement('${paymentDetail.order_no}');" class="sec4-but">매출전표 출력하기</a>
+	                    <c:if test="${impPayment.status == 'paid'}">
+	                        <a href="javascript:normalReceipt('${paymentDetail.order_no}');" class="sec4-but">영수증 출력하기</a>
+                        </c:if>
+                        <c:if test="${impPayment.status == 'paid' && impPayment.payMethod != 'card'}">
+                        	<a href="javascript:cashReceipt('${paymentDetail.order_no}');" class="sec4-but">현금 영수증 신청하기</a>
+                        </c:if>
+                        <c:if test="${impPayment.status == 'paid'}">
+                        	<a href="javascript:transactionStatement('${paymentDetail.order_no}');" class="sec4-but">거래명세서 출력하기</a>
+                        </c:if>
+                        <c:if test="${impPayment.status == 'paid' && impPayment.payMethod == 'card'}">
+                        	<a href="javascript:salesStatement('${paymentDetail.order_no}');" class="sec4-but">매출전표 출력하기</a>
+                        </c:if>
                     </div>
 <%--                    <div class="sec4-ca"><a href="">신용카드 전표</a></div>--%>
                 </div>
