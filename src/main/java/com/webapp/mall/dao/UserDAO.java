@@ -17,6 +17,10 @@ public class UserDAO {
         List<Map<String, Object>> getUserList = sql.selectList("mall.UserMapper.getUserList",params);
         return getUserList;
     }
+    public List<Map<String, Object>> getMailUserList(Map<String, String> params) throws SQLException {
+        List<Map<String, Object>> getMailUserList = sql.selectList("mall.UserMapper.getMailUserList",params);
+        return getMailUserList;
+    }
     public Map<String, Object> getEmailAuthList(Map<String, String> params) throws SQLException {
         Map<String, Object> getEmailAuthList = sql.selectOne("mall.UserMapper.getEmailAuthList",params);
         return getEmailAuthList;

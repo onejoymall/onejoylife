@@ -340,6 +340,38 @@ $(document).on("click","#gradeChange",function () {
     });
 })
 
+//회원관리 - 메일보내기
+$(document).on("click","#sendmail",function () {
+    $('.loading-bar-wrap').removeClass("hidden");
+	var formData = $("#member-sendmail").serialize();
+	jQuery.ajax({
+		type:"GET",
+		url:"/Manager/authemail",
+		data:formData,
+
+		success : function(data) {
+			// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+			// TODO
+			console.log(data);
+			if(data.validateError){
+				$.each(data.validateError, function (index, item) {
+					if(index != "Error"){//일반에러메세지
+						$('#'+index+'Validation').html(item);
+					}
+				});
+			}
+		},
+
+		complete : function(data) {
+            $('.loading-bar-wrap').addClass("hidden");
+            $(".modal4").attr("style", "display:none");
+		},
+		error : function(xhr, status, error) {
+			console.log(xhr+status+error);
+		}
+	});
+})
+
 // 배송비 구분 선택 박스 변경 시
 $(document).on("change","#shipping-fee",function(){
 	var shipR='<tr class="shippingFee-detail-wrap shipping-t-detail"><th>배송비 상세 설정</th><td>배송비 <input class="onlyNumber" class="onlyNumber" type="text" id="product_delivery_payment" name="product_delivery_payment"> 원을 고정적으로 부과함.</td></tr>';

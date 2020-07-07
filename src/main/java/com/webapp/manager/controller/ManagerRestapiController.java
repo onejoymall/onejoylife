@@ -1517,6 +1517,58 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
+    //회원관리 - 이메일 전송
+    @RequestMapping(value = "/Manager/authemail", method = RequestMethod.GET, produces = "application/json")
+    public HashMap<String, Object> Managerauthemail(@RequestParam HashMap params,HttpServletRequest request, UserVO userVO){
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try {
+            if(params.get("user_grant") != null){
+                String[] usergrant = request.getParameterValues("user_grant");
+                int[] user_grant = Arrays.stream(usergrant).mapToInt(Integer::parseInt).toArray();
+                params.put("user_grant", user_grant);
+            }
+            if(params.get("age_class") != null){
+                String[] ageclass = request.getParameterValues("age_class");
+                int[] age_class = Arrays.stream(ageclass).mapToInt(Integer::parseInt).toArray();
+                params.put("age_class", age_class);
+            }
+            if(params.get("sex") != null){
+                String[] sex = request.getParameterValues("sex");
+                params.put("sex", sex);
+            }
+
+//            if(product != null && product.equals("")){
+            if(params.get("goods-cate") != null && params.get("goods-cate") != ""){
+                String product = (String) params.get("goods-cate");
+                String[] product_ct = product.split("\\|");
+                params.put("product_ct", product_ct);
+            }
+            String memo;
+            String subject =  messageSource.getMessage("ManagerauthemailTitle","ko");
+            memo = (String)params.get("mem-mail");
+
+            List<Map<String,Object>> sendmaillist = userDAO.getMailUserList(params);
+
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                //중복이 아니면 메일전송
+//                mailSender.sendSimpleMessage(userVO.getEmail(), subject, memo);
+                for(Map<String,Object> list:sendmaillist) {
+                    mailSender.sendSimpleMessage((String) list.get("email"), subject, memo);
+                }
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+
     //브랜드 등록
     @RequestMapping(value = "/Manager/brandAddProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> brandAddProc(@RequestParam HashMap params,MgBrandVO mgBrandVO){
