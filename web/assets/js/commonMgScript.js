@@ -339,6 +339,16 @@ $(document).on("click","#gradeChange",function () {
         }
     });
 })
+//회원관리 - 메일보내기 초기화
+$(document).on("click","#mailsendbtn", function () {
+    event.preventDefault();
+    $("input:checkbox[name=user_grant]").attr("checked", false);
+    $("input:checkbox[name=age_class]").attr("checked", false);
+    $("input:checkbox[name=sex]").attr("checked", false);
+    $("input[name=goods-cate]").val('');
+    $("input:radio[name=product_class]").attr("checked", false);
+    $("input:radio[name=email_privacy_policy]").attr("checked", false);
+})
 
 //회원관리 - 메일보내기
 $(document).on("click","#sendmail",function () {

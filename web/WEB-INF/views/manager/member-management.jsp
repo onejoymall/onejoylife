@@ -77,7 +77,7 @@
                                  </select>
 
                             <button type="button" class="goods-list-btn big" id="gradeChange">선택 권한 으로 변경</button>
-                            <button type="button" class="big" name="detail4">메일보내기</button>
+                            <button type="button" class="big" name="detail4" id="mailsendbtn">메일보내기</button>
 <%--                            <button type="button" class="big" name="detail5">SMS보내기</button>--%>
 <%--                            <button type="button" class="big" name="detail6">로그인 푸시보내기</button>--%>
                         </div>
