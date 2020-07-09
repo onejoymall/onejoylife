@@ -5102,3 +5102,67 @@ input[type=password]::placeholder{
 .bg-success {
     background: #28a745!important;;
 }
+/* 20.07.07 추가 */
+.body-mar {
+    margin:  30px 30px 50px;
+}
+.body-txt1{
+    font-size: 1.1rem;
+}
+.body-tr tr {
+    height: 100px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.body-tr tr td:nth-child(1){
+    padding: 5px;
+}
+.body-tr tr td:nth-child(2){
+    text-align: left;
+}
+.body-txt1 {
+    border-bottom: 2px solid #2d2e43;
+    padding: 5px;
+}
+#S-list table {
+    text-align: center;
+    margin: 0px 0 25px;
+}
+#S-list table td{
+    border: none;
+}
+.body-tr input{display: none;}
+
+.c-btn {
+    width: 65px;
+    height: 40px;
+    border: 1px solid #2d2e43;
+    background-color: #fff;
+}
+.d-btn {
+    width: 100px;
+    height: 40px;
+    background-color: #2d2e43;
+    color: #fff;
+    display: block;
+    margin: 30px auto;
+}
+#S-list input[type=checkbox]+label:before {
+    top: -6px;
+}
+.ov-s{
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#S-list.underPop .content content {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.S-list-btn {
+    width: 80px;
+    height: 28px;
+    border: 1px solid #232a32;
+    background-color: #fff;
+    margin: 10px 0;
+}

@@ -141,6 +141,10 @@
                                         <input type="radio" name="selectAddress" id="ra1-3" value="NEW">
                                         <label for="ra1-3"><span class="ra-txt">새로입력</span></label>
                                     </p>
+                                    <p>
+                                        <input type="radio" name="selectAddress" id="ra1-4" value="LIST">
+                                        <label for="ra1-4"><span class="ra-txt">배송지 목록</span></label>
+                                    </p>
                                 </td>
                             </tr>
                             </c:if>
@@ -434,7 +438,42 @@
         </main>
     </div>
 </div>
-
+<div class="modal">
+        <div class="modal-content">
+            <div class="modal-close close2">×</div>
+            <div class="mo-in-con1">
+                <p class="body-txt1">내배송지</p>
+                <div class="ov-s">
+                    <table>
+                        <colgroup>
+                       
+                            <col style="width: 300px;">
+                            <col style="width: 200px;">
+                        </colgroup>
+                        <tbody class="body-tr" id="list_address">
+                       <%-- (append 되는 html)
+                        <c:forEach var="deliveryList" items="${deliveryList}">
+                            <tr>
+                               <td>
+                                    <p>${deliveryList.delivery_alias}</p>
+                                </td>
+                                <td>
+                                    <p>${deliveryList.order_user_name}</p>
+                                    <p>${deliveryList.roadAddress}</p>
+                                </td>
+                                <td>
+                                    <button type="button" class="c-btn">선택</button>
+                                </td>
+                            </tr>
+                            </c:forEach> 
+                        --%>     
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
@@ -675,6 +714,7 @@
                 $("#deliverySpan").text(resultDelivery.toLocaleString('en'));
                 $("#paymentSpan").text(resultPayment.toLocaleString('en'));
                 $("input[name=payment]").val(resultPayment);
+                
             },
             error: function (xhr, status, error) {
                 console.log(error,xhr,status );
@@ -722,6 +762,65 @@
         $("#discountSpan").text(resultDiscount.toLocaleString('en'));
         $("#paymentSpan").text(resultPayment.toLocaleString('en'));
         $("input[name=payment]").val(resultPayment);
+    });
+ 
+    $("#ra1-4").click(function(){
+    $('#list_address').empty();
+        $(".modal").addClass('on');
+        $('html,body').css("overflow", "hidden");
+        
+        
+    	jQuery.ajax({
+            type: 'POST',
+            url: '/payment/getMyListDelivery',
+            data:formData,
+            success: function (data) {
+            	for (var i=0;i<data.deliveryList.length;i++) {
+            		var item = data.deliveryList[i];
+            		$("#list_address").append('<tr><td><p align="left" >' + item.order_user_name + '</p><p align="left" >' + item.roadAddress +'</p><p align="left" >' + item.extraAddress +'</p></td><td> <button type="button" class="c-btn" id="choose" data-id="' + item.order_no + '">선택</button></td>');
+            	}
+            	
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            },
+        });
+        
+    });
+ 
+    $(document).on("click","#choose",function(){ 
+    	var order_no = $(this).data("id");
+    	
+    	jQuery.ajax({
+            type: 'POST',
+            url: '/payment/getDeliveryAddress2',
+            data: "order_no="+order_no,
+            success: function (data) {
+                if(data.deliveryChoose!=null ) {
+                    $.each(data.deliveryChoose,function(index, item){
+                        if(index != "order_no" &&  index != "product_cd"){
+                            $("input[name="+index+"]").val(item);
+                        }
+                        if(index=="delivery_user_phone" || index=="delivery_user_tel"){
+                            var number = item.split("-");
+                            ['a','b','c'].forEach(function(el,idx){
+                                $("input[name="+index+"_"+el+"]").val(number[idx]);
+                            });
+                        }
+                    });
+                    $(".modal").removeClass('on');
+                    $('html,body').css("overflow", "auto");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            },
+        });
+    });
+
+    $(".modal-close").click(function(){
+        $(".modal").removeClass('on');
+        $('html,body').css("overflow", "auto");
     });
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

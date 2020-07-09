@@ -175,6 +175,21 @@
 		ORDER BY A.reg_date DESC
 		LIMIT 1
     </select>
+    <select id="getMyListDelivery" parameterType="hashmap" resultType="hashmap">
+	    SELECT *
+		FROM delivery_info_user A
+		WHERE A.order_user_email = #{email}
+		ORDER BY A.reg_date DESC
+    </select>
+    
+    <select id="getMyListDelivery2" parameterType="hashmap" resultType="hashmap">
+	  SELECT *
+		FROM delivery_info_user A
+		WHERE A.order_user_email = #{email}
+		AND order_no=#{order_no}
+		ORDER BY A.reg_date DESC
+    </select>
+    
     <select id="getDefaultDelivery" parameterType="hashmap" resultType="hashmap">
     	SELECT *
 		FROM delivery_info_user A
@@ -184,7 +199,7 @@
 		LIMIT 1
     </select>
     <update id="deleteDelivery" parameterType="java.util.Map">
-        UPDATE delivery_info SET
+        UPDATE delivery_info_user SET
 		delivery_visible_yn = 'N'
 		WHERE order_no = #{orderNo}
     </update>
