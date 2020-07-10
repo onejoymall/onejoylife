@@ -1597,7 +1597,7 @@ public class ManagerRestapiController {
                 params.put("product_ct", product_ct);
             }
             String memo;
-            String subject =  messageSource.getMessage("ManagerauthemailTitle","ko");
+            String subject = (String) params.get("mail_title");
             memo = (String)params.get("mem-text");
 
             List<Map<String,Object>> sendmaillist = userDAO.getMailUserList(params);
@@ -1610,6 +1610,7 @@ public class ManagerRestapiController {
                     mailSender.sendSimpleMessage((String) list.get("email"), subject, memo);
                     params.put("usr_id", list.get("usr_id"));
                     params.put("email", list.get("email"));
+                    params.put("subject", subject);
                     userDAO.insertMarketingLog(params);
                 }
                 resultMap.put("success","success");
@@ -1708,6 +1709,7 @@ public class ManagerRestapiController {
 					        params.put("msg_id", msgid);
 					        params.put("usr_id", list.get("usr_id"));
                             params.put("email", list.get("phone"));
+                            params.put("subject", subject);
                             userDAO.insertMarketingLog(params);
 					        resultMap.put("success","success");
                         }

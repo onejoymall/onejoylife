@@ -437,7 +437,7 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th rowspan="6">받는사람</th>
+                                <th rowspan="7">받는사람</th>
                                 <th>회원등급</th>
                                 <td>
                                     <input type="checkbox" name="user_grant" value="1" id="mem-class-ck1">
@@ -498,6 +498,12 @@
                                     <label for="mail-class-ck1">포함</label>
                                     <input type="radio" name="email_privacy_policy" value="exception" id="mail-class-ck2">
                                     <label for="mail-class-ck2">제외</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>메일 제목</th>
+                                <td>
+                                    <input type="text" name="mail_title" size="100%">
                                 </td>
                             </tr>
                             <tr>
