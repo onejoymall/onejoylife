@@ -64,7 +64,7 @@ input[type="radio"]{
     -moz-appearance: radio;
     appearance: radio;
 }
-input[name="volume"], input[name="issue"]{
+input[name="kwon"], input[name="ho"]{
     width:40px;
 }
 .txt-p{
