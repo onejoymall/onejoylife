@@ -30,6 +30,13 @@
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
+    <select id="getUserForId" resultType="java.util.HashMap">
+        <![CDATA[
+        SELECT
+          A.*
+        FROM user A where usr_id =#{payment_user_id}
+        ]]>
+    </select>
     <select id="getMailUserList" resultType="java.util.HashMap">
         <![CDATA[
         SELECT

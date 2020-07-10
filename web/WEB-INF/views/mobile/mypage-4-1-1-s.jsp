@@ -236,6 +236,7 @@
 	                    	<option value=" ">사용가능 쿠폰이 없습니다.</option>
 	                    </c:if>
 	                </select>
+	                <input type="hidden" name="coupon_discount" value="0"/>
                 </li>
             </ul>
         </ul>
@@ -524,15 +525,20 @@ function show(num){
 				var productPayment = $(this).attr("data-payment");
 				
 				if(saleType == 'amount'){
-					disCoupon += parseInt(salePayment);
-			    }else{
-					if(saleCalCondition == 'A'){
-					    disCoupon += parseInt(productUserPayment*(saleRate/100));
-				    }else{
-						disCoupon += parseInt(productPayment*(saleRate/100));
-				    }
-			    }
-		    }
+  					disCoupon += parseInt(salePayment);
+  					$(this).siblings('input[name=coupon_discount]').val(parseInt(salePayment));
+  			    }else{
+  					if(saleCalCondition == 'A'){
+  					    disCoupon += parseInt(productUserPayment*(saleRate/100));
+  					  $(this).siblings('input[name=coupon_discount]').val(productUserPayment*(saleRate/100));
+  				    }else{
+  						disCoupon += parseInt(productPayment*(saleRate/100));
+  						$(this).siblings('input[name=coupon_discount]').val(parseInt(productPayment*(saleRate/100)));
+  				    }
+  			    }
+  		    }else{
+  		    	$(this).siblings('input[name=coupon_discount]').val(0);
+  		    }
 		});
 		couponDiscount = disCoupon;
 	}

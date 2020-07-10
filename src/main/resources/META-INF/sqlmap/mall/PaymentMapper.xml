@@ -91,7 +91,8 @@ and A.payment_status != 'N'
 	        payment_type_cd,
 	        payment_order_quantity,
 	        coupon_cd,
-	        option_name
+	        option_name,
+	        coupon_discount
         )values (
 	        #{product_cd},
 	        #{payment_cd},
@@ -100,7 +101,8 @@ and A.payment_status != 'N'
 	        #{payment_type_cd},
 	        #{payment_order_quantity},
         	#{coupon_cd},
-        	#{option_name}
+        	#{option_name},
+        	#{coupon_discount}
         )
     </insert>
 
@@ -315,4 +317,16 @@ and A.payment_status != 'N'
 		ON A.product_cd = B.product_cd
 		WHERE A.order_no = #{order_no}
     </select>
+    
+    <insert id="insertTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
+        insert into taxinvoice_history(
+			mgt_num,
+			order_no,
+			result_code
+        )values(
+            #{mgt_num},
+			#{order_no},
+			#{result_code}
+        )
+    </insert>
 </mapper>

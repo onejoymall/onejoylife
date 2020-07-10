@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.manager.vo.TaxVO;
 
 @Repository
 public class PaymentDAO {
@@ -87,11 +88,15 @@ public class PaymentDAO {
 			map.put("payment_order_quantity",cartPaymentVO.getPayment_order_quantity()[i]);
 			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i].trim());
 			map.put("option_name",cartPaymentVO.getOption_name()[i].trim());
+			map.put("coupon_discount",cartPaymentVO.getCoupon_discount()[i].trim());
             sql.insert("mall.PaymentMapper.insertBundle", map);
         }
 	}
 	public List<Map<String, Object>> getPaymentBundleList(HashMap params) {
 		List<Map<String, Object>> getPaymentBundle = sql.selectList("mall.PaymentMapper.getPaymentBundleList",params);
         return getPaymentBundle;
+	}
+	public void insertTaxinvoiceHistory(TaxVO taxVO) {
+		sql.insert("mall.PaymentMapper.insertTaxinvoiceHistory",taxVO);
 	}
 }

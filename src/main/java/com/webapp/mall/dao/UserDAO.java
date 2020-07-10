@@ -73,4 +73,8 @@ public class UserDAO {
 		 Map<String, Object> getUserConditionInfo = sql.selectOne("mall.UserMapper.getUserConditionInfo",user_id);
         return getUserConditionInfo;
 	}
+	public Map<String, Object> getUserForId(Map<String, Object> params) {
+		Map<String, Object> getUserForId = sql.selectOne("mall.UserMapper.getUserForId", params);
+        return getUserForId;
+	}
 }
