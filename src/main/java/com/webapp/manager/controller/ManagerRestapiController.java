@@ -2194,7 +2194,7 @@ public class ManagerRestapiController {
     }
     
   //바로빌 세금계산서 발행
-  	@RequestMapping(value = "/Manager/api/taxInvoice", method = RequestMethod.POST, produces = "application/json")
+  	@RequestMapping(value = "/api/taxInvoice", method = RequestMethod.POST, produces = "application/json")
   	public HashMap<String, Object> taxInvoice(@RequestParam HashMap params, HttpServletRequest request,
   			HttpSession session, TaxVO taxVO) {
   		HashMap<String, Object> resultMap = new HashMap<String, Object>();

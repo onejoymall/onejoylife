@@ -271,6 +271,7 @@
                     </div>
                     <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
 
+					<c:if test="${list.product_delivery_International_type == 'A' }">
                     <script type="text/javascript" >
                         naver.NaverPayButton.apply({
                          BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력
@@ -282,6 +283,7 @@
                          WISHLIST_BUTTON_HANDLER:wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
                         });
                     </script>
+                    </c:if>
                 </form>
             </div>
         </div>

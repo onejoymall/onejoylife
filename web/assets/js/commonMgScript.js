@@ -743,7 +743,7 @@ $(document).on("click","#taxInvoceSendBtn",function () {
 	
 	jQuery.ajax({
         type: 'post',
-        url: "/Manager/api/taxInvoice",
+        url: "/api/taxInvoice",
         data:formData,
         success: function (data) {
             if (data.validateError) {
