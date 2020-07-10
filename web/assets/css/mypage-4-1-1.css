@@ -318,9 +318,11 @@ input[type="radio"] {
 input[id="ra1-1"] + label,
 input[id="ra1-2"] + label,
 input[id="ra1-3"] + label,
+input[id="ra1-4"] + label,
 input[id="sec5-ra1"] + label,
 input[id="sec5-ra2"] + label,
 input[id="sec5-ra3"] + label
+input[id="sec5-ra4"] + label
 {
     float: left;
     display: block;
@@ -331,9 +333,11 @@ input[id="sec5-ra3"] + label
 input[id="ra1-1"]:checked + label,
 input[id="ra1-2"]:checked + label,
 input[id="ra1-3"]:checked + label,
+input[id="ra1-4"]:checked + label,
 input[id="sec5-ra1"]:checked + label,
 input[id="sec5-ra2"]:checked + label,
-input[id="sec5-ra3"]:checked + label
+input[id="sec5-ra3"]:checked + label,
+input[id="sec5-ra4"]:checked + label
 {
     background: url(../img/icon/but-g-2.png)no-repeat left center / 20px;
 }
@@ -468,4 +472,114 @@ input[id="sec5-ra3"]:checked + label
 }
 .bor-bot-b{
 	border-bottom: 2px solid #dadada !important;
+}
+/* 20.07.07 배송지목록 */
+.S-list-btn {
+    width: 80px;
+    height: 28px;
+    border: 1px solid #232a32;
+    background-color: #fff;
+}
+/* 모달 팝업창 */
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    line-height: 28px;
+}
+.modal.on{display: block;}
+.modal-content{
+    overflow: hidden;
+    width: 460px;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.mo-in-con1{
+    clear: both;
+    padding: 0 20px;
+}
+.con-in{
+    width: 350px;
+    margin: 0 auto;
+}
+.modal-close.close2{
+    width: 35px;
+    height: 35px;
+    font-size: 3.7rem;
+    font-weight: 200;
+    text-align: center;
+    color: #232a32;
+    float: right;
+    position: static;
+    margin: 10px 20px 10px 0;
+    background: none;
+    text-indent: inherit;
+}
+.modal-close:hover {
+    cursor: pointer;
+}
+.body-tr tr {
+    height: 100px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.body-tr tr td:nth-child(1){
+    padding: 5px;
+    text-align:left;
+}
+.body-tr tr td:nth-child(2){
+    text-align: center;
+}
+.body-txt1 {
+    border-bottom: 2px solid #2d2e43;
+    padding: 5px;
+    font-size: 18px;
+}
+.modal-content table {
+    text-align: center;
+    margin: 0px 0 25px;
+}
+.body-tr input{display: none;}
+.body-tr label{
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #2d2e43;
+    cursor: pointer;
+}
+.c-btn {
+    width: 65px;
+    height: 40px;
+    border: 1px solid #da394d;
+    background-color: #fff;
+    color: #da394d;
+}
+.d-btn {
+    width: 100px;
+    height: 40px;
+    background-color: #2d2e43;
+    color: #fff;
+    display: block;
+    margin: 20px auto 40px;
+}
+.ov-s{
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.ov-s::-webkit-scrollbar {
+    display: none;
+}
+.body-tr input[type=checkbox]:checked + label{
+    background: url(../img/arrow-down-bk.png) no-repeat center / 20px;
 }

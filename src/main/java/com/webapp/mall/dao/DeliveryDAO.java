@@ -70,5 +70,15 @@ public class DeliveryDAO {
 		Map<String,Object> getUserDeliveryDetail = sql.selectOne("mall.DeliveryMapper.getUserDeliveryDetail",params);
         return getUserDeliveryDetail;
 	}
+    public List<Map<String,Object>> getMyListDelivery(Map<String, String> params) throws SQLException{
+    	List<Map<String,Object>> getMyListDelivery = sql.selectList("mall.DeliveryMapper.getMyListDelivery",params);
+    	return getMyListDelivery;
+    }
 
+    public Map<String,Object> getMyListDelivery2(Map<String, String> params) throws SQLException{
+    	Map<String,Object> getMyListDelivery2 = sql.selectOne("mall.DeliveryMapper.getMyListDelivery2",params);
+    	return getMyListDelivery2;
+    }
+	
+	
 }
