@@ -18,9 +18,9 @@
                     <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                     <button type="submit" class="keyword-src-button">검색</button>
                     <div class="src-filter-wrap">
-                        <input id="src-name" type="checkbox" name="searchType" value="coupon_name" <c:if test="${fn:contains(searchVO.searchType, 'coupon_name')}">checked</c:if>>
+                        <input id="src-name" type="checkbox" name="searchType" value="coupon_name" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'coupon_name')}">checked</c:if>>
                         <label for="src-name">쿠폰명</label>
-                        <input id="src-code" type="checkbox" name="searchType" value="coupon_cd" <c:if test="${fn:contains(searchVO.searchType, 'coupon_cd')}">checked</c:if>>
+                        <input id="src-code" type="checkbox" name="searchType" value="coupon_cd" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'coupon_cd')}">checked</c:if>>
                         <label for="src-code">쿠폰코드</label>
                     </div>
                 </div>
