@@ -85,6 +85,38 @@
         </if>
         <if test="email_privacy_policy != null and email_privacy_policy == 'exception' and email_privacy_policy != ''">AND A.email_privacy_policy = 'Y'</if>
     </select>
+    <insert id="insertMarketingLog" parameterType="java.util.HashMap">
+        insert into marketing_send_log(
+            usr_id,
+            user_grant,
+            age_class,
+            sex,
+            product_ct,
+            product_class,
+            email_privacy_policy,
+            send_text,
+            msg_id,
+            sms_kind,
+            subject,
+            email,
+            phone
+            )
+            VALUES (
+            #{usr_id},
+            #{s_usergrant},
+            #{s_ageclass},
+            #{s_sex},
+            #{goods-cate},
+            #{product_class},
+            #{email_privacy_policy},
+            #{mem-text},
+            #{msg_id},
+            #{sms_kind},
+            #{subject},
+            #{email},
+            #{phone}
+            )
+    </insert>
     <insert id="insertUser" parameterType="String">
         <![CDATA[
         insert into user(

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.net.URLEncoder;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -22,7 +23,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.common.support.CurlPost;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -166,28 +184,6 @@ public class ManagerRestapiController {
     private String downloadEditorPath;
     @Value("${barobill_key}")
     private String barobillKey;
-    @Value("${barobill_corp_num}")
-    private String barobillCorpNum;
-    @Value("${barobill_corp_name}")
-    private String barobillCorpName;
-    @Value("${barobill_ceo_name}")
-    private String barobillCeoName;
-    @Value("${barobill_addr}")
-    private String barobillAddr;
-    @Value("${barobill_biz_type}")
-    private String barobillBizType;
-    @Value("${barobill_biz_class}")
-    private String barobillBizClass;
-    @Value("${barobill_contact_id}")
-    private String barobillContactId;
-    @Value("${barobill_contact_name}")
-    private String barobillContactName;
-    @Value("${barobill_tel}")
-    private String barobillTel;
-    @Value("${barobill_hp}")
-    private String barobillHp;
-    @Value("${barobill_email}")
-    private String barobillEmail;
     @Autowired
     private MailSender mailSender;
 
@@ -1565,27 +1561,55 @@ public class ManagerRestapiController {
             if(params.get("user_grant") != null){
                 String[] usergrant = request.getParameterValues("user_grant");
                 int[] user_grant = Arrays.stream(usergrant).mapToInt(Integer::parseInt).toArray();
+                String s_usergrant = "";
+                for(int i=0; i < usergrant.length; i++){
+                    s_usergrant += usergrant[i];
+                    if(i < usergrant.length -1) {
+                        s_usergrant += "|";
+                    }
+                }
                 params.put("user_grant", user_grant);
+                params.put("s_usergrant", s_usergrant);
             }
             if(params.get("age_class") != null){
                 String[] ageclass = request.getParameterValues("age_class");
                 int[] age_class = Arrays.stream(ageclass).mapToInt(Integer::parseInt).toArray();
+                String s_ageclass = "";
+                for(int i=0; i < ageclass.length; i++){
+                    s_ageclass += ageclass[i];
+                    if(i < ageclass.length -1) {
+                        s_ageclass += "|";
+                    }
+                }
                 params.put("age_class", age_class);
+                params.put("s_ageclass", s_ageclass);
             }
             if(params.get("sex") != null){
                 String[] sex = request.getParameterValues("sex");
+                String s_sex = "";
+                for(int i=0; i < sex.length; i++){
+                    s_sex += sex[i];
+                    if(i < sex.length -1) {
+                        s_sex += "|";
+                    }
+                }
                 params.put("sex", sex);
+                params.put("s_sex", s_sex);
             }
 
-//            if(product != null && product.equals("")){
             if(params.get("goods-cate") != null && params.get("goods-cate") != ""){
                 String product = (String) params.get("goods-cate");
                 String[] product_ct = product.split("\\|");
                 params.put("product_ct", product_ct);
             }
+
             String memo;
-            String subject =  messageSource.getMessage("ManagerauthemailTitle","ko");
-            memo = (String)params.get("mem-mail");
+            String subject = (String) params.get("mail_title");
+            memo = (String)params.get("mem-text");
+
+            if(params.get("mail_title") == null || params.get("mail_title") == ""){
+                    error.put("Error", "메일 제목을 입력해주세요.");
+            }
 
             List<Map<String,Object>> sendmaillist = userDAO.getMailUserList(params);
 
@@ -1593,10 +1617,139 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                //중복이 아니면 메일전송
-//                mailSender.sendSimpleMessage(userVO.getEmail(), subject, memo);
                 for(Map<String,Object> list:sendmaillist) {
                     mailSender.sendSimpleMessage((String) list.get("email"), subject, memo);
+                    params.put("usr_id", list.get("usr_id"));
+                    params.put("email", list.get("email"));
+                    params.put("subject", subject);
+                    userDAO.insertMarketingLog(params);
+                }
+                resultMap.put("success","success");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+    //회원관리 - SMS 보내기
+    @RequestMapping(value = "/Manager/sendsms", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    public HashMap<String, Object> ManagerSendSms(@RequestParam HashMap params,ModelMap model,HttpServletRequest request, UserVO userVO){
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try {
+            if(params.get("user_grant") != null){
+                String[] usergrant = request.getParameterValues("user_grant");
+                int[] user_grant = Arrays.stream(usergrant).mapToInt(Integer::parseInt).toArray();
+                String s_usergrant = "";
+                for(int i=0; i < usergrant.length; i++){
+                    s_usergrant += usergrant[i];
+                    if(i < usergrant.length -1) {
+                        s_usergrant += "|";
+                    }
+                }
+                params.put("user_grant", user_grant);
+                params.put("s_usergrant", s_usergrant);
+            }
+            if(params.get("age_class") != null){
+                String[] ageclass = request.getParameterValues("age_class");
+                int[] age_class = Arrays.stream(ageclass).mapToInt(Integer::parseInt).toArray();
+                String s_ageclass = "";
+                for(int i=0; i < ageclass.length; i++){
+                    s_ageclass += ageclass[i];
+                    if(i < ageclass.length -1) {
+                        s_ageclass += "|";
+                    }
+                }
+                params.put("age_class", age_class);
+                params.put("s_ageclass", s_ageclass);
+            }
+            if(params.get("sex") != null){
+                String[] sex = request.getParameterValues("sex");
+                String s_sex = "";
+                for(int i=0; i < sex.length; i++){
+                    s_sex += sex[i];
+                    if(i < sex.length -1) {
+                        s_sex += "|";
+                    }
+                }
+                params.put("sex", sex);
+                params.put("s_sex", s_sex);
+            }
+            if(params.get("goods-cate") != null && params.get("goods-cate") != ""){
+                String product = (String) params.get("goods-cate");
+                String[] product_ct = product.split("\\|");
+                params.put("product_ct", product_ct);
+            }
+            String memo;
+            String subject = (String) params.get("sms_title");
+            memo = (String)params.get("mem-text");
+            String profile_key = "0f46edf22b245b284f0b3bc6c6868bf1b7734c59";
+
+            if(params.get("sms_kind").equals("L")){
+                if(params.get("sms_title") == null || params.get("sms_title") == ""){
+                    error.put("Error", "SMS 제목을 입력해주세요.");
+                }
+            }
+
+            List<Map<String,Object>> sendsmslist = userDAO.getMailUserList(params);
+
+            HttpClient client = HttpClientBuilder.create().build();
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+
+                if(subject != null && subject != ""){
+                    for(Map<String,Object> list:sendsmslist) {//+list.get("phone")
+                        String msgid = "SWT-"+numberGender.numberGen(7,1);
+					    HttpPost post =  new HttpPost ("https://alimtalk-api.sweettracker.net//v2/"+profile_key+"/sendMessage");
+
+                        StringEntity jsonparams = new StringEntity("[{\"reserved_time\":\"00000000000000\",\"receiver_num\":\""+list.get("phone")+"\",\"sms_title\":\""+subject+"\",\"sms_kind\":\"L\",\"profile_key\":\"+profile_key+\",\"sender_num\":\"1811-9590\",\"sms_message\":\""+memo+"\",\"sms_only\":\"Y\",\"msgid\":\""+msgid+"\",\"message\":\"\"}]", "UTF-8");
+					    jsonparams.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json; charset=UTF-8"));
+                        post.addHeader("userid", "onejoycorp");
+					    post.addHeader("Content-Type", "application/json;charset=UTF-8");
+                        post.setEntity(jsonparams);
+
+
+					    HttpResponse response = client.execute(post);
+
+					    if (response.getStatusLine().getStatusCode() != 200) {
+                            resultMap.put("validateError", error);
+                        }else {
+					        params.put("msg_id", msgid);
+					        params.put("usr_id", list.get("usr_id"));
+                            params.put("email", list.get("phone"));
+                            params.put("subject", subject);
+                            userDAO.insertMarketingLog(params);
+					        resultMap.put("success","success");
+                        }
+                    }
+                } else{
+                    for(Map<String,Object> list:sendsmslist) {
+                        String msgid = "SWT-"+numberGender.numberGen(7,1);
+					    HttpPost post =  new HttpPost ("https://alimtalk-api.sweettracker.net//v2/"+profile_key+"/sendMessage");
+
+                        StringEntity jsonparams = new StringEntity("[{\"reserved_time\":\"00000000000000\",\"receiver_num\":\""+list.get("phone")+"\",\"sms_kind\":\"S\",\"profile_key\":\"+profile_key+\",\"sender_num\":\"1811-9590\",\"sms_message\":\""+memo+"\",\"sms_only\":\"Y\",\"msgid\":\""+msgid+"\",\"message\":\"\"}]", "UTF-8");
+					    jsonparams.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json; charset=UTF-8"));
+                        post.addHeader("userid", "onejoycorp");
+					    post.addHeader("Content-Type", "application/json;charset=UTF-8");
+                        post.setEntity(jsonparams);
+
+
+					    HttpResponse response = client.execute(post);
+
+					    if (response.getStatusLine().getStatusCode() != 200) {
+                            resultMap.put("validateError", error);
+                        } else {
+					        params.put("msg_id", msgid);
+					        params.put("usr_id", list.get("usr_id"));
+                            params.put("phone", list.get("phone"));
+                            userDAO.insertMarketingLog(params);
+					        resultMap.put("success","success");
+                        }
+
+                    }
                 }
             }
         } catch (Exception e) {
@@ -2200,28 +2353,15 @@ public class ManagerRestapiController {
   		HashMap<String, Object> resultMap = new HashMap<String, Object>();
   		HashMap<String, Object> error = new HashMap<String, Object>();
   		
-  		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
-  			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
-  		}
-  		if (taxVO.getCeo_name() == null || taxVO.getCeo_name().equals("")) {
-  			error.put(messageSource.getMessage("ceo_name", "ko"), messageSource.getMessage("error.required", "ko"));
-  		}
-  		if (taxVO.getAddr() == null || taxVO.getAddr().equals("")) {
-  			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
-  		}
+//  		if (params.get("identifier") == null || params.get("identifier").equals("")) {
+//  			error.put(messageSource.getMessage("identifier", "ko"), messageSource.getMessage("error.required", "ko"));
+//  		}
   		
   		try {
   			if (!isEmpty(error)) {
   				resultMap.put("validateError", error);
   			} else {
-  				int resultCode = RegistAndIssueTaxInvoice(taxVO);
-  				if(resultCode == 1) {
-  					resultMap.put("success","success");
-  				}else {
-  					error.put("Error", "ERROR CODE: "+resultCode);
-  					resultMap.put("validateError", error);
-  				}
-  				paymentDAO.insertTaxinvoiceHistory(taxVO);
+  				RegistAndIssueTaxInvoice();
   			}
   		} catch (Exception e) {
   			e.printStackTrace();
@@ -2231,7 +2371,7 @@ public class ManagerRestapiController {
   	}
   	
   	//세금계산서 국세청전송
-  	public int RegistAndIssueTaxInvoice(TaxVO taxVO) throws RemoteException, MalformedURLException {
+  	public void RegistAndIssueTaxInvoice() throws RemoteException, MalformedURLException {
 
 		String certKey = barobillKey;                                //인증키
 
@@ -2246,10 +2386,10 @@ public class ManagerRestapiController {
 		//TaxInvoiceType 이 1,4 일 때 : 1-과세, 2-영세
 		//TaxInvoiceType 이 2,5 일 때 : 3-면세
 		//-------------------------------------------
-		taxInvoice.setTaxType(taxVO.getTax_type());
+		taxInvoice.setTaxType(1);
 
 		taxInvoice.setTaxCalcType(1);                        //세율계산방법 : 1-절상, 2-절사, 3-반올림
-		taxInvoice.setPurposeType(taxVO.getPurpose_type());                        //1-영수, 2-청구
+		taxInvoice.setPurposeType(2);                        //1-영수, 2-청구
 
 		//-------------------------------------------
 		//수정사유코드
@@ -2258,83 +2398,76 @@ public class ManagerRestapiController {
 		//-------------------------------------------
 		taxInvoice.setModifyCode("");
 
-		taxInvoice.setKwon(taxVO.getKwon());                                //별지서식 11호 상의 [권] 항목
-		taxInvoice.setHo(taxVO.getHo());                                //별지서식 11호 상의 [호] 항목
-		taxInvoice.setSerialNum(taxVO.getSerial_num());                        //별지서식 11호 상의 [일련번호] 항목
+		taxInvoice.setKwon("");                                //별지서식 11호 상의 [권] 항목
+		taxInvoice.setHo("");                                //별지서식 11호 상의 [호] 항목
+		taxInvoice.setSerialNum("");                        //별지서식 11호 상의 [일련번호] 항목
 
 		//-------------------------------------------
 		//공급가액 총액
 		//-------------------------------------------
-		taxInvoice.setAmountTotal(taxVO.getAmount_total());
+		taxInvoice.setAmountTotal("");
 
 		//-------------------------------------------
 		//세액합계
 		//-------------------------------------------
 		//taxInvoice.TaxType 이 2 또는 3 으로 셋팅된 경우 0으로 입력
 		//-------------------------------------------
-		taxInvoice.setTaxTotal(taxVO.getTax_total());
+		taxInvoice.setTaxTotal("");
 
 		//-------------------------------------------
 		//합계금액
 		//-------------------------------------------
 		//공급가액 총액 + 세액합계 와 일치해야 합니다.
 		//-------------------------------------------
-		taxInvoice.setTotalAmount(taxVO.getTotal_amount());
+		taxInvoice.setTotalAmount("");
 
 		taxInvoice.setCash("");                                //현금
 		taxInvoice.setChkBill("");                            //수표
 		taxInvoice.setNote("");                                //어음
 		taxInvoice.setCredit("");                            //외상미수금
 
-		taxInvoice.setRemark1(taxVO.getInvoicee_party_type().equals("foreigner") ? taxVO.getCorp_num() : "");
-		taxInvoice.setRemark2(taxVO.getRemark1());
+		taxInvoice.setRemark1("");
+		taxInvoice.setRemark2("");
 		taxInvoice.setRemark3("");
 
-		taxInvoice.setWriteDate(taxVO.getReg_date());                        //작성일자 (YYYYMMDD), 공백입력 시 Today로 작성됨.
+		taxInvoice.setWriteDate("");                        //작성일자 (YYYYMMDD), 공백입력 시 Today로 작성됨.
 
 		//-------------------------------------------
 		//공급자 정보 - 정발행시 세금계산서 작성자
 		//-------------------------------------------
-		Date now = new Date();
-		
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
-        String curDate = format.format(now);
-        String mgtNum = "T" + curDate + "R" +numberGender.numberGen(5, 1);
-        taxVO.setMgt_num(mgtNum);
-        
 		taxInvoice.setInvoicerParty(new InvoiceParty());
 
-		taxInvoice.getInvoicerParty().setMgtNum(mgtNum);        //필수입력 - 연동사부여 문서키
-		taxInvoice.getInvoicerParty().setCorpNum(barobillCorpNum);        //필수입력 - 연계사업자 사업자번호 ('-' 제외, 10자리)
-		taxInvoice.getInvoicerParty().setTaxRegID("");						//종사업장번호
-		taxInvoice.getInvoicerParty().setCorpName(barobillCorpName);        //필수입력
-		taxInvoice.getInvoicerParty().setCEOName(barobillCeoName);        //필수입력
-		taxInvoice.getInvoicerParty().setAddr(barobillAddr);				//사업장주소
-		taxInvoice.getInvoicerParty().setBizType(barobillBizType);			//업종
-		taxInvoice.getInvoicerParty().setBizClass(barobillBizClass);		//업태
-		taxInvoice.getInvoicerParty().setContactID(barobillContactId);        //필수입력 - 담당자 바로빌 아이디
-		taxInvoice.getInvoicerParty().setContactName(barobillContactName);    //필수입력
-		taxInvoice.getInvoicerParty().setTEL(barobillTel);					//담당자전화번호
-		taxInvoice.getInvoicerParty().setHP(barobillHp);					//담당자핸드폰
-		taxInvoice.getInvoicerParty().setEmail(barobillEmail);            //필수입력
+		taxInvoice.getInvoicerParty().setMgtNum("");        //필수입력 - 연동사부여 문서키
+		taxInvoice.getInvoicerParty().setCorpNum("");        //필수입력 - 연계사업자 사업자번호 ('-' 제외, 10자리)
+		taxInvoice.getInvoicerParty().setTaxRegID("");
+		taxInvoice.getInvoicerParty().setCorpName("");        //필수입력
+		taxInvoice.getInvoicerParty().setCEOName("");        //필수입력
+		taxInvoice.getInvoicerParty().setAddr("");
+		taxInvoice.getInvoicerParty().setBizType("");
+		taxInvoice.getInvoicerParty().setBizClass("");
+		taxInvoice.getInvoicerParty().setContactID("");        //필수입력 - 담당자 바로빌 아이디
+		taxInvoice.getInvoicerParty().setContactName("");    //필수입력
+		taxInvoice.getInvoicerParty().setTEL("");
+		taxInvoice.getInvoicerParty().setHP("");
+		taxInvoice.getInvoicerParty().setEmail("");            //필수입력
 
 		//-------------------------------------------
 		//공급받는자 정보 - 역발행시 세금계산서 작성자
 		//-------------------------------------------
 		taxInvoice.setInvoiceeParty(new InvoiceParty());
 
-		taxInvoice.getInvoiceeParty().setCorpNum(taxVO.getInvoicee_party_type().equals("foreigner") ? "9999999999999" : taxVO.getCorp_num());        //필수입력
+		taxInvoice.getInvoiceeParty().setCorpNum("");        //필수입력
 		taxInvoice.getInvoiceeParty().setTaxRegID("");
-		taxInvoice.getInvoiceeParty().setCorpName(taxVO.getInvoicee_party_type().equals("corp") ? taxVO.getCorp_name() : taxVO.getCeo_name());        //필수입력
-		taxInvoice.getInvoiceeParty().setCEOName(taxVO.getCeo_name());        //필수입력
-		taxInvoice.getInvoiceeParty().setAddr(taxVO.getAddr());
-		taxInvoice.getInvoiceeParty().setBizType(taxVO.getBiz_type());
-		taxInvoice.getInvoiceeParty().setBizClass(taxVO.getBiz_class());
+		taxInvoice.getInvoiceeParty().setCorpName("");        //필수입력
+		taxInvoice.getInvoiceeParty().setCEOName("");        //필수입력
+		taxInvoice.getInvoiceeParty().setAddr("");
+		taxInvoice.getInvoiceeParty().setBizType("");
+		taxInvoice.getInvoiceeParty().setBizClass("");
 		taxInvoice.getInvoiceeParty().setContactID("");
-		taxInvoice.getInvoiceeParty().setContactName(taxVO.getInvoicee_party_type().equals("corp") ? taxVO.getCorp_name() : taxVO.getCeo_name());    //필수입력
+		taxInvoice.getInvoiceeParty().setContactName("");    //필수입력
 		taxInvoice.getInvoiceeParty().setTEL("");
 		taxInvoice.getInvoiceeParty().setHP("");
-		taxInvoice.getInvoiceeParty().setEmail(taxVO.getEmail());
+		taxInvoice.getInvoiceeParty().setEmail("");
 
 		//-------------------------------------------
 		//수탁자 정보 - 입력하지 않음
@@ -2359,16 +2492,16 @@ public class ManagerRestapiController {
 		//-------------------------------------------
 		ArrayOfTaxInvoiceTradeLineItem arrayOfTaxInvoiceTradeLineItem = new ArrayOfTaxInvoiceTradeLineItem();
 
-		for (int i = 0; i <taxVO.getPurchaseExpiry().split(",",-1).length; i++) {
+		for (int i = 0; i < 4; i++) {
 			TaxInvoiceTradeLineItem taxInvoiceTradeLineItem = new TaxInvoiceTradeLineItem();
-			taxInvoiceTradeLineItem.setPurchaseExpiry(taxVO.getPurchaseExpiry().split(",",-1)[i]);        //YYYYMMDD
-			taxInvoiceTradeLineItem.setName(taxVO.getName().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setInformation(taxVO.getInfomation().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setChargeableUnit(taxVO.getChargeableUnit().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setUnitPrice(taxVO.getUnitPrice().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setAmount(taxVO.getAmount().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setTax(taxVO.getTax().split(",",-1)[i]);
-			taxInvoiceTradeLineItem.setDescription(taxVO.getDescription().split(",",-1)[i]);
+			taxInvoiceTradeLineItem.setPurchaseExpiry("");        //YYYYMMDD
+			taxInvoiceTradeLineItem.setName("");
+			taxInvoiceTradeLineItem.setInformation("");
+			taxInvoiceTradeLineItem.setChargeableUnit("");
+			taxInvoiceTradeLineItem.setUnitPrice("");
+			taxInvoiceTradeLineItem.setAmount("");
+			taxInvoiceTradeLineItem.setTax("");
+			taxInvoiceTradeLineItem.setDescription("");
 
 			arrayOfTaxInvoiceTradeLineItem.getTaxInvoiceTradeLineItem().add(taxInvoiceTradeLineItem);
 		}
@@ -2388,7 +2521,5 @@ public class ManagerRestapiController {
 		int result = barobillApiService.taxInvoice.registAndIssueTaxInvoice(certKey, taxInvoice.getInvoicerParty().getCorpNum(), taxInvoice, sendSms, forceIssue, mailTitle);
 
 		System.out.println(result);
-		taxVO.setResult_code(String.valueOf(result));
-		return result;
 	}
 }
