@@ -366,9 +366,21 @@ $(document).on("click","#sendmail",function () {
 			console.log(data);
 			if(data.validateError){
 				$.each(data.validateError, function (index, item) {
-					if(index != "Error"){//일반에러메세지
-						$('#'+index+'Validation').html(item);
-					}
+					if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
 				});
 			} else {
                 if (data.success) {

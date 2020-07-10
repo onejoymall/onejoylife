@@ -1602,9 +1602,14 @@ public class ManagerRestapiController {
                 String[] product_ct = product.split("\\|");
                 params.put("product_ct", product_ct);
             }
+
             String memo;
             String subject = (String) params.get("mail_title");
             memo = (String)params.get("mem-text");
+
+            if(params.get("mail_title") == null || params.get("mail_title") == ""){
+                    error.put("Error", "메일 제목을 입력해주세요.");
+            }
 
             List<Map<String,Object>> sendmaillist = userDAO.getMailUserList(params);
 
