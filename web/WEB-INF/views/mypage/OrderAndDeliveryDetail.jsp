@@ -197,6 +197,7 @@
                     </table>
                     <div class="sec4-ca">
 	                    <c:if test="${impPayment.status == 'paid'}">
+	                    	<a href="javascript:taxInvoice('${paymentDetail.order_no}');" class="sec4-but">세금계산서 전송</a>
 	                        <a href="javascript:normalReceipt('${paymentDetail.order_no}');" class="sec4-but">영수증 출력하기</a>
                         </c:if>
                         <c:if test="${impPayment.status == 'paid' && impPayment.payMethod != 'card'}">

@@ -29,7 +29,7 @@
                            <input type="radio" name="tax_type" id="vat1" value=1>
                            <label for="vat1">과세</label>
                            <input type="radio" name="tax_type" id="vat2" value=2 checked>
-                           <label for="vat2">영세</label>
+                           <label for="vat2">영세율</label>
                        </td>
                        <th class="tr-tit">공급받는자 구분</th>
                        <td>

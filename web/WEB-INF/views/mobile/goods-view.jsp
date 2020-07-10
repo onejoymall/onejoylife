@@ -190,6 +190,7 @@
                 <li>
                     <h2 class="red">4,500<span class="text-sm">원</span></h2>
                 </li>--%>
+                <c:if test="${list.product_delivery_International_type == 'A' }">
                 <p>
                    <script type="text/javascript" >
 				       naver.NaverPayButton.apply({
@@ -203,6 +204,7 @@
 			           });
 		           </script>
                 </p>
+                </c:if>
             </ul>
         </div>
         <ul class="footerBtns">

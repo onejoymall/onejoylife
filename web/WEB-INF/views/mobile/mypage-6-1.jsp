@@ -132,6 +132,10 @@
         <hr class="mt-4">
         <section class="subheader bg_grey py-1">
         	<c:if test="${impPayment.status == 'paid'}">
+        		<ul class="calculator p-1">
+	                <li>세금계산서</li>
+	                <li><a href="javascript:taxInvoice('${paymentDetail.order_no}');">전송하기 <i class="ri-arrow-right-s-line"></i></a></li>
+	            </ul>
 	            <ul class="calculator p-1">
 	                <li>영수증</li>
 	                <li><a href="javascript:normalReceipt('${paymentDetail.order_no}');">출력하기 <i class="ri-arrow-right-s-line"></i></a></li>

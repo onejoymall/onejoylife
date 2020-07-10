@@ -837,17 +837,23 @@ and A.payment_status != 'N'
 
     <select id="getMgProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
         <![CDATA[
-            SELECT
-                *,
-                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
-                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
-                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,
-                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 1) as file_1,
-                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 2) as file_2,
-                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 3) as file_3,
-                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 4) as file_4,
-                (select product_file.file_link from product_file where product_file.key_id = product.product_cd and product_file.file_order = 5) as file_5
-            FROM product  where 1=1
+            SELECT A.*,
+                (select code.code_name from code where code.code='product_delivery_type' and code.code_value =A.product_delivery_type) as product_delivery_type_name,
+                (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.product_made_company_cd) as product_made_company_name,
+                (select code.code_name from code where code.code='product_sale_yn' and code.code_value =A.product_sale_yn) as product_sale_yn_name,
+                (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 1) as file_1,
+                (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 2) as file_2,
+                (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 3) as file_3,
+                (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 4) as file_4,
+                (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 5) as file_5
+            FROM product A
+			LEFT JOIN store B
+			on A.product_supplier = B.supplier_cd
+			LEFT JOIN (SELECT Z.product_class_name AS brand_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'B') C
+			ON A.product_brand = C.product_class_code
+			LEFT JOIN (SELECT Z.product_class_name AS origin_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'O') D
+			ON A.product_origin = D.product_class_code
+			where 1=1
 
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -855,21 +861,31 @@ and A.payment_status != 'N'
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
-        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
-        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
-        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
-        <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
-        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
-        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
-        <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
-        <if test="orderByKey == null"> order by product_id DESC </if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="category1 != null and  category1 != ''">
+        	<![CDATA[
+        		AND (
+        			find_in_set(#{category1},replace(product_ct,'|',','))
+        			OR  find_in_set(#{category2},replace(product_ct,'|',','))
+        			OR  find_in_set(#{category3},replace(product_ct,'|',','))
+       			)
+        	]]>
+        </if>
         LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getMgProductListCount" parameterType="com.webapp.manager.vo.ProductVO" resultType="Integer">
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM product  where 1=1
+        FROM product A
+		LEFT JOIN store B
+		on A.product_supplier = B.supplier_cd
+		LEFT JOIN (SELECT Z.product_class_name AS brand_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'B') C
+		ON A.product_brand = C.product_class_code
+		LEFT JOIN (SELECT Z.product_class_name AS origin_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'O') D
+		ON A.product_origin = D.product_class_code  
+		where 1=1
 
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -877,12 +893,17 @@ and A.payment_status != 'N'
                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
             </foreach>
         </if>
-        <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
-        <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
-        <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
-        <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
-        <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
-        <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="category1 != null and  category1 != ''">
+        	<![CDATA[
+        		AND (
+        			find_in_set(#{category1},replace(product_ct,'|',','))
+        			OR  find_in_set(#{category2},replace(product_ct,'|',','))
+        			OR  find_in_set(#{category3},replace(product_ct,'|',','))
+       			)
+        	]]>
+        </if>
     </select>
     
     <select id="sameSupplierProductList" parameterType="hashmap" resultType="hashmap">

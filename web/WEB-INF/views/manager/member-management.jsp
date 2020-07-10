@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
     <main>
         <div class="main-content">
             <div class="main-header">
@@ -17,9 +18,9 @@
                         <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
-                            <input type="checkbox" name="searchType" value="email" id="chk2" checked>
+                            <input type="checkbox" name="searchType" value="email" id="chk2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'email')}">checked</c:if>>
                             <label for="chk2">email</label>
-                            <input type="checkbox"  name="searchType" value="username" id="chk1">
+                            <input type="checkbox"  name="searchType" value="username" id="chk1" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'username')}">checked</c:if>>
                             <label for="chk1">이름</label>
 
                         </div>
