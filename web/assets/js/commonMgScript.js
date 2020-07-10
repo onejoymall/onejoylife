@@ -737,3 +737,54 @@ $(document).on("click",".definitionInsertUpdateBtn",function () {
 	console.log('/Manager/'+type+"Definition");
 	commonAjaxCall('post','/Manager/'+type+"Definition",formData);
 });
+
+$(document).on("click","#taxInvoceSendBtn",function () {
+	var formData = $("#taxInvoiceForm").serialize();
+	
+	jQuery.ajax({
+        type: 'post',
+        url: "/Manager/api/taxInvoice",
+        data:formData,
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+            	if (data.success){
+            		alert("처리되었습니다.");
+            		self.close();
+            	}else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+            	}
+            }
+        },
+        error: function (e){
+        	console.log(e);
+        }
+    });
+});

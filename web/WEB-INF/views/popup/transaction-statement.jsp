@@ -47,9 +47,9 @@
                     </tr>
                     <tr>
                         <td>업태</td>
-                        <td><span>도소매</span></td>
+                        <td><span>도소매업외</span></td>
                         <td>종목</td>
-                        <td><span>전자상거래</span></td>
+                        <td><span>전자상거래업외</span></td>
                         <!-- <td>업태</td>
                         <td><span><input type="text"></span></td>
                         <td>종목</td>

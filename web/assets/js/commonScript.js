@@ -1654,7 +1654,8 @@ $(document).on("click",".ra-num",function () {
             data: {"order_no":order_no},
             success: function (data) {
             	var leftHtml = '';
-            	if(data.impPayment.status == 'paid'){
+            	leftHtml += '';
+            	if(data.impPayment && data.impPayment.status == 'paid'){
             		leftHtml += '<button type="button" class="btn-gray" onclick="taxInvoice(\'' + data.list.order_no + '\');">세금계산서</button>' +
             					'<button type="button" class="btn-gray" onclick="normalReceipt(\'' + data.list.order_no + '\');">영수증</button>' +
             					'<button type="button" class="btn-gray" onclick="transactionStatement(\'' + data.list.order_no + '\');">거래명세서</button>';
