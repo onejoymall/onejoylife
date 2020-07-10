@@ -77,8 +77,8 @@
                                  </select>
 
                             <button type="button" class="goods-list-btn big" id="gradeChange">선택 권한 으로 변경</button>
-                            <button type="button" class="big" name="detail4">메일보내기</button>
-<%--                            <button type="button" class="big" name="detail5">SMS보내기</button>--%>
+                            <button type="button" class="big" name="detail4" id="mailsendbtn">메일 보내기</button>
+                            <button type="button" class="big" name="detail5" id="smssendbtn">SMS 보내기</button>
 <%--                            <button type="button" class="big" name="detail6">로그인 푸시보내기</button>--%>
                         </div>
                     </div>
@@ -437,7 +437,7 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th rowspan="6">받는사람</th>
+                                <th rowspan="7">받는사람</th>
                                 <th>회원등급</th>
                                 <td>
                                     <input type="checkbox" name="user_grant" value="1" id="mem-class-ck1">
@@ -501,8 +501,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>메일 제목</th>
+                                <td>
+                                    <input type="text" name="mail_title" size="100%">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="3">
-                                    <textarea name="mem-mail" id="summernote"></textarea>
+                                    <textarea name="mem-text" id="summernote"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -520,7 +526,7 @@
                 <button type="button" class="modal-close">×</button>
             </div>
             <div class="modal-body clearfix">
-                <form name="member-management" id="member-management" method="get">
+                <form name="member-sms" id="member-sms" method="POST">
                     <table class="goods-detail-table">
                         <colgroup>
                             <col width="10%">
@@ -529,42 +535,38 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th colspan="2">보내는 사람</th>
-                                <td>이름: <input type="text" placeholder="원조이라이프">
-                                    번호: <input type="text" placeholder="000-0000-0000">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th rowspan="6">받는사람</th>
+                                <th rowspan="8">받는사람</th>
                                 <th>회원등급</th>
                                 <td>
-                                    <input type="checkbox" name="member-class-ck" id="mem-class-ck1">
+                                    <input type="checkbox" name="user_grant" value="1" id="mem-class-ck1">
                                     <label for="mem-class-ck1">일반회원</label>
-                                    <input type="checkbox" name="member-class-ck" id="mem-class-ck2">
-                                    <label for="mem-class-ck2">우수회원</label>
-                                    <input type="checkbox" name="member-class-ck" id="mem-class-ck3">
-                                    <label for="mem-class-ck3">특별회원</label>
+                                    <input type="checkbox" name="user_grant" value="7" id="mem-class-ck2">
+                                    <label for="mem-class-ck2">특별회원</label>
+                                    <input type="checkbox" name="user_grant" value="41" id="mem-class-ck3">
+                                    <label for="mem-class-ck3">VIP회원</label>
+                                    <input type="checkbox" name="user_grant" value="42" id="mem-class-ck3">
+                                    <label for="mem-class-ck3">나그네회원</label>
                                 </td>
                             </tr>
                             <tr>
                                 <th>나이</th>
                                 <td>
-                                    <input type="checkbox" name="age-class-ck" id="age-class-ck1">
+                                    <input type="checkbox" name="age_class" value="10" id="age-class-ck1">
                                     <label for="age-class-ck1">10대</label>
-                                    <input type="checkbox" name="age-class-ck" id="age-class-ck2">
+                                    <input type="checkbox" name="age_class" value="20" id="age-class-ck2">
                                     <label for="age-class-ck2">20대</label>
-                                    <input type="checkbox" name="age-class-ck" id="age-class-ck3">
+                                    <input type="checkbox" name="age_class" value="30" id="age-class-ck3">
                                     <label for="age-class-ck3">30대</label>
-                                    <input type="checkbox" name="age-class-ck" id="age-class-ck4">
+                                    <input type="checkbox" name="age_class" value="40" id="age-class-ck4">
                                     <label for="age-class-ck4">40대 이상</label>
                                 </td>
                             </tr>
                             <tr>
                                 <th>성별</th>
                                 <td>
-                                    <input type="checkbox" name="sex-class-ck" id="sex-class-ck1">
-                                    <label for="">여자</label>
-                                    <input type="checkbox" name="sex-class-ck" id="sex-class-ck2">
+                                    <input type="checkbox" name="sex" value="02" id="sex-class-ck1">
+                                    <label for="sex-class-ck1">여자</label>
+                                    <input type="checkbox" name="sex" value="01" id="sex-class-ck2">
                                     <label for="sex-class-ck2">남자</label>
                                 </td>
                             </tr>
@@ -575,35 +577,53 @@
                                     <span class="cc">* 분류 번호는 상품 분류관리에서 분류URL 항목의 가장 마지막 숫자입니다.</span><br>
                                     <span class="cc">* 상품 분류의 분류URL이 /product/list.html?cale_no=7 이라면 7을 입력합니다.</span><br>
                                     <span class="cc">* 분류 개수가 많은 경우는 10|20|21 등으로 입력합니다.</span><br></p>
-                                     <input type="text" id="goods-cate" name="goods-cate" placeholder="ex) 24|29|30">
+                                    <input type="text" id="goods-cate" name="goods-cate" placeholder="ex) 24|29|30">
                                  </td>
                             </tr>
                             <tr>
                                 <th>상품정보</th>
                                 <td>
-                                    <input type="checkbox" name="product-class-ck" id="prod-class-ck1">
+                                    <input type="radio" name="product_class" value="payment" id="prod-class-ck1">
                                     <label for="prod-class-ck1">구매상품</label>
-                                    <input type="checkbox" name="product-class-ck" id="prod-class-ck2">
+                                    <input type="radio" name="product_class" value="product_cart" id="prod-class-ck2">
                                     <label for="prod-class-ck2">장바구니 상품</label>
                                 </td>
                             </tr>
                             <tr>
                                 <th>SMS수신거부</th>
                                 <td>
-                                    <input type="checkbox" name="mail-class-ck" id="mail-class-ck1">
+                                    <input type="radio" name="email_privacy_policy" value="inclusion" id="mail-class-ck1">
                                     <label for="mail-class-ck1">포함</label>
-                                    <input type="checkbox" name="mail-class-ck" id="mail-class-ck2">
+                                    <input type="radio" name="email_privacy_policy" value="exception" id="mail-class-ck2">
                                     <label for="mail-class-ck2">제외</label>
                                 </td>
                             </tr>
                             <tr>
+                                <th>SMS 종류</th>
+                                <td>
+                                    <input type="radio" name="sms_kind" id="sms-kind-ck1" value="S">
+                                    <label for="sms-kind-ck1">SMS</label>
+                                    <input type="radio" name="sms_kind" id="sms-kind-ck2" value="L">
+                                    <label for="sms-kind-ck2">LMS</label>
+                                    <%--<input type="radio" name="sms_kind" id="sms-kind-ck3" value="M">
+                                    <label for="sms-kind-ck2">MMS</label>--%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>SMS 제목</th>
+                                <td>
+                                    <p class="cc2">*제목은 LMS(장문 메시지)일 경우에만 입력해주세요.</p>
+                                    <input type="text" name="sms_title" size="100%">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="3">
-                                    <textarea name="mem-SMS" id="summernote2"></textarea>
+                                    <textarea name="mem-text" style="height: 200px;width:100%"></textarea>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn-red">발송하기</button>
+                    <button type="button" class="btn-red" id="sendsms">발송하기</button>
                     <button type="button" class="btn-red cancle">취소</button>
                 </form>
             </div>

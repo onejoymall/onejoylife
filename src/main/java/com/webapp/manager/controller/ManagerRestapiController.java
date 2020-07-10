@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.net.URLEncoder;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -22,7 +23,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.common.support.CurlPost;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -1565,27 +1583,50 @@ public class ManagerRestapiController {
             if(params.get("user_grant") != null){
                 String[] usergrant = request.getParameterValues("user_grant");
                 int[] user_grant = Arrays.stream(usergrant).mapToInt(Integer::parseInt).toArray();
+                String s_usergrant = "";
+                for(int i=0; i < usergrant.length; i++){
+                    s_usergrant += usergrant[i];
+                    if(i < usergrant.length -1) {
+                        s_usergrant += "|";
+                    }
+                }
                 params.put("user_grant", user_grant);
+                params.put("s_usergrant", s_usergrant);
             }
             if(params.get("age_class") != null){
                 String[] ageclass = request.getParameterValues("age_class");
                 int[] age_class = Arrays.stream(ageclass).mapToInt(Integer::parseInt).toArray();
+                String s_ageclass = "";
+                for(int i=0; i < ageclass.length; i++){
+                    s_ageclass += ageclass[i];
+                    if(i < ageclass.length -1) {
+                        s_ageclass += "|";
+                    }
+                }
                 params.put("age_class", age_class);
+                params.put("s_ageclass", s_ageclass);
             }
             if(params.get("sex") != null){
                 String[] sex = request.getParameterValues("sex");
+                String s_sex = "";
+                for(int i=0; i < sex.length; i++){
+                    s_sex += sex[i];
+                    if(i < sex.length -1) {
+                        s_sex += "|";
+                    }
+                }
                 params.put("sex", sex);
+                params.put("s_sex", s_sex);
             }
 
-//            if(product != null && product.equals("")){
             if(params.get("goods-cate") != null && params.get("goods-cate") != ""){
                 String product = (String) params.get("goods-cate");
                 String[] product_ct = product.split("\\|");
                 params.put("product_ct", product_ct);
             }
             String memo;
-            String subject =  messageSource.getMessage("ManagerauthemailTitle","ko");
-            memo = (String)params.get("mem-mail");
+            String subject = (String) params.get("mail_title");
+            memo = (String)params.get("mem-text");
 
             List<Map<String,Object>> sendmaillist = userDAO.getMailUserList(params);
 
@@ -1593,10 +1634,139 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
-                //중복이 아니면 메일전송
-//                mailSender.sendSimpleMessage(userVO.getEmail(), subject, memo);
                 for(Map<String,Object> list:sendmaillist) {
                     mailSender.sendSimpleMessage((String) list.get("email"), subject, memo);
+                    params.put("usr_id", list.get("usr_id"));
+                    params.put("email", list.get("email"));
+                    params.put("subject", subject);
+                    userDAO.insertMarketingLog(params);
+                }
+                resultMap.put("success","success");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+
+    //회원관리 - SMS 보내기
+    @RequestMapping(value = "/Manager/sendsms", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json")
+    public HashMap<String, Object> ManagerSendSms(@RequestParam HashMap params,ModelMap model,HttpServletRequest request, UserVO userVO){
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try {
+            if(params.get("user_grant") != null){
+                String[] usergrant = request.getParameterValues("user_grant");
+                int[] user_grant = Arrays.stream(usergrant).mapToInt(Integer::parseInt).toArray();
+                String s_usergrant = "";
+                for(int i=0; i < usergrant.length; i++){
+                    s_usergrant += usergrant[i];
+                    if(i < usergrant.length -1) {
+                        s_usergrant += "|";
+                    }
+                }
+                params.put("user_grant", user_grant);
+                params.put("s_usergrant", s_usergrant);
+            }
+            if(params.get("age_class") != null){
+                String[] ageclass = request.getParameterValues("age_class");
+                int[] age_class = Arrays.stream(ageclass).mapToInt(Integer::parseInt).toArray();
+                String s_ageclass = "";
+                for(int i=0; i < ageclass.length; i++){
+                    s_ageclass += ageclass[i];
+                    if(i < ageclass.length -1) {
+                        s_ageclass += "|";
+                    }
+                }
+                params.put("age_class", age_class);
+                params.put("s_ageclass", s_ageclass);
+            }
+            if(params.get("sex") != null){
+                String[] sex = request.getParameterValues("sex");
+                String s_sex = "";
+                for(int i=0; i < sex.length; i++){
+                    s_sex += sex[i];
+                    if(i < sex.length -1) {
+                        s_sex += "|";
+                    }
+                }
+                params.put("sex", sex);
+                params.put("s_sex", s_sex);
+            }
+            if(params.get("goods-cate") != null && params.get("goods-cate") != ""){
+                String product = (String) params.get("goods-cate");
+                String[] product_ct = product.split("\\|");
+                params.put("product_ct", product_ct);
+            }
+            String memo;
+            String subject = (String) params.get("sms_title");
+            memo = (String)params.get("mem-text");
+            String profile_key = "0f46edf22b245b284f0b3bc6c6868bf1b7734c59";
+
+            if(params.get("sms_kind").equals("L")){
+                if(params.get("sms_title") == null || params.get("sms_title") == ""){
+                    error.put("Error", "SMS 제목을 입력해주세요.");
+                }
+            }
+
+            List<Map<String,Object>> sendsmslist = userDAO.getMailUserList(params);
+
+            HttpClient client = HttpClientBuilder.create().build();
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+
+                if(subject != null && subject != ""){
+                    for(Map<String,Object> list:sendsmslist) {//+list.get("phone")
+                        String msgid = "SWT-"+numberGender.numberGen(7,1);
+					    HttpPost post =  new HttpPost ("https://alimtalk-api.sweettracker.net//v2/"+profile_key+"/sendMessage");
+
+                        StringEntity jsonparams = new StringEntity("[{\"reserved_time\":\"00000000000000\",\"receiver_num\":\""+list.get("phone")+"\",\"sms_title\":\""+subject+"\",\"sms_kind\":\"L\",\"profile_key\":\"+profile_key+\",\"sender_num\":\"1811-9590\",\"sms_message\":\""+memo+"\",\"sms_only\":\"Y\",\"msgid\":\""+msgid+"\",\"message\":\"\"}]", "UTF-8");
+					    jsonparams.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json; charset=UTF-8"));
+                        post.addHeader("userid", "onejoycorp");
+					    post.addHeader("Content-Type", "application/json;charset=UTF-8");
+                        post.setEntity(jsonparams);
+
+
+					    HttpResponse response = client.execute(post);
+
+					    if (response.getStatusLine().getStatusCode() != 200) {
+                            resultMap.put("validateError", error);
+                        }else {
+					        params.put("msg_id", msgid);
+					        params.put("usr_id", list.get("usr_id"));
+                            params.put("email", list.get("phone"));
+                            params.put("subject", subject);
+                            userDAO.insertMarketingLog(params);
+					        resultMap.put("success","success");
+                        }
+                    }
+                } else{
+                    for(Map<String,Object> list:sendsmslist) {
+                        String msgid = "SWT-"+numberGender.numberGen(7,1);
+					    HttpPost post =  new HttpPost ("https://alimtalk-api.sweettracker.net//v2/"+profile_key+"/sendMessage");
+
+                        StringEntity jsonparams = new StringEntity("[{\"reserved_time\":\"00000000000000\",\"receiver_num\":\""+list.get("phone")+"\",\"sms_kind\":\"S\",\"profile_key\":\"+profile_key+\",\"sender_num\":\"1811-9590\",\"sms_message\":\""+memo+"\",\"sms_only\":\"Y\",\"msgid\":\""+msgid+"\",\"message\":\"\"}]", "UTF-8");
+					    jsonparams.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json; charset=UTF-8"));
+                        post.addHeader("userid", "onejoycorp");
+					    post.addHeader("Content-Type", "application/json;charset=UTF-8");
+                        post.setEntity(jsonparams);
+
+
+					    HttpResponse response = client.execute(post);
+
+					    if (response.getStatusLine().getStatusCode() != 200) {
+                            resultMap.put("validateError", error);
+                        } else {
+					        params.put("msg_id", msgid);
+					        params.put("usr_id", list.get("usr_id"));
+                            params.put("phone", list.get("phone"));
+                            userDAO.insertMarketingLog(params);
+					        resultMap.put("success","success");
+                        }
+
+                    }
                 }
             }
         } catch (Exception e) {
