@@ -217,6 +217,7 @@
             	<option value="">사용가능 쿠폰이 없습니다.</option>
             </c:if>
          </select>
+         <input type="hidden" name="coupon_discount" value="0"/>
          <ul class="calculator">
             <li>사용가능 쿠폰</li>
             <li><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /> <span>장</span></li>
@@ -613,6 +614,7 @@
 		    $("input[name=coupon_paid_user_id]").val('');
 		}
 		
+		$("input[name=coupon_discount]").val(disCoupon);
 		var resultDiscount = parseInt(originDiscount) + parseInt(disCoupon);
 		var resultPayment = originPayment - disCoupon + addDelivery;
         $("#discountSpan").text(resultDiscount.toLocaleString('en'));
