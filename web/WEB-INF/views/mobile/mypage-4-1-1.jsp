@@ -69,6 +69,7 @@
             <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD"><label for="ra1-1">기본 배송지</label>
             <input type="radio" id="ra1-2" name="selectAddress" value="LAST"><label for="ra1-2">최신 배송지</label>
             <input type="radio" id="ra1-3" name="selectAddress" value="NEW"><label for="ra1-3">새로입력</label>
+            <input type="radio" id="ra1-4" name="selectAddress" value="LIST"><label for="ra1-4">배송지 목록</label>
         </div>
         </c:if>
         <p class="text-md mt-2 mb-05">받으시는 분</p>
@@ -274,6 +275,29 @@
     <label for="replysns"><span class="red text-bold">필수</span> 주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?</label>
 </section>
 <div class="bottomBtns">
+ <div class="underPop" id="S-list">
+        <div class="content">
+            <header>
+               <h3>내배송지</h3>
+                <button class="popClose">
+                    <i class="ri-close-line"></i>
+                </button>
+            </header>
+            <content>
+                <div class="ov-s">
+                    <table>
+                        <colgroup>
+                            <col style="width: 300px;">
+                            <col style="width: 100px;">
+                        </colgroup>
+                        <tbody class="body-tr" id="list_address">
+
+                    </table>
+                </div>
+               
+            </content>
+        </div>
+    </div>
     <ul>
         <li><a href="javascript:void(0);" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
     </ul>
@@ -597,6 +621,68 @@
         $("#paymentSpan").text(resultPayment.toLocaleString('en'));
         $("input[name=payment]").val(resultPayment);
     });
+	
+	
+	$('.popClose').on('click',function(){
+	    $('.underPop').removeClass('on');
+	    $('body').removeClass('overflow-hidden');
+	})
+	$('#ra1-4').on('click',function(){
+		$('#list_address').empty();
+	    $('#S-list').addClass('on');
+	    $('body').addClass('overflow-hidden');
+	    
+	 	jQuery.ajax({
+            type: 'POST',
+            url: '/payment/getMyListDelivery',
+            data:formData,
+            success: function (data) {
+            	for (var i=0;i<data.deliveryList.length;i++) {
+            		var item = data.deliveryList[i];
+          
+            		$("#list_address").append('<tr><td><p align="left" >' + item.order_user_name + '</p><p align="left" >' + item.roadAddress +'</p><p align="left" >' + item.extraAddress +'</p></td><td> <button type="button" class="c-btn" id="choose" data-id="' + item.order_no + '">선택</button></td>');
+            		 
+            	}
+            	
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            },
+        });
+	    
+	})
+	
+	    $(document).on("click","#choose",function(){ 
+    	var order_no = $(this).data("id");
+    	
+    	jQuery.ajax({
+            type: 'POST',
+            url: '/payment/getDeliveryAddress2',
+            data: "order_no="+order_no,
+            success: function (data) {
+                if(data.deliveryChoose!=null ) {
+                    $.each(data.deliveryChoose,function(index, item){
+                        if(index != "order_no" &&  index != "product_cd"){
+                            $("input[name="+index+"]").val(item);
+                        }
+                        if(index=="delivery_user_phone" || index=="delivery_user_tel"){
+                            var number = item.split("-");
+                            ['a','b','c'].forEach(function(el,idx){
+                                $("input[name="+index+"_"+el+"]").val(number[idx]);
+                            });
+                        }
+                    });
+                    $(".underPop").removeClass('on');
+                    $('body').removeClass('overflow-hidden');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error,xhr,status );
+            },
+        });
+    	
+    });
+	
 </script>
 
 <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>

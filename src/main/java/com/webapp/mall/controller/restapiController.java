@@ -1594,6 +1594,9 @@ public class restapiController {
 				} else if (params.get("deliveryType").equals("last")) {
 					resultMap.put("delivery", deliveryDAO.getLastDelivery(params));
 				}
+				
+					
+				
 			}
 		} catch (Exception e) {
 
@@ -1602,6 +1605,67 @@ public class restapiController {
 		return resultMap;
 	}
 
+	// 내가 선택한 배송지 불러오기 /
+	@Transactional
+	@RequestMapping(value = "/payment/getDeliveryAddress2", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> getDeliveryAddress2(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+		try {
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				params.put("email", session.getAttribute("email"));
+				// 로그인 확인
+				Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+				if (!isEmpty(userInfo)) {
+					params.put("usr_id", userInfo.get("usr_id"));
+				}
+
+				resultMap.put("deliveryChoose", deliveryDAO.getMyListDelivery2(params));
+					
+					
+				
+			} 
+		} catch (Exception e) {
+
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
+	
+	// 결제화면 배송지리스트 불러오기
+	@Transactional
+	@RequestMapping(value = "/payment/getMyListDelivery", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> getMyListDelivery(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+		try {
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				params.put("email", session.getAttribute("email"));
+				// 로그인 확인
+				Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+				if (!isEmpty(userInfo)) {
+					params.put("usr_id", userInfo.get("usr_id"));
+				}
+				List<Map<String, Object>>  list = deliveryDAO.getMyListDelivery(params);
+				resultMap.put("deliveryList", list);
+					
+					
+				
+			}
+		} catch (Exception e) {
+
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
 	//myPage Q&A 저장
 	@RequestMapping(value = "/Save/writeQna", method = RequestMethod.POST, produces = "application/json")
 	public HashMap<String, Object> writeQna(@RequestParam HashMap params, HttpServletRequest request,
