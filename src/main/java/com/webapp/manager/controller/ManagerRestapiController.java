@@ -2517,7 +2517,7 @@ public class ManagerRestapiController {
 		String mailTitle = "";                            //전송되는 이메일의 제목 설정 (공백 시 바로빌 기본 제목으로 전송됨)
 
 		//-------------------------------------------
-		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.TESTBED);
+		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.RELEASE);
 		int result = barobillApiService.taxInvoice.registAndIssueTaxInvoice(certKey, taxInvoice.getInvoicerParty().getCorpNum(), taxInvoice, sendSms, forceIssue, mailTitle);
 
 		System.out.println(result);
