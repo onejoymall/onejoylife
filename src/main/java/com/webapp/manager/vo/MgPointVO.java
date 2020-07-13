@@ -15,6 +15,7 @@ public class MgPointVO extends SearchVO {
     private String email;
     private String item;
     
+    
     public String getItem() {
 		return item;
 	}
