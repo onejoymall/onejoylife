@@ -416,3 +416,48 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 .modal-body input[type="checkbox"] {
     vertical-align: -8px;
 }
+.input-box1 > button{
+    width: 53.5px;
+    height: 27px;
+    border: 1px solid #62606b;
+    background: #fff;
+    color: #62606b;
+    text-align: center;
+    padding-top: 2px;
+    margin-right: 5px;
+    line-height: 22px;
+}
+.cla {
+    width: 130px;
+    height: 25px;
+    float: left;
+    background: #fff;
+    border: 1px solid #b5b5b5;
+}
+.input-box2 {
+    overflow: hidden;
+    float: left;
+}
+.input-box1 > p:hover,
+.input-box1-1 > p {
+    cursor:pointer
+}
+.cla > input {
+    float: left;
+    display: block;
+    width: 80%;
+    height: 100%;
+    border-width: 0;
+    padding: 0 17px;
+}
+.cla-img1 {
+    float: left;
+    width: 10%;
+    height: 100%;
+    background: url(../img/icon/calendar.png) no-repeat center / cover;
+}
+.cla-p1 {
+    float: left;
+    margin: 0 10px;
+}
+
