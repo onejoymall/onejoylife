@@ -1688,7 +1688,7 @@ public class ManagerRestapiController {
             String profile_key = "0f46edf22b245b284f0b3bc6c6868bf1b7734c59";
 
             if(params.get("sms_kind").equals("S")){
-                if(params.get("sms_title") != null){
+                if(params.get("sms_title") != ""){
                     error.put("Error", "SMS 제목은 LMS일 경우만 이용 가능합니다.");
                }
             }
