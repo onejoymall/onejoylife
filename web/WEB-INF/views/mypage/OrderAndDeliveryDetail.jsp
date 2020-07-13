@@ -60,9 +60,9 @@
                             <td class="sec1-tbody-p2">
 
                                 <div class="p2-box1">
-                                <c:if test="${paymentDetail.payment_status eq 'W'}">
+                                <%--<c:if test="${paymentDetail.payment_status eq 'W'}">
                                     <p class="p2-ck"><a href="">배송지 변경</a></p>
-                                </c:if>
+                                </c:if>--%>
                                 <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
                                     <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
 
