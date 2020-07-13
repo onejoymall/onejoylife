@@ -600,7 +600,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>SMS 종류</th>
+                                <th>SMS 종류 *</th>
                                 <td>
                                     <input type="radio" name="sms_kind" id="sms-kind-ck1" value="S">
                                     <label for="sms-kind-ck1">SMS</label>
