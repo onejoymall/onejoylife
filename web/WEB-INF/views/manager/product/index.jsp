@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <main>
     <div class="main-content">
         <div class="main-header">
@@ -18,13 +19,26 @@
                     <button type="submit" class="keyword-src-button">검색</button>
 
                     <div class="src-filter-wrap">
-                        <input type="checkbox" name="searchType" value="product_name" id="check2" checked>
+                        <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
                         <label for="check2">상품명</label>
-                        <input type="checkbox" name="searchType" value="product_cd" id="check1" <c:if test="${param.searchType eq 'product_cd'}">checked</c:if>>
-                        <label for="check1">상품코드</label>
+                        <input type="checkbox" name="searchType" value="product_cd" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_cd')}">checked</c:if>>
+                        <label for="check3">상품코드</label>
+                        <input type="checkbox" name="searchType" value="store_name" id="check4" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'store_name')}">checked</c:if>>
+                        <label for="check4">공급사명</label>
+                        <input type="checkbox" name="searchType" value="product_supplier" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_supplier')}">checked</c:if>>
+                        <label for="check5">공급사코드</label>
+                        <input type="checkbox" name="searchType" value="brand_name" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'brand_name')}">checked</c:if>>
+                        <label for="check6">브랜드명</label>
+                        <input type="checkbox" name="searchType" value="product_brand" id="check7" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_brand')}">checked</c:if>>
+                        <label for="check7">브랜드코드</label>
+                        <input type="checkbox" name="searchType" value="origin_name" id="check8" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'origin_name')}">checked</c:if>>
+                        <label for="check8">원산지명</label>
+                        <input type="checkbox" name="searchType" value="product_origin" id="check9" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_origin')}">checked</c:if>>
+                        <label for="check9">원산지코드</label>
+                        <input type="checkbox" name="searchType" value="product_model_name" id="check10" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_model_name')}">checked</c:if>>
+                        <label for="check10">모델명</label>
                     </div>
                 </div>
-                <!--
                 <table class="keyword-src-table">
                     <colgroup>
                         <col width="80px">
@@ -33,52 +47,50 @@
                         <col width="420px">
                     </colgroup>
                     <tbody>
-                    <tr>
-                        <th>카테고리</th>
-                        <td>
-                            <select name="src-category">
-                                <option value="전체">전체</option>
-                                <option value="뷰티">뷰티</option>
-                                <option value="식품">식품</option>
-                            </select>
-                            <select name="src-category">
-                                <option value="전체">전체</option>
-                                <option value="수입">수입</option>
-                                <option value="명품">명품</option>
-                                <option value="매스티지">매스티지</option>
-                                <option value="트렌드">트렌드</option>
-                                <option value="해외직구">해외직구</option>
-                            </select>
-                            <select name="src-category">
-                                <option value="전체">전체</option>
-                                <option value="스킨케어">스킨케어</option>
-                                <option value="메이크업">메이크업</option>
-                                <option value="향수">향수</option>
-                                <option value="남성화장품">남성화장품</option>
-                            </select>
-                        </td>
-                        <th>브랜드</th>
-                        <td>
-                            <select name="src-brand">
-                                <option value="전체">전체</option>
-                                <option value="분류1">분류1</option>
-                                <option value="분류2">분류2</option>
-                            </select>
-                            <select name="src-brand">
-                                <option value="전체">전체</option>
-                                <option value="분류1">분류1</option>
-                                <option value="분류2">분류2</option>
-                            </select>
-                            <select name="src-brand">
-                                <option value="전체">전체</option>
-                                <option value="분류1">분류1</option>
-                                <option value="분류2">분류2</option>
-                            </select>
-                        </td>
-                    </tr>
-                    </tbody>
+                            <tr>
+                                <th>카테고리</th>
+                                <td id="categorySearch">
+	                                    <select class="category1" name="category1">
+	                                    <option value=''>--</option>
+	                                    </select>
+	                                    <select class="category2" name="category2">
+	                                    <option value=''>--</option>
+	                                    </select>
+	                                    <select class="category3" name="category3">
+	                                    <option value=''>--</option>
+	                                    </select>
+	                                </td>
+	                                <th>등록일</th>
+	                             <td>
+		                             <div class="input-box1">
+			                             <button type="button" class="ra-num" data-id="con1">오늘</p>
+			                             <button type="button" class="ra-num" data-id="con2">1주일</p>
+			                             <button type="button" class="ra-num" data-id="con3">1개월</p>
+			                             <button type="button" class="ra-num" data-id="con4">3개월</p>
+			                             <button type="button" class="ra-num" data-id="con5">6개월</p>
+		                             </div>
+	                          	 </td>
+                         	 </tr>
+	                          <tr>
+		                          <th></th>
+		                          <td></td>
+		                          <th></th>
+	                        	  <td>
+		                              <div class="input-box2">
+		                                  <div class="cla">
+		                                      <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+		                                      <div class="cla-img1"></div>
+		                                  </div>
+		                                  <p class="cla-p1"> ~ </p>
+		                                  <div class="cla">
+		                                      <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+		                                      <div class="cla-img1"></div>
+		                                  </div>
+		                              </div>
+	                          	  </td>
+	                          </tr>
+                        </tbody>
                 </table>
-                -->
             </form>
         </div>
         <div class="goods-list-wrap">
@@ -1417,6 +1429,77 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		jQuery.ajax({
+            type: 'POST',
+            url: '/Manager/productCategoryList',
+            data: {"pd_category_upper_code":0},
+            success: function (data) {
+                console.log(data.list);
+                var html="<option value=''>--</option>"
+                data.list.forEach(function(el){
+                	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+                });
+                $(".category1").html(html);
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    	$('.category1').on("change",function(){
+   	        //소분류 초기화
+   	        $('.category2').empty();
+   	        $('.category3').empty();
+   	        $('.category3').html("<option value=''>--</option>");
+   	     	var uppper_code = -1;
+   	     	if($(this).val()){
+   	        	uppper_code =$(this).val();
+   	     	}
+
+   	        jQuery.ajax({
+   	            type: 'POST',
+   	            url: '/Manager/productCategoryList',
+   	            data: {"pd_category_upper_code":uppper_code},
+   	            success: function (data) {
+  	        			console.log(data.list);
+  	                    var html="<option value=''>--</option>"
+  	                    data.list.forEach(function(el){
+  	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+  	                    });
+  	                    $(".category2").html(html);
+   	            },
+   	            error: function (xhr, status, error) {
+   	                alert(error);
+   	            }
+   	        });
+   	    });
+    	$('.category2').on("change",function(){
+   	        //소분류 초기화
+   	        $('.category3').empty();
+   	     	var uppper_code = -1;
+	     	if($(this).val()){
+	        	uppper_code =$(this).val();
+	     	}
+	     	
+   	        jQuery.ajax({
+   	            type: 'POST',
+   	            url: '/Manager/productCategoryList',
+   	            data: {"pd_category_upper_code":uppper_code},
+   	            success: function (data) {
+  	                    var html="<option value=''>--</option>"
+  	                    data.list.forEach(function(el){
+  	                    	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";
+  	                    });
+  	                    $(".category3").html(html);
+   	            },
+   	            error: function (xhr, status, error) {
+   	                alert(error);
+   	            }
+   	        });
+   	    });
+	})
+</script>
 <script>
     $('.order-select').on("change",function () {
         $('input[name=displayRowCount]').val($(this).val());

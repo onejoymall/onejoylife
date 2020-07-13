@@ -26,9 +26,9 @@
                    <tr>
                        <th class="tr-tit">부가세 유형</th>
                        <td>
-                           <input type="radio" name="tax_type" id="vat1" value=1 checked>
+                           <input type="radio" name="tax_type" id="vat1" value=1>
                            <label for="vat1">과세</label>
-                           <input type="radio" name="tax_type" id="vat2" value=2>
+                           <input type="radio" name="tax_type" id="vat2" value=2 checked>
                            <label for="vat2">영세율</label>
                        </td>
                        <th class="tr-tit">공급받는자 구분</th>
@@ -181,27 +181,27 @@
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></td>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="dd"/></td>
 						<td>${empty_count}</td>
-						<td>${fn:substring(supply_total_str,0,1)}</td>
-						<td>${fn:substring(supply_total_str,1,2)}</td>
-						<td>${fn:substring(supply_total_str,2,3)}</td>
-						<td>${fn:substring(supply_total_str,3,4)}</td>
-						<td>${fn:substring(supply_total_str,4,5)}</td>
-						<td>${fn:substring(supply_total_str,5,6)}</td>
-						<td>${fn:substring(supply_total_str,6,7)}</td>
-						<td>${fn:substring(supply_total_str,7,8)}</td>
-						<td>${fn:substring(supply_total_str,8,9)}</td>
-						<td>${fn:substring(supply_total_str,9,10)}</td>
-						<td>${fn:substring(supply_total_str,10,11)}</td>
-						<td>${fn:substring(tax_total_str,0,1)}</td>
-						<td>${fn:substring(tax_total_str,1,2)}</td>
-						<td>${fn:substring(tax_total_str,2,3)}</td>
-						<td>${fn:substring(tax_total_str,3,4)}</td>
-						<td>${fn:substring(tax_total_str,4,5)}</td>
-						<td>${fn:substring(tax_total_str,5,6)}</td>
-						<td>${fn:substring(tax_total_str,6,7)}</td>
-						<td>${fn:substring(tax_total_str,7,8)}</td>
-						<td>${fn:substring(tax_total_str,8,9)}</td>
-						<td>${fn:substring(tax_total_str,9,10)}</td>
+						<td>${fn:substring(total_amount_str,0,1)}</td>
+						<td>${fn:substring(total_amount_str,1,2)}</td>
+						<td>${fn:substring(total_amount_str,2,3)}</td>
+						<td>${fn:substring(total_amount_str,3,4)}</td>
+						<td>${fn:substring(total_amount_str,4,5)}</td>
+						<td>${fn:substring(total_amount_str,5,6)}</td>
+						<td>${fn:substring(total_amount_str,6,7)}</td>
+						<td>${fn:substring(total_amount_str,7,8)}</td>
+						<td>${fn:substring(total_amount_str,8,9)}</td>
+						<td>${fn:substring(total_amount_str,9,10)}</td>
+						<td>${fn:substring(total_amount_str,10,11)}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 						<td><input type="text" name="remark1"/></td>
 					</tr>
                 </tbody>
@@ -236,8 +236,8 @@
                     <input type="hidden" name="infomation" value="1"/>
                     <input type="hidden" name="chargeableUnit" value="${list.payment_order_quantity}"/>
                     <input type="hidden" name="unitPrice" value="${list.unit_price}"/>
-                    <input type="hidden" name="amount" value="${list.unit_supply_price}"/>
-                    <input type="hidden" name="tax" value="${list.unit_price - list.unit_supply_price}"/>
+                    <input type="hidden" name="amount" value="${list.unit_price}"/>
+                    <input type="hidden" name="tax" value="0"/>
                     <input type="hidden" name="description" value=""/>
                     	<tr>
 	                        <td><span><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></span></td>
@@ -246,8 +246,8 @@
 	                        <td><span>1</span></td>
 	                        <td><span>${list.payment_order_quantity}</span></td>
 	                        <td><span><fmt:formatNumber value="${list.unit_price}" groupingUsed="true" /></span></td>
-	                        <td><span><fmt:formatNumber value="${list.unit_supply_price}" groupingUsed="true" /></span></td>
-	                        <td><span><fmt:formatNumber value="${list.unit_price - list.unit_supply_price}" groupingUsed="true" /></span></td>
+	                        <td><span><fmt:formatNumber value="${list.unit_price}" groupingUsed="true" /></span></td>
+	                        <td><span><fmt:formatNumber value="0" groupingUsed="true" /></span></td>
 	                        <td><span></span></td>
 	                    </tr>
                     </c:forEach>
@@ -256,8 +256,8 @@
                     <input type="hidden" name="infomation" value=""/>
                     <input type="hidden" name="chargeableUnit" value="1"/>
                     <input type="hidden" name="unitPrice" value="${delivery_payment}"/>
-                    <input type="hidden" name="amount" value="${delivery_supply_payment}"/>
-                    <input type="hidden" name="tax" value="${delivery_payment - delivery_supply_payment}"/>
+                    <input type="hidden" name="amount" value="${delivery_payment}"/>
+                    <input type="hidden" name="tax" value="0"/>
                     <input type="hidden" name="description" value=""/>
                     <tr>
                         <td><span><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></span></td>
@@ -266,8 +266,8 @@
                         <td><span>1</span></td>
                         <td><span>1</span></td>
                         <td><span><fmt:formatNumber value="${delivery_payment}" groupingUsed="true" /></span></td>
-                        <td><span><fmt:formatNumber value="${delivery_supply_payment}" groupingUsed="true" /></span></td>
-                        <td><span><fmt:formatNumber value="${delivery_payment - delivery_supply_payment}" groupingUsed="true" /></span></td>
+                        <td><span><fmt:formatNumber value="${delivery_payment}" groupingUsed="true" /></span></td>
+                        <td><span><fmt:formatNumber value="0" groupingUsed="true" /></span></td>
                         <td><span></span></td>
                     </tr>
                 </tbody>
@@ -315,8 +315,8 @@
     $(function(){
     	var order_no = '${param.order_no}';
     	$("input[name=tax_type]").on("input", function(){
-    		if($("input[name=tax_type]:checked").val() == '2'){
-    			location.href="/Popup/taxInvoiceZero?order_no="+order_no;
+    		if($("input[name=tax_type]:checked").val() == '1'){
+    			location.href="/Popup/taxInvoice?order_no="+order_no;
     		}
     	});
     });

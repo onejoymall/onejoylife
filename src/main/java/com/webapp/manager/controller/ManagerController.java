@@ -199,6 +199,7 @@ public class ManagerController {
             searchVO.pageCalculate(productDAO.getMgProductListCount(searchVO));
             params.put("rowStart", searchVO.getRowStart());
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
+            params.put("searchTypeArr", searchVO.getSearchTypeArr());
             List<Map<String, Object>> productList = productDAO.getMgProductList(searchVO);
             model.addAttribute("productList", productList);
             model.addAttribute("table_name", "product");
@@ -206,6 +207,7 @@ public class ManagerController {
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "goods");
             model.addAttribute("searchVO",searchVO);
+            model.addAttribute("params",params);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -302,6 +304,7 @@ public class ManagerController {
             searchVO.pageCalculate(giveawayDAO.getGiveawayListCount(searchVO));
             params.put("rowStart", searchVO.getRowStart());
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
+            params.put("searchTypeArr",searchVO.getSearchTypeArr());
             List<Map<String, Object>> productList = giveawayDAO.getGiveawayList(searchVO);
             model.addAttribute("table_name", "giveaway");
             model.addAttribute("Pk", "giveaway_id");
@@ -309,6 +312,7 @@ public class ManagerController {
             model.addAttribute("style", "goods");
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("productList", productList);
+            model.addAttribute("params", params);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -340,6 +344,7 @@ public class ManagerController {
 
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("searchTypeArr",searchVO.getSearchTypeArr());
             List<Map<String,Object>> giveawayList = giveawayDAO.getUserGiveawayPlayList(params);
 
             //코드 목록
@@ -354,6 +359,7 @@ public class ManagerController {
             model.addAttribute("listCnt", giveawayDAO.getUserGiveawayPlayListCount(params));
             model.addAttribute("list", giveawayList);
             model.addAttribute("searchVO", searchVO);
+            model.addAttribute("params", params);
             
           //택배사목록
             //스위트레커 연동필요
@@ -637,6 +643,7 @@ public class ManagerController {
     		searchVO.pageCalculate(mgCouponDAO.getCouponListCount(params));
     		params.put("displayRowCount", searchVO.getDisplayRowCount());
     		params.put("rowStart", searchVO.getRowStart());
+    		params.put("searchTypeArr",searchVO.getSearchTypeArr());
     		List<Map<String, Object>> list = mgCouponDAO.getCouponList(params);
     		
     		//발급조건
@@ -652,6 +659,7 @@ public class ManagerController {
         } catch (Exception e) {
              e.printStackTrace();
         }
+        model.addAttribute("params", params);
         model.addAttribute("topNav", 2);
         model.addAttribute("style", "promotion-coupon");
         model.addAttribute("postUrl", "/Manager/promotion-coupon");
@@ -666,11 +674,13 @@ public class ManagerController {
             mgOptionVO.setDisplayRowCount(10);
 //            mgBrandVO.setStaticRowEnd(10);
             mgOptionVO.pageCalculate(mgOptionDAO.getOptionListCount(mgOptionVO));
+            params.put("searchTypeArr",mgOptionVO.getSearchTypeArr());
             List<Map<String, Object>> list = mgOptionDAO.getOptionList(mgOptionVO);
             model.addAttribute("list", list);
             model.addAttribute("searchVO", mgOptionVO);
             model.addAttribute("table_name", "product_option");
             model.addAttribute("Pk", "product_option_code");
+            model.addAttribute("params", params);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1116,6 +1126,7 @@ public class ManagerController {
             mgUserVO.setDisplayRowCount(10);
             mgUserVO.setStaticRowEnd(10);
             mgUserVO.pageCalculate(mgUserDAO.getManagerUserListCount(mgUserVO));
+            params.put("searchTypeArr",mgUserVO.getSearchTypeArr());
             List<Map<String,Object>> depthList = mgUserDAO.getMenuDepth();
             model.addAttribute("depthList", depthList);
             List<Map<String,Object>> list = mgUserDAO.getManagerUserList(mgUserVO);
@@ -1130,6 +1141,7 @@ public class ManagerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        model.addAttribute("params", params);
         model.addAttribute("topNav", 6);
         model.addAttribute("style", "member-management");
         model.addAttribute("postUrl", "/Manager/member-management");

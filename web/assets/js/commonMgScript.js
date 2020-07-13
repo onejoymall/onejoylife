@@ -339,6 +339,17 @@ $(document).on("click","#gradeChange",function () {
         }
     });
 })
+//회원관리 - 메일보내기 초기화
+$(document).on("click","#mailsendbtn", function () {
+    event.preventDefault();
+    $("input:checkbox[name=user_grant]").attr("checked", false);
+    $("input:checkbox[name=age_class]").attr("checked", false);
+    $("input:checkbox[name=sex]").attr("checked", false);
+    $("input[name=goods-cate]").val('');
+    $("input:radio[name=product_class]").attr("checked", false);
+    $("input:radio[name=email_privacy_policy]").attr("checked", false);
+    $("#summernote").summernote('code','');
+})
 
 //회원관리 - 메일보내기
 $(document).on("click","#sendmail",function () {
@@ -355,16 +366,111 @@ $(document).on("click","#sendmail",function () {
 			console.log(data);
 			if(data.validateError){
 				$.each(data.validateError, function (index, item) {
-					if(index != "Error"){//일반에러메세지
-						$('#'+index+'Validation').html(item);
-					}
+					if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
 				});
-			}
+			} else {
+                if (data.success) {
+                	alert("처리되었습니다.");
+                	self.close();
+                } else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                }
+            }
 		},
 
 		complete : function(data) {
             $('.loading-bar-wrap').addClass("hidden");
             $(".modal4").attr("style", "display:none");
+		},
+		error : function(xhr, status, error) {
+			console.log(xhr+status+error);
+		}
+	});
+})
+
+//회원관리 - SMS 초기화
+$(document).on("click","#smssendbtn", function () {
+    event.preventDefault();
+    $("input:checkbox[name=user_grant]").attr("checked", false);
+    $("input:checkbox[name=age_class]").attr("checked", false);
+    $("input:checkbox[name=sex]").attr("checked", false);
+    $("input[name=goods-cate]").val('');
+    $("input:radio[name=product_class]").attr("checked", false);
+    $("input:radio[name=email_privacy_policy]").attr("checked", false);
+    $("input[name=tempcode]").val('');
+    $("#summernote2").summernote('code','');
+})
+
+//회원관리 - SMS 보내기
+$(document).on("click","#sendsms",function () {
+    $('.loading-bar-wrap').removeClass("hidden");
+	var formData = $("#member-sms").serialize();
+	jQuery.ajax({
+		type:"POST",
+		url:"/Manager/sendsms",
+		data:formData,
+
+		success : function(data) {
+			// 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+			// TODO
+			console.log(data);
+			if(data.validateError){
+				$.each(data.validateError, function (index, item) {
+					if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+				});
+			} else {
+                if (data.success) {
+                	alert("처리되었습니다.");
+                	self.close();
+                } else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                }
+            }
+		},
+
+		complete : function(data) {
+            $('.loading-bar-wrap').addClass("hidden");
+            $(".modal5").attr("style", "display:none");
 		},
 		error : function(xhr, status, error) {
 			console.log(xhr+status+error);
@@ -736,4 +842,55 @@ $(document).on("click",".definitionInsertUpdateBtn",function () {
 	var formData =  $("#mgDefinitionForm").serialize();
 	console.log('/Manager/'+type+"Definition");
 	commonAjaxCall('post','/Manager/'+type+"Definition",formData);
+});
+
+$(document).on("click","#taxInvoceSendBtn",function () {
+	var formData = $("#taxInvoiceForm").serialize();
+	
+	jQuery.ajax({
+        type: 'post',
+        url: "/api/taxInvoice",
+        data:formData,
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+            	if (data.success){
+            		alert("처리되었습니다.");
+            		self.close();
+            	}else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+            	}
+            }
+        },
+        error: function (e){
+        	console.log(e);
+        }
+    });
 });
