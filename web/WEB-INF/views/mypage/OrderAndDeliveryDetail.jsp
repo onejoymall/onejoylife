@@ -60,7 +60,9 @@
                             <td class="sec1-tbody-p2">
 
                                 <div class="p2-box1">
-<%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
+                                <%--<c:if test="${paymentDetail.payment_status eq 'W'}">
+                                    <p class="p2-ck"><a href="">배송지 변경</a></p>
+                                </c:if>--%>
                                 <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
                                     <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
 
@@ -222,96 +224,42 @@
 <!-- 팝업창 -->
 <div class="modal">
     <div class="modal-content">
-        <div class="modal-close">
+        <div class="modal-close-address">
             <p>우편번호 찾기</p>
             <div class="close"></div>
         </div>
         <div class="content-in">
-            <div class="click-box">
-                <p class="ck-box1 on" data-1=ck1>도로명으로 찾기</p>
-                <p class="ck-box1" data-1=ck2>지번으로 찾기</p>
-            </div>
-            <div class="ck on" id="ck1">
-                <div class="search-in1">
-                    <p>도로명과 건물번호를 입력해 주세요 (예: 서리풀길 4)</p>
-                    <div class="sear-input">
-                        <input type="text">
-                        <button type="submit">조회</button>
-                    </div>
-                </div>
-                <div class="search-in2">
-                    <p><span>'서리풀길 4'</span>검색결과는 총 <span class="txt-b">3건</span>입니다.</p>
-                    <table>
-                        <colgroup>
-                            <col style="width: 465px;">
-                            <col style="width: 105px;">
-                        </colgroup>
-                        <thead>
-                        <tr class="head-tr">
-                            <td>주소</td>
-                            <td>우편번호</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="body-tr">
-                            <td class="body-td1">
-                                <div class="td1-p1">
-                                    <p>도로명</p>
-                                    <p>지번</p>
-                                </div>
-                                <div class="td1-p2">
-                                    <p>서울특별시 서초구 서리풀길 4 (서초동)</p>
-                                    <p>서울특별시 서초구 서초동 1605-1 영호빌딩</p>
-                                </div>
-                            </td>
-                            <td>
-                                <p>06643</p>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="ck" id="ck2">
-                <div class="search-in1">
-                    <p>동(읍/면/리/가)을 입력해 주세요. (예: 서초동)</p>
-                    <div class="sear-input">
-                        <input type="text">
-                        <button type="submit">조회</button>
-                    </div>
-                </div>
-                <div class="search-in2">
-                    <p><span>'서리풀길 4'</span>검색결과는 총 <span class="txt-b">3건</span>입니다.</p>
-                    <table>
-                        <colgroup>
-                            <col style="width: 465px;">
-                            <col style="width: 105px;">
-                        </colgroup>
-                        <thead>
-                        <tr class="head-tr">
-                            <td>주소</td>
-                            <td>우편번호</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="body-tr">
-                            <td class="body-td1">
-                                <div class="td1-p1">
-                                    <p>도로명</p>
-                                    <p>지번</p>
-                                </div>
-                                <div class="td1-p2">
-                                    <p>서울특별시 서초구 서리풀길 4 (서초동)</p>
-                                    <p>서울특별시 서초구 서초동 1605-1 영호빌딩</p>
-                                </div>
-                            </td>
-                            <td>
-                                <p>06643</p>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+           <table>
+                <colgroup>
+                    <col style="width: 20%;">
+                   <col style="width: 80%;">
+                </colgroup>
+
+                <thead>
+                <tr class="head-tr">
+                    <td class="body-td1">
+                        주소
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="body-tr">
+                    <td class="body-td2 td-m">
+                        <div class="input-group">
+                            <input placeholder="우편번호" type="text" name="postcode" id="postcode_modi" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+                            <button type="button" class="grey" id="daumMapCall2">우편번호 찾기</button>
+                        </div>
+                        <p class="mar-p2"><input placeholder="도로명주소" type="text" class="sec2-in2" name="roadAddress" id="roadAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                         <p class="mar-p2"><input placeholder="상세주소" type="text" class="sec2-in2" name="extraAddress" id="extraAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                         <p>* 위 칸에 상세주소를 추가로 입력하세요</p>
+                         <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress_modi"></p>
+
+                    </td>
+                </tr>
+                </tbody>
+           </table>
+            <div class="btn-box">
+                <button type="button" class="btn-redcover" id="updateDeliveryBtn">수정</button>
             </div>
         </div>
     </div>
