@@ -302,7 +302,7 @@
             <div>
             	<p>※ 개인인경우 등록번호에 주민번호 입력해주세요.</p>
             	<p>※ 외국인경우 등록번호에 외국인등록번호 또는 여권번호 입력해주세요.</p>
-            	<p>※ 모든번호는 숫자만 입력해주세요.</p>
+            	<p>※ 모든번호는 - 없이 숫자만 입력해주세요.</p>
             </div>
             <div class="but-box">
                 <button class="but2" type="button" onclick="window.print();">인쇄</button>
