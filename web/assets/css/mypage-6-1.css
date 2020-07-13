@@ -226,6 +226,27 @@ main{overflow: hidden;}
     font-size: 1.2rem;
     line-height: 3rem;
 }
+
+.modal-close-address {
+    overflow: hidden;
+    height: 50px;
+    padding: 0 30px;
+    color: #fff;
+    background: #232a32;
+}
+.modal-close-address > p {
+    float: left;
+    font-size: 1.2rem;
+    line-height: 3rem;
+}
+.close {
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin: 15px 0;
+    cursor: pointer;
+    background: url(../img/x.png)no-repeat center / 18px;
+}
 .close {
     float: right;
     width: 20px;
@@ -330,4 +351,43 @@ main{overflow: hidden;}
     float: right;
     padding: 5px;
     margin-right: 5px;
+}
+/*배송지 수정 모달*/
+tbody tr {
+    height: 65px;
+}
+.body-td2{text-align: left;}
+.body-td2 input {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+}
+.input-group input{
+    width: 70%;
+}
+.input-group button{
+    width: calc(30% - 5px);
+    height: 45px;
+    background: #232a32;
+    color: #fff;
+    vertical-align: -1.5px;
+}
+.group-input {
+    margin-top: 10px;
+}
+.td-m {
+    padding: 10px 0;
+}
+.btn-box .btn-redcover {
+    width: 200px;
+    height: 50px;
+    border: 1px solid #232a32;
+    background: #232a32;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 30px;
+}
+.mar-p2, .input-group{
+    margin-bottom: 4px;
 }
