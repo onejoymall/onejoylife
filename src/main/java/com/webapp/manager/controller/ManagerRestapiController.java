@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.webapp.common.support.CurlPost;
+import com.webapp.mall.vo.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -82,10 +83,6 @@ import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.UserDAO;
-import com.webapp.mall.vo.DeliveryInfoVO;
-import com.webapp.mall.vo.GiveawayVO;
-import com.webapp.mall.vo.QnaVO;
-import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -636,6 +633,29 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //주문 상세보기 - 배송지 수정
+    @Transactional
+	@RequestMapping(value = "/Manager/Addrmodi", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> managerAddrmodi(@RequestParam HashMap params, CommonVO commonVO, HttpServletRequest request, HttpSession session) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+		try {
+			if (params.get("postcode").equals(null) || params.get("postcode").equals("")) {
+				error.put("주소", messageSource.getMessage("error.required", "ko"));
+			}
+
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				deliveryDAO.managerAddrmodi(params);
+			}
+		} catch (Exception e) {
+
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
+
     //상품상세보기
     @RequestMapping(value = "/Manager/viewDetail", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerViewDetail(@RequestParam HashMap params, HttpSession session, MgCommonVO mgCommonVO, HttpServletRequest request){

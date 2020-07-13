@@ -328,7 +328,17 @@
                                 <th>수취인 전화번호</th>
                                 <td class="delivery_user_tel"></td>
                             </tr>
-                            <tr>
+                            <tr id="upate_addr_tr">
+                                <th>수취인 주소 수정</th>
+                                <td>
+                                    <input type="text" name="postcode" class="postcode">
+                                    <input type="text" name="roadAddress" class="roadAddress">
+                                    <input type="text" name="extraAddress" class="extraAddress">
+                                    <input type="hidden" name="jibunAddress" class="jibunAddress">
+                                    <button type="button" class="goods-list-btn" id="daumMapCall">우편번호 찾기</button>
+                                </td>
+                            </tr>
+                            <tr id="upate_addr_basic">
                                 <th>수취인 주소</th>
                                 <td>(<span class="postcode"></span>) <span class="roadAddress"></span> <span class="extraAddress"></span></td>
                             </tr>
