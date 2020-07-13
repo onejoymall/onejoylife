@@ -1648,6 +1648,8 @@ $(document).on("click",".ra-num",function () {
         $(".modal").attr("style", "display:block");
         // $('input:radio[name=store_reg_type]').eq(0).click();
         var html;
+        $("#upate_addr_tr").hide();
+        $("#upate_addr_basic").show();
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/selectPayment',
@@ -1668,6 +1670,7 @@ $(document).on("click",".ra-num",function () {
             	$("#setDefaultButton").html(leftHtml);
             	console.log(data);
                 $.each(data.list, function (index, item) {
+                	$("input[name="+index+"]").val(item);
                     $('.' + index).html(item);
                     if(index=="delivery_t_code"){
                         $('select[name=delivery_t_code]').val(item);
@@ -1685,6 +1688,11 @@ $(document).on("click",".ra-num",function () {
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'D\')">배송준비중</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
+                        if(index=="payment_status" && item=="W"){
+	                        html += '<button type="button" name="detail" class="btn-gray" onclick="addrmodi(\''+$.trim(order_no)+'\')">배송지 수정</button>';
+	                        $("#upate_addr_tr").show();
+	                        $("#upate_addr_basic").hide();
+	                    }
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="R"){
@@ -1830,7 +1838,54 @@ $(document).on("click",".ra-num",function () {
             },
         })
     }
-    //입점업체등록
+
+    //배송 주소 수정
+	function addrmodi(order_no){
+    	var formData = $('#saveDelivery').serialize()+'&order_no='+order_no;
+    	$.ajax({
+            type: 'POST',
+            data: formData,
+            url:'/Manager/Addrmodi',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        })
+	}
+
+   //입점업체등록
     $(document).on("click","#formStoreSubmit",function () {
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
