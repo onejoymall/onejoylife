@@ -5166,3 +5166,22 @@ input[type=password]::placeholder{
     background-color: #fff;
     margin: 10px 0;
 }
+.info-score{
+    position:relative;
+}
+
+
+.list-cartic{
+    position: absolute;
+    bottom: -5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    background:url(/assets/img/cartonly.png) no-repeat center center / 25px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 50%;
+}
+.list-cartic:hover{
+    background:url(../../assets/img/cartonly-white.png) no-repeat center center / 25px;
+    background-color:rgba(218, 57, 77, 0.9)
+}

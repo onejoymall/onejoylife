@@ -622,3 +622,20 @@ input[class='styleClass']:checked + label
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+.info-score{
+    position:relative;
+}
+.list-cartic{
+    position: absolute;
+    bottom: -10px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    background:url(/assets/img/cartonly.png) no-repeat center center / 30px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 50%;
+}
+.list-cartic:hover{
+    background:url(/assets/img/cartonly-white.png) no-repeat center center / 30px;
+    background-color:rgba(218, 57, 77, 0.9)
+}
