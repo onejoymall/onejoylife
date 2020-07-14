@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <div class="wrap">
         <div class="page-box">
             <main class="clearfix">
@@ -16,8 +17,10 @@
                             <table>
                                 <colgroup>
                                     <col style="width: 150px;">
-                                    <col style="width: 260px;">
-                                    <col style="width: 525px;">
+                                    <col style="width: 460px;">
+                                    <col style="width: 200px;">
+                                    <col style="width: 200px;">
+                                    <col style="width: 200px;">
 <%--                                    <col style="width: 259px;">--%>
 <%--                                    <col style="width: 100px;">--%>
                                 </colgroup>
@@ -27,10 +30,12 @@
                                         <th>상품정보</th>
 <%--                                        <th>판매자</th>--%>
                                         <th>상품금액</th>
-<%--                                        <th>수량</th>--%>
+                                        <th>수량</th>
+                                        <th>총합계</th>
                                     </tr>
                                 </thead>
                                 <tbody class="sec1-tbody">
+                                    <c:if test="${fn:length(paymentBundleList) <= 1}">
                                     <tr>
                                         <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                                         <td class="sec1-tbody-p1">
@@ -38,9 +43,28 @@
                                             <p>${paymentDetail.product_made_company_model}</p>
                                         </td>
 <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
+                                        <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                                        <td><span>${paymentDetail.payment_order_quantity}</span></td>
                                         <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
-<%--                                        <td><span>1</span></td>--%>
                                     </tr>
+                                    </c:if>
+                                    <c:if test="${fn:length(paymentBundleList) > 1}">
+                                        <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
+                                            <tr>
+                                                <td><img src="${list.file_1}" style="width: 80px;"/></td>
+                                                <td class="sec1-tbody-p1">
+                                                    <p>${list.product_name}</p>
+                                                    <p>${list.product_made_company_model}</p>
+                                                </td>
+        <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
+                                                <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
+                                                <td><span>${list.payment_order_quantity}</span></td>
+                                                <c:if test="${status.index == 0 }">
+                                                <td rowspan="${fn:length(paymentBundleList)}"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
+                                                </c:if>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
                                 </tbody>
                             </table>
                         </div>
