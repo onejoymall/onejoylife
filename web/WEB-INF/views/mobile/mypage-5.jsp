@@ -45,10 +45,11 @@
 	                </ul>
 	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
 	                <c:if test="${list.product_option_yn !='Y' }">
+	                <button type="button" class="btn-red btn" onclick="deleteFavorite('${list.product_cd}')">삭제하기</button>
 	                <button type="button" class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">장바구니 담기</button>
 	                </c:if>
 	                <c:if test="${list.product_option_yn =='Y' }">
-	                <button type="button" class="btn-red btn" onclick="deleteFavorite('${list.product_cd}')">옵션선택하러가기</button>
+	                <button type="button" class="btn-red btn" onclick="deleteFavorite('${list.product_cd}')">삭제하기</button>
 	                <button type="button" class="btn-blue btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">옵션선택하러가기</button>
 	                </c:if>
 	            </li>

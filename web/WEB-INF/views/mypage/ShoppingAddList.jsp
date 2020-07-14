@@ -75,7 +75,8 @@
                                                     <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
 <%--                                                <td><button class="x" data-id="${list.product_cd}"></button></td>--%>
                                                 <td>
-                                                	<c:if test="${list.product_option_yn !='Y' }">deleteFavorite
+                                                	<c:if test="${list.product_option_yn !='Y' }">
+                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >삭제하기</p></a>
                                                     <a href="javascript:void(0);" onclick="addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
                                                     </c:if>
                                                 	<c:if test="${list.product_option_yn =='Y' }">
