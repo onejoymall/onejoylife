@@ -7,9 +7,7 @@
     <div class="main-content">
         <div class="main-header">
             <h2 name="detail">회원 포인트 관리</h2>
-<%--            <div class="main-hd-btn-wrap">--%>
-<%--                <button type="button" name="detail">회원등급 설정</button>--%>
-<%--            </div>--%>
+
         </div>
         <div class="search-form">
             <form name="listSrcForm" id="listSrcForm" method="get">
@@ -23,10 +21,6 @@
                         <label for="chk1">고객명</label>
                         <input type="checkbox" name="searchType" value="email" id="chk3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'email')}">checked</c:if>>
                         <label for="chk3">email</label>
-                      
-<%--                        <input type="checkbox"  name="searchType" value="username" id="chk1">--%>
-<%--                        <label for="chk1"></label>--%>
-
                     </div>
                 </div>
 
@@ -49,19 +43,7 @@
 	                                    <button type="button" class="ra-num" data-id="con5">6개월</p>
 	                                </div>
 	                            </td>
-	                            <%-- <td>
-	                                <div class="input-box2">
-	                                    <div class="cla">
-	                                        <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
-	                                        <div class="cla-img1"></div>
-	                                    </div>
-	                                    <p class="cla-p1"> ~ </p>
-	                                    <div class="cla">
-	                                        <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
-	                                        <div class="cla-img1"></div>
-	                                    </div>
-	                                </div>
-	                            </td> --%>
+	                           
 	                           </tr>
 	                           <tr>
 	                           	<th></th>
@@ -95,16 +77,7 @@
                 <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
-<%--                        <col width="2%">--%>
-<%--                        <col width="8%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
+
                     </colgroup>
                     <thead>
                     <tr>
@@ -142,22 +115,19 @@
                 </table>
             </form>
             <form id="form1" name="form1"  method="get">
-                   
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
                     <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
-                    <input type="hidden" name="searchType" value="email" id="chk2" checked>
-                    <input type="hidden" name="searchType" value="username" id="chk1">
-                    <input type="hidden" name="user_grant" value="${param.user_grant}">
-                    <input type="hidden" name="level" value="${param.level}">
-                    <input type="hidden" name="sex" value="${param.sex}">
+                     <c:forEach items="${params.searchTypeArr}" var="list">
+                    	<input type="hidden" name="searchType" value="${list}">	
+                    </c:forEach>
+                    <input type="hidden" name="start_date" value="${param.start_date}">
+                    <input type="hidden" name="end_date" value="${param.end_date}">
                 </form>
-            </form>
         </div>
 
     </div>
 </main>
-
 
 <script>
 
