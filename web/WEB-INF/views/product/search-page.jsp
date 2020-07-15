@@ -83,6 +83,7 @@
                         </c:forEach>
                     </c:if>
                         </ul>
+                        
                     </div>
                     <div class="inner-filter1">
                         <p class="filter-tit">색상</p>
