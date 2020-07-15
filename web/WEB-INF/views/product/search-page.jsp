@@ -271,8 +271,8 @@
                                     </p>
                                     <p class="info-score">
                                         <i class="star-ic"></i>
-                                        	<c:if test="${list.review_score == NULL }"><span class="score-number">0.0</span></c:if>
-					    					<c:if test="${list.review_score != NULL }"><span class="score-number">${list.review_score}</span></c:if>
+                                        	<c:if test="${list.review_score == 0 }"><span class="score-number" >0.0</span></c:if>
+					    					<c:if test="${list.review_score != NULL and list.review_score != 0 }"><span class="score-number" >${list.review_score}</span></c:if>
 					                       
 					                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 					                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>

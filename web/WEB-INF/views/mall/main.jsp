@@ -228,7 +228,7 @@
 							<div class="category-row">
 								<span class="active" onclick="mdSlideCategorySelect('','product_popular_class')">ALL</span>
 								<c:if test="${not empty categoryList}">
-									<c:forEach var="categoryList" items="${categoryList}"varStatus="status">
+									<c:forEach var="categoryList" items="${categoryList}" varStatus="status">
 										<c:set var="categoryLineCut" value="${status.count%6}"></c:set>
 										<span onclick="mdSlideCategorySelect('${categoryList.pd_category_id}','product_popular_class')">${categoryList.pd_category_name}</span>
 										<c:if test="${categoryLineCut  == 0}">
@@ -261,9 +261,9 @@
 										<p class="info-production">${productMDList.product_made_company_name}</p>
 										<p class="info-product-name">${productMDList.product_name}</p>
 										<p class="info-price">
-											<span class="price-before"> <fmt:formatNumber value="${productMDList.product_user_payment}"groupingUsed="true" />원	</span>
+											<span class="price-before"> <fmt:formatNumber value="${productMDList.product_user_payment}" groupingUsed="true" />원	</span>
 											<i class="right-arrow"></i>
-											<fmt:formatNumber value="${productMDList.product_payment}"groupingUsed="true" />원
+											<fmt:formatNumber value="${productMDList.product_payment}" groupingUsed="true" />원
 										</p>
 										<p class="info-score">
 											<i class="star-ic"></i>
