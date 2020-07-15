@@ -8,6 +8,9 @@
         <![CDATA[
             SELECT
                 *,
+                 CEIL(((product_user_payment - product_payment)/product_user_payment)*100) AS percent_discount,
+ 				(select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
+ 				(SELECT ifnull(count(*),0) FROM product_review WHERE product_review.product_cd  =product.product_cd )AS review_score,
                 (select code.code_name from code where code.code='product_delivery_type' and code.code_value =product.product_delivery_type) as product_delivery_type_name,
                 (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=product.product_made_company_cd) as product_made_company_name,
                 (select code.code_name from code where code.code='product_sale_yn' and code.code_value =product.product_sale_yn) as product_sale_yn_name,

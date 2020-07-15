@@ -34,16 +34,22 @@
                             <div class="img-out">
                                 <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
                             </div>
-                                    <%--                            <p class="info-production">${list.product_made_company_name}</p>--%>
-                            <p class="point-pdt-title">${list.product_name}</p>
+                         	 <p class="sale-percent">${list.percent_discount} <span>%</span></p>
+                       		 <i class="share-ic"></i>
+                  		  	 <p class="info-production">${list.product_made_company_name}</p> 
+                             <p class="point-pdt-title">${list.product_name}</p>
                         </a>
                         <p class="info-price">
                             <span class="price-before"><fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</span><br><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원
                         </p>
                         <p class="info-score">
                             <i class="star-ic"></i>
-                            <span class="score-number">4.5</span>
-                            <span class="score-text">(5,324)</span>
+                            <c:if test="${list.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+    					<c:if test="${list.review_score != NULL }"><span class="score-number">${list.review_score}</span></c:if>
+                       
+                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
+                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">(${list.review_cnt})</span></c:if>
+                     <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
                         </p>
                     </div>
                     </c:forEach>

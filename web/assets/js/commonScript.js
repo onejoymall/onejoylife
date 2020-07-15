@@ -607,6 +607,7 @@ $(document).on("click",".ra-num",function () {
                             '     <a href="/product/productDetail?product_cd='+productList.product_cd+'">\n' +
                             '         <div class="img-box">\n' +
                             '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
+                            ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
                             '             <i class="share-ic"></i>\n' +
                             '         </div>\n' +
                             '         <div class="product-info">\n' +
@@ -616,15 +617,25 @@ $(document).on("click",".ra-num",function () {
                             '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
                             '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                             '             <p class="info-score">\n' +
-                            '                 <i class="star-ic"></i>\n' +
-                            '                 <span class="score-number">4.5</span>\n' +
-                            '                 <span class="score-text">5,324개 평가</span>\n' +
+                            '                 <i class="star-ic"></i>\n' ;
+												if(!productList.review_score ){
+													html += '<span class="score-number">0.0</span>';
+												}else{
+													html += '<span class="score-number"> '+ productList.review_score + '</span>';
+												} 
+												if(!productList.review_cnt){
+													html += '<span class="score-text">0 개 평가</span>';
+												}else{
+													html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
+												}
+                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
                             '             </p>\n' +
                             '         </div>\n' +
                             '     </a>\n' +
                             ' </li>' +
                             '';
-
+                  
+       
                     });
                     if(!data.mdSlideCategorySelect || data.mdSlideCategorySelect.length == 0){
                     	html += '<li>표시할 내용이 없습니다.</li>';
@@ -659,6 +670,7 @@ $(document).on("click",".ra-num",function () {
                                 '     <a href="/product/productDetail?product_cd='+productList.product_cd+'">\n' +
                                 '         <div class="img-box">\n' +
                                 '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
+                                ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
                                 '             <i class="share-ic"></i>\n' +
                                 '         </div>\n' +
                                 '         <div class="product-info">\n' +
@@ -668,14 +680,23 @@ $(document).on("click",".ra-num",function () {
                                 '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
                                 '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                                 '             <p class="info-score">\n' +
-                                '                 <i class="star-ic"></i>\n' +
-                                '                 <span class="score-number">4.5</span>\n' +
-                                '                 <span class="score-text">5,324개 평가</span>\n' +
-                                '             </p>\n' +
-                                '         </div>\n' +
-                                '     </a>\n' +
-                                ' </li>' +
-                                '';
+	                            '                 <i class="star-ic"></i>\n' ;
+													if(!productList.review_score ){
+														html += '<span class="score-number">0.0</span>';
+													}else{
+														html += '<span class="score-number"> '+ productList.review_score + '</span>';
+													} 
+													if(!productList.review_cnt){
+														html += '<span class="score-text">0 개 평가</span>';
+													}else{
+														html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
+													}
+	                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
+	                            '             </p>\n' +
+	                            '         </div>\n' +
+	                            '     </a>\n' +
+	                            ' </li>' +
+	                            '';
 
                         });
                         $('.category-list').html(html);
