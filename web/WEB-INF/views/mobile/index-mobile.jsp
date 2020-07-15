@@ -40,12 +40,22 @@
                             <div class="img-box">
                                 <img src='${productSpList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
+  
+ 							<p class="sale-percent">${productSpList.percent_discount} <span>%</span></p>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productSpList.product_name}</p>
-                                <p><ins><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</del></p>
-                                <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
+                                <p><ins><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />원</ins>
+                                <del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p class="info-score"><i class="star-ic"></i>
+                                
+                                <c:if test="${productSpList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+    							<c:if test="${productSpList.review_score != NULL }"><span class="score-number">${productSpList.review_score}</span></c:if>
+                       
+                      			<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
+                        		<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">(${productSpList.review_cnt})</span></c:if>
+                      			  <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
                             </div>
                         </a>
                     </li>
@@ -76,12 +86,20 @@
                             <div class="img-box">
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
+ 							<p class="sale-percent">${productList.percent_discount}<span>%</span></p>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
                                 <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
-                                <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
+                                <p class="info-score">
+                                <i class="star-ic"></i>
+								<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+	    						<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
+	                       		<c:if test="${productList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
+	                        	<c:if test="${productList.review_cnt != NULL }"><span class="score-text">(${productList.review_cnt})</span></c:if>
+	                        	<a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+							</p>
                             </div>
                         </a>
                     </li>
@@ -128,12 +146,20 @@
                             <div class="img-box">
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
+                                <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
                                 <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
-                                <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
+                                <p class="info-score"><i class="star-ic"></i>
+                                	<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
+			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
+			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
+			                        <a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+                                
+                                </p>
                             </a>
                         </li>
                     </a>
@@ -157,12 +183,19 @@
                             <div class="img-box">
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
+                                 <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
                                 <a href="#" class="share-ic"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
                                 <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
-                                <p class="info-score"><i class="star-ic"></i><span>4.5</span></p>
+                                <p class="info-score"><i class="star-ic"></i>
+                           			<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
+			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
+			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
+			                        <a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+                                </p>
                             </a>
                         </li>
                     </a>
@@ -284,4 +317,6 @@
                 touchEnabled : (navigator.maxTouchPoints > 0),randomStart: false,
             });
         });
+
+        
     </script>

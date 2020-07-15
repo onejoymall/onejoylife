@@ -27,8 +27,6 @@
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
     </select>
     <select id="getProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
-       /*getProductList*/
-       
         <![CDATA[
             SELECT
             	 *,
@@ -841,6 +839,8 @@ and A.payment_status != 'N'
     </delete>
 
     <select id="getMgProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
+       /*getMgProductList*/
+       
         <![CDATA[
             SELECT A.*,
                 (select code.code_name from code where code.code='product_delivery_type' and code.code_value =A.product_delivery_type) as product_delivery_type_name,
