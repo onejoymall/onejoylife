@@ -50,8 +50,8 @@
                                 <del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</del></p>
                                 <p class="info-score"><i class="star-ic"></i>
                                 
-                                <c:if test="${productSpList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
-    							<c:if test="${productSpList.review_score != NULL }"><span class="score-number">${productSpList.review_score}</span></c:if>
+                                <c:if test="${productSpList.review_score == 0 }"><span class="score-number">0.0</span></c:if>
+    							<c:if test="${productSpList.review_score != NULL and productSpList.review_score != 0 }"><span class="score-number" >${productSpList.review_score}</span></c:if>
                        
                       			<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
                         		<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">(${productSpList.review_cnt})</span></c:if>
