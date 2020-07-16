@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
 import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.vo.MgDeliveryVO;
 
@@ -20,6 +21,8 @@ import com.webapp.manager.vo.MgDeliveryVO;
 public class MgSystemController {
     @Autowired
     private MgSystemDAO mgSystemDAO;
+    @Autowired
+    private SelectorDAO selectorDAO;
     //배송관리
     @RequestMapping(value = "/Manager/Delivery")
     public String MgDelivery(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
@@ -64,5 +67,54 @@ public class MgSystemController {
         model.addAttribute("table_name", "store_delivery_area");
         model.addAttribute("style", "goods");
         return "manager/system/delivery-area";
+    }
+    
+    //엑셀다운설정-상품
+    @RequestMapping(value = "/Manager/excelSettingProduct")
+    public String excelSettingProduct(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
+        Object adminLogin = session.getAttribute("adminLogin");
+        try {
+            if(adminLogin.equals("admin")){
+            	params.put("store_id","admin");
+                mgDeliveryVO.setStore_id("admin");
+            }
+            params.put("type_name","product");
+            Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+            model.addAttribute("detail", getExcelSettingDetail);
+            
+            params.put("code","excel_setting_product");
+            List<Map<String, Object>> excel_column_list = selectorDAO.getSelectorList(params);
+            model.addAttribute("excel_column_list", excel_column_list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 1);
+        model.addAttribute("style", "excel-setting");
+        model.addAttribute("postUrl", "/Manager/excel-setting-proc");
+        return "/manager/excel-setting-product";
+    }
+    //엑셀다운설정-경품
+    @RequestMapping(value = "/Manager/excelSettingGiveaway")
+    public String excelSettingGiveaway(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
+    	Object adminLogin = session.getAttribute("adminLogin");
+    	try {
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    			mgDeliveryVO.setStore_id("admin");
+    		}
+    		params.put("type_name","giveaway");
+    		Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+    		model.addAttribute("detail", getExcelSettingDetail);
+    		
+    		params.put("code","excel_setting_giveaway");
+    		List<Map<String, Object>> excel_column_list = selectorDAO.getSelectorList(params);
+    		model.addAttribute("excel_column_list", excel_column_list);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("topNav", 1);
+    	model.addAttribute("style", "excel-setting");
+    	model.addAttribute("postUrl", "/Manager/excel-setting-proc");
+    	return "/manager/excel-setting-giveaway";
     }
 }

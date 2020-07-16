@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.net.URLEncoder;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -23,25 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.webapp.common.support.CurlPost;
-import com.webapp.mall.vo.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -83,6 +71,11 @@ import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CommonVO;
+import com.webapp.mall.vo.DeliveryInfoVO;
+import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.QnaVO;
+import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -101,6 +94,7 @@ import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
 import com.webapp.manager.vo.CouponVO;
+import com.webapp.manager.vo.ExcelSettingVO;
 import com.webapp.manager.vo.MgBrandVO;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.MgOptionVO;
@@ -1953,6 +1947,26 @@ public class ManagerRestapiController {
         return resultMap;
     }
     
+    //엑셀다운설정
+    @RequestMapping(value = "/Manager/excel-setting-proc", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> insertExcelSetting(@RequestParam HashMap params, ExcelSettingVO excelSettingVO, HttpSession session){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	Object adminLogin = session.getAttribute("adminLogin");
+    	try {
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}
+    		params.put("column_name",excelSettingVO.getColumn_name());
+    		params.put("column_text",excelSettingVO.getColumn_text());
+    		mgSystemDAO.insertExcelSetting(params);
+    		resultMap.put("success", "success");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return resultMap;
+    }
+    
   //쿠폰등록
     @Transactional
     @RequestMapping(value = "/Manager/insertCoupon", method = RequestMethod.POST, produces = "application/json")
@@ -2392,8 +2406,8 @@ public class ManagerRestapiController {
     	return resultMap;
     }
     
-  //바로빌 세금계산서 발행
-  	@RequestMapping(value = "/Manager/api/taxInvoice", method = RequestMethod.POST, produces = "application/json")
+    //바로빌 세금계산서 발행
+  	@RequestMapping(value = "/api/taxInvoice", method = RequestMethod.POST, produces = "application/json")
   	public HashMap<String, Object> taxInvoice(@RequestParam HashMap params, HttpServletRequest request,
   			HttpSession session, TaxVO taxVO) {
   		HashMap<String, Object> resultMap = new HashMap<String, Object>();
