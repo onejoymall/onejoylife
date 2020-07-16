@@ -1539,11 +1539,6 @@ $(document).on("click",".ra-num",function () {
     		return;
     	}
 
-    	$("input[name=product_exposure_kr]:checked").val('Y');
-    	$("input[name=product_exposure_usa]:checked").val('Y');
-    	$("input[name=product_exposure_cn]:checked").val('Y');
-    	$("input[name=product_exposure_jp]:checked").val('Y');
-
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',

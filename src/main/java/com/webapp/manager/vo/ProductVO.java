@@ -111,10 +111,10 @@ public class ProductVO extends SearchVO {
     Integer product_stock_quantity;
     String product_definition_key;
     String product_definition_value;
-    String product_exposure_kr;
-    String product_exposure_usa;
-    String product_exposure_cn;
-    String product_exposure_jp;
+    String product_exposure_kr = "N";
+    String product_exposure_usa = "N";
+    String product_exposure_cn = "N";
+    String product_exposure_jp = "N";
 
     public String getProduct_exposure_kr() {
         return product_exposure_kr;
