@@ -71,7 +71,7 @@
                     <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>원</span></li>
                 </ul>
                 <ul class="options bg_grey p-1">
-                    <li>${paymentList.payment_status_name}</li>
+                    <li class="w100px">${paymentList.payment_status_name}</li>
                     <li>
                         <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
                         <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
@@ -85,7 +85,25 @@
                             <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">상품평보기</button>
                             </c:if>
                         </c:if>
+                        <c:if test="${paymentList.payment_status == 'C'}">
+                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
+                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
+                            </c:if>
+                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
+                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소</button>
+                            </c:if>
+                        </c:if>
                     </li>
+<%--                    <li>
+                        <c:if test="${paymentList.payment_status == 'C'}">
+                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
+                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
+                            </c:if>
+                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
+                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소 재주문</button>
+                            </c:if>
+                        </c:if>
+                    </li>--%>
                 </ul>
             </ul>
         <hr>
