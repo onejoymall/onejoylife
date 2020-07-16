@@ -537,6 +537,9 @@ public class MyPage {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+            List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+
+            model.addAttribute("paymentBundleList", paymentBundleList);
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
             params.put("code","kcp_bank_code");
@@ -562,13 +565,14 @@ public class MyPage {
         model.addAttribute("style", "mypage-");
         return "mypage/OrderAndDeliveryDetailVA";
     }
-    //취소,재결제,교환,반품
+    //취소, 재결제, 교환,반품
     @RequestMapping(value="/MyPage/OrderCancels")
     public String myPageOrderCancels(Model model) {
         model.addAttribute("leftNavOrder", 7);
         model.addAttribute("style", "mypage-7");
         return "mypage/OrderCancels";
     }
+
     //교환신청
     @RequestMapping(value="/MyPage/OrderChange")
     public String myPageOrderChange(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {

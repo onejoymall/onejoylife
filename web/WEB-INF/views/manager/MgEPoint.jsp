@@ -2,61 +2,67 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <main>
     <div class="main-content">
         <div class="main-header">
             <h2 name="detail">회원 포인트 관리</h2>
-<%--            <div class="main-hd-btn-wrap">--%>
-<%--                <button type="button" name="detail">회원등급 설정</button>--%>
-<%--            </div>--%>
+
         </div>
         <div class="search-form">
             <form name="listSrcForm" id="listSrcForm" method="get">
-
                 <div class="keyword-src-wrap">
                     <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
                     <button type="submit" class="keyword-src-button">검색</button>
                     <div class="src-filter-wrap">
-                        <input type="checkbox" name="searchType" value="point_paid_memo" id="chk2" checked>
+                        <input type="checkbox" name="searchType" value="point_paid_memo" id="chk2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'point_paid_memo')}">checked</c:if>>
                         <label for="chk2">내역</label>
-<%--                        <input type="checkbox"  name="searchType" value="username" id="chk1">--%>
-<%--                        <label for="chk1"></label>--%>
-
+                         <input type="checkbox" name="searchType" value="username" id="chk1" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'username')}">checked</c:if>>
+                        <label for="chk1">고객명</label>
+                        <input type="checkbox" name="searchType" value="email" id="chk3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'email')}">checked</c:if>>
+                        <label for="chk3">email</label>
                     </div>
                 </div>
-<%--                <table class="keyword-src-table">--%>
-<%--                    <colgroup>--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="23%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="23%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="24%">--%>
-<%--                    </colgroup>--%>
-<%--                    <tbody>--%>
-<%--                    <tr>--%>
-<%--                        <th></th><td></td>--%>
-<%--                        <th>등급</th>--%>
-<%--                        <td>--%>
-<%--                            <select name="src-grade">--%>
-<%--                                <option value="전체">전체</option>--%>
-<%--                                <option value="1">일반회원</option>--%>
-<%--                                <option value="10">관리자</option>--%>
-<%--                            </select>--%>
-<%--                        </td>--%>
 
-<%--                        <th>성별</th>--%>
-<%--                        <td class="age-margin">--%>
-<%--                            <input type="radio" name="sex" id="age-all" checked="">--%>
-<%--                            <label for="age-all">전체</label>--%>
-<%--                            <input type="radio" name="sex" id="age-wom" value="여자">--%>
-<%--                            <label for="age-wom">여자</label>--%>
-<%--                            <input type="radio" name="asex" id="age-man" value="남자">--%>
-<%--                            <label for="age-man">남자</label>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                    </tbody>--%>
-<%--                </table>--%>
+	             <table class="keyword-src-table">
+	                      <colgroup>
+	                          <col width="80px">
+	                          <col width="420px">
+	                          <col width="80px">
+	                          <col width="420px">
+	                      </colgroup>
+	                      <tbody>
+	                          	<tr>
+	                               <th>기간별 선택</th>
+	                               <td>
+	                                <div class="input-box1">
+	                                    <button type="button" class="ra-num" data-id="con1">오늘</p>
+	                                    <button type="button" class="ra-num" data-id="con2">1주일</p>
+	                                    <button type="button" class="ra-num" data-id="con3">1개월</p>
+	                                    <button type="button" class="ra-num" data-id="con4">3개월</p>
+	                                    <button type="button" class="ra-num" data-id="con5">6개월</p>
+	                                </div>
+	                            </td>
+	                           
+	                           </tr>
+	                           <tr>
+	                           	<th></th>
+	                           	<td>
+	                                <div class="input-box2">
+	                                    <div class="cla">
+	                                        <input type="text" id="start_date" name="start_date" class="date_pick" value="${param.start_date}">
+	                                        <div class="cla-img1"></div>
+	                                    </div>
+	                                    <p class="cla-p1"> ~ </p>
+	                                    <div class="cla">
+	                                        <input type="text" id="end_date" name="end_date" class="date_pick" value="${param.end_date}">
+	                                        <div class="cla-img1"></div>
+	                                    </div>
+	                                </div>
+	                            </td>
+	                           </tr>
+	                          </tbody>
+	                  </table>
             </form>
         </div>
         <div class="goods-list-wrap txt-align1">
@@ -71,16 +77,7 @@
                 <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
-<%--                        <col width="2%">--%>
-<%--                        <col width="8%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
-<%--                        <col width="10%">--%>
+
                     </colgroup>
                     <thead>
                     <tr>
@@ -89,6 +86,7 @@
                         <td>내역</td>
                         <td>구분</td>
                         <td>소멸예정일</td>
+                        <td>고객명</td>
                         <td>이메일</td>
                         <td>사용포인트</td>
                         <td>적립포인트</td>
@@ -105,6 +103,7 @@
                                 <td><p>${list.point_paid_memo}</p></td>
                                 <td>${list.point_paid_type_name}</td>
                                 <td>${list.point_end_date}</td>
+                                 <td>${list.username}</td>
                                 <td>${list.email}</td>
                                 <td>-<fmt:formatNumber value="${list.point_use}" groupingUsed="true" /></td>
                                 <td>+<fmt:formatNumber value="${list.point_add}" groupingUsed="true" /></td>
@@ -116,12 +115,22 @@
                 </table>
             </form>
             <form id="form1" name="form1"  method="get">
-                <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
-                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
-            </form>
+                    <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+                    <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                    <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                     <c:forEach items="${params.searchTypeArr}" var="list">
+                    	<input type="hidden" name="searchType" value="${list}">	
+                    </c:forEach>
+                    <input type="hidden" name="start_date" value="${param.start_date}">
+                    <input type="hidden" name="end_date" value="${param.end_date}">
+                </form>
         </div>
 
     </div>
 </main>
 
+<script>
+
+
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

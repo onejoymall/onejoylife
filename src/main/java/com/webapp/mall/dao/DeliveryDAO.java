@@ -42,7 +42,10 @@ public class DeliveryDAO {
     }    
     public void updateDeliveryAddress(Map<String,Object> paramas) throws SQLException {
     	sql.update("mall.DeliveryMapper.updateDeliveryAddress",paramas);
-    }    
+    }
+    public void managerAddrmodi(Map<String,Object> paramas) throws SQLException {
+    	sql.update("mall.DeliveryMapper.managerAddrmodi",paramas);
+    }
     public void insertDeliveryAddress(Map<String,Object> paramas) throws SQLException {
     	sql.update("mall.DeliveryMapper.insertDeliveryAddress",paramas);
     }    

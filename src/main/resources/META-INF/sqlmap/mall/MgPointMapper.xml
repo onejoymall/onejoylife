@@ -3,38 +3,48 @@
 
 
 <mapper namespace="mall.MgPointMapper">
-
     <select id="getMgPointList" parameterType="com.webapp.manager.vo.MgPointVO" resultType="java.util.HashMap">
-        <![CDATA[
-        SELECT
-            A.*,
-            (select Z.email from user Z where Z.usr_id = A.point_paid_user_id) email,
-            (select Z.code_name from code Z where Z.code='point_paid_type' and Z.code_value=A.point_paid_type) as point_paid_type_name
-        FROM point_history A  where 1=1
-        ]]>
-
-
+          <![CDATA[ 
+		  SELECT A.*, B.*
+		  , (select Z.code_name from code Z where Z.code='point_paid_type' and Z.code_value=A.point_paid_type) as point_paid_type_name
+		  FROM point_history A JOIN user B ON A.point_paid_user_id = B.usr_id
+		   where 1=1
+ 		 ]]>
+   <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>  
         <if test="point_paid_user_id != null"> <![CDATA[AND A.point_paid_user_id= #{point_paid_user_id} ]]></if>
         <if test="point_paid_type != null"> <![CDATA[AND A.point_paid_type= #{point_paid_type} ]]></if>
-        <if test="start_date != null"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="start_date != null and start_date != ''.toString() " ><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''.toString() "><![CDATA[AND A.reg_date < #{end_date} ]]></if>
         <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
         <![CDATA[ order by point_id desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
     </select>
+    
+    
     <select id="getMgPointListCount" resultType="Integer" parameterType="com.webapp.manager.vo.MgPointVO">
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM point_history  where 1=1
+        FROM point_history A JOIN user B ON A.point_paid_user_id = B.usr_id
+		WHERE 1=1
         ]]>
-
-
-        <if test="point_paid_user_id != null"> <![CDATA[AND point_paid_user_id= #{point_paid_user_id} ]]></if>
-        <if test="point_paid_type != null"> <![CDATA[AND point_paid_type= #{point_paid_type} ]]></if>
-        <if test="start_date != null"><![CDATA[AND reg_date >= #{start_date} ]]></if>
-        <if test="end_date != null"><![CDATA[AND reg_date < #{end_date} ]]></if>
-        <if test="point_paid_product_cd != null"> <![CDATA[AND point_paid_product_cd= #{point_paid_product_cd} ]]></if>
+   <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if>  
+        <if test="point_paid_user_id != null"> <![CDATA[AND A.point_paid_user_id= #{point_paid_user_id} ]]></if>
+        <if test="point_paid_type != null"> <![CDATA[AND A.point_paid_type= #{point_paid_type} ]]></if>
+        <if test="start_date != null and start_date != ''.toString()"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+        <if test="end_date != null and end_date != ''.toString()"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+        <if test="point_paid_product_cd != null"> <![CDATA[AND A.point_paid_product_cd= #{point_paid_product_cd} ]]></if>
+   
     </select>
+    
+    
     <select id="getMgPointAmount" resultType="java.lang.Integer" parameterType="com.webapp.manager.vo.MgPointVO">
         <![CDATA[
         select

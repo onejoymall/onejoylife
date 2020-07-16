@@ -1208,8 +1208,6 @@ public class ManagerController {
     public String managerCalculateCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
         try {
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1220,24 +1218,33 @@ public class ManagerController {
     }
     //이포인트
     @RequestMapping(value="/Manager/MgEPoint")
-    public String myPagePoint(Model model, HttpServletRequest request, HttpSession session, HashMap params,MgPointVO mgPointVO) throws SQLException {
+    public String myPagePoint(@RequestParam HashMap params, SearchVO searchVO, Model model, HttpServletRequest request, HttpSession session, MgPointVO mgPointVO) throws SQLException {
         try{
+        	
             mgPointVO.setDisplayRowCount(10);
             mgPointVO.setStaticRowEnd(10);
             mgPointVO.pageCalculate(mgPointDAO.getMgPointListCount(mgPointVO));
 
+            params.put("rowStart",searchVO.getRowStart());
+            params.put("displayRowCount",searchVO.getDisplayRowCount());
+            params.put("staticRowEnd", searchVO.getStaticRowEnd());
+            params.put("searchTypeArr",searchVO.getSearchTypeArr());
+            
             model.addAttribute("searchVO", mgPointVO);
 
             List<Map<String,Object>> list = mgPointDAO.getMgPointList(mgPointVO);
             model.addAttribute("list", list);
+            
         }catch (Exception e){
             e.printStackTrace();
         }
         model.addAttribute("table_name", "point_history");
         model.addAttribute("Pk", "point_id");
         model.addAttribute("topNav", 6);
+        model.addAttribute("params", params);
         model.addAttribute("style", "member-management");
         return "manager/MgEPoint";
+        
     }
 
     //Q&A 목록

@@ -18,25 +18,7 @@
         <div class="inner clearfix">
             <c:import url="/layout/scrollRight"/>
             <h3>${categoryRowData.pd_category_name}</h3>
-<%--            <div class="txt-box">--%>
-<%--                <ul class="txt-box-ul">--%>
-<%--                    <li class="active"><a href="#" >전체</a></li>--%>
-<%--                    <li><a href="#">스킨케어</a></li>--%>
-<%--                    <li><a href="#">클렌징 ∙ 필링</a></li>--%>
-<%--                    <li><a href="#">팩 ∙ 마스크</a></li>--%>
-<%--                    <li><a href="#">메이크업</a></li>--%>
-<%--                    <li><a href="#">네일케어</a></li>--%>
-<%--                    <li><a href="#">헤어케어</a></li>--%>
-<%--                    <li><a href="#">바디케어</a></li>--%>
-<%--                    <li><a href="#">향수</a></li>--%>
-<%--                    <li><a href="#">남성 화장품</a></li>--%>
-<%--                    <li><a href="#">뷰티소품</a></li>--%>
-<%--                    <li></li>--%>
-<%--                    <li></li>--%>
-<%--                    <li></li>--%>
-<%--                    <li></li>--%>
-<%--                </ul>--%>
-<%--            </div>--%>
+
             <c:if test="${not empty categoryRowData.file_link3 and categoryRowData.pd_category_event_use_yn eq 'Y' || not empty categoryRowData.file_link5 and categoryRowData.event_use_yn eq 'Y'}">
             <section class="main-section">
                 <h2 class="main-section-title hide">main section</h2>
@@ -57,136 +39,7 @@
             </section>
             </c:if>
             <p class="gift-amount">${categoryRowData.pd_category_name} 전체 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
-<%--            <div class="nav-tit clearfix">--%>
-<%--                <h4>MD추천</h4>--%>
-<%--                <div class="row clearfix">--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="gift-view.html">--%>
-<%--                            <img src="../assets/img/list-img.png" />--%>
-<%--                            <p class="sale-percent">35<span>%</span></p>--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">--%>
-<%--                            <span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원--%>
-<%--                        </p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img2.png" />--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img3.png" />--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item mar-r">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img4.png" />--%>
-<%--                            <p class="sale-percent">35<span>%</span></p>--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="nav-tit clearfix">--%>
-<%--                <h4>인기상품</h4>--%>
-<%--                <div class="row clearfix">--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="gift-view.html">--%>
-<%--                            <img src="../assets/img/list-img.png" />--%>
-<%--                            <p class="sale-percent">35<span>%</span></p>--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">발뮤다 가습기 (ERN-1100SD-WK)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">--%>
-<%--                            <span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원--%>
-<%--                        </p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img2.png" />--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[매넌/아르댓/뮤제外]19 WINTER 코트 대전 최대20% 할인</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img3.png" />--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price">15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                    <div class="point-product-item mar-r">--%>
-<%--                        <a href="#">--%>
-<%--                            <img src="../assets/img/list-img4.png" />--%>
-<%--                            <p class="sale-percent">35<span>%</span></p>--%>
-<%--                            <i class="share-ic"></i>--%>
-<%--                            <p class="info-production">삼성전자</p>--%>
-<%--                            <p class="point-pdt-title">[스페셜오더]_Everywhere Quilting Set (4 Color)</p>--%>
-<%--                        </a>--%>
-<%--                        <p class="info-price"><span class="price-before">23,200원</span><i class="right-arrow"></i>15,080원</p>--%>
-<%--                        <p class="info-score">--%>
-<%--                            <i class="star-ic"></i>--%>
-<%--                            <span class="score-number">4.5</span>--%>
-<%--                            <span class="score-text">5,324개 평가</span>--%>
-<%--                        </p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+
             <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
@@ -211,12 +64,16 @@
                 <c:forEach var="list" items="${list}" varStatus="status">
                 <c:set var="lineCut" value="${status.count%4}"></c:set>
                 <div class="point-product-item">
+                
+              	 <input type="hidden" name="order_max" value="${list.product_max_limit}" />
+                 <input type="hidden" name="order_min" value="${list.product_min_limit}" />
+                     
                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                         <div class="img-out">
                             <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
                         </div>
-<%--                        <p class="sale-percent">35<span>%</span></p>--%>
-<%--                        <i class="share-ic"></i>--%>
+                        <p class="sale-percent">${list.percent_discount} <span>%</span></p>
+                        <i class="share-ic"></i>
                         <p class="info-production">${list.product_made_company_name}</p>
                         <p class="point-pdt-title">${list.product_name}</p>
                     </a>
@@ -226,9 +83,16 @@
                         <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원
                     </p>
                     <p class="info-score">
+                    
                         <i class="star-ic"></i>
-                        <span class="score-number">4.5</span>
-                        <span class="score-text">5,324개 평가</span>
+                
+                     	<c:if test="${list.review_score == NULL }"><span class="score-number">0.0</span></c:if>
+    					<c:if test="${list.review_score != NULL }"><span class="score-number">${list.review_score}</span></c:if>
+                       
+                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
+                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>
+                        <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
+                       <%--  <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button> --%>
                     </p>
                 </div>
                 <c:if test="${lineCut  == 0}">
@@ -253,5 +117,7 @@
     $('.order-select').on("change",function () {
         $('#form1').submit();
     })
+   
+     
 </script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

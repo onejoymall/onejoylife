@@ -607,6 +607,7 @@ $(document).on("click",".ra-num",function () {
                             '     <a href="/product/productDetail?product_cd='+productList.product_cd+'">\n' +
                             '         <div class="img-box">\n' +
                             '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
+                            ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
                             '             <i class="share-ic"></i>\n' +
                             '         </div>\n' +
                             '         <div class="product-info">\n' +
@@ -616,15 +617,25 @@ $(document).on("click",".ra-num",function () {
                             '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
                             '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                             '             <p class="info-score">\n' +
-                            '                 <i class="star-ic"></i>\n' +
-                            '                 <span class="score-number">4.5</span>\n' +
-                            '                 <span class="score-text">5,324개 평가</span>\n' +
+                            '                 <i class="star-ic"></i>\n' ;
+												if(!productList.review_score ){
+													html += '<span class="score-number">0.0</span>';
+												}else{
+													html += '<span class="score-number"> '+ productList.review_score + '</span>';
+												} 
+												if(!productList.review_cnt){
+													html += '<span class="score-text">0 개 평가</span>';
+												}else{
+													html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
+												}
+                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
                             '             </p>\n' +
                             '         </div>\n' +
                             '     </a>\n' +
                             ' </li>' +
                             '';
-
+                  
+       
                     });
                     if(!data.mdSlideCategorySelect || data.mdSlideCategorySelect.length == 0){
                     	html += '<li>표시할 내용이 없습니다.</li>';
@@ -659,6 +670,7 @@ $(document).on("click",".ra-num",function () {
                                 '     <a href="/product/productDetail?product_cd='+productList.product_cd+'">\n' +
                                 '         <div class="img-box">\n' +
                                 '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
+                                ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
                                 '             <i class="share-ic"></i>\n' +
                                 '         </div>\n' +
                                 '         <div class="product-info">\n' +
@@ -668,14 +680,23 @@ $(document).on("click",".ra-num",function () {
                                 '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
                                 '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
                                 '             <p class="info-score">\n' +
-                                '                 <i class="star-ic"></i>\n' +
-                                '                 <span class="score-number">4.5</span>\n' +
-                                '                 <span class="score-text">5,324개 평가</span>\n' +
-                                '             </p>\n' +
-                                '         </div>\n' +
-                                '     </a>\n' +
-                                ' </li>' +
-                                '';
+	                            '                 <i class="star-ic"></i>\n' ;
+													if(!productList.review_score ){
+														html += '<span class="score-number">0.0</span>';
+													}else{
+														html += '<span class="score-number"> '+ productList.review_score + '</span>';
+													} 
+													if(!productList.review_cnt){
+														html += '<span class="score-text">0 개 평가</span>';
+													}else{
+														html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
+													}
+	                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
+	                            '             </p>\n' +
+	                            '         </div>\n' +
+	                            '     </a>\n' +
+	                            ' </li>' +
+	                            '';
 
                         });
                         $('.category-list').html(html);
@@ -1648,6 +1669,8 @@ $(document).on("click",".ra-num",function () {
         $(".modal").attr("style", "display:block");
         // $('input:radio[name=store_reg_type]').eq(0).click();
         var html;
+        $("#upate_addr_tr").hide();
+        $("#upate_addr_basic").show();
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/selectPayment',
@@ -1668,6 +1691,7 @@ $(document).on("click",".ra-num",function () {
             	$("#setDefaultButton").html(leftHtml);
             	console.log(data);
                 $.each(data.list, function (index, item) {
+                	$("input[name="+index+"]").val(item);
                     $('.' + index).html(item);
                     if(index=="delivery_t_code"){
                         $('select[name=delivery_t_code]').val(item);
@@ -1685,6 +1709,11 @@ $(document).on("click",".ra-num",function () {
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'D\')">배송준비중</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>' +
                             '<button type="button" name="detail" class="btn-gray" onclick="deliverySave(\''+$.trim(order_no)+'\',\'C\')">결제취소</button>';
+                        if(index=="payment_status" && item=="W"){
+	                        html += '<button type="button" name="detail" class="btn-gray" onclick="addrmodi(\''+$.trim(order_no)+'\')">배송지 수정</button>';
+	                        $("#upate_addr_tr").show();
+	                        $("#upate_addr_basic").hide();
+	                    }
                         $('#setButton').html(html);
                     }
                     if(index=="payment_status" && item=="R"){
@@ -1830,7 +1859,54 @@ $(document).on("click",".ra-num",function () {
             },
         })
     }
-    //입점업체등록
+
+    //배송 주소 수정
+	function addrmodi(order_no){
+    	var formData = $('#saveDelivery').serialize()+'&order_no='+order_no;
+    	$.ajax({
+            type: 'POST',
+            data: formData,
+            url:'/Manager/Addrmodi',
+            success: function (data) {
+                if (data.validateError) {
+                    $('.validateError').empty();
+                    $.each(data.validateError, function (index, item) {
+                        if(index == "Error"){//일반에러메세지
+                            alertType = "error";
+                            showText = item;
+                        }else{
+                            alertType = "error";
+                            showText = index + " (은) " + item;
+                        }
+                        $.toast({
+                            text: showText,
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error'
+                        });
+                    });
+
+                } else {
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        })
+	}
+
+   //입점업체등록
     $(document).on("click","#formStoreSubmit",function () {
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
