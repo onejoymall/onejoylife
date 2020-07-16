@@ -111,6 +111,42 @@ public class ProductVO extends SearchVO {
     Integer product_stock_quantity;
     String product_definition_key;
     String product_definition_value;
+    String product_exposure_kr;
+    String product_exposure_usa;
+    String product_exposure_cn;
+    String product_exposure_jp;
+
+    public String getProduct_exposure_kr() {
+        return product_exposure_kr;
+    }
+
+    public void setProduct_exposure_kr(String product_exposure_kr) {
+        this.product_exposure_kr = product_exposure_kr;
+    }
+
+    public String getProduct_exposure_usa() {
+        return product_exposure_usa;
+    }
+
+    public void setProduct_exposure_usa(String product_exposure_usa) {
+        this.product_exposure_usa = product_exposure_usa;
+    }
+
+    public String getProduct_exposure_cn() {
+        return product_exposure_cn;
+    }
+
+    public void setProduct_exposure_cn(String product_exposure_cn) {
+        this.product_exposure_cn = product_exposure_cn;
+    }
+
+    public String getProduct_exposure_jp() {
+        return product_exposure_jp;
+    }
+
+    public void setProduct_exposure_jp(String product_exposure_jp) {
+        this.product_exposure_jp = product_exposure_jp;
+    }
 
     public String getProduct_stock_use_yn() {
         return product_stock_use_yn;

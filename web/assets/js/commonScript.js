@@ -963,8 +963,8 @@ $(document).on("click",".ra-num",function () {
     }
     //장바구니 등록 모바일
     function addShoppingBasketM(product_cd) {
-    	if($("input[name=product_option_required").val()){
-	    	var option_required_list = $("input[name=product_option_required").val().split("|");
+    	if($("input[name=product_option_required]").val()){
+	    	var option_required_list = $("input[name=product_option_required]").val().split("|");
 	    	var isOptionCheck = false;
 	    	var optionStr = "";
 	    	option_required_list.forEach(function(el,idx){
@@ -1538,7 +1538,12 @@ $(document).on("click",".ra-num",function () {
             });
     		return;
     	}
-   
+
+    	$("input[name=product_exposure_kr]:checked").val('Y');
+    	$("input[name=product_exposure_usa]:checked").val('Y');
+    	$("input[name=product_exposure_cn]:checked").val('Y');
+    	$("input[name=product_exposure_jp]:checked").val('Y');
+
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -2819,6 +2824,7 @@ $(document).on("click",".ra-num",function () {
                             $('input:text[name^="'+index+'"]').val(item);
                             $('select[name='+index+']').val(item);
                             $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+                            $('input:checkbox[name='+index+'][value=\'' + item + '\']').prop('checked',true);
                             $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                         }
                     });
