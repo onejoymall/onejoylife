@@ -293,9 +293,9 @@
                             <tbody>
                             <c:if test="${not empty cartPaymentList}">
                                 <c:forEach var="cartPaymentList" items="${cartPaymentList}" varStatus="status">
-                                    <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
-                                    <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
                                     <tr>
+	                                    <input type="hidden" name="cart_cd" value="${cartPaymentList.cart_cd}">
+	                                    <input type="hidden" name="chk" value="${cartPaymentList.cart_cd}">
                                         <td>
                                             <a href="<c:url value="/product/productDetail?product_cd=${cartPaymentList.product_cd}"/>">
                                                 <img src='${cartPaymentList.file_1}' onerror="this.src='http://placehold.it/100'" width="100">
