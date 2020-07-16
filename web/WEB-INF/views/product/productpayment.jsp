@@ -308,7 +308,12 @@
 <%--                                    <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                 </td>
                                 <td><span><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /></span>원</td>
-                                <td><span>${param.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}"></span></td>
+                                <c:if test="${param.payment_order_quantity != null}">
+                                    <td><span>${param.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}"></span></td>
+                                </c:if>
+                                <c:if test="${param.order_no != null}">
+                                    <td><span>${detail.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${detail.payment_order_quantity}"></span></td>
+                                </c:if>
 <%--                                <td><span>123456</span></td>--%>
                             </tr>
                             </tbody>
