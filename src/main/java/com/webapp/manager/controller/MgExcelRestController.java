@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -205,7 +210,7 @@ public class MgExcelRestController {
     	return resultMap;
     }
 
-    //엑셀다운
+    //엑셀다운 jstl방식
     private void excelDown(HttpServletRequest request, HttpServletResponse response, String keyword, List<Map<String, Object>> list) throws Exception{
     	String tempPath = request.getSession().getServletContext().getRealPath("/assets/template/");
     	try(InputStream is = new BufferedInputStream(new FileInputStream(tempPath+keyword+"_template.xlsx"))) {
@@ -224,6 +229,75 @@ public class MgExcelRestController {
     			JxlsHelper.getInstance().processTemplate(is, os, context);
     		}
     	}
+    }
+    
+    //엑셀다운 poi방식
+    private void excelDownPoi(HttpServletRequest request, HttpServletResponse response, String keyword, List<Map<String, Object>> list) throws Exception{
+    	SXSSFWorkbook workbook = makeWorkBook(list);
+        
+		//파일 네임 설정
+		Date date = new Date();
+		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss");
+		String day = dayformat.format(date);
+		String hour = hourformat.format(date);
+		String fileName = keyword + "_" + day + "_" + hour + ".xlsx";
+		
+		/***** 여기서부터는 각 브라우저에 따른 파일이름 인코딩작업 start *****/
+        String browser = request.getHeader("User-Agent");
+        if (browser.indexOf("MSIE") > -1) {
+            fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        } else if (browser.indexOf("Trident") > -1) {       // IE11
+            fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        } else if (browser.indexOf("Firefox") > -1) {
+            fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
+        } else if (browser.indexOf("Opera") > -1) {
+            fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
+        } else if (browser.indexOf("Chrome") > -1) {
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < fileName.length(); i++) {
+               char c = fileName.charAt(i);
+               if (c > '~') {
+                     sb.append(URLEncoder.encode("" + c, "UTF-8"));
+                       } else {
+                             sb.append(c);
+                       }
+                }
+                fileName = sb.toString();
+        } else if (browser.indexOf("Safari") > -1){
+            fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
+        } else {
+             fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
+        }
+		/***** 여기서부터는 각 브라우저에 따른 파일이름 인코딩작업 end *****/
+		
+		response.setContentType("application/download;charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        
+        OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			workbook.write(os);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(workbook != null) {
+				try {
+					workbook.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			   
+			if(os != null) {
+				try {
+					os.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
     }
     
     //엑셀 리스트로 파싱
@@ -280,5 +354,57 @@ public class MgExcelRestController {
             }
         }
     	return list;
+    }
+    
+    //워크북생성
+    private SXSSFWorkbook makeWorkBook(List<Map<String,Object>> list) {
+    	SXSSFWorkbook workbook = new SXSSFWorkbook();
+    	
+    	// 시트 생성
+        SXSSFSheet sheet = workbook.createSheet("과일표");
+        
+        //시트 열 너비 설정
+        sheet.setColumnWidth(0, 1500);
+        sheet.setColumnWidth(1, 3000);
+        sheet.setColumnWidth(2, 3000);
+        sheet.setColumnWidth(3, 1500);
+        
+        // 헤더 행
+        Row headerRow = sheet.createRow(0);
+        headerRow.setZeroHeight(true);
+        // 해당 행의 첫번째 열 셀 생성
+        Cell headerCell = headerRow.createCell(0);
+        headerCell.setCellValue("번호");
+        // 해당 행의 두번째 열 셀 생성
+        headerCell = headerRow.createCell(1);
+        headerCell.setCellValue("과일이름");
+        // 해당 행의 세번째 열 셀 생성
+        headerCell = headerRow.createCell(2);
+        headerCell.setCellValue("가격");
+        // 해당 행의 네번째 열 셀 생성
+        headerCell = headerRow.createCell(3);
+        headerCell.setCellValue("수량");
+        
+        // 과일표 내용 행 및 셀 생성
+        Row bodyRow = null;
+        Cell bodyCell = null;
+        for(int i=0; i<list.size(); i++) {
+            
+            // 행 생성
+            bodyRow = sheet.createRow(i+1);
+            // 데이터 번호 표시
+            bodyCell = bodyRow.createCell(0);
+            bodyCell.setCellValue(i + 1);
+            // 데이터 이름 표시
+            bodyCell = bodyRow.createCell(1);
+            bodyCell.setCellValue(i + 1);
+            // 데이터 가격 표시
+            bodyCell = bodyRow.createCell(2);
+            bodyCell.setCellValue(i + 1);
+            // 데이터 수량 표시
+            bodyCell = bodyRow.createCell(3);
+            bodyCell.setCellValue(i + 1);
+        }
+        return workbook;
     }
 }
