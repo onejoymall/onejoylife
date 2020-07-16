@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>'
 <div class="wrap">
     <div class="page-box clearfix">
@@ -146,6 +147,19 @@
                                                 <a href="/MyPage/Reviews"><span>상품평보기</span></a>
                                                 </c:if>
                                             </div>
+                                            </c:if>
+
+                                            <c:if test="${paymentList.payment_status == 'C'}">
+                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
+                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
+                                                        <a href="#" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'"><span>재주문</span></a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
+                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
+                                                        <a href="#" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'"><span>부분취소</span></a>
+                                                    </div>
+                                                </c:if>
                                             </c:if>
                                         </td>
                                     </tr>

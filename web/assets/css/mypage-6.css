@@ -553,3 +553,11 @@ table {
     width: 255px;
     height: 30px;
 }
+
+.txt-color1 {
+    border-color: #4159d3;
+    color: #4159d3;
+}
+.txt-color1 a {
+    color: #4159d3;
+}
