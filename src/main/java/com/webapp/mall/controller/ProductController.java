@@ -4,15 +4,14 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.common.model.ComboVo;
+import com.webapp.mall.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -25,13 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.dao.CartDAO;
-import com.webapp.mall.dao.CouponDAO;
-import com.webapp.mall.dao.DeliveryDAO;
-import com.webapp.mall.dao.ProductDAO;
-import com.webapp.mall.dao.ReviewDAO;
-import com.webapp.mall.dao.SearchDAO;
-import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.SearchFilterVO;
@@ -70,6 +62,8 @@ public class ProductController {
     private ConfigDAO configDAO;
     @Autowired
     private MgSystemDAO mgSystemDAO;
+    @Autowired
+    PaymentDAO paymentDAO;
 
     @Autowired
     private CouponDAO couponDAO;
@@ -386,45 +380,128 @@ public class ProductController {
     public String productPaymentCart(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CartPaymentVO cartPaymentVO) throws Exception{
 
         try{
+            params.get("order_no");
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
-            if(isEmpty(userInfo)){
-                cartPaymentVO.setCart_user_id((String) session.getAttribute("nonMembersUserId"));
-            }else{
+
+            if (params.get("order_no") != null) {
+                List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+
+                String cart_cd = "";
+                String payment_order_quantity = "";
+                List<String> chk_arr = new ArrayList<String>();
+                List<String> payment_order_arr = new ArrayList<String>();
+                for(Map<String,Object> list : paymentBundleList) {
+                    cart_cd = "CR" + numberGender.numberGen(6, 1);
+                    payment_order_quantity = list.get("payment_order_quantity").toString();
+                    params.put("option_name", list.get("option_name"));
+                    params.put("product_cd", list.get("product_cd"));
+                    params.put("product_delivery_payment", list.get("product_delivery_payment"));
+                    params.put("btn-option-value", list.get("btn-option-value"));
+                    params.put("rd-option-value", list.get("rd-option-value"));
+                    params.put("payment_order_quantity", payment_order_quantity);
+                    params.put("product_delivery_bundle_yn", list.get("product_delivery_bundle_yn"));
+                    params.put("product_store_id", list.get("product_store_id"));
+                    params.put("product_option_required", list.get("product_option_required"));
+                    params.put("cart_cd", cart_cd);
+                    params.put("email", userInfo.get("email"));
+                    params.put("member_yn", "Y");
+                    params.put("cart_user_id", userInfo.get("usr_id"));
+
+                    chk_arr.add(cart_cd);
+                    payment_order_arr.add(payment_order_quantity);
+				    cartDAO.insertCart(params);
+                }
+                String[] simpleArray = new String[chk_arr.size()];
+                chk_arr.toArray(simpleArray);
+                cartPaymentVO.setChk(simpleArray);
+
+                String[] simpleArray2 = new String[payment_order_arr.size()];
+                payment_order_arr.toArray(simpleArray2);
+                cartPaymentVO.setPayment_order_quantity(simpleArray2);
+                String s_cart_cd = "";
+                for(int i=0; i < simpleArray.length; i++){
+                    s_cart_cd += simpleArray[i];
+                    if(i < simpleArray.length -1) {
+                        s_cart_cd += ",";
+                    }
+                }
+                cartPaymentVO.setCart_cd(s_cart_cd);
+                cartPaymentVO.setPk("cart_cd");
+                cartPaymentVO.setTable_name("product_cart");
+
                 String usr_id = userInfo.get("usr_id").toString();
                 cartPaymentVO.setCart_user_id(usr_id);
+                cartPaymentVO.setOrder_no(null);
+
+                //결제비용
+                Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
+                List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
+                for(Map<String,Object> map : cartPaymentList) {
+                    map.put("delivery_payment",deliveryPayment(map));
+                    //보유 쿠폰
+                    Map<String,Object> parameter = new HashMap<>();
+                    parameter.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
+                    parameter.put("coupon_ct", ((String)map.get("product_ct")).split("\\|"));
+                    parameter.put("product_payment",map.get("product_payment"));
+                    parameter.put("coupon_use_range", "O");
+
+                    //사용가능쿠폰
+                    if(!isEmpty(userInfo)){
+                        params.put("coupon_paid_id",userInfo.get("usr_id"));
+                    }else {
+                        //조회안되도록
+                        params.put("coupon_paid_id","9999999");
+                    }
+                    //사용가능쿠폰
+                    List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(parameter);
+                    map.put("enableCouponList",enableCouponList);
+                }
+                model.addAttribute("cartPaymentList", cartPaymentList);
+                model.addAttribute("getCartSum", getCartSum);
+
+
+            } else {
+                if(isEmpty(userInfo)){
+                    cartPaymentVO.setCart_user_id((String) session.getAttribute("nonMembersUserId"));
+                }else{
+                    String usr_id = userInfo.get("usr_id").toString();
+                    cartPaymentVO.setCart_user_id(usr_id);
+                }
+
+
+                //결제비용
+                Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
+                List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
+                for(Map<String,Object> map : cartPaymentList) {
+                    map.put("delivery_payment",deliveryPayment(map));
+                    //보유 쿠폰
+                    Map<String,Object> parameter = new HashMap<>();
+                    parameter.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
+                    parameter.put("coupon_ct", ((String)map.get("product_ct")).split("\\|"));
+                    parameter.put("product_payment",map.get("product_payment"));
+                    parameter.put("coupon_use_range", "O");
+
+                    //사용가능쿠폰
+                    if(!isEmpty(userInfo)){
+                        params.put("coupon_paid_id",userInfo.get("usr_id"));
+                    }else {
+                        //조회안되도록
+                        params.put("coupon_paid_id","9999999");
+                    }
+                    //사용가능쿠폰
+                    List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(parameter);
+                    map.put("enableCouponList",enableCouponList);
+                }
+                model.addAttribute("cartPaymentList", cartPaymentList);
+                model.addAttribute("getCartSum", getCartSum);
+
             }
+
             //주문번호생성
             String order_no = "PO-ORDER-"+numberGender.numberGen(7,1);
             model.addAttribute("order_no",order_no);
 
-
-            //결제비용
-            Map<String,Object> getCartSum = cartDAO.getPaymentCartSum(cartPaymentVO);
-            List<Map<String,Object>> cartPaymentList = cartDAO.getCartPaymentList(cartPaymentVO);
-            for(Map<String,Object> map : cartPaymentList) {
-            	map.put("delivery_payment",deliveryPayment(map));
-            	//보유 쿠폰
-            	Map<String,Object> parameter = new HashMap<>();
-            	parameter.put("coupon_paid_user_id",cartPaymentVO.getCart_user_id());
-            	parameter.put("coupon_ct", ((String)map.get("product_ct")).split("\\|"));
-            	parameter.put("product_payment",map.get("product_payment"));
-            	parameter.put("coupon_use_range", "O");
-                
-            	//사용가능쿠폰
-                if(!isEmpty(userInfo)){
-                	params.put("coupon_paid_id",userInfo.get("usr_id"));
-                }else {
-                	//조회안되도록
-                	params.put("coupon_paid_id","9999999");
-                }
-                //사용가능쿠폰
-                List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(parameter);
-                map.put("enableCouponList",enableCouponList);
-            }
-            model.addAttribute("cartPaymentList", cartPaymentList);
-            model.addAttribute("getCartSum", getCartSum);
-            
             //희망 배송일시 YN (상품중 하나라도 희망배송설정 Y면
             Map<String,Object> storeInfo = mgSystemDAO.getCartStoreHopeInfo(cartPaymentVO);
             model.addAttribute("store_delivery",storeInfo);
@@ -453,97 +530,138 @@ public class ProductController {
         }
 
     }
+
     //상품결제
     @RequestMapping(value = "/product/productPayment")
     public String productPayment(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, HttpSession session, CommonVO commonVO,SearchVO searchVO,
     		@RequestParam(value = "select_option_value", required = false) String[] select_option_value, HttpServletResponse response) throws Exception{
         try{
-        	if(params.get("email") != null) {
-        		if(!params.get("email").equals("") && params.get("login").equals("true")) {
-	        		session.setAttribute("email", params.get("email"));
-	        		session.setAttribute("login", true);
-        		}else{
-        			session.setAttribute("email", null);
-	        		session.setAttribute("login", null);
-        		}
-        	}
+            params.get("order_no");
+            if (params.get("email") != null) {
+                if (!params.get("email").equals("") && params.get("login").equals("true")) {
+                    session.setAttribute("email", params.get("email"));
+                    session.setAttribute("login", true);
+                } else {
+                    session.setAttribute("email", null);
+                    session.setAttribute("login", null);
+                }
+            }
+
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-            String order_no = "PD-ORDER-"+numberGender.numberGen(7,1);
-            params.put("product_cd",request.getParameter("product_cd"));
-            params.put("product_live_type", "on");
-            Map<String,Object> detail = productDAO.getProductViewDetail(params);
-            //상품 금액
-            params.put("product_payment",detail.get("product_payment"));
-            //배송정보
-            params.put("delivery_class",detail.get("product_delivery_class"));
-            //배송밥법
-            params.put("delivery_type",detail.get("product_delivery_type"));
-            //배송비구분
-            params.put("delivery_payment_class",detail.get("product_delivery_payment_class"));
-            //배송비 구분별 값
-            params.put("delivery_payment",detail.get("product_delivery_payment"));
+
+            if(params.get("order_no") != null){
+                //재결제
+                Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+                List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+
+                params.put("product_cd",paymentDetail.get("product_cd"));
+                params.put("product_live_type", "on");
+                Map<String,Object> detail = productDAO.getProductViewDetail(params);
+                //상품 금액
+                params.put("product_payment",paymentDetail.get("product_payment"));
+                //배송정보
+                params.put("delivery_class",paymentDetail.get("product_delivery_class"));
+                //배송밥법
+                params.put("delivery_type",paymentDetail.get("product_delivery_type"));
+                //배송비구분
+                params.put("delivery_payment_class",paymentDetail.get("product_delivery_payment_class"));
+                //배송비 구분별 값
+                params.put("delivery_payment",paymentDetail.get("product_delivery_payment"));
 
 
-            Map<String,Object> delivery = giveawayDelivery(params);
-            model.addAttribute("delivery",delivery );
-            //옵션
+                Map<String,Object> delivery = giveawayDelivery(params);
+                model.addAttribute("delivery",delivery );
+                //옵션
+
+                detail.put("payment_order_quantity",paymentDetail.get("payment_order_quantity"));
+                Integer deliveryPayment = deliveryPayment(paymentDetail);
+                model.addAttribute("deliveryPayment",deliveryPayment );
+
+                model.addAttribute("option", paymentBundleList.get(0).get("option_name"));
+                //보유 쿠폰
+                params.put("coupon_paid_user_id", userInfo.get("usr_id"));
+                params.put("coupon_ct", ((String)detail.get("product_ct")).split("\\|"));
+                params.put("coupon_use_range", "P");
+
+                model.addAttribute("detail",detail );
+            } else {
+                params.put("product_cd", request.getParameter("product_cd"));
+                params.put("product_live_type", "on");
+                Map<String, Object> detail = productDAO.getProductViewDetail(params);
+                //상품 금액
+                params.put("product_payment", detail.get("product_payment"));
+                //배송정보
+                params.put("delivery_class", detail.get("product_delivery_class"));
+                //배송밥법
+                params.put("delivery_type", detail.get("product_delivery_type"));
+                //배송비구분
+                params.put("delivery_payment_class", detail.get("product_delivery_payment_class"));
+                //배송비 구분별 값
+                params.put("delivery_payment", detail.get("product_delivery_payment"));
+
+
+                Map<String, Object> delivery = giveawayDelivery(params);
+                model.addAttribute("delivery", delivery);
+                //옵션
 //            params.put("product_option_input",detail.get("product_option_input"));
 //            String option = getOption(params);
 //            model.addAttribute("option",option );
 
-            detail.put("payment_order_quantity",params.get("payment_order_quantity"));
-            Integer deliveryPayment = deliveryPayment(detail);
-            model.addAttribute("deliveryPayment",deliveryPayment );
+                detail.put("payment_order_quantity", params.get("payment_order_quantity"));
+                Integer deliveryPayment = deliveryPayment(detail);
+                model.addAttribute("deliveryPayment", deliveryPayment);
+
+                model.addAttribute("option", new String(((String) params.get("option_name")).getBytes("8859_1"), "UTF-8"));
+                //보유 쿠폰
+                params.put("coupon_paid_user_id", userInfo.get("usr_id"));
+                params.put("coupon_ct", ((String) detail.get("product_ct")).split("\\|"));
+                params.put("coupon_use_range", "P");
+
+                model.addAttribute("detail", detail);
+
+            }
 
             //기본 배송설정
-            Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
-            model.addAttribute("store_delivery",storeInfo);
-            if(!isEmpty(userInfo)){
+            Map<String, Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
+            model.addAttribute("store_delivery", storeInfo);
+            if (!isEmpty(userInfo)) {
 
                 //최근 배송지 불러오기
-                params.put("product_cd",null);
-                params.put("giveaway_cd",null);
-                params.put("order_user_id",userInfo.get("usr_id"));
-                params.put("order_no",null);
-                Map<String,Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
-                model.addAttribute("userInfo",userInfo );
-                model.addAttribute("latestDelivery",latestDelivery );
+                params.put("product_cd", null);
+                params.put("giveaway_cd", null);
+                params.put("order_user_id", userInfo.get("usr_id"));
+                params.put("order_no", null);
+                Map<String, Object> latestDelivery = deliveryDAO.getDeliveryLatest(params);
+                model.addAttribute("userInfo", userInfo);
+                model.addAttribute("latestDelivery", latestDelivery);
 //                String options = "";
 //                if(select_option_value != null && select_option_value.length > 0) {
 //                	options += String.join("/", select_option_value);
 //                }
 //                if(params.get("btn-option-value") != null && !params.get("btn-option-value").equals("")) {
-//                	if(options.equals(""))  options += params.get("btn-option-value"); 
+//                	if(options.equals(""))  options += params.get("btn-option-value");
 //                	else					options += "/"+params.get("btn-option-value");
 //                }
 //            	if(params.get("rd-option-value") != null && !params.get("rd-option-value").equals("")) {
-//            		if(options.equals(""))  options += params.get("rd-option-value"); 
+//            		if(options.equals(""))  options += params.get("rd-option-value");
 //                	else					options += "/"+params.get("rd-option-value");
 //                }
             }
-            
-            model.addAttribute("option",new String(((String)params.get("option_name")).getBytes("8859_1"), "UTF-8"));
-            //보유 쿠폰
-            params.put("coupon_paid_user_id",params.get("order_user_id"));
-            params.put("coupon_ct", ((String)detail.get("product_ct")).split("\\|"));
-            params.put("coupon_use_range", "P");
-            
             //사용가능쿠폰
-            if(!isEmpty(userInfo)){
-            	params.put("coupon_paid_id",userInfo.get("usr_id"));
-            }else {
-            	//조회안되도록
-            	params.put("coupon_paid_id","9999999");
+            if (!isEmpty(userInfo)) {
+                params.put("coupon_paid_id", userInfo.get("usr_id"));
+            } else {
+                //조회안되도록
+                params.put("coupon_paid_id", "9999999");
             }
-            List<Map<String,Object>> enableCouponList = couponDAO.getUserCouponList(params);
-            model.addAttribute("enableCouponList",enableCouponList);
-            
-            
-            model.addAttribute("postUrl","/SaveDeliveInfo" );
-            model.addAttribute("detail",detail );
-            model.addAttribute("order_no",order_no);
-            
+            List<Map<String, Object>> enableCouponList = couponDAO.getUserCouponList(params);
+            model.addAttribute("enableCouponList", enableCouponList);
+
+            String order_no = "PD-ORDER-" + numberGender.numberGen(7, 1);
+            model.addAttribute("postUrl", "/SaveDeliveInfo");
+            model.addAttribute("order_no", order_no);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -555,6 +673,7 @@ public class ProductController {
             return "product/productpayment";
         }
     }
+
     //배송비
     public Integer deliveryPayment( Map<String,Object> params)throws IOException {
         Integer deliveryPayment=0;

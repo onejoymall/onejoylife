@@ -173,3 +173,7 @@ input[type="number"]::placeholder{
 @-ms-keyframes spin {
     to { -ms-transform: rotate(360deg); }
 }
+
+.w100px{
+    width: 100px !important;
+}
