@@ -84,4 +84,11 @@ public class MgSystemDAO {
 	public void deleteProductCode(MgProductCodeVO mgProductCodeVO) {
 		sql.insert("mall.MgSystemMapper.deleteProductCode",mgProductCodeVO);
 	}
+	public Map<String, Object> getExcelSettingDetail(HashMap params) {
+		Map<String,Object> getExcelSettingDetail=sql.selectOne("mall.MgSystemMapper.getExcelSettingDetail",params);
+    	return getExcelSettingDetail;
+	}
+	public void insertExcelSetting(HashMap params) {
+		sql.insert("mall.MgSystemMapper.insertExcelSetting",params);
+	}
 }
