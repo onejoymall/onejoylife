@@ -1224,7 +1224,6 @@ public class ManagerRestapiController {
             String product_cd = "P"+numberGender.numberGen(7,1);
             productVO.setProduct_cd(product_cd);
 
-
             if(productVO.getProduct_name().isEmpty()){
                 error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
             }
@@ -1234,7 +1233,7 @@ public class ManagerRestapiController {
 //            if(productVO.getProduct_summary_memo().isEmpty()){
 //                error.put(messageSource.getMessage("product_summary_memo","ko"), messageSource.getMessage("error.required","ko"));
 //            }
-//            if(productVO.getProduct_user_payment().is){
+//            if(productVO.getProduct_user_payment().idefaultModals){
 //                error.put(messageSource.getMessage("product_user_payment","ko"), messageSource.getMessage("error.required","ko"));
 //            }
             if(productVO.getProduct_company_payment() == null){

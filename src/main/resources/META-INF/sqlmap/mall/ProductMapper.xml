@@ -186,6 +186,10 @@
             product_store_id as product_user_ud,
             product_definition_key,
             product_definition_value,
+            product_exposure_kr,
+            product_exposure_usa,
+            product_exposure_cn,
+            product_exposure_jp,
             (SELECT DATE_FORMAT(product_validity_start,'%Y-%m-%d'))product_validity_start,
             (SELECT DATE_FORMAT(product_validity_end,'%Y-%m-%d'))product_validity_end,
             (select IFNULL(product_user_payment,0)) as product_user_payment,
@@ -399,7 +403,11 @@ and A.payment_status != 'N'
         product_validity_start,
         product_validity_end,
         product_definition_key,
-        product_definition_value
+        product_definition_value,
+        product_exposure_kr,
+        product_exposure_usa,
+        product_exposure_cn,
+        product_exposure_jp
        )values(
         #{product_cd},
         #{product_store_id},
@@ -501,7 +509,11 @@ and A.payment_status != 'N'
         #{product_validity_start},
         #{product_validity_end},
         #{product_definition_key},
-        #{product_definition_value}
+        #{product_definition_value},
+        #{product_exposure_kr},
+        #{product_exposure_usa},
+        #{product_exposure_cn},
+        #{product_exposure_jp}
        )
 
     </insert>
@@ -816,7 +828,11 @@ and A.payment_status != 'N'
         product_validity_start=#{product_validity_start},
         product_validity_end=#{product_validity_end},
         product_definition_key = #{product_definition_key},
-        product_definition_value = #{product_definition_value}
+        product_definition_value = #{product_definition_value},
+        product_exposure_kr = #{product_exposure_kr},
+        product_exposure_usa = #{product_exposure_usa},
+        product_exposure_cn = #{product_exposure_cn},
+        product_exposure_jp = #{product_exposure_jp}
         where product_cd =#{product_cd}
         ]]>
     </update>

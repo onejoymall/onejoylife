@@ -91,17 +91,19 @@
                             <label for="goods-notsale">판매 안 함</label>
                         </td>
                     </tr>
-<%--                    <tr>--%>
-<%--                        <th>국가별 노출</th>--%>
-<%--                        <td>--%>
-<%--                            <input type="checkbox" id="goods-exposure-kr" name="goods-exposure-ct" value="Y" checked>--%>
-<%--                            <label for="goods-exposure-kr">대한민국</label>--%>
-<%--                            <input type="checkbox" id="goods-exposure-usa" name="goods-exposure-ct" value="N">--%>
-<%--                            <label for="goods-exposure-usa">미국</label>--%>
-<%--                            <input type="checkbox" id="goods-exposure-ch" name="goods-exposure-ct" value="N">--%>
-<%--                            <label for="goods-exposure-ch">중국</label>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                    <tr>
+                        <th>국가별 노출</th>
+                        <td>
+                            <input type="checkbox" id="product_exposure_kr" name="product_exposure_kr" value="Y" checked>
+                            <label for="product_exposure_kr">대한민국</label>
+                            <input type="checkbox" id="product_exposure_usa" name="product_exposure_usa" value="Y">
+                            <label for="product_exposure_usa">미국</label>
+                            <input type="checkbox" id="product_exposure_cn" name="product_exposure_cn" value="Y">
+                            <label for="product_exposure_cn">중국</label>
+                            <input type="checkbox" id="product_exposure_jp" name="product_exposure_jp" value="Y">
+                            <label for="product_exposure_jp">일본</label>
+                        </td>
+                    </tr>
                     <tr>
                         <th>회원 전용 상품</th>
                         <td>
@@ -725,6 +727,11 @@
                                 <option value="G" <c:if test="${detail.product_delivery_type eq 'G' }">selected</c:if>>화물배송</option>
                                 <option value="H" <c:if test="${detail.product_delivery_type eq 'H' }">selected</c:if>>매장직접수령</option>
                                 <option value="I" <c:if test="${detail.product_delivery_type eq 'I' }">selected</c:if>>배송 필요 없음</option>
+                            </select>
+<%--                            <select name="delivery_t_code">
+                            <c:forEach var="companyList" items="${companyList}" varStatus="status">
+                                <option value="${companyList.Code}">${companyList.Name}</option>
+                            </c:forEach>--%>
                             </select>
                         </td>
                     </tr>

@@ -276,14 +276,15 @@
                             </p>
                         </td>
                     </tr>
-                    <%--                    <tr>--%>
-                    <%--                        <th>판매 기간</th>--%>
-                    <%--                        <td>--%>
-                    <%--                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.--%>
-                    <%--                            </p>--%>
-                    <%--                            <input type="text" id="goods-sDate-start" name="goods-sDate-start" placeholder="ex) 2020-02-28"> ~ <input type="text" id="goods-sDate-end" name="goods-sDate-end" placeholder="ex) 2020-02-28">--%>
-                    <%--                        </td>--%>
-                    <%--                    </tr>--%>
+<%--                    <tr>
+                        <th>예상 마감기간</th>
+                        <td>
+                            <p class="cc2">날짜형식 &#40;YYYY-MM-DD&#41;으로 입력합니다.
+                            </p>
+                            <input type="text" id="giveaway_date_start" name="giveaway_date_start" placeholder="ex) 2020-02-28"> ~
+                            <input type="text" id="giveaway_date_end" name="giveaway_date_end" placeholder="ex) 2020-02-28">
+                        </td>
+                    </tr>--%>
                     </tbody>
                 </table>
                 <h3>옵션 정보</h3>
