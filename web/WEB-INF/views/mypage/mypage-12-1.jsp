@@ -364,4 +364,5 @@ $(document).on('input','input[name=newpassword],input[name=renewpassword]',funct
     if(!pw && !pw_cf) pwCheck = true;
 })
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

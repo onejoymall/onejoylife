@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="manager.CompanyInfoMapper">
+    <select id="getCompanyInfo" resultType="java.util.HashMap" parameterType="com.webapp.manager.vo.CompanyInfoVO">
+     /*getCompanyInfo*/
+        select * 
+        from company_Info;
+       
+    </select>
+   <update id="insertCompanyInfo" parameterType="java.util.Map">
+  /*insertCompanyInfo*/
+			update company_Info set  
+				company_name 			=#{company_name},
+				company_ceo 			=#{company_ceo},
+				company_ph 		 		=#{company_ph},
+				company_fax				=#{company_fax},
+				corporate_num  			=#{corporate_num},
+				cmnt_sales_busi_report  =#{cmnt_sales_busi_report},
+				service_ment	 		=#{service_ment},
+				counsel_time			=#{counsel_time},
+				counsel_time_sub 		=#{counsel_time_sub},
+				counsel_offday	 		=#{counsel_offday},
+				postcode				=#{postcode},
+				roadAddress				=#{roadAddress},
+				jibunAddress 			=#{jibunAddress},
+				extraAddress 			=#{extraAddress},
+				personal_info_incharge  =#{personal_info_incharge},
+				personal_info_incharge_email  =#{personal_info_incharge_email},
+				copyright  				=#{copyright},
+				hosting_by 				=#{hosting_by}
+				
+        
+        
+    </update>
+</mapper>

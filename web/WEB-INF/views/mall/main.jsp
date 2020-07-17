@@ -273,7 +273,8 @@
 											<c:if test="${productMDList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 											<c:if test="${productMDList.review_cnt != NULL }"><span class="score-text">${productMDList.review_cnt}개평가</span>
 											</c:if>
-											<a href="#" onclick="addShoppingBasketM('${productMDList.product_cd}')" class="list-cartic"></a>
+											<input type="hidden" name="product_option_yn" value="${productMDList.product_option_yn}" />
+											<a href="#" onclick="addShoppingBasketF('${productMDList.product_cd}')"  class="list-cartic"></a>
 										</p>
 									</div>
 							</a></li>
@@ -366,7 +367,8 @@
 
 											<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 											<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">${productSpList.review_cnt}개 평가</span></c:if>
-											<a href="#" onclick="addShoppingBasketM('${productSpList.product_cd}')" class="list-cartic"></a>
+											<input type="hidden" name="product_option_yn" value="${productSpList.product_option_yn}" />
+											<a href="#" onclick="addShoppingBasketF('${productSpList.product_cd}')" class="list-cartic"></a>
 										</p>
 									</div>
 							</a></li>
@@ -446,7 +448,9 @@
 
 											<c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 											<c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span>
-											</c:if> <a href="#" onclick="addShoppingBasketM('${productList.product_cd}')" class="list-cartic"></a>
+											</c:if> 
+											<input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+											<a href="#" onclick="addShoppingBasketF('${productList.product_cd}')" class="list-cartic"></a>
 										</p>
 									</div>
 							</a></li>
@@ -693,4 +697,5 @@
 		mdSlideCategorySelect('', $(this).attr('data-tab'))
 	});
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp"%>
+<c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

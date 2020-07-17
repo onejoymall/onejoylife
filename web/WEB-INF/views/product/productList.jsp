@@ -67,6 +67,9 @@
                 
               	 <input type="hidden" name="order_max" value="${list.product_max_limit}" />
                  <input type="hidden" name="order_min" value="${list.product_min_limit}" />
+                 <input type="hidden" name="product_option_yn" value="${list.product_option_yn}" />
+                     
+                    
                      
                     <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                         <div class="img-out">
@@ -91,7 +94,7 @@
                        
                         <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
                         <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>
-                        <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
+                       <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')" class="list-cartic"></a>
                        <%--  <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button> --%>
                     </p>
                 </div>
@@ -120,4 +123,5 @@
    
      
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

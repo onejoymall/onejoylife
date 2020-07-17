@@ -29,6 +29,7 @@
                 A.product_name,
                 A.product_user_payment,
                 A.product_payment,
+                A.product_option_yn,
                 (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=A.product_made_company_cd) as product_made_company_name,
                 (select Z.file_link from product_file Z where Z.key_id = A.product_cd and Z.file_order = 1) as file_1,
                 CEIL(((product_user_payment - product_payment)/product_user_payment)*100) AS percent_discount,

@@ -78,6 +78,7 @@ import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.CompanyInfoDAO;
 import com.webapp.manager.dao.ConfigDAO;
 import com.webapp.manager.dao.DefinitionDAO;
 import com.webapp.manager.dao.MgBrandDAO;
@@ -93,6 +94,7 @@ import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
+import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.CouponVO;
 import com.webapp.manager.vo.ExcelSettingVO;
 import com.webapp.manager.vo.MgBrandVO;
@@ -164,6 +166,8 @@ public class ManagerRestapiController {
     private CouponDAO couponDAO;
     @Autowired
     private SelectorDAO selectorDAO;
+    @Autowired
+    private CompanyInfoDAO companyInfoDAO;    
     IamportClient client;
     @Value("${api_key}")
     private String apiKey;
@@ -1194,6 +1198,21 @@ public class ManagerRestapiController {
             e.printStackTrace();
         }
 
+        return resultMap;
+    }
+
+
+    @RequestMapping(value = "/Manager/companyInfoModi", method = RequestMethod.POST, produces = "application/json")//jmjm
+    public  HashMap<String, Object> managerCompanyInfoModi(CompanyInfoVO companyInfoVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    //    HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+        	    companyInfoDAO.insertCompanyInfo(companyInfoVO);
+                resultMap.put("redirectUrl","/Manager/companyInfo");
+            }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return resultMap;
     }
     //상품등록

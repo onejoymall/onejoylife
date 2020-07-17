@@ -419,5 +419,5 @@ function computePayment(ids){
 
 
 
-</script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+</script><c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

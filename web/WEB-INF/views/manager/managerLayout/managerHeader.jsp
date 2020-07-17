@@ -299,6 +299,16 @@
                         <c:if test="${afn:contains(menuList, '28')}">
                         <li><a href="/Manager/boardList?bgno=16">FAQ</a></li>
                         </c:if>
+  						</ul>
+		               	 </li>
+		                </c:if>
+		               	<c:if test="${ afn:contains(menuList, '29')}">
+		                <li <c:if test="${topNav == 10}">class="active" </c:if>><a href="/Manager/companyInfo">쇼핑몰 정보</a>
+                    	<ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '29')}">
+                        <li><a href="/Manager/companyInfo">정보등록</a></li>
+            			</c:if>
+                        
                     </ul>
                 </li>
                 </c:if>

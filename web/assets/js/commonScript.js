@@ -628,7 +628,8 @@ $(document).on("click",".ra-num",function () {
 												}else{
 													html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
 												}
-                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
+                                  html += 	'<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+
+                            '		 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +
                             '             </p>\n' +
                             '         </div>\n' +
                             '     </a>\n' +
@@ -691,8 +692,8 @@ $(document).on("click",".ra-num",function () {
 													}else{
 														html += '<span class="score-text"> '+ productList.review_cnt + '개 평가</span>';
 													}
-	                                 html += 	' <a href="#" class="list-cartic" onclick="addShoppingBasketM(\''+productList.product_cd+'\');"></a>\n'  +
-	                            '             </p>\n' +
+	                                 html +=        html +='<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+ 	
+	                            '			 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +	                            '             </p>\n' +
 	                            '         </div>\n' +
 	                            '     </a>\n' +
 	                            ' </li>' +
@@ -1002,6 +1003,143 @@ $(document).on("click",".ra-num",function () {
     	}
     	
     	var formData = 'option_name='+(optionStr ? optionStr : ' ')+'&product_cd='+product_cd+"&"+$('#defaultForm').serialize();
+    	var order = $('input[name=payment_order_quantity]').val() ? $('input[name=payment_order_quantity]').val() : 1;
+    	var max = $('input[name=order_max]').val();
+    	var min = $('input[name=order_min]').val();
+    	if(max != 0) {
+    		if (order < min || order > max) {
+    			$.toast({
+    				heading : '최소/최대 주문 수량을 확인해주세요.',
+    				text: [
+    					'최소 : ' + min,
+    					'최대 : ' + max,
+    					],
+    					showHideTransition: 'plain', //펴짐
+    					position: 'bottom-right',
+    					heading: 'Error',
+    					icon: 'error',
+    					stack: false
+    			});
+    		} else {
+    			jQuery.ajax({
+    				type: 'POST',
+    				data: formData,
+    				url:'/cart/addcart',
+    				success: function (data) {
+    					if (data.validateError) {
+    						$('.validateError').empty();
+    						$.each(data.validateError, function (index, item) {
+    							// $('#validateError'+index).removeClass('none');
+    							// $('#validateError'+index).html('* '+item);
+    							if(index == "Error"){//일반에러메세지
+    								alertType = "error";
+    								showText = item;
+    							}else{
+    								alertType = "error";
+    								showText = index + " (은) " + item;
+    							}
+    							// $.toast().reset('all');//토스트 초기화
+    							$.toast({
+                                    text: showText,
+                                    showHideTransition: 'plain', //펴짐
+                                    position: 'bottom-right',
+                                    heading: 'Error',
+                                    icon: 'error'
+                                });
+    						});
+    						
+    					} else {
+    						$.toast({
+                                heading: '등록 성공!',
+                                text: [
+                                    '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                    '<a href="">쇼핑 계속!</a>',
+                                ],
+
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                icon: 'success',
+                                hideAfter: false,
+                            });
+    					}
+    				},
+    				error: function (xhr, status, error) {
+    					alert("error");
+    				}
+    			});
+    		}
+    	} else {
+    		jQuery.ajax({
+    			type: 'POST',
+    			data: formData,
+    			url:'/cart/addcart',
+    			success: function (data) {
+    				if (data.validateError) {
+    					$('.validateError').empty();
+    					$.each(data.validateError, function (index, item) {
+    						// $('#validateError'+index).removeClass('none');
+    						// $('#validateError'+index).html('* '+item);
+    						if(index == "Error"){//일반에러메세지
+    							alertType = "error";
+    							showText = item;
+    						}else{
+    							alertType = "error";
+    							showText = index + " (은) " + item;
+    						}
+    						// $.toast().reset('all');//토스트 초기화
+    						$.toast({
+                                text: showText,
+                                showHideTransition: 'plain', //펴짐
+                                position: 'bottom-right',
+                                heading: 'Error',
+                                icon: 'error'
+                            });
+    					});
+    					
+    				} else {
+    					
+    					$.toast({
+                            heading: '등록 성공!',
+                            text: [
+                                '<a href="/MyPage/ShoppingBasket">장바구니 이동</a>',
+                                '<a href="">쇼핑 계속!</a>',
+                            ],
+
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            icon: 'success',
+                            hideAfter: false,
+                        });
+    				}
+    				// loginAuth(data.access_token);
+    				// location.href=data.redirectUrl;
+    			},
+    			error: function (xhr, status, error) {
+    				alert("error");
+    			}
+    		});
+    	}
+    	
+    }
+    //장바구니 등록(썸네일) 
+    function addShoppingBasketF(product_cd) {
+
+    
+    	if($("input[name=product_option_yn").val()== 'Y'){
+    	
+	    		$.toast({
+	    			heading : '옵션은 필수사항입니다.',
+	    			text: '',
+	    			showHideTransition: 'plain', //펴짐
+	    			position: 'bottom-right',
+	    			icon: 'error',
+	    			stack: false
+	    		});
+	    		return;
+	    		
+    	}
+    	
+    	var formData = 'product_cd='+product_cd+"&"+$('#defaultForm').serialize();
     	var order = $('input[name=payment_order_quantity]').val() ? $('input[name=payment_order_quantity]').val() : 1;
     	var max = $('input[name=order_max]').val();
     	var min = $('input[name=order_min]').val();

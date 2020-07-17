@@ -65,7 +65,8 @@
                        
                         <c:if test="${list.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
                         <c:if test="${list.review_cnt != NULL }"><span class="score-text">(${list.review_cnt})</span></c:if>
-                     <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
+                      <input type="hidden" name="product_option_yn" value="${list.product_option_yn}" />
+                     <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')"class="list-cartic"></a>
                         </p>
                     </div>
                     </c:forEach>
