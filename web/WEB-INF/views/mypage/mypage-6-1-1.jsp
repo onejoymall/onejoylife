@@ -168,4 +168,4 @@
         </div>
     </div>
 <c:import url="/layout/footer"/>
-<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>p" %>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>
