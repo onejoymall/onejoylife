@@ -38,6 +38,7 @@ import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.CompanyInfoDAO;
 import com.webapp.manager.dao.ConfigDAO;
 import com.webapp.manager.dao.DefinitionDAO;
 import com.webapp.manager.dao.MgBrandDAO;
@@ -52,6 +53,7 @@ import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
+import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.MgBrandVO;
 import com.webapp.manager.vo.MgDeliveryVO;
 import com.webapp.manager.vo.MgOptionVO;
@@ -113,6 +115,9 @@ public class ManagerController {
     private String t_url;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private CompanyInfoDAO companyInfoDAO;
+    
     /**
      *  리스트.
      */
@@ -290,6 +295,20 @@ public class ManagerController {
         }
         return "/manager/product/productAdd";
     }
+    @RequestMapping(value = "/Manager/companyInfo")//jmjm
+    public String managerCompanyInfo(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,CompanyInfoVO companyInfoVO,HttpSession session) throws Exception {
+        try {
+            Map<String,Object> info = companyInfoDAO.getCompanyInfo(companyInfoVO);
+            model.addAttribute("info", info);
+            model.addAttribute("topNav", 10);
+            model.addAttribute("style", "goods-add");
+            model.addAttribute("postUrl", "/Manager/companyInfoModi");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "/manager/companyInfo";
+    }
+    
 
     @RequestMapping(value = "/Manager/Giveaway")
     public String managerGiveaway(@RequestParam HashMap params, ModelMap model, GiveawayVO searchVO) throws Exception {

@@ -79,7 +79,7 @@
                             </a>
                             <p class="info-price">
                         <span class="price-before">
-                  1          <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</span>
+                            <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</span>
                                 <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원
                             </p>
                             <p class="info-score">
@@ -89,7 +89,8 @@
                        
                         <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
                         <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>
-                        <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
+                       <input type="hidden" name="product_option_yn" value="${list.product_option_yn}" />
+                        <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')"class="list-cartic" ></a>
                             </p>
                         </div>
                         <c:if test="${lineCut  == 0}">
@@ -118,5 +119,6 @@
         $('#form1').submit();
     })
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>
 

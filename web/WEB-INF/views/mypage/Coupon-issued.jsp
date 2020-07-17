@@ -8,4 +8,6 @@ var msg = "${msg}";
 alert(msg ? msg : "잘못된 접근입니다.");
 location.href="/MyPage/Coupon";
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

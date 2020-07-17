@@ -55,7 +55,9 @@
                        
                       			<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
                         		<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">(${productSpList.review_cnt})</span></c:if>
-                      			  <a href="#"  onclick="addShoppingBasketM('${list.product_cd}')"class="list-cartic"></a>
+                      			   <input type="hidden" name="product_option_yn" value="${productSpList.product_option_yn}" />
+                      			  <a href="#"  onclick="addShoppingBasketF('${productSpList.product_cd}')"class="list-cartic"></a>
+                      			  
                             </div>
                         </a>
                     </li>
@@ -98,7 +100,8 @@
 	    						<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
 	                       		<c:if test="${productList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
 	                        	<c:if test="${productList.review_cnt != NULL }"><span class="score-text">(${productList.review_cnt})</span></c:if>
-	                        	<a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+	                        	<input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+	                        	<a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
 							</p>
                             </div>
                         </a>
@@ -157,7 +160,8 @@
 			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
 			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
-			                        <a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+			                        <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 
                                 </p>
                             </a>
@@ -194,7 +198,8 @@
 			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
 			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
 			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
-			                        <a href="#"  onclick="addShoppingBasketM('${productList.product_cd}')"class="list-cartic"></a>
+			                         <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 </p>
                             </a>
                         </li>

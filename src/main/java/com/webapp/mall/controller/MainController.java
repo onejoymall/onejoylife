@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.webapp.mall.dao.*;
+import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
@@ -33,6 +34,7 @@ import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.CompanyInfoDAO;
 import com.webapp.manager.dao.ConfigDAO;
 @Controller
 @RequestMapping("/")
@@ -61,6 +63,8 @@ public class MainController {
     private ConfigDAO configDAO;
     @Autowired
     private BoardGroupSvc boardGroupSvc;
+    @Autowired
+    private CompanyInfoDAO companyInfoDAO;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public String mallMain(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, GiveawayVO giveawayVO, BoardVO boardVO, ProductVO productVO) throws Exception {
 //        List<Map<String, Object>> userList = null;
@@ -316,6 +320,24 @@ public class MainController {
             return "layout/mainTopNav";
         }
     }
+    
+    
+    @RequestMapping(value = "/layout/footer")
+    public String footer(ModelMap model, HttpServletRequest request,  HttpSession session,CompanyInfoVO companyInfoVO) throws Exception{
+        try{
+        	 Map<String,Object> info = companyInfoDAO.getCompanyInfo(companyInfoVO);
+            model.addAttribute("info", info);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/layout/footer-left-Nav";
+        } else {
+            return "layout/footer";
+        }
+    }
+    
     @RequestMapping(value = "/layout/scrollRight")
     public String scrollRight(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session, TodayVO todayVO) throws Exception{
         try{
@@ -441,6 +463,7 @@ public class MainController {
         return "mobile/layout/sub-header";
 
     }
+
     @RequestMapping(value = "/mall/today", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     public String mallTody(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO) throws Exception {
 //        List<Map<String, Object>> userList = null;

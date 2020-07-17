@@ -146,5 +146,6 @@
 
     </div>
 </div>
+<c:import url="/layout/footer"/>
 
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

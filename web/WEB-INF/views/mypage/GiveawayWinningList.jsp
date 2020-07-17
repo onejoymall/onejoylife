@@ -636,4 +636,5 @@
         child = window.open('mypage-6-mo1.html','_blank','width=750, height=900');
     });
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+<%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>
