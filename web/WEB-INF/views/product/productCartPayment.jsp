@@ -837,6 +837,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
+                	console.log(error,xhr,status);
                     alert("error");
                 }
             });
@@ -949,4 +950,5 @@
         $('html,body').css("overflow", "auto");
     });
 </script>
-<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+<c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/layout/footer.jsp" %>--%>
