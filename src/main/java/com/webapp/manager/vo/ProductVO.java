@@ -115,6 +115,24 @@ public class ProductVO extends SearchVO {
     String product_exposure_usa = "N";
     String product_exposure_cn = "N";
     String product_exposure_jp = "N";
+    String delivery_t_code;
+    String product_type;//상품형태
+
+    public String getProduct_type() {
+        return product_type;
+    }
+
+    public void setProduct_type(String product_type) {
+        this.product_type = product_type;
+    }
+
+    public String getDelivery_t_code() {
+        return delivery_t_code;
+    }
+
+    public void setDelivery_t_code(String delivery_t_code) {
+        this.delivery_t_code = delivery_t_code;
+    }
 
     public String getProduct_exposure_kr() {
         return product_exposure_kr;

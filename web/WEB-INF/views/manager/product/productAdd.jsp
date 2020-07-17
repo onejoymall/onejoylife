@@ -105,6 +105,17 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>상품 형태</th>
+                        <td>
+                            <input type="radio" id="product_type_1" name="product_type" value="p" checked>
+                            <label for="product_type_1">일반 상품</label>
+                            <input type="radio" id="product_type_2" name="product_type" value="t">
+                            <label for="product_type_2">티켓</label>
+                            <input type="radio" id="product_type_3" name="product_type" value="r">
+                            <label for="product_type_3">여행</label>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>회원 전용 상품</th>
                         <td>
                             <input type="radio" id="goods-member-only1" name="product_use_member_yn" value="Y" >
@@ -728,10 +739,10 @@
                                 <option value="H" <c:if test="${detail.product_delivery_type eq 'H' }">selected</c:if>>매장직접수령</option>
                                 <option value="I" <c:if test="${detail.product_delivery_type eq 'I' }">selected</c:if>>배송 필요 없음</option>
                             </select>
-<%--                            <select name="delivery_t_code">
-                            <c:forEach var="companyList" items="${companyList}" varStatus="status">
-                                <option value="${companyList.Code}">${companyList.Name}</option>
-                            </c:forEach>--%>
+                            <select name="delivery_t_code">
+                                <c:forEach var="companyList" items="${companyList}" varStatus="status">
+                                    <option value="${companyList.Code}">${companyList.Name}</option>
+                                </c:forEach>
                             </select>
                         </td>
                     </tr>
@@ -1209,6 +1220,14 @@ $(function(){
 			$("#typeM").addClass("hidden");
 		}
 	})
+})
+
+$("select[name=product_delivery_type]").on('click', function () {
+    if ($("select[name=product_delivery_type]").find("option:selected").val() == "A") {
+        $("select[name=delivery_t_code]").attr("disabled", false);
+    } else {
+        $("select[name=delivery_t_code]").attr("disabled", true);
+    }
 })
 </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

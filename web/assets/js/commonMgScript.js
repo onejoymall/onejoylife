@@ -516,8 +516,8 @@ $(document).on("click",'.goods-shipping',function(){
         $('tr.shipping-t-detail').removeClass('hidden');
         $('tr.shipping-f-detail input').val('');
     }else{
-        // $('tr.shipping-t-detail').addClass('hidden');
-        // $('tr.shipping-t-detail input').val('');
+        $('tr.shipping-t-detail').addClass('hidden');
+        $('tr.shipping-t-detail input').val('');
     }
 });
 //기본배송 정보 저장
