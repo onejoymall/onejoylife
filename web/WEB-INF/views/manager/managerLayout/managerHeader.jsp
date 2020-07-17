@@ -78,7 +78,8 @@
        						 afn:contains(menuList, '46') || 
        						 afn:contains(menuList, '47') ||
        						 afn:contains(menuList, '48') ||
-       						  afn:contains(menuList, '49')}">
+       						 afn:contains(menuList, '49') ||
+       						 afn:contains(menuList, '51') }">
                 <li <c:if test="${topNav == 1}">class="active" </c:if>><a href="/Manager/info-join">운영관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '9')}">
@@ -104,6 +105,9 @@
                         </c:if>
                         <c:if test="${afn:contains(menuList, '49')}">
                             <li><a href="/Manager/systemHistory">운영로그</a> </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '51')}">
+                            <li><a href="/Manager/excelSettingProduct">엑셀다운로드관리</a> </li>
                         </c:if>
                     </ul>
                 </li>

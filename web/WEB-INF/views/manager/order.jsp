@@ -359,13 +359,13 @@
                                 <td class="product_made_company_name">-</td>
                             </tr>
                             <tr>
-                                <th>상품명/옵션</th>
+                                <th>상품명/옵션 [수량]</th>
                                 <td class="product_order_name giveaway_name"></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>수량</th>
                                 <td class="payment_order_quantity"></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>결제수단</th>
                                 <td class="pay_method"></td>

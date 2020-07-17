@@ -1,0 +1,199 @@
+@charset "utf-8";
+
+.display-block{display:block!important;}
+a{transition: none;}
+body{
+    width:100%;
+    min-width: 1400px;
+    font-size:12px;
+    font-family: '맑은 고딕', 'Malgun Gothic', 'Dotum', '돋움', 'arial', 'verdana', sans-serif;
+    word-break: keep-all;
+    background-color: #ecf0f7;
+}
+.main-content {
+    max-width: 1400px;
+    margin: 10px auto;
+}
+/* main-title */
+.main-title {
+    margin: 40px 0 14px;
+}
+.main-title h2 {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 30px;
+    vertical-align: middle;
+    margin-bottom: 40px;
+}
+.goback {
+    display: inline-block;
+    height: 36px;
+    font-size: 14px;
+    line-height: 34px;
+    padding: 0 14px;
+    margin-bottom: 15px;
+    color: #2e3039;
+    border: 1px solid #98989b;
+    background-color: #fff;
+}
+
+/* form-box */
+.info-tab{border-left: 1px solid #dadcdd;}
+.info-tab li {
+    float: left;
+    height: 39px;
+    border-top: 1px solid #dadcdd;
+    border-right: 1px solid #dadcdd;
+    background-color: #f5f7fb;
+}
+.info-tab li > a {
+    display:block;
+    width: 100%;
+    padding:0 12px;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    color: #898989;
+}
+.info-tab > li .active{
+    color: #da394d;
+    border-top:2px solid #da304d;
+    line-height: 34px;
+    height:40px;
+}
+/*
+.info-tab > li .active:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: -1px 0;
+    background-color: #da394d;
+}
+*/
+.info-tab > li .active::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+}
+.text-editor {
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 20px 20px 40px;
+    margin-bottom: 50px;
+    box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+}
+/* btn */
+.btn-box {
+    width: 334px;
+    margin: auto;
+}
+.save-btn {
+    min-width: 162px;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 20px;
+    margin-right: 5px;
+    background-color: #da394d;
+    transition: .2s ease-out;
+}
+.save-btn:hover {
+    background: #bf1c30;
+}
+.default-btn {
+    min-width: 162px;
+    font-size: 20px;
+    line-height: 48px;
+    color: #da394d;
+    border: 1px solid #da394d;
+    background: #fff;
+    transition: .2s ease-out;
+}
+.default-btn:hover{
+    color: #bf1c30;
+    border-color: #bf1c30;
+    background: #fff;
+    box-shadow:inset 0px 0px 0px 1px rgb(218, 57, 77);
+}
+/* radio */
+.text-editor table {
+    width: 100%;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #dadcdd;
+}
+.mobile-radio tr th{
+    text-align: left;
+    padding-left: 10px;
+    background: #f8f8f8;
+}
+.mobile-radio tr td{
+    padding: 10px 10px;
+}
+.mobile-radio input{display: none;}
+.mobile-radio label span{
+    display: inline-block;
+    width: 100px;
+    margin-left: 30px;
+    line-height: 29px;
+}
+input[id="pay-mobile-ra1"] + label,
+input[id="pay-mobile-ra2"] + label,
+input[id="service-mobile-ra1"] + label,
+input[id="service-mobile-ra2"] + label,
+input[id="refund-mobile-ra1"] + label,
+input[id="refund-mobile-ra2"] + label
+{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url(../img/icon/but-g-1.png)no-repeat center / 20px;
+    cursor: pointer;
+}
+input[id="pay-mobile-ra2"] + label,
+input[id="service-mobile-ra2"] + label,
+input[id="refund-mobile-ra2"] + label
+{margin-left: 45px;}
+input[id="pay-mobile-ra1"]:checked + label,
+input[id="pay-mobile-ra2"]:checked + label,
+input[id="service-mobile-ra1"]:checked + label,
+input[id="service-mobile-ra2"]:checked + label,
+input[id="refund-mobile-ra1"]:checked + label,
+input[id="refund-mobile-ra2"]:checked + label
+{background: url(../img/icon/but-2.png)no-repeat center / 20px;}
+
+/*동현 start*/
+.modal-level-btn, .modal-enable-menu-btn{
+    background: #da394a;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.menu-depth{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	zoom: 1.2;
+}
+.menu-depth input, .menu-depth-all input{
+	margin-right: 5px;
+}
+.menu-depth-all{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	zoom: 1.5;
+}
+.column_name_div hr{
+	margin-bottom: 10px;
+}
+input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
+}
+/*동현 end*/

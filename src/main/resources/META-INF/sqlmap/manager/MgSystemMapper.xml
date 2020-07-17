@@ -220,4 +220,32 @@
 	postcode=#{postcode},
 	additional_delivery_payment=#{additional_delivery_payment}
   </update>
+  <select id="getExcelSettingDetail" parameterType="hashmap" resultType="hashmap">
+	  select *
+	  from store_excel_setting
+	  where store_id = #{store_id}
+	  and type_name=#{type_name}
+  </select>
+  <insert id="insertExcelSetting" parameterType="hashmap">
+  	insert into store_excel_setting(
+  		store_id,
+  		type_name,
+  		type_text,
+  		column_name,
+  		column_text
+  	)values(
+  		#{store_id},
+  		#{type_name},
+  		#{type_text},
+  		#{column_name},
+  		#{column_text}
+  	)
+  	on duplicate key update
+  	
+	store_id = #{store_id},
+	type_name = #{type_name},
+	type_text = #{type_text},
+	column_name = #{column_name},
+	column_text = #{column_text}
+  </insert>
 </mapper>

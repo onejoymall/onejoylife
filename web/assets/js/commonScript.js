@@ -963,8 +963,8 @@ $(document).on("click",".ra-num",function () {
     }
     //장바구니 등록 모바일
     function addShoppingBasketM(product_cd) {
-    	if($("input[name=product_option_required").val()){
-	    	var option_required_list = $("input[name=product_option_required").val().split("|");
+    	if($("input[name=product_option_required]").val()){
+	    	var option_required_list = $("input[name=product_option_required]").val().split("|");
 	    	var isOptionCheck = false;
 	    	var optionStr = "";
 	    	option_required_list.forEach(function(el,idx){
@@ -1538,7 +1538,7 @@ $(document).on("click",".ra-num",function () {
             });
     		return;
     	}
-   
+
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -1737,6 +1737,10 @@ $(document).on("click",".ra-num",function () {
                         $('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
 
                     }
+                    if(index=="product_order_name"){
+                        $('.' + index).html(item + " [" + data.list.payment_order_quantity + "개]");
+
+                    }
                     // $('#setDefaultButton').html('<button type="button" name="detail" class="btn-gray" onclick="refundCancel(\''+$.trim(order_no)+'\',\'W\')">교환/반품 취소</button>');
                 });
                 
@@ -1747,13 +1751,13 @@ $(document).on("click",".ra-num",function () {
                 	
                 	data.paymentBundleList.forEach(function(el, idx){
                 		product_made_company_name_html += (idx == 0 ? '' : '<br>') + (el.product_made_company_name ? el.product_made_company_name : '-');
-                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name + (el.option_name ? ' '+el.option_name : '');
-                		payment_order_quantity_html += (idx == 0 ? '' : '<br>') + el.payment_order_quantity;
+                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name + (el.option_name ? ' '+el.option_name : '') + " [" + el.payment_order_quantity + "개]";
+//                		payment_order_quantity_html += el.payment_order_quantity;
                 	});
                 	
                 	$(".product_made_company_name").html(product_made_company_name_html);
                 	$(".product_order_name").html(product_name_html);
-                	$(".payment_order_quantity").html(payment_order_quantity_html);
+//                	$(".payment_order_quantity").html(payment_order_quantity_html);
                 }
             },
             error: function (xhr, status, error) {
@@ -2819,6 +2823,7 @@ $(document).on("click",".ra-num",function () {
                             $('input:text[name^="'+index+'"]').val(item);
                             $('select[name='+index+']').val(item);
                             $('input:radio[name='+index+'][value=\'' + item + '\']').prop('checked',true);
+                            $('input:checkbox[name='+index+'][value=\'' + item + '\']').prop('checked',true);
                             $('input:radio[name='+index+'][value=\'' + item + '\']').trigger("click");
                         }
                     });
@@ -3114,7 +3119,11 @@ $(document).on("click",".ra-num",function () {
                             icon: 'success',
                             hideAfter: 2000,
                             afterHidden: function () {
-                            	location.href=data.redirectUrl;
+                            	if(data.redirectUrl){
+                            		location.href=data.redirectUrl;	
+                            	}else{
+                            		location.reload();
+                            	}
                             }
                         });
                     } else{
