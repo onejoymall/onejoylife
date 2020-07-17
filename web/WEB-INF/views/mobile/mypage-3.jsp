@@ -116,5 +116,5 @@
             <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
         </ul>
     </section>
-    
-<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+     <c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>
