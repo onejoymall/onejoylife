@@ -94,5 +94,5 @@
                 </form>
         </article>
     </section>
-    
-    <%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+        <c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

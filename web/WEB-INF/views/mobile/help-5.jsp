@@ -19,5 +19,5 @@
         <p class="qna-info">오전 10시 ~ 오후 6시<br> 주말, 공휴일 휴무<br><span>&#40; 점심시간: 12:00 ~ 13:00 &#41;</span></p>
         <p>&#40; 업무 외 시간에는 1:1 문의하기를 이용해 주세요. &#41;</p>
     </section>
-
-<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+    <c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

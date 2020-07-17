@@ -321,5 +321,5 @@ function computePayment(ids){
 	$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span>원</span>');
 }
 </script>
-
-<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+    <c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

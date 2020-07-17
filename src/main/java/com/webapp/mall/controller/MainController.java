@@ -332,7 +332,7 @@ public class MainController {
         }
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
-            return "mobile/layout/footer-left-Nav";
+            return "mobile/layout/footer";
         } else {
             return "layout/footer";
         }

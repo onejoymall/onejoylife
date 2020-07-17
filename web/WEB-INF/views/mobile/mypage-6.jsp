@@ -116,4 +116,5 @@
         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
     </section>
     </form>
-<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %>
+     <c:import url="/layout/footer"/>
+<%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

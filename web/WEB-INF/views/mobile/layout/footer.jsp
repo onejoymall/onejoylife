@@ -23,15 +23,15 @@ wcs_do();
         <li><a href="#" id="mo-btn2">이용약관</a></li>
     </ul>
     <ul class="wrap">
-        <li>주식회사 원조이</li>
-        <li>대표 : 김수현</li>
-        <li>전화 : 1811-9590 / 팩스 : 02-3472-0888</li>
-        <li>06643 서울특별시 서초구 서리풀길 4 (서초동) 영호빌딩 4층</li>
-        <li>사업자 등록번호 : 487-88-01223</li>
-        <li>통신판매업신고 2019-서울서초-0844 <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[사업자정보확인]</a></li>
-        <li>개인정보관리책임자 : <a href="mailto:cs@onejoy.co.kr">김수현(cs@onejoy.co.kr)</a></li>
-        <li>고객센터 : 1811-9590 / onejoy@onejoy.co.kr</li>
-        <li>Copyright ONEJOYlife. All rights reserved.</li>
+        <li>${info.company_name}</li>
+        <li>대표 : ${info.company_ceo} </li>
+        <li>전화 : ${info.company_ph} / 팩스 : ${info.company_fax}</li>
+        <li>${info.postcode} ${info.roadAddress} ${info.jibunAddress} ${info.extraAddress}</li>
+        <li>사업자 등록번호 : ${info.corporate_num}</li>
+        <li>통신판매업신고  ${info.cmnt_sales_busi_report} <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[사업자정보확인]</a></li>
+        <li>개인정보관리책임자 : <a href="mailto:${info.personal_info_incharge_email}">${info.personal_info_incharge}(${info.personal_info_incharge_email})</a></li>
+        <li>고객센터 : ${info.company_ph} / ${info.personal_info_incharge_email}</li>
+        <li>Copyright ${info.copyright}. All rights reserved.</li>
     </ul>
 </footer>
 
