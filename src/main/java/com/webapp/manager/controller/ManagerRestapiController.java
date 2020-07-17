@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.common.support.CurlPost;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -203,6 +204,10 @@ public class ManagerRestapiController {
     private String barobillEmail;
     @Autowired
     private MailSender mailSender;
+    @Value("${t_key}")
+    private String t_key;
+    @Value("${t_url}")
+    private String t_url;
 
     // 포인트 관리 포인트 추가 및 환수
     @RequestMapping(value = "/Manager/MgPointAdd", method = RequestMethod.POST, produces = "application/json")
@@ -662,6 +667,7 @@ public class ManagerRestapiController {
         try {
         	params.put("product_live_type","on");
             Map<String,Object> list = mgProductDAO.getProductViewDetail(params);
+
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -1122,6 +1128,14 @@ public class ManagerRestapiController {
 //                error.put(messageSource.getMessage("product_payment","ko"), messageSource.getMessage("error.required","ko"));
 //            }
 
+            if(params.get("product_delivery_class").equals("T")) {
+                if (!params.get("product_delivery_type").equals("A")) {
+                    productVO.setDelivery_t_code(null);
+                }
+            } else {
+                productVO.setDelivery_t_code(null);
+            }
+
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -1217,7 +1231,7 @@ public class ManagerRestapiController {
     }
     //상품등록
     @RequestMapping(value = "/Manager/productAddProc", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> managerProductAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
+    public  HashMap<String, Object> managerProductAddProc(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
@@ -1242,6 +1256,27 @@ public class ManagerRestapiController {
             //
             String product_cd = "P"+numberGender.numberGen(7,1);
             productVO.setProduct_cd(product_cd);
+
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+
+            if(params.get("product_delivery_class").equals("T")) {
+                if (!params.get("product_delivery_type").equals("A")) {
+                    productVO.setDelivery_t_code(null);
+                }
+            } else {
+                productVO.setDelivery_t_code(null);
+            }
+
 
             if(productVO.getProduct_name().isEmpty()){
                 error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));

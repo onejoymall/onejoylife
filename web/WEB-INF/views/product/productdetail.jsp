@@ -220,8 +220,13 @@
                                 배송안내
                             </div>
                             <div class="shipping-number">
+                                <c:forEach var="companyList" items="${companyList}" varStatus="status">
+                                    <c:if test="${companyList.Code eq list.delivery_t_code}">
+                                        <c:set var="t_code_name" value="${companyList.Name}"/>
+                                    </c:if>
+                                </c:forEach>
                                 ${list.product_delivery_international_type_name} ${list.product_delivery_type_name} 
-                                <br>${list.product_delivery_payment_type_name} ${delivery.delivery_payment}
+                                <br><c:out value="${t_code_name}"/> | ${list.product_delivery_payment_type_name} ${delivery.delivery_payment}
                             </div>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.webapp.mall.dao.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,6 +76,8 @@ public class ManagerController {
     GiveawayDAO giveawayDAO;
     @Autowired
     CategoryDAO categoryDAO;
+    @Autowired
+    DeliveryDAO deliveryDAO;
     @Autowired
     private MgProductDAO mgProductDAO;
     @Autowired
@@ -191,7 +194,7 @@ public class ManagerController {
     }
     //상품관리
     @RequestMapping(value = "/Manager/Product")
-    public String managerProduct(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO) throws Exception {
+    public String managerProduct(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO) throws Exception {
 
         try {
             if(searchVO.getDisplayRowCount()==null){
@@ -206,7 +209,21 @@ public class ManagerController {
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
             params.put("searchTypeArr", searchVO.getSearchTypeArr());
             List<Map<String, Object>> productList = productDAO.getMgProductList(searchVO);
+
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+
             model.addAttribute("productList", productList);
+            model.addAttribute("companyList", company);
             model.addAttribute("table_name", "product");
             model.addAttribute("Pk", "product_id");
             model.addAttribute("topNav", 2);
@@ -273,8 +290,9 @@ public class ManagerController {
     	return "/manager/banner";
     }
 
+    //상품등록 페이지
     @RequestMapping(value = "/Manager/ProductAdd")
-    public String managerProductAdd(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,MgDeliveryVO mgDeliveryVO,HttpSession session) throws Exception {
+    public String managerProductAdd(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,DeliveryInfoVO deliveryInfoVO,MgDeliveryVO mgDeliveryVO,HttpSession session) throws Exception {
         try {
             Object adminLogin = session.getAttribute("adminLogin");
             params.put("pd_category_upper_code", "T");
@@ -284,8 +302,21 @@ public class ManagerController {
             Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
             model.addAttribute("detail", detail);
 
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                    deliveryInfoVO.getDelivery_t_url()
+                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                    "",
+                    "",
+                    "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
+            model.addAttribute("companyList",company);
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "goods-add");
             model.addAttribute("postUrl", "/Manager/productAddProc");

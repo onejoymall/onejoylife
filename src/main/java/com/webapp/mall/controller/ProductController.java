@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.webapp.common.model.ComboVo;
+import com.webapp.common.support.CurlPost;
 import com.webapp.mall.dao.*;
+import com.webapp.mall.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
@@ -24,10 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.webapp.board.common.SearchVO;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.NumberGender;
-import com.webapp.mall.vo.CartPaymentVO;
-import com.webapp.mall.vo.CommonVO;
-import com.webapp.mall.vo.SearchFilterVO;
-import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -67,6 +66,10 @@ public class ProductController {
 
     @Autowired
     private CouponDAO couponDAO;
+    @Value("${t_key}")
+    private String t_key;
+    @Value("${t_url}")
+    private String t_url;
     //상품 검색
     @RequestMapping(value="/product/search-page")
     public String productSearch(@RequestParam HashMap params, Model model,SearchVO searchVO, HttpSession session, SearchFilterVO searchFilterVO, HttpServletRequest request, MgBrandVO mgBrandVO) throws Exception {
@@ -196,7 +199,7 @@ public class ProductController {
     }
     //상품 상세
     @RequestMapping(value = "/product/productDetail")
-    public String ProductDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request,HttpServletResponse response) throws Exception {
+    public String ProductDetail(@RequestParam HashMap params, ModelMap model, DeliveryInfoVO deliveryInfoVO, SearchVO searchVO, HttpSession session, TodayVO todayVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
         try{
         	params.put("email",session.getAttribute("email"));
         	Map<String, Object> userInfo = userDAO.getLoginUserList(params);
@@ -206,7 +209,20 @@ public class ProductController {
             }else{
                 params.put("user_id", userInfo.get("usr_id"));
             }
-            
+
+            deliveryInfoVO.setDelivery_t_key(t_key);
+            deliveryInfoVO.setDelivery_t_url(t_url);
+            //택배사목록
+            Map<String, Object> companylist = CurlPost.curlPostFn(
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
+            );
+            List<Map<String,Object>> company = (List)companylist.get("Company");
+            model.addAttribute("companyList", company);
+
             //상품 상세페이지 로드시 최근 본 상품 세션에 적용
             if(isEmpty((List<String>)session.getAttribute("today"))){
                 todayVO.setProduct_cd_array_string((String)params.get("product_cd"));
