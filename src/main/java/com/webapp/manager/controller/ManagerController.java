@@ -345,9 +345,10 @@ public class ManagerController {
     public String managerGiveaway(@RequestParam HashMap params, ModelMap model, GiveawayVO searchVO) throws Exception {
 
         try {
-
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
+            if(searchVO.getDisplayRowCount()==null){
+                searchVO.setDisplayRowCount(10);
+            }
+//            searchVO.setStaticRowEnd(10);
             params.put("pd_category_upper_code", "T");
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
