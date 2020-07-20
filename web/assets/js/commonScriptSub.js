@@ -1106,3 +1106,10 @@ function getCookie(cookieName) {
    }
    return unescape(cookieValue);
 }
+
+
+//관리자 > 상품관리 > 경품리스트 > 일괄수정
+function listGiveawayUpdate(column,update_value) {
+    var formData = $('#defaultListForm').serialize()+'&column='+column+'&update_value='+update_value
+    commonAjaxCall("POST","/Manager/giveawayListUpdate",formData);
+}

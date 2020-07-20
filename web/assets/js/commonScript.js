@@ -4248,7 +4248,7 @@ function listProductUpdate(column,update_value) {
     var formData = $('#defaultListForm').serialize()+'&column='+column+'&update_value='+update_value
     commonAjaxCall("POST","/Manager/productListUpdate",formData);
 }
-//관리자 > 상푼관리 > 재구 수정
+//관리자 > 상품관리 > 재고 수정
 function  listProductUpdateStock() {
     if($('input[name=chk]:checked').length <1){
         alert("수정할 대상을 선택하세요");
