@@ -228,8 +228,14 @@ function fn_replyReplySave(){
 					</table>
 					<p>&nbsp;</p>
 					<a class="btn-default" href="/Manager/boardList?bgno=<c:out value="${boardInfo.bgno}"/>">돌아가기</a>
+					<c:if test="${boardInfo.bgno == 9 && sessionScope.level == 10}">
 					<a class="btn-default" href="/Manager/boardDelete?bgno=<c:out value="${boardInfo.bgno}"/>&brdno=<c:out value="${boardInfo.brdno}"/>">삭제</a>
 					<a class="btn-default" href="/Manager/boardForm?brdno=<c:out value="${boardInfo.brdno}"/>">수정</a>
+					</c:if>
+					<c:if test="${boardInfo.bgno != 9}">
+					<a class="btn-default" href="/Manager/boardDelete?bgno=<c:out value="${boardInfo.bgno}"/>&brdno=<c:out value="${boardInfo.brdno}"/>">삭제</a>
+					<a class="btn-default" href="/Manager/boardForm?brdno=<c:out value="${boardInfo.brdno}"/>">수정</a>
+					</c:if>
 					<p>&nbsp;</p>
 
 					<c:if test="${bgInfo.bgreply=='Y'}">

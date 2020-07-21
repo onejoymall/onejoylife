@@ -16,7 +16,12 @@
 							<div class="left">
 <%--								<button type="button" class="goods-list-btn" name="copy">선택 삭제</button>--%>
 <%--								<button type="button" class="goods-list-btn" name="detail">공지사항 글쓰기</button>--%>
+								<c:if test="${searchVO.bgno == 9 && sessionScope.level == 10}">
 								<a class="goods-list-btn" href="/Manager/boardForm?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>
+								</c:if>
+								<c:if test="${searchVO.bgno != 9}">
+								<a class="goods-list-btn" href="/Manager/boardForm?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>
+								</c:if>
 							</div>
 							<div class="right">
 
