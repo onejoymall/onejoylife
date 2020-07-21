@@ -35,15 +35,17 @@
             email as email,
             password as password,
             level as level,
-            enable_mg_menu_id as enable_mg_menu_id
+            enable_mg_menu_id as enable_mg_menu_id,
+            email_auth_status as status
         FROM user A where A.email = #{email}
         UNION ALL
         SELECT
             store_id as email,
             store_password as password,
             level as level,
-            enable_mg_menu_id as enable_mg_menu_id
-        FROM store B where B.store_id = #{email}
+            enable_mg_menu_id as enable_mg_menu_id,
+            store_approval_status as status
+        FROM store B where B.store_id = #{email};
     </select>
     <select id="getUserForId" resultType="java.util.HashMap">
         <![CDATA[

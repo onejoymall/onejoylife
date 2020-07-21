@@ -336,15 +336,21 @@ public class ManagerRestapiController {
                             session.removeAttribute("adminLogin"); // 기존값을 제거해 준다.
                         }
                         session.setAttribute("email",email);
-                        if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
-                        else 										  session.setAttribute("adminLogin", "manager");
+                        if((Integer)loginUserList.get("level") == 10) {
+                            session.setAttribute("adminLogin", "admin");
+                        }else {
+                            if(loginUserList.get("status").equals("W")){
+                                error.put("Error", messageSource.getMessage("error.loginFail","ko"));
+                            }
+                            session.setAttribute("adminLogin", "manager");
+                        }
                         session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
                         session.setAttribute("level", loginUserList.get("level"));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);
                         resultMap.put("redirectUrl", "/Manager/ManagerMain");
-                    }else{
+                    } else {
                         error.put("Error", messageSource.getMessage("error.notUsrInfo","ko"));
                     }
                 }else{
