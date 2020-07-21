@@ -319,9 +319,9 @@ public class ManagerRestapiController {
             String password = (String)params.get("password");
             params.put("password",null);//패스워드 초기화
             //관리자레벨
-            params.put("level",10);
+//            params.put("level",10);
             //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
-            Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
+            Map<String,Object> loginUserList = userDAO.getUserStoreList(params);
             //기본 Valitaion
             if(email==null || email.isEmpty()){
                 error.put("Email", messageSource.getMessage("error.required","ko"));
@@ -339,6 +339,7 @@ public class ManagerRestapiController {
                         if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
                         else 										  session.setAttribute("adminLogin", "manager");
                         session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
+                        session.setAttribute("level", loginUserList.get("level"));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);
@@ -1420,6 +1421,7 @@ public class ManagerRestapiController {
                 storeVO.setStore_approval_status("W");
                 fileVO.setParentPK(storeVO.getStore_id());
                 mgProductDAO.insertProductFile(filelist,fileVO);
+                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 mgStoreDAO.insertStore(storeVO);
                 Object obj = session.getAttribute("adminLogin");
                 if ( obj == null ){
@@ -1474,7 +1476,7 @@ public class ManagerRestapiController {
     }
     //입점업체 업데이트
     @RequestMapping(value = "/Manager/storeUpdateProc", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> managerStoreUpdateProc(BoardVO boardInfo,FileVO fileVO,StoreVO storeVO,ProductVO productVO){
+    public  HashMap<String, Object> managerStoreUpdateProc(@RequestParam HashMap params, BoardVO boardInfo,FileVO fileVO,StoreVO storeVO,ProductVO productVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
@@ -1495,6 +1497,7 @@ public class ManagerRestapiController {
                     mgProductDAO.insertProductFile(filelist,fileVO);
                 }
 
+                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 mgStoreDAO.updateStore(storeVO);
                 resultMap.put("redirectUrl","/Manager/company-app");
             }

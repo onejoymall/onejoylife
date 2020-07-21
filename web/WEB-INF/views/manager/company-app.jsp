@@ -131,7 +131,7 @@
         <div class="modal-content">
             <form name="defaultForm" id="defaultForm" method="multipart/form-data">
                 <div class="modal-header">
-                   <h2>입점업체 등록</h2>
+                   <h2>입점업체 수정</h2>
                     <button type="button" class="modal-close">×</button>
                 </div>
                 <div class="modal-body clearfix">
@@ -152,10 +152,10 @@
                             <tr>
                                 <th>비밀번호 설정</th>
                                 <td>
-                                    <p><input type="password" name="store_password" placeholder="비밀번호"></p>
-                                    <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"></p>
-                                    <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 조합으로 10-20자 미만</p>
-                                    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>
+                                    <p><input type="password" name="store_password" placeholder="비밀번호"><span class="er" id="passwordValidation"></span></p>
+                                    <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"><span class="er" id="password_cfValidation"></span></p>
+                                    <p class="s-font">- 6~20자의 영문,숫자를 조합하여 입력하여 주세요.</p>
+<%--                                    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
                                 </td>
                             </tr>
 
@@ -280,4 +280,28 @@
         </div>
     </div>
 
+<script>
+    var regExp = /^[a-zA-Z0-9]{6,20}$/;
+    //패스워드 체크
+    $(document).on('input','input[name=store_password],input[name=store_passwordCf]',function () {
+    	pwCheck = false;
+    	var pw = $('input[name=store_password]').val();
+    	var pw_cf = $('input[name=store_passwordCf]').val();
+        if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+            $("#passwordValidation").removeClass("text-success");
+            $("#password_cfValidation").text('');
+        }else{
+        	$("#passwordValidation").text('');
+        	if(pw != pw_cf){
+                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+                $("#password_cfValidation").removeClass("text-success");
+            }else{
+            	pwCheck = true;
+            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+                $("#password_cfValidation").addClass("text-success");
+            }
+        }
+    })
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
