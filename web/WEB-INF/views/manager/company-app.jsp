@@ -281,27 +281,8 @@
     </div>
 
 <script>
-    var regExp = /^[a-zA-Z0-9]{6,20}$/;
-    //패스워드 체크
-    $(document).on('input','input[name=store_password],input[name=store_passwordCf]',function () {
-    	pwCheck = false;
-    	var pw = $('input[name=store_password]').val();
-    	var pw_cf = $('input[name=store_passwordCf]').val();
-        if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
-            $("#passwordValidation").removeClass("text-success");
-            $("#password_cfValidation").text('');
-        }else{
-        	$("#passwordValidation").text('');
-        	if(pw != pw_cf){
-                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
-                $("#password_cfValidation").removeClass("text-success");
-            }else{
-            	pwCheck = true;
-            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
-                $("#password_cfValidation").addClass("text-success");
-            }
-        }
-    })
+
+
+
 </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
