@@ -424,37 +424,37 @@ public class ManagerRestapiController {
         try {
         	Map<String, Object> detail = paymentDAO.getMgPaymentBundleDetail(params);
         	//반품완료 결제취소
-//        	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
-//        		client = new IamportClient(apiKey, apiSecret);
-//        		String merchant_uid = (String)detail.get("order_no");
-//        		int product_payment = Integer.parseInt(String.valueOf(detail.get("product_payment")));
-//				int payment_order_quantity = Integer.parseInt(String.valueOf(detail.get("payment_order_quantity")));
-//				int coupon_discount = Integer.parseInt(String.valueOf(detail.get("coupon_discount")));
-//				int return_amount = product_payment * payment_order_quantity - coupon_discount;
-//
-//				BigDecimal return_amount_bd = new BigDecimal(return_amount);
-//        		CancelData cancel_data = new CancelData(merchant_uid, false, return_amount_bd); // merchant_uid를 통한
-//        		
-//        		cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
-//        		if(deliveryInfoVO.getRefund_account() != null && !deliveryInfoVO.getRefund_account().equals("")) {
-//        			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
-//        		}
-//        		if(deliveryInfoVO.getRefund_bank() != null && !deliveryInfoVO.getRefund_bank().equals("")) {
-//        			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
-//        		}
-//        		if(deliveryInfoVO.getRefund_holder() != null && !deliveryInfoVO.getRefund_holder().equals("")) {
-//        			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
-//        		}
-//        		
-//        		Map<String,Object> paymentDetail = paymentDAO.getMgPaymentBundleDetail(params);
-//                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
-//                if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
-//                
-//        		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
-//        		if (payment_response.getResponse() == null) {
-//    				error.put("Error", payment_response.getMessage());
-//    			}
-//        	}
+        	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
+        		client = new IamportClient(apiKey, apiSecret);
+        		String merchant_uid = (String)detail.get("order_no");
+        		int product_payment = Integer.parseInt(String.valueOf(detail.get("product_payment")));
+				int payment_order_quantity = Integer.parseInt(String.valueOf(detail.get("payment_order_quantity")));
+				int coupon_discount = Integer.parseInt(String.valueOf(detail.get("coupon_discount")));
+				int return_amount = product_payment * payment_order_quantity - coupon_discount;
+
+				BigDecimal return_amount_bd = new BigDecimal(return_amount);
+        		CancelData cancel_data = new CancelData(merchant_uid, false, return_amount_bd); // merchant_uid를 통한
+        		
+        		cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
+        		if(deliveryInfoVO.getRefund_account() != null && !deliveryInfoVO.getRefund_account().equals("")) {
+        			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
+        		}
+        		if(deliveryInfoVO.getRefund_bank() != null && !deliveryInfoVO.getRefund_bank().equals("")) {
+        			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
+        		}
+        		if(deliveryInfoVO.getRefund_holder() != null && !deliveryInfoVO.getRefund_holder().equals("")) {
+        			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
+        		}
+        		
+        		Map<String,Object> paymentDetail = paymentDAO.getMgPaymentBundleDetail(params);
+                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+                if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+                
+        		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
+        		if (payment_response.getResponse() == null) {
+    				error.put("Error", payment_response.getMessage());
+    			}
+        	}
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
