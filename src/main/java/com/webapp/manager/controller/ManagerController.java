@@ -4,15 +4,18 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.webapp.mall.dao.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +32,7 @@ import com.webapp.board.common.TreeMaker;
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.NumberGender;
+import com.webapp.mall.dao.DeliveryDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.ProductDAO;
@@ -870,11 +874,36 @@ public class ManagerController {
         	params.put("searchTypeArr", searchVO.getSearchTypeArr());
             deliveryInfoVO.setDelivery_t_key(t_key);
             deliveryInfoVO.setDelivery_t_url(t_url);
-            searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
+            searchVO.pageCalculate(paymentDAO.getMgPaymentBundleListCount(params));
 
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getDisplayRowCount());
-            List<Map<String,Object>> list = paymentDAO.getPaymentList(params);
+            List<Map<String,Object>> list = paymentDAO.getMgPaymentBundleList(params);
+            
+            if(list != null && list.size() > 0) {
+	            Map<String,Object> groupList = list.stream().reduce(new HashMap<String,Object>(),(acc, cur) -> {
+	            	if(acc.containsKey(cur.get("order_no"))) {
+	            		((List)acc.get(cur.get("order_no"))).add(cur);
+	            	}else {
+	            		List<Map<String,Object>> tmpList = new ArrayList<>();
+	            		tmpList.add(cur);
+	            		acc.put((String)cur.get("order_no"),tmpList);
+	            	}
+	            	return acc;
+	            });
+	            // Map.Entry 리스트 작성
+	    		List<Entry<String, Object>> list_entries = new ArrayList<Entry<String, Object>>(groupList.entrySet());
+	
+	    		// 비교함수 Comparator를 사용하여 오름차순으로 정렬
+	    		Collections.sort(list_entries, new Comparator<Entry<String, Object>>() {
+	    			// compare로 값을 비교
+	    			public int compare(Entry<String, Object> obj1, Entry<String, Object> obj2) {
+	    				// 오름 차순 정렬
+	    				return String.valueOf(((List<Map<String,Object>>)obj2.getValue()).get(0).get("reg_date")).compareTo(String.valueOf(((List<Map<String,Object>>)obj1.getValue()).get(0).get("reg_date")));
+	    			}
+	    		});
+	    		model.addAttribute("list", list_entries);
+            }
             //택배사목록
             //스위트레커 연동필요
             Map<String, Object> companylist = CurlPost.curlPostFn(
@@ -897,7 +926,6 @@ public class ManagerController {
             model.addAttribute("statusCount", getStatusCount);
             
             model.addAttribute("companyList", company);
-            model.addAttribute("list", list);
             model.addAttribute("searchVO", searchVO);
         } catch (Exception e) {
             e.printStackTrace();

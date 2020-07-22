@@ -40,75 +40,73 @@
         <h2 class="py-1">주문상품</h2>
         <hr>
         <c:if test="${not empty paymentList}">
-            <c:forEach var="paymentList" items="${paymentList}" varStatus="status">
-            <ul class="product pb-0">
-                <h5><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></h5>
-                <ul class="pb-0">
-                    <c:if test="${not empty paymentList.giveaway_id}">
-                        <li><a href="/giveaway/giveawaydetail?giveaway_id=${paymentList.giveaway_id}"><img src="${paymentList.file_6}" alt=""></a></li>
-                    </c:if>
-                    <c:if test="${not empty paymentList.product_cd}">
-                        <li><a href="/product/productDetail?product_cd=${paymentList.product_cd}"><img src="${paymentList.file_1}" alt=""></a></li>
-                    </c:if>
-                    <li>
-                       <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}" class="mb-1">${paymentList.order_no}</a>
-                        <%-- <p>${paymentList.product_made_company_name}</p> --%>
-                        <h5><a href="/product/productDetail?product_cd=${paymentList.product_cd}" style="text-decoration: none; color:black;">${paymentList.product_name}</a></h5>
-                        <%-- <p class="grey">${paymentList.product_model}</p> --%>
-                    </li>
-                </ul>
-                <ul class="options">
-                    <li>상품금액</li>
-                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /><span>원</span></li>
-                </ul>
-                <ul class="options">
-                    <li>수량</li>
-                    <li>1 <span>개</span></li>
-                </ul>
-                <hr>
-                <ul class="options mb-1">
-                    <li>주문금액</li>
-                    <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>원</span></li>
-                </ul>
-                <ul class="options bg_grey p-1">
-                    <li class="w100px">${paymentList.payment_status_name}</li>
-                    <li>
-                        <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
-                        <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
-                            <button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >배송조회</button>
-                        </c:if>
-                        <c:if test="${paymentList.payment_status == 'O'}">
-                            <c:if test="${paymentList.review_id == null}">
-                            <button type="button" class="btn btn-red review-write" data-id="${paymentList.order_no}" >상품평작성</button>
-                            </c:if>
-                            <c:if test="${paymentList.review_id != null}">
-                            <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">상품평보기</button>
-                            </c:if>
-                        </c:if>
-                        <c:if test="${paymentList.payment_status == 'C'}">
-                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
-                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
-                            </c:if>
-                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
-                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소</button>
-                            </c:if>
-                        </c:if>
-                    </li>
-<%--                    <li>
-                        <c:if test="${paymentList.payment_status == 'C'}">
-                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
-                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
-                            </c:if>
-                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
-                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소 재주문</button>
-                            </c:if>
-                        </c:if>
-                    </li>--%>
-                </ul>
-            </ul>
-        <hr>
-            </c:forEach>
-        </c:if>
+        	<c:forEach var="map" items="${paymentList}">
+           		<c:forEach var="paymentList" items="${map.value}" varStatus="status">
+           			<ul class="product pb-0">
+		                <h5><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></h5>
+		                <ul class="pb-0">
+	                        <li><a href="/product/productDetail?product_cd=${paymentList.product_cd}"><img src="${paymentList.file_1}" alt=""></a></li>
+		                    <li>
+		                       <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}" class="mb-1">${paymentList.order_no}</a>
+		                        <%-- <p>${paymentList.product_made_company_name}</p> --%>
+		                        <h5><a href="/product/productDetail?product_cd=${paymentList.product_cd}" style="text-decoration: none; color:black;">${paymentList.product_name}<c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></a></h5>
+		                        <%-- <p class="grey">${paymentList.product_model}</p> --%>
+		                    </li>
+		                </ul>
+		                <ul class="options">
+		                    <li>상품금액</li>
+		                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /><span>원</span></li>
+		                </ul>
+		                <ul class="options">
+		                    <li>수량</li>
+		                    <li><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /> <span>개</span></li>
+		                </ul>
+		                <hr>
+		                <ul class="options mb-1">
+		                    <li>주문금액</li>
+		                    <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>원</span></li>
+		                </ul>
+		                <ul class="options bg_grey p-1">
+		                    <li class="w100px">${paymentList.payment_status_name}</li>
+		                    <li>
+		                        <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
+		                        <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
+		                            <button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >배송조회</button>
+		                        </c:if>
+		                        <c:if test="${paymentList.payment_status == 'O' || paymentList.payment_status eq 'S'}">
+		                            <c:if test="${paymentList.review_id == null}">
+		                            <button type="button" class="btn btn-red review-write" data-id="${paymentList.no}" >상품평작성</button>
+		                            </c:if>
+		                            <c:if test="${paymentList.review_id != null}">
+		                            <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">상품평보기</button>
+		                            </c:if>
+		                        </c:if>
+		                        <c:if test="${paymentList.payment_status == 'C'}">
+		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
+		                            </c:if>
+		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소</button>
+		                            </c:if>
+		                        </c:if>
+		                    </li>
+		<%--                    <li>
+		                        <c:if test="${paymentList.payment_status == 'C'}">
+		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
+		                            </c:if>
+		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소 재주문</button>
+		                            </c:if>
+		                        </c:if>
+		                    </li>--%>
+		                </ul>
+		            </ul>
+		        	<hr>
+           		</c:forEach>
+       		</c:forEach>
+   		</c:if>
+   		
         <c:if test="${empty paymentList}">
         	표시할 내용이 없습니다.
         	<hr>

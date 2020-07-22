@@ -5,14 +5,16 @@
 <mapper namespace="mall.PaymentMapper">
 	<select id="getUserPaymentStatusCount" parameterType="hashmap" resultType="hashmap">
 		SELECT ifnull(sum(A.payment_status = 'M'),0) as mCnt,
-				 ifnull(sum(A.payment_status = 'w'),0) as wCnt,
+				 ifnull(sum(A.payment_status = 'W'),0) as wCnt,
 				 ifnull(sum(A.payment_status IN ('I')),0) as iCnt,
 				 ifnull(sum(A.payment_status = 'R'),0) as rCnt,
 				 ifnull(sum(A.payment_status = 'O'),0) as oCnt
-		FROM payment A
-		WHERE A.payment_user_id = #{payment_user_id}
+		FROM payment_bundle A
+		left join payment B
+		on A.order_no = B.order_no
+		WHERE B.payment_user_id = #{payment_user_id}
 		and A.order_no NOT LIKE 'GW%'
-and A.payment_status != 'N'
+		and A.payment_status != 'N'
 	</select>
 	
     <insert id="insertPayment" parameterType="java.util.Map">
@@ -92,7 +94,8 @@ and A.payment_status != 'N'
 	        payment_order_quantity,
 	        coupon_cd,
 	        option_name,
-	        coupon_discount
+	        coupon_discount,
+	        payment_status
         )values (
 	        #{product_cd},
 	        #{payment_cd},
@@ -102,7 +105,8 @@ and A.payment_status != 'N'
 	        #{payment_order_quantity},
         	#{coupon_cd},
         	#{option_name},
-        	#{coupon_discount}
+        	#{coupon_discount},
+        	#{payment_status}
         )
     </insert>
 
@@ -112,6 +116,158 @@ and A.payment_status != 'N'
         update giveaway_play_history set giveaway_payment_status = #{giveaway_payment_status} where giveaway_play_cd=#{giveaway_play_cd}
     </update>
 
+	<select id="getUserPaymentBundleListCount" parameterType="hashmap" resultType="int">
+		SELECT count(*) as cnt
+		FROM payment_bundle A
+		LEFT JOIN payment B
+		ON A.order_no = B.order_no
+		LEFT JOIN delivery_info C
+		ON B.order_no = C.order_no
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		LEFT JOIN store E
+		ON D.product_store_id = E.store_id
+		where 1=1
+        and B.order_no NOT LIKE 'GW%'
+		and B.payment_status != 'N'
+		and A.payment_status != 'N'
+		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND B.payment_user_id= #{payment_user_id} ]]></if>
+	</select>
+	<select id="getUserPaymentBundleList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,B.*,C.*,D.*,E.*,
+			(select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+		   (SELECT Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+		   (select Z.review_id from product_review Z where Z.order_no = A.no) as review_id,
+		   (SELECT Z.store_name FROM store Z where Z.supplier_cd = D.product_supplier) as product_made_company_name,
+		   (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
+		   (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
+		   (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
+		   (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name,
+		   (select Z.file_link from product_file Z where Z.key_id = D.product_cd and Z.file_order = 1) as file_1
+		FROM payment_bundle A
+		LEFT JOIN payment B
+		ON A.order_no = B.order_no
+		LEFT JOIN delivery_info C
+		ON B.order_no = C.order_no
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		LEFT JOIN store E
+		ON D.product_store_id = E.store_id
+		where 1=1
+        and B.order_no NOT LIKE 'GW%'
+		and B.payment_status != 'N'
+		and A.payment_status != 'N'
+		<if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND B.payment_user_id= #{payment_user_id} ]]></if>
+        <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+	</select>
+	<select id="getMgPaymentBundleListCount" resultType="int" parameterType="hashmap">
+		SELECT count(*) as cnt
+		FROM payment_bundle A
+		LEFT JOIN payment B
+		ON A.order_no = B.order_no
+		LEFT JOIN delivery_info C
+		ON B.order_no = C.order_no
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		LEFT JOIN store E
+		ON D.product_store_id = E.store_id
+		where 1=1
+        and B.order_no NOT LIKE 'GW%'
+		and B.payment_status != 'N'
+		and A.payment_status != 'N'
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+		  	<if test='item == "product_name"'>
+		      	(D.product_name like concat('%',#{searchKeyword},'%') or A.option_name like concat('%',#{searchKeyword},'%')) 
+		    </if>
+		    <if test='item != "product_name"'>
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	        </if>
+	      </foreach>
+	    </if>
+        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="deli_start_date != null and deli_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= date_format(#{deli_start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="deli_end_date != null and deli_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= date_format(date_add(#{deli_end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+	</select>
+	<select id="getMgPaymentBundleList" resultType="hashmap" parameterType="hashmap">
+		SELECT A.*,B.*,C.*,D.*,E.*,
+			(select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+		   (SELECT Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+		   (SELECT Z.store_name FROM store Z where Z.supplier_cd = D.product_supplier) as product_made_company_name,
+		   (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name,
+		   (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
+		   (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
+		   (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name,
+		   (SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1
+		FROM payment_bundle A
+		LEFT JOIN payment B
+		ON A.order_no = B.order_no
+		LEFT JOIN delivery_info C
+		ON B.order_no = C.order_no
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		LEFT JOIN store E
+		ON D.product_store_id = E.store_id
+		where 1=1
+        and B.order_no NOT LIKE 'GW%'
+		and B.payment_status != 'N'
+		and A.payment_status != 'N'
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+		  	<if test='item == "product_name"'>
+		      	(D.product_name like concat('%',#{searchKeyword},'%') or A.option_name like concat('%',#{searchKeyword},'%')) 
+		    </if>
+		    <if test='item != "product_name"'>
+		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	        </if>
+	      </foreach>
+	    </if>
+        <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
+        <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="deli_start_date != null and deli_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= date_format(#{deli_start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="deli_end_date != null and deli_end_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) <= date_format(date_add(#{deli_end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="merchant_uid != null"> <![CDATA[AND A.merchant_uid= #{merchant_uid} ]]></if>
+        <if test="payment_user_id != null"> <![CDATA[AND A.payment_user_id= #{payment_user_id} ]]></if>
+        <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
+    	<![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
+	</select>
+	<select id="getMgPaymentBundleDetail" resultType="hashmap" parameterType="hashmap">
+		SELECT A.*,B.*,C.*,D.*,E.*,
+			(select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
+		   (SELECT Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+		   (SELECT Z.store_name FROM store Z where Z.supplier_cd = D.product_supplier) as product_made_company_name,
+		   (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
+		   (select D.order_user_email from delivery_info D where A.order_no = D.order_no) as order_user_email,
+		   (select D.order_user_name from delivery_info D where A.order_no = D.order_no) as order_user_name,
+		   (select D.delivery_user_name from delivery_info D where A.order_no = D.order_no) as delivery_user_name,
+		   (SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1
+		FROM payment_bundle A
+		LEFT JOIN payment B
+		ON A.order_no = B.order_no
+		LEFT JOIN delivery_info C
+		ON B.order_no = C.order_no
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		LEFT JOIN store E
+		ON D.product_store_id = E.store_id
+		where 1=1
+        and B.order_no NOT LIKE 'GW%'
+		and B.payment_status != 'N'
+		and A.payment_status != 'N'
+		and A.no = #{order_no}
+	</select>
     <select id="getPaymentList" resultType="java.util.HashMap">
     <![CDATA[
         SELECT
@@ -255,10 +411,10 @@ and A.payment_status != 'N'
 				SUM(IF(A.payment_status IN ('F','S'),1,0)) sCnt,
 				SUM(IF(A.payment_status = 'H',1,0)) hCnt,
 				SUM(IF(A.payment_status = 'G',1,0)) gCnt
-		FROM payment A
+		FROM payment_bundle A
 		WHERE A.reg_date BETWEEN DATE_ADD(SYSDATE(), INTERVAL -1 MONTH) AND SYSDATE()
 		and A.order_no NOT LIKE 'GW%'
-and A.payment_status != 'N'
+        and A.payment_status != 'N'
     </select>
     <select id="getStatusCount" resultType="java.util.HashMap" parameterType="java.util.Map" >
 	    SELECT SUM(IF(A.payment_status = 'M',1,0)) mCnt,
@@ -272,10 +428,10 @@ and A.payment_status != 'N'
 				SUM(IF(A.payment_status = 'S',1,0)) sCnt,
 				SUM(IF(A.payment_status = 'H',1,0)) hCnt,
 				SUM(IF(A.payment_status = 'G',1,0)) gCnt
-		FROM payment A
+		FROM payment_bundle A
 		WHERE 1=1
 		and A.order_no NOT LIKE 'GW%'
-and A.payment_status != 'N'
+        and A.payment_status != 'N'
 		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>
@@ -284,10 +440,28 @@ and A.payment_status != 'N'
         payment_status = #{payment_status}
         where order_no=#{merchant_uid}
     </update>
+    <update id="updatePaymentBundle" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update payment_bundle set
+        	payment_status = #{payment_status}
+        where no=#{merchant_uid}
+    </update>
     <update id="updatePaymentManger" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         update payment set
         payment_status = #{payment_status}
         where order_no=#{order_no}
+    </update>
+    <update id="updatePaymentBundleCancel" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update payment_bundle set
+        payment_status = #{payment_status}
+        where order_no=#{order_no}
+    </update>
+    <update id="updatePaymentBundleManger" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
+        update payment_bundle set
+        payment_status = #{payment_status},
+        delivery_start_date = now(),
+        delivery_t_invoice = #{delivery_t_invoice},
+        delivery_t_code = #{delivery_t_code}
+        where no=#{order_no}
     </update>
     <insert id="insertPaymentRefund" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into payment_refund
@@ -311,7 +485,8 @@ and A.payment_status != 'N'
     <select id="getPaymentBundleList" resultType="hashmap" parameterType="hashmap">
     	SELECT A.*, B.*,
 			(SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1,
-			(SELECT Z.store_name FROM store Z where Z.supplier_cd = B.product_supplier) as product_made_company_name
+			(SELECT Z.store_name FROM store Z where Z.supplier_cd = B.product_supplier) as product_made_company_name,
+			(select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = A.payment_status) as payment_status_name
 		FROM payment_bundle A
 		JOIN product B
 		ON A.product_cd = B.product_cd

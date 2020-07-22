@@ -90,10 +90,10 @@
                                     </td>
                                     <td>
                                         <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#" class="review-update" data-id="${list.order_no}">수정하기</a>
+                                            <a href="#" class="review-update" data-id="${list.no}">수정하기</a>
                                         </div>
                                         <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#" class="review-delete" data-id="${list.order_no}">삭제하기</a>
+                                            <a href="#" class="review-delete" data-id="${list.no}">삭제하기</a>
                                         </div>
                                     </td>
                                 </tr>

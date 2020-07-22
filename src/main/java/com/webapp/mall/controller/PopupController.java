@@ -76,7 +76,7 @@ public class PopupController {
     public String mallDeliverySearch(@RequestParam HashMap params, ModelMap model, UserInfo userInfo, HttpServletRequest request, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         deliveryInfoVO.setDelivery_t_key(t_key);
         deliveryInfoVO.setDelivery_t_url(t_url);
-        Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
+        Map<String,Object> delivery = paymentDAO.getMgPaymentBundleDetail(params);
         deliveryInfoVO.setDelivery_t_code((String)delivery.get("delivery_t_code"));
         deliveryInfoVO.setDelivery_t_invoice((String)delivery.get("delivery_t_invoice"));
         //택배사목록
@@ -173,7 +173,7 @@ public class PopupController {
     @RequestMapping("/Popup/review-write")
     public String writeReview(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO) throws Exception {
     	try {
-    		model.addAttribute("productDetail",paymentDAO.getPaymentDetail(params));
+    		model.addAttribute("productDetail",paymentDAO.getMgPaymentBundleDetail(params));
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
@@ -266,7 +266,7 @@ public class PopupController {
 			String token = client.getAuth().getResponse().getToken();
 			
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpPost post = new HttpPost("https://api.iamport.kr/payments/imp_260211693205");
+			HttpPost post = new HttpPost("https://api.iamport.kr/payments/"+paymentDetail.get("imp_uid"));
 			post.addHeader("Authorization",token);
 			
 			HttpResponse restResponse = client.execute(post);

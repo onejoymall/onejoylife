@@ -56,8 +56,8 @@
                 <p>${list.review_content}</p>
             </div>
             <div class="my-1">
-                <button class="btn btn-blue review-update"  data-id="${list.order_no}">수정하기</button>
-                <button class="btn btn-red review-delete" data-id="${list.order_no}">삭제하기</button>
+                <button type="button" class="btn btn-blue"  data-id="${list.no}" onclick="reviewUpdateBtn('${list.no}')">수정하기</button>
+                <button type="button" class="btn btn-red" data-id="${list.no}" onclick="reviewDeleteBtn('${list.no}')">삭제하기</button>
             </div>
         </ul>
         <hr>

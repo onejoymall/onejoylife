@@ -775,6 +775,7 @@ public class restapiController {
 
 			params.put("email", session.getAttribute("email"));
 			
+			//주문시 결제실패상태 -> 웹훅으로 결제,미결제처리
 			params.put("payment_status", "N");
 			// 로그인 확인
 			Map<String, Object> userInfo = userDAO.getLoginUserList(params);
@@ -792,6 +793,7 @@ public class restapiController {
 
 			cartPaymentVO.setPayment_cd((String) params.get("payment_cd"));
 			cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
+			cartPaymentVO.setPayment_status((String) params.get("payment_status"));
 			paymentDAO.insertCartBundle(cartPaymentVO);
 		} catch (Exception e) {
 			error.put("Error",e.getMessage());
@@ -810,8 +812,8 @@ public class restapiController {
 			
 			if(impPayment != null) {
 				iamPortDAO.updateIamportWebHook(impPayment);
+				cartDAO.CartPaymentListDelete(cartPaymentVO);
 			}
-			cartDAO.CartPaymentListDelete(cartPaymentVO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -858,12 +860,14 @@ public class restapiController {
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
 			} else {
+				Map<String,Object> payment = paymentDAO.getMgPaymentBundleDetail(params);
 				// 결제상태 업데이트
 				deliveryInfoVO.setPayment_status("F");
 				deliveryInfoVO.setDelivery_status("F");
-				deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
+				deliveryInfoVO.setMerchant_uid((String)payment.get("order_no"));
 				deliveryDAO.updateDelivery(deliveryInfoVO);
-				paymentDAO.updatePayment(deliveryInfoVO);
+				deliveryInfoVO.setMerchant_uid(String.valueOf(payment.get("no")));
+				paymentDAO.updatePaymentBundle(deliveryInfoVO);
 				refundDAO.insertDeliveryRefund(deliveryInfoVO);
 				// 교환정보 저장
 				resultMap.put("success", "success");
@@ -900,17 +904,16 @@ public class restapiController {
 						messageSource.getMessage("error.required", "ko"));
 			}
 
-			String pay_method = "";
-			if (!params.put("pay_method", pay_method).equals("card")) {
-				if (deliveryInfoVO.getRefund_bank().isEmpty()) {
+			if (!params.get("pay_method").equals("card")) {
+				if (deliveryInfoVO.getRefund_bank() == null || deliveryInfoVO.getRefund_bank().isEmpty()) {
 					error.put(messageSource.getMessage("refund_bank", "ko"),
 							messageSource.getMessage("error.required", "ko"));
 				}
-				if (deliveryInfoVO.getRefund_account().isEmpty()) {
+				if (deliveryInfoVO.getRefund_account() == null || deliveryInfoVO.getRefund_account().isEmpty()) {
 					error.put(messageSource.getMessage("refund_account", "ko"),
 							messageSource.getMessage("error.required", "ko"));
 				}
-				if (deliveryInfoVO.getRefund_holder().isEmpty()) {
+				if (deliveryInfoVO.getRefund_holder() == null || deliveryInfoVO.getRefund_holder().isEmpty()) {
 					error.put(messageSource.getMessage("refund_holder", "ko"),
 							messageSource.getMessage("error.required", "ko"));
 				}
@@ -928,14 +931,16 @@ public class restapiController {
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
 			} else {
-
+				Map<String,Object> payment = paymentDAO.getMgPaymentBundleDetail(params);
 				// 결제상태 업데이트
 				deliveryInfoVO.setPayment_status("H");
 				deliveryInfoVO.setDelivery_status("H");
-				deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
+				deliveryInfoVO.setMerchant_uid((String)payment.get("order_no"));
 				deliveryDAO.updateDelivery(deliveryInfoVO);
-				paymentDAO.updatePayment(deliveryInfoVO);
+				deliveryInfoVO.setMerchant_uid(String.valueOf(payment.get("no")));
+				paymentDAO.updatePaymentBundle(deliveryInfoVO);
 				refundDAO.insertDeliveryRefund(deliveryInfoVO);
+				
 				// 교환정보 저장
 				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
 			}
@@ -984,7 +989,7 @@ public class restapiController {
 			// 전액취소
 			Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
-            if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+            if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
             
 			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
 

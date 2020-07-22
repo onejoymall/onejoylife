@@ -21,19 +21,21 @@
             <li><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></li>
         </ul>
         <hr class="grey">
-        <ul class="product pb-0">
-            <ul class="pb-0">
-                <li><img src="${paymentDetail.file_1}" alt=""></li>
-                <li>
-                    <h5>${paymentDetail.product_name}</h5>
-                    <p class="grey">${paymentDetail.product_made_company_model}</p>
-                </li>
-            </ul>
-            <ul class="options">
-                <li>상품금액</li>
-                <li><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /> <span>원</span></li>
-            </ul>
-        </ul>
+        <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
+	        <ul class="product pb-0">
+	            <ul class="pb-0">
+	                <li><img src="${list.file_1}" alt=""></li>
+	                <li>
+	                    <h5>${list.product_name}</h5>
+	                    <p class="grey">${list.option_name}</p>
+	                </li>
+	            </ul>
+	            <ul class="options">
+	                <li>상품금액</li>
+	                <li><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span>원</span></li>
+	            </ul>
+	        </ul>
+        </c:forEach>
         
         <h2 class="pb-1 mt-4">취소사유</h2>
         <hr class="pb-1">
@@ -45,7 +47,7 @@
         <p class="grey pb-05">주문금액</p>
         <h3><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">상품금액</p>
-        <h3><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" />원</h3>
+        <h3><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" />원 <c:if test="${fn:length(paymentBundleList) > 1}"> 외 ${fn:length(paymentBundleList) - 1}건</c:if></h3>
         <p class="grey pt-2 pb-05">결제금액</p>
         <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">결제수단</p>

@@ -196,25 +196,6 @@ body{
     border-bottom: 1px solid #dadada;
 }
 
-.goods-list-wrap tbody td:nth-child(2){text-align: center;}
-.goods-list-wrap tbody td:nth-child(3){text-align: center;}
-.goods-list-wrap tbody td:nth-child(4){text-align: left;}
-.goods-list-wrap tbody td:nth-child(5){text-align: center;}
-.goods-list-wrap tbody td:nth-child(6){text-align: right;}
-.goods-list-wrap tbody td:nth-child(7){text-align: right;}
-.goods-list-wrap tbody td:nth-child(8){text-align: left;}
-.goods-list-wrap tbody td:nth-child(9){text-align: right;}
-.goods-list-wrap tbody td:nth-child(10){text-align: right;}
-.giveaway-play-list-wrap tbody td:nth-child(2){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(3){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(4){text-align: left;}
-.giveaway-play-list-wrap tbody td:nth-child(5){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(6){text-align: right;}
-.giveaway-play-list-wrap tbody td:nth-child(7){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(8){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(9){text-align: center;}
-.giveaway-play-list-wrap tbody td:nth-child(10){text-align: center;}
-
 .goods-list-wrap tbody td{
     padding:5px;
     border-left: 1px solid #dadada;

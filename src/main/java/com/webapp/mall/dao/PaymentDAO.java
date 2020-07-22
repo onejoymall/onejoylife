@@ -39,8 +39,17 @@ public class PaymentDAO {
     public void updatePayment(DeliveryInfoVO deliveryInfoVO) throws SQLException {
         sql.update("mall.PaymentMapper.updatePayment",deliveryInfoVO);
     }
+    public void updatePaymentBundle(DeliveryInfoVO deliveryInfoVO) throws SQLException {
+    	sql.update("mall.PaymentMapper.updatePaymentBundle",deliveryInfoVO);
+    }
     public void updatePaymentManger(DeliveryInfoVO deliveryInfoVO) throws SQLException {
         sql.update("mall.PaymentMapper.updatePaymentManger",deliveryInfoVO);
+    }
+    public void updatePaymentBundleManger(DeliveryInfoVO deliveryInfoVO) throws SQLException {
+    	sql.update("mall.PaymentMapper.updatePaymentBundleManger",deliveryInfoVO);
+    }
+    public void updatePaymentBundleCancel(DeliveryInfoVO deliveryInfoVO) throws SQLException {
+    	sql.update("mall.PaymentMapper.updatePaymentBundleManger",deliveryInfoVO);
     }
     public List<Map<String, Object>> getPaymentList(Map<String, String> params) throws SQLException {
         List<Map<String, Object>> getPaymentList = sql.selectList("mall.PaymentMapper.getPaymentList",params);
@@ -89,6 +98,7 @@ public class PaymentDAO {
 			map.put("coupon_cd",cartPaymentVO.getCoupon_cd()[i].trim());
 			map.put("option_name",cartPaymentVO.getOption_name()[i].trim());
 			map.put("coupon_discount",cartPaymentVO.getCoupon_discount()[i].trim());
+			map.put("payment_status",cartPaymentVO.getPayment_status());
             sql.insert("mall.PaymentMapper.insertBundle", map);
         }
 	}
@@ -98,5 +108,25 @@ public class PaymentDAO {
 	}
 	public void insertTaxinvoiceHistory(TaxVO taxVO) {
 		sql.insert("mall.PaymentMapper.insertTaxinvoiceHistory",taxVO);
+	}
+	public Integer getMgPaymentBundleListCount(HashMap params) {
+		Integer getMgPaymentBundleListCount=sql.selectOne("mall.PaymentMapper.getMgPaymentBundleListCount",params);
+        return getMgPaymentBundleListCount;
+	}
+	public List<Map<String, Object>> getMgPaymentBundleList(HashMap params) {
+		List<Map<String, Object>> getMgPaymentBundleList = sql.selectList("mall.PaymentMapper.getMgPaymentBundleList",params);
+        return getMgPaymentBundleList;
+	}
+	public Map<String, Object> getMgPaymentBundleDetail(HashMap params) {
+		Map<String, Object> getMgPaymentBundleDetail = sql.selectOne("mall.PaymentMapper.getMgPaymentBundleDetail",params);
+        return getMgPaymentBundleDetail;
+	}
+	public List<Map<String, Object>> getUserPaymentBundleList(HashMap params) {
+		List<Map<String, Object>> getUserPaymentBundleList = sql.selectList("mall.PaymentMapper.getUserPaymentBundleList",params);
+        return getUserPaymentBundleList;
+	}
+	public Integer getUserPaymentBundleListCount(HashMap params) {
+		Integer getUserPaymentBundleListCount = sql.selectOne("mall.PaymentMapper.getUserPaymentBundleListCount",params);
+		return getUserPaymentBundleListCount;
 	}
 }

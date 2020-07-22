@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -171,9 +174,34 @@ public class MyPage {
             searchVO.pageCalculate(paymentDAO.getPaymentListCount(params));
             params.put("rowStart",searchVO.getRowStart());
             params.put("staticRowEnd",searchVO.getStaticRowEnd());
+            params.put("displayRowCount",searchVO.getDisplayRowCount());
             model.addAttribute("searchVO", searchVO);
-            List<Map<String,Object>> paymentList = paymentDAO.getPaymentList(params);
-            model.addAttribute("paymentList", paymentList);
+            List<Map<String,Object>> paymentList = paymentDAO.getUserPaymentBundleList(params);
+            
+            if(paymentList != null && paymentList.size() > 0) {
+	            Map<String,Object> groupList = paymentList.stream().reduce(new HashMap<String,Object>(),(acc, cur) -> {
+	            	if(acc.containsKey(cur.get("order_no"))) {
+	            		((List)acc.get(cur.get("order_no"))).add(cur);
+	            	}else {
+	            		List<Map<String,Object>> tmpList = new ArrayList<>();
+	            		tmpList.add(cur);
+	            		acc.put((String)cur.get("order_no"),tmpList);
+	            	}
+	            	return acc;
+	            });
+	            // Map.Entry 리스트 작성
+	    		List<Entry<String, Object>> list_entries = new ArrayList<Entry<String, Object>>(groupList.entrySet());
+	
+	    		// 비교함수 Comparator를 사용하여 오름차순으로 정렬
+	    		Collections.sort(list_entries, new Comparator<Entry<String, Object>>() {
+	    			// compare로 값을 비교
+	    			public int compare(Entry<String, Object> obj1, Entry<String, Object> obj2) {
+	    				// 오름 차순 정렬
+	    				return String.valueOf(((List<Map<String,Object>>)obj2.getValue()).get(0).get("reg_date")).compareTo(String.valueOf(((List<Map<String,Object>>)obj1.getValue()).get(0).get("reg_date")));
+	    			}
+	    		});
+	    		model.addAttribute("paymentList", list_entries);
+            }
 
             //경품참여
             params.put("giveaway_play_user_id",userInfo.get("usr_id"));
@@ -443,15 +471,44 @@ public class MyPage {
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 
             myPageVO.setPayment_user_id((Integer)userInfo.get("usr_id"));
+            params.put("payment_user_id",(Integer)userInfo.get("usr_id"));
             //페이징
+            myPageVO.setStaticRowEnd(5);
             myPageVO.setDisplayRowCount(5);
             model.addAttribute("searchVO", myPageVO);
 
             //목록 수량
-            myPageVO.pageCalculate(myPageDAO.getMyPagePaymentListCount(myPageVO));
+            myPageVO.pageCalculate(paymentDAO.getUserPaymentBundleListCount(params));
+            params.put("rowStart",myPageVO.getRowStart());
+            params.put("staticRowEnd",myPageVO.getStaticRowEnd());
+            params.put("displayRowCount",myPageVO.getDisplayRowCount());
             //목록 생성
-            List<Map<String,Object>> paymentList = myPageDAO.getMyPagePaymentList(myPageVO);
-            model.addAttribute("paymentList", paymentList);
+            List<Map<String,Object>> paymentList = paymentDAO.getUserPaymentBundleList(params);
+            
+            if(paymentList != null && paymentList.size() > 0) {
+	            Map<String,Object> groupList = paymentList.stream().reduce(new HashMap<String,Object>(),(acc, cur) -> {
+	            	if(acc.containsKey(cur.get("order_no"))) {
+	            		((List)acc.get(cur.get("order_no"))).add(cur);
+	            	}else {
+	            		List<Map<String,Object>> tmpList = new ArrayList<>();
+	            		tmpList.add(cur);
+	            		acc.put((String)cur.get("order_no"),tmpList);
+	            	}
+	            	return acc;
+	            });
+	            // Map.Entry 리스트 작성
+	    		List<Entry<String, Object>> list_entries = new ArrayList<Entry<String, Object>>(groupList.entrySet());
+	
+	    		// 비교함수 Comparator를 사용하여 오름차순으로 정렬
+	    		Collections.sort(list_entries, new Comparator<Entry<String, Object>>() {
+	    			// compare로 값을 비교
+	    			public int compare(Entry<String, Object> obj1, Entry<String, Object> obj2) {
+	    				// 오름 차순 정렬
+	    				return String.valueOf(((List<Map<String,Object>>)obj2.getValue()).get(0).get("reg_date")).compareTo(String.valueOf(((List<Map<String,Object>>)obj1.getValue()).get(0).get("reg_date")));
+	    			}
+	    		});
+	    		model.addAttribute("paymentList", list_entries);
+            }
             
             params.put("code", "payment_status");
             List<Map<String, Object>> getSelectorList = selectorDAO.getSelectorList(params);
@@ -577,7 +634,8 @@ public class MyPage {
     @RequestMapping(value="/MyPage/OrderChange")
     public String myPageOrderChange(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
         try{
-            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> paymentDetail = paymentDAO.getMgPaymentBundleDetail(params);
+            params.put("order_no", paymentDetail.get("order_no"));
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);
@@ -607,7 +665,8 @@ public class MyPage {
         try{
             deliveryInfoVO.setDelivery_t_key(t_key);
             deliveryInfoVO.setDelivery_t_url(t_url);
-            Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Map<String,Object> paymentDetail = paymentDAO.getMgPaymentBundleDetail(params);
+            params.put("order_no", paymentDetail.get("order_no"));
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             model.addAttribute("paymentDetail", paymentDetail);
             model.addAttribute("delivery", delivery);

@@ -38,82 +38,37 @@
                         </tr>
                         </thead>
                         <tbody class="sec1-tbody">
-                        <c:if test="${fn:length(paymentBundleList) <= 1}">
-                        <tr>
-                            <c:if test="${not empty paymentDetail.file_6}">
-                                <td><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" style="width: 80px;"/></a></td>
-                            </c:if>
-                            <c:if test="${not empty paymentDetail.file_1}">
-                                <td><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_1}" style="width: 80px;"/></a></td>
-                            </c:if>
-                            <td class="sec1-tbody-p1">
-                            	<a href="/product/productDetail?product_cd=${paymentDetail.product_cd}">
-                                <p>
-                                    <c:if test="${not empty paymentDetail.product_name}">${paymentDetail.product_name}</c:if>
-                                    <c:if test="${not empty paymentDetail.giveaway_name}">${paymentDetail.giveaway_name}</c:if>
-                                </p>
-                                </a>
-                            </td>
-                            <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
-                            <td><span>${paymentDetail.payment_order_quantity}</span></td>
-                            <td><span>${paymentDetail.payment_status_name}</span></td>
-                            <td class="sec1-tbody-p2">
-
-                                <div class="p2-box1">
-                                <%--<c:if test="${paymentDetail.payment_status eq 'W'}">
-                                    <p class="p2-ck"><a href="">배송지 변경</a></p>
-                                </c:if>--%>
-                                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
-                                    <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
-
-                                </c:if>
-                                <c:if test="${paymentDetail.payment_status eq 'R' || paymentDetail.payment_status eq 'S'}">
-                                    <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${paymentDetail.order_no}">배송조회</a></p>
-                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
-                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
-                                </c:if>
-                                <c:if test="${paymentDetail.payment_status eq 'O'}">
-                                	<p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
-                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
-                                </c:if>
-<%--                                    <p><a href="">판매자 문의</a></p>--%>
-                                </div>
-
-                            </td>
-                        </tr>
-                        </c:if>
-                        <c:if test="${fn:length(paymentBundleList) > 1}">
 	                        <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
 	                        <tr>
 	                            <td><img src="${list.file_1}" style="width: 80px;"/></td>
 	                            <td class="sec1-tbody-p1">
-	                                <p>${list.product_name}</p>
+	                                <p>${list.product_name} <c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></p>
 	                            </td>
 	                            <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
-	                            <td><span>${list.payment_order_quantity}</span></td>
-	                            <c:if test="${status.index == 0 }">
-		                            <td rowspan="${fn:length(paymentBundleList)}"><span>${paymentDetail.payment_status_name}</span></td>
-		                            <td rowspan="${fn:length(paymentBundleList)}" class="sec1-tbody-p2">
-		
-		                                <div class="p2-box1">
-		<%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
-		                                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D'}">
-		                                    <p><a href="/MyPage/OrderCancel?order_no=${paymentDetail.order_no}">주문취소</a></p>
-		
-		                                </c:if>
-		                                <c:if test="${paymentDetail.payment_status eq 'R'}">
-		                                    <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${paymentDetail.order_no}">배송조회</a></p>
-		                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}">교환신청 하기</a></p>
-		                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}">반품신청 하기</a></p>
-		                                </c:if>
-		<%--                                    <p><a href="">판매자 문의</a></p>--%>
-		                                </div>
-		
-		                            </td>
-	                            </c:if>
+	                            <td><span><fmt:formatNumber value="${list.payment_order_quantity}" groupingUsed="true" /></span></td>
+	                            <td><span>${list.payment_status_name}</span></td>
+	                            <td class="sec1-tbody-p2">
+	
+	                                <div class="p2-box1">
+	<%--                                    <p class="p2-ck"><a href="">배송지 변경</a></p>--%>
+	                                <c:if test="${list.payment_status eq 'W' || list.payment_status eq 'D' || list.payment_status eq 'I'}">
+	                                    <p><a href="/MyPage/OrderCancel?order_no=${list.order_no}">전액취소</a></p>
+	                                </c:if>
+	                                <c:if test="${list.payment_status eq 'R' || list.payment_status eq 'S'}">
+	                                    <p class="lis-txt-box text-danger"><a id="SearchDelivery" class="click-span" data-id="${list.no}">배송조회</a></p>
+	                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${list.no}">교환신청 하기</a></p>
+	                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${list.no}">반품신청 하기</a></p>
+	                                </c:if>
+	                                <c:if test="${list.payment_status eq 'O'}">
+	                                	<p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${list.no}">교환신청 하기</a></p>
+	                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${list.no}">반품신청 하기</a></p>
+	                                </c:if>
+	<%--                                    <p><a href="">판매자 문의</a></p>--%>
+	                                </div>
+	
+	                            </td>
 	                        </tr>
 	                        </c:forEach>
-                        </c:if>
                         </tbody>
                     </table>
                 </div>

@@ -214,9 +214,10 @@ public class MobilePayment {
                 rediectURL = "/MyPage/OrderAndDelivery";
                 params.put("payment_order_quantity", params.get("quantity_total"));
                 paymentDAO.insertPayment(params);
-                
+
                 cartPaymentVO.setPayment_cd((String)params.get("payment_cd"));
                 cartPaymentVO.setCart_user_id(String.valueOf(params.get("payment_user_id")));
+                cartPaymentVO.setPayment_status((String) params.get("payment_status"));
                 paymentDAO.insertCartBundle(cartPaymentVO);
                 cartDAO.CartPaymentListDelete(cartPaymentVO);
             }

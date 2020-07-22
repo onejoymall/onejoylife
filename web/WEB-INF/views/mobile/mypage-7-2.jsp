@@ -17,8 +17,8 @@
         <ul class="flexbetween mb-1">
             <li>주문일</li>
             <li><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></li>
-            <input type="hidden" name="order_no" value="${paymentDetail.order_no}">
-                        <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
+            <input type="hidden" name="order_no" value="${paymentDetail.no}">
+            <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
         </ul>
         <hr class="grey">
         <ul class="product pb-0">
@@ -26,12 +26,20 @@
                 <li><img src="${paymentDetail.file_1}" alt=""></li>
                 <li>
                     <h5>${paymentDetail.product_name}</h5>
-                    <p class="grey">${paymentDetail.product_made_company_model}</p>
+                    <p class="grey">${paymentDetail.option_name}</p>
                 </li>
             </ul>
             <ul class="options">
                 <li>상품금액</li>
-                <li><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /> <span>원</span></li>
+                <li><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /> <span>원</span></li>
+            </ul>
+            <ul class="options">
+                <li>수량</li>
+                <li><fmt:formatNumber value="${paymentDetail.payment_order_quantity}" groupingUsed="true" /></li>
+            </ul>
+            <ul class="options">
+                <li>쿠폰할인</li>
+                <li><fmt:formatNumber value="${paymentDetail.coupon_discount}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </ul>
         
@@ -71,10 +79,11 @@
         <h3><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">상품금액</p>
         <h3><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" />원</h3>
-        <p class="grey pt-2 pb-05">결제금액</p>
-        <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
+        <p class="grey pt-2 pb-05">반품예정금액</p>
+        <h3 class="red"><fmt:formatNumber value="${paymentDetail.product_payment * paymentDetail.payment_order_quantity - paymentDetail.coupon_discount}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">결제수단</p>
         <h3>${paymentDetail.pay_method}</h3>
+        <input type="hidden" name="pay_method" value="${paymentDetail.pay_method}"/>
         
         <h2 class="pb-1 mt-4">환불 계좌</h2>
         <hr class="pb-1">
@@ -98,5 +107,6 @@
            <li><a href="#" id="formSubmit">신청</a></li>
         </ul>
     </div>
+    </form>
       <c:import url="/layout/footer"/>
 <%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

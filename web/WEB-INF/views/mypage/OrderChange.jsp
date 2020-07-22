@@ -11,13 +11,14 @@
                     <div class="r-sec1">
                         <p class="sec1-h1">교환신청</p>
                         <p class="sec1-p1">상점주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
-                        <input type="hidden" name="order_no" value="${paymentDetail.order_no}">
-                        <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
+                        <input type="hidden" name="order_no" value="${paymentDetail.no}">
                         <table>
                             <colgroup>
                                 <col style="width: 150px;">
                                 <col style="width: 260px;">
-                                <col style="width: 525px;">
+                                <col style="width: 225px;">
+                                <col style="width: 125px;">
+                                <col style="width: 200px;">
                                 <%--                                    <col style="width: 259px;">--%>
                                 <%--                                    <col style="width: 100px;">--%>
                             </colgroup>
@@ -27,7 +28,8 @@
                                 <th>상품정보</th>
                                 <%--                                        <th>판매자</th>--%>
                                 <th>상품금액</th>
-                                <%--                                        <th>수량</th>--%>
+                                <th>수량</th>
+                                <th>쿠폰할인</th>
                             </tr>
                             </thead>
                             <tbody class="sec1-tbody">
@@ -35,11 +37,12 @@
                                 <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                                 <td class="sec1-tbody-p1">
                                     <p>${paymentDetail.product_name}</p>
-                                    <p>${paymentDetail.product_made_company_model}</p>
+                                    <p>${paymentDetail.option_name}</p>
                                 </td>
                                 <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
-                                <td><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
-                                <%--                                        <td><span>1</span></td>--%>
+                                <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                                <td><span><fmt:formatNumber value="${paymentDetail.payment_order_quantity}" groupingUsed="true" /></span></td>
+                                <td><span><fmt:formatNumber value="${paymentDetail.coupon_discount}" groupingUsed="true" /></span>원</td>
                             </tr>
                             </tbody>
                         </table>

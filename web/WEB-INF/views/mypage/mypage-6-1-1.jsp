@@ -40,7 +40,6 @@
                                         <td><img src="${paymentDetail.file_1}" style="width: 80px;"/></td>
                                         <td class="sec1-tbody-p1">
                                             <p>${paymentDetail.product_name}</p>
-                                            <p>${paymentDetail.product_made_company_model}</p>
                                         </td>
 <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
                                         <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
@@ -54,7 +53,7 @@
                                                 <td><img src="${list.file_1}" style="width: 80px;"/></td>
                                                 <td class="sec1-tbody-p1">
                                                     <p>${list.product_name}</p>
-                                                    <p>${list.product_made_company_model}</p>
+                                                    <p>${list.option_name}</p>
                                                 </td>
         <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
                                                 <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
@@ -106,7 +105,7 @@
                                     <td class="body-td-tit">주문금액</td>
                                     <td class="body-td-txt2"><span><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /></span>원</td>
                                     <td class="body-td-tit">상품금액</td>
-                                    <td class="body-td-txt2"><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                                    <td class="body-td-txt2"><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원 <c:if test="${fn:length(paymentBundleList) > 1}"> 외 ${fn:length(paymentBundleList) - 1}건</c:if></td>
                                 </tr>
                                 <tr>
                                     <td class="body-td-tit">결제금액</td>
