@@ -64,7 +64,11 @@
             (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 5) as file_5
         FROM giveaway A  where 1=1
         ]]>
-
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
 		<if test="giveaway_id != null and giveaway_id != ''"> <![CDATA[AND A.giveaway_id= #{giveway_id} ]]></if>
         <if test="giveaway_cd != null and giveaway_cd != ''"> <![CDATA[AND A.giveaway_cd= #{giveaway_cd} ]]></if>
         <if test="giveaway_use_yn != null and giveaway_use_yn != ''"> <![CDATA[AND A.giveaway_use_yn= #{giveaway_use_yn} ]]></if>
@@ -75,7 +79,7 @@
         <if test='parti_rate == "100"'> <![CDATA[and  ifnull((((select sum(Z.giveaway_payment_epoint) from giveaway_play_history Z where Z.giveaway_cd = A.giveaway_cd) / A.giveaway_play_winner_point) * 100) , 0) >= 100 ]]></if>
         <if test="orderByKey != null"> order by ${orderByKey} ${orderByValue}</if>
         <if test="orderByKey == null"> order by giveaway_id DESC </if>
-        LIMIT ${rowStart-1}, ${staticRowEnd}
+        LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getGiveawayListCount" resultType="java.lang.Integer">
         <![CDATA[

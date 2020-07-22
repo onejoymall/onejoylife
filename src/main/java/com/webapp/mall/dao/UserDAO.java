@@ -1,6 +1,8 @@
 package com.webapp.mall.dao;
 
 import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.vo.StoreVO;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,7 +40,10 @@ public class UserDAO {
         return getLoginUserList;
     }
 
-
+    public Map<String, Object> getUserStoreList(Map<String, String> params) throws SQLException {
+        Map<String, Object> getUserStoreList = sql.selectOne("mall.UserMapper.getUserStoreList",params);
+        return getUserStoreList;
+    }
 
     public Map<String, Object> getFindUser(Map<String, String> params) throws SQLException {
         Map<String, Object> getFindUser = sql.selectOne("mall.UserMapper.getFindUser",params);
@@ -80,4 +85,11 @@ public class UserDAO {
 		Map<String, Object> getUserForId = sql.selectOne("mall.UserMapper.getUserForId", params);
         return getUserForId;
 	}
+    public void updateManagerPassword(UserVO userVO) throws SQLException {
+        sql.update("mall.UserMapper.updateManagerPassword", userVO);
+    }
+    public void updateStoreManagerPassword(UserVO userVO) throws SQLException {
+        sql.update("mall.UserMapper.updateStoreManagerPassword", userVO);
+    }
+    
 }

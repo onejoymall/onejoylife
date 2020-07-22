@@ -209,7 +209,7 @@ public class MgSystemRestController {
         }
         return resultMap;
     }
-    //상품 일괄 수정 제고
+    //상품 일괄 수정 재고
     @RequestMapping(value = "/Manager/productListUpdateStock",method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> productListUpdateStock(@RequestParam HashMap params, HttpServletRequest request, StockVO stockVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -246,6 +246,27 @@ public class MgSystemRestController {
                 resultMap.put("validateError",error);
             }else{
                 mgCommonDAO.productListCategoryUpdate(categoryVO);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //경품 일괄 수정
+    @RequestMapping(value = "/Manager/giveawayListUpdate",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> giveawayListUpdate(@RequestParam HashMap params, HttpServletRequest request, MgCommonVO mgCommonVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try{
+            if(mgCommonVO.getChk() == null || mgCommonVO.getChk().length < 1){
+                error.put("Error", messageSource.getMessage("error.chcUpd","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                mgCommonDAO.listUpdate(mgCommonVO);
             }
         }catch (Exception e){
             e.printStackTrace();

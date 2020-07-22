@@ -152,10 +152,10 @@
                             <tr>
                                 <th>비밀번호 설정</th>
                                 <td>
-                                    <p><input type="password" name="store_password" placeholder="비밀번호"></p>
-                                    <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"></p>
-                                    <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 조합으로 10-20자 미만</p>
-                                    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>
+                                    <p><input type="password" name="store_password" placeholder="비밀번호"><span class="er" id="passwordValidation"></span></p>
+                                    <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"><span class="er" id="password_cfValidation"></span></p>
+                                    <p class="s-font">- 6~20자의 영문,숫자를 조합하여 입력하여 주세요.</p>
+<%--                                    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
                                 </td>
                             </tr>
 
@@ -280,4 +280,9 @@
         </div>
     </div>
 
+<script>
+
+
+
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

@@ -95,6 +95,7 @@ import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
+import com.webapp.manager.dao.StoreInfoDAO;
 import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.CouponVO;
 import com.webapp.manager.vo.ExcelSettingVO;
@@ -169,6 +170,9 @@ public class ManagerRestapiController {
     private SelectorDAO selectorDAO;
     @Autowired
     private CompanyInfoDAO companyInfoDAO;    
+    @Autowired
+    private StoreInfoDAO storeInfoDAO;
+    
     IamportClient client;
     @Value("${api_key}")
     private String apiKey;
@@ -319,9 +323,9 @@ public class ManagerRestapiController {
             String password = (String)params.get("password");
             params.put("password",null);//패스워드 초기화
             //관리자레벨
-            params.put("level",10);
+//            params.put("level",10);
             //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
-            Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
+            Map<String,Object> loginUserList = userDAO.getUserStoreList(params);
             //기본 Valitaion
             if(email==null || email.isEmpty()){
                 error.put("Email", messageSource.getMessage("error.required","ko"));
@@ -336,14 +340,21 @@ public class ManagerRestapiController {
                             session.removeAttribute("adminLogin"); // 기존값을 제거해 준다.
                         }
                         session.setAttribute("email",email);
-                        if((Integer)loginUserList.get("level") == 10) session.setAttribute("adminLogin", "admin");
-                        else 										  session.setAttribute("adminLogin", "manager");
+                        if((Integer)loginUserList.get("level") == 10) {
+                            session.setAttribute("adminLogin", "admin");
+                        }else {
+                            if(loginUserList.get("status").equals("W")){
+                                error.put("Error", messageSource.getMessage("error.loginFail","ko"));
+                            }
+                            session.setAttribute("adminLogin", "manager");
+                        }
                         session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
+                        session.setAttribute("level", loginUserList.get("level"));
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);
                         resultMap.put("redirectUrl", "/Manager/ManagerMain");
-                    }else{
+                    } else {
                         error.put("Error", messageSource.getMessage("error.notUsrInfo","ko"));
                     }
                 }else{
@@ -1230,7 +1241,7 @@ public class ManagerRestapiController {
     }
 
 
-    @RequestMapping(value = "/Manager/companyInfoModi", method = RequestMethod.POST, produces = "application/json")//jmjm
+    @RequestMapping(value = "/Manager/companyInfoModi", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerCompanyInfoModi(CompanyInfoVO companyInfoVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
     //    HashMap<String, Object> error = new HashMap<String, Object>();
@@ -1433,7 +1444,9 @@ public class ManagerRestapiController {
             }else{
                 storeVO.setStore_approval_status("W");
                 fileVO.setParentPK(storeVO.getStore_id());
+ fileVO.setFileorder(1);
                 mgProductDAO.insertProductFile(filelist,fileVO);
+                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 mgStoreDAO.insertStore(storeVO);
                 Object obj = session.getAttribute("adminLogin");
                 if ( obj == null ){
@@ -1488,7 +1501,7 @@ public class ManagerRestapiController {
     }
     //입점업체 업데이트
     @RequestMapping(value = "/Manager/storeUpdateProc", method = RequestMethod.POST, produces = "application/json")
-    public  HashMap<String, Object> managerStoreUpdateProc(BoardVO boardInfo,FileVO fileVO,StoreVO storeVO,ProductVO productVO){
+    public  HashMap<String, Object> managerStoreUpdateProc(@RequestParam HashMap params, BoardVO boardInfo,FileVO fileVO,StoreVO storeVO,ProductVO productVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
@@ -1509,6 +1522,7 @@ public class ManagerRestapiController {
                     mgProductDAO.insertProductFile(filelist,fileVO);
                 }
 
+                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 mgStoreDAO.updateStore(storeVO);
                 resultMap.put("redirectUrl","/Manager/company-app");
             }
@@ -2672,4 +2686,115 @@ public class ManagerRestapiController {
 		taxVO.setResult_code(String.valueOf(result));
 		return result;
 	}
+  //폼의 메서드가 GET인지 POST 인지 꼭 확인 
+    @RequestMapping(value = "/manager/managerPasswordChange", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerPassCheck(@RequestParam HashMap params, UserVO userVO, StoreVO storeVO,HttpSession session) throws Exception{
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try {
+        	 if(userVO.getPassword().isEmpty()){
+                 error.put("password", "기존비밀번호는 필수 항목입니다.");
+             }
+        	 if(userVO.getNewpassword().isEmpty()){
+                 error.put("newpassword", "신규 비밀번호는 필수 항목입니다.");
+             }
+        	 if(userVO.getRenewpassword().isEmpty()){
+                 error.put("renewpassword", "신규 비밀번호 확인은 필수 항목입니다.");
+             }
+			 if(!userVO.getRenewpassword().equals(userVO.getNewpassword())){
+				 error.put("renewpassword", "비밀번호가 일치하지않습니다.");
+			 }
+            //이메일 필수 체크
+ 	    	params.put("email", session.getAttribute("email"));
+	    	params.put("password", null);
+	    	 
+	    	 Map<String, Object> userData= userDAO.getUserStoreList(params);
+	  
+	        //입력한 비밀번호와 직접 입력한 비밀번호 일치 확인 
+ 	        if(!passwordEncoder.matches(userVO.getPassword(),(String)userData.get("password"))){
+	            error.put("password", "계정정보가 일치하지 않습니다.");
+	        }
+	        
+	 	    
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	userVO.setEmail((String)session.getAttribute("email"));
+            	
+            	storeVO.setStore_id((String)session.getAttribute("email"));
+            	if(userVO.getNewpassword() != null && !userVO.getNewpassword().equals("")) {
+            		userVO.setNewpassword(passwordEncoder.encode(userVO.getNewpassword()));
+            	}
+            	
+	            		userDAO.updateManagerPassword(userVO);
+            	
+	            		userDAO.updateStoreManagerPassword(userVO);
+            	resultMap.put("success", true);
+                resultMap.put("redirectUrl","/managerLayout/managerFooter");
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    @RequestMapping(value = "/Manager/storeInfoModi", method = RequestMethod.POST, produces = "application/json")//jmjm
+    public  HashMap<String, Object> managerStoreInfoModi(StoreVO storeVO, FileVO fileVO,BoardVO boardInfo,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+        	 FileUtil fs = new FileUtil();
+             List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
+             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
+              //fileVO.setParentPK(storeVO.getStore_id());
+             if(!isEmpty(error)){
+                 resultMap.put("validateError",error);
+             }else{ 
+            	 fileVO.setParentPK((String)session.getAttribute("email"));
+            	 fileVO.setParentPK((String)session.getAttribute("email"));
+	             storeVO.setStore_id((String)session.getAttribute("email"));
+	          	 fileVO.setFileorder(1);
+	              if(!isEmpty(filelist)){
+	     	             
+	                // productVO.setProduct_cd(storeVO.getStore_id());
+	                // mgStoreDAO.deleteProductFile(productVO);
+	            	  storeInfoDAO.insertProductFile1(filelist,fileVO);
+	            	  storeInfoDAO.updateStoreFile(filelist,fileVO);
+	            	  resultMap.put("redirectUrl","/Manager/storeInfo");
+              }
+        	 // storeInfoDAO.getStoreInfo(storeVO);
+	          storeVO.setStore_id((String)session.getAttribute("email"));
+        	  storeInfoDAO.updateStoreInfo(storeVO);
+              resultMap.put("redirectUrl","/Manager/storeInfo");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    @RequestMapping(value = "/Manager/managerChk3mth", method = RequestMethod.POST, produces = "application/json")//jmjm
+    public  HashMap<String, Object> managerChk3mth(@RequestParam HashMap params,StoreVO storeVO, FileVO fileVO,BoardVO boardInfo,HttpSession session){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        
+        try {
+            //이메일 필수 체크
+        	params.put("email", session.getAttribute("email"));
+	    	//params.put("password", null);
+	    	 
+	    	 Map<String, Object> userData= userDAO.getUserStoreList(params);
+	    //	 SimpleDateFormat getMonth = new SimpleDateFormat("M");
+	  
+	    	 	resultMap.put("info",userData);
+            	resultMap.put("success", true);
+                resultMap.put("redirectUrl","/manager/managerMain");
+            
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
 }

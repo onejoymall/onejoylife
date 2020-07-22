@@ -58,6 +58,7 @@ import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
+import com.webapp.manager.dao.StoreInfoDAO;
 import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.MgBrandVO;
 import com.webapp.manager.vo.MgDeliveryVO;
@@ -124,6 +125,8 @@ public class ManagerController {
     private UserDAO userDAO;
     @Autowired
     private CompanyInfoDAO companyInfoDAO;
+    @Autowired
+    private StoreInfoDAO storeInfoDAO;
     
     /**
      *  리스트.
@@ -330,7 +333,7 @@ public class ManagerController {
         }
         return "/manager/product/productAdd";
     }
-    @RequestMapping(value = "/Manager/companyInfo")//jmjm
+    @RequestMapping(value = "/Manager/companyInfo")
     public String managerCompanyInfo(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,CompanyInfoVO companyInfoVO,HttpSession session) throws Exception {
         try {
             Map<String,Object> info = companyInfoDAO.getCompanyInfo(companyInfoVO);
@@ -343,15 +346,34 @@ public class ManagerController {
         }
         return "/manager/companyInfo";
     }
+
+    @RequestMapping(value = "/Manager/storeInfo")
+    public String managerStoreInfo(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,StoreVO storeVO,HttpSession session) throws Exception {
+        try {
+		     // storeVO.setStore_id(storeVO.getStor8e_id());
+        	
+        	storeVO.setStore_id((String)session.getAttribute("email"));
+			  Map<String,Object> info = storeInfoDAO.getStoreInfo(storeVO);
+			  model.addAttribute("info", info);
+			  model.addAttribute("topNav", 11);
+			  model.addAttribute("style", "goods-add");
+			  model.addAttribute("postUrl","/Manager/storeInfoModi");
+			 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "/manager/storeInfo";
+    }
     
 
     @RequestMapping(value = "/Manager/Giveaway")
     public String managerGiveaway(@RequestParam HashMap params, ModelMap model, GiveawayVO searchVO) throws Exception {
 
         try {
-
-            searchVO.setDisplayRowCount(10);
-            searchVO.setStaticRowEnd(10);
+            if(searchVO.getDisplayRowCount()==null){
+                searchVO.setDisplayRowCount(10);
+            }
+//            searchVO.setStaticRowEnd(10);
             params.put("pd_category_upper_code", "T");
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);

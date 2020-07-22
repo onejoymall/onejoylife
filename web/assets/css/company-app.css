@@ -451,3 +451,7 @@ input[type="radio"]+label, input[type="checkbox"]+label{
     height: 100%;
     background: url(../img/icon/calendar.png) no-repeat center / cover;
 }
+
+.er {
+    color:#da394d;
+}

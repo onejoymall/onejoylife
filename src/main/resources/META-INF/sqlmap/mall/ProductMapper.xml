@@ -746,6 +746,19 @@ and A.payment_status != 'N'
         insert into product_file (key_id,file_name,real_name,file_size,file_link,file_order)
         select #{product_cd},file_name,real_name,file_size,file_link,file_order from product_file where key_id =#{request_product_cd}
     </insert>
+    
+    <update id="updateProductFile" parameterType="java.util.Map">
+       	update product_file set 
+		key_id				= #{parentPK},
+		file_name			=#{filename},
+		real_name			=#{realname},
+		file_size			=#{filesize},
+		file_link			=#{filelink},
+		file_order			=#{file_order}
+		where key_id		=#{parentPK}
+    </update>
+    
+    
     <update id="updateProduct" parameterType="com.webapp.manager.vo.ProductVO">
         <![CDATA[
         update product set

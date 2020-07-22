@@ -117,8 +117,18 @@ public class ProductVO extends SearchVO {
     String product_exposure_jp = "N";
     String delivery_t_code;
     String product_type;//상품형태
+    String parentPK;
+    
 
-    public String getProduct_type() {
+    public String getParentPK() {
+		return parentPK;
+	}
+
+	public void setParentPK(String parentPK) {
+		this.parentPK = parentPK;
+	}
+
+	public String getProduct_type() {
         return product_type;
     }
 

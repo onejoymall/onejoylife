@@ -54,7 +54,7 @@
                     </c:if>
                     <c:if test="${sessionScope.adminLogin != null}">
                         <li><a href="/Manager/ManagerSign/ManagerLogOut">로그아웃</a></li>
-                        <li><a href="">비밀번호 변경</a></li>
+                        <li  class="pass-btn"><a href="">비밀번호 변경</a></li>
                     </c:if>
                     <li class="language-nav"><a href="">국가선택</a>
                         <ul>
@@ -301,17 +301,35 @@
                         </c:if>
   						</ul>
 		               	 </li>
-		                </c:if>
-		               	<c:if test="${ afn:contains(menuList, '29')}">
-		                <li <c:if test="${topNav == 10}">class="active" </c:if>><a href="/Manager/companyInfo">쇼핑몰 정보</a>
-                    	<ul class="gnb-in-ul">
-                    	<c:if test="${afn:contains(menuList, '29')}">
-                        <li><a href="/Manager/companyInfo">정보등록</a></li>
-            			</c:if>
-                        
-                    </ul>
                 </li>
                 </c:if>
+		               	<c:if test="${afn:contains(menuList, '53')}">
+		                <li <c:if test="${topNav == 10}">class="active" </c:if>><a href="/Manager/companyInfo">쇼핑몰 정보</a>
+                    	<ul class="gnb-in-ul">
+                    	<c:if test="${afn:contains(menuList, '53')}">
+                        <li><a href="/Manager/companyInfo">정보등록</a></li>
+            			</c:if>
+                        </ul>
+                        </li>
+                        </c:if>
+                        <c:if test="${afn:contains(menuList, '54')}">
+                        <li <c:if test="${topNav == 11}">class="active" </c:if>><a href="/Manager/storeInfo">입점업체 정보</a>
+                        <ul class="gnb-in-ul">
+                        <c:if test="${afn:contains(menuList, '54')}">
+                        <li><a href="/Manager/storeInfo">정보수정</a></li>
+                        </c:if>
+                        </ul>
+                        </li>
+                        </c:if>
+
+		               	<c:if test="${afn:contains(menuList, '52')}">
+                        <li <c:if test="${topNav == 12}">class="active"</c:if>><a href="/Manager/boardList?bgno=9">입점업체 공지</a>
+                    	<ul class="gnb-in-ul">
+		               	<c:if test="${afn:contains(menuList, '52')}">
+                            <li><a href="/Manager/boardList?bgno=9">입점업체 공지사항</a></li>
+                        </c:if>
+                        </ul>
+                        </c:if>
             </ul>
         </c:if>
         </div>

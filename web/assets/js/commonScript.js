@@ -2203,6 +2203,12 @@ $(document).on("click",".ra-num",function () {
     }
     //입점업체수정
     $(document).on("click","#storeUpdateSubmit",function () {
+		if(!pwCheck){
+			$('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+			$("#password_cfValidation").removeClass("text-success");
+			return;
+		}
+
         var formData = new FormData($('#defaultForm')[0]);
         jQuery.ajax({
             type: 'POST',
@@ -2245,6 +2251,31 @@ $(document).on("click",".ra-num",function () {
             }
         });
     })
+	var pwCheck = true;
+
+    var regExp = /^[a-zA-Z0-9]{6,20}$/;
+	//패스워드 체크
+	$(document).on('input','input[name=store_password],input[name=store_passwordCf]',function () {
+		pwCheck = false;
+		var pw = $('input[name=store_password]').val();
+		var pw_cf = $('input[name=store_passwordCf]').val();
+	    if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+	        $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+	        $("#passwordValidation").removeClass("text-success");
+	        $("#password_cfValidation").text('');
+	    }else{
+	        $("#passwordValidation").text('');
+	        if(pw != pw_cf){
+	            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+	            $("#password_cfValidation").removeClass("text-success");
+	        }else{
+	            pwCheck = true;
+	            $("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+	            $("#password_cfValidation").addClass("text-success");
+	        }
+	    }
+	    if(!pw && !pw_cf) pwCheck = true;
+	})
     //입점업체 승인
     $(document).on("click","#storeApproval",function () {
         var formData = new FormData($('#defaultForm')[0]);
@@ -4284,7 +4315,7 @@ function listProductUpdate(column,update_value) {
     var formData = $('#defaultListForm').serialize()+'&column='+column+'&update_value='+update_value
     commonAjaxCall("POST","/Manager/productListUpdate",formData);
 }
-//관리자 > 상푼관리 > 재구 수정
+//관리자 > 상품관리 > 재고 수정
 function  listProductUpdateStock() {
     if($('input[name=chk]:checked').length <1){
         alert("수정할 대상을 선택하세요");

@@ -16,6 +16,7 @@
             <form name="listSrcForm" id="listSrcForm" method="get">
                 <div class="keyword-src-wrap">
                     <input type="text" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                    <input type="hidden" name="displayRowCount">
                     <button type="submit" class="keyword-src-button">검색</button>
 
                     <div class="src-filter-wrap">
@@ -86,17 +87,21 @@
             <div class="list-sort-wrap">
                 <div class="left">
                     <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
+                    <button type="button" class="btn-default" name="copy" onclick="listGiveawayUpdate('giveaway_use_yn','Y')">진열함</button>
+                    <button type="button" class="btn-default" name="copy" onclick="listGiveawayUpdate('giveaway_use_yn','N')">진열암함</button>
+                    <button type="button" class="btn-default" name="copy" onclick="listGiveawayUpdate('giveaway_sale_yn','Y')">판매함</button>
+                    <button type="button" class="btn-default" name="copy" onclick="listGiveawayUpdate('giveaway_sale_yn','N')">판매안함</button>
 <%--                    <button type="button" class="btn-default" name="copy">선택 복사 등록</button>--%>
 <%--                    <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>--%>
                     <button type="button" class="btn-default excelBtn" name="copy" data-id="giveaway"><i class="exel-ic"></i>다운로드</button>
                 </div>
-<%--                <div class="right">--%>
-<%--                    <select name="order" class="order-select">--%>
-<%--                        <option value="32">10개씩 보기</option>--%>
-<%--                        <option value="60">50개씩 보기</option>--%>
-<%--                        <option value="92">100개씩 보기</option>--%>
-<%--                    </select>--%>
-<%--                </div>--%>
+                <div class="right">
+                    <select name="order" class="order-select">
+                        <option value="10" <c:if test="${searchVO.displayRowCount == 10}"> selected</c:if>>10개씩 보기</option>
+                        <option value="50" <c:if test="${searchVO.displayRowCount == 50}"> selected</c:if>>50개씩 보기</option>
+                        <option value="100" <c:if test="${searchVO.displayRowCount == 100}"> selected</c:if>>100개씩 보기</option>
+                    </select>
+                </div>
             </div>
             <form name="defaultListForm" id="defaultListForm" method="POST">
                 <input type="hidden" name="Pk" value="${Pk}">
@@ -127,6 +132,7 @@
 <%--                    <td>재고</td>--%>
                     <td>배송</td>
 <%--                    <td>구매수량</td>--%>
+                    <td name="detail">판매여부</td>
                     <td name="detail">상태</td>
                     <td>관리</td>
                 </tr>
@@ -147,7 +153,7 @@
                             <td>${productList.giveaway_play_winner_point}</td>
 <%--                            <td></td>--%>
                             <td>${productList.giveaway_delivery_type_name}</td>
-<%--                            <td></td>--%>
+                            <td>${productList.giveaway_sale_yn_name}</td>
                             <td><c:if test="${productList.parti_rate < 100}">응모중</c:if>
                             	<c:if test="${productList.parti_rate >= 100}">추첨완료</c:if></td>
                             <td>
@@ -164,6 +170,8 @@
             <form id="form1" name="form1"  method="get">
                 <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                 <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+                <input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                <input type="hidden" name="displayRowCount" value="${param.displayRowCount}">
             </form>
         </div>
     </div>
@@ -1066,4 +1074,10 @@
     </div>
 </div>
 
+<script>
+    $('.order-select').on("change",function () {
+        $('input[name=displayRowCount]').val($(this).val());
+        $('#listSrcForm').submit();
+    });
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
