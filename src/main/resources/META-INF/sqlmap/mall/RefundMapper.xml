@@ -73,18 +73,24 @@
 			refund_send_date = #{refund_send_date}
     </insert>
     <select id="getDeliveryRefundList" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="java.util.Map">
-        select
-            A.*,B.*,
-            (select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
-            (select Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+        select B.order_no as order_no,
+            A.*,B.*,C.*,
+            (select Z.username from user Z where Z.usr_id=C.payment_user_id) as username,
+            (select Z.email from user Z where Z.usr_id=C.payment_user_id) as email,
             (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
             (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
             (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
             (select Z.product_name from product Z where Z.product_cd=B.product_cd ) as product_name,
             (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
             (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
-            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
-        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
+            (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
+            (select Z.store_name from store Z where Z.store_id=(select ZZ.product_store_id from product ZZ where ZZ.product_cd=B.product_cd)) as store_name
+        FROM delivery_refund A 
+        left join payment_bundle B 
+        on B.no = A.order_no
+        left join payment C
+        on B.order_no = C.order_no
+        where B.payment_status in ('F','H','S','G','E','J')
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
 		        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -101,7 +107,12 @@
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where B.payment_status in ('F','H','S','G','E','J')
+        FROM delivery_refund A 
+        left join payment_bundle B 
+        on B.no = A.order_no
+        left join payment C
+        on B.order_no = C.order_no
+        where B.payment_status in ('F','H','S','G','E','J')
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -115,18 +126,24 @@
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     </select>
     <select id="getDeliveryRefundDetail" parameterType="com.webapp.mall.vo.DeliveryInfoVO" resultType="java.util.Map">
-        select
-        A.*,B.*,
-        (select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
-        (select Z.email from user Z where Z.usr_id=B.payment_user_id) as email,
+        select B.order_no as order_no,
+        A.*,B.*,C.*,
+        (select Z.username from user Z where Z.usr_id=C.payment_user_id) as username,
+        (select Z.email from user Z where Z.usr_id=C.payment_user_id) as email,
         (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) as delivery_start_date,
         (select Z.delivery_t_code from delivery_info Z where Z.order_no=A.order_no) as delivery_t_code,
         (select Z.delivery_t_invoice from delivery_info Z where Z.order_no=A.order_no) as delivery_t_invoice,
         (select Z.product_name from product Z where Z.product_cd=B.product_cd ) as product_name,
         (select Z.code_name from code Z where Z.code='payment_status' and Z.code_value = B.payment_status) as payment_status_name,
         (select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=(select ZZ.product_made_company_cd from product ZZ where ZZ.product_cd=B.product_cd)) as product_made_company_name,
-        (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1
-        FROM delivery_refund A left join payment B on (B.order_no = A.order_no) where  A.order_no= #{order_no}
+        (select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
+        (select Z.store_name from store Z where Z.store_id=(select ZZ.product_store_id from product ZZ where ZZ.product_cd=B.product_cd)) as store_name
+        FROM delivery_refund A 
+        left join payment_bundle B 
+        on B.no = A.order_no
+        left join payment C
+        on B.order_no = C.order_no
+        where A.order_no= #{order_no}
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
         <if test="delivery_start_date != null and delivery_start_date !=''"><![CDATA[AND (select Z.delivery_start_date from delivery_info Z where Z.order_no=A.order_no) >= #{delivery_start_date} ]]></if>

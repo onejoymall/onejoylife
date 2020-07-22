@@ -52,3 +52,12 @@ button{
 .span-22 {width:870px;}/*91.57894736842105%*/
 .span-23 {width:910px;}/*95.78947368421053%*/
 .span-24 {width:950px;margin-right:0;}
+td.text-left{
+	text-align: left;
+}
+td.text-center{
+	text-align: center;
+}
+td.text-right{
+	text-align: right;
+}

@@ -14,6 +14,7 @@ public class CartPaymentVO extends CommonVO {
    private String payment_type_cd;
    private String pg_provider;
    private String success;
+   private String payment_status;
    private String[] product_cd;
    private String[] product_cds;
    private String[] coupon_cd;
@@ -180,6 +181,14 @@ public class CartPaymentVO extends CommonVO {
 
 	public void setCoupon_discount(String[] coupon_discount) {
 		this.coupon_discount = coupon_discount;
+	}
+
+	public String getPayment_status() {
+		return payment_status;
+	}
+
+	public void setPayment_status(String payment_status) {
+		this.payment_status = payment_status;
 	}
 
 }

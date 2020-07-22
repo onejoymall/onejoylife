@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="page-box clearfix">
@@ -43,7 +44,7 @@
                 </div>
                 <div class="r-sec4">
                     <div class="sec4-txt">
-                        <p class="txt-tit">최근 구매내역<span>최근주문3건(1개월내)</span></p>
+                        <p class="txt-tit">최근 구매내역<span>최근주문3건</span></p>
                         <p class="mor-a">
                             <a href="/MyPage/OrderAndDelivery">더보기 ></a>
                         </p>
@@ -69,79 +70,67 @@
                         </thead>
                         <tbody class="lis-body">
                         <c:if test="${not empty paymentList}">
-                            <c:forEach var="paymentList" items="${paymentList}" varStatus="status">
-                                <tr>
-                                    <td class="my-lis-1">
-                                        <p><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></p>
-                                        <p><a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}">${paymentList.order_no}</a></p>
-                                    </td>
-                                    <td class="my-lis-2">
-                                        <c:if test="${not empty paymentList.giveaway_cd}">
-                                            <a href="/giveaway/giveawaydetail?giveaway_id=${paymentList.giveaway_id}">
-                                                <div style="width: 22%;height: 90px;background: url(${paymentList.file_6}) no-repeat center / cover;"></div>
-                                                <div class="my-lis-txt">
-                                                    <p>${paymentList.product_made_company_name}</p>
-                                                    <p class="lis-font-w">${paymentList.product_name}</p>
-                                                    <p>${paymentList.product_model}</p>
-                                                </div>
-                                            </a>
-                                        </c:if>
-                                        <c:if test="${not empty paymentList.product_cd}">
-                                            <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
-                                                <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
-                                                <div class="my-lis-txt">
-                                                    <p>${paymentList.product_made_company_name}</p>
-                                                    <p class="lis-font-w">${paymentList.product_name}</p>
-                                                    <p>${paymentList.product_model}</p>
-                                                </div>
-                                            </a>
-                                        </c:if>
-                                    </td>
-                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
-                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
-                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
-                                    <td class="pointer">
-
-                                        <p class="lis-font-w ">${paymentList.payment_status_name}</p>
-
-                                        <div class="lis-txt-box lis-txt-box1-2">
-                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
-                                        </div>
-                                        <c:if test="${paymentList.payment_status == 'O'}">
-                                        <div class="lis-txt-box lis-txt-box1-4">
-                                        	<c:if test="${paymentList.review_id == null}">
-                                            <a href="#" class="review-write" data-id="${paymentList.order_no}"><span>상품평작성</span></a>
-                                            </c:if>
-                                            <c:if test="${paymentList.review_id != null}">
-                                            <a href="/MyPage/Reviews"><span>상품평보기</span></a>
-                                            </c:if>
-                                        </div>
-                                        </c:if>
-<%--                                        <c:if test="${paymentList.payment_status eq 'R'}">--%>
-<%--                                            <div class="lis-txt-box">--%>
-<%--                                                <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.order_no}">배송조회</a>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="lis-txt-box">--%>
-<%--                                                <a href="/MyPage/OrderChange?order_no=${paymentDetail.order_no}" class="click-span">교환신청 하기</a>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="lis-txt-box">--%>
-<%--                                                <a href="/MyPage/OrderRollback?order_no=${paymentDetail.order_no}" class="click-span">반품신청 하기</a>--%>
-<%--                                            </div>--%>
-<%--                                        </c:if>--%>
-                                        <c:if test="${paymentList.payment_status eq 'P'}">
-                                        <div class="lis-txt-box lis-txt-box1-4">
-                                            <span>상품평작성</span>
-                                        </div>
-                                        </c:if>
-                                    </td>
-                                </tr>
+                        	<c:forEach var="map" items="${paymentList}">
+                           		<c:forEach var="paymentList" items="${map.value}" varStatus="status">
+                               		<c:if test="${status.index == 0}">
+                               			<tr>
+		                                    <td class="my-lis-1" rowspan="${fn:length(map.value)}">
+		                                        <p><fmt:formatDate value="${paymentList.reg_date}" pattern="yyyy.MM.dd"/></p>
+		                                        <p><a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}">${paymentList.order_no}</a></p>
+		                                    </td>
+		                                    <td class="my-lis-2">
+		                                        <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
+		                                            <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
+		                                            <div class="my-lis-txt">
+		                                                <%-- <p>${paymentList.product_made_company_name}</p> --%>
+		                                                <p class="lis-font-w">${paymentList.product_name} <c:if test="${not empty paymentList.option_name}"> / ${paymentList.option_name}</c:if></p>
+		                                                <%-- <p>${paymentList.product_model}</p> --%>
+		                                            </div>
+		                                        </a>
+		                                    </td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
+		                                    <td class="lis-font-w" rowspan="${fn:length(map.value)}"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="pointer">
+		
+		                                        <p class="lis-font-w ">${paymentList.payment_status_name}</p>
+		
+		                                        <div class="lis-txt-box lis-txt-box1-2">
+		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                        </div>
+		                                    </td>
+		                                </tr>
+		                            </c:if>
+		                            <c:if test="${status.index != 0}">
+			                            <tr>
+		                                    <td class="my-lis-2">
+		                                        <a href="/product/productDetail?product_cd=${paymentList.product_cd}">
+		                                            <div style="width: 22%;height: 90px;background: url(${paymentList.file_1}) no-repeat center / cover;"></div>
+		                                            <div class="my-lis-txt">
+		                                                <%-- <p>${paymentList.product_made_company_name}</p> --%>
+		                                                <p class="lis-font-w">${paymentList.product_name} <c:if test="${not empty paymentList.option_name}"> / ${paymentList.option_name}</c:if></p>
+		                                                <%-- <p>${paymentList.product_model}</p> --%>
+		                                            </div>
+		                                        </a>
+		                                    </td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
+		                                    <td class="pointer">
+		
+		                                        <p class="lis-font-w ">${paymentList.payment_status_name}</p>
+		
+		                                        <div class="lis-txt-box lis-txt-box1-2">
+		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                        </div>
+		                                    </td>
+		                                </tr>
+		                            </c:if>
+                            	</c:forEach> 
                             </c:forEach>
                         </c:if>
                         <c:if test="${empty paymentList}">
                             <tr>
-                                <td colspan="6">표시할 내용이 없습니다.</td>
-                                <td></td>
-                                <td></td>
+                                <td colspan="8">표시할 내용이 없습니다.</td>
                             </tr>
                         </c:if>
                         </tbody>

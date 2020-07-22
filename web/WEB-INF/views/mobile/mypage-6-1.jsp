@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
     <section class="subheader">
-        <div class="subTitle">주문/배송 조회</div>
+        <div class="subTitle">주문상세</div>
     </section>
     
     <section class="wrap">
@@ -24,78 +24,41 @@
         </ul>
         <hr class="grey">
         <ul class="product pb-0">
-           <h5>${paymentDetail.payment_status_name}</h5>
-           <c:if test="${fn:length(paymentBundleList) <= 1}">
+           <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
+           <h5>${list.payment_status_name}</h5>
             <ul class="pb-0">
-                <c:if test="${not empty paymentDetail.file_6}">
-                    <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_6}" alt=""></a></li>
-                </c:if>
-                <c:if test="${not empty paymentDetail.file_1}">
-                    <li><a href="/product/productDetail?product_cd=${paymentDetail.product_cd}"><img src="${paymentDetail.file_1}" alt=""></a></li>
-                </c:if>
+                <li><a href="/product/productDetail?product_cd=${list.product_cd}"><img src="${list.file_1}" alt=""></a></li>
                 <li>
-                <a href="/product/productDetail?product_cd=${paymentDetail.product_cd}">
-                    <if test="${not empty paymentDetail.giveaway_name}">
-                        <h5>${paymentDetail.giveaway_name}</h5>
-                    </if>
-                    <if test="${not empty paymentDetail.product_name}">
-                        <h5>${paymentDetail.product_name}</h5>
-                    </if>
-                </a>
-                    <!-- <p class="option"><span>구성품</span> <br>
-                    · 30mm 1.4 여친렌즈 <br>
-                    · 추가배터리</p> -->
+	               <a href="/product/productDetail?product_cd=${list.product_cd}">
+	                   <h5>${list.product_name}</h5>
+	               </a>
                 </li>
             </ul>
             <ul class="options">
                 <li>상품금액</li>
-                <li><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /> <span>원</span></li>
+                <li><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span>원</span></li>
             </ul>
             <ul class="options mb-1">
                 <li>수량</li>
-                <li>${paymentDetail.payment_order_quantity} <span>개</span></li>
+                <li><fmt:formatNumber value="${list.payment_order_quantity}" groupingUsed="true" /> <span>개</span></li>
             </ul>
-            </c:if>
-            <c:if test="${fn:length(paymentBundleList) > 1}">
-            	<c:forEach var="list" items="${paymentBundleList}" varStatus="status">
-	            	<ul class="pb-0">
-		                <c:if test="${not empty list.file_1}">
-		                    <li><a href="/product/productDetail?product_cd=${list.product_cd}"><img src="${list.file_1}" alt=""></a></li>
-		                </c:if>
-		                <li>
-		                <a href="/product/productDetail?product_cd=${list.product_cd}">
-		                        <h5>${list.product_name}</h5>
-		                </a>
-		                    <!-- <p class="option"><span>구성품</span> <br>
-		                    · 30mm 1.4 여친렌즈 <br>
-		                    · 추가배터리</p> -->
-		                </li>
-		            </ul>
-		            <ul class="options">
-		                <li>상품금액</li>
-		                <li><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span>원</span></li>
-		            </ul>
-		            <ul class="options mb-1">
-		                <li>수량</li>
-		                <li>${list.payment_order_quantity} <span>개</span></li>
-		            </ul>
-            	</c:forEach>
-            </c:if>
             <div class="my-1">
                 <!-- <button class="btn">배송지 변경</button> -->
-                <c:if test="${paymentDetail.payment_status eq 'W' || paymentDetail.payment_status eq 'D' || paymentDetail.payment_status eq 'I'}">
-                <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderCancel?order_no=${paymentDetail.order_no}'">주문취소</button>
+                <c:if test="${list.payment_status eq 'W' || list.payment_status eq 'D'}">
+                <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderCancel?order_no=${list.order_no}'">전액취소</button>
                 </c:if>
-                <c:if test="${paymentDetail.payment_status eq 'R' || paymentDetail.payment_status eq 'S'}">
-                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderCancel?order_no=${paymentDetail.order_no}'">배송조회</button>
-                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${paymentDetail.order_no}'">교환신청 하기</button>
-                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
+                <c:if test="${list.payment_status eq 'R' || list.payment_status eq 'S'}">
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderCancel?order_no=${list.no}'">배송조회</button>
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${list.no}'">교환신청 하기</button>
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${list.no}'">반품신청 하기</button>
 				</c:if>
-                <c:if test="${paymentDetail.payment_status eq 'O'}">
-                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${paymentDetail.order_no}'">교환신청 하기</button>
-                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${paymentDetail.order_no}'">반품신청 하기</button>
+                <c:if test="${list.payment_status eq 'O'}">
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${list.no}'">교환신청 하기</button>
+                <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${list.no}'">반품신청 하기</button>
                 </c:if>
             </div>
+            <hr>
+            </c:forEach>
         </ul>
         
         <h2 class="pb-1 mt-4">배송지 정보</h2>
@@ -122,7 +85,7 @@
         <p class="grey pb-05">주문금액</p>
         <h3><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">상품금액</p>
-        <h3><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" />원</h3>
+        <h3><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" />원 <c:if test="${fn:length(paymentBundleList) > 1}"> 외 ${fn:length(paymentBundleList) - 1}건</c:if></h3>
         <p class="grey pt-2 pb-05">결제금액</p>
         <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />원</h3>
         <p class="grey pt-2 pb-05">결제수단</p>

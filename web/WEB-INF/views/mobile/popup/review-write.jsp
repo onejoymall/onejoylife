@@ -42,8 +42,8 @@
 	            </button>
 	        </header>
 	        <form id="defaultForm">
-		    <input type="hidden" name="order_no" value="${productDetail.order_no}"/>
-    <input type="hidden" name="product_cd" value="${productDetail.product_cd}"/>
+		    <input type="hidden" name="order_no" value="${productDetail.no}"/>
+    		<input type="hidden" name="product_cd" value="${productDetail.product_cd}"/>
 	        <content>
 	        	<p class="text-md mt-2 mb-05">상품평가</p>
 	            <div class="star-wrap">

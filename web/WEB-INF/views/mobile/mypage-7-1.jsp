@@ -18,8 +18,8 @@
         <ul class="flexbetween mb-1">
             <li>주문일</li>
             <li><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></li>
-            <input type="hidden" name="order_no" value="${paymentDetail.order_no}">
-                        <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
+            <input type="hidden" name="order_no" value="${paymentDetail.no}">
+            <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">
         </ul>
         <hr class="grey">
         <ul class="product pb-0">
@@ -32,7 +32,15 @@
             </ul>
             <ul class="options">
                 <li>상품금액</li>
-                <li><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" /> <span>원</span></li>
+                <li><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /> <span>원</span></li>
+            </ul>
+            <ul class="options">
+                <li>수량</li>
+                <li><fmt:formatNumber value="${paymentDetail.payment_order_quantity}" groupingUsed="true" /></li>
+            </ul>
+            <ul class="options">
+                <li>쿠폰할인</li>
+                <li><fmt:formatNumber value="${paymentDetail.coupon_discount}" groupingUsed="true" /> <span>원</span></li>
             </ul>
         </ul>
         
@@ -82,10 +90,4 @@
            <li><a href="#" id="formSubmit">교환신청</a></li>
         </ul>
     </div>
-    
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
-    <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
-    <script src='<c:url value="/assets/js/index.js"/>'></script>
-    <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
-    <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
+<c:import url="/layout/footer"/>

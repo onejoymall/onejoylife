@@ -20,7 +20,7 @@
                         <div class="src-filter-wrap">
                             <%-- <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
                             <label for="check2">상품명</label> --%>
-                            <input type="checkbox" name="searchType" value="A.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.order_no')}">checked</c:if>>
+                            <input type="checkbox" name="searchType" value="B.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'B.order_no')}">checked</c:if>>
                             <label for="check3">상점주문번호</label>
                             <input type="checkbox" name="searchType" value="imp_uid" id="check10" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'imp_uid')}">checked</c:if>>
                             <label for="check10">주문번호</label>
@@ -215,15 +215,15 @@
                             <td>${list.order_no}</td>
                             <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
                             <td>${list.email}</td>
-                           <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
-                           <td>${list.delivery_t_invoice}</td>
-                           <td>${list.product_made_company_name}</td>
-                            <td>${list.product_name}</td>
-                            <td>1</td>
+                            <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
+                            <td>${list.delivery_t_invoice}</td>
+                            <td>${list.store_name}</td>
+                            <td>${list.product_name} <c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></td>
+                            <td>${list.payment_order_quantity}</td>
                             <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
                             <td>${list.payment_status_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="selectDeliveryRefund('${list.order_no}')">상세보기</button>
+                                <button type="button" class="goods-list-btn" name="detail" onclick="selectDeliveryRefund('${list.no}')">상세보기</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -277,47 +277,47 @@
 
                             <tr>
                                 <th>주문번호</th>
-                                <td class="order_no">6549858</td>
+                                <td class="order_no">-</td>
                             </tr>
                             <tr>
                                 <th>주문일</th>
-                                <td class="reg_date">2020-03-13</td>
+                                <td class="reg_date">-</td>
                             </tr>
                             <tr>
                                 <th>주문자</th>
-                                <td class="email">unknown01</td>
+                                <td class="email">-</td>
                             </tr>
                             <tr>
                                 <th>배송일</th>
-                                <td class="delivery_start_date">2020-03-14</td>
+                                <td class="delivery_start_date">-</td>
                             </tr>
                             <tr>
                                 <th>공급사</th>
-                                <td class="product_made_company_name">-</td>
+                                <td class="stroe_name">-</td>
                             </tr>
                             <tr>
-                                <th>상품명/옵션</th>
-                                <td class="product_name">제주 신선 한라봉/1KG</td>
+                                <th>상품명/옵션 [수량]</th>
+                                <td class="product_name">-</td>
                             </tr>
                             <tr>
                                 <th>수량</th>
-                                <td class="payment_order_quantity">1</td>
+                                <td class="payment_order_quantity">-</td>
                             </tr>
                             <tr>
                                 <th>결제수단</th>
-                                <td class="pay_method">카드</td>
+                                <td class="pay_method">-</td>
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="payment">30,150원</td>
+                                <td class="payment">-</td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td class="payment_status_name">배송완료</td>
+                                <td class="payment_status_name">-</td>
                             </tr>
                             <tr>
                                 <th>요청 사유</th>
-                                <td class="reason">배송완료</td>
+                                <td class="reason">-</td>
                             </tr>
                             <tr>
                                 <th>상품 회수처 이름</th>

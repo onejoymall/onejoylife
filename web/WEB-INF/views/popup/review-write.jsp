@@ -7,7 +7,7 @@
     </header>
     <div class="main-section">
     <form id="defaultForm">
-    <input type="hidden" name="order_no" value="${productDetail.order_no}"/>
+    <input type="hidden" name="order_no" value="${productDetail.no}"/>
     <input type="hidden" name="product_cd" value="${productDetail.product_cd}"/>
         <p class="goods-name">${productDetail.product_name}</p>
         <div>

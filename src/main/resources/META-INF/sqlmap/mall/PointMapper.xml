@@ -90,9 +90,10 @@
         </foreach>
     </delete>
     <select id="getPointOrderNo" resultType="hashmap" parameterType="hashmap">
-    select *
-    from point_history
-    where order_no = #{order_no}
-    order by reg_date limit 1
+	    select *
+	    from point_history
+	    where order_no = #{order_no}
+	    and point_paid_product_cd = #{product_cd}
+	    order by reg_date limit 1
     </select>
 </mapper>

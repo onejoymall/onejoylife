@@ -422,55 +422,68 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
+        	Map<String, Object> detail = paymentDAO.getMgPaymentBundleDetail(params);
         	//반품완료 결제취소
-        	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
-        		client = new IamportClient(apiKey, apiSecret);
-        		String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
-        		CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); // merchant_uid를 통한
-        		
-        		cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
-        		if(deliveryInfoVO.getRefund_account() != null && !deliveryInfoVO.getRefund_account().equals("")) {
-        			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
-        		}
-        		if(deliveryInfoVO.getRefund_bank() != null && !deliveryInfoVO.getRefund_bank().equals("")) {
-        			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
-        		}
-        		if(deliveryInfoVO.getRefund_holder() != null && !deliveryInfoVO.getRefund_holder().equals("")) {
-        			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
-        		}
-        		
-        		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
-                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
-                if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
-                
-        		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
-        		if (payment_response.getResponse() == null) {
-    				error.put("Error", payment_response.getMessage());
-    			}
-        	}
+//        	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
+//        		client = new IamportClient(apiKey, apiSecret);
+//        		String merchant_uid = (String)detail.get("order_no");
+//        		int product_payment = Integer.parseInt(String.valueOf(detail.get("product_payment")));
+//				int payment_order_quantity = Integer.parseInt(String.valueOf(detail.get("payment_order_quantity")));
+//				int coupon_discount = Integer.parseInt(String.valueOf(detail.get("coupon_discount")));
+//				int return_amount = product_payment * payment_order_quantity - coupon_discount;
+//
+//				BigDecimal return_amount_bd = new BigDecimal(return_amount);
+//        		CancelData cancel_data = new CancelData(merchant_uid, false, return_amount_bd); // merchant_uid를 통한
+//        		
+//        		cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
+//        		if(deliveryInfoVO.getRefund_account() != null && !deliveryInfoVO.getRefund_account().equals("")) {
+//        			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
+//        		}
+//        		if(deliveryInfoVO.getRefund_bank() != null && !deliveryInfoVO.getRefund_bank().equals("")) {
+//        			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
+//        		}
+//        		if(deliveryInfoVO.getRefund_holder() != null && !deliveryInfoVO.getRefund_holder().equals("")) {
+//        			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
+//        		}
+//        		
+//        		Map<String,Object> paymentDetail = paymentDAO.getMgPaymentBundleDetail(params);
+//                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+//                if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+//                
+//        		IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
+//        		if (payment_response.getResponse() == null) {
+//    				error.put("Error", payment_response.getMessage());
+//    			}
+//        	}
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
             	//반품시 포인트 환수
             	if(deliveryInfoVO.getPayment_status() != null && deliveryInfoVO.getPayment_status().equals("G")) {
+            		params.put("order_no",detail.get("order_no"));
+            		params.put("product_cd",detail.get("product_cd"));
             		Map<String,Object> pointMap = pointDAO.getPointOrderNo(params);
-            		params.put("point_paid_user_id",pointMap.get("point_paid_user_id"));
             		
-            		Map<String, Object> pointParam = new HashMap<>();
-            		String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
-            		BigDecimal userPoint = new BigDecimal(getPointAmountString);
-            		BigDecimal pointMultiply = new BigDecimal(String.valueOf(pointMap.get("point_add"))); // 구매포인트
-            		pointParam.put("point_amount", userPoint.subtract(pointMultiply));
-            		pointParam.put("point_paid_memo", pointMap.get("point_paid_memo")+"(반품 환수)");
-            		pointParam.put("point_use", pointMultiply);
-            		pointParam.put("point_paid_user_id", pointMap.get("point_paid_user_id"));
-            		pointParam.put("point_paid_type", pointMap.get("point_paid_type"));
-            		pointParam.put("order_no", pointMap.get("order_no"));
-            		pointDAO.insertPoint(pointParam);
+            		if(pointMap != null) {
+	            		params.put("point_paid_user_id",pointMap.get("point_paid_user_id"));
+	            		Map<String, Object> pointParam = new HashMap<>();
+	            		String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
+	            		BigDecimal userPoint = new BigDecimal(getPointAmountString);
+	            		BigDecimal pointMultiply = new BigDecimal(String.valueOf(pointMap.get("point_add"))); // 구매포인트
+	            		pointParam.put("point_amount", userPoint.subtract(pointMultiply));
+	            		pointParam.put("point_paid_memo", pointMap.get("point_paid_memo")+"(반품 환수)");
+	            		pointParam.put("point_use", pointMultiply);
+	            		pointParam.put("point_paid_user_id", pointMap.get("point_paid_user_id"));
+	            		pointParam.put("point_paid_type", pointMap.get("point_paid_type"));
+	            		pointParam.put("order_no", pointMap.get("order_no"));
+	            		pointParam.put("point_paid_product_cd", pointMap.get("point_paid_product_cd"));
+	            		pointDAO.insertPoint(pointParam);
+            		}
             	}
-                deliveryInfoVO.setMerchant_uid(deliveryInfoVO.getOrder_no());
-                deliveryDAO.updateDelivery(deliveryInfoVO);
-                paymentDAO.updatePayment(deliveryInfoVO);
+                deliveryInfoVO.setOrder_no((String)detail.get("order_no"));
+                deliveryDAO.updateDeliveryManager(deliveryInfoVO);
+            	deliveryInfoVO.setOrder_no(String.valueOf(detail.get("no")));
+                paymentDAO.updatePaymentBundleManger(deliveryInfoVO);
                 resultMap.put("success",messageSource.getMessage("success.done","ko"));
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
@@ -517,8 +530,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
-            Map<String,Object> list = paymentDAO.getPaymentDetail(params);
-            List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            Map<String,Object> list = paymentDAO.getMgPaymentBundleDetail(params);
             client = new IamportClient(apiKey, apiSecret);
             Payment impPayment = client.paymentByImpUid((String)list.get("imp_uid")).getResponse();
             resultMap.put("impPayment", impPayment);
@@ -526,12 +538,12 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 resultMap.put("list",list);
-                resultMap.put("paymentBundleList",paymentBundleList);
+//                resultMap.put("paymentBundleList",paymentBundleList);
 //                resultMap.put("deliveryInfoVO",deliveryInfoVO);
 //                resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
-
+        	e.printStackTrace();
             resultMap.put("e", e);
         }
         return resultMap;
@@ -578,18 +590,15 @@ public class ManagerRestapiController {
                     }
                 }
             }
-            if(deliveryInfoVO.getDelivery_status()!=null && (deliveryInfoVO.getDelivery_status().equals("G") || deliveryInfoVO.getDelivery_status().equals("C"))){
+            if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("C")){
                 //환불을위한 토큰발급
-                IamportClient client;
-                String test_api_key = "7152058542143411";
-                String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
-                client = new IamportClient(test_api_key, test_api_secret);
-                String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
-                CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+                client = new IamportClient(apiKey,apiSecret);
+                String merchant_uid = deliveryInfoVO.getOrder_no();
+                CancelData cancel_data = new CancelData(merchant_uid, false); //merchant_uid를 통한 전액취소
 
                 Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
                 Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
-                if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+                if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
                 
                 IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
                 if(payment_response.getResponse()==null){
@@ -599,45 +608,50 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+            	Map<String, Object> detail = paymentDAO.getMgPaymentBundleDetail(params);
             	//배송완료시 포인트지급
             	if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
-            		Map<String, Object> payment = paymentDAO.getPaymentDetail(params);
-            		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
-            		params.put("point_paid_user_id",payment.get("payment_user_id"));
+            		params.put("point_paid_user_id",detail.get("payment_user_id"));
             		
             		//결제확인
             		client = new IamportClient(apiKey, apiSecret);
-    	            Payment impPayment = client.paymentByImpUid((String)payment.get("imp_uid")).getResponse();
+    	            Payment impPayment = client.paymentByImpUid((String)detail.get("imp_uid")).getResponse();
     	            if(impPayment.getStatus().equals("paid")) {
 	            		long sumAddPoint = 0;
-	            		for(Map<String, Object> paymentBundle:paymentBundleList) {
-	            			if(paymentBundle.get("product_point_class").equals("P")) { //적립율기준
-	            				int product_payment = Integer.parseInt(String.valueOf(paymentBundle.get("product_payment")));
-	            				int payment_order_quantity = Integer.parseInt(String.valueOf(paymentBundle.get("payment_order_quantity")));
-	            				double product_point_rate = Double.parseDouble(String.valueOf(paymentBundle.get("product_point_rate")));
-	            				
-	            				long addPoint = Math.round((product_payment * payment_order_quantity * product_point_rate / 100));
-	            				sumAddPoint += addPoint;
-	            			}else {
-	            				//미개발
-	            			}
-	            		}
+            			if(detail.get("product_point_class").equals("P")) { //적립율기준
+            				int product_payment = Integer.parseInt(String.valueOf(detail.get("product_payment")));
+            				int payment_order_quantity = Integer.parseInt(String.valueOf(detail.get("payment_order_quantity")));
+            				int coupon_discount = Integer.parseInt(String.valueOf(detail.get("coupon_discount")));
+            				double product_point_rate = Double.parseDouble(String.valueOf(detail.get("product_point_rate")));
+            				
+            				long addPoint = Math.round(((product_payment * payment_order_quantity - coupon_discount) * product_point_rate / 100));
+            				sumAddPoint += addPoint;
+            			}else {
+            				//포인트 고정형 미개발
+            			}
 	            		
 	            		Map<String, Object> pointParam = new HashMap<>();
 	            		String getPointAmountString = Integer.toString(pointDAO.getPointAmount(params));
 	            		BigDecimal userPoint = new BigDecimal(getPointAmountString);
 	            		BigDecimal pointMultiply = new BigDecimal(sumAddPoint); // 구매포인트
 	            		pointParam.put("point_amount", userPoint.add(pointMultiply));
-	            		pointParam.put("point_paid_memo", payment.get("product_order_name"));
+	            		pointParam.put("point_paid_memo", detail.get("product_name"));
 	            		pointParam.put("point_add", pointMultiply);
-	            		pointParam.put("point_paid_user_id", payment.get("payment_user_id"));
-	            		pointParam.put("point_paid_type", ((String)payment.get("order_no")).substring(0, 2).equals("PO") ? "O" : "P");
-	            		pointParam.put("order_no", payment.get("order_no"));
+	            		pointParam.put("point_paid_user_id", detail.get("payment_user_id"));
+	            		pointParam.put("point_paid_type", ((String)detail.get("order_no")).substring(0, 2).equals("PO") ? "O" : "P");
+	            		pointParam.put("order_no", detail.get("order_no"));
+	            		pointParam.put("point_paid_product_cd", detail.get("product_cd"));
 	            		pointDAO.insertPoint(pointParam);
     	            }
             	}
+            	deliveryInfoVO.setOrder_no((String)detail.get("order_no"));
                 deliveryDAO.updateDeliveryManager(deliveryInfoVO);
-                paymentDAO.updatePaymentManger(deliveryInfoVO);
+            	if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("C")){
+	                paymentDAO.updatePaymentBundleCancel(deliveryInfoVO);
+            	}else {
+	            	deliveryInfoVO.setOrder_no(String.valueOf(detail.get("no")));
+	                paymentDAO.updatePaymentBundleManger(deliveryInfoVO);
+            	}
                 resultMap.put("success",messageSource.getMessage("success.done","ko"));
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }

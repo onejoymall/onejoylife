@@ -23,7 +23,7 @@
                         <button type="submit" class="keyword-src-button">검색</button>
                         <div class="src-filter-wrap">
                             <input type="checkbox" name="searchType" value="product_name" id="check2" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'product_name')}">checked</c:if>>
-                            <label for="check2">상품명</label>
+                            <label for="check2">상품/옵션명</label>
                             <input type="checkbox" name="searchType" value="A.order_no" id="check3" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.order_no')}">checked</c:if>>
                             <label for="check3">상점주문번호</label>
                             <input type="checkbox" name="searchType" value="imp_uid" id="check10" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'imp_uid')}">checked</c:if>>
@@ -32,7 +32,7 @@
                             <label for="check4">주문자명</label>
                             <input type="checkbox" name="searchType" value="delivery_user_name" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_name')}">checked</c:if>>
                             <label for="check5">수취인명</label>
-                            <input type="checkbox" name="searchType" value="delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_t_invoice')}">checked</c:if>>
+                            <input type="checkbox" name="searchType" value="A.delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_t_invoice')}">checked</c:if>>
                             <label for="check6">운송장번호</label>
                             <input type="checkbox" name="searchType" value="delivery_user_phone" id="check7" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_phone')}">checked</c:if>>
                             <label for="check7">핸드폰번호</label>
@@ -84,12 +84,12 @@
                                 <td>
                                     <div class="input-box2">
                                         <div class="cla">
-                                            <input type="text" class="date_pick" id="delivery_start_date" name="delivery_start_date" value="${param.delivery_start_date}">
+                                            <input type="text" class="date_pick" id="deli_start_date" name="deli_start_date" value="${param.deli_start_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                         <p class="cla-p1"> ~ </p>
                                         <div class="cla">
-                                            <input type="text" class="date_pick" id="delivery_end_date" name="delivery_end_date" value="${param.delivery_end_date}">
+                                            <input type="text" class="date_pick" id="deli_end_date" name="deli_end_date" value="${param.deli_end_date}">
                                             <div class="cla-img1"></div>
                                         </div>
                                     </div>
@@ -219,29 +219,47 @@
                         </thead>
                         <tbody>
                         <c:if test="${not empty list}">
-                            <c:forEach var="list" items="${list}" varStatus="status">
-                           <tr>
-                                <td><input type="checkbox" name="chk" value="${list.order_no}"></td>
-                                <td>${list.order_no}</td>
-                                <td>${list.imp_uid}</td>
-                                <td><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
-                                <td>
-                                    <c:if test="${not empty list.email}">회원</c:if>
-                                    <c:if test="${empty list.email}">비회원</c:if>
-                                </td>
-                                <td>${list.email}</td>
-                                <td>${list.order_user_name}</td>
-                                <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
-                                <td>${list.delivery_t_invoice}</td>
-                                <td>${list.product_made_company_name}</td>
-                                <td>${list.product_name}</td>
-                                <td>${list.payment_order_quantity}</td>
-                                <td><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
-                                <td>${list.payment_status_name}</td>
-                                <td>
-                                    <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.order_no}')">상세보기</button>
-                                </td>
-                            </tr>
+                        	<c:forEach var="map" items="${list}">
+                           		<c:forEach var="list" items="${map.value}" varStatus="status">
+                               		<c:if test="${status.index == 0}">
+			                            <tr>
+			                                <td><input type="checkbox" name="chk" value="${list.no}"></td>
+			                                <td rowspan="${fn:length(map.value)}">${list.order_no}</td>
+			                                <td rowspan="${fn:length(map.value)}">${list.imp_uid}</td>
+			                                <td rowspan="${fn:length(map.value)}"><fmt:formatDate value="${list.reg_date}" pattern="yyyy.MM.dd"/></td>
+			                                <td rowspan="${fn:length(map.value)}">
+			                                    <c:if test="${not empty list.email}">회원</c:if>
+			                                    <c:if test="${empty list.email}">비회원</c:if>
+			                                </td>
+			                                <td class="text-left" rowspan="${fn:length(map.value)}">${list.email}</td>
+			                                <td rowspan="${fn:length(map.value)}">${list.order_user_name}</td>
+			                                <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
+			                                <td>${list.delivery_t_invoice}</td>
+			                                <td class="text-left">${list.product_made_company_name}</td>
+			                                <td class="text-left">${list.product_name} <c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></td>
+			                                <td class="text-right">${list.payment_order_quantity}</td>
+			                                <td class="text-right" rowspan="${fn:length(map.value)}"><fmt:formatNumber value="${list.payment}" groupingUsed="true" /></td>
+			                                <td>${list.payment_status_name}</td>
+			                                <td>
+			                                    <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.no}')">상세보기</button>
+			                                </td>
+			                            </tr>
+		                            </c:if>
+		                            <c:if test="${status.index != 0}">
+			                            <tr>
+			                                <td><input type="checkbox" name="chk" value="${list.no}"></td>
+			                                <td><fmt:formatDate value="${list.delivery_start_date}" pattern="yyyy.MM.dd"/></td>
+			                                <td>${list.delivery_t_invoice}</td>
+			                                <td class="text-left">${list.product_made_company_name}</td>
+			                                <td class="text-left">${list.product_name} <c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></td>
+			                                <td class="text-right">${list.payment_order_quantity}</td>
+			                                <td>${list.payment_status_name}</td>
+			                                <td>
+			                                    <button type="button" class="goods-list-btn" name="detail" onclick="selectPayment('${list.no}')">상세보기</button>
+			                                </td>
+			                            </tr>
+		                            </c:if>
+                            	</c:forEach> 
                             </c:forEach>
                         </c:if>
                         </tbody>
@@ -360,7 +378,7 @@
                             </tr>
                             <tr>
                                 <th>상품명/옵션 [수량]</th>
-                                <td class="product_order_name giveaway_name"></td>
+                                <td class="product_order_name giveaway_name product_name"></td>
                             </tr>
                             <!-- <tr>
                                 <th>수량</th>
