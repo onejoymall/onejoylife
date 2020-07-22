@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
-<main>
+<main >
     <div class="main-content">
         <div class="main-title clearfix">
             <h3>오늘 매출 현황</h3>
@@ -12,6 +12,9 @@
         </div>
         <div class="main-content-sales clearfix">
             <a href="/Manager/order?start_date=<fmt:formatDate value="${today}" pattern="YYYY-MM-dd"/>" class="content-sales item">
+      <input type="hidden" id="store_id" value="${info.store_id}" data-id="${info.store_id}">
+      <input type="hidden" id="reg_date" value="<fmt:formatDate value="${info.reg_date}" pattern="YYYY-MM-dd"/>" data-id="${info.reg_date}">
+      
                 <span class="item-icon"></span>
                 <span class="content-item-text">
                         <strong class="item-tit">
@@ -184,4 +187,61 @@
     </div>
 </main>
 
+
+
+<script type="text/javascript">
+
+/* 
+$(document).ready(function() {
+	var store_id= $("#store_id").val();
+	var reg_date= $("#reg_date").val();
+	
+	
+	/* var d = new Date(reg_date);
+	console.log(d.toLocaleDateString());
+	d.setMonth(d.getMonth() + 3);
+	console.log(d.toLocaleDateString());
+	 */
+	function getCookie(name) {
+		var cookie = document.cookie; 
+		if (document.cookie != "") {
+			var cookie_array = cookie.split("; ");
+			for ( var index in cookie_array) {
+				var cookie_name = cookie_array[index].split("="); 
+				if (cookie_name[0] == "popupYN") {
+					return cookie_name[1]; 
+					} 
+				} 
+			} return ; 
+			} 
+	function openPopup(url) {
+		var cookieCheck = getCookie("popupYN"); 
+		if (cookieCheck != "N") window.open(url, '', 'width=450,height=750,left=0,top=0')
+		}
+
+	 */
+	
+/* 	  
+	jQuery.ajax({
+        type: 'POST',
+        url: '/Manager/managerChk3mth',
+        data:  {'store_id': store_id},
+        success: function (data) {
+        	var d = new Date("January 14, 2012");
+        	console.log(d.toLocaleDateString());
+        	d.setMonth(d.getMonth() - 3);
+        	console.log(d.toLocaleDateString());
+
+        	
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        	
+            
+        },
+    }); */
+	
+	
+	});
+</script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

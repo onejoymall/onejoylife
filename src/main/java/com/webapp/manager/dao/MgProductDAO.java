@@ -39,6 +39,14 @@ public class MgProductDAO {
     public void insertProductFileCopy(Map<String,Object> params) throws Exception{
         sql.insert("mall.ProductMapper.insertProductFileCopy",params);
     }
+    public void updateProductFile(List<FileVO> filelist,FileVO fileVO) throws Exception{
+    	for (FileVO f : filelist) {
+            f.setParentPK(fileVO.getParentPK());
+            f.setFilelink(fileVO.getFilepath()+f.getRealname());
+            f.setFileorder(fileVO.getFileorder());
+            sql.update("mall.ProductMapper.updateProductFile", f);
+        };
+    }
     public void updateProduct(ProductVO productVO) throws SQLException{
         sql.update("mall.ProductMapper.updateProduct",productVO);
     }

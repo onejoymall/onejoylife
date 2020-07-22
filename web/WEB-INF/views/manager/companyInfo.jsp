@@ -128,12 +128,14 @@
                     </tr>  
               
                     
+        		   </tbody>
+         	  </table>
                 <button type="button" id="formCompanyInfoSubmit" class="btn-red">저장하기</button>
+           
             </form>
-        </div>
-    </div>
-</main>
 
+</main>
+<%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
 <script type="text/javascript" src="/assets/js/goods-add.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
 <script src="<c:url value='/assets/js/lang/summernote-ko-KR.js'/>"></script>
@@ -210,4 +212,3 @@ $(function(){
         });
     })
 </script>
-<%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

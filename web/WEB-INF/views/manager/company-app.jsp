@@ -131,7 +131,7 @@
         <div class="modal-content">
             <form name="defaultForm" id="defaultForm" method="multipart/form-data">
                 <div class="modal-header">
-                   <h2>입점업체 수정</h2>
+                   <h2>입점업체 등록</h2>
                     <button type="button" class="modal-close">×</button>
                 </div>
                 <div class="modal-body clearfix">

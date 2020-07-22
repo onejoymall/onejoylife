@@ -20,6 +20,7 @@
         ]]>
     </select>
     <select id="getUserList" resultType="java.util.HashMap">
+        /*getUserList*/
         <![CDATA[
         SELECT
           A.*
@@ -31,12 +32,14 @@
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
     <select id="getUserStoreList" resultType="java.util.HashMap">
+      /*getUserStoreList*/
         SELECT
             email as email,
             password as password,
             level as level,
             enable_mg_menu_id as enable_mg_menu_id,
-            email_auth_status as status
+            email_auth_status as status,
+            reg_date
         FROM user A where A.email = #{email}
         UNION ALL
         SELECT
@@ -44,7 +47,8 @@
             store_password as password,
             level as level,
             enable_mg_menu_id as enable_mg_menu_id,
-            store_approval_status as status
+            store_approval_status as status,
+            reg_date
         FROM store B where B.store_id = #{email};
     </select>
     <select id="getUserForId" resultType="java.util.HashMap">
@@ -224,7 +228,7 @@
 	        birth = #{birth},
 	        username = #{username}
         where email = #{email}
-    </update>
+       </update>
 
 <!--    <update id="privacy_policy" parameterType="com.webapp.mall.vo.UserVO">
         <![CDATA[
@@ -235,6 +239,21 @@
         ]]>
     </update>-->
 
+ 	<update id="updateManagerPassword" parameterType="com.webapp.mall.vo.UserVO">
+       /*updateManagerPassword*/ 
+        update user set
+	        <if test="newpassword != null and newpassword != ''" >password=#{newpassword}</if>
+        where email = #{email}
+    </update>
+    
+    <update id="updateStoreManagerPassword" parameterType="com.webapp.mall.vo.UserVO">
+       /*updateStoreManagerPassword*/ 
+        update store set
+	        <if test="newpassword != null and newpassword != ''" >store_password=#{newpassword}</if>
+        where store_id = #{email}
+    </update>
+    
+    
     <insert id="insertSnsUser" parameterType="java.util.Map">
 
         insert into user(
