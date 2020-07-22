@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +18,8 @@ import com.webapp.board.app.BoardGroupVO;
 import com.webapp.board.app.BoardSvc;
 import com.webapp.board.app.BoardVO;
 import com.webapp.mall.dao.PaymentDAO;
+import com.webapp.manager.dao.StoreInfoDAO;
+import com.webapp.manager.vo.StoreVO;
 
 @Controller
 public class ManagerMainController {
@@ -25,9 +29,17 @@ public class ManagerMainController {
     private BoardGroupSvc boardGroupSvc;
     @Autowired
     private PaymentDAO paymentDAO;
+    @Autowired
+    private StoreInfoDAO storeInfoDAO;
     @RequestMapping(value = "/Manager/ManagerMain")
-    public String ManagerMain(@RequestParam HashMap params, ModelMap model, BoardVO searchVO) throws Exception {
+    public String ManagerMain(@RequestParam HashMap params, ModelMap model, BoardVO searchVO,StoreVO storeVO,HttpSession session) throws Exception {
         try{
+        	//입점 업체 정보 
+	    	storeVO.setStore_id((String)session.getAttribute("email"));
+			Map<String,Object> info = storeInfoDAO.getStoreInfo(storeVO);
+			model.addAttribute("info", info);
+
+        	
             //공지사항
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("9");
             searchVO.setBgno("9");
@@ -60,6 +72,11 @@ public class ManagerMainController {
             
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("bgInfo", bgInfo);
+            
+            
+            
+            
+            
         }catch (Exception e){
         	e.printStackTrace();
         }

@@ -9,8 +9,29 @@ public class FileVO {
     private String filelink;
     private String filepath;
     private Integer fileorder;
+    private Integer file_order;
+    private String store_id;
+    
+    
 
-    public Integer getFileorder() {
+    
+    public String getStore_id() {
+		return store_id;
+	}
+
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
+	}
+
+	public Integer getFile_order() {
+		return file_order;
+	}
+
+	public void setFile_order(Integer file_order) {
+		this.file_order = file_order;
+	}
+
+	public Integer getFileorder() {
         return fileorder;
     }
 
