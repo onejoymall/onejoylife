@@ -36,6 +36,11 @@
 
     </update>
     
+    <select id="selectfileInfo" parameterType="hashmap" resultType="int">
+    /*selectfileInfo*/
+    SELECT count(*) FROM product_file WHERE key_id =#{store_id}
+    </select>
+    
     <update id="updateStoreFile" parameterType="java.util.Map">
       /*updateStoreFile*/
        	update product_file set 
@@ -49,8 +54,13 @@
     </update>
     
      <insert id="insertProductFile1" parameterType="com.webapp.board.common.FileVO" >
+        /*insertProductFile1*/
         INSERT INTO product_file (key_id, file_name, real_name, file_size,file_link,file_order)
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
+        ON DUPLICATE KEY UPDATE key_id=#{parentPK}
+        ,file_size=#{filesize}
+        ,file_link=#{filelink}
+        ,file_order=#{fileorder}
     </insert>
     
 </mapper>

@@ -101,16 +101,24 @@ $(document).on("click","#changepw",function(){
    $('span.cc').eq(2).html('');
    
    var pw = $('input[name=newpassword]').val();
+   var renpw = $('input[name=renewpassword]').val();
    var regExp = /^[a-zA-Z0-9]{6,20}$/;
-       if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-     $('span.cc').eq(1).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
-     return;
+      if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+   		$('span.cc').eq(1).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+    	return;
      // $("#passwordValidation").removeClass("text-success");
   }
      
+    
+     if(!regExp.test(renpw) || !isStrNumber(renpw) || !isStrAlphabet(renpw)){
+  		$('span.cc').eq(2).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+  		return;
+  		// $("#passwordValidation").removeClass("text-success");
+  	}
+  	   
    jQuery.ajax({
         type: 'POST',
-        url: '/manager/managerPasswordChange',
+        url: '/Manager/managerPasswordChange',
         data: formData,
         success: function (data) {
            if(data.validateError){
