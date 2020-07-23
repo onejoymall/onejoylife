@@ -18,57 +18,57 @@
   </div>
 </div>
 <form name="managerChangePassword" id="managerChangePassword" method="POST">
-	<div class="modal_change_pw"><!--20.07.17 모달추가-->
-	     <div class="modal-content">
-	         <div class="modal-header">
-	            <h2>비밀번호 변경하기</h2>
-	             <button type="button" class="modal-close">×</button>
-	         </div>
-	         <div class="modal-body clearfix">
-	             <h3>기본정보</h3>
-	             <table class="goods-detail-table">
-	                 <colgroup>
-	                     <col width="15%">
-	                     <col width="85%">
-	                 </colgroup>
-	                 <tbody class="modal2-pw">
-	                     <tr>
-	                         <th>아이디</th>
-	                         <td>
-	                             <span>${sessionScope.email}</span>
-	                         </td>
-	                     </tr>
-	                     <tr>
-	                         <th>비밀번호 변경</th>
-	                         <td class="pw-p-td"  id="change_pw">
-		                             <p>
-		                             	 <span>기존비밀번호</span>
-		                            	 <input type="password" name="password" id="password" value="">
-		                             <span class="cc on" ></span>
-		                             </p>
-		                             <p>
-		                             	 <span>신규 비밀번호</span>
-		                           	 	 <input type="password" name="newpassword" id="newpassword">
-		                            	 <span class="cc on" ></span>
-		                             </p>
-		                             <p>
-			                             <span>비밀번호 다시 입력</span>
-			                             <input type="password" name="renewpassword" id="renewpassword">
-			                             <span class="cc on"></span>
-			                         </p>
-	                             <p class="s-font">-  6~20자의 영문,숫자를 조합하여 입력하여 주세요</p>
-	                          <!--    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p> -->
-	                         </td>
-	                     </tr>
-	          
-	                     
-	                 </tbody>
-	             </table>
-	             <button type="button" id="changepw" class="btn-red">변경하기</button>
-	         </div>
-	     </div>
-	 </div>
-	 </form>
+   <div class="modal_change_pw"><!--20.07.17 모달추가-->
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2>비밀번호 변경하기</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <h3>기본정보</h3>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="85%">
+                    </colgroup>
+                    <tbody class="modal2-pw">
+                        <tr>
+                            <th>아이디</th>
+                            <td>
+                                <span>${sessionScope.email}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호 변경</th>
+                            <td class="pw-p-td"  id="change_pw">
+                                   <p>
+                                       <span>기존비밀번호</span>
+                                      <input type="password" name="password" id="password" value="">
+                                   <span class="cc on" ></span>
+                                   </p>
+                                   <p>
+                                       <span>신규 비밀번호</span>
+                                         <input type="password" name="newpassword" id="newpassword">
+                                      <span class="cc on" ></span>
+                                   </p>
+                                   <p>
+                                      <span>비밀번호 다시 입력</span>
+                                      <input type="password" name="renewpassword" id="renewpassword">
+                                      <span class="cc on"></span>
+                                  </p>
+                                <p class="s-font">-  6~20자의 영문,숫자를 조합하여 입력하여 주세요</p>
+                             <!--    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p> -->
+                            </td>
+                        </tr>
+             
+                        
+                    </tbody>
+                </table>
+                <button type="button" id="changepw" class="btn-red">변경하기</button>
+            </div>
+        </div>
+    </div>
+    </form>
 </body>
 <!-- Toastr -->
 <%--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>--%>
@@ -93,62 +93,59 @@ $(".pass-btn a").click(function(e){
 
 
 $(document).on("click","#changepw",function(){ 
-	
-	var formData = $('#managerChangePassword').serialize();
-	
-	$('span.cc').eq(0).html('');
-	$('span.cc').eq(1).html('');
-	$('span.cc').eq(2).html('');
-	
-	var pw = $('input[name=newpassword]').val();
-	var regExp = /^[a-zA-Z0-9]{6,20}$/;
-		 if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-	  $('span.cc').eq(1).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
-	  return;
+   
+   var formData = $('#managerChangePassword').serialize();
+   
+   $('span.cc').eq(0).html('');
+   $('span.cc').eq(1).html('');
+   $('span.cc').eq(2).html('');
+   
+   var pw = $('input[name=newpassword]').val();
+   var regExp = /^[a-zA-Z0-9]{6,20}$/;
+       if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+     $('span.cc').eq(1).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+     return;
      // $("#passwordValidation").removeClass("text-success");
   }
-	
-
-	 
-	  
-	jQuery.ajax({
+     
+   jQuery.ajax({
         type: 'POST',
         url: '/manager/managerPasswordChange',
         data: formData,
         success: function (data) {
-        	if(data.validateError){
-        
-        		if(data.validateError.password){
-            		$('span.cc').eq(0).html(data.validateError.password);
-            	}
-    			if(data.validateError.newpassword){
-    				$('span.cc').eq(1).html(data.validateError.newpassword);	
-    			 }
-    			if(data.validateError.renewpassword){
-    				$('span.cc').eq(2).html(data.validateError.renewpassword);
-    			}	
+           if(data.validateError){
 
-        	}else{
-        	
-        		 $.toast({
+              if(data.validateError.password){
+                  $('span.cc').eq(0).html(data.validateError.password);
+               }
+             if(data.validateError.newpassword){
+                $('span.cc').eq(1).html(data.validateError.newpassword);
+              }
+             if(data.validateError.renewpassword){
+                $('span.cc').eq(2).html(data.validateError.renewpassword);
+             }
+
+           }else{
+
+               $.toast({
                      text: 'success',
                      showHideTransition: 'plain', //펴짐
                      position: 'bottom-right',
                      icon: 'success',
                      hideAfter: 2000,
                      afterHidden: function () {
-                    	  $(".modal_change_pw").attr("style", "display:none");
-                    	    $('body').css("overflow", "auto");
+                         $(".modal_change_pw").attr("style", "display:none");
+                           $('body').css("overflow", "auto");
                      }
                  });
-        		
-        	}
-        	
-        	
+
+           }
+
+
         },
         error: function (xhr, status, error) {
             console.log(error,xhr,status );
-        	
+
             
         },
     });
