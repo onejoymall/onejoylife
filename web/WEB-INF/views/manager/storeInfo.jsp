@@ -24,7 +24,7 @@
 <%--                                        <label for="table-ra1">개인</label>--%>
 <%--                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">--%>
 <%--                                        <label for="table-ra2">법인</label>--%>
-                                        <input type="text" id="store_reg" name="store_reg">
+                                        <input type="text" id="store_reg" name="store_reg" value="${info.store_reg}">
                                         <button type="button" class="btn_file" id="storRegDupCheck" >중복확인</button>
                                     </td>
                                 </tr>
@@ -37,7 +37,7 @@
                                 <tr>
                                     <th>업태/업종</th>
                                     <td>
-                                        <input type="text" id="store_type" name="store_type" value="${info.store_type}"> / <input type="text" id="store_item" name="store_item">
+                                        <input type="text" id="store_type" name="store_type" value="${info.store_type}"> / <input type="text" id="store_item" name="store_item" value="${info.store_item}">
                                     </td>
                                 </tr>
 
@@ -85,7 +85,7 @@
                                 <tr>
                                     <th>사업장 주소</th>
                                     <td class="address-td">
-                                        <p><input type="text" id="postcode" name="postcode"><button type="button" class="ad-but" id="daumMapCall"  value="${info.postcode}">우편번호</button></p>
+                                        <p><input type="text" id="postcode" name="postcode" value="${info.postcode}"><button type="button" class="ad-but" id="daumMapCall"  >우편번호</button></p>
                                         <p><span>(도로명)</span><input type="text" id="roadAddress" name="roadAddress" class="ad-input" value="${info.roadAddress}"></p>
                                         <p><span>(지번)</span><input type="text" id="jibunAddress" name="jibunAddress" class="ad-input" value="${info.jibunAddress}"></p>
                                         <p><span>(공통상세)</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input" value="${info.extraAddress}"></p>
