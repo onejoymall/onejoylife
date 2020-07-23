@@ -967,7 +967,6 @@ public class restapiController {
 				resultMap.put("redirectUrl", "/");
 			} else {
 				params.put("payment_user_id", userInfo.get("usr_id"));
-				// 회원인 경우 보유포인트 확인
 				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
 			}
 
@@ -1002,8 +1001,10 @@ public class restapiController {
 			} else {
 				deliveryInfoVO.setDelivery_status("C");
 				deliveryInfoVO.setPayment_status("C");
+				deliveryInfoVO.setOrder_no(deliveryInfoVO.getMerchant_uid());
 				deliveryDAO.updateDelivery(deliveryInfoVO);
 				paymentDAO.updatePayment(deliveryInfoVO);
+				paymentDAO.updatePaymentBundleCancel(deliveryInfoVO);
 //				paymentDAO.insertPaymentRefund(deliveryInfoVO);
 			}
 

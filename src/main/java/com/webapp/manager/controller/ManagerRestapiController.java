@@ -350,6 +350,7 @@ public class ManagerRestapiController {
                         }
                         session.setAttribute("menuList", Arrays.asList(((String)loginUserList.get("enable_mg_menu_id")).split("\\|")));
                         session.setAttribute("level", loginUserList.get("level"));
+                        session.setAttribute("mgCategoryList", selectorDAO.getMgCategoryList());
                         //로그인 기록 저장
                         userVO.setLog_type("adminlogin");
                         userDAO.insertUserHistory(userVO);

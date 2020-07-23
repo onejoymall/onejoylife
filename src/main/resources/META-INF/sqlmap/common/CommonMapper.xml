@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//END" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common.CommonMapper">
+	<resultMap id="mgCategory1Map" type="hashmap">
+		<id property="menu_id" column="menu_id"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_upper_id" column="menu_upper_id"/>
+		<result property="menu_link" column="menu_link"/>
+		
+		<collection property="category2List" column="menu_id" select="getMgCategory2List"></collection>
+	</resultMap>
+	<resultMap id="mgCategory2Map" type="hashmap">
+		<id property="menu_id" column="menu_id"/>
+		<result property="menu_name" column="menu_name"/>
+		<result property="menu_upper_id" column="menu_upper_id"/>
+		<result property="menu_link" column="menu_link"/>
+		
+		<collection property="category3List" column="menu_id" select="getMgCategory3List"></collection>
+	</resultMap>
 
 	<select id="getSelector" resultType="java.util.HashMap">
 		<![CDATA[
@@ -28,6 +44,20 @@
 		FROM code
 		where code =#{code}
 	</select>
-
+	<select id="getMgCategoryList" resultMap="mgCategory1Map" >
+		select *
+		from user_manager_menu 
+		where menu_upper_id = '0'
+	</select>
+	<select id="getMgCategory2List" resultMap="mgCategory2Map"  parameterType="hashmap">
+		select *
+		from user_manager_menu 
+		where menu_upper_id = #{menu_id}
+	</select>
+	<select id="getMgCategory3List" resultType="hashmap"  parameterType="hashmap">
+		select *
+		from user_manager_menu 
+		where menu_upper_id = #{menu_id}
+	</select>
 
 </mapper>

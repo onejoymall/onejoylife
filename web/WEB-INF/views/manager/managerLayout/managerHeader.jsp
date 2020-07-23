@@ -303,29 +303,29 @@
 		               	 </li>
                 </li>
                 </c:if>
-		               	<c:if test="${afn:contains(menuList, '53')}">
+		               	<c:if test="${afn:contains(menuList, '55')}">
 		                <li <c:if test="${topNav == 10}">class="active" </c:if>><a href="/Manager/companyInfo">쇼핑몰 정보</a>
                     	<ul class="gnb-in-ul">
-                    	<c:if test="${afn:contains(menuList, '53')}">
+                    	<c:if test="${afn:contains(menuList, '55')}">
                         <li><a href="/Manager/companyInfo">정보등록</a></li>
             			</c:if>
                         </ul>
                         </li>
                         </c:if>
-                        <c:if test="${afn:contains(menuList, '54')}">
+                        <c:if test="${afn:contains(menuList, '56')}">
                         <li <c:if test="${topNav == 11}">class="active" </c:if>><a href="/Manager/storeInfo">입점업체 정보</a>
                         <ul class="gnb-in-ul">
-                        <c:if test="${afn:contains(menuList, '54')}">
+                        <c:if test="${afn:contains(menuList, '56')}">
                         <li><a href="/Manager/storeInfo">정보수정</a></li>
                         </c:if>
                         </ul>
                         </li>
                         </c:if>
 
-		               	<c:if test="${afn:contains(menuList, '52')}">
+		               	<c:if test="${afn:contains(menuList, '57')}">
                         <li <c:if test="${topNav == 12}">class="active"</c:if>><a href="/Manager/boardList?bgno=9">입점업체 공지</a>
                     	<ul class="gnb-in-ul">
-		               	<c:if test="${afn:contains(menuList, '52')}">
+		               	<c:if test="${afn:contains(menuList, '57')}">
                             <li><a href="/Manager/boardList?bgno=9">입점업체 공지사항</a></li>
                         </c:if>
                         </ul>
