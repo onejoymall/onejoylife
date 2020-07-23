@@ -132,7 +132,7 @@
             <form name="defaultForm" id="defaultForm" method="multipart/form-data">
                 <div class="modal-header">
                    <h2>입점업체 등록</h2>
-                    <button type="button" class="modal-close">×</button>
+                    <button type="button" class="modal-close" id="modal-close1">×</button>
                 </div>
                 <div class="modal-body clearfix">
                     <h3>기본정보</h3>
@@ -282,6 +282,10 @@
 
 <script>
 
+$("#modal-close1").click(function(){
+    $(".modal").attr("style", "display:none");
+    location.reload();
+});
 
 
 </script>

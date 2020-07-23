@@ -118,9 +118,18 @@ public class ProductVO extends SearchVO {
     String delivery_t_code;
     String product_type;//상품형태
     String parentPK;
+    String fileorder;
     
 
-    public String getParentPK() {
+    public String getFileorder() {
+		return fileorder;
+	}
+
+	public void setFileorder(String fileorder) {
+		this.fileorder = fileorder;
+	}
+
+	public String getParentPK() {
 		return parentPK;
 	}
 

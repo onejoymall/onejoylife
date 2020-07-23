@@ -1517,10 +1517,25 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 fileVO.setParentPK(storeVO.getStore_id());
+                fileVO.setFileorder(1);
                 if(!isEmpty(filelist)){
                     productVO.setProduct_cd(storeVO.getStore_id());
                     mgStoreDAO.deleteProductFile(productVO);
-                    mgProductDAO.insertProductFile(filelist,fileVO);
+                   // mgProductDAO.insertProductFile(filelist,fileVO);
+                    
+                    Integer count =storeInfoDAO.selectfileInfo(storeVO);
+	            	  storeVO.getFileName();
+	            	  
+	                // productVO.setProduct_cd(storeVO.getStore_id());
+	                // mgStoreDAO.deleteProductFile(productVO);
+	            	  
+	            	  if(count==0) {
+	            		  storeInfoDAO.insertProductFile1(filelist,fileVO);
+	            	  }else {
+	            		  storeInfoDAO.updateStoreFile(filelist,fileVO);
+	            	  }
+	            	  resultMap.put("redirectUrl","/Manager/company-app");
+                    
                 }
 
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
@@ -2688,7 +2703,7 @@ public class ManagerRestapiController {
 		return result;
 	}
   //폼의 메서드가 GET인지 POST 인지 꼭 확인 
-    @RequestMapping(value = "/manager/managerPasswordChange", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/managerPasswordChange", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerPassCheck(@RequestParam HashMap params, UserVO userVO, StoreVO storeVO,HttpSession session) throws Exception{
         HashMap<String, Object> error = new HashMap<String, Object>();
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -2739,7 +2754,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-    @RequestMapping(value = "/Manager/storeInfoModi", method = RequestMethod.POST, produces = "application/json")//jmjm
+    @RequestMapping(value = "/Manager/storeInfoModi", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerStoreInfoModi(StoreVO storeVO, FileVO fileVO,BoardVO boardInfo,HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -2757,12 +2772,18 @@ public class ManagerRestapiController {
 	             storeVO.setStore_id((String)session.getAttribute("email"));
 	          	 fileVO.setFileorder(1);
 	              if(!isEmpty(filelist)){
-	     	             
+	            	 Integer count =storeInfoDAO.selectfileInfo(storeVO);
+	            	  storeVO.getFileName();
+	            	  
 	                // productVO.setProduct_cd(storeVO.getStore_id());
 	                // mgStoreDAO.deleteProductFile(productVO);
-	            	  storeInfoDAO.insertProductFile1(filelist,fileVO);
-	            	  storeInfoDAO.updateStoreFile(filelist,fileVO);
-	            	  resultMap.put("redirectUrl","/Manager/storeInfo");
+	            	  if(count==0) {
+	            		  storeInfoDAO.insertProductFile1(filelist,fileVO);
+	            	  }else {
+	            		  storeInfoDAO.updateStoreFile(filelist,fileVO);
+	            	  }
+	            	 resultMap.put("redirectUrl","/Manager/storeInfo");
+	            	  
               }
         	 // storeInfoDAO.getStoreInfo(storeVO);
 	          storeVO.setStore_id((String)session.getAttribute("email"));
@@ -2775,7 +2796,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-    @RequestMapping(value = "/Manager/managerChk3mth", method = RequestMethod.POST, produces = "application/json")//jmjm
+    @RequestMapping(value = "/Manager/managerChk3mth", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerChk3mth(@RequestParam HashMap params,StoreVO storeVO, FileVO fileVO,BoardVO boardInfo,HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
