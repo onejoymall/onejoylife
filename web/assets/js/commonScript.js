@@ -1725,10 +1725,10 @@ $(document).on("click",".ra-num",function () {
         $('#defaultForm1')[0].reset();
         $('#store_reg').attr("readonly",false);
         $('#store_id').attr("readonly",false);
-        $('#storIdDupCheck').attr('disabled', false);
-        $('#storIdDupCheck').html('중복확인');
-        $('#storRegDupCheck').attr('disabled', false);
-        $('#storRegDupCheck').html('중복확인');
+        // $('#storIdDupCheck').attr('disabled', false);
+        // $('#storIdDupCheck').html('중복확인');
+        // $('#storRegDupCheck').attr('disabled', false);
+        // $('#storRegDupCheck').html('중복확인');
         $('#formStoreSubmit').removeClass('hidden');
         $('.updateBtn').addClass('hidden');
         $('body').css("overflow", "hidden");

@@ -31,6 +31,10 @@ public class StoreInfoDAO {
         Map<String,Object> updateStoreInfo=sql.selectOne("manager.StoreInfoMapper.updateStoreInfo",StoreVO);
         return updateStoreInfo;
     }
+    public Integer selectfileInfo(StoreVO StoreVO) throws SQLException {
+    	Integer selectfileInfo=sql.selectOne("manager.StoreInfoMapper.selectfileInfo",StoreVO);
+        return selectfileInfo;
+    }
     
     
     
