@@ -107,7 +107,7 @@
                             <li><a href="/Manager/systemHistory">운영로그</a> </li>
                         </c:if>
                         <c:if test="${afn:contains(menuList, '51')}">
-                            <li><a href="/Manager/excelSettingProduct">엑셀다운로드관리</a> </li>
+                            <li><a href="/Manager/excelSetting/product">엑셀다운로드관리</a> </li>
                         </c:if>
                     </ul>
                 </li>

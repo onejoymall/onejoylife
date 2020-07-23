@@ -2035,13 +2035,17 @@ public class ManagerRestapiController {
     public HashMap<String, Object> insertExcelSetting(@RequestParam HashMap params, ExcelSettingVO excelSettingVO, HttpSession session){
     	HashMap<String, Object> resultMap = new HashMap<String, Object>();
     	HashMap<String, Object> error = new HashMap<String, Object>();
-    	Object adminLogin = session.getAttribute("adminLogin");
+    	
     	try {
+    		Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
     		if(adminLogin.equals("admin")){
     			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
     		}
+    		params.put("column_value",excelSettingVO.getColumn_value());
     		params.put("column_name",excelSettingVO.getColumn_name());
-    		params.put("column_text",excelSettingVO.getColumn_text());
     		mgSystemDAO.insertExcelSetting(params);
     		resultMap.put("success", "success");
     	} catch (Exception e) {
