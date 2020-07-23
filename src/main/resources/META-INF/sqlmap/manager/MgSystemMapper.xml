@@ -224,28 +224,28 @@
 	  select *
 	  from store_excel_setting
 	  where store_id = #{store_id}
-	  and type_name=#{type_name}
+	  and type_value=#{type_value}
   </select>
   <insert id="insertExcelSetting" parameterType="hashmap">
   	insert into store_excel_setting(
   		store_id,
+  		type_value,
   		type_name,
-  		type_text,
-  		column_name,
-  		column_text
+  		column_value,
+  		column_name
   	)values(
   		#{store_id},
+  		#{type_value},
   		#{type_name},
-  		#{type_text},
-  		#{column_name},
-  		#{column_text}
+  		#{column_value},
+  		#{column_name}
   	)
   	on duplicate key update
   	
 	store_id = #{store_id},
+	type_value = #{type_value},
 	type_name = #{type_name},
-	type_text = #{type_text},
-	column_name = #{column_name},
-	column_text = #{column_text}
+	column_value = #{column_value},
+	column_name = #{column_name}
   </insert>
 </mapper>

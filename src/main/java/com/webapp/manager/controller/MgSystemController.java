@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -69,52 +70,34 @@ public class MgSystemController {
         return "manager/system/delivery-area";
     }
     
-    //엑셀다운설정-상품
-    @RequestMapping(value = "/Manager/excelSettingProduct")
-    public String excelSettingProduct(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
-        Object adminLogin = session.getAttribute("adminLogin");
-        try {
-            if(adminLogin.equals("admin")){
-            	params.put("store_id","admin");
-                mgDeliveryVO.setStore_id("admin");
-            }
-            params.put("type_name","product");
-            Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
-            model.addAttribute("detail", getExcelSettingDetail);
-            
-            params.put("code","excel_setting_product");
-            List<Map<String, Object>> excel_column_list = selectorDAO.getSelectorList(params);
-            model.addAttribute("excel_column_list", excel_column_list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("topNav", 1);
-        model.addAttribute("style", "excel-setting");
-        model.addAttribute("postUrl", "/Manager/excel-setting-proc");
-        return "/manager/excel-setting-product";
-    }
-    //엑셀다운설정-경품
-    @RequestMapping(value = "/Manager/excelSettingGiveaway")
-    public String excelSettingGiveaway(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
-    	Object adminLogin = session.getAttribute("adminLogin");
+    //엑셀다운설정
+    @RequestMapping(value = "/Manager/excelSetting/{type}")
+    public String excelSettingGiveaway(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session,@PathVariable String type) throws Exception {
     	try {
+    		Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
     		if(adminLogin.equals("admin")){
     			params.put("store_id","admin");
-    			mgDeliveryVO.setStore_id("admin");
+    		}else {
+    			params.put("store_id",email);
     		}
-    		params.put("type_name","giveaway");
+    		params.put("type_value",type);
     		Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
     		model.addAttribute("detail", getExcelSettingDetail);
     		
-    		params.put("code","excel_setting_giveaway");
+    		params.put("code","excel_setting_"+type);
     		List<Map<String, Object>> excel_column_list = selectorDAO.getSelectorList(params);
     		model.addAttribute("excel_column_list", excel_column_list);
+    		
+    		params.put("code","excel_setting_type_name_"+type);
+    		List<Map<String, Object>> excel_setting_type = selectorDAO.getSelectorList(params);
+    		model.addAttribute("excel_setting_type", excel_setting_type.get(0));
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
     	model.addAttribute("topNav", 1);
     	model.addAttribute("style", "excel-setting");
     	model.addAttribute("postUrl", "/Manager/excel-setting-proc");
-    	return "/manager/excel-setting-giveaway";
+    	return "/manager/excel-setting";
     }
 }
