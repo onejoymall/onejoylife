@@ -49,7 +49,7 @@ public class PaymentDAO {
     	sql.update("mall.PaymentMapper.updatePaymentBundleManger",deliveryInfoVO);
     }
     public void updatePaymentBundleCancel(DeliveryInfoVO deliveryInfoVO) throws SQLException {
-    	sql.update("mall.PaymentMapper.updatePaymentBundleManger",deliveryInfoVO);
+    	sql.update("mall.PaymentMapper.updatePaymentBundleCancel",deliveryInfoVO);
     }
     public List<Map<String, Object>> getPaymentList(Map<String, String> params) throws SQLException {
         List<Map<String, Object>> getPaymentList = sql.selectList("mall.PaymentMapper.getPaymentList",params);
