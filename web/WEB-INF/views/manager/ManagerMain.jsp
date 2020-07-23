@@ -201,7 +201,7 @@ $(document).ready(function() {
 	console.log(d.toLocaleDateString());
 	d.setMonth(d.getMonth() + 3);
 	console.log(d.toLocaleDateString());
-	 */
+	
 	function getCookie(name) {
 		var cookie = document.cookie; 
 		if (document.cookie != "") {
@@ -239,9 +239,9 @@ $(document).ready(function() {
         	
             
         },
-    }); */
+    }); 
 	
 	
-	});
+	}); */
 </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
