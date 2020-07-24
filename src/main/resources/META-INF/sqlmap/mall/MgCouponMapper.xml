@@ -7,7 +7,9 @@
     	SELECT A.*,
 			(SELECT COUNT(*) FROM coupon_paid_history Z WHERE Z.coupon_cd = A.coupon_cd ) coupon_paid_cnt,
 			(SELECT Z.code_name FROM code Z WHERE Z.code = 'coupon_condition' and Z.code_value = A.coupon_condition ) coupon_condition_name,
-			(SELECT GROUP_CONCAT(Z.pd_category_name) FROM product_category Z WHERE find_in_set(Z.pd_category_id,replace(A.coupon_ct,'|',','))) category_name
+			(SELECT GROUP_CONCAT(Z.pd_category_name) FROM product_category Z WHERE find_in_set(Z.pd_category_id,replace(A.coupon_ct,'|',','))) category_name,
+			(SELECT ifnull(sum(Z.coupon_discount),0) FROM payment_bundle Z WHERE Z.coupon_cd = A.coupon_cd) as coupon_discount,
+			if(NOW() between A.coupon_valid_date_start AND A.coupon_valid_date_end,'발급중','기한만료') as coupon_status_name
 		FROM coupon A
 		WHERE 1=1
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">

@@ -88,8 +88,7 @@
 	                    <col width="2%">
 	                    <col width="33%">
 	                    <col width="10%">
-	                    <col width="10%">
-	                    <col width="10%">
+	                    <col width="15%">
 	                    <col width="10%">
 	                    <col width="10%">
 	                    <col width="10%">
@@ -105,7 +104,6 @@
 	                    <td>쿠폰 할인</td>
 	                    <td>발급수</td>
 	                    <td>쿠폰사용 매출액</td>
-	                    <td>쿠폰 수익률 조회</td>
 	                    <td>상태</td>
 	                    <td>발급조건</td>
 	                    <td>다운로드 url</td>
@@ -130,9 +128,8 @@
 		                    	<c:if test="${list.coupon_sale_type eq 'percentage'}"><fmt:formatNumber value="${list.coupon_sale_rate}" groupingUsed="true" />%</c:if>
 		                    </td>
 		                    <td>${list.coupon_paid_cnt}</td>
-		                    <td>0원</td>
-		                    <td>0%</td>
-		                    <td class="txt-active">발급중</td>
+		                    <td><fmt:formatNumber value="${list.coupon_discount}" groupingUsed="true" />원</td>
+		                    <td class="txt-active">${list.coupon_status_name}</td>
 		                    <td>${list.coupon_condition_name}</td>
 		                    <td>
 		                    	<c:if test="${list.coupon_condition == 'L' || list.coupon_condition == 'M'}">

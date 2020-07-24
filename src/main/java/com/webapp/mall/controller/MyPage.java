@@ -270,7 +270,7 @@ public class MyPage {
             	searchVO.setStaticRowEnd(1000);	
         	}
             //사용자 아이디 확인 후 전달
-            params.put("email",session.getAttribute("email")); 
+            params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             params.put("coupon_paid_user_id",userInfo.get("usr_id"));
             List<Map<String,Object>> userCouponList = couponDAO.getUserCouponList(params);

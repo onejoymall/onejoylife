@@ -17,10 +17,13 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -47,8 +50,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.webapp.board.common.SearchVO;
+import com.webapp.common.dao.SelectorDAO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.manager.dao.MgDownloadDAO;
+import com.webapp.manager.dao.MgSystemDAO;
 import com.webapp.manager.vo.MgCommonVO;
 import com.webapp.manager.vo.ProductVO;
 
@@ -58,13 +63,17 @@ public class MgExcelRestController {
     private DataSourceTransactionManager txManager;
     @Autowired
     MgDownloadDAO mgDownloadDAO;
+    @Autowired
+    SelectorDAO selectorDAO;
+    @Autowired
+    MgSystemDAO mgSystemDAO;
     @Value("${t_key}")
     private String t_key;
     @Value("${t_url}")
     private String t_url;
     
     @RequestMapping(value = "/{type}/downloadExcelFile")
-    public void productDownloadExcelFile(@RequestParam HashMap params, @PathVariable String type, MgCommonVO mgCommonVO, Model model, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO) throws Exception {
+    public void productDownloadExcelFile(@RequestParam HashMap params, @PathVariable String type, MgCommonVO mgCommonVO, Model model, ProductVO productVO,HttpServletRequest request, HttpServletResponse response,SearchVO searchVO,HttpSession session) throws Exception {
     	try {
     		Map<String, Object> companylist = null;
         	List<Map<String, Object>> companys = null;
@@ -138,7 +147,22 @@ public class MgExcelRestController {
 //	    			list = mgDownloadDAO.getProductDtoList(mgCommonVO);
 	    			break;
     		}
-    		excelDown(request,response,type,list);
+    		
+    		Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
+    		}
+    		params.put("type_value",type);
+    		Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+    		if(getExcelSettingDetail == null) {
+    			params.put("store_id","admin");
+    		}
+    		getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+    		
+    		excelDownPoi(request,response,type,list,getExcelSettingDetail);
     	}catch (Exception e) {
     		e.printStackTrace();
 		}
@@ -150,7 +174,7 @@ public class MgExcelRestController {
     	excelDown(request,response,type,null);
     }
     
-    //주문 엑셀업로드
+    //엑셀업로드
     @Transactional(propagation=Propagation.REQUIRES_NEW,rollbackFor = {RuntimeException.class, Exception.class})
     @ResponseBody
     @RequestMapping(value = "/uploadExcelFile/{type}")
@@ -232,8 +256,8 @@ public class MgExcelRestController {
     }
     
     //엑셀다운 poi방식
-    private void excelDownPoi(HttpServletRequest request, HttpServletResponse response, String keyword, List<Map<String, Object>> list) throws Exception{
-    	SXSSFWorkbook workbook = makeWorkBook(list);
+    private void excelDownPoi(HttpServletRequest request, HttpServletResponse response, String keyword, List<Map<String, Object>> list,Map<String,Object> setting) throws Exception{
+    	SXSSFWorkbook workbook = makeWorkBook(list,keyword,setting);
         
 		//파일 네임 설정
 		Date date = new Date();
@@ -357,54 +381,51 @@ public class MgExcelRestController {
     }
     
     //워크북생성
-    private SXSSFWorkbook makeWorkBook(List<Map<String,Object>> list) {
+    private SXSSFWorkbook makeWorkBook(List<Map<String,Object>> list,String keyword,Map<String,Object> setting) {    	
     	SXSSFWorkbook workbook = new SXSSFWorkbook();
-    	
     	// 시트 생성
-        SXSSFSheet sheet = workbook.createSheet("과일표");
+        SXSSFSheet sheet = workbook.createSheet(keyword);
         
         //시트 열 너비 설정
-        sheet.setColumnWidth(0, 1500);
-        sheet.setColumnWidth(1, 3000);
-        sheet.setColumnWidth(2, 3000);
-        sheet.setColumnWidth(3, 1500);
+//        sheet.setColumnWidth(0, 1500);
+//        sheet.setColumnWidth(1, 3000);
+//        sheet.setColumnWidth(2, 3000);
+//        sheet.setColumnWidth(3, 1500);
         
-        // 헤더 행
-        Row headerRow = sheet.createRow(0);
-        headerRow.setZeroHeight(true);
-        // 해당 행의 첫번째 열 셀 생성
-        Cell headerCell = headerRow.createCell(0);
-        headerCell.setCellValue("번호");
-        // 해당 행의 두번째 열 셀 생성
-        headerCell = headerRow.createCell(1);
-        headerCell.setCellValue("과일이름");
-        // 해당 행의 세번째 열 셀 생성
-        headerCell = headerRow.createCell(2);
-        headerCell.setCellValue("가격");
-        // 해당 행의 네번째 열 셀 생성
-        headerCell = headerRow.createCell(3);
-        headerCell.setCellValue("수량");
+        // 숨김행
+        Row hideRow = sheet.createRow(0);
+        hideRow.setZeroHeight(true);	//첫행숨김
+        String[] column_val_arr = ((String)setting.get("column_value")).split("`",-1);
+        String[] column_name_arr = ((String)setting.get("column_name")).split("`",-1);
         
-        // 과일표 내용 행 및 셀 생성
-        Row bodyRow = null;
-        Cell bodyCell = null;
-        for(int i=0; i<list.size(); i++) {
-            
-            // 행 생성
-            bodyRow = sheet.createRow(i+1);
-            // 데이터 번호 표시
-            bodyCell = bodyRow.createCell(0);
-            bodyCell.setCellValue(i + 1);
-            // 데이터 이름 표시
-            bodyCell = bodyRow.createCell(1);
-            bodyCell.setCellValue(i + 1);
-            // 데이터 가격 표시
-            bodyCell = bodyRow.createCell(2);
-            bodyCell.setCellValue(i + 1);
-            // 데이터 수량 표시
-            bodyCell = bodyRow.createCell(3);
-            bodyCell.setCellValue(i + 1);
+        for(int i=0; i<column_val_arr.length; i++) {
+        	Cell hideCell = hideRow.createCell(i);
+        	hideCell.setCellValue(column_val_arr[i]);
         }
+        
+        //헤더행
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        Font fontBold = workbook.createFont();
+        fontBold.setBold(true);
+        headerCellStyle.setFont(fontBold);
+        Row headerRow = sheet.createRow(1);
+        
+        for(int i=0; i<column_val_arr.length; i++) {
+        	Cell headerCell = headerRow.createCell(i);
+        	headerCell.setCellStyle(headerCellStyle);
+        	headerCell.setCellValue(column_name_arr[i]);
+        }
+        
+        //데이터 리스트
+        for(int i=0; i<list.size(); i++) {
+        	//행 생성
+        	Row bodyRow = sheet.createRow(i+2);
+        	for(int j=0; j<column_val_arr.length; j++) {
+        		Cell bodyCell = bodyRow.createCell(j);
+        		bodyCell.setCellValue(String.valueOf(list.get(i).get(column_val_arr[j])));
+        	}
+        }
+        
         return workbook;
     }
 }
