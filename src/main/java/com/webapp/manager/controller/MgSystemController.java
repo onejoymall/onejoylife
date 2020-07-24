@@ -86,6 +86,8 @@ public class MgSystemController {
     		model.addAttribute("detail", getExcelSettingDetail);
     		
     		params.put("code","excel_setting_"+type);
+    		params.put("orderKey","code_id");
+    		params.put("orderValue","asc");
     		List<Map<String, Object>> excel_column_list = selectorDAO.getSelectorList(params);
     		model.addAttribute("excel_column_list", excel_column_list);
     		

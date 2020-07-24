@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 
 import com.webapp.common.support.CurlPost;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -2059,8 +2060,8 @@ public class ManagerRestapiController {
     		}else {
     			params.put("store_id",email);
     		}
-    		params.put("column_value",excelSettingVO.getColumn_value());
-    		params.put("column_name",excelSettingVO.getColumn_name());
+    		params.put("column_value",StringUtils.join(excelSettingVO.getColumn_value(),"`"));
+    		params.put("column_name",StringUtils.join(excelSettingVO.getColumn_name(),"`"));
     		mgSystemDAO.insertExcelSetting(params);
     		resultMap.put("success", "success");
     	} catch (Exception e) {

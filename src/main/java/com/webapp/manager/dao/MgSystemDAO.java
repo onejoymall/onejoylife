@@ -77,14 +77,14 @@ public class MgSystemDAO {
     public void insertDeliveryArea(Map<String,Object> params) throws SqlSessionException{
     	sql.insert("mall.MgSystemMapper.insertDeliveryArea",params);
     }
-	public List<Map<String, Object>> getSupplierList(HashMap params) {
+	public List<Map<String, Object>> getSupplierList(Map<String,Object> params) {
 		List<Map<String,Object>> getSupplierList=sql.selectList("mall.MgSystemMapper.getSupplierList",params);
     	return getSupplierList;
 	}
 	public void deleteProductCode(MgProductCodeVO mgProductCodeVO) {
 		sql.insert("mall.MgSystemMapper.deleteProductCode",mgProductCodeVO);
 	}
-	public Map<String, Object> getExcelSettingDetail(HashMap params) {
+	public Map<String, Object> getExcelSettingDetail(Map<String, Object> params) {
 		Map<String,Object> getExcelSettingDetail=sql.selectOne("mall.MgSystemMapper.getExcelSettingDetail",params);
     	return getExcelSettingDetail;
 	}

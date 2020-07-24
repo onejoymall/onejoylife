@@ -31,11 +31,12 @@
 		</foreach>
 
 	</select>
-	<select id="getSelectorList" resultType="java.util.HashMap">
+	<select id="getSelectorList" resultType="java.util.HashMap" parameterType="hashmap">
 		SELECT
 		    *
 		FROM code
 		where code =#{code}
+		<if test="orderKey != null and orderKey != ''"><![CDATA[order by ${orderKey} ${orderValue}]]></if>
 	</select>
 
 	<select id="getGiveSelectorList" resultType="java.util.HashMap">

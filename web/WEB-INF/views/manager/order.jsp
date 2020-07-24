@@ -32,7 +32,7 @@
                             <label for="check4">주문자명</label>
                             <input type="checkbox" name="searchType" value="delivery_user_name" id="check5" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_name')}">checked</c:if>>
                             <label for="check5">수취인명</label>
-                            <input type="checkbox" name="searchType" value="A.delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_t_invoice')}">checked</c:if>>
+                            <input type="checkbox" name="searchType" value="A.delivery_t_invoice" id="check6" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'A.delivery_t_invoice')}">checked</c:if>>
                             <label for="check6">운송장번호</label>
                             <input type="checkbox" name="searchType" value="delivery_user_phone" id="check7" <c:if test="${empty params.searchTypeArr[0] || afn:containsA(params.searchTypeArr,'delivery_user_phone')}">checked</c:if>>
                             <label for="check7">핸드폰번호</label>
