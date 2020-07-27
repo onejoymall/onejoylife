@@ -2152,4 +2152,29 @@ public class restapiController {
 			}
 			return resultMap;
 		}
+		
+		//메세지소스
+		@RequestMapping(value = "/getMessage", method = RequestMethod.POST, produces = "application/json")
+		public Map<String, Object> getMessage(@RequestParam HashMap params, HttpServletRequest request,
+				HttpSession session) {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			if(params.get("key") == null || params.get("key").equals("")) {
+				return resultMap;
+			}
+			if(params.get("locale") == null || params.get("locale").equals("")) {
+				return resultMap;
+			}
+			resultMap.put("message",messageSource.getMessage((String)params.get("key"), (String)params.get("locale")));
+			return resultMap;
+		}
+		
+		//국가선택
+		@RequestMapping(value = "/setLocale", method = RequestMethod.POST, produces = "application/json")
+		public Map<String, Object> setLocale(@RequestParam HashMap params, HttpServletRequest request,
+				HttpSession session) {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			session.setAttribute("locale", params.get("locale"));
+			resultMap.put("locale", params.get("locale"));
+			return resultMap;
+		}
 }

@@ -56,10 +56,10 @@
         </header>
         <content>
             <ul class="language-ul">
-                <li><button type="button">한국</button></li>
-                <li><button type="button">미국</button></li>
-                <li><button type="button">중국</button></li>
-                <li><button type="button">영국</button></li>
+                <li><button type="button" onclick="setGlobalLocale('ko')">한국</button></li>
+                <li><button type="button" onclick="setGlobalLocale('en')">미국</button></li>
+                <li><button type="button" onclick="setGlobalLocale('cn')">중국</button></li>
+                <li><button type="button" onclick="setGlobalLocale('jp')">일본</button></li>
             </ul>
         </content>
     </div>

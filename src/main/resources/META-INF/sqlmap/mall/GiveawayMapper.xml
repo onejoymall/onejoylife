@@ -717,5 +717,51 @@
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
     </select>
 
-
+	<insert id="insertGiveawayHistory" parameterType="hashmap">
+    	INSERT INTO giveaway_history(
+			giveaway_prev,
+			giveaway_current,
+			usr_id
+		)VALUES(
+			#{giveaway_prev},
+			#{giveaway_current},
+			#{usr_id}
+		)
+    </insert>
+    
+    <update id="updateGiveawayHistory" parameterType="hashmap">
+	    UPDATE giveaway_history SET 
+			giveaway_next = #{giveaway_next},
+			update_date = SYSDATE()
+		WHERE usr_id = #{usr_id}
+		AND giveaway_current = #{giveaway_current}
+		ORDER BY reg_date DESC
+		LIMIT 1
+    </update>
+    
+    <select id="relatedGiveawayList" parameterType="hashmap" resultType="hashmap">
+    	SELECT *,
+    		(select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1
+		FROM giveaway A
+		WHERE 
+       	<foreach collection="product_cts" item="item" separator="OR" open="(" close=")">
+        		<![CDATA[FIND_IN_SET(#{item},replace(A.giveaway_ct,'|',',')) ]]>
+       	</foreach>
+		ORDER BY reg_date DESC
+		LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    
+    <select id="serialGiveawayList" parameterType="hashmap" resultType="hashmap">
+    	SELECT A.*,
+			   (select Z.file_link from product_file Z where Z.key_id = A.giveaway_cd and Z.file_order = 1) as file_1
+		FROM giveaway A
+		JOIN giveaway_history B
+		ON B.giveaway_current = A.giveaway_id
+		WHERE (B.giveaway_prev = #{giveaway_id}
+		OR B.giveaway_next = #{giveaway_id})
+		AND B.giveaway_current != #{giveaway_id}
+		GROUP BY B.giveaway_current
+		ORDER BY COUNT(B.giveaway_current) DESC
+		LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
 </mapper>

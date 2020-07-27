@@ -1,3 +1,6 @@
+//전역변수 locale default: ko
+var global_locale='ko';
+
 //결과 후 페이지 이동시
 function commonAjaxCall(type,url,formData){
     jQuery.ajax({
@@ -662,6 +665,7 @@ $(document).on("click",".ra-num",function () {
                 url: '/product/mainList',
                 data: {'product_ct':category_id},
                 success: function (data) {
+                	var korea_won = getMessageAjax('korea_won');
 
                     if(data.mdSlideCategorySelect){
 
@@ -678,8 +682,8 @@ $(document).on("click",".ra-num",function () {
                                 /*'             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +*/
                                 '             <p class="info-product-name">'+productList.product_name+'</p>\n' +
                                 '             <p class="info-price"><span class="price-before">\n' +
-                                '                '+parseInt(productList.product_user_payment).toLocaleString('en')+'원</span>\n' +
-                                '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+'원</p>\n' +
+                                '                '+parseInt(productList.product_user_payment).toLocaleString('en')+korea_won+'</span>\n' +
+                                '                 <i class="right-arrow"></i>'+parseInt(productList.product_payment).toLocaleString('en')+korea_won+'</p>\n' +
                                 '             <p class="info-score">\n' +
 	                            '                 <i class="star-ic"></i>\n' ;
 													if(!productList.review_score ){
@@ -4762,3 +4766,36 @@ $("#cashReceiptsBtn").click(function(){
 		}
 	});
 });
+
+//국가선택
+function setGlobalLocale(locale){
+	$.ajax({
+		type: 'post',
+		data: {locale: locale},
+		url: '/setLocale',
+		success: function(data){
+			global_locale = data.locale;
+			location.reload();
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+}
+
+//메세지소스
+function getMessageAjax(key){
+    var message = $.ajax({
+        type: 'post',
+        url: '/getMessage',
+        data: {key: key, locale: global_locale},
+        async: false,
+        success: function (data) {
+        	
+        },
+        error: function (xhr, status, error) {
+            console.log(error,xhr,status );
+        }
+    }).responseText;
+    return JSON.parse(message).message;
+}

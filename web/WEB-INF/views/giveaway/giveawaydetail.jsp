@@ -47,7 +47,7 @@
                 <div class="point-pdt-parti-wrap">
                     <div class="parti-percent-wrap">
                         <span class="progress">0%</span>
-                        <span class="progress-now">참여율 <b class="progress-now-number"> ${detail.parti_rate}%</b><span class="parti-ppl"> <%--&#40;<span class="parti-ppl-number"><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중&#41;--%></span></span>
+                        <span class="progress-now">참여율 ${afn:getMessage("korea_won",sessionScope.locale)} <b class="progress-now-number"> ${detail.parti_rate}%</b><span class="parti-ppl"> <%--&#40;<span class="parti-ppl-number"><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중&#41;--%></span></span>
                         <span class="progress">100%</span>
                     </div>
                     <div class="progress-bar">
@@ -117,7 +117,25 @@
             <img src="${lineBannerList1.file_1}" /></a>
         </div>
     </article>
-
+	<article class="related-goods-section">
+        <div class="inner">
+            <h2>관련 경품</h2>
+            <ul class="related-goods">
+            	<c:if test="${not empty relatedProductList}">
+            	<c:forEach var="list" items="${relatedProductList}">
+	            	<li><a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=${list.giveaway_id}"/>">
+	                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
+	                    <p class="goods-name">${list.giveaway_name}</p>
+	                    <p class="goods-price"><span><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /></span>원</p>
+	                </a></li>
+                </c:forEach>
+            	</c:if>
+            	<c:if test="${empty relatedProductList}">
+            		관련경품이 없습니다.
+            	</c:if>
+            </ul>
+        </div>
+    </article>
     <article class="goods-detail-section">
         <div class="inner">
             <div class="goods-detail-wrap" id="goods-description">
@@ -130,7 +148,23 @@
                     ${detail.giveaway_html}
                 </div>
             </div>
-
+			<div class="also-viewed-goods">
+                <h5>함께 본 경품</h5>
+                <ul class="related-goods">
+                    <c:if test="${not empty serialProductList}">
+	            	<c:forEach var="list" items="${serialProductList}">
+		            	<li><a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=${list.giveaway_id}"/>">
+		                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
+		                    <p class="goods-name">${list.giveaway_name}</p>
+		                    <p class="goods-price"><span><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /></span>원</p>
+		                </a></li>
+	                </c:forEach>
+	            	</c:if>
+	            	<c:if test="${empty serialProductList}">
+	            		함께 본 경품이 없습니다.
+	            	</c:if>
+                </ul>
+            </div>
             <div class="goods-detail-wrap" id="goods-information">
                 <ul class="detail-nav">
                     <li><a href="#goods-description"><span>상품설명</span></a></li>

@@ -291,6 +291,9 @@ public class MainController {
             }else{
                 params.put("cart_user_id",userInfo.get("usr_id"));
             }
+            if(session.getAttribute("locale") == null) {
+    			session.setAttribute("locale", "ko");
+    		}
 
             searchVO.setDisplayRowCount(5);
             searchVO.setStaticRowEnd(5);

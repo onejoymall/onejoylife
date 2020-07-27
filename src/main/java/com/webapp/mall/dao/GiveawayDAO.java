@@ -60,4 +60,18 @@ public class GiveawayDAO {
         Map<String,Object> getGiveawayStatusCount = sql.selectOne("mall.GiveawayMapper.getGiveawayStatusCount",params);
         return getGiveawayStatusCount;
     }
+	public void insertGiveawayHistory(Map<String, Object> params) {
+		sql.insert("mall.GiveawayMapper.insertGiveawayHistory", params);
+	}
+	public void updateGiveawayHistory(Map<String, Object> params) {
+		sql.insert("mall.GiveawayMapper.updateGiveawayHistory", params);
+	}
+	public List<Map<String, Object>> relatedGiveawayList(Map<String, Object> params) {
+		List<Map<String, Object>> relatedGiveawayList = sql.selectList("mall.GiveawayMapper.relatedGiveawayList", params);
+		return relatedGiveawayList;
+	}
+	public List<Map<String, Object>> serialGiveawayList(Map<String, Object> params) {
+		List<Map<String, Object>> serialGiveawayList = sql.selectList("mall.GiveawayMapper.serialGiveawayList", params);
+		return serialGiveawayList;
+	}
 }
