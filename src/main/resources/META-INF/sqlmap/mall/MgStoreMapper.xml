@@ -76,7 +76,9 @@
         tex_email,
         store_bank_account,
         store_bank_holder,
-        store_bank_name
+        store_bank_name,
+        level,
+        enable_mg_menu_id
       )
       values
       (
@@ -100,7 +102,9 @@
         #{tex_email},
         #{store_bank_account},
         #{store_bank_holder},
-        #{store_bank_name}
+        #{store_bank_name},
+        #{level},
+        #{enable_mg_menu_id}
       )
     </insert>
   <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">
@@ -122,7 +126,8 @@
          tex_email=#{ tex_email},
          store_bank_account=#{ store_bank_account},
          store_bank_holder=#{ store_bank_holder},
-         store_bank_name=#{ store_bank_name}
+         store_bank_name=#{ store_bank_name},
+         enable_mg_menu_id = #{enable_mg_menu_id}
          where store_id = #{store_id}
     </update>
   <update id="updateStoreApproval" parameterType="com.webapp.manager.vo.StoreVO">

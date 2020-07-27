@@ -1416,6 +1416,9 @@ public class ManagerRestapiController {
     public  HashMap<String, Object> managerStoreAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, StoreVO storeVO, BoardVO boardInfo, FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+        if(params.get("enable_menu") == null || ((String)params.get("enable_menu")).equals("")) {
+            error.put(messageSource.getMessage("mg_enable_menu","ko"),messageSource.getMessage("error.required","ko"));
+        }
         try{
         	storeVO.setSupplier_cd("S"+numberGender.numberGen(6, 1));
             FileUtil fs = new FileUtil();
@@ -1445,10 +1448,12 @@ public class ManagerRestapiController {
                 resultMap.put("validateError",error);
             }else{
                 storeVO.setStore_approval_status("W");
+                storeVO.setLevel(9);
                 fileVO.setParentPK(storeVO.getStore_id());
- fileVO.setFileorder(1);
+                fileVO.setFileorder(1);
                 mgProductDAO.insertProductFile(filelist,fileVO);
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+                storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
                 mgStoreDAO.insertStore(storeVO);
                 Object obj = session.getAttribute("adminLogin");
                 if ( obj == null ){
@@ -1465,7 +1470,7 @@ public class ManagerRestapiController {
     }
     //입점업체 선택
     @RequestMapping(value = "/Manager/storeViewDetail", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Object> managerStoreViewDetail(@RequestParam HashMap params,StoreVO storeVO){
+    public HashMap<String, Object> managerStoreViewDetail(@RequestParam HashMap params,StoreVO storeVO, HttpSession session){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
@@ -1506,6 +1511,9 @@ public class ManagerRestapiController {
     public  HashMap<String, Object> managerStoreUpdateProc(@RequestParam HashMap params, BoardVO boardInfo,FileVO fileVO,StoreVO storeVO,ProductVO productVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+        if(params.get("enable_menu") == null || ((String)params.get("enable_menu")).equals("")) {
+        	error.put(messageSource.getMessage("mg_enable_menu","ko"),messageSource.getMessage("error.required","ko"));
+        }
         try{
 
             FileUtil fs = new FileUtil();
@@ -1540,6 +1548,7 @@ public class ManagerRestapiController {
                 }
 
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+                storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
                 mgStoreDAO.updateStore(storeVO);
                 resultMap.put("redirectUrl","/Manager/company-app");
             }

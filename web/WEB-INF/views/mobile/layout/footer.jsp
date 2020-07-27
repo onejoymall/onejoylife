@@ -16,7 +16,7 @@ wcs_do();
 <footer class="pb-5 bg_grey2">
     <ul class="ftmenu bg_red">
         <li><a href="<c:url value="/Help/csinfo"/>">고객센터</a></li>
-        <li><a href="javascript:void(0)" class="ready">쇼핑몰 입점/제휴문의</a></li>
+        <li><a href="#" id="m-modal-store">쇼핑몰 입점/제휴문의</a></li>
     </ul>
     <ul class="ftmenu">
         <li><a href="#" id="mo-btn1">개인정보처리방침</a></li>

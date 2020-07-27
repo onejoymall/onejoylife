@@ -42,7 +42,7 @@
 <%--                                <p class="saleBox">35%</p>--%>
   
  							<p class="sale-percent">${productSpList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productSpList.product_name}</p>
@@ -89,7 +89,7 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
  							<p class="sale-percent">${productList.percent_discount}<span>%</span></p>
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -150,7 +150,7 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                 <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -188,7 +188,7 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                  <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -263,7 +263,7 @@
                             <div class="img-box">
                                    <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
             <!--                    <p class="saleBox">35%</p>-->
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>

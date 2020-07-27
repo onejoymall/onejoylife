@@ -1726,20 +1726,25 @@ $(document).on("click",".ra-num",function () {
     function resetStoreForm(){
         $(".modal1").attr("style", "display:block");
         $('#defaultForm')[0].reset();
-        $('#defaultForm1')[0].reset();
+        // $('#defaultForm1')[0].reset();
         $('#store_reg').attr("readonly",false);
         $('#store_id').attr("readonly",false);
-        // $('#storIdDupCheck').attr('disabled', false);
-        // $('#storIdDupCheck').html('중복확인');
-        // $('#storRegDupCheck').attr('disabled', false);
-        // $('#storRegDupCheck').html('중복확인');
+        $('#storIdDupCheck').attr('disabled', false);
+        $('#storIdDupCheck').html('중복확인');
+        $('#storRegDupCheck').attr('disabled', false);
+        $('#storRegDupCheck').html('중복확인');
         $('#formStoreSubmit').removeClass('hidden');
+        $('#menuGrant').removeClass('hidden');
         $('.updateBtn').addClass('hidden');
         $('body').css("overflow", "hidden");
     }
     $("button[name='detail0']").click(function(){
         resetStoreForm();
     });
+    //  $("#modal-store").click(function(){
+    //     resetStoreForm();
+    // });
+
     //교환 신청 선택
     function selectDeliveryRefund(order_no){
         var file_link='';
@@ -2053,9 +2058,14 @@ $(document).on("click",".ra-num",function () {
         })
 	}
 
-   //입점업체등록
+   //입점업체 등록
     $(document).on("click","#formStoreSubmit",function () {
         var formData = new FormData($('#defaultForm')[0]);
+		enableMenuArr = [];
+		$.each($('input[name=enable_menu]'),function(idx, item){
+		    if($(this).prop("checked")) enableMenuArr.push($(this).val());
+		});
+	    formData.set("enable_menu", enableMenuArr.join("|"));
         jQuery.ajax({
             type: 'POST',
             enctype: 'multipart/form-data',
@@ -2174,13 +2184,21 @@ $(document).on("click",".ra-num",function () {
     function defaultModalStore (store_id){
         var file_link='';
         $(".modal1").attr("style", "display:block");
+        $('#formStoreSubmit').addClass('hidden');
+        $('.updateBtn').removeClass('hidden');
         // $('input:radio[name=store_reg_type]').eq(0).click();
         jQuery.ajax({
             type: 'POST',
             url: '/Manager/storeViewDetail',
             data: {"store_id":store_id},
             success: function (data) {
+                $("input[name=enable_menu]").prop("checked",false);
                 $.each(data.list, function (index, item) {
+		            if(index=="enable_mg_menu_id" && data.list.level != 1){
+	                    item.split("|").forEach(function(el){
+	                    $("input[name=enable_menu]:checkbox[value="+el+"]").prop("checked",true);
+	                    });
+	                }
                     $('input[name^="' + index + '"]').val(item);
                     if(index=='file_1'){
                         $('.fileDownload').html('<a href="'+item+'" target="_blank">'+data.list.file_name+'</a>');
@@ -2197,8 +2215,6 @@ $(document).on("click",".ra-num",function () {
                 $('#storIdDupCheck').html('OK');
                 $('#storRegDupCheck').attr('disabled', true);
                 $('#storRegDupCheck').html('OK');
-                $('#formStoreSubmit').addClass('hidden');
-                $('.updateBtn').removeClass('hidden');
             },
             error: function (xhr, status, error) {
                 alert(error);
@@ -2214,6 +2230,12 @@ $(document).on("click",".ra-num",function () {
 		}
 
         var formData = new FormData($('#defaultForm')[0]);
+		enableMenuArr = [];
+		$.each($('input[name=enable_menu]'),function(idx, item){
+		    if($(this).prop("checked")) enableMenuArr.push($(this).val());
+		});
+	    formData.set("enable_menu", enableMenuArr.join("|"));
+
         jQuery.ajax({
             type: 'POST',
             enctype: 'multipart/form-data',

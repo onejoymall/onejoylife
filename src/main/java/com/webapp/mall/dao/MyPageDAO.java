@@ -25,4 +25,9 @@ public class MyPageDAO {
         Map<String,Object> getMyPagePaymentDetail = sql.selectOne("mall.MyPageMapper.getMyPagePaymentDetail",myPageVO);
         return getMyPagePaymentDetail;
     }
+
+    public List<Map<String, Object>> getMyPageSnsShareList(Map<String,Object> params) throws SQLException {
+        List<Map<String, Object>> getMyPageSnsShareList = sql.selectList("mall.MyPageMapper.getMyPageSnsShareList",params);
+        return getMyPageSnsShareList;
+    }
 }

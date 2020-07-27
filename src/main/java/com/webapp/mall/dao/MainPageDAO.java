@@ -22,4 +22,8 @@ public class MainPageDAO {
         List<Map<String, Object>> getMainProductList = sql.selectList("mall.MainPageMapper.getMainProductList",searchVO);
         return getMainProductList;
     }
+
+    public void insertSnsShare(Map<String,Object> params) throws SQLException {
+        sql.insert("mall.MainPageMapper.insertSnsShare",params);
+    }
 }

@@ -19,6 +19,7 @@
                                 <li><a href="<c:url value="/MyPage/Reviews"/>" class="<c:if test="${leftNavOrder == 8}">active</c:if>">나의 상품평 보기</a></li>
                                 <li><a href="<c:url value="/MyPage/Qna"/>" class="<c:if test="${leftNavOrder == 14}">active</c:if>">나의 QnA 보기</a></li>
                                 <li><a href="<c:url value="/MyPage/Favorites"/>" class="<c:if test="${leftNavOrder == 9}">active</c:if>">자주 구매하는 상품</a></li>
+                                <li><a href="<c:url value="/MyPage/mypage-share"/>" class="<c:if test="${leftNavOrder == 15}">active</c:if>">공유한 상품</a></li>
                             </ul>
                         </li>
                         <li class="outer-li">나의 경품관리

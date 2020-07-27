@@ -42,7 +42,7 @@
                         <div class="point-product-item">
                             <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
                                 <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
-<%--                                <i class="share-ic"></i>--%>
+                                <i class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></i>
                                 <p class="point-pdt-title"> ${list.giveaway_name}</p>
                             </a>
                             <p class="point-pdt-price"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> 원</p>

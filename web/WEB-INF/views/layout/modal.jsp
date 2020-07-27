@@ -73,39 +73,41 @@
         <!-- 업체신청 모달 -->
         <div class="main_modal" id="modal-store">
             <div class="modal-content">
-                <form name="defaultForm" id="defaultForm" method="multipart/form-data">
+                <form name="resetStoreForm" id="defaultForm" method="multipart/form-data">
                     <div class="modal-header">
-                        <h2>공급사 등록</h2>
-                        <button type="button" class="modal-close">×</button>
+                        <h2>입점업체 신청</h2>
+                        <button type="button" class="modal-close modal-close1">×</button>
                     </div>
                     <div class="modal-body clearfix">
                         <h3>기본정보</h3>
-                        <table class="right-table">
+                        <table class="goods-detail-table">
                             <colgroup>
                                 <col width="142px">
                                 <col width="800px">
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>공급사 ID</th>
+                                    <th>입점사 ID</th>
                                     <td>
                                         <input type="text" id="store_id" name="store_id">
-                                        <button type="button" class="btn_file" id="storIdDupCheck">중복확인</button>
+                                        <button type="button" class="btn_file" id="modalstorIdDupCheck">중복확인</button>
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>비밀번호 설정</th>
                                     <td>
-                                        <p><input type="password" name="store_password" placeholder="비밀번호"></p>
-                                        <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"></p>
-                                        <p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 좋바으로 10-20자 미만</p>
-                                        <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>
+                                        <p><input type="password" name="store_password" placeholder="비밀번호"><span class="er" id="passwordValidation"></span></p>
+                                        <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"><span class="er" id="password_cfValidation"></span></p>
+                                        <p class="s-font">- 6~20자의 영문,숫자를 조합하여 입력하여 주세요.</p>
+                                        <%--<p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 좋바으로 10-20자 미만</p>
+                                        <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
                                     </td>
                                 </tr>
 
                             </tbody>
                         </table>
-                        <h3>공급사</h3>
+                        <h3>판매자</h3>
                         <table class="goods-detail-table">
                             <colgroup>
                                 <col width="142px">
@@ -126,7 +128,7 @@
                                         <%--                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">--%>
                                         <%--                                        <label for="table-ra2">법인</label>--%>
                                         <input type="text" id="store_reg" name="store_reg">
-                                        <button type="button" class="btn_file" id="storRegDupCheck">중복확인</button>
+                                        <button type="button" class="btn_file" id="modalstorRegDupCheck">중복확인</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -188,14 +190,49 @@
                                         <p><span>(공통상세)</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input"></p>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>계산서 수신메일</th>
+                                    <td>
+                                        <input type="text" id="tex_email" name="tex_email">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>계좌번호</th>
+                                    <td>
+                                        <input type="text" id="store_bank_account" name="store_bank_account">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>예금주</th>
+                                    <td>
+                                        <input type="text" id="store_bank_holder" name="store_bank_holder">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>은행명</th>
+                                    <td>
+                                        <input type="text" id="store_bank_name" name="store_bank_name">
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <button type="button" id="formStoreSubmit" class="btn-red">등록하기</button>
-                        <div class="updateBtn hidden">
-                            <button type="button" id="storeApproval" class="btn-red">승인</button>
-                            <button type="button" id="storeUpdateSubmit" class="btn-red">수정</button>
-                        </div>
+                        <button type="button" id="modalStoreAddProc" class="btn-red">신청하기</button>
                     </div>
                 </form>
             </div>
         </div>
+
+<script>
+$(".modal-close1").click(function(){
+    $(".modal").attr("style", "display:none");
+    $('#defaultForm')[0].reset();
+
+    $('#store_id').attr("readonly",false);
+    $('#modalstorIdDupCheck').attr('disabled', false);
+    $('#modalstorIdDupCheck').html('중복확인');
+
+    $('#store_reg').attr("readonly",false);
+    $('#modalstorRegDupCheck').attr('disabled', false);
+    $('#modalstorRegDupCheck').html('중복확인');
+});
+</script>

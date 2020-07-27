@@ -1226,4 +1226,34 @@ public class MyPage {
     	
     	return isCondition;
     }
+
+    //마이페이지 - sns 공유 내역
+	@RequestMapping(value="/MyPage/mypage-share")
+    public String myPageShare(@RequestParam HashMap params, Model model, SearchVO searchVO, HttpServletRequest request, HttpSession session) {
+    	Device device = DeviceUtils.getCurrentDevice(request);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+    	try {
+    		params.put("email", session.getAttribute("email"));
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            params.put("usr_id", userInfo.get("usr_id"));
+            List<Map<String,Object>> list = myPageDAO.getMyPageSnsShareList(params);
+
+			model.addAttribute("list", list);
+
+    	}catch(Exception e){
+    		  e.printStackTrace();
+    	}
+
+        model.addAttribute("leftNavOrder", 15);
+        model.addAttribute("style", "mypage-6");
+
+        if(device.isMobile()){
+            return "mobile/mypage-share";
+        } else {
+        	return "mypage/mypage-share";
+        }
+    }
+
 }

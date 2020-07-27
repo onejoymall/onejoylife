@@ -29,7 +29,7 @@
                                     <img src='${list.file_1}' onerror="this.src='http://placehold.it/400x300'" >
                                 </a>
             <!--                    <p class="saleBox">35%</p>-->
-                                <a href="#" class="share-ic"></a>
+                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                             </div>
                             <a href="#" class="mainList-big-text">
                                 <p class="list-title"> ${list.giveaway_name}</p>
