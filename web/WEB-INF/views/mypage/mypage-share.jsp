@@ -51,14 +51,14 @@
                             </div>
                             <table class="sec4-lis">
                                 <colgroup>
-                                    <col style="width: 160px;">
-                                    <col style="width: 415px;">
-                                    <col style="width: 175px;">
-                                    <col style="width: 150px;">
+<%--                                    <col style="width: 160px;">--%>
+                                    <col style="width: 600px;">
+                                    <col style="width: 200px;">
+                                    <col style="width: 200px;">
                                 </colgroup>
                                 <thead class="lis-head">
                                     <tr>
-                                        <th>번호</th>
+<%--                                        <th>번호</th>--%>
                                         <th>상품정보</th>
                                         <th>공유날짜</th>
                                         <th>공유SNS</th>
@@ -68,9 +68,9 @@
                                     <c:if test="${not empty list}">
                                     <c:forEach var="list" items="${list}">
                                     <tr>
-                                        <td class="my-lis-1">
+                                        <%--<td class="my-lis-1">
                                             <p>${list.no}</p>
-                                        </td>
+                                        </td>--%>
                                         <td class="my-lis-2">
                                             <c:if test="${not empty list.giveaway_id}">
                                                 <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
