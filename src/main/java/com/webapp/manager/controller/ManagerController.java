@@ -854,12 +854,14 @@ public class ManagerController {
 
     //업체관리
     @RequestMapping(value = "/Manager/company-app")
-    public String managerCompanyApp(@RequestParam HashMap params, ModelMap model, StoreVO storeVO) throws Exception {
+    public String managerCompanyApp(@RequestParam HashMap params, ModelMap model, StoreVO storeVO, HttpSession session) throws Exception {
         try {
             storeVO.setDisplayRowCount(10);
             storeVO.setStaticRowEnd(10);
             storeVO.pageCalculate(mgStoreDAO.getStoreListCount(storeVO));
             List<Map<String, Object>> storeList = mgStoreDAO.getStoreList(storeVO);
+            List<Map<String,Object>> depthList = mgUserDAO.getMenuDepth();
+            model.addAttribute("depthList", depthList);
             model.addAttribute("list", storeList);
             model.addAttribute("table_name", "store");
             model.addAttribute("Pk", "store_id");

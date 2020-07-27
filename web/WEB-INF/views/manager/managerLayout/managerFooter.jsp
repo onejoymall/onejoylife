@@ -60,8 +60,8 @@
                              <!--    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p> -->
                             </td>
                         </tr>
-             
-                        
+
+
                     </tbody>
                 </table>
                 <button type="button" id="changepw" class="btn-red">변경하기</button>
@@ -93,13 +93,13 @@ $(".pass-btn a").click(function(e){
 
 
 $(document).on("click","#changepw",function(){ 
-   
+
    var formData = $('#managerChangePassword').serialize();
-   
+
    $('span.cc').eq(0).html('');
    $('span.cc').eq(1).html('');
    $('span.cc').eq(2).html('');
-   
+
    var pw = $('input[name=newpassword]').val();
    var renpw = $('input[name=renewpassword]').val();
    var regExp = /^[a-zA-Z0-9]{6,20}$/;
@@ -108,14 +108,14 @@ $(document).on("click","#changepw",function(){
     	return;
      // $("#passwordValidation").removeClass("text-success");
   }
-     
-    
+
+
      if(!regExp.test(renpw) || !isStrNumber(renpw) || !isStrAlphabet(renpw)){
   		$('span.cc').eq(2).html(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
   		return;
   		// $("#passwordValidation").removeClass("text-success");
   	}
-  	   
+
    jQuery.ajax({
         type: 'POST',
         url: '/Manager/managerPasswordChange',

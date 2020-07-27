@@ -165,4 +165,11 @@ and A.payment_status != 'N'
 		ON A.product_cd = B.product_cd
 		WHERE A.order_no = #{order_no}
     </select>
+
+	<select id="getMyPageSnsShareList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT A.*,
+    	(select B.file_link from product_file B where B.key_id = A.product_cd and B.file_order = 1) as file_1
+    	FROM sns_history A
+    	where usr_id = #{usr_id} AND 1=1 LIMIT 5
+	</select>
 </mapper>

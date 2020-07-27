@@ -268,6 +268,21 @@
                                         <input type="text" id="store_bank_name" name="store_bank_name">
                                     </td>
                                 </tr>
+                            <c:if test="${sessionScope.adminLogin == 'admin' && sessionScope.level == 10}">
+                                <tr id="menuGrant">
+                                    <th>사용가능 메뉴</th>
+                                    <td>
+                                    <c:if test="${not empty depthList}">
+                                        <div class="menu-depth-all"><input type="checkbox" name="enable_menu_all"/> <b>전체선택</b></div>
+                                        <hr>
+                                        <c:forEach var="list" items="${depthList}">
+                                        <div class="menu-depth"><input type="checkbox" name="enable_menu" value="${list.menu_id}"/> ${list.menu_name}</div>
+                                        </c:forEach>
+<%--                                        <button class="modal-enable-menu-btn" type="button">사용메뉴 설정</button>--%>
+                                    </c:if>
+                                    </td>
+                                </tr>
+                            </c:if>
                             </tbody>
                         </table>
                     <button type="button" id="formStoreSubmit" class="btn-red">등록하기</button>
@@ -281,6 +296,11 @@
     </div>
 
 <script>
+$(function(){
+	$('input[name=enable_menu_all]').click(function() {
+	  $('input[name=enable_menu]').prop('checked',this.checked);
+	});
+});
 
 $("#modal-close1").click(function(){
     $(".modal").attr("style", "display:none");

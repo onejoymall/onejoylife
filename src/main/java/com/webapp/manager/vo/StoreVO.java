@@ -28,6 +28,24 @@ public class StoreVO extends SearchVO {
     private String store_bank_account;
     private String store_bank_holder;
     private String store_bank_name;
+    private String enable_mg_menu_id;
+    private Integer level;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getEnable_mg_menu_id() {
+        return enable_mg_menu_id;
+    }
+
+    public void setEnable_mg_menu_id(String enable_mg_menu_id) {
+        this.enable_mg_menu_id = enable_mg_menu_id;
+    }
 
     public String getStore_approval_date() {
         return store_approval_date;

@@ -2,6 +2,9 @@ package com.webapp.mall.controller;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.Payment;
+import com.webapp.board.app.BoardVO;
+import com.webapp.board.common.FileUtil;
+import com.webapp.board.common.FileVO;
 import com.webapp.common.support.CurlPost;
 import com.webapp.common.support.MailSender;
 import com.webapp.common.support.MessageSource;
@@ -10,6 +13,9 @@ import com.webapp.mall.dao.*;
 import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.CommonVO;
 import com.webapp.mall.vo.UserVO;
+import com.webapp.manager.dao.MgProductDAO;
+import com.webapp.manager.dao.MgStoreDAO;
+import com.webapp.manager.vo.StoreVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
@@ -24,9 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -58,11 +63,20 @@ public class restapiSubController {
     private CommonDAO commonDAO;
     @Autowired
     private ProductDAO productDAO;
+    @Autowired
+    private MgStoreDAO mgStoreDAO;
+    @Autowired
+    private MgProductDAO mgProductDAO;
+    @Autowired
+    private MainPageDAO mainPageDAO;
     IamportClient client;
     @Value("${api_key}")
     private String apiKey;
     @Value("${api_secret}")
     private String apiSecret;
+    @Value("${downloadPath}")
+    private String downloadPath;
+
 
     //폼의 메서드가 GET인지 POST 인지 꼭 확인
     @RequestMapping(value = "/sign/passcheck", method = RequestMethod.POST, produces = "application/json")
@@ -162,5 +176,135 @@ public class restapiSubController {
         return resultMap;
     }
 
+    //입점업체 신청
+    @RequestMapping(value = "/layout/modalStoreAddProc", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> modalStoreAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, StoreVO storeVO, BoardVO boardInfo, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+        	storeVO.setSupplier_cd("S"+numberGender.numberGen(6, 1));
+            FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"store");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/store/"+ft.format(new Date())+"/");
+            //
 
+            if(storeVO.getStore_id().isEmpty()){
+                error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            Map<String,Object> soterInfo = mgStoreDAO.getStoreDetail(storeVO);
+
+            if(!isEmpty(soterInfo)){
+                error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.chkDplcId","ko"));
+            }
+            if(storeVO.getStore_password()==null || storeVO.getStore_password().isEmpty()){
+                error.put("Password", messageSource.getMessage("error.required","ko"));
+            }
+            if(storeVO.getStore_passwordCf()==null || storeVO.getStore_passwordCf().isEmpty()){
+                error.put("PasswordCf", messageSource.getMessage("error.required","ko"));
+            }
+            if(!storeVO.getStore_password().equals(storeVO.getStore_passwordCf())){
+                error.put("PasswordCf", messageSource.getMessage("error.inpPwdCfm", "ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                storeVO.setStore_approval_status("W");
+                storeVO.setLevel(9);
+                fileVO.setParentPK(storeVO.getStore_id());
+                fileVO.setFileorder(1);
+                mgProductDAO.insertProductFile(filelist,fileVO);
+                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+                storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
+                mgStoreDAO.insertStore(storeVO);
+
+                resultMap.put("redirectUrl","/");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    //입점업체 아이디 중복체크
+    @RequestMapping(value = "/layout/modalstoreIdDupCheck", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> modalstoreIdDupCheck(StoreVO storeVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            Map<String,Object> soterInfo = mgStoreDAO.getStoreDetail(storeVO);
+
+            if(storeVO.getStore_id().isEmpty()){
+                error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(soterInfo)){
+                error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.chkDplcId","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("status",true);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    //사업자 중복체크
+    @RequestMapping(value = "/layout/modalstoreRegDupCheck", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> modalstoreRegDupCheck(StoreVO storeVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            Map<String,Object> soterInfo = mgStoreDAO.getStoreRegDetail(storeVO);
+
+            if(storeVO.getStore_reg().isEmpty()){
+                error.put(messageSource.getMessage("store_reg","ko"), messageSource.getMessage("error.required","ko"));
+            }
+            if(!isEmpty(soterInfo)){
+                error.put(messageSource.getMessage("store_reg","ko"), messageSource.getMessage("error.chkDplcBsReg","ko"));
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                resultMap.put("status",true);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+    //sns 공유 내역
+    @RequestMapping(value = "/layout/sns_share", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> insertSnsShare(@RequestParam HashMap params, HttpSession session)  {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+		    params.put("email",session.getAttribute("email"));
+            //로그인 확인
+            Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+            if(isEmpty(userInfo)){
+
+            }else{
+                params.put("usr_id",userInfo.get("usr_id"));
+                String product_cd = (String) params.get("product_cd");
+                if(product_cd.length() == 8){
+                    Map<String,Object> list = productDAO.getProductViewDetail(params);
+                    params.put("product_name", list.get("product_name"));
+                } else{
+                    params.put("giveaway_id", product_cd);
+                    Map<String,Object> list = giveawayDAO.getGiveawayDetail(params);
+                    params.put("product_name", list.get("giveaway_name"));
+                    params.put("giveaway_id", list.get("giveaway_id"));
+                    params.put("product_cd", null);
+                }
+    			mainPageDAO.insertSnsShare(params);
+            }
+
+			resultMap.put("redirectUrl", "/");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 }

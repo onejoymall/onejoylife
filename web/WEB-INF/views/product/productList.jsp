@@ -76,7 +76,7 @@
                             <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
                         </div>
                         <p class="sale-percent">${list.percent_discount} <span>%</span></p>
-                        <i class="share-ic"></i>
+                        <i class="share-ic" onclick="share_product('${list.product_cd}', '${list.product_name}')"></i>
                         <p class="info-production">${list.product_made_company_name}</p>
                         <p class="point-pdt-title">${list.product_name}</p>
                     </a>
@@ -120,8 +120,6 @@
     $('.order-select').on("change",function () {
         $('#form1').submit();
     })
-   
-     
 </script>
 <c:import url="/layout/footer"/>
 <%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

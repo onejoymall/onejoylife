@@ -54,4 +54,20 @@
         order by product_id desc
         LIMIT ${displayRowCount}
     </select>
+
+    <insert id="insertSnsShare" parameterType="java.util.Map">
+        insert into sns_history(
+            usr_id,
+            product_cd,
+            giveaway_id,
+            product_name,
+            type
+        ) VALUES (
+            #{usr_id},
+            #{product_cd},
+            #{giveaway_id},
+            #{product_name},
+            #{type}
+        )
+    </insert>
 </mapper>

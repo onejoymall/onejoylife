@@ -455,3 +455,25 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 .er {
     color:#da394d;
 }
+
+.modal-level-btn, .modal-enable-menu-btn{
+    background: #da394a;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.menu-depth{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.menu-depth input{
+	margin-right: 5px;
+}
+.menu-depth-all{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	zoom: 1.5;
+}

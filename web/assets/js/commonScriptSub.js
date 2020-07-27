@@ -1113,3 +1113,333 @@ function listGiveawayUpdate(column,update_value) {
     var formData = $('#defaultListForm').serialize()+'&column='+column+'&update_value='+update_value
     commonAjaxCall("POST","/Manager/giveawayListUpdate",formData);
 }
+
+//공유하기
+var baseURL = window.location.protocol + "//" + window.location.host;
+var share_url = "";
+var share_title = "";
+function share_giveaway(giveaway_id, name) {
+    $('#share_link').val(baseURL + "/giveaway/giveawaydetail?giveaway_id=" + giveaway_id);
+    share_url = baseURL + "/giveaway/giveawaydetail?giveaway_id=" + giveaway_id;
+    share_title = name;
+}
+function share_product(product_cd, name) {
+    $('#share_link').val(baseURL + "/product/productDetail?product_cd=" + product_cd);
+    share_url = baseURL + "/product/productDetail?product_cd=" + product_cd;
+    share_title = name;
+}
+
+$(document).on('click', '.share-ic', function(e){
+    e.preventDefault();
+    $('#sharePop').addClass('on');
+}).on('click', '#sharePop .bg', function(){
+    $('#sharePop').removeClass('on');
+});
+
+function copyURL() {
+    var shareURL = document.getElementById("share_link");
+    shareURL.value = share_url;
+
+    shareURL.select();
+    document.execCommand("copy");
+
+    alert("URL이 클립보드에 복사되었습니다");
+}
+
+function snsSubmit(type, title) {
+    if(type == 'fackbook'){
+        title = share_title;
+        SNS.facebook(share_url, title);
+    }
+    if(share_url.search("P") != -1){
+        var product_cd = share_url.slice(-8);
+    } else{
+        var product_cd = share_url.slice(-2);
+    }
+
+    var formData = {"product_cd":product_cd,"name":title, "type": type};
+    jQuery.ajax({
+        type: 'POST',
+        data: formData,
+        url:'/layout/sns_share',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                $.toast({
+                    text: "SUCCESS",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success'
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+}
+
+var SNS  = {
+    facebook: function (share_url, title) {
+        link = encodeURIComponent(share_url);
+        title = encodeURIComponent(title);
+
+        var url = 'http://www.facebook.com/sharer.php?u=' + link + '&t=' + title;
+
+        var newWindow = window.open("about:blank");
+        newWindow.location.href=url;
+    }
+}
+
+//선택 이미지 출력 및 파일명 노출
+//부모의 형제 parent().siblings()
+//형제 siblings()
+$('.uploadBtn').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    filesArr.forEach(function (f) {
+        if(!f.type.match("image.*")){
+            alert("이미지파일만 등록 가능합니다.");
+            return false;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var imgDisplayType ='copy';
+            // if(imgDisplayType =="copy"){
+            //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+            //     $('.uploadBtn').siblings('.fileName').val(filename);
+            // }else{
+                thisObject.parent().siblings('img').attr("src",e.target.result);
+                thisObject.siblings('.fileName').val(filename);
+            // }
+
+        }
+        reader.readAsDataURL(f);
+    })
+});
+
+//입점업체 신청
+$(document).on("click","#modalStoreAddProc",function () {
+    var formData = new FormData($('#defaultForm')[0]);
+    enableMenuArr = [];
+    $.each($('input[name=enable_menu]'),function(idx, item){
+        if($(this).prop("checked")) enableMenuArr.push($(this).val());
+    });
+    formData.set("enable_menu", enableMenuArr.join("|"));
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/layout/modalStoreAddProc',
+        success: function (data) {
+            console.log(data.validateError)
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+//                    location.href=data.redirectUrl;
+                $.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+//                        	location.href=data.redirectUrl;
+                        location.reload();
+                    }
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})
+
+//아이디중복체크
+$(document).on("click","#modalstorIdDupCheck",function () {
+    var formData = new FormData($('#defaultForm')[0]);
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/layout/modalstoreIdDupCheck',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                $.toast({
+                    text: "SUCCESS",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success'
+                });
+                $('#store_id').attr("readonly",true);
+                $('#modalstorIdDupCheck').attr('disabled', true);
+                $('#modalstorIdDupCheck').html('OK');
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})
+//사업자중복체크
+$(document).on("click","#modalstorRegDupCheck",function () {
+    var formData = new FormData($('#defaultForm')[0]);
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/layout/modalstoreRegDupCheck',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                $.toast({
+                    text: "SUCCESS",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success'
+                });
+                $('#store_reg').attr("readonly",true);
+                $('#modalstorRegDupCheck').attr('disabled', true);
+                $('#modalstorRegDupCheck').html('OK');
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})
+
+//sns 리스트
+/*$(document).on("click","#shareForm",function () {
+    var formData = $('#shareForm').serialize();
+    jQuery.ajax({
+        type: 'POST',
+        data: formData,
+        url:'/layout/sns_share',
+        success: function (data) {
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                $.toast({
+                    text: "SUCCESS",
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success'
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+})*/

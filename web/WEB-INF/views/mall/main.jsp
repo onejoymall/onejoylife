@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp"%>
+
 <section class="main-section">
 	<h2 class="main-section-title hide">main section</h2>
 	<article class="main-slider">
@@ -62,7 +63,7 @@
 								href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
 									<img src='${list.file_1}'
 									onerror="this.src='http://placehold.it/190x190'"> <i
-									class="share-ic"></i>
+									class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></i>
 									<p class="point-pdt-title">${list.giveaway_name}</p>
 							</a>
 								<p class="point-pdt-price">
@@ -248,14 +249,13 @@
 					<c:if test="${not empty productMDList}">
 						<c:forEach var="productMDList" items="${productMDList}"
 							varStatus="status">
-							<li><a
-								href="/product/productDetail?product_cd=${productMDList.product_cd}">
+							<li><a href="/product/productDetail?product_cd=${productMDList.product_cd}">
 									<div class="img-box">
 										<img src='${productMDList.file_1}'
 											onerror="this.src='http://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productMDList.percent_discount}<span>%</span></p>
-										<i class="share-ic"></i>
+										<i class="share-ic" onclick="share_product('${productMDList.product_cd}', '${productMDList.product_name}')"></i>
 									</div>
 									<div class="product-info">
 										<p class="info-production">${productMDList.product_made_company_name}</p>
@@ -346,7 +346,7 @@
 										<img src='${productSpList.file_1}'	onerror="this.src='http://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productSpList.percent_discount}<span>%</span></p>
-										<i class="share-ic"></i>
+										<i class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></i>
 									</div>
 									<div class="product-info">
 										<p class="info-production">${productSpList.product_made_company_name}</p>
@@ -424,7 +424,7 @@
 										<p class="sale-percent">${productList.percent_discount}
 											<span>%</span>
 										</p>
-										<i class="share-ic"></i>
+										<i class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></i>
 
 									</div>
 									<div class="product-info">
@@ -696,6 +696,7 @@
 		$(this).addClass('active');
 		mdSlideCategorySelect('', $(this).attr('data-tab'))
 	});
+
 </script>
 <c:import url="/layout/footer"/>
 <%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

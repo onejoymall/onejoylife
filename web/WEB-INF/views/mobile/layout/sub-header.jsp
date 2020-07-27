@@ -110,6 +110,47 @@
     // });
 </script>
 <body class="pt-48 pb-5">
+    <div id="sharePop">
+       <div class="bg"></div>
+       <div class="md-content">
+           <ul class="clearfix">
+                <li>
+                    <a href="" onclick="snsSubmit('fackbook', '');">
+                      <div class="fbic"></div>
+                       페이스북
+                    </a>
+                </li>
+                <%--<li>
+                    <a href="">
+                       <div class="ktic"></div>
+                       카카오톡
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                       <div class="twtic"></div>
+                       트위터
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                       <div class="nbic"></div>
+                       블로그
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                       <div class="inic"></div>
+                       인스타그램
+                    </a>
+                </li>--%>
+           </ul>
+           <div class="sharelink">
+                <input type="text" name="share_link" id="share_link" value="" readonly>
+                <button type="button" class="copybtn" onclick="copyURL()">URL 복사</button>
+            </div>
+       </div>
+    </div>
         <header class="header clearfix">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
