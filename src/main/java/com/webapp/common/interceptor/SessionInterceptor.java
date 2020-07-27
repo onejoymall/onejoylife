@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.webapp.common.support.NumberGender;
+
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 	
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,8 +31,12 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 //	    return super.preHandle(request, response, handler);
 
 		HttpSession session = request.getSession();
+		if(session.getAttribute("locale") == null) {
+			session.setAttribute("locale", "ko");
+		}
 		Object obj = session.getAttribute("login");
 		if ( obj == null ){
+			session.setAttribute("nonMembersUserId",NumberGender.numberGen(6, 1));
 			response.sendRedirect("/sign/login");
 			return false; // 더이상 컨트롤러 요청으로 가지 않도록 false로 반환함
 		}

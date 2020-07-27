@@ -1,22 +1,31 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE taglib
-        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
-        "http://Java.Sun.com/dtd/web-jsptaglibrary_1_2.dtd">
-<taglib
-        xmlns="http://Java.Sun.com/xml/ns/j2ee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://Java.Sun.com/xml/ns/j2ee http://Java.Sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
-        version="2.0"
-        >
-    <tlib-version>1.0</tlib-version>
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+    
+    <description>CommonUtil functions library</description>
+    <display-name>CommonUtil functions</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>afn</short-name>
+    <uri>/WEB-INF/tlds/arr.tld</uri>
+    
     <function>
+    	<description>리스트중 요소확인</description>
         <name>contains</name>
         <function-class>com.webapp.common.support.ArrUtil</function-class>
         <function-signature>boolean contains(java.util.List,java.lang.Object)</function-signature>
     </function>
     <function>
+    	<description>스트링배열중 요소확인</description>
         <name>containsA</name>
         <function-class>com.webapp.common.support.ArrUtil</function-class>
         <function-signature>boolean contains(java.lang.String[],java.lang.Object)</function-signature>
+    </function>
+    <function>
+    	<description>메세지소스 호출</description>
+        <name>getMessage</name>
+        <function-class>com.webapp.common.support.ArrUtil</function-class>
+        <function-signature>java.lang.String getMessage(java.lang.String, java.lang.String)</function-signature>
     </function>
 </taglib>

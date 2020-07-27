@@ -85,12 +85,12 @@
         <li><a href="/MyPage/ShoppingBasket">장바구니</a></li>
         <li><a href="/MyPage/OrderAndDelivery">주문배송</a></li>
         <li><a href="/Help/csinfo">고객센터</a></li>
-        <li class="language-nav"><a href="">국가선택</a>
+        <li class="language-nav"><a href="javascrip:void(0)">국가선택</a>
             <ul>
-                <li><a href="">한국</a></li>
-                <li><a href="">미국</a></li>
-                <li><a href="">중국</a></li>
-                <li><a href="">일본</a></li>
+                <li><a href="javascript:setGlobalLocale('ko')">한국</a></li>
+                <li><a href="javascript:setGlobalLocale('en')">미국</a></li>
+                <li><a href="javascript:setGlobalLocale('cn')">중국</a></li>
+                <li><a href="javascript:setGlobalLocale('jp')">일본</a></li>
             </ul>
         </li>
 
@@ -102,12 +102,12 @@
         <li><a href="/Help/csinfo">고객센터</a></li>
         <li><a href="/sign/logout" class="logoutBtn">로그아웃</a></li>
         <!-- <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li> -->
-        <li class="language-nav"><a href="">국가선택</a>
+        <li class="language-nav"><a href="javascrip:void(0)">국가선택</a>
             <ul>
-                <li><a href="">한국</a></li>
-                <li><a href="">미국</a></li>
-                <li><a href="">중국</a></li>
-                <li><a href="">일본</a></li>
+                <li><a href="javascript:setGlobalLocale('ko')">한국</a></li>
+                <li><a href="javascript:setGlobalLocale('en')">미국</a></li>
+                <li><a href="javascript:setGlobalLocale('cn')">중국</a></li>
+                <li><a href="javascript:setGlobalLocale('jp')">일본</a></li>
             </ul>
         </li>
     </c:if>

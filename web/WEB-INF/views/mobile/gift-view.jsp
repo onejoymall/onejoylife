@@ -198,6 +198,24 @@
         </div>
     </section>
     <section class="wrap">
+    	<div class="mt-1 mb-3">
+            <h3 class="mb-1">함께 본 경품</h3>
+            <hr class="mb-1">
+            <div class="shareProducts">
+            	<c:if test="${not empty serialProductList}">
+            	<c:forEach var="list" items="${serialProductList}">
+	                <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=${list.giveaway_cd}"/>" class="product">
+	                    <div class="productImg"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
+	                    <h5 class="mt-05">${list.giveaway_name}</h5>
+	                    <h4 class="text-bold red"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> <span class="text-sm">원</span></h4>
+	                </a>
+                </c:forEach>
+            	</c:if>
+            	<c:if test="${empty serialProductList}">
+            		함께 본 경품이 없습니다.
+            	</c:if>
+       		</div>
+        </div>
         <div class="my-1" id="content02">
             <h3 class="mb-1">상품 필수정보</h3>
             <!-- <hr class="mb-1">
@@ -366,6 +384,26 @@
 				<p class="grey pt-2 pb-05">10. A/S 책임자와 전화번호</p><h3>상세페이지 참조</h3>
 			</c:if>
          </div>
+         <div class="mt-4 mb-2">
+            <h3 class="mb-1">관련 경품</h3>
+            <hr class="mb-1">
+            <div class="shareProducts">
+                <div class="shareProducts">
+	                <c:if test="${not empty relatedProductList}">
+	            	<c:forEach var="list" items="${relatedProductList}">
+		                <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=${list.giveaway_id}"/>" class="product">
+		                    <div class="productImg"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
+		                    <h5 class="mt-05">${list.giveaway_name}</h5>
+		                    <h4 class="text-bold red"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> <span class="text-sm">원</span></h4>
+		                </a>
+	                </c:forEach>
+	            	</c:if>
+	            	<c:if test="${empty relatedProductList}">
+	            		관련 경품이 없습니다.
+	            	</c:if>
+           		</div>
+            </div>
+        </div>
         <div class="mt-4 mb-2" id="content03">
             <h3 class="mb-1">경품응모/당첨방식/세금</h3>
             <hr>

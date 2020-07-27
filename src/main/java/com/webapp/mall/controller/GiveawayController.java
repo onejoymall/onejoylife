@@ -18,12 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.webapp.common.dao.SelectorDAO;
 import com.webapp.mall.dao.GiveawayDAO;
 import com.webapp.mall.dao.PointDAO;
 import com.webapp.mall.dao.UserDAO;
 import com.webapp.mall.vo.GiveawayVO;
+import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
 @Controller
@@ -86,7 +88,7 @@ public class GiveawayController {
     }
     //경품 상세333
     @RequestMapping(value="/giveaway/giveawaydetail",method = RequestMethod.GET)
-    public String giveawayDetail(Model model, HashMap params, HttpServletRequest request,HttpSession session) throws SQLException {
+    public String giveawayDetail(Model model, @RequestParam HashMap params, TodayVO todayVO, HttpServletRequest request,HttpSession session) throws SQLException {
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -95,7 +97,39 @@ public class GiveawayController {
                 params.put("point_paid_user_id",userInfo.get("usr_id"));
                 Integer point = pointDAO.getPointAmount(params);
                 model.addAttribute("point_amount",point);
+                
+                params.put("user_id", userInfo.get("usr_id"));
+            }else{
+            	params.put("user_id", session.getAttribute("nonMembersUserId"));
             }
+            
+          //경품 상세페이지 로드시 최근 본 상품 세션에 적용
+            if(isEmpty((List<String>)session.getAttribute("todayGiveaway"))){
+                todayVO.setProduct_cd_array_string((String)params.get("giveaway_id"));
+                session.setAttribute("todayGiveaway",todayVO.getProduct_cd_array());
+                
+                //최근본상품없으면 prev없이 insert
+                Map<String,Object> map = new HashMap<>();
+                map.put("giveaway_current",params.get("giveaway_id"));
+                map.put("usr_id",params.get("user_id"));
+                giveawayDAO.insertGiveawayHistory(map);
+            }else{
+            	todayVO.setProduct_cd_array((List<String>) session.getAttribute("todayGiveaway"));
+            	//최근본상품있으면 이전기록 next 업데이트
+                Map<String,Object> map = new HashMap<>();
+                map.put("giveaway_current",todayVO.getProduct_cd_array().get(todayVO.getProduct_cd_array().size()-1));
+                map.put("giveaway_next",params.get("giveaway_id"));
+                map.put("usr_id",params.get("user_id"));
+                giveawayDAO.updateGiveawayHistory(map);
+                
+                map.put("giveaway_prev",todayVO.getProduct_cd_array().get(todayVO.getProduct_cd_array().size()-1));
+                map.put("giveaway_current",params.get("giveaway_id"));
+                giveawayDAO.insertGiveawayHistory(map);
+                
+                todayVO.setProduct_cd_array_string((String)params.get("giveaway_id"));
+                session.setAttribute("today",todayVO.getProduct_cd_array());
+            }
+            
             params.put("giveaway_cd",request.getParameter("giveaway_cd"));
             params.put("giveaway_id",request.getParameter("giveaway_id"));
             Map<String,Object> detail = giveawayDAO.getGiveawayDetail(params);
@@ -112,6 +146,17 @@ public class GiveawayController {
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
             model.addAttribute("product_ct_arr",Arrays.asList(((String)detail.get("giveaway_ct")).split("\\|")));
+            
+            //관련상품 (카테고리기준)
+            detail.put("rowStart",1);
+            detail.put("displayRowCount",8);
+            detail.put("product_cts",((String)detail.get("giveaway_ct")).split("\\|"));
+            List<Map<String,Object>> relatedProductList = giveawayDAO.relatedGiveawayList(detail);
+            model.addAttribute("relatedProductList", relatedProductList);
+            
+            //함께본상품
+            List<Map<String,Object>> serialProductList = giveawayDAO.serialGiveawayList(detail);
+            model.addAttribute("serialProductList", serialProductList);
             
           //띠배너
             params.put("banner_type","product_line");
