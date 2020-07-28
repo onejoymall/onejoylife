@@ -22,6 +22,9 @@ public class ArrUtil {
 		return Arrays.asList(list).contains(o);
 	}
 	public static String getMessage(String key, String locale) {
+		if(locale == null || locale.equals("")) {
+			locale = "ko";
+		}
 		return messageSource.getMessage(key, locale);
 	}
 }

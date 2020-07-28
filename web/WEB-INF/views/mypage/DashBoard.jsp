@@ -10,6 +10,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -19,34 +21,34 @@
                 <c:import url="/MyPage/RightHeader"/>
                 <div class="r-sec3">
                     <div class="sec3-in">
-                        <div class="sec3-box1">배송현황</div>
+                        <div class="sec3-box1">${afn:getMessage('delivery_status',sessionScope.locale)}</div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon1"></div>
-                            <p>주문접수<span>(${paymentCnt.mCnt})</span></p>
+                            <p>${afn:getMessage('order_reception',sessionScope.locale)}<span>(${paymentCnt.mCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon2"></div>
-                            <p>결제완료<span>(${paymentCnt.wCnt})</span></p>
+                            <p>${afn:getMessage('payment_complete',sessionScope.locale)}<span>(${paymentCnt.wCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon3"></div>
-                            <p>상품준비중<span>(${paymentCnt.iCnt})</span></p>
+                            <p>${afn:getMessage('product_preparing',sessionScope.locale)}<span>(${paymentCnt.iCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon4"></div>
-                            <p>배송중<span>(${paymentCnt.rCnt})</span></p>
+                            <p>${afn:getMessage('delivery_progress',sessionScope.locale)}<span>(${paymentCnt.rCnt})</span></p>
                         </div>
                         <div class="sec3-box2">
                             <div class="sec3-box2-icon5"></div>
-                            <p>배송완료<span>(${paymentCnt.oCnt})</span></p>
+                            <p>${afn:getMessage('delivery_complete',sessionScope.locale)}<span>(${paymentCnt.oCnt})</span></p>
                         </div>
                     </div>
                 </div>
                 <div class="r-sec4">
                     <div class="sec4-txt">
-                        <p class="txt-tit">최근 구매내역<span>최근주문3건</span></p>
+                        <p class="txt-tit">${afn:getMessage('recent_order_list',sessionScope.locale)}<span>${afn:getMessage('recent_order_3',sessionScope.locale)}</span></p>
                         <p class="mor-a">
-                            <a href="/MyPage/OrderAndDelivery">더보기 ></a>
+                            <a href="/MyPage/OrderAndDelivery">${afn:getMessage('more',sessionScope.locale)} ></a>
                         </p>
                     </div>
                     <table class="sec4-lis">
@@ -60,12 +62,12 @@
                         </colgroup>
                         <thead class="lis-head">
                         <tr>
-                            <th>주문일/상점주문번호</th>
-                            <th>상품정보</th>
-                            <th>상품금액</th>
-                            <th>수량</th>
-                            <th>주문금액</th>
-                            <th>진행상태</th>
+                            <th>${afn:getMessage('order_date',sessionScope.locale)}/${afn:getMessage('store_order_no',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('product_info',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('product_amount',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('quantity',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('order_payment',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('status',sessionScope.locale)}</th>
                         </tr>
                         </thead>
                         <tbody class="lis-body">
@@ -88,15 +90,15 @@
 		                                            </div>
 		                                        </a>
 		                                    </td>
-		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
-		                                    <td class="lis-font-w" rowspan="${fn:length(map.value)}"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="lis-font-w" rowspan="${fn:length(map.value)}"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 		                                    <td class="pointer">
 		
 		                                        <p class="lis-font-w ">${paymentList.payment_status_name}</p>
 		
 		                                        <div class="lis-txt-box lis-txt-box1-2">
-		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>${afn:getMessage('order_detail',sessionScope.locale)}</span></a>
 		                                        </div>
 		                                    </td>
 		                                </tr>
@@ -113,14 +115,14 @@
 		                                            </div>
 		                                        </a>
 		                                    </td>
-		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 		                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
 		                                    <td class="pointer">
 		
 		                                        <p class="lis-font-w ">${paymentList.payment_status_name}</p>
 		
 		                                        <div class="lis-txt-box lis-txt-box1-2">
-		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                            <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>${afn:getMessage('order_detail',sessionScope.locale)}</span></a>
 		                                        </div>
 		                                    </td>
 		                                </tr>
@@ -130,7 +132,7 @@
                         </c:if>
                         <c:if test="${empty paymentList}">
                             <tr>
-                                <td colspan="8">표시할 내용이 없습니다.</td>
+                                <td colspan="8">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                             </tr>
                         </c:if>
                         </tbody>
@@ -138,8 +140,8 @@
                 </div>
                 <div class="r-sec5">
                     <div class="sec5-txt">
-                        <p class="txt-tit">경품 참여 내역</p>
-                        <p class="mor-a"><a href="/MyPage/GiveawayWinningList">더보기 ></a></p>
+                        <p class="txt-tit">${afn:getMessage('giveaway_parti_list',sessionScope.locale)}</p>
+                        <p class="mor-a"><a href="/MyPage/GiveawayWinningList">${afn:getMessage('more',sessionScope.locale)} ></a></p>
                     </div>
                     <table>
                         <colgroup>
@@ -149,9 +151,9 @@
                         </colgroup>
                         <thead class="lis-head">
                         <tr>
-                            <th>참여일</th>
-                            <th>이벤트명</th>
-                            <th>진행상태</th>
+                            <th>${afn:getMessage('parti_date',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('giveaway_name',sessionScope.locale)}</th>
+                            <th>${afn:getMessage('status',sessionScope.locale)}</th>
                         </tr>
                         </thead>
                         <tbody class="lis-body2">
@@ -168,10 +170,10 @@
                                     </td>
                                     <td>
                                     <c:if test="${empty giveawayList.giveaway_winner_reg_date && empty giveawayList.winner_id}">
-                                        <span>진행중</span><br>
+                                        <span>${afn:getMessage('ongoing',sessionScope.locale)}</span><br>
                                     </c:if>
                                     <c:if test="${not empty giveawayList.giveaway_winner_reg_date && empty giveawayList.winner_id}">
-                                        <span>추첨완료</span><br>
+                                        <span>${afn:getMessage('draw_complete',sessionScope.locale)}</span><br>
                                         <span class="txt-s">(<fmt:formatDate value="${giveawayList.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
                                     </c:if>
                                     <c:if test="${not empty giveawayList.giveaway_winner_reg_date && giveawayList.winner_id > 0}">
@@ -186,14 +188,14 @@
                         </c:if>
                         <c:if test="${empty giveawayList}">
                             <tr>
-                                <td colspan="5">표시할 내용이 없습니다.</td>
+                                <td colspan="5">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
                         </c:if>
                         </tbody>
                     </table>
-                    <table class="dis-none1">
+                   <%--  <table class="dis-none1">
                         <colgroup>
                             <col style="width: 150px;">
                             <col style="width: 630px;">
@@ -281,7 +283,7 @@
                             <td></td>
                         </tr>
                         </tbody>
-                    </table>
+                    </table> --%>
                 </div>
         </main>
     </div>
