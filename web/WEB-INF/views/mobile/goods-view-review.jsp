@@ -30,11 +30,26 @@
                     ${list.review_score}.0</li>
                 </ul>
                 <ul>
+                
+                 <c:if test="${not empty list.file_1}">
                     <li><img src="${list.file_1}" onerror="this.src='http://placehold.it/300x300'" alt="후기이미지"></li>
+                   </c:if>
+                    <c:if test="${not empty list.file_2}">
+<%-- 				  <img src='${list.file_2}' onerror="this.src='http://placehold.it/550'" > --%>
+            			 <video width="300" height="300" controls>
+              			     <source src="${list.file_2}" type=video/ogg>
+			   			 <source src="${list.file_2}" type=video/mp4>
+					   </video>
+			      </c:if>   
+                   
+                   
                     <li>
                     	<p>${list.review_title}</p>
                        	<p>${list.review_content}</p>
                     </li>
+                   
+                    
+                    
                 </ul>
             </ul>
             </c:forEach>

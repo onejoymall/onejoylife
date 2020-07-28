@@ -66,4 +66,10 @@ public class ReviewDAO {
     public void deleteReviewFile(FileVO fileVO) throws SQLException{
         sql.delete("mall.ReviewMapper.deleteReviewFileOne",fileVO);
     }
+    public void deleteReviewFileOneByName(Map<String, String> params) throws SQLException{
+        sql.delete("mall.ReviewMapper.deleteReviewFileOneByName",params);
+    }
+    public void deleteReviewAllFile(Map<String, String> params) throws SQLException{
+        sql.delete("mall.ReviewMapper.deleteReviewAllFile",params);
+    }
 }
