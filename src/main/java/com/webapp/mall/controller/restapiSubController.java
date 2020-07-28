@@ -181,6 +181,12 @@ public class restapiSubController {
     public  HashMap<String, Object> modalStoreAddProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, StoreVO storeVO, BoardVO boardInfo, FileVO fileVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
+        if(params.get("storIdDupCheck") == null || params.get("storIdDupCheck").equals("")){
+            error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.overlapCheck", "ko"));
+        }
+        if(params.get("storRegDupCheck") == null || params.get("storRegDupCheck").equals("")){
+            error.put(messageSource.getMessage("store_reg","ko"), messageSource.getMessage("error.overlapCheck", "ko"));
+        }
         try{
         	storeVO.setSupplier_cd("S"+numberGender.numberGen(6, 1));
             FileUtil fs = new FileUtil();
