@@ -24,6 +24,25 @@
     <if test="orderByKey == null"> order by reg_date DESC </if>
     LIMIT ${rowStart-1}, ${displayRowCount}
   </select>
+    <select id="getMgUserList" parameterType="com.webapp.manager.vo.StoreVO" resultType="java.util.Map">
+        SELECT
+            email as store_id,
+            password as store_password,
+            level as level,
+            enable_mg_menu_id as enable_mg_menu_id,
+            email_auth_status as status,
+            reg_date
+        FROM user A where A.email = #{store_id}
+        UNION ALL
+        SELECT
+            store_id as store_id,
+            store_password as store_password,
+            level as level,
+            enable_mg_menu_id as enable_mg_menu_id,
+            store_approval_status as status,
+            reg_date
+        FROM store B where B.store_id = #{store_id}
+    </select>
   <select id="getStoreListCount" parameterType="com.webapp.manager.vo.StoreVO" resultType="Integer">
     select IFNULL(count(*),0) as cnt
     from store where 1=1

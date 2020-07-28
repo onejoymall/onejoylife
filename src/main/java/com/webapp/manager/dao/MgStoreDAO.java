@@ -21,6 +21,12 @@ public class MgStoreDAO {
         List<Map<String, Object>> getStoreList = sql.selectList("mall.MgStoreMapper.getStoreList",storeVO);
         return getStoreList;
     }
+
+    public Map<String,Object> getMgUserList(StoreVO storeVO) throws SQLException {
+        Map<String,Object> getMgUserList=sql.selectOne("mall.MgStoreMapper.getMgUserList",storeVO);
+        return getMgUserList;
+    }
+
     public Integer getStoreListCount(StoreVO storeVO) throws SQLException {
         Integer getStoreListCount=sql.selectOne("mall.MgStoreMapper.getStoreListCount",storeVO);
         return getStoreListCount;

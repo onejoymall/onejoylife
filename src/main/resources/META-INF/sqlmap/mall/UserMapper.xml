@@ -32,7 +32,6 @@
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
     <select id="getUserStoreList" resultType="java.util.HashMap">
-      /*getUserStoreList*/
         SELECT
             email as email,
             password as password,
