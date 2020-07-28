@@ -155,9 +155,9 @@
                 </div>
 
                 <div class="share-list">
-                    <a href="#none"><i class="facebook-ic"></i></a>
-                    <a href="#none"><i class="twitter-ic"></i></a>
-                    <a href="#none"><i class="kakao-ic"></i></a>
+                    <a href="#none" onclick="snsSubmit('fackbook', '');"><i class="facebook-ic" onclick="share_product('${list.product_cd}', '${list.product_name}')"></i></a>
+<%--                    <a href="#none"><i class="twitter-ic"></i></a>--%>
+<%--                    <a href="#none"><i class="kakao-ic"></i></a>--%>
                 </div>
             </div>
             <div class="goods-info-wrap">

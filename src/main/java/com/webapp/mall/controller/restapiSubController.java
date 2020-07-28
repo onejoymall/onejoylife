@@ -204,13 +204,13 @@ public class restapiSubController {
                 error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.chkDplcId","ko"));
             }
             if(storeVO.getStore_password()==null || storeVO.getStore_password().isEmpty()){
-                error.put("Password", messageSource.getMessage("error.required","ko"));
+                error.put(messageSource.getMessage("pswd","ko"), messageSource.getMessage("error.required","ko"));
             }
             if(storeVO.getStore_passwordCf()==null || storeVO.getStore_passwordCf().isEmpty()){
-                error.put("PasswordCf", messageSource.getMessage("error.required","ko"));
+                error.put(messageSource.getMessage("pswdCfm","ko"), messageSource.getMessage("error.required","ko"));
             }
             if(!storeVO.getStore_password().equals(storeVO.getStore_passwordCf())){
-                error.put("PasswordCf", messageSource.getMessage("error.inpPwdCfm", "ko"));
+                error.put(messageSource.getMessage("pswd","ko"), messageSource.getMessage("error.inpPwdCfm", "ko"));
             }
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -238,7 +238,7 @@ public class restapiSubController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
-            Map<String,Object> soterInfo = mgStoreDAO.getStoreDetail(storeVO);
+            Map<String,Object> soterInfo = mgStoreDAO.getMgUserList(storeVO);
 
             if(storeVO.getStore_id().isEmpty()){
                 error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.required","ko"));
@@ -281,7 +281,7 @@ public class restapiSubController {
         return resultMap;
     }
 
-    //sns 공유 내역
+    //sns 공유
     @RequestMapping(value = "/layout/sns_share", method = RequestMethod.POST, produces = "application/json")
 	public HashMap<String, Object> insertSnsShare(@RequestParam HashMap params, HttpSession session)  {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
@@ -290,22 +290,22 @@ public class restapiSubController {
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
             if(isEmpty(userInfo)){
-
+                params.put("usr_id", session.getAttribute("nonMembersUserId"));
             }else{
                 params.put("usr_id",userInfo.get("usr_id"));
-                String product_cd = (String) params.get("product_cd");
-                if(product_cd.length() == 8){
-                    Map<String,Object> list = productDAO.getProductViewDetail(params);
-                    params.put("product_name", list.get("product_name"));
-                } else{
-                    params.put("giveaway_id", product_cd);
-                    Map<String,Object> list = giveawayDAO.getGiveawayDetail(params);
-                    params.put("product_name", list.get("giveaway_name"));
-                    params.put("giveaway_id", list.get("giveaway_id"));
-                    params.put("product_cd", null);
-                }
-    			mainPageDAO.insertSnsShare(params);
             }
+            String product_cd = (String) params.get("product_cd");
+            if(product_cd.length() == 8){
+                Map<String,Object> list = productDAO.getProductViewDetail(params);
+                params.put("product_name", list.get("product_name"));
+            } else{
+                params.put("giveaway_id", product_cd);
+                Map<String,Object> list = giveawayDAO.getGiveawayDetail(params);
+                params.put("product_name", list.get("giveaway_name"));
+                params.put("giveaway_id", list.get("giveaway_id"));
+                params.put("product_cd", null);
+            }
+            mainPageDAO.insertSnsShare(params);
 
 			resultMap.put("redirectUrl", "/");
 		} catch (Exception e) {
