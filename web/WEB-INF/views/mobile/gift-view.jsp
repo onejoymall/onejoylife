@@ -131,11 +131,11 @@
                 <li><img src='${detail.file_1}' onerror="this.src='http://placehold.it/550'" ></li>
                 <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
             </ul>
-            <div class="share-list">
-                <a href="#none"><i class="facebook-ic"></i></a>
-                <a href="#none"><i class="twitter-ic"></i></a>
-                <a href="#none"><i class="kakao-ic"></i></a>
-            </div>
+<%--            <div class="share-list">--%>
+<%--                <a href="#none"><i class="facebook-ic"></i></a>--%>
+<%--                <a href="#none"><i class="twitter-ic"></i></a>--%>
+<%--                <a href="#none"><i class="kakao-ic"></i></a>--%>
+<%--            </div>--%>
         </div>
     </section>
     <section class="wrap">
@@ -185,7 +185,7 @@
     <section class="subheader">
         <ul class="shareBtns">
             <li><a href="javascript:wish()" class="wish favorite ready" >위시리스트</a></li>
-            <li><a href="#" class="share">공유하기</a></li>
+            <li><a href="#" class="share" onclick="share_giveaway('${detail.giveaway_id}', '${detail.giveaway_name}')">공유하기</a></li>
         </ul>
         <img src="../../assets/img/goods-view/bnr1.jpg" alt="" class="width-100">
         <ul class="taps" id="tap">
