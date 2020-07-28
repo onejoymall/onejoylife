@@ -101,9 +101,19 @@
 	            <div class="mb-2">
 	                <input type="text" class="fileName width-100 mb-1" name="fileName" readonly="readonly" value="${review.file_name}">
 	                <label for="rvImg1" class="btn_file">파일선택</label>
-                    <input type="file" id="rvImg1" name="uploadfile" class="uploadBtn">
+                    <input type="file" id="rvImg1" name="uploadfile" class="uploadBtn1"  style="display:none;">
                     <button type="button" class="xBox">x</button>
 	            </div>
+	             <p class="text-md mt-1 mb-05">동영상 등록</p>
+	              <div class="mb-2">
+	                <input type="text" class="fileName width-100 mb-1" name="fileName" readonly="readonly" value="${review.file_name2}">
+	                <label for="pdImg6" class="btn_file">파일선택</label>
+                   <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo1"  style="display:none;">
+                    <button type="button" class="xBox">x</button>
+	            </div>
+	            
+	            
+	            
 	            <ul class="btns mt-3 mb-0">
 	                <li><a href="javascript:self.close();">취소</a></li>
 	                <li><a href="#" class="on" id="insertReviewBtn">등록</a></li>
@@ -138,26 +148,88 @@
                 contentType: false, // 필수
                 url:'/MyPage/insertReview',
                 success: function (data) {
-                	if (data.success) {//toast 오류처리
-                   		$.toast({
-                            text: 'success',
-                            showHideTransition: 'plain', //펴짐
-                            position: 'bottom-right',
-                            icon: 'success',
-                            hideAfter: 2000
-                        });
-                		setTimeout(function(){
-                			opener.location.reload();
-                       	    self.close();
-                		},1000);
-                    }else{
-                    	alert("error");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert("error");
-                }
+               	 if (data.success) {
+                  	alert("상품평이 등록되었습니다.");
+                  	self.close();
+                  	opener.location.reload();
+                  } else{
+              		$.toast({
+                          text: "ERROR",
+                          showHideTransition: 'plain', //펴짐
+                          position: 'bottom-right',
+                          heading: 'Error',
+                          icon: 'error',
+                      });
+                  }
+              }
             });
         });
+        
+         
+    });
+    
+    $('.uploadBtn1').on('change', function(object){
+        var sel_file;
+        var thisObject = $(this);
+        var filename = thisObject.val().split('/').pop().split('\\').pop();
+        var files = object.target.files;
+        var filesArr =Array.prototype.slice.call(files);
+        
+        filesArr.forEach(function (f) {
+            if(!f.type.match("image.*")){
+                alert("이미지파일만 등록 가능합니다.");
+                return false;
+            }
+            sel_file = f;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imgDisplayType ='copy';
+                // if(imgDisplayType =="copy"){
+                //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+                //     $('.uploadBtn').siblings('.fileName').val(filename);
+                // }else{
+                    thisObject.parent().siblings('img').attr("src",e.target.result);
+                    //console.log(filename)
+                    thisObject.siblings('.fileName').eq(0).val(filename);
+                   // $('.fileName').eq(0).val(filename);
+                // }
+
+            }
+            reader.readAsDataURL(f);
+        })
+    });
+    
+    $('.uploadBtnVideo1').on('change', function(object){
+        var sel_file;
+        var thisObject = $(this);
+        var filename = thisObject.val().split('/').pop().split('\\').pop();
+        console.log(object.target);
+        var files = object.target.files;
+        var filesArr =Array.prototype.slice.call(files);
+        var maxSize = 100 * 1024 * 1024;
+        filesArr.forEach(function (f) {
+        	if(files[0].size > maxSize){
+        		alert("크기 100MB 미만의 파일만 등록 가능합니다.");
+                return false;
+        	}
+            if(!f.type.match("video.*")){
+                alert("동영상파일만 등록 가능합니다.");
+                return false;
+            }
+            sel_file = f;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imgDisplayType ='copy';
+                // if(imgDisplayType =="copy"){
+                //     $('.uploadBtn').parent().siblings('img').attr("src",e.target.result);
+                //     $('.uploadBtn').siblings('.fileName').val(filename);
+                // }else{
+                    thisObject.parent().siblings('img').attr("src",e.target.result);
+                    thisObject.siblings('.fileName').val(filename);
+                // }
+
+            }
+            reader.readAsDataURL(f);
+        })
     });
     </script>

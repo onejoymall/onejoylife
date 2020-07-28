@@ -67,4 +67,4 @@
     </section>
      <c:import url="/layout/footer"/>
 <%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>
-<%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %> --%>
