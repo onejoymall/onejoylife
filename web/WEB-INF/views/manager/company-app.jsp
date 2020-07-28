@@ -147,6 +147,7 @@
                                 <td>
                                     <input type="text" id="store_id" name="store_id">
                                     <button type="button" class="btn_file" id="storIdDupCheck">중복확인</button>
+                                    <input type="hidden" name="storIdDupCheck" value="">
                                 </td>
                             </tr>
                             <tr>
@@ -183,6 +184,7 @@
 <%--                                        <label for="table-ra2">법인</label>--%>
                                         <input type="text" id="store_reg" name="store_reg">
                                         <button type="button" class="btn_file" id="storRegDupCheck">중복확인</button>
+                                        <input type="hidden" name="storRegDupCheck" value="">
                                     </td>
                                 </tr>
                                 <tr>
