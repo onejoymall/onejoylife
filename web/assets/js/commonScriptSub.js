@@ -1244,6 +1244,12 @@ $('.uploadBtn').on('change', function(object){
 
 //입점업체 신청
 $(document).on("click","#modalStoreAddProc",function () {
+    if(!pwCheck){
+        $('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+        $('input[name=store_password]').focus();
+        $("#password_cfValidation").removeClass("text-success");
+        return;
+    }
     var formData = new FormData($('#defaultForm')[0]);
     enableMenuArr = [];
     $.each($('input[name=enable_menu]'),function(idx, item){
@@ -1301,6 +1307,32 @@ $(document).on("click","#modalStoreAddProc",function () {
     });
 })
 
+var pwCheck = true;
+
+var regExp = /^[a-zA-Z0-9]{6,20}$/;
+//패스워드 체크
+$(document).on('input','input[name=store_password],input[name=store_passwordCf]',function () {
+    pwCheck = false;
+    var pw = $('input[name=store_password]').val();
+    var pw_cf = $('input[name=store_passwordCf]').val();
+    if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+        $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+        $("#passwordValidation").removeClass("text-success");
+        $("#password_cfValidation").text('');
+    }else{
+        $("#passwordValidation").text('');
+        if(pw != pw_cf){
+            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+            $("#password_cfValidation").removeClass("text-success");
+        }else{
+            pwCheck = true;
+            $("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+            $("#password_cfValidation").addClass("text-success");
+        }
+    }
+    if(!pw && !pw_cf) pwCheck = true;
+})
+
 //아이디중복체크
 $(document).on("click","#modalstorIdDupCheck",function () {
     var formData = new FormData($('#defaultForm')[0]);
@@ -1343,6 +1375,7 @@ $(document).on("click","#modalstorIdDupCheck",function () {
                 $('#store_id').attr("readonly",true);
                 $('#modalstorIdDupCheck').attr('disabled', true);
                 $('#modalstorIdDupCheck').html('OK');
+                $('input[name=storIdDupCheck]').val('Y');
             }
         },
         error: function (xhr, status, error) {
@@ -1392,6 +1425,7 @@ $(document).on("click","#modalstorRegDupCheck",function () {
                 $('#store_reg').attr("readonly",true);
                 $('#modalstorRegDupCheck').attr('disabled', true);
                 $('#modalstorRegDupCheck').html('OK');
+                $('input[name=storRegDupCheck]').val('Y');
             }
         },
         error: function (xhr, status, error) {

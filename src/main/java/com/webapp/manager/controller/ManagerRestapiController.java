@@ -1419,6 +1419,12 @@ public class ManagerRestapiController {
         if(params.get("enable_menu") == null || ((String)params.get("enable_menu")).equals("")) {
             error.put(messageSource.getMessage("mg_enable_menu","ko"),messageSource.getMessage("error.required","ko"));
         }
+        if(params.get("storIdDupCheck") == null || params.get("storIdDupCheck").equals("")){
+            error.put(messageSource.getMessage("store_id","ko"), messageSource.getMessage("error.overlapCheck", "ko"));
+        }
+        if(params.get("storRegDupCheck") == null || params.get("storRegDupCheck").equals("")){
+            error.put(messageSource.getMessage("store_reg","ko"), messageSource.getMessage("error.overlapCheck", "ko"));
+        }
         try{
         	storeVO.setSupplier_cd("S"+numberGender.numberGen(6, 1));
             FileUtil fs = new FileUtil();

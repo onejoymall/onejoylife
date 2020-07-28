@@ -2060,6 +2060,12 @@ $(document).on("click",".ra-num",function () {
 
    //입점업체 등록
     $(document).on("click","#formStoreSubmit",function () {
+    	if(!pwCheck){
+			$('#password_cfValidation').html(' * 비밀번호를 확인 해주세요.');
+			$('input[name=store_password]').focus();
+			$("#password_cfValidation").removeClass("text-success");
+			return;
+		}
         var formData = new FormData($('#defaultForm')[0]);
 		enableMenuArr = [];
 		$.each($('input[name=enable_menu]'),function(idx, item){
@@ -2116,6 +2122,8 @@ $(document).on("click",".ra-num",function () {
             }
         });
     })
+
+
     //입점업체등록 (상품등록시)
     $(document).on("click","#formStoreSubmitProduct",function () {
         var formData = new FormData($('#defaultForm1')[0]);
@@ -2186,6 +2194,7 @@ $(document).on("click",".ra-num",function () {
         $(".modal1").attr("style", "display:block");
         $('#formStoreSubmit').addClass('hidden');
         $('.updateBtn').removeClass('hidden');
+        $('.modal-header h2').html("입점업체 수정");
         // $('input:radio[name=store_reg_type]').eq(0).click();
         jQuery.ajax({
             type: 'POST',
@@ -2225,6 +2234,7 @@ $(document).on("click",".ra-num",function () {
     $(document).on("click","#storeUpdateSubmit",function () {
 		if(!pwCheck){
 			$('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+			$('input[name=store_password]').focus();
 			$("#password_cfValidation").removeClass("text-success");
 			return;
 		}
@@ -2388,6 +2398,7 @@ $(document).on("click",".ra-num",function () {
                     $('#store_id').attr("readonly",true);
                     $('#storIdDupCheck').attr('disabled', true);
                     $('#storIdDupCheck').html('OK');
+                    $('input[name=storIdDupCheck]').val('Y');
                 }
             },
             error: function (xhr, status, error) {
@@ -2437,6 +2448,7 @@ $(document).on("click",".ra-num",function () {
                     $('#store_reg').attr("readonly",true);
                     $('#storRegDupCheck').attr('disabled', true);
                     $('#storRegDupCheck').html('OK');
+                    $('input[name=storRegDupCheck]').val('Y');
                 }
             },
             error: function (xhr, status, error) {
