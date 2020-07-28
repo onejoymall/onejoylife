@@ -283,11 +283,11 @@
                 <li><img src='${list.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
                  </c:if>
             </ul>
-            <div class="share-list">
-                <a href="#none"><i class="facebook-ic"></i></a>
-                <a href="#none"><i class="twitter-ic"></i></a>
-                <a href="#none"><i class="kakao-ic"></i></a>
-            </div>
+<%--            <div class="share-list">--%>
+<%--                <a href="#none"><i class="facebook-ic"></i></a>--%>
+<%--                <a href="#none"><i class="twitter-ic"></i></a>--%>
+<%--                <a href="#none"><i class="kakao-ic"></i></a>--%>
+<%--            </div>--%>
         </div>
     </section>
     <section class="wrap">
@@ -321,7 +321,7 @@
 
                 <i class="heart-empty <c:if test="${heart}">heart-full</c:if>"> </i>
                 위시리스트</a></li>
-            <li><a href="#" class="share">공유하기</a></li>
+            <li><a href="#" class="share" onclick="share_product('${list.product_cd}', '${list.product_name}')">공유하기</a></li>
         </ul>
         <a href="${lineBannerList1.url}" class="width-100">
             <img src="${lineBannerList1.file_1}" class="width-100" /></a>
