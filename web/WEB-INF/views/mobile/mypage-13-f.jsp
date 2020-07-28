@@ -2,15 +2,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 	<form action="" method="POST" id="myDeliveryForm">
     <section class="subheader">
     <input type="hidden" name="product_delivery_International_type" value="C"/>
-        <div class="subTitle">배송지 관리</div>
+        <div class="subTitle">${afn:getMessage('delivery_manage',sessionScope.locale)}</div>
         
         <ul class="taps">
-            <li><a href="/MyPage/DeliveryAddress" id="tap1">국내 배송주소</a></li>
-            <li><a href="/MyPage/DeliveryAddressForeign" id="tap2" class="active">해외 배송주소</a></li>
+            <li><a href="/MyPage/DeliveryAddress" id="tap1">${afn:getMessage('domestic_delivery_addr',sessionScope.locale)}</a></li>
+            <li><a href="/MyPage/DeliveryAddressForeign" id="tap2" class="active">${afn:getMessage('foreign_delivery_addr',sessionScope.locale)}</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
@@ -23,8 +24,8 @@
             <thead class="lis-head">
                 <tr>
                     <th colspan="2" class="c-btn">
-                        <button type="submit" formaction="/MyPage/DeliveryAddressUpdateForeign" >선택주소지 수정</button>
-                        <button type="button" id="deleteDeliveryInfo">선택주소지 삭제</button>
+                        <button type="submit" formaction="/MyPage/DeliveryAddressUpdateForeign" >${afn:getMessage('check_addr',sessionScope.locale)} ${afn:getMessage('update',sessionScope.locale)}</button>
+                        <button type="button" id="deleteDeliveryInfo">${afn:getMessage('check_addr',sessionScope.locale)} ${afn:getMessage('delete',sessionScope.locale)}</button>
                     </th>
                 </tr>
             </thead>
@@ -41,7 +42,7 @@
                         	<span>${list.delivery_user_name}</span>
                         	<br>${list.delivery_alias}
                         	<c:if test="${list.default_delivery_info_yn == 'Y'}">
-                     		<span class="basic-r">(기본)</span>
+                     		<span class="basic-r">(${afn:getMessage('default',sessionScope.locale)})</span>
                       		</c:if>
                       	</p>
                         <p><span>${list.delivery_user_phone}</span></p>
@@ -56,8 +57,8 @@
         </table>
         
         <div class="fot-btn">
-            <button type="button" onclick="location.href='/MyPage/DeliveryAddressInsertForeign'">새 배송지 등록</button>
-            <button type="button" id="updateDefaultDeliveryInfo">기존배송지로 등록</button>
+            <button type="button" onclick="location.href='/MyPage/DeliveryAddressInsertForeign'">${afn:getMessage('new_addr',sessionScope.locale)}</button>
+            <button type="button" id="updateDefaultDeliveryInfo">${afn:getMessage('set_default_addr',sessionScope.locale)}</button>
         </div>
     </section>
     </form>

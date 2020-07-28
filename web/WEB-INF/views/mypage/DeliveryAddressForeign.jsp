@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -15,13 +16,13 @@
             <div class="right-contain">
                 <form action="" method="POST" id="myDeliveryForm">
                 <input type="hidden" name="product_delivery_International_type" value="C"/>
-                    <p class="sec1-h1">배송지 관리</p>
+                    <p class="sec1-h1">${afn:getMessage('delivery_manage',sessionScope.locale)}</p>
                     <div class="r-sec1">
                         <div class="sec1-ck">
-                            <p class="ck-p" data-id="/MyPage/DeliveryAddress">국내 배송주소</p>
-                            <p class="ck-p on" data-id="/MyPage/DeliveryAddressForeign">해외 배송주소</p>
+                            <p class="ck-p on" data-id="/MyPage/DeliveryAddress">${afn:getMessage('domestic_delivery_addr',sessionScope.locale)}</p>
+                            <p class="ck-p" data-id="/MyPage/DeliveryAddressForeign">${afn:getMessage('foreign_delivery_addr',sessionScope.locale)}</p>
                         </div>
-                        <p class="sec1-p">상품 구매 시 사용하실 배송지 정보를 최대 5개까지 관리하실 수 있습니다.</p>
+                        <p class="sec1-p">${afn:getMessage('msg.delivery_addr_info',sessionScope.locale)}</p>
                         <table class="tab on" id="sec-ck1">
                             <colgroup>
                             	<col style="width: 115px;">
@@ -32,11 +33,11 @@
                             </colgroup>
                             <thead>
                             <tr class="sec1-tr">
-                                <td>선택</td>
-                                <td>배송지 별명</td>
-                                <td>받는사람</td>
-                                <td>주소</td>
-                                <td>연락처</td>
+                                <td>${afn:getMessage('check',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('delivery_align',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('delivery_user_name',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('address',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('contact_num',sessionScope.locale)}</td>
                             </tr>
                             </thead>
                             <tbody class="sec1-tbody">
@@ -50,7 +51,7 @@
 	                                <td>
 	                                	${list.delivery_alias}
 	                                	<c:if test="${list.default_delivery_info_yn == 'Y'}">
-                                		<span class="td-clolr">(기본)</span>
+                                		<span class="td-clolr">(${afn:getMessage('default',sessionScope.locale)})</span>
 	                                	</c:if>
 	                                </td>
 	                                <td>
@@ -75,12 +76,12 @@
                         </table>
                     </div>
                     <div class="r-sec2">
-                        <p style="cursor: pointer;" id="updateDeliveryInfo">선택주소지 수정</p>
-                        <p style="cursor: pointer;" id="deleteDeliveryInfo">선택주소지 삭제</p>
+                        <p style="cursor: pointer;" id="updateDeliveryInfo">${afn:getMessage('check_addr',sessionScope.locale)} ${afn:getMessage('update',sessionScope.locale)}</p>
+                        <p style="cursor: pointer;" id="deleteDeliveryInfo">${afn:getMessage('check_addr',sessionScope.locale)} ${afn:getMessage('delete',sessionScope.locale)}</p>
                     </div>
                     <div class="r-sec3">
-                        <button type="button" id="addDeliveryInfo">새 배송지 등록</button>
-                        <button type="button" id="updateDefaultDeliveryInfo">기본배송지로 설정</button>
+                        <button type="button" id="addDeliveryInfo">${afn:getMessage('new_addr',sessionScope.locale)}</button>
+                        <button type="button" id="updateDefaultDeliveryInfo">${afn:getMessage('set_default_addr',sessionScope.locale)}</button>
                     </div>
                 </form>
             </div>
@@ -94,7 +95,7 @@
 <form id="form1">
    <div class="modal-content">
        <div class="modal-close-address">
-           <p>새 배송지 등록</p>
+           <p>${afn:getMessage('new_addr',sessionScope.locale)}</p>
            <div class="close"></div>
        </div>
        <div class="content-in">
@@ -108,7 +109,7 @@
                 <tbody>
                 	<tr class="body-tr">
                         <td class="body-td1">
-                            배송지 별명
+                            ${afn:getMessage('delivery_align',sessionScope.locale)}
                         </td>
                         <td  class="body-td2">
                             <input type="text" name="delivery_alias"/>
@@ -116,7 +117,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            받으시는분
+                            ${afn:getMessage('delivery_user_name',sessionScope.locale)}
                         </td>
                         <td  class="body-td2">
                             <input type="text" name="delivery_user_name"/>
@@ -126,7 +127,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            휴대폰번호
+                            ${afn:getMessage('phone',sessionScope.locale)}
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_phone_a" id="">
@@ -145,7 +146,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            전화 번호
+                            ${afn:getMessage('tel',sessionScope.locale)}
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_tel_a" id="">
@@ -175,16 +176,14 @@
                     </tr>
                     <tr class="body-tr ">
                         <td class="body-td1">
-                            주소
+                            ${afn:getMessage('addr',sessionScope.locale)}
                         </td>
                         <td class="body-td2 td-m">
-                            <!-- <div class="input-group"> -->
-                            <div>
-                                <input placeholder="우편번호" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
-                                <!-- <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button> -->
+                            <div class="input-group">
+                                <input placeholder="${afn:getMessage('postcode',sessionScope.locale)}" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
                             </div>
-                            <p class="mar-p2"><input placeholder="도로명주소" type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
-                             <p class="mar-p2"><input placeholder="상세주소" type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                            <p class="mar-p2"><input placeholder="${afn:getMessage('road_name_address',sessionScope.locale)}" type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                             <p class="mar-p2"><input placeholder="${afn:getMessage('extraAddress',sessionScope.locale)}" type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
                              <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
                              
                         </td>
@@ -197,7 +196,7 @@
                                 <input type="checkbox" id="le-ck1" name="defaultYn" value="Y">
                                 <label for="le-ck1">
                                     <span class="le-ck-txt"></span>
-                                    <span class="le-ck-color">기본배송지로 설정</span>
+                                    <span class="le-ck-color">${afn:getMessage('set_default_addr',sessionScope.locale)}</span>
                                 </label>
                             </div>
                         </td>
@@ -205,7 +204,7 @@
                 </tbody>
             </table>
             <div class="btn-box">
-                <button type="button" class="btn-redcover" id="newDeliveryBtn">등록</button>
+                <button type="button" class="btn-redcover" id="newDeliveryBtn">${afn:getMessage('registration',sessionScope.locale)}</button>
              </div>
         </div>
     </div>
@@ -215,7 +214,7 @@
     <form id="form2">
    <div class="modal-content">
        <div class="modal-close-address">
-           <p>배송지 수정</p>
+           <p>${afn:getMessage('delivery_address',sessionScope.locale)} ${afn:getMessage('update',sessionScope.locale)}</p>
            <input type="hidden" name="product_delivery_International_type" value="C"/>
            <div class="close"></div>
        </div>
@@ -230,7 +229,7 @@
                 <tbody>
                 	<tr class="body-tr">
                         <td class="body-td1">
-                            배송지 별명
+                            ${afn:getMessage('delivery_align',sessionScope.locale)}
                         </td>
                         <td  class="body-td2">
                             <input type="text" name="delivery_alias"/>
@@ -238,7 +237,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            받으시는분
+                            ${afn:getMessage('delivery_user_name',sessionScope.locale)}
                         </td>
                         <td  class="body-td2">
                             <input type="text" name="delivery_user_name"/>
@@ -247,7 +246,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            휴대폰번호
+                            ${afn:getMessage('phone',sessionScope.locale)}
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_phone_a" id="">
@@ -266,7 +265,7 @@
                     </tr>
                     <tr class="body-tr">
                         <td class="body-td1">
-                            전화 번호
+                            ${afn:getMessage('tel',sessionScope.locale)}
                         </td>
                         <td  class="body-td2 p-num">
                             <select name="delivery_user_tel_a" id="">
@@ -296,16 +295,16 @@
                     </tr>
                     <tr class="body-tr ">
                         <td class="body-td1">
-                            주소
+                            ${afn:getMessage('address',sessionScope.locale)}
                         </td>
                         <td class="body-td2 td-m">
                             <!-- <div class="input-group"> -->
                             <div>
-                                <input placeholder="우편번호" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+                                <input placeholder="${afn:getMessage('postcode',sessionScope.locale)}" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
                                 <!-- <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button> -->
                             </div>
-                            <p class="mar-p2"><input placeholder="도로명주소" type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
-                             <p class="mar-p2"><input placeholder="상세주소" type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
+                            <p class="mar-p2"><input placeholder="${afn:getMessage('road_name_addr',sessionScope.locale)}" type="text" class="sec2-in2" name="roadAddress" id="roadAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>"></p>
+                             <p class="mar-p2"><input placeholder="${afn:getMessage('extraAddress',sessionScope.locale)}" type="text" class="sec2-in2" name="extraAddress" id="extraAddress_modi" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>"></p>
                              <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
                              
                         </td>
@@ -318,7 +317,7 @@
                                 <input type="checkbox" id="le-ck2" name="defaultYn" value="Y">
                                 <label for="le-ck2">
                                     <span class="le-ck-txt"></span>
-                                    <span class="le-ck-color">기본배송지로 설정</span>
+                                    <span class="le-ck-color">${afn:getMessage('set_default_addr',sessionScope.locale)}</span>
                                 </label>
                             </div>
                         </td>
@@ -326,7 +325,7 @@
                 </tbody>
             </table>
             <div class="btn-box">
-                <button type="button" class="btn-redcover btn-redcover1" id="updateDeliveryBtn">수정</button>
+                <button type="button" class="btn-redcover btn-redcover1" id="updateDeliveryBtn">${afn:getMessage('update',sessionScope.locale)}</button>
              </div>
         </div>
     </div>

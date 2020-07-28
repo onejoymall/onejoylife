@@ -2,23 +2,24 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 
     <section class="subheader">
-        <div class="subTitle">새 배송지 등록</div>
+        <div class="subTitle">${afn:getMessage('new_addr',sessionScope.locale)}</div>
     </section>
     
     <section class="wrap">
     	<form id="form1">
-    	<p class="text-md mt-2 mb-05">배송지 별명</p>
+    	<p class="text-md mt-2 mb-05">${afn:getMessage('delivery_align',sessionScope.locale)}</p>
         <input type="text" name="delivery_alias" class="width-100 mb-05"/>
         
-        <p class="text-md mt-2 mb-05">받으시는 분</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage('delivery_user_name',sessionScope.locale)}</p>
         <input type="text" name="delivery_user_name" class="width-100 mb-05"/>
         <input type="hidden" name="order_no"/>
         <input type="hidden" name="product_delivery_International_type" value="A"/>
         
-        <p class="text-md mt-2 mb-05">휴대폰 번호</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage('phone',sessionScope.locale)}</p>
         <select name="delivery_user_phone_a" id="" class="width-25 mt-05 mb-05">
             <option value="010" >010</option>
             <option value="011" >011</option>
@@ -30,7 +31,7 @@
         <input type="text" class="width-30 mb-05" name="delivery_user_phone_b" id="delivery_user_tel_b"  maxlength="4"> -
         <input type="text" class="width-30 mb-05" name="delivery_user_phone_c" id="delivery_user_tel_b"  maxlength="4">
         
-        <p class="text-md mt-2 mb-05">전화 번호</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage('tel',sessionScope.locale)}</p>
         <select name="delivery_user_tel_a" id="" class="width-25 mt-05 mb-05">
             <option value="02">02</option>
 			<option value="031">031</option>
@@ -53,22 +54,22 @@
         <input type="text" name="delivery_user_tel_b" class="width-30 mb-05" maxlength="4"> -
         <input type="text" name="delivery_user_tel_c" class="width-30 mb-05" maxlength="4">
         
-        <p class="text-md mt-2 mb-05">주소</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage('address',sessionScope.locale)}</p>
         <div class="input-group mb-05">
-            <input placeholder="우편번호" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
-            <button type="button" class="grey" id="daumMapCall">우편번호 찾기</button>
+            <input placeholder="${afn:getMessage('postcode',sessionScope.locale)}" type="text" name="postcode" id="postcode" class="sec2-in1" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
+            <button type="button" class="grey" id="daumMapCall">${afn:getMessage('postcode',sessionScope.locale)} ${afn:getMessage('search',sessionScope.locale)}</button>
          </div>
-         <input placeholder="도로명주소" type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
-         <input placeholder="상세주소" type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
-         <p>* 위 칸에 상세주소를 추가로 입력하세요</p>
+         <input placeholder="${afn:getMessage('road_name_addr',sessionScope.locale)}" type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
+         <input placeholder="${afn:getMessage('extraAddress',sessionScope.locale)}" type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
+         <p>* ${afn:getMessage('msg.detail_address_input',sessionScope.locale)}</p>
          <input type="hidden" name="jibunAddress" id="jibunAddress">
 
          <input type="checkbox" id="le-ck1" name="defaultYn" value="Y">
-         <label for="le-ck1" class="mt-2">기본배송지로 설정</label>
+         <label for="le-ck1" class="mt-2">${afn:getMessage('set_default_addr',sessionScope.locale)}</label>
          
 
          <div class="btn-box mt-4">
-            <button type="button" class="btn btn-redcover width-100" id="newDeliveryBtn">등록</button>
+            <button type="button" class="btn btn-redcover width-100" id="newDeliveryBtn">${afn:getMessage('registration',sessionScope.locale)}</button>
          </div>
          </form>
     </section>
