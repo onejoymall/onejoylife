@@ -245,7 +245,10 @@
 	        <if test="newpassword != null and newpassword != ''" >password=#{newpassword}</if>
         where email = #{email}
     </update>
-    
+    <delete id="deleteUser" parameterType="hashmap">
+    	delete from user 
+    	where usr_id = #{usr_id}
+    </delete>
     <update id="updateStoreManagerPassword" parameterType="com.webapp.mall.vo.UserVO">
        /*updateStoreManagerPassword*/ 
         update store set

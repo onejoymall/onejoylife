@@ -2,30 +2,31 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 <form name="defaultForm" id="defaultForm" method="POST">
         <header class="header">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
-                <p class="header-tit">회원정보 수정</p>
+                <p class="header-tit">${afn:getMessage('user_info',sessionScope.locale)} ${afn:getMessage('confirm',sessionScope.locale)}</p>
             </div>
         </header>
         <div class="mo-main form-main clearfix">
             <div class="h3-tit">
-                <h3>비밀번호 확인</h3>
-                <p>회원님의 안전한 개인정보 보호를 위해 비밀번호를 다시 한번 확인 합니다.</p>
+                <h3>${afn:getMessage('password',sessionScope.locale)} ${afn:getMessage('confirm',sessionScope.locale)}</h3>
+                <p>${afn:getMessage('msg.user.pw_confirm',sessionScope.locale)}</p>
             </div>
             <div class="form-box">
                 <form action="">
                     <div class="join-cell">
-                        <h5>아이디(이메일)</h5>
+                        <h5>${afn:getMessage('id',sessionScope.locale)} (${afn:getMessage('email',sessionScope.locale)})</h5>
                         <p class="id-p"><span>${sessionScope.email}</span></p>
                     </div>
                     <div class="join-cell">
-                        <h5>비밀번호</h5>
+                        <h5>${afn:getMessage('password',sessionScope.locale)}</h5>
                         <input type="password" name="password">
                     </div>
-                    <button type="button" id="formSubmit" class="btn-join">확인</button>
+                    <button type="button" id="formSubmit" class="btn-join">${afn:getMessage('confirm',sessionScope.locale)}</button>
                 </form>
             </div>
         </div>

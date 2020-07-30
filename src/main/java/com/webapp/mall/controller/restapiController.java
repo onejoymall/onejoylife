@@ -295,6 +295,25 @@ public class restapiController {
         }
         return resultMap;
     }
+    //회원 탈퇴
+    @RequestMapping(value = "/sign/withdrawProc", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> withdrawProc(@RequestParam HashMap params, UserVO userVO, HttpSession session){
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	try {
+    		params.put("email", session.getAttribute("email"));
+			Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+			
+			if(!isEmpty(userInfo)){
+				userDAO.deleteUser(userInfo);
+				resultMap.put("redirectUrl", "/sign/logout");
+			}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
+    }
     //로그인 처리 1
     @RequestMapping(value = "/sign/loginProc", method = RequestMethod.GET, produces = "application/json")
     public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo,HttpServletRequest request,UserVO userVO){
@@ -2162,7 +2181,7 @@ public class restapiController {
 				return resultMap;
 			}
 			if(params.get("locale") == null || params.get("locale").equals("")) {
-				return resultMap;
+				params.put("locale","ko");
 			}
 			resultMap.put("message",messageSource.getMessage((String)params.get("key"), (String)params.get("locale")));
 			return resultMap;

@@ -2,10 +2,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 <form id="form1" name="form1"  method="get">
     <section class="subheader">
-        <div class="subTitle">E.POINT 조회</div>
+        <div class="subTitle">E.POINT ${afn:getMessage('lookup',sessionScope.locale)}</div>
         <c:import url="/MyPage/RightHeaderSub"/>
         <ul class="taps">
             <li><a class="active">E-POINT</a></li>
@@ -19,10 +20,10 @@
             <option value="2">사용(-)</option>
         </select> -->
         <ul class="btns">
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <div class="date-box">
             <div class="input-box2">
@@ -36,7 +37,7 @@
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="button" onclick="$('#form1').submit();" class="date-btn">조회</button>
+            <button type="button" onclick="$('#form1').submit();" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
         <table>
             <colgroup>
@@ -45,7 +46,7 @@
             </colgroup>
             <thead class="lis-head">
                 <tr>
-                    <th colspan="2">이용내역</th>
+                    <th colspan="2">${afn:getMessage('useList',sessionScope.locale)}</th>
                 </tr>
             </thead>
             <tbody class="lis-body">
@@ -65,7 +66,7 @@
                 </c:if>
                 <c:if test="${empty list}">
                     <tr>
-                        <td colspan="2">표시할 내용이 없습니다.</td>
+                        <td colspan="2">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                     </tr>
                 </c:if>
             </tbody>
