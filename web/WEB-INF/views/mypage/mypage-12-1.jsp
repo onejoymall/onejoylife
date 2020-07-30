@@ -6,6 +6,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/mall/cert_conf.jsp"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <%
 	String ordr_idxx = "TEST" + (new SimpleDateFormat("yyyyMMddHHmmssSSSSSSS").format(new Date())); // 요청번호 생성 예제
 %>
@@ -19,13 +21,13 @@
 		
 		if(obj.cert_enc_use == 'Y' && obj.res_cd == '0000'){
 			$('#phoneBtn').addClass("bg-success");
-            $('#phoneBtn').text("인증완료");
+            $('#phoneBtn').text("${afn:getMessage('cert_ok',sessionScope.locale)}");
             $('input[name=phone]').val(obj.phone_no);
             $('input[name=username]').val(obj.user_name);
             $('input[name=sex]').val(obj.sex_code);
             $('input[name=birth]').val(obj.birth_day);
 		}else{
-			alert("인증실패");
+			alert("${afn:getMessage('cert_fail',sessionScope.locale)}");
 		}
 	}
     // 인증창 종료 후 인증데이터 리턴 함수
@@ -38,7 +40,7 @@
         // up_hash 검증 
         if( frm.up_hash.value != auth_form.veri_up_hash.value )
         {
-            alert("up_hash 변조 위험있음");
+            alert("up_hash ${afn:getMessage('error.modulation',sessionScope.locale)}");
             
         }              
         
@@ -60,7 +62,7 @@
 
         if( auth_form.ordr_idxx.value == "" )
         {
-            alert( "요청번호는 필수 입니다." );
+            alert( "${afn:getMessage('error.req_num',sessionScope.locale)}" );
 
             return false;
         }
@@ -138,9 +140,9 @@
                 <%@ include file="/WEB-INF/views/layout/leftNav.jsp" %>
                 <div class="right-contain">
                     <form name="defaultForm" id="defaultForm" method="POST">
-                        <p class="sec1-h1">회원정보 수정</p>
+                        <p class="sec1-h1">${afn:getMessage('user_info',sessionScope.locale)} ${afn:getMessage('update',sessionScope.locale)}</p>
                         <div class="r-sec1">
-                            <p class="sec-h1">기본정보</p>
+                            <p class="sec-h1">${afn:getMessage('default_info',sessionScope.locale)}</p>
                             <table>
                                 <colgroup>
                                     <col style="width: 180px;">
@@ -148,30 +150,30 @@
                                 </colgroup>
                                 <tbody class="sec1-tbody">
                                     <tr class="sec1-td-bor1">
-                                        <td class="txt-a">아이디(이메일)</td>
+                                        <td class="txt-a">${afn:getMessage('id',sessionScope.locale)}(${afn:getMessage('email',sessionScope.locale)})</td>
                                         <td class="td-mar padding-left">
                                             <div class="body-td1-1">
                                                 <span>${sessionScope.email}</span>
                                             </div>
                                             <div class="body-td1-2 dis-none" style="margin-bottom: 12px;">
                                                 <input type="text">
-                                                <a href=""><span>인증메일 전송</span></a>
+                                                <a href=""><span>${afn:getMessage('cert_mail_req',sessionScope.locale)}</span></a>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr class="sec1-td-bor1">
-                                        <td class="txt-a">휴대폰 번호</td>
+                                        <td class="txt-a">${afn:getMessage('phone',sessionScope.locale)}</td>
                                         <td class="padding-left">
                                             <input type="text" name="phone" class="input-ty input-phone" id="phone" readonly="readonly" value="${userInfo.phone}">
                                             <input name="sex" id="sex" type="hidden" value="${userInfo.sex}" readonly>
 		                                    <input name="birth" id="birth" type="hidden" value="${userInfo.birth}" readonly>
 		                                    <input name="username" id="username" type="hidden" value="${userInfo.username}" readonly>
-		                                    <button class="btn-auth" id="phoneBtn" onclick="return auth_type_check();" type="button">변경하기</button>
+		                                    <button class="btn-auth" id="phoneBtn" onclick="return auth_type_check();" type="button">${afn:getMessage('do_update',sessionScope.locale)}</button>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="7" class="txt-a">비밀번호 변경</td>
-                                        <td class="padding-left pw-color1"><span>* 비밀번호는 6~20자의 영문, 숫자를 조합하여 입력하여 주세요. <br> * 입력하지않으면 기존비밀번호로 유지됩니다.</span></td>
+                                        <td rowspan="7" class="txt-a">${afn:getMessage('password',sessionScope.locale)} ${afn:getMessage('update',sessionScope.locale)}</td>
+                                        <td class="padding-left pw-color1"><span>* ${afn:getMessage('msg.user.pw_update1',sessionScope.locale)} <br> * ${afn:getMessage('msg.user.pw_update2',sessionScope.locale)}</span></td>
                                     </tr>
                                     <!-- <tr>
                                         <td class="padding-left"><span class="span-w">현재 비밀번호</span><input type="password" name="password" class="input-ty"></td>
@@ -180,13 +182,13 @@
                                         <td class="padding-left"><span class="span-w"></span>비밀번호가 정확하지 않습니다.</td>
                                     </tr> -->
                                     <tr>
-                                        <td class="padding-left"><span class="span-w">신규 비밀번호</span><input type="password" name="newpassword" class="input-ty"></td>
+                                        <td class="padding-left"><span class="span-w">${afn:getMessage('new_pw',sessionScope.locale)}</span><input type="password" name="newpassword" class="input-ty"></td>
                                     </tr>
                                     <tr class="tr-height">
                                         <td class="padding-left" id="passwordValidation"></td>
                                     </tr>
                                     <tr>
-                                        <td class="padding-left"><span class="span-w">비밀번호 다시 입력</span><input type="password" name="renewpassword" class="input-ty"></td>
+                                        <td class="padding-left"><span class="span-w">${afn:getMessage('re_pw',sessionScope.locale)}</span><input type="password" name="renewpassword" class="input-ty"></td>
                                     </tr>
                                     <tr class="tr-height">
                                         <td class="padding-left pad-bot" id="password_cfValidation"></td>
@@ -195,7 +197,7 @@
                             </table>
                         </div>
                         <div class="r-sec2">
-                            <p class="sec-h1">정보 수신 동의</p>
+                            <p class="sec-h1">${afn:getMessage('accept_info',sessionScope.locale)}</p>
                             <table>
                                 <colgroup>
                                     <col style="width: 894px;">
@@ -205,7 +207,7 @@
                                         <td class="sec2-td1">
                                             <input type="checkbox" id="ch1" <c:if test="${userInfo.user_privacy_policy == 'Y' &&
                                             											  userInfo.email_privacy_policy == 'Y'}">checked</c:if>>
-                                            <label for="ch1"><span class="ch-display">전체동의</span></label>
+                                            <label for="ch1"><span class="ch-display">${afn:getMessage('accept_all',sessionScope.locale)}</span></label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -214,16 +216,16 @@
                                             <label for="ch2">
                                                 <div class="ch-display">
                                                     <div class="cont1-box1">
-                                                        <span class="c-color">(선택)</span><span>개인정보 수집 및 이용</span>
+                                                        <span class="c-color">(${afn:getMessage('select',sessionScope.locale)})</span><span>${afn:getMessage('collect_info_agree',sessionScope.locale)}</span>
                                                     </div>
                                                     <div class="cont1-box2">
                                                         <div class="cont1-out1">
-                                                            <span>목적</span>
-                                                            <span>메인이벤트 등 마케팅 활용</span>
+                                                            <span>${afn:getMessage('purpose',sessionScope.locale)}</span>
+                                                            <span>${afn:getMessage('marketing_event_use',sessionScope.locale)}</span>
                                                         </div>
                                                         <div class="cont1-out2">
-                                                            <span>항목</span>
-                                                            <span>회원탈퇴 후 5일까지</span>
+                                                            <span>${afn:getMessage('article',sessionScope.locale)}</span>
+                                                            <span>${afn:getMessage('withdraw_after5',sessionScope.locale)}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,10 +237,10 @@
                                             <input type="checkbox" id="ch3" value="Y" name="email_privacy_policy" <c:if test="${userInfo.email_privacy_policy == 'Y'}">checked</c:if>>
                                             <label for="ch3">
                                                 <div class="ch-display">
-                                                    <span class="c-color">(선택)</span><span>이메일 수신</span>
-                                                    <p class="mar-top">- 이메일 동의 여부 변경 시 24시간 이후부터 적용됩니다.<br>
-                                                    - 이메일 수신 동의 시 원조이몰의 할인쿠폰,이벤트,인기경품 등의 마케팅 관련소식을 받을 수 있습니다.<br>
-                                                    - 회원정보, 구매, 배송 정보 및 중요 공지사항은 수신 동의여부에 관계없이 발송됩니다.
+                                                    <span class="c-color">(${afn:getMessage('select',sessionScope.locale)})</span><span>${afn:getMessage('email_receive',sessionScope.locale)}</span>
+                                                    <p class="mar-top">- ${afn:getMessage('msg.user.email_receive2',sessionScope.locale)}<br>
+                                                    - ${afn:getMessage('msg.user.email_receive2',sessionScope.locale)}<br>
+                                                    - ${afn:getMessage('msg.user.email_receive3',sessionScope.locale)}
                                                     </p>
                                                 </div>
                                             </label>
@@ -249,14 +251,14 @@
                             </table>
                             <div class="box1">
                                 <div class="box1-in">
-                                    <p>탈퇴를 원하시면 우측의 회원탈퇴 버튼을 눌러주세요.</p>
-                                    <a href="mypage-12-1-1.html">회원탈퇴</a>
+                                    <p>${afn:getMessage('msg.user.withdraw',sessionScope.locale)}</p>
+                                    <a href="javascript:withdrawUser()">${afn:getMessage('user_withdraw',sessionScope.locale)}</a>
                                 </div>
                             </div>
                         </div>
                         <div class="r-sec3">
-                            <button type="button" id="formSubmitUserModi">수정</button>
-                            <button>이전</button>
+                            <button type="button" id="formSubmitUserModi">${afn:getMessage('update',sessionScope.locale)}</button>
+                            <button>${afn:getMessage('prev',sessionScope.locale)}</button>
                         </div>
                     </form>
                 </div>   
@@ -267,7 +269,7 @@
 <script type="text/javascript">
 $("#formSubmitUserModi").click(function(){
 	if(!pwCheck){
-		$('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+		$('#password_cfValidation').html('* ${afn:getMessage('error.sign.pwdcfMsg',sessionScope.locale)}');
 		$("#password_cfValidation").removeClass("text-success");
 		return;
 	}
@@ -293,7 +295,7 @@ $("#formSubmitUserModi").click(function(){
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + " ${afn:getMessage('is',sessionScope.locale)} " + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -347,17 +349,17 @@ $(document).on('input','input[name=newpassword],input[name=renewpassword]',funct
 	var pw = $('input[name=newpassword]').val();
 	var pw_cf = $('input[name=renewpassword]').val();
     if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-        $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+        $("#passwordValidation").text(" * ${afn:getMessage('msg.user.pw_update1',sessionScope.locale)}");
         $("#passwordValidation").removeClass("text-success");
         $("#password_cfValidation").text('');
     }else{
     	$("#passwordValidation").text('');
     	if(pw != pw_cf){
-            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+            $("#password_cfValidation").text(" * ${afn:getMessage('error.inpPwdCfm',sessionScope.locale)}");
             $("#password_cfValidation").removeClass("text-success");
         }else{
         	pwCheck = true;
-        	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+        	$("#password_cfValidation").text(" * ${afn:getMessage('msg.user.pw_ok',sessionScope.locale)}");
             $("#password_cfValidation").addClass("text-success");
         }
     }

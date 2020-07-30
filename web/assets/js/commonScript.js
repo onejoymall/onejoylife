@@ -4835,3 +4835,10 @@ function getMessageAjax(key){
     }).responseText;
     return JSON.parse(message).message;
 }
+
+//회원탈퇴
+function withdrawUser(){
+	if(confirm(getMessageAjax('msg.user.withdraw_confirm'))){
+		commonAjaxCall('post','/sign/withdrawProc',{});
+	}
+}

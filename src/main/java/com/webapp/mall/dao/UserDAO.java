@@ -91,5 +91,8 @@ public class UserDAO {
     public void updateStoreManagerPassword(UserVO userVO) throws SQLException {
         sql.update("mall.UserMapper.updateStoreManagerPassword", userVO);
     }
+	public void deleteUser(Map<String, Object> userInfo) {
+		sql.delete("mall.UserMapper.deleteUser", userInfo);
+	}
     
 }

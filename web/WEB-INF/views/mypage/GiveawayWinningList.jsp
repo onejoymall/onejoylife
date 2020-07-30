@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %>'
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -18,18 +20,18 @@
                 <c:import url="/MyPage/RightHeader"/>
                 <div class="ojt-tab-box">
                     <div class="ojt-tab">
-                        <p class="ojt-but on2" data-id2="ojt1">경품</p>
-                        <p class="ojt-but ready" data-id2="ojt2">이벤트</p>
+                        <p class="ojt-but on2" data-id2="ojt1">${afn:getMessage('giveaway',sessionScope.locale)}</p>
+                        <p class="ojt-but ready" data-id2="ojt2">${afn:getMessage('event',sessionScope.locale)}</p>
                     </div>
                 </div>
                 <div class="ojt-tabbox on2" id="ojt1">
                     <div class="r-input-box">
                         <div class="r-in-box">
                             <div class="input-box1">
-                                <p class="ra-num on" data-id="con1">오늘</p>
-                                <p class="ra-num" data-id="con2">1주일</p>
-                                <p class="ra-num" data-id="con3">1개월</p>
-                                <p class="ra-num" data-id="con4">3개월</p>
+                                <p class="ra-num on" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</p>
                             </div>
                             <form id="form2" name="form2"  method="get">
                             <div class="input-box2">
@@ -42,7 +44,7 @@
                                     <input type="text" name="end_date" id="to_date" class="date_pick" value="${param.end_date}">
                                     <div class="cla-img1"></div>
                                 </div>
-                                <p class="cla-p2"><a href="javascript:$('#form2').submit();">조회</a></p>
+                                <p class="cla-p2"><a href="javascript:$('#form2').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                             </div>
                             </form>
                         </div>
@@ -70,11 +72,11 @@
                                 </colgroup>
                                 <thead class="lis-head">
                                 <tr>
-                                    <th>응모일시</th>
-                                    <th>경품정보</th>
-                                    <th>총 사용포인트</th>
-                                    <th>상태</th>
-                                    <th>조회</th>
+                                    <th>${afn:getMessage('appl_date_time',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('giveaway_info',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('use_point_total',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('status',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('lookup',sessionScope.locale)}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="lis-body">
@@ -112,12 +114,12 @@
                                         <td><span><fmt:formatNumber value="${list.giveaway_payment_epoint}" groupingUsed="true" />P</span></td>
                                         <c:if test="${empty list.giveaway_winner_reg_date && empty list.winner_id}">
                                             <td>
-                                                <span>진행중</span><br>
+                                                <span>${afn:getMessage('ongoing',sessionScope.locale)}</span><br>
                                             </td>
                                         </c:if>
                                         <c:if test="${not empty list.giveaway_winner_reg_date && empty list.winner_id}">
                                         <td>
-                                            <span>추첨완료</span><br>
+                                            <span>${afn:getMessage('use_point_total',sessionScope.locale)}</span><br>
                                             <span class="txt-s">(<fmt:formatDate value="${list.giveaway_winner_reg_date}" pattern="yyyy.MM.dd"/>)</span>
                                         </td>
                                         </c:if>
@@ -134,7 +136,7 @@
                                                 <c:if test="${list.giveaway_payment_status eq 'A' || list.payment_status == 'N'}">
                                                     <a href="/MyPage/giveawayform?giveaway_cd=${list.giveaway_cd}&giveaway_play_cd=${list.giveaway_play_cd}">
                                                         <p class="lis-txt-box txt-color2">
-                                                            <span>경품받기</span>
+                                                            <span>${afn:getMessage('giveaway',sessionScope.locale)}${afn:getMessage('receive',sessionScope.locale)}</span>
                                                         </p>
                                                     </a>
                                                 </c:if>
@@ -142,14 +144,14 @@
                                                 <c:if test="${list.giveaway_payment_status !=  'A' && list.payment_status != 'N'}">
                                                     <a href="javascript:void(0)" id="SearchDelivery" data-id="${list.order_no}">
                                                         <p class="lis-txt-box txt-color2">
-                                                            <span>배송조회</span>
+                                                            <span>${afn:getMessage('QA_delivery',sessionScope.locale)}${afn:getMessage('receive',sessionScope.locale)}</span>
                                                         </p>
                                                     </a>
                                                     <c:if test="${list.payment_status == 'M' && list.pay_method == 'vbank'}">
-                                                    	<a href="javascript:vbankNoCheck('${list.imp_uid}')"><p class="lis-txt-box">가상계좌 확인</p></a>
+                                                    	<a href="javascript:vbankNoCheck('${list.imp_uid}')"><p class="lis-txt-box">${afn:getMessage('vbank',sessionScope.locale)} ${afn:getMessage('QAok',sessionScope.locale)}</p></a>
                                                     </c:if>
                                                     <c:if test="${list.payment_status != 'M' }">
-                                                    	<a href="javascript:withholding('${list.order_no}')"><p class="lis-txt-box">원천징수 영수증</p></a>
+                                                    	<a href="javascript:withholding('${list.order_no}')"><p class="lis-txt-box">${afn:getMessage('withholding',sessionScope.locale)}</p></a>
                                                     </c:if>
                                                 </c:if>
                                             </c:if>
@@ -159,7 +161,7 @@
                             </c:if>
                                 <c:if test="${empty list}">
                                     <tr>
-                                        <td colspan="5">표시할 내용이 없습니다.</td>
+                                        <td colspan="5">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -596,9 +598,9 @@
         $.datepicker.setDefaults({
             dateFormat: 'yy-mm-dd',
             showMonthAfterYear:true,
-            monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            monthNames:['1${afn:getMessage('month2',sessionScope.locale)}','2${afn:getMessage('month2',sessionScope.locale)}','3${afn:getMessage('month2',sessionScope.locale)}','4${afn:getMessage('month2',sessionScope.locale)}','5${afn:getMessage('month2',sessionScope.locale)}','6${afn:getMessage('month2',sessionScope.locale)}','7${afn:getMessage('month2',sessionScope.locale)}','8${afn:getMessage('month2',sessionScope.locale)}','9${afn:getMessage('month2',sessionScope.locale)}','10${afn:getMessage('month2',sessionScope.locale)}','11${afn:getMessage('month2',sessionScope.locale)}','12${afn:getMessage('month2',sessionScope.locale)}'],
+            dayNamesMin: ['${afn:getMessage('sun',sessionScope.locale)}','${afn:getMessage('mon',sessionScope.locale)}','${afn:getMessage('tue',sessionScope.locale)}','${afn:getMessage('wed',sessionScope.locale)}','${afn:getMessage('thu',sessionScope.locale)}','${afn:getMessage('fri',sessionScope.locale)}','${afn:getMessage('sat',sessionScope.locale)}'],
+            dayNames: ['${afn:getMessage('sunday',sessionScope.locale)}','${afn:getMessage('monday',sessionScope.locale)}','${afn:getMessage('tuesday',sessionScope.locale)}','${afn:getMessage('wednesday',sessionScope.locale)}','${afn:getMessage('thursday',sessionScope.locale)}','${afn:getMessage('friday',sessionScope.locale)}','${afn:getMessage('saturday',sessionScope.locale)}'],
             numberOfMonths: [1,1],
         });
         $(".date_pick").datepicker();
