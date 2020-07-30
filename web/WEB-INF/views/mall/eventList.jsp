@@ -10,6 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
 <section class="main-section">
@@ -60,7 +61,7 @@
             </c:forEach>
         </c:if>
         <c:if test="${empty eventList}">
-            표시할 내용이 없습니다.
+            ${afn:getMessage("msg.none_content",sessionScope.locale)}
         </c:if>
             </div>
         </div>

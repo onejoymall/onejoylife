@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -29,18 +30,18 @@
         <header class="header clearfix">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
-                <span class="header-tit">회원가입</span>
+                <span class="header-tit">${afn:getMessage("join",sessionScope.locale)}</span>
             </div>
         </header>
         <div class="mo-main join-main clearfix">
             <div class="mo-logo clearfix"><a href="/">onejoy life</a></div>
-            <a href="<c:url value="/mobile/signup"/>" class="btn-join">회원가입</a>
+            <a href="<c:url value="/mobile/signup"/>" class="btn-join">${afn:getMessage("join",sessionScope.locale)}</a>
             <div class="line-box">
                 <span class="line"></span>
-                <span class="ttl">또는 소셜 아이디로 회원가입</span>
+                <span class="ttl">${afn:getMessage("msg.sign.orSocialSign",sessionScope.locale)}</span>
                 <span class="line"></span>
             </div>
-            <a href="" class="btn-kakao-login"><i class="kakao-icon"></i>kakao 계정으로 회원가입</a>
+            <a href="" class="btn-kakao-login"><i class="kakao-icon"></i>${afn:getMessage("msg.sign.kakao",sessionScope.locale)}</a>
         </div>
         <div class="mo-footer">
 

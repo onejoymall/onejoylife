@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,14 +24,14 @@
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
                 
-            <span class="header-tit">회원가입</span>
+            <span class="header-tit">${afn:getMessage("join",sessionScope.locale)}</span>
             </div>
         </header>
         <div class="mo-main complete-main clearfix">
             <div class="mo-logo"><a href="">onejoy life</a></div>
-            <p class="join-tit">회원가입 완료</p>
-            <p class="join-txt"><span>홍길동</span>님의 원조이라이프 회원가입을 축하합니다.<br>원조이몰에서 즐겁게 구입하시고 E-PONT의 특별한 혜택도 함께 누려보세요!</p>
-            <a href="<c:url value="/sign/login"/>" class="btn-login">로그인</a>
+            <p class="join-tit">${afn:getMessage("successJoin",sessionScope.locale)}</p>
+            <p class="join-txt"><span></span>ONEJOYlife ${afn:getMessage("msg.signupDone.joinCong",sessionScope.locale)}<br>${afn:getMessage("msg.signupDone.enjoyMsg",sessionScope.locale)}</p>
+            <a href="<c:url value="/sign/login"/>" class="btn-login">${afn:getMessage("login",sessionScope.locale)}</a>
         </div>
         <div class="mo-footer">
 

@@ -167,7 +167,7 @@ public class UserController {
                 redirectUrl = "redirect:/sign/findUserInfo";
             } else if(isEmpty(userInfo)){
 //                redirectUrl = "redirect:/";
-                out.println("<script>alert('유효하지 않은 페이지 입니다.'); location.href='/';</script>");
+                out.println("<script>alert('" + messageSource.getMessage("error.changePwd.invalidPage", "ko") + "'); location.href='/';</script>");
                 out.flush();
             } else {
                 model.addAttribute("email",email);
