@@ -9,14 +9,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>'
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <div class="wrap">
     <div class="page-box">
         <main class="clearfix">
             <form name="defaultForm" ID="defaultForm" method="POST">
-                <h2 class="head-h2">세금결제</h2>
+                <h2 class="head-h2">${afn:getMessage('tax_payment',sessionScope.locale)}</h2>
                 <div class="left-box">
                     <div class="l-sec1">
-                        <p class="sec-h1">주문상품 정보</p>
+                        <p class="sec-h1">${afn:getMessage('order_product_info',sessionScope.locale)}</p>
                         <table class="box1-table">
                             <colgroup>
                                 <col style="width: 150px;">
@@ -28,10 +30,10 @@
                             <thead>
                             <tr class="head-tr">
                                 <td></td>
-                                <td>상품정보</td>
-                                <td>상품 공급가</td>
-                                <td>수량</td>
-                                <td>당첨번호</td>
+                                <td>${afn:getMessage('product_info',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('product_company_payment',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('quantity',sessionScope.locale)}</td>
+                                <td>${afn:getMessage('win_num',sessionScope.locale)}</td>
                             </tr>
                             </thead>
                             <tbody class="body-tr">
@@ -43,7 +45,7 @@
                                     <p>${detail.giveaway_model_name}</p>
 <%--                                    <p>구성품<br>·<span> 30mm 1.4 여친렌즈</span><br>·<span> 추가배터리</span></p>--%>
                                 </td>
-                                <td><span><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /></span>원</td>
+                                <td><span><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /></span>${afn:getMessage('korea_won',sessionScope.locale)}</td>
                                 <td><span>1</span></td>
                                 <td><span>${delivery.giveaway_play_cd}</span></td>
                             </tr>
@@ -51,16 +53,16 @@
                         </table>
                     </div>
                     <div class="l-sec1">
-                        <p class="sec-h1">결제 정보</p>
+                        <p class="sec-h1">${afn:getMessage('payment_info',sessionScope.locale)}</p>
                         <div class="sec2-box">
-                            <div class="sec2-p1">결제수단</div>
+                            <div class="sec2-p1">${afn:getMessage('pay_method',sessionScope.locale)}</div>
                             <div class="sec2-p2">
                                 <input type="radio" id="sec2-ra" name="payment_type_cd" value="card" checked>
-                                <label for="sec2-ra"><span class="ra-txt">신용카드</span></label>
+                                <label for="sec2-ra"><span class="ra-txt">${afn:getMessage('card',sessionScope.locale)}</span></label>
                                 <input type="radio" id="sec2-ra2" name="payment_type_cd" value="trans">
-                                <label for="sec2-ra2"><span class="ra-txt">실시간 계좌이체</span></label>
+                                <label for="sec2-ra2"><span class="ra-txt">${afn:getMessage('trans',sessionScope.locale)}</span></label>
                                 <input type="radio" id="sec2-ra3" name="payment_type_cd" value="vbank">
-                                <label for="sec2-ra3"><span class="ra-txt">가상계좌</span></label>
+                                <label for="sec2-ra3"><span class="ra-txt">${afn:getMessage('vbank',sessionScope.locale)}</span></label>
 <%--                                <input type="radio" id="sec2-ra4" name="payment_type_cd">--%>
 <%--                                <label for="sec2-ra4"><span class="ra-txt">예시4</span></label>--%>
 <%--                                <input type="radio" id="sec2-ra5" name="payment_type_cd">--%>
@@ -69,7 +71,7 @@
                         </div>
                     </div>
                     <div class="l-sec2">
-                        <p class="sec-h1">당첨자 정보</p>
+                        <p class="sec-h1">${afn:getMessage('winner_info',sessionScope.locale)}</p>
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -77,7 +79,7 @@
                             </colgroup>
                             <tbody class="sec2-tbody">
                             <tr>
-                                <td>주민등록번호</td>
+                                <td>${afn:getMessage('reg_num',sessionScope.locale)}</td>
                                 <td>
                                     <input type="number" class="sec2-in1" name="reg_no1" maxlength="6"> <span>-</span>
                                     <input type="number" class="sec2-in1" name="reg_no2" maxlength="7">
@@ -90,7 +92,7 @@
                 </div>
                 <div class="right-box">
                     <div class="right-line">
-                        <p>최종 결제 금액 확인</p>
+                        <p>${afn:getMessage('final_payment_confirm',sessionScope.locale)}</p>
                         <div class="num-outer">
 <%--                            <div class="num-box1">--%>
 <%--                                <div class="txt-in1">--%>
@@ -102,18 +104,18 @@
 <%--                            </div>--%>
                             <div class="num-box1">
                                 <div class="txt-in1">
-                                    <p class="in1-font1">세금</p>
+                                    <p class="in1-font1">${afn:getMessage('tax',sessionScope.locale)}</p>
                                 </div>
                                 <div class="txt-in2">
-                                    <p><span class="in1-font2"><fmt:formatNumber value="${texSum}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in1-font2"><fmt:formatNumber value="${texSum}" groupingUsed="true" /></span> ${afn:getMessage('korea_won',sessionScope.locale)}</p>
                                 </div>
                             </div>
                             <div class="num-box2">
                                 <div class="txt-in1">
-                                    <p>총 결제 금액</p>
+                                    <p>${afn:getMessage('total_payment',sessionScope.locale)}</p>
                                 </div>
                                 <div class="txt-in2 in2-color">
-                                    <p><span class="in2-font2"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /></span> 원</p>
+                                    <p><span class="in2-font2"><fmt:formatNumber value="${detail.giveaway_delivery_payment+texSum}" groupingUsed="true" /></span> ${afn:getMessage('korea_won',sessionScope.locale)}</p>
                                     <input type="hidden" name="payment" value="${detail.giveaway_delivery_payment+texSum}">
                                     <input type="hidden" name="payment_user_id" value="${delivery.order_user_id}">
                                     <input type="hidden" name="order_no" value="${delivery.order_no}">
@@ -126,11 +128,11 @@
                         </div>
                         <div class="ck-box">
                             <input type="checkbox" name="service_terms_of_use" id="le-ck" value="Y">
-                            <label for="le-ck"><span class="le-ck-txt"><span class="le-ck-color">(필수)</span> 주문 상품정보 및 결제대행<br>서비스 이용약관에 모두 동의하십니까?</span></label>
+                            <label for="le-ck"><span class="le-ck-txt"><span class="le-ck-color">(${afn:getMessage('require',sessionScope.locale)})</span> ${afn:getMessage('msg.payment.confirm1',sessionScope.locale)}<br>${afn:getMessage('msg.payment.confirm2',sessionScope.locale)}</span></label>
                         </div>
                     </div>
                     <div class="but-box">
-                        <button type="button" id="submitPayment">결제하기</button>
+                        <button type="button" id="submitPayment">${afn:getMessage('do_payment',sessionScope.locale)}</button>
                     </div>
                 </div>
             </form>
@@ -160,7 +162,7 @@
     $("#submitPayment").on("click",function() {
         if(!$('#le-ck').is(":checked")){
             $.toast({
-                text: "이용약관 동의 는 필수 항목입니다.",
+                text: "${afn:getMessage('error.chkAgreeTerms',sessionScope.locale)}",
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -168,7 +170,7 @@
             });
         }else if(regCheck){
         	$.toast({
-                text: "주민등록번호를 확인해주세요.",
+                text: "${afn:getMessage('error.chkRegNum',sessionScope.locale)}",
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -191,7 +193,7 @@
                                 showText = item;
                             }else{
                                 alertType = "error";
-                                showText = index + " (은) " + item;
+                                showText = index + " ${afn:getMessage('is',sessionScope.locale)} " + item;
                             }
                             // $.toast().reset('all');//토스트 초기화
                             $.toast({

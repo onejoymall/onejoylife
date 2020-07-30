@@ -9,6 +9,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -27,10 +29,10 @@
                 <div class="ojt-tabbox on2" id="ojt1">
                     <div class="r-in-box">
                         <div class="input-box1">
-                            <p class="ra-num on" data-id="con1">오늘</p>
-                            <p class="ra-num" data-id="con2">1주일</p>
-                            <p class="ra-num" data-id="con3">1개월</p>
-                            <p class="ra-num" data-id="con4">3개월</p>
+                            <p class="ra-num on" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</p>
                         </div>
                         <div class="input-box2">
                             <div class="cla">
@@ -42,7 +44,7 @@
                                 <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
-                            <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">조회</a></p>
+                            <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                         </div>
                     </div>
                     <div class="con on" id="con1">
@@ -69,13 +71,13 @@
                                 </colgroup>
                                 <thead class="lis-head">
                                 <tr>
-                                    <th>거래일시</th>
-                                    <th>내역</th>
-                                    <th>구분</th>
-                                    <th>소멸예정일</th>
-                                    <th>사용포인트</th>
-                                    <th>적립포인트</th>
-                                    <th>잔여포인트</th>
+                                    <th>${afn:getMessage('transaction_date_time',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('detail',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('kind',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('extinction_date',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('use',sessionScope.locale)}${afn:getMessage('point',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('add',sessionScope.locale)}${afn:getMessage('point',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('remain',sessionScope.locale)}${afn:getMessage('point',sessionScope.locale)}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="lis-body txt-color1">
@@ -94,7 +96,7 @@
                                 </c:if>
                                 <c:if test="${empty list}">
                                     <tr>
-                                        <td colspan="7">표시할 내용이 없습니다.</td>
+                                        <td colspan="7">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -119,9 +121,9 @@
         $.datepicker.setDefaults({
             dateFormat: 'yy-mm-dd',
             showMonthAfterYear:true,
-            monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            monthNames:['1${afn:getMessage('month2',sessionScope.locale)}','2${afn:getMessage('month2',sessionScope.locale)}','3${afn:getMessage('month2',sessionScope.locale)}','4${afn:getMessage('month2',sessionScope.locale)}','5${afn:getMessage('month2',sessionScope.locale)}','6${afn:getMessage('month2',sessionScope.locale)}','7${afn:getMessage('month2',sessionScope.locale)}','8${afn:getMessage('month2',sessionScope.locale)}','9${afn:getMessage('month2',sessionScope.locale)}','10${afn:getMessage('month2',sessionScope.locale)}','11${afn:getMessage('month2',sessionScope.locale)}','12${afn:getMessage('month2',sessionScope.locale)}'],
+            dayNamesMin: ['${afn:getMessage('sun',sessionScope.locale)}','${afn:getMessage('mon',sessionScope.locale)}','${afn:getMessage('tue',sessionScope.locale)}','${afn:getMessage('wed',sessionScope.locale)}','${afn:getMessage('thu',sessionScope.locale)}','${afn:getMessage('fri',sessionScope.locale)}','${afn:getMessage('sat',sessionScope.locale)}'],
+            dayNames: ['${afn:getMessage('sunday',sessionScope.locale)}','${afn:getMessage('monday',sessionScope.locale)}','${afn:getMessage('tuesday',sessionScope.locale)}','${afn:getMessage('wednesday',sessionScope.locale)}','${afn:getMessage('thursday',sessionScope.locale)}','${afn:getMessage('friday',sessionScope.locale)}','${afn:getMessage('saturday',sessionScope.locale)}'],
             numberOfMonths: [1,1],
         });
         $(".date_pick").datepicker();

@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
@@ -9,12 +10,12 @@
     <section class="wrap">
        <ul class="flexbetween mb-1">
            <li>
-               <h2>자주 구매하는 상품</h2>
+               <h2>${afn:getMessage('favorite_product',sessionScope.locale)}</h2>
            </li>   
            <li>
            <c:if test="${not empty list}">
-      			<button type="button" id="del-chk-btn" class="btn btn-grey addChkFavorites">찜하기</button>
-				<button type="button" id="cart-chk-btn" class="btn btn-blue addChkCart">장바구니 담기</button>
+      			<button type="button" id="del-chk-btn" class="btn btn-grey addChkFavorites">${afn:getMessage('add_wish',sessionScope.locale)}</button>
+				<button type="button" id="cart-chk-btn" class="btn btn-blue addChkCart">${afn:getMessage('add_cart',sessionScope.locale)}</button>
 			</c:if>
            </li>
        </ul>
@@ -42,20 +43,20 @@
 	                        <%-- <p class="grey">${list.product_model_name}</p> --%>
 	                    </li>
 	                </ul>
-	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>원</span> </h2>
+	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>${afn:getMessage('worea_won',sessionScope.locale)}</span> </h2>
 	                <form name="" class="" method="POST" action="/product/productPayment">
                      <input type="hidden" name="product_delivery_payment" value="${list.product_delivery_payment}">
                      <input type="hidden" name="payment_order_quantity" value="1">
                      <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
                     </form>
 	                <c:if test="${list.product_option_yn !='Y' }">
-	                <button class="btn-red btn favoriteSubmit" >바로결제</button>
-	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
-	                <button class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">장바구니 담기</button>
+	                <button class="btn-red btn favoriteSubmit" >${afn:getMessage('pay_now',sessionScope.locale)}</button>
+	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">${afn:getMessage('add_wish',sessionScope.locale)}</button>
+	                <button class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">${afn:getMessage('add_cart',sessionScope.locale)}</button>
 	                </c:if>
                     <c:if test="${list.product_option_yn =='Y' }">
-	                <button type="button" class="btn-red btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">옵션선택하러가기</button>
-	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
+	                <button type="button" class="btn-red btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">${afn:getMessage('select_option',sessionScope.locale)}</button>
+	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">${afn:getMessage('add_wish',sessionScope.locale)}</button>
 	                </c:if>
 	            </li>
 	        </ul>
@@ -63,17 +64,17 @@
             </c:forEach>
         </c:if>
         <c:if test="${empty list}">
-                    표시할 내용이 없습니다.
+                    ${afn:getMessage('msg.none_content',sessionScope.locale)}
 		<hr>
         </c:if>
         <c:if test="${not empty productList}">
         <ul class="flexbetween mb-1">
            <li>
-               <h2>추천 상품</h2>
+               <h2>${afn:getMessage('recommend_product',sessionScope.locale)}</h2>
            </li>   
            <li>
-      			<button type="button" id="del-chk-btn" class="btn btn-grey addChkFavorites">찜하기</button>
-				<button type="button" id="cart-chk-btn" class="btn btn-blue addChkCart">장바구니 담기</button>
+      			<button type="button" id="del-chk-btn" class="btn btn-grey addChkFavorites">${afn:getMessage('add_wish',sessionScope.locale)}</button>
+				<button type="button" id="cart-chk-btn" class="btn btn-blue addChkCart">${afn:getMessage('add_cart',sessionScope.locale)}</button>
            </li>
        </ul>
        <hr>
@@ -99,20 +100,20 @@
 	                        <%-- <p class="grey">${list.product_model_name}</p> --%>
 	                    </li>
 	                </ul>
-	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>원</span> </h2>
+	                <h2><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span>${afn:getMessage('korea_won',sessionScope.locale)}</span> </h2>
 	                <form name="" class="" method="POST" action="/product/productPayment">
                      <input type="hidden" name="product_delivery_payment" value="${list.product_delivery_payment}">
                      <input type="hidden" name="payment_order_quantity" value="1">
                      <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
                     </form>
                     <c:if test="${list.product_option_yn !='Y' }">
-	                <button class="btn-red btn favoriteSubmit" >바로결제</button>
-	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
-	                <button class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">장바구니 담기</button>
+	                <button class="btn-red btn favoriteSubmit" >${afn:getMessage('pay_now',sessionScope.locale)}</button>
+	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">${afn:getMessage('add_wish',sessionScope.locale)}</button>
+	                <button class="btn-blue btn" onclick="addShoppingBasketM('${list.product_cd}')">${afn:getMessage('add_cart',sessionScope.locale)}</button>
 	                </c:if>
                     <c:if test="${list.product_option_yn =='Y' }">
-	                <button type="button" class="btn-red btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">옵션선택하러가기</button>
-	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">찜하기</button>
+	                <button type="button" class="btn-red btn" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';">${afn:getMessage('select_option',sessionScope.locale)}</button>
+	                <button class="btn-grey btn favorite" data-id="${list.product_cd}">${afn:getMessage('add_wish',sessionScope.locale)}</button>
 	                </c:if>
 	            </li>
 				<input type="hidden" name="payment_order_quantity" value="1">
