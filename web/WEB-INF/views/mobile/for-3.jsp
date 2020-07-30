@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,22 +28,22 @@
     <header class="header clearfix">
         <div class="top-inner">
             <button class="back-arr"><i class="back-ic"></i></button>
-            <p class="header-tit">아이디/비밀번호 찾기</p>
+            <p class="header-tit">${afn:getMessage("idPwdFind",sessionScope.locale)}</p>
         </div>
     </header>
     <section class="subheader">
         <ul class="taps">
-            <li><a href="javascript:void(1)" id="tap1" class="">아이디 찾기</a></li>
-            <li><a href="javascript:void(2)" id="tap2" class="">비밀번호 찾기</a></li>
+            <li><a href="javascript:void(1)" id="tap1" class="">${afn:getMessage("searchIdEmail",sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(2)" id="tap2" class="">${afn:getMessage("searchPswd",sessionScope.locale)}</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
-        <p class="id-pw-tit">등록하신 ID는<br> <span>${id}</span> 입니다.</p>
-        <button type="button" onclick="location.href='<c:url value="/sign/login"/>'" class="id-pw-btn">로그인</button>
+        <p class="id-pw-tit">${afn:getMessage("msg.changePwdDone.resultId",sessionScope.locale)}<br> <span>${id}</span> ${afn:getMessage("msg.changePwdDone.is",sessionScope.locale)}</p>
+        <button type="button" onclick="location.href='<c:url value="/sign/login"/>'" class="id-pw-btn">${afn:getMessage("login",sessionScope.locale)}</button>
     </section>
     <section class="wrap clearfix" id="list">
-        <p class="id-pw-tit">신규로 입력하신<br> 비밀번호로 변경이 완료되었습니다.</p>
-        <button type="button" onclick="location.href='<c:url value="/sign/login"/>'" class="id-pw-btn">로그인</button>
+        <p class="id-pw-tit">${afn:getMessage("msg.changePwdDone.successMent",sessionScope.locale)}</p>
+        <button type="button" onclick="location.href='<c:url value="/sign/login"/>'" class="id-pw-btn">${afn:getMessage("login",sessionScope.locale)}</button>
     </section>
 </body>
 <%@ include file="/WEB-INF/views/mobile/layout/fix-nav.jsp" %>

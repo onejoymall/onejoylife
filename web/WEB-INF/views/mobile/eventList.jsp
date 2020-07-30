@@ -10,8 +10,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/main-header"/>
-<div class="mt-1 bg_grey2 clearfix">
+<div class="mt-1 clearfix">
 
     <ul class="mainList-sm2">
         <c:if test="${not empty eventList}">
@@ -24,7 +25,11 @@
                 </li>
             </c:forEach>
         </c:if>
+        <c:if test="${empty eventList}">
+            <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
+        </c:if>
     </ul>
+
 </div>
 
 <script>

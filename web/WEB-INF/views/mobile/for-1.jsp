@@ -5,6 +5,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/mall/cert_conf.jsp"%>
 <%
 	String ordr_idxx = "TEST" + (new SimpleDateFormat("yyyyMMddHHmmssSSSSSSS").format(new Date())); // 요청번호 생성 예제
@@ -50,7 +51,7 @@
                 }
             });
 		}else{
-			alert("인증실패");
+			alert("${afn:getMessage("certifail",sessionScope.locale)}");
 		}
 	}
     // 인증창 종료 후 인증데이터 리턴 함수
@@ -63,7 +64,7 @@
         // up_hash 검증 
         if( frm.up_hash.value != auth_form.veri_up_hash.value )
         {
-            alert("up_hash 변조 위험있음");
+            alert("${afn:getMessage("error.sign.uphashRiskTamp",sessionScope.locale)}");
             
         }              
         
@@ -85,7 +86,7 @@
 
         if( auth_form.ordr_idxx.value == "" )
         {
-            alert( "요청번호는 필수 입니다." );
+            alert( "${afn:getMessage("error.sign.reNum_Required",sessionScope.locale)}" );
 
             return false;
         }
@@ -161,20 +162,20 @@
     <header class="header clearfix">
         <div class="top-inner">
             <button class="back-arr"><i class="back-ic"></i></button>
-            <p class="header-tit">아이디/비밀번호 찾기</p>
+            <p class="header-tit">${afn:getMessage("idPwdFind",sessionScope.locale)}</p>
         </div>
     </header>
     <section class="subheader">
         <ul class="taps">
-            <li><a href="javascript:show(1)" id="tap1" >아이디 찾기</a></li>
-            <li><a href="javascript:show(2)" id="tap2" class="active">비밀번호 찾기</a></li>
+            <li><a href="javascript:show(1)" id="tap1" >${afn:getMessage("searchId",sessionScope.locale)}</a></li>
+            <li><a href="javascript:show(2)" id="tap2" class="active">${afn:getMessage("searchPswd",sessionScope.locale)}</a></li>
         </ul>
     </section>
     <section class="wrap clearfix" id="write">
         <form action="">
-            <p class="text-md mt-2 mb-05">아이디 찾기 방법</p>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("searchIdWay",sessionScope.locale)}</p>
             <input type="radio" id="id-num-rd1" name="" checked class="">
-            <label for="id-num-rd1">등록된 휴대폰</label>
+            <label for="id-num-rd1">${afn:getMessage("hp_register",sessionScope.locale)}</label>
             <!-- <hr class=" mt-2 mb-2"> -->
             <div class="id-num1">
             	<p class="text-md mt-3 mb-05"></p>
@@ -182,30 +183,30 @@
                 
                 <div class="input-group">
                     <!-- <input type="text" placeholder="010-1234-1234">  -->
-                    <button type="button" onclick="auth_type_check();">인증하기</button>
+                    <button type="button" onclick="auth_type_check();">${afn:getMessage("certi",sessionScope.locale)}</button>
                 </div>
-                <p class="error mt-05">* 입력하신 번호로 계정을 찾을수 없습니다.</p>
+                <p class="error mt-05">* ${afn:getMessage("error.finduserinfo.inputHpNotFind",sessionScope.locale)}</p>
             </div>
             <div class="id-num2" style="display: none;">
-                <p class="text-md mt-3 mb-05">인증번호</p>
+                <p class="text-md mt-3 mb-05">${afn:getMessage("certiNum",sessionScope.locale)}</p>
                 <input type="text">
-                <p class="error mt-05">* 입력하신 인증번호가 일치하지 않습니다.</p>
+                <p class="error mt-05">* ${afn:getMessage("error.finduserinfo.NotCertiNum_retry",sessionScope.locale)}</p>
             </div>
             
-            <button type="button" class="id-pw-btn">확인</button>
+            <button type="button" class="id-pw-btn">${afn:getMessage("QAok",sessionScope.locale)}</button>
         </form>
     </section>
     <section class="wrap clearfix" id="list">
         <form id="defaultUserInfoFind" name="defaultUserInfoFind" method="post">
-            <p class="text-md mt-2 mb-05">비밀번호 찾기 방법</p>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("searchPwdWay",sessionScope.locale)}</p>
             <input type="radio" id="id-num-rd2" name="" checked>
-            <label for="id-num-rd2">E-mail주소</label>
-            <p class="text-md mt-3 mb-05">아이디(이메일)</p>
-            <input type="text" name="email" placeholder="gildonghong@onejoy.co.kr">
-            <p class="mt-05">* 가입된 계정 이메일을 입력해주세요.</p>
-            <p class="error mt-05">* 입력하신 이메일로 계정을 찾을수 없습니다.</p>
-            <p class="error mt-05">* 입력하신 이메일로 신규비밀번호를 전송했습니다.</p>
-            <button type="button" class="id-pw-btn" id="senderFindPassword">확인</button>
+            <label for="id-num-rd2">${afn:getMessage("emailAdd",sessionScope.locale)}</label>
+            <p class="text-md mt-3 mb-05">${afn:getMessage("idEmail",sessionScope.locale)}</p>
+            <input type="text" name="email" placeholder="${afn:getMessage("emailEx",sessionScope.locale)}">
+            <p class="mt-05">* ${afn:getMessage("error.finduserinfo.emailCheckinput",sessionScope.locale)}</p>
+            <p class="error mt-05">* ${afn:getMessage("error.finduserinfo.NotEmailinfo",sessionScope.locale)}</p>
+            <p class="error mt-05">* ${afn:getMessage("msg.findUserInfo.mailNewPwdsend",sessionScope.locale)}</p>
+            <button type="button" class="id-pw-btn" id="senderFindPassword">${afn:getMessage("QAok",sessionScope.locale)}</button>
 
         </form>
     </section>

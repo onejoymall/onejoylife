@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,36 +24,36 @@
             <a href="/"><div class="mo-logo"></div></a>
             <div class="mo-login-form">
                 <form name="defaultLoginForm" id="defaultLoginForm">
-                    <input type="text" for="id-input" name="email" class="id-la" placeholder="아이디(이메일)">
-                    <input type="password" for="pw-input" name="password" class="id-la" placeholder="비밀번호">
-                    <span class="error" id="loginCheckError">회원 아이디 또는 비밀번호가 일치하지 않습니다.</span>
+                    <input type="text" for="id-input" name="email" class="id-la" placeholder="${afn:getMessage("idEmail",sessionScope.locale)}">
+                    <input type="password" for="pw-input" name="password" class="id-la" placeholder="${afn:getMessage("pwd",sessionScope.locale)}">
+                    <span class="error" id="loginCheckError"></span>
                     <div class="check-save">
                         <input type="checkbox" id="saveid" class="save-ck">
-                        <label for="saveid"><span class="ck-img"></span> 아이디 저장</label>
+                        <label for="saveid"><span class="ck-img"></span> ${afn:getMessage("idSave",sessionScope.locale)}</label>
                         <!-- <input type="checkbox" id="auto-login" class="save-ck">
                         <label for="auto-login"><span class="ck-img"></span>자동 로그인</label> -->
                     </div>
-                    <button type="button" title="login" class="btn-login">로그인</button>
+                    <button type="button" title="login" class="btn-login">${afn:getMessage("login",sessionScope.locale)}</button>
                 </form>
-                <button type="button" class="btn-kakao-login"><i class="kakao-icon"></i>kakao 계정으로 로그인</button>
+                <button type="button" class="btn-kakao-login"><i class="kakao-icon"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
                 <div class="login-search">
-                    <a href="<c:url value="/sign/signup"/>" class="link-a">회원가입</a>
+                    <a href="<c:url value="/sign/signup"/>" class="link-a">${afn:getMessage("join",sessionScope.locale)}</a>
                     <span class="bar"></span>
-                    <a href="/sign/findUserInfo">아이디/비밀번호 찾기</a>
+                    <a href="/sign/findUserInfo">${afn:getMessage("idPwdFind",sessionScope.locale)}</a>
 
                 </div>
                 <!-- 비회원 주문조회 -->
                 <div class="ttl-line"></div>
                 <div class="link-nonmem">
-                    <button type="button" class="nonmem-btn">비회원 주문조회</button>
+                    <button type="button" class="nonmem-btn">${afn:getMessage("nmemOrder",sessionScope.locale)}</button>
                 </div>
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div>
-                            <input type="text" name="imp_uid" class="non-num" placeholder="주문번호 입력">
-                            <input type="password" name="password" class="non-num" placeholder="비밀번호 입력">
+                            <input type="text" name="imp_uid" class="non-num" placeholder="${afn:getMessage("msg.login.impOrderNum",sessionScope.locale)}">
+                            <input type="password" name="password" class="non-num" placeholder="${afn:getMessage("msg.login.paymentPwd",sessionScope.locale)}">
                         </div>
-                        <button type="button" id="orderDetailGuestBtn">조회</button>
+                        <button type="button" id="orderDetailGuestBtn">${afn:getMessage("lookup",sessionScope.locale)}</button>
                     </form>
                 </div>
             </div>
