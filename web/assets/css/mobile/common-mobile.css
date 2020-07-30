@@ -5181,8 +5181,8 @@ input[type=password]::placeholder{
     background-color: rgba(0,0,0,0.1);
     border-radius: 50%;
 }
-.list-cartic:hover{
-    background:url(../../assets/img/cartonly-white.png) no-repeat center center / 25px;
+.list-cartic.on{
+    background:url(assets/img/cartonly-white.png) no-repeat center center / 30px;
     background-color:rgba(218, 57, 77, 0.9)
 }
 

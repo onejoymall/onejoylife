@@ -3726,9 +3726,10 @@ $(document).on("click",".ra-num",function () {
     	console.log(1)
     	if(confirm("삭제하시겠습니까?")){
     		var order_no = $(this).attr("data-id");
+			var review_id = $(this).attr("data-rid");
     		jQuery.ajax({
     	        type: 'POST',
-    	        data: "order_no="+order_no,
+    	        data: {'order_no':order_no,'review_id':review_id},
     	        url:'/MyPage/deleteReview',
     	        success: function (data) {
     	        	if(data.success){
@@ -3753,9 +3754,10 @@ $(document).on("click",".ra-num",function () {
     function reviewDeleteBtn(order_no){
     	if(confirm("삭제하시겠습니까?")){
     		var order_no = order_no;
+ 			var review_id = review_id;	
     		jQuery.ajax({
     	        type: 'POST',
-    	        data: "order_no="+order_no,
+    	        data: {'order_no':order_no,'review_id':review_id},
     	        url:'/MyPage/deleteReview',
     	        success: function (data) {
     	        	if(data.success){
@@ -4148,7 +4150,7 @@ $('#qnaWriteSubmit').on("click",function () {
     opener.parent.callQnalist($('input[name=product_cd]').val(),1);
 })
 //Q&A 수정
-$(document).on("click","#qnaModifySubmit",function () {//jmjm
+$(document).on("click","#qnaModifySubmit",function () {
     var formData = new FormData($('#defaultForm')[0]);
 	if(confirm("수정하시겠습니까?")){
     //수정중인 페이징 기억

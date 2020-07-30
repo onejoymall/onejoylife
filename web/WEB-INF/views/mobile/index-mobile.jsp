@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/main-header"/>
 
     <div class="main-slider mt-1">
@@ -29,8 +30,8 @@
     </div>
     <div class="mainList-wrap mt-1">
         <div class="wrap bg_grey2">
-            <h2 ><a href="/mall/today" class="red"> 오늘의 특가 <i class="ri-arrow-right-s-line"></i></a></h2>
-            <h4 class="mt-05">오늘의 특가 상품 구매시 E-POINT 적립 2배!</h4>
+            <h2 ><a href="/mall/today" class="red"> ${afn:getMessage("todayPrice_cate",sessionScope.locale)} <i class="ri-arrow-right-s-line"></i></a></h2>
+            <h4 class="mt-05">${afn:getMessage("msg.main.m_today_stxt",sessionScope.locale)}</h4>
         </div>
         <ul class="mainList-sm">
             <c:if test="${not empty productSpList}">
@@ -46,8 +47,8 @@
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productSpList.product_name}</p>
-                                <p><ins><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />원</ins>
-                                <del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p><ins><fmt:formatNumber value="${productSpList.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</ins>
+                                <del><fmt:formatNumber value="${productSpList.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</del></p>
                                 <p class="info-score"><i class="star-ic"></i>
                                 
                                 <c:if test="${productSpList.review_score == 0 }"><span class="score-number">0.0</span></c:if>
@@ -64,7 +65,7 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty productSpList}">
-                <li>표시할 내용이 없습니다.</li>
+                <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
             </c:if>
         </ul>
     </div>
@@ -77,8 +78,8 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">추천 상품 </h2>
-            <h4 class="mt-05">고민없이 선택하는 MD 강력 추천 상품!</h4>
+            <h2 class="red">${afn:getMessage("reco_pro_tit",sessionScope.locale)}</h2>
+            <h4 class="mt-05">${afn:getMessage("msg.main.m_reco_stxt",sessionScope.locale)}</h4>
         </div>
         <ul class="mainList-sm">
             <c:if test="${not empty productMDList}">
@@ -93,7 +94,7 @@
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
-                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</del></p>
                                 <p class="info-score">
                                 <i class="star-ic"></i>
 								<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
@@ -109,7 +110,7 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty productMDList}">
-                <li>표시할 내용이 없습니다.</li>
+                <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
             </c:if>
         </ul>
     </div>
@@ -121,7 +122,7 @@
     </div>
     <div class="mt-1 bg_grey2 clearfix">
         <div class="wrap">
-            <h2 class="red"><a href="/mall/eventList" class="red"> 이벤트 <i class="ri-arrow-right-s-line"></i></a></h2>
+            <h2 class="red"><a href="/mall/eventList" class="red"> ${afn:getMessage("QA_event",sessionScope.locale)} <i class="ri-arrow-right-s-line"></i></a></h2>
         </div>
         <ul class="mainList-sm2">
         <c:if test="${not empty eventList}">
@@ -138,8 +139,8 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">인기 상품</h2>
-            <h4 class="mt-05">망설이면 후회하는 원조이몰 인기 상품!</h4>
+            <h2 class="red">${afn:getMessage("popular_pro",sessionScope.locale)}</h2>
+            <h4 class="mt-05">${afn:getMessage("msg.main.m_popular_stxt",sessionScope.locale)}</h4>
         </div>
         <ul class="mainList-sm">
             <c:if test="${not empty productPopularList}">
@@ -154,12 +155,12 @@
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
-                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</del></p>
                                 <p class="info-score"><i class="star-ic"></i>
                                 	<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
 			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
-			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
-			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
+			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
+			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                        <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
 			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 
@@ -170,13 +171,13 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty productPopularList}">
-                <li>표시할 내용이 없습니다.</li>
+                <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
             </c:if>
         </ul>
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red">신상품</h2>
+            <h2 class="red">${afn:getMessage("new_tit",sessionScope.locale)}</h2>
             <!-- <h4 class="mt-05">망설이면 후회하는 원조이몰 인기 상품!</h4> -->
         </div>
         <ul class="mainList-sm">
@@ -192,12 +193,12 @@
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
-                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />원</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />원</del></p>
+                                <p><ins><fmt:formatNumber value="${productList.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</ins><del><fmt:formatNumber value="${productList.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</del></p>
                                 <p class="info-score"><i class="star-ic"></i>
                            			<c:if test="${productList.review_score == NULL }"><span class="score-number">0.0</span></c:if>
 			    					<c:if test="${productList.review_score != NULL }"><span class="score-number">${productList.review_score}</span></c:if>
-			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
-			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}개 평가</span></c:if>
+			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
+			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                         <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
 			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 </p>
@@ -207,13 +208,13 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty productList}">
-                <li>표시할 내용이 없습니다.</li>
+                <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
             </c:if>
         </ul>
     </div>
     <div class="mt-1 bg_grey2 clearfix">
         <div class="wrap">
-            <h2 class="red">기획전</h2>
+            <h2 class="red">${afn:getMessage("exhibitions",sessionScope.locale)}</h2>
         </div>
         <ul class="mainList-big2">
             <c:if test="${not empty categoryEventList}">
@@ -252,8 +253,8 @@
     </div>
     <div class="mainList-wrap mt-1 clearfix">
         <div class="wrap bg_grey2">
-            <h2 class="red"><a href="/giveaway" class="red"> 경품 추첨 <i class="ri-arrow-right-s-line"></i></a></h2>
-            <h4 class="mt-05">E-POINT 행운의 주인공이 되어 보세요!</h4>
+            <h2 class="red"><a href="/giveaway" class="red"> ${afn:getMessage("giveaway_tit",sessionScope.locale)} <i class="ri-arrow-right-s-line"></i></a></h2>
+            <h4 class="mt-05">${afn:getMessage("msg.main.m_giveaway_stxt",sessionScope.locale)}</h4>
         </div>
         <ul class="mainList-sm">
             <c:if test="${not empty giveawaylist}">
@@ -267,13 +268,13 @@
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>
-                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> 원</ins></p>
+                                <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> ${afn:getMessage("korea_won",sessionScope.locale)}</ins></p>
                                 <div class="progress-wrap">
-                                    <p class="progress-now">참여율 <b class="red">${list.parti_rate}%</b></p>
+                                    <p class="progress-now">${afn:getMessage("parti_rate",sessionScope.locale)} <b class="red">${list.parti_rate}%</b></p>
                                     <div class="progress-bar">
                                         <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
                                     </div>
-                                    <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>명 참여 중</p>
+                                    <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>${afn:getMessage("partiPeople_count",sessionScope.locale)}</p>
                                 </div>
                             </div>
                         </a>
@@ -281,7 +282,7 @@
                 </c:forEach>
             </c:if>
             <c:if test="${empty giveawaylist}">
-                <li>표시할 내용이 없습니다.</li>
+                <li>${afn:getMessage("msg.none_content",sessionScope.locale)}</li>
             </c:if>
         </ul>
     </div>
@@ -294,13 +295,13 @@
     <div>
         <ul class="flexaround border-n">
             <li>
-                <a href="<c:url value="/sign/signup"/>" class="link-a"><i class="icon join i-big"></i>회원가입</a>
+                <a href="<c:url value="/sign/signup"/>" class="link-a"><i class="icon join i-big"></i>${afn:getMessage("join",sessionScope.locale)}</a>
             </li>
             <li>
-                <a href="<c:url value="/Help/usePointGuid"/>"><i class="icon epoint i-big"></i>E-POINT 안내</a>
+                <a href="<c:url value="/Help/usePointGuid"/>"><i class="icon epoint i-big"></i>${afn:getMessage("epoint_announ",sessionScope.locale)}</a>
             </li>
             <li>
-                <a href="<c:url value="/Help/faqCenter?bgno=16&question_type=F"/>"><i class="icon faq i-big"></i>자주하는 질문</a>
+                <a href="<c:url value="/Help/faqCenter?bgno=16&question_type=F"/>"><i class="icon faq i-big"></i>${afn:getMessage("faq_tit",sessionScope.locale)}</a>
             </li>
         </ul>
     </div>

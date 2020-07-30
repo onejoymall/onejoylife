@@ -1491,8 +1491,9 @@ public class restapiController {
 		try {
 			FileUtil fs = new FileUtil();
 			List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(), downloadPath + "review");
+			List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
 			SimpleDateFormat ft = new SimpleDateFormat("yyyy");
-			fileVO.setFilepath("/fileupload/review/" + ft.format(new Date()) + "/");
+			//fileVO.setFilepath("/fileupload/review/" + ft.format(new Date()) + "/");
 
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
@@ -1508,9 +1509,16 @@ public class restapiController {
 				fileVO.setParentPK(params.get("pk") + "");
 				if (!isEmpty(filelist)) {
 					fileVO.setFileorder(1);
+					fileVO.setFilepath("/fileupload/review/" + ft.format(new Date()) + "/");
 					reviewDAO.deleteReviewFile(filelist, fileVO);
 					reviewDAO.insertReviewFile(filelist, fileVO);
 				}
+				if(!isEmpty(filelist6)){
+                	fileVO.setFileorder(6);
+                	fileVO.setFilepath("/fileupload/product/" + ft.format(new Date()) + "/");
+                	reviewDAO.deleteReviewFile(filelist6,fileVO);
+                	reviewDAO.insertReviewFile(filelist6,fileVO);
+                }
 				resultMap.put("success", "success");
 				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
 			}
@@ -1532,6 +1540,7 @@ public class restapiController {
 		try {
 			FileUtil fs = new FileUtil();
 			List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(), downloadPath + "review");
+			List<FileVO> filelist6 = fs.saveAllFiles(boardInfo.getUploadfile6(),downloadPath+"product");
 			SimpleDateFormat ft = new SimpleDateFormat("yyyy");
 			fileVO.setFilepath("/fileupload/review/" + ft.format(new Date()) + "/");
 
@@ -1549,14 +1558,17 @@ public class restapiController {
 				fileVO.setParentPK(params.get("review_id") + "");
 				if (!isEmpty(filelist)) {
 					fileVO.setFileorder(1);
+					fileVO.setFilepath("/fileupload/review/" + ft.format(new Date()) + "/");
 					reviewDAO.deleteReviewFile(filelist, fileVO);
 					reviewDAO.insertReviewFile(filelist, fileVO);
 				}
-				if (params.get("fileName") == null || params.get("fileName").equals("")) {
-					fileVO.setFileorder(1);
-					reviewDAO.deleteReviewFile(fileVO);
-				}
-				resultMap.put("success", "success");
+				if(!isEmpty(filelist6)){
+                	fileVO.setFileorder(6);
+                	fileVO.setFilepath("/fileupload/product/" + ft.format(new Date()) + "/");
+                	reviewDAO.deleteReviewFile(filelist6,fileVO);
+                	reviewDAO.insertReviewFile(filelist6,fileVO);
+                }		
+                resultMap.put("success", "success");
 				resultMap.put("redirectUrl", "/MyPage/Reviews");
 			}
 		} catch (Exception e) {
@@ -1565,7 +1577,35 @@ public class restapiController {
 		}
 		return resultMap;
 	}
+	// 상품평 파일 하나 삭제
+	@Transactional
+	@RequestMapping(value = "/MyPage/deleteOneFile", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> deleteOneFile(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session, ProductVO productVO, BoardVO boardInfo, FileVO fileVO) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
 
+			try {
+				if (!isEmpty(error)) {
+					resultMap.put("validateError", error);
+				} else {
+					params.put("email", session.getAttribute("email"));
+					// 로그인 확인
+					Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+					if (!isEmpty(userInfo)) {
+						params.put("usr_id", userInfo.get("usr_id"));
+					}
+					
+					reviewDAO.deleteReviewFileOneByName(params);
+					resultMap.put("success", "success");
+					resultMap.put("redirectUrl", "/MyPage/Reviews");
+				}
+		} catch (Exception e) {
+
+			resultMap.put("e", e);
+		}
+		return resultMap;
+	}
 	// 상품평 삭제
 	@Transactional
 	@RequestMapping(value = "/MyPage/deleteReview", method = RequestMethod.POST, produces = "application/json")
@@ -1574,21 +1614,21 @@ public class restapiController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> error = new HashMap<String, Object>();
 
-		try {
-			if (!isEmpty(error)) {
-				resultMap.put("validateError", error);
-			} else {
-				params.put("email", session.getAttribute("email"));
-				// 로그인 확인
-				Map<String, Object> userInfo = userDAO.getLoginUserList(params);
-				if (!isEmpty(userInfo)) {
-					params.put("usr_id", userInfo.get("usr_id"));
+			try {
+				if (!isEmpty(error)) {
+					resultMap.put("validateError", error);
+				} else {
+					params.put("email", session.getAttribute("email"));
+					// 로그인 확인
+					Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+					if (!isEmpty(userInfo)) {
+						params.put("usr_id", userInfo.get("usr_id"));
+					}
+					reviewDAO.deleteReview(params);
+					reviewDAO.deleteReviewAllFile(params);
+					resultMap.put("success", "success");
+					resultMap.put("redirectUrl", "/MyPage/Reviews");
 				}
-				reviewDAO.deleteReview(params);
-
-				resultMap.put("success", "success");
-				resultMap.put("redirectUrl", "/MyPage/Reviews");
-			}
 		} catch (Exception e) {
 
 			resultMap.put("e", e);

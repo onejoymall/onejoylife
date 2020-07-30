@@ -11,6 +11,7 @@
 <%@ page import="java.util.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/mall/cert_conf.jsp"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <%
 	String ordr_idxx = "TEST" + (new SimpleDateFormat("yyyyMMddHHmmssSSSSSSS").format(new Date())); // 요청번호 생성 예제
@@ -25,14 +26,14 @@
 		
 		if(obj.cert_enc_use == 'Y' && obj.res_cd == '0000'){
 			$('#phoneBtn').addClass("bg-success");
-            $('#phoneBtn').text("인증완료");
+            $('#phoneBtn').text("${afn:getMessage("certiOk",sessionScope.locale)}");
             $('#phoneBtn').attr("id","");
             $('input[name=phone]').val(obj.phone_no);
             $('input[name=username]').val(obj.user_name);
             $('input[name=sex]').val(obj.sex_code);
             $('input[name=birth]').val(obj.birth_day);
 		}else{
-			alert("인증실패");
+			alert("${afn:getMessage("certiFail",sessionScope.locale)}");
 		}
 	}
     // 인증창 종료 후 인증데이터 리턴 함수
@@ -45,7 +46,7 @@
         // up_hash 검증 
         if( frm.up_hash.value != auth_form.veri_up_hash.value )
         {
-            alert("up_hash 변조 위험있음");
+            alert("${afn:getMessage("error.sign.uphashRiskTamp",sessionScope.locale)}");
             
         }              
         
@@ -67,7 +68,7 @@
 
         if( auth_form.ordr_idxx.value == "" )
         {
-            alert( "요청번호는 필수 입니다." );
+            alert( "${afn:getMessage("error.sign.reNum_Required",sessionScope.locale)}" );
 
             return false;
         }
@@ -144,11 +145,11 @@
         <div class="path">
             <ul>
                 <li class="path-color">ㆍ</li>
-                <li><a href="#">HOME ＞</a></li>
-                <li><a href="#"> 원조이몰 회원가입</a></li>
+                <li><a href="#">HOME ＞ </a></li>
+                <li><a href="#"> ${afn:getMessage("onejoyJoin",sessionScope.locale)}</a></li>
             </ul>
         </div>
-        <div class="h2-box"><h2><span>원조이몰</span> 회원가입</h2></div>
+        <div class="h2-box"><h2><span>${afn:getMessage("onejoymall",sessionScope.locale)}</span> ${afn:getMessage("join",sessionScope.locale)}</h2></div>
 
         <div class="form-out1">
             <div class="form-out2">
@@ -159,9 +160,9 @@
                         </colgroup>
                         <tr>
                             <td class="mem-td">
-                                <p class="mem-id1">아이디(이메일)</p>
+                                <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="email" id="email" type="text" placeholder="이메일을 입력해주세요." required>
+                                    <input name="email" id="email" type="text" placeholder="${afn:getMessage("msg.signEmailRe",sessionScope.locale)}" required>
                                 </div>
                             </td>
                         </tr>
@@ -172,10 +173,10 @@
                         </tr>
                         <tr>
                             <td class="mem-td">
-                                <p class="mem-id1">인증번호</p>
+                                <p class="mem-id1">${afn:getMessage("certiNum",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w">
                                     <input name="email_auth_code" id="email_auth_code" type="text" class="num-txt" readonly>
-                                    <button class="btn-auth" id="mailSender" type="button">인증번호 받기</button>
+                                    <button class="btn-auth" id="mailSender" type="button">${afn:getMessage("certiNumSend",sessionScope.locale)}</button>
                                     <!-- <a href="" class="none"><span>인증완료</span></a>
                                     <a href="" class="none"><span>300s</span></a> -->
                                 </div>
@@ -188,13 +189,13 @@
                         </tr>
                         <tr>
                             <td class="mem-td">
-                                <p class="mem-id1">휴대폰번호</p>
+                                <p class="mem-id1">${afn:getMessage("phone",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w">
                                     <input name="phone" id="phone" type="text" class="num-txt" readonly>
                                     <input name="sex" id="sex" type="hidden" readonly>
                                     <input name="birth" id="birth" type="hidden" readonly>
                                     <input name="username" id="username" type="hidden" readonly>
-                                    <button class="btn-auth" id="phoneBtn" onclick="return auth_type_check();" type="button">인증하기</button>
+                                    <button class="btn-auth" id="phoneBtn" onclick="return auth_type_check();" type="button">${afn:getMessage("certi",sessionScope.locale)}</button>
                                 </div>
                             </td>
                         </tr>
@@ -205,9 +206,9 @@
                         </tr>
                         <tr>
                             <td class="mem-td">
-                                <p class="mem-id1">비밀번호</p>
+                                <p class="mem-id1">${afn:getMessage("pwd",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="password" id="password" type="password" placeholder="비밀번호를 입력해 주세요." >
+                                    <input name="password" id="password" type="password" placeholder="${afn:getMessage("msg.signPwdMsg",sessionScope.locale)}" >
                                 </div>
                             </td>
                         </tr>
@@ -218,9 +219,9 @@
                         </tr>
                         <tr>
                             <td class="mem-td">
-                                <p class="mem-id1">비밀번호 확인</p>
+                                <p class="mem-id1">${afn:getMessage("pswdCfm",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="password_cf" id="password_cf" type="password" placeholder="비밀번호를 다시 입력해 주세요." >
+                                    <input name="password_cf" id="password_cf" type="password" placeholder="${afn:getMessage("msg.signPwdcfMsg",sessionScope.locale)}" >
                                 </div>
                             </td>
                         </tr>
@@ -234,12 +235,19 @@
                         <input type="checkbox" name="option" id="ch">
                         <label for="ch">
                             <div class="ch-p-box">
-                                <p>본인은 <strong>만 14세 이상</strong>이며, <a href="#default-modal" rel="modal:open">원조이몰 이용약관,</a><a href="#default-modal2" rel="modal:open"> 제3자동의 이용약관,</a><a href="#default-modal3" rel="modal:open"> 개인정보 수집 및 이용</a> 개인정보 제공 내용을 확인하였으며, 이에 동의합니다.</p>
+                                <p>
+                                    ${afn:getMessage("Iam",sessionScope.locale)} <strong>${afn:getMessage("14years",sessionScope.locale)}</strong>
+                                    ${afn:getMessage("or",sessionScope.locale)}
+                                    <a href="#default-modal" rel="modal:open">${afn:getMessage("terms",sessionScope.locale)},</a>
+                                    <a href="#default-modal2" rel="modal:open"> ${afn:getMessage("3terms",sessionScope.locale)},</a>
+                                    <a href="#default-modal3" rel="modal:open"> ${afn:getMessage("privacy",sessionScope.locale)}</a>
+                                    ${afn:getMessage("msg.sign.agreeMsg",sessionScope.locale)}
+                                </p>
                             </div>
                         </label>
                     </div>
                     <div class="join-box">
-                        <a href="javascript:void(0)" id="formSignUpSubmit">회원가입</a>
+                        <a href="javascript:void(0)" id="formSignUpSubmit">${afn:getMessage("join",sessionScope.locale)}</a>
                         <a id="kakao-login-btn"></a>
                     </div>
                 </form>
@@ -260,7 +268,7 @@
         $('.er').html('');
 
        if(!pwCheck){
-    	   $('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+    	   $('#password_cfValidation').html('* ${afn:getMessage("error.sign.pwdcfMsg",sessionScope.locale)}');
        }else if($('#ch').is(":checked")) {
            $('.loading-bar-wrap').removeClass("hidden");
                jQuery.ajax({
@@ -295,7 +303,7 @@
                });
 
        }else{
-          alert('이용약관 동의 후 회원가입이 가능합니다.')
+          alert('${afn:getMessage("error.sign.termsRequest",sessionScope.locale)}');
        }
    })
 
@@ -324,8 +332,8 @@
                     });
                 }else{
                     $('#mailSender').addClass("bg-secondary");
-                    $('#mailSender').text("인증하기");
-                    $('#email_auth_code').attr("placeholder","인증번호 4자리 입력");
+                    $('#mailSender').text("${afn:getMessage("certi",sessionScope.locale)}");
+                    $('#email_auth_code').attr("placeholder","${afn:getMessage("msg.sign.certi_4input",sessionScope.locale)}");
                     $('#email_auth_code').attr("readonly",false);
                     //인증버튼으로 변경
                     $('#mailSender').attr("id","mailauth");
@@ -350,17 +358,17 @@
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+            $("#passwordValidation").text("* ${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}");
             $("#passwordValidation").removeClass("text-success");
             $("#password_cfValidation").text('');
         }else{
         	$("#passwordValidation").text('');
         	if(pw != pw_cf){
-                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+                $("#password_cfValidation").text("* ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
                 $("#password_cfValidation").removeClass("text-success");
             }else{
             	pwCheck = true;
-            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+            	$("#password_cfValidation").text("* ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
                 $("#password_cfValidation").addClass("text-success");
             }
         }
@@ -390,7 +398,7 @@
                 }else{
                     $('#mailauth').removeClass("bg-secondary");
                     $('#mailauth').addClass("bg-success");
-                    $('#mailauth').text("인증완료");
+                    $('#mailauth').text("${afn:getMessage("certiOk",sessionScope.locale)}");
                     $('#email_auth_code').attr("readonly",true);
                     $('#email').attr("readonly",true);
                     //인증버튼으로 변경

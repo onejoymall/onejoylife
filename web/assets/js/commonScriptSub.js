@@ -1136,6 +1136,13 @@ $(document).on('click', '.share-ic', function(e){
     $('#sharePop').removeClass('on');
 });
 
+$(document).on('click', '.share', function(e){
+    e.preventDefault();
+    $('#sharePop').addClass('on');
+}).on('click', '#sharePop .bg', function(){
+    $('#sharePop').removeClass('on');
+});
+
 function copyURL() {
     var shareURL = document.getElementById("share_link");
     shareURL.value = share_url;

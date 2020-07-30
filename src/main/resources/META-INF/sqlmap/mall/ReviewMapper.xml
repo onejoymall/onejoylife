@@ -4,9 +4,11 @@
 
 <mapper namespace="mall.ReviewMapper">
 	<select id="getReviewDetail" parameterType="hashmap" resultType="hashmap">
+	/*getReviewDetail*/
 		SELECT A.*,
 				B.*,
-				(select Z.file_name from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_name
+				(select Z.file_name from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_name,
+				(select Z.file_name from product_review_file Z where Z.review_id=A.review_id and Z.file_order =6) as file_name2
 		FROM product_review A
 		LEFT JOIN product B
 		on A.product_cd = B.product_cd
@@ -14,6 +16,7 @@
 		AND A.order_no = #{order_no}
 	</select>
 	<select id="getReviewListCount" parameterType="hashmap" resultType="int">
+	/*getReviewListCount*/
 		SELECT ifnull(count(*),0)
 		FROM product_review A
 		WHERE A.usr_id = #{usr_id}
@@ -21,11 +24,13 @@
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= #{end_date} ]]></if>
 	</select>
 	<select id="getReviewList" parameterType="hashmap" resultType="hashmap">
+	/*getReviewList*/
 		SELECT (select Z.order_no from payment_bundle Z where Z.no = A.order_no) as order_no,
 			A.order_no as no,
 			A.*,
 			 B.*,
 			(select Z.file_link from product_file Z where Z.key_id=A.product_cd and Z.file_order =1) as file_1,
+			(select Z.file_link from product_review_file Z where Z.review_id=A.review_id and Z.file_order =6) as file_2,
 			(select Z.product_made_company_name from product_made_company Z where Z.product_made_company_cd=B.product_made_company_cd) as product_made_company_name
 		FROM product_review A
 		left JOIN product B
@@ -41,9 +46,11 @@
 		WHERE A.product_cd = #{product_cd}
 	</select>
 	<select id="getReviewForProductList" parameterType="hashmap" resultType="hashmap">
+	/*getReviewForProductList*/
 		SELECT A.*,
 			 B.*,
 			(select Z.file_link from product_review_file Z where Z.review_id=A.review_id and Z.file_order =1) as file_1,
+			(select Z.file_link from product_review_file Z where Z.review_id=A.review_id and Z.file_order =6) as file_2,
 			 CONCAT(
                 left(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', 1),
                 length(SUBSTRING_INDEX((select Z.email from user Z where Z.usr_id=A.usr_id),'@', 1))-1),
@@ -63,6 +70,7 @@
         <![CDATA[ order by A.reg_date desc LIMIT ${rowStart-1}, ${staticRowEnd} ]]>
 	</select>
 	<insert id="insertReview" parameterType="hashmap">
+	/*insertReview*/
 		<selectKey keyProperty="pk" resultType="int" order="BEFORE">  
 	        SELECT IFNULL(MAX(A.review_id)+1,1) FROM product_review A
 	     </selectKey>
@@ -85,10 +93,12 @@
 		)
 	</insert>
 	<insert id="insertReviewFile" parameterType="com.webapp.board.common.FileVO" >
+     /*insertReviewFile*/
         INSERT INTO product_review_file (review_id, file_name, real_name, file_size,file_link,file_order)
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
     </insert>
     <update id="updateReview" parameterType="hashmap">
+    /*updateReview*/
     	update product_review SET
 			review_title = #{review_title},
 			review_content = #{review_content},
@@ -97,12 +107,23 @@
    		AND usr_id = #{usr_id}
     </update>
 	<delete id="deleteReviewFile" parameterType="com.webapp.board.common.FileVO">
+	/*deleteReviewFile*/
         delete from product_review_file  where review_id = #{parentPK} and file_order = #{fileorder}
     </delete>
 	<delete id="deleteReviewFileOne" parameterType="com.webapp.board.common.FileVO">
+	/*deleteReviewFileOne*/
         delete from product_review_file  where review_id = #{parentPK} and file_order = #{fileorder}
     </delete>
+  <delete id="deleteReviewFileOneByName" parameterType="hashmap">
+	/*deleteReviewFileOneByName*/
+        delete from product_review_file  where review_id = #{review_id} and file_name = #{file_name}
+    </delete>
     <delete id="deleteReview" parameterType="hashmap">
+    /*deleteReview*/
     	delete from product_review where order_no = #{order_no} and usr_id = #{usr_id}
+    </delete>
+    	<delete id="deleteReviewAllFile" parameterType="hashmap">
+	/*deleteReviewAllFile*/
+        delete from product_review_file  where review_id = #{review_id} 
     </delete>
 </mapper>

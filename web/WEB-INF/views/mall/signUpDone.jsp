@@ -7,16 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="mem-box">
-        <div class="h2-box"><h2><span>ONEJOY</span>life 회원가입</h2></div>
+        <div class="h2-box"><h2><span>ONEJOY</span>life ${afn:getMessage("join",sessionScope.locale)}</h2></div>
         <div class="txt-box">
-            <h2>회원가입이 완료되었습니다.</h2>
-            <p><span class="mem-name"></span> ONEJOYlife 회원가입을 축하합니다.</p>
-            <p>원조이몰에서 즐겁게 구입하시고 E-POINT의 특별한 혜택도 함께 누려보세요.</p>
+            <h2>${afn:getMessage("msg.signupDone.successJoin",sessionScope.locale)}</h2>
+            <p><span class="mem-name"></span> ONEJOYlife ${afn:getMessage("msg.signupDone.joinCong",sessionScope.locale)}</p>
+            <p>${afn:getMessage("msg.signupDone.enjoyMsg",sessionScope.locale)}</p>
             <div class="login-box">
-                <a href="<c:url value="/sign/login"/>">로그인</a>
+                <a href="<c:url value="/sign/login"/>">${afn:getMessage("login",sessionScope.locale)}</a>
             </div>
         </div>
     </div>

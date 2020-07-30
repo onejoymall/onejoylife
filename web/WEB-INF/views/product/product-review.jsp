@@ -49,8 +49,19 @@
 	                        <div class="review-content-body">
 	                            ${list.review_content}
 	                            <div class="review-content-body-media-box">
-	                                <img src="${list.file_1}" onerror="this.src='http://placehold.it/600x300'" alt="후기이미지" />
+	                           
+	                            <c:if test="${not empty list.file_1}">
+	                 			     <img src="${list.file_1}" onerror="this.src='http://placehold.it/600x300'" alt="후기이미지" />
+	                           </c:if>
 	                            </div>
+	                             
+					            <c:if test="${not empty list.file_2}">
+<%-- 				                    <img src='${list.file_2}' onerror="this.src='http://placehold.it/550'" > --%>
+		               			   <video width="500" height="500" controls>
+		               			     <source src="${list.file_2}" type=video/ogg>
+						   			 <source src="${list.file_2}" type=video/mp4>
+								   </video>
+			                    </c:if>  
 	                        </div>
 	                    </div>
 	                </li>

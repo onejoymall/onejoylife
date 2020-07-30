@@ -7,67 +7,68 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div class="wrap">
     <div class="login-box">
         <form  name="defaultLoginForm" id="defaultLoginForm" onsubmit="return false;">
-            <h2 class="h2-box">로그인</h2>
+            <h2 class="h2-box">${afn:getMessage("login",sessionScope.locale)}</h2>
             <div class="login-out">
                 <div class="login-in">
                     <div class="in-box1">
-                        <label for="id-input" class="id-la">아이디(이메일)</label><input type="text" name="email" id="id-input" placeholder="아이디를 입력하세요" class="form-con">
+                        <label for="id-input" class="id-la">${afn:getMessage("idEmail",sessionScope.locale)}</label><input type="text" name="email" id="id-input" placeholder="${afn:getMessage("msg.login.idinputRequest",sessionScope.locale)}" class="form-con">
                     </div>
                     <div class="in-box2">
-                        <label for="pw-input" class="id-la">비밀번호</label><input type="password" name="password" id="pw-input" placeholder="비밀번호를 입력하시오" class="form-con">
+                        <label for="pw-input" class="id-la">${afn:getMessage("pwd",sessionScope.locale)}</label><input type="password" name="password" id="pw-input" placeholder="${afn:getMessage("msg.login.pwdinputRequest",sessionScope.locale)}" class="form-con">
                     </div>
                 </div>
                 <div class="login-but">
-                    <button type="submit" title="login" class="login-on"><span>로그인</span>
+                    <button type="submit" title="login" class="login-on"><span>${afn:getMessage("login",sessionScope.locale)}</span>
                     </button>
                 </div>
 
             </div>
-            <div class="er" id="loginCheckError">회원 아이디 또는 비밀번호가 일치하지 않습니다.</div>
+            <div class="er" id="loginCheckError"></div>
             <div class="option">
                 <label for="saveid">
                     <input type="checkbox" id="saveid" class="id-ch ">
-                    아이디 저장하기
+                    ${afn:getMessage("idSave",sessionScope.locale)}
                 </label>
-                <a href="<c:url value="/sign/findUserInfo"/>" class="id-pw">아이디/비밀번호 찾기</a>
+                <a href="<c:url value="/sign/findUserInfo"/>" class="id-pw">${afn:getMessage("idPwdFind",sessionScope.locale)}</a>
             </div>
             <div class="sns-login-wrap">
                 <div class="sns-login-inner">
                     <div class="sns-login-ttl">
                         <div class="ttl-line"></div>
-                        <span>또는 소셜 아이디로 로그인</span>
+                        <span>${afn:getMessage("msg.login.orSocialLogin",sessionScope.locale)}</span>
                         <div class="ttl-line"></div>
                     </div>
-                    <button type="button" class="kko-login-btn"><i class="kko-ic"></i>Kakao 계정으로 로그인</button>
+                    <button type="button" class="kko-login-btn"><i class="kko-ic"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
                 </div>
             </div>
             <div class="link-box">
                 <div class="link-join">
                     <ul class="txt-p1">
-                        <li class="txt-w">ㆍ아직 원조이몰 회원이 아니신가요?</li>
-                        <li>원조이몰에 가입하시면 다양한 혜택을 누리실 수 있습니다.</li>
+                        <li class="txt-w">ㆍ${afn:getMessage("msg.login.joinornot",sessionScope.locale)}</li>
+                        <li>${afn:getMessage("msg.login.benefitmsg",sessionScope.locale)}</li>
                     </ul>
-                    <a href="<c:url value="/sign/signup"/>" class="link-a">회원가입</a>
+                    <a href="<c:url value="/sign/signup"/>" class="link-a">${afn:getMessage("join",sessionScope.locale)}</a>
                 </div>
                 <div class="link-nonmem">
-                    <p class="txt-p2 txt-w">ㆍ비회원 주문/배송 조회가 필요하신가요?</p>
-                    <a href="#" class="link-a nonmem-btn">비회원 주문조회</a>
+                    <p class="txt-p2 txt-w">ㆍ ${afn:getMessage("msg.login.NmemOrderAndDelivery",sessionScope.locale)}</p>
+                    <a href="#" class="link-a nonmem-btn">${afn:getMessage("nmemOrder",sessionScope.locale)}</a>
                 </div>
         </form>
                 <!-- 비회원 주문조회 -->
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div class="nonmem-in">
-                            <p>주문번호</p>
-                            <input type="text" name="imp_uid" placeholder="imp로 시작하는 주문번호">
-                            <p>비밀번호</p>
-                            <input type="password" name="password" placeholder="결제시 입력한 비밀번호">
+                            <p>${afn:getMessage("ordernum",sessionScope.locale)}</p>
+                            <input type="text" name="imp_uid" placeholder="${afn:getMessage("msg.login.impOrderNum",sessionScope.locale)}">
+                            <p>${afn:getMessage("pwd",sessionScope.locale)}</p>
+                            <input type="password" name="password" placeholder="${afn:getMessage("msg.login.paymentPwd",sessionScope.locale)}">
                         </div>
-                        <button type="button" id="orderDetailGuestBtn">조회</button>
+                        <button type="button" id="orderDetailGuestBtn">${afn:getMessage("lookup",sessionScope.locale)}</button>
                     </form>
                 </div>
             </div>

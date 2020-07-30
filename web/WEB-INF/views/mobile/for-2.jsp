@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,52 +29,52 @@
     <header class="header clearfix">
         <div class="top-inner">
             <button class="back-arr"><i class="back-ic"></i></button>
-            <p class="header-tit">아이디/비밀번호 찾기</p>
+            <p class="header-tit">${afn:getMessage("idPwdFind",sessionScope.locale)}</p>
         </div>
     </header>
 
     <form name="passwordChangeForm" id="passwordChangeForm" method="POST">
         <section class="subheader">
             <ul class="taps">
-                <li><a href="javascript:show(1)" id="tap1">아이디 찾기</a></li>
-                <li><a href="javascript:show(2)" id="tap2" class="active">비밀번호 찾기</a></li>
+                <li><a href="javascript:show(1)" id="tap1">${afn:getMessage("searchId",sessionScope.locale)}</a></li>
+                <li><a href="javascript:show(2)" id="tap2" class="active">${afn:getMessage("searchPswd",sessionScope.locale)}</a></li>
             </ul>
         </section>
         <section class="wrap clearfix" id="write">
-                <p class="text-md mt-2 mb-05">아이디 찾기 방법</p>
+                <p class="text-md mt-2 mb-05">${afn:getMessage("searchIdWay",sessionScope.locale)}</p>
                 <input type="radio" id="id-num-rd1" name="">
-                <label for="id-num-rd1">등록된 휴대폰(가입 시 선택사항)</label>
+                <label for="id-num-rd1">${afn:getMessage("hp_register",sessionScope.locale)}</label>
                 <!-- <hr class=" mt-2 mb-2"> -->
                 <div class="id-num1">
-                    <p class="text-md mt-3 mb-05">등록한 휴대폰 번호</p>
+                    <p class="text-md mt-3 mb-05">${afn:getMessage("hp_register2",sessionScope.locale)}</p>
 
                     <div class="input-group">
                         <input type="text" placeholder="010-1234-1234">
-                        <button type="button">인증번호 전송</button>
+                        <button type="button">${afn:getMessage("certi",sessionScope.locale)}</button>
                     </div>
-                    <p class="error-on mt-05">* 입력하신 번호로 계정을 찾을수 없습니다.</p>
+                    <p class="error-on mt-05">* ${afn:getMessage("error.finduserinfo.inpPhoneNotFind",sessionScope.locale)}</p>
                 </div>
                 <div class="id-num2" style="display: none;">
-                    <p class="text-md mt-3 mb-05">인증번호</p>
+                    <p class="text-md mt-3 mb-05">${afn:getMessage("certi",sessionScope.locale)}</p>
                     <input type="text">
-                    <p class="error-on mt-05">* 입력하신 인증번호가 일치하지 않습니다.</p>
+                    <p class="error-on mt-05">* ${afn:getMessage("error.changePwd.notMatchCerti",sessionScope.locale)}</p>
                 </div>
 
-                <button type="button" class="id-pw-btn">확인</button>
+                <button type="button" class="id-pw-btn">${afn:getMessage("QAok",sessionScope.locale)}</button>
         </section>
         <section class="wrap clearfix pw-num" id="list">
-            <h2 class="pb-1 mt-3">신규 비밀번호 입력</h2>
+            <h2 class="pb-1 mt-3">${afn:getMessage("newPwdinput",sessionScope.locale)}</h2>
             <hr class="">
-                <p class="text-md mt-2 mb-05">비밀번호</p>
+                <p class="text-md mt-2 mb-05">${afn:getMessage("pwd",sessionScope.locale)}</p>
                 <input type="password" name="password" id="password">
                 <p class="mt-05"></p>
                 <p class="error-on mt-05" id="validateErrorPassword"></p>
-                <p class="text-md mt-3 mb-05">비밀번호 확인</p>
+                <p class="text-md mt-3 mb-05">${afn:getMessage("pswdCfm",sessionScope.locale)}</p>
                 <input type="password" name="password_cf" id="password_cf">
                 <p id ="validateErrorPasswordCf" class="error-on mt-05"></p>
                 <input type="hidden" name="email" value="${email}">
-                <button type="button" class="id-pw-btn" onclick="location.href='/'">취소</button>
-                <button type="button" class="id-pw-btn" id="formSubmit">확인</button>
+                <button type="button" class="id-pw-btn" onclick="location.href='/'">${afn:getMessage("QAcancel",sessionScope.locale)}</button>
+                <button type="button" class="id-pw-btn" id="formSubmit">${afn:getMessage("QAok",sessionScope.locale)}</button>
         </section>
     </form>
 </body>
@@ -111,7 +112,7 @@ var pwCheck = false;
 $('#formSubmit').on("click",function () {
         var formData = $('#passwordChangeForm').serialize();
         if(!pwCheck){
-    		$("#validateErrorPasswordCf").text("* 비밀번호를 확인 해주세요.");
+    		$("#validateErrorPasswordCf").text("* ${afn:getMessage("error.sign.pwdcfMsg",sessionScope.locale)}");
     		$("#validateErrorPasswordCf").removeClass("text-success");
     		return;
     	}
@@ -152,17 +153,17 @@ $('#formSubmit').on("click",function () {
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#validateErrorPassword").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+            $("#validateErrorPassword").text(" * ${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}");
             $("#validateErrorPassword").removeClass("text-success");
             $("#validateErrorPasswordCf").text("");
         }else{
         	$("#validateErrorPassword").text('');
         	if(pw != pw_cf){
-                $("#validateErrorPasswordCf").text(" * 비밀번호가 일치하지 않습니다.");
+                $("#validateErrorPasswordCf").text(" * ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
                 $("#validateErrorPasswordCf").removeClass("text-success");
             }else{
             	pwCheck = true;
-            	$("#validateErrorPasswordCf").text(" * 비밀번호가 일치합니다.");
+            	$("#validateErrorPasswordCf").text(" * ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
                 $("#validateErrorPasswordCf").addClass("text-success");
             }
         }

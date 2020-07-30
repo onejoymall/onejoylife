@@ -62,5 +62,13 @@
         </article>
         </form>
     </section>
+    <script>
+    $(document).on('touchstart', '.list-cartic', function(){
+        $(this).addClass('on');
+    }).on('touchend', '.list-cartic', function(){
+        $(this).removeClass('on');
+    });    
+    
+    </script>
     <c:import url="/layout/footer"/>
 <%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>

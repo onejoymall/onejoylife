@@ -170,6 +170,9 @@ and A.payment_status != 'N'
 		SELECT A.*,
     	(select B.file_link from product_file B where B.key_id = A.product_cd and B.file_order = 1) as file_1
     	FROM sns_history A
-    	where usr_id = #{usr_id} AND 1=1 LIMIT 5
+    	where usr_id = #{usr_id}
+    	AND 1=1
+    	order by reg_date DESC
+        LIMIT 5
 	</select>
 </mapper>
