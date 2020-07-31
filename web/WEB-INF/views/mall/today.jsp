@@ -35,7 +35,7 @@
 				<c:if test="${searchVO.product_ct eq null}">${afn:getMessage("all",sessionScope.locale)}</c:if>
 				<c:forEach var="categoryList" items="${categoryList}" varStatus="status">
                     <c:if test="${searchVO.product_ct eq categoryList.pd_category_id}">${categoryList.pd_category_name}</c:if>
-                </c:forEach> ${afn:getMessage("msg.today,cateIn",sessionScope.locale)} <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>${afn:getMessage("msg.today.EntProduct",sessionScope.locale)}</p>
+                </c:forEach> ${afn:getMessage("msg.today.cateIn",sessionScope.locale)} <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>${afn:getMessage("msg.today.EntProduct",sessionScope.locale)}</p>
             <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">

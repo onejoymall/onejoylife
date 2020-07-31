@@ -10,6 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
 <section class="main-section">
@@ -38,23 +39,23 @@
                 </article>
             </section>
             </c:if>
-            <p class="gift-amount">${categoryRowData.pd_category_name} 전체 카테고리에 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>개의 상품이 등록되어 있습니다.</p>
+            <p class="gift-amount">${categoryRowData.pd_category_name} ${afn:getMessage("msg.prolist_allcate",sessionScope.locale)} <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span>${afn:getMessage("msg.today.EntProduct",sessionScope.locale)}</p>
 
             <form id="form1" name="form1"  method="get">
                 <div class="sort-tab">
                     <div class="sort-tab-left">
-                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=1"/>'">랭킹순</button>
-                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=ASC&sortOrder=2"/>'">낮은가격순</button>
-                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=DESC&sortOrder=3"/>'">높은가격순</button>
-                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=4"/>'">판매량</button>
-                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=5"/>'">최신순</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=1"/>'">${afn:getMessage("shortRanking",sessionScope.locale)}</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=ASC&sortOrder=2"/>'">${afn:getMessage("shortLowPrice",sessionScope.locale)}</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=DESC&sortOrder=3"/>'">${afn:getMessage("shorthighPrice",sessionScope.locale)}</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=4"/>'">${afn:getMessage("shortSales",sessionScope.locale)}</button>
+                        <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product?product_ct=${param.product_ct}&sortOrder=5"/>'">${afn:getMessage("shortNewest",sessionScope.locale)}</button>
                     </div>
                     <div class="sort-tab-right">
                         <select name="displayRowCount" class="order-select">
-                            <option value="12" <c:if test="${searchVO.displayRowCount ==12}">selected</c:if>>12개씩 보기</option>
-                            <option value="32" <c:if test="${searchVO.displayRowCount ==32}">selected</c:if>>32개씩 보기</option>
-                            <option value="64" <c:if test="${searchVO.displayRowCount ==64}">selected</c:if>>64개씩 보기</option>
-                            <option value="128" <c:if test="${searchVO.displayRowCount ==128}">selected</c:if>>128개씩 보기</option>
+                            <option value="12" <c:if test="${searchVO.displayRowCount ==12}">selected</c:if>>${afn:getMessage("display_row12",sessionScope.locale)}</option>
+                            <option value="32" <c:if test="${searchVO.displayRowCount ==32}">selected</c:if>>${afn:getMessage("display_row32",sessionScope.locale)}</option>
+                            <option value="64" <c:if test="${searchVO.displayRowCount ==64}">selected</c:if>>${afn:getMessage("display_row64",sessionScope.locale)}</option>
+                            <option value="128" <c:if test="${searchVO.displayRowCount ==128}">selected</c:if>>${afn:getMessage("display_row128",sessionScope.locale)}</option>
                         </select>
                     </div>
                 </div>
@@ -82,8 +83,8 @@
                     </a>
                     <p class="info-price">
                         <span class="price-before">
-                            <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</span>
-                        <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원
+                            <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</span>
+                        <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}
                     </p>
                     <p class="info-score">
                     
@@ -92,8 +93,8 @@
                      	<c:if test="${list.review_score == NULL }"><span class="score-number">0.0</span></c:if>
     					<c:if test="${list.review_score != NULL }"><span class="score-number">${list.review_score}</span></c:if>
                        
-                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
-                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>
+                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
+                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
                        <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')" class="list-cartic"></a>
                        <%--  <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button> --%>
                     </p>
@@ -105,7 +106,7 @@
             </c:forEach>
         </c:if>
         <c:if test="${empty list}">
-            표시할 내용이 없습니다.
+            ${afn:getMessage("msg.none_content",sessionScope.locale)}
         </c:if>
             </div>
         </div>

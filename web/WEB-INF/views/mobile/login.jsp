@@ -24,8 +24,8 @@
             <a href="/"><div class="mo-logo"></div></a>
             <div class="mo-login-form">
                 <form name="defaultLoginForm" id="defaultLoginForm">
-                    <input type="text" for="id-input" name="email" class="id-la" placeholder="${afn:getMessage("idEmail",sessionScope.locale)}">
-                    <input type="password" for="pw-input" name="password" class="id-la" placeholder="${afn:getMessage("pwd",sessionScope.locale)}">
+                    <input type="text" for="id-input" name="email" class="id-la" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}">
+                    <input type="password" for="pw-input" name="password" class="id-la" placeholder="${afn:getMessage('pwd',sessionScope.locale)}">
                     <span class="error" id="loginCheckError"></span>
                     <div class="check-save">
                         <input type="checkbox" id="saveid" class="save-ck">
@@ -50,8 +50,8 @@
                 <div class="nonmem">
                     <form name="orderForm" id="orderForm" method="post">
                         <div>
-                            <input type="text" name="imp_uid" class="non-num" placeholder="${afn:getMessage("msg.login.impOrderNum",sessionScope.locale)}">
-                            <input type="password" name="password" class="non-num" placeholder="${afn:getMessage("msg.login.paymentPwd",sessionScope.locale)}">
+                            <input type="text" name="imp_uid" class="non-num" placeholder="${afn:getMessage('msg.login.impOrderNum',sessionScope.locale)}">
+                            <input type="password" name="password" class="non-num" placeholder="${afn:getMessage('msg.login.paymentPwd',sessionScope.locale)}">
                         </div>
                         <button type="button" id="orderDetailGuestBtn">${afn:getMessage("lookup",sessionScope.locale)}</button>
                     </form>

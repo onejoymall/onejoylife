@@ -238,7 +238,7 @@
                             <div class="id-num1">
                                 <p class="tit-id">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="la-box2">
-                                    <input name="email" type="text" placeholder="${afn:getMessage("emailEx",sessionScope.locale)}">
+                                    <input name="email" type="text" placeholder="${afn:getMessage('emailEx',sessionScope.locale)}">
                                     <div class="num">
                                         <a href="#" id="senderFindPassword">${afn:getMessage("emailSend",sessionScope.locale)}</a>
                                     </div>
