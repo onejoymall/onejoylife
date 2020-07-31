@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
     <c:import url="/mobile/layout/m_modal"/>
 <script type='text/javascript'> 
 
@@ -15,22 +16,22 @@ wcs_do();
 </script>
 <footer class="pb-5 bg_grey2">
     <ul class="ftmenu bg_red">
-        <li><a href="<c:url value="/Help/csinfo"/>">고객센터</a></li>
-        <li><a href="#" id="m-modal-store">쇼핑몰 입점/제휴문의</a></li>
+        <li><a href="<c:url value="/Help/csinfo"/>">${afn:getMessage('customer_service',sessionScope.locale)}</a></li>
+        <li><a href="#" id="m-modal-store">${afn:getMessage('shoppingmall_entrance',sessionScope.locale)}/${afn:getMessage('affiliated_Inquiry',sessionScope.locale)}</a></li>
     </ul>
     <ul class="ftmenu">
-        <li><a href="#" id="mo-btn1">개인정보처리방침</a></li>
-        <li><a href="#" id="mo-btn2">이용약관</a></li>
+        <li><a href="#" id="mo-btn1">${afn:getMessage('privacy_policy',sessionScope.locale)}</a></li>
+        <li><a href="#" id="mo-btn2">${afn:getMessage('service_terms_of_use',sessionScope.locale)}</a></li>
     </ul>
     <ul class="wrap">
         <li>${info.company_name}</li>
-        <li>대표 : ${info.company_ceo} </li>
-        <li>전화 : ${info.company_ph} / 팩스 : ${info.company_fax}</li>
+        <li>${afn:getMessage('representative',sessionScope.locale)} : ${info.company_ceo} </li>
+        <li>${afn:getMessage('tel',sessionScope.locale)} : ${info.company_ph} / ${afn:getMessage('fax',sessionScope.locale)} : ${info.company_fax}</li>
         <li>${info.postcode} ${info.roadAddress} ${info.jibunAddress} ${info.extraAddress}</li>
-        <li>사업자 등록번호 : ${info.corporate_num}</li>
-        <li>통신판매업신고  ${info.cmnt_sales_busi_report} <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[사업자정보확인]</a></li>
-        <li>개인정보관리책임자 : <a href="mailto:${info.personal_info_incharge_email}">${info.personal_info_incharge}(${info.personal_info_incharge_email})</a></li>
-        <li>고객센터 : ${info.company_ph} / ${info.personal_info_incharge_email}</li>
+        <li>${afn:getMessage('store_reg',sessionScope.locale)}: ${info.corporate_num}</li>
+        <li>${afn:getMessage('communications_sales_report',sessionScope.locale)}  ${info.cmnt_sales_busi_report} <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[${afn:getMessage('store_info_check',sessionScope.locale)}]</a></li>
+        <li>${afn:getMessage('privacy_infor_manager',sessionScope.locale)} : <a href="mailto:${info.personal_info_incharge_email}">${info.personal_info_incharge}(${info.personal_info_incharge_email})</a></li>
+        <li>${afn:getMessage('customer_service',sessionScope.locale)} : ${info.company_ph} / ${info.personal_info_incharge_email}</li>
         <li>Copyright ${info.copyright}. All rights reserved.</li>
     </ul>
 </footer>

@@ -1,6 +1,7 @@
         <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+        <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
         <div class="main_modal" id="link-info-main" >
             <div class="modal-content">
@@ -75,11 +76,11 @@
             <div class="modal-content">
                 <form name="resetStoreForm" id="defaultForm" method="multipart/form-data">
                     <div class="modal-header">
-                        <h2>입점업체 신청</h2>
+                        <h2>${afn:getMessage('store_request',sessionScope.locale)}</h2>
                         <button type="button" class="modal-close modal-close1">×</button>
                     </div>
                     <div class="modal-body clearfix">
-                        <h3>기본정보</h3>
+                        <h3>${afn:getMessage('default_info',sessionScope.locale)}</h3>
                         <table class="goods-detail-table">
                             <colgroup>
                                 <col width="142px">
@@ -87,19 +88,19 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>입점사 ID</th>
+                                    <th>${afn:getMessage('store_id',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_id" name="store_id">
-                                        <button type="button" class="btn_file" id="modalstorIdDupCheck">중복확인</button>
+                                        <button type="button" class="btn_file" id="modalstorIdDupCheck">${afn:getMessage('duplication_check',sessionScope.locale)}</button>
                                         <input type="hidden" name="storIdDupCheck" value="">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>비밀번호 설정</th>
+                                    <th>${afn:getMessage('password',sessionScope.locale)}</th>
                                     <td>
                                         <p><input type="password" name="store_password" placeholder="비밀번호"><span class="er" id="passwordValidation"></span></p>
                                         <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"><span class="er" id="password_cfValidation"></span></p>
-                                        <p class="s-font">- 6~20자의 영문,숫자를 조합하여 입력하여 주세요.</p>
+                                        <p class="s-font">-${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}</p>
                                         <%--<p class="s-font">- 영문 대소문자 또는 숫자, 특수문자 중 2가지 이상 좋바으로 10-20자 미만</p>
                                         <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
                                     </td>
@@ -107,7 +108,7 @@
 
                             </tbody>
                         </table>
-                        <h3>판매자</h3>
+                        <h3>${afn:getMessage('sellerInfo',sessionScope.locale)}</h3>
                         <table class="goods-detail-table">
                             <colgroup>
                                 <col width="142px">
@@ -115,42 +116,42 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>상호</th>
+                                    <th>${afn:getMessage('company_name',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_name" name="store_name">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>사업자등록번호</th>
+                                    <th>${afn:getMessage('store_reg',sessionScope.locale)}</th>
                                     <td>
                                         <%--                                        <input type="radio" id="table-ra1" name="store_reg_type" value="D">--%>
                                         <%--                                        <label for="table-ra1">개인</label>--%>
                                         <%--                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">--%>
                                         <%--                                        <label for="table-ra2">법인</label>--%>
                                         <input type="text" id="store_reg" name="store_reg">
-                                        <button type="button" class="btn_file" id="modalstorRegDupCheck">중복확인</button>
+                                        <button type="button" class="btn_file" id="modalstorRegDupCheck">${afn:getMessage('duplication_check',sessionScope.locale)}</button>
                                         <input type="hidden" name="storRegDupCheck" value="">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>대표자</th>
+                                    <th>${afn:getMessage('representative',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_ceo_name" name="store_ceo_name">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>업태/업종</th>
+                                    <th>${afn:getMessage('business_condition',sessionScope.locale)}/${afn:getMessage('industry',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_type" name="store_type"> / <input type="text" id="store_item" name="store_item">
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <th>사업자등록증 사본</th>
+                                    <th>${afn:getMessage('business_license_copy',sessionScope.locale)}</th>
                                     <td>
                                         <div class="fileBox">
                                             <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">
-                                            <label for="uploadBtn" class="btn_file">파일찾기</label>
+                                            <label for="uploadBtn" class="btn_file">${afn:getMessage('find_files',sessionScope.locale)}</label>
                                             <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
                                             <div class="fileDownload">
 
@@ -159,65 +160,65 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>통신판매신고번호</th>
+                                    <th>${afn:getMessage('communications_sales_reportnum',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_online_reg" name="store_online_reg">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>전화</th>
+                                    <th>${afn:getMessage('tel',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_tel" name="store_tel">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>메일</th>
+                                    <th>${afn:getMessage('email',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_mail" name="store_mail">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>팩스</th>
+                                    <th>${afn:getMessage('fax',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_fax" name="store_fax">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>사업장 주소</th>
+                                    <th>${afn:getMessage('store_address',sessionScope.locale)}</th>
                                     <td class="address-td">
-                                        <p><input type="text" id="postcode" name="postcode"><button type="button" class="ad-but" id="daumMapCall">우편번호</button></p>
-                                        <p><span>(도로명)</span><input type="text" id="roadAddress" name="roadAddress" class="ad-input"></p>
-                                        <p><span>(지번)</span><input type="text" id="jibunAddress" name="jibunAddress" class="ad-input"></p>
-                                        <p><span>(공통상세)</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input"></p>
+                                        <p><input type="text" id="postcode" name="postcode"><button type="button" class="ad-but" id="daumMapCall">${afn:getMessage('postcode',sessionScope.locale)}</button></p>
+                                        <p><span>(${afn:getMessage('road_name_addr',sessionScope.locale)})</span><input type="text" id="roadAddress" name="roadAddress" class="ad-input"></p>
+                                        <p><span>(${afn:getMessage('jibunAddress',sessionScope.locale)})</span><input type="text" id="jibunAddress" name="jibunAddress" class="ad-input"></p>
+                                        <p><span>(${afn:getMessage('extraAddress',sessionScope.locale)})</span><input type="text" id="extraAddress" name="extraAddress" class="ad-input"></p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>계산서 수신메일</th>
+                                    <th>${afn:getMessage('bill_received_mail',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="tex_email" name="tex_email">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>계좌번호</th>
+                                    <th>${afn:getMessage('account',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_bank_account" name="store_bank_account">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>예금주</th>
+                                    <th>${afn:getMessage('account_name',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_bank_holder" name="store_bank_holder">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>은행명</th>
+                                    <th>${afn:getMessage('bank_name',sessionScope.locale)}</th>
                                     <td>
                                         <input type="text" id="store_bank_name" name="store_bank_name">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="button" id="modalStoreAddProc" class="btn-red">신청하기</button>
+                        <button type="button" id="modalStoreAddProc" class="btn-red">${afn:getMessage('request',sessionScope.locale)}</button>
                     </div>
                 </form>
             </div>
@@ -230,10 +231,10 @@ $(".modal-close1").click(function(){
 
     $('#store_id').attr("readonly",false);
     $('#modalstorIdDupCheck').attr('disabled', false);
-    $('#modalstorIdDupCheck').html('중복확인');
+    $('#modalstorIdDupCheck').html('${afn:getMessage('duplication_check',sessionScope.locale)}');
 
     $('#store_reg').attr("readonly",false);
     $('#modalstorRegDupCheck').attr('disabled', false);
-    $('#modalstorRegDupCheck').html('중복확인');
+    $('#modalstorRegDupCheck').html('${afn:getMessage('duplication_check',sessionScope.locale)}');
 });
 </script>

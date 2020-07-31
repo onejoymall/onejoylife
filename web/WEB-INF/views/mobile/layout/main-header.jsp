@@ -9,18 +9,19 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>onejoy life</title>
+    <title>${afn:getMessage('onejoylife',sessionScope.locale)}</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta property="og:url" content="http://onejoy-life.com" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="원조이라이프" />
+    <meta property="og:title" content="${afn:getMessage('ojl_prize',sessionScope.locale)}" />
     <meta property="og:description" content="" />
     <meta property="og:image" content="http://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
     <meta property="og:image:width" content="1100" />
@@ -69,7 +70,7 @@
                 <li>
                     <a href="" onclick="snsSubmit('fackbook', '');">
                       <div class="fbic"></div>
-                       페이스북
+                       ${afn:getMessage('facebook',sessionScope.locale)}
                     </a>
                 </li>
                 <%--<li>
@@ -99,17 +100,17 @@
            </ul>
            <div class="sharelink">
                 <input type="text" name="share_link" id="share_link" value="" readonly>
-                <button type="button" class="copybtn" onclick="copyURL()">URL 복사</button>
+                <button type="button" class="copybtn" onclick="copyURL()">${afn:getMessage('url_copy',sessionScope.locale)}</button>
             </div>
        </div>
     </div>
     <header class="h-main">
         <div class="top-inner">
-            <h1 class="main-logo"><a href="/">원조이몰</a></h1>
+            <h1 class="main-logo"><a href="/">${afn:getMessage('onejoymall',sessionScope.locale)}</a></h1>
             <form action="/product/search-page" id="main-search-form" name="main-search-form" method="get" class="src-form">
                 <div class="src-inner">
                     <input type="text" id="main-search" name="product_name" class="src-input" value="${param.product_name}">
-                    <button type="submit" class="src-btn"><span>검색</span></button>
+                    <button type="submit" class="src-btn"><span>${afn:getMessage('search',sessionScope.locale)}</span></button>
                 </div>
             </form>
             <div class="h-cart">
@@ -120,10 +121,10 @@
             </div>
         </div>
         <ul class="submenu">
-            <li><a href="/mall/today">오늘의 특가</a></li>
-            <li><a href="/giveaway">경품</a></li>
-            <li><a href="/product?product_ct=808">특판</a></li>
-            <li><a href="/product?product_ct=880">여행</a></li>
-            <li><a href="http://onejoymcm.com">라이브 쇼핑</a></li>
+            <li><a href="/mall/today">${afn:getMessage('todayPrice_cate',sessionScope.locale)}</a></li>
+            <li><a href="/giveaway">${afn:getMessage('giveaway',sessionScope.locale)}</a></li>
+            <li><a href="/product?product_ct=808">${afn:getMessage('special_edition',sessionScope.locale)}</a></li>
+            <li><a href="/product?product_ct=880">${afn:getMessage('travel',sessionScope.locale)}</a></li>
+            <li><a href="http://onejoymcm.com">${afn:getMessage('live_shopping',sessionScope.locale)}</a></li>
         </ul>
     </header>

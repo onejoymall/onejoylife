@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -18,14 +19,14 @@
                 <%--                <%@ include file="/WEB-INF/views/layout/MyPageRightHeader.jsp" %>--%>
                 <c:import url="/MyPage/RightHeader"/>
                     <div class="r-input-box">
-                        <p class="r-input-tit" style="width:100%">나의 상품평 보기</p>
+                        <p class="r-input-tit" style="width:100%">${afn:getMessage('my_review',sessionScope.locale)}</p>
                         <div class="r-in-box">
 	                        <div class="input-box1">
-	                            <p class="ra-num on" data-id="con1">오늘</p>
-	                            <p class="ra-num" data-id="con2">1주일</p>
-	                            <p class="ra-num" data-id="con3">1개월</p>
-	                            <p class="ra-num" data-id="con4">3개월</p>
-	                        </div>
+                            	<p class="ra-num on" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</p>
+                            	<p class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</p>
+                            	<p class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</p>
+                            	<p class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</p>
+                        	</div>
 	                        <div class="input-box2">
 	                        <form id="form2">
 	                            <div class="cla">
@@ -37,7 +38,7 @@
 	                                <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:out value="${param.end_date}"/> ">
 	                                <div class="cla-img1"></div>
 	                            </div>
-	                            <p class="cla-p2"><a href="#" onclick="$('#form2').submit();">조회</a></p>
+	                            <p class="cla-p2"><a href="#" onclick="$('#form2').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                             </form>
 	                        </div>
 	                    </div>
@@ -52,9 +53,9 @@
                                 </colgroup>
                                 <thead class="lis-head">
                                 <tr>
-                                    <th>주문일/상점주문번호</th>
-                                    <th>상품정보</th>
-                                    <th>상태</th>
+                                    <th>${afn:getMessage('order_date',sessionScope.locale)}/${afn:getMessage('storeorder_num',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('product_information',sessionScope.locale)}</th>
+                                    <th>${afn:getMessage('State',sessionScope.locale)}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="lis-body">
@@ -90,11 +91,11 @@
                                     </td>
                                     <td>
                                         <div class="lis-txt-box lis-txt-box1-3">
-                                            <a href="#" class="review-update" data-id="${list.no}">수정하기</a>
+                                            <a href="#" class="review-update" data-id="${list.no}">${afn:getMessage('update',sessionScope.locale)}</a>
                                         </div>
                                         
                                         <div class="lis-txt-box lis-txt-box1-1">
-                                            <a href="#" class="review-delete" data-id="${list.no}" data-rid="${list.review_id}">삭제하기</a>
+                                            <a href="#" class="review-delete" data-id="${list.no}" data-rid="${list.review_id}">${afn:getMessage('delete',sessionScope.locale)}</a>
                                         </div>
                                     </td>
                                 </tr>

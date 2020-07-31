@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 <style>
 .npay_storebtn_bx{
@@ -13,7 +14,7 @@
 	function buy_nc(){
 		if($('input[name=chk]:checked').length <= 0){
             $.toast({
-                heading: '결제 할 상품을 선택하세요.',
+                heading: '${afn:getMessage('msg.payment_product',sessionScope.locale)}',
                 // text: [
                 //     '<a href="/sign/signup">회원 가입 후 이용</a>',
                 //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
@@ -121,9 +122,9 @@
 </script>
 
     <section class="subheader">
-        <div class="subTitle">장바구니</div>
+        <div class="subTitle">${afn:getMessage('cart',sessionScope.locale)}</div>
         <ul class="taps">
-            <li><a href="#" class="active">일반 (${searchVO.totRow})</a></li>
+            <li><a href="#" class="active">${afn:getMessage('brd_usual',sessionScope.locale)} (${searchVO.totRow})</a></li>
 <%--            <li><a href="#">경품 (5)</a></li>--%>
         </ul>
     </section>
@@ -134,7 +135,7 @@
 
             <ul class="btns">
     <%--            <li><a href="#" class="active">선택 찜하기</a></li>--%>
-                <li><a href="" class="commonlistDelete">선택 삭제</a></li>
+                <li><a href="" class="commonlistDelete">${afn:getMessage('chkdelete',sessionScope.locale)}</a></li>
             </ul>
             <hr>
 
@@ -161,9 +162,9 @@
 										<c:if test="${empty list.option_name}">-</c:if></span></p>
                                 </li>
                             </ul>
-                            <h2><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /><span>원</span> <span class="shipping">무료배송</span></h2>
+                            <h2><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /><span>${afn:getMessage('korea_won',sessionScope.locale)}</span> <span class="shipping">${afn:getMessage('free_shipping',sessionScope.locale)}</span></h2>
     <%--                        <button class="btn-black btn">옵션변경</button>--%>
-                            <button class="btn x" data-id="${list.product_cd}">삭제</button>
+                            <button class="btn x" data-id="${list.product_cd}">${afn:getMessage('delete',sessionScope.locale)}</button>
                             <select name="payment_order_quantity" value="${list.payment_order_quantity}" class="half payment_order_quantity" data-id="${list.cart_cd}">
                                 <c:forEach var="i" begin="1" end="100">
                                		<option value="${i}" <c:if test="${list.payment_order_quantity eq i}"> selected</c:if>>${i}</option>
@@ -177,7 +178,7 @@
             </c:if>
             <c:if test="${empty list}">
                 <ul class="basket">
-                    <li>표시할 내용이 없습니다.</li>
+                    <li>${afn:getMessage('msg.none_content',sessionScope.locale)}</li>
                 </ul>
 
             </c:if>
@@ -216,20 +217,20 @@
     <hr>
     <section class="wrap">
         <ul class="calculator">
-            <li>총 주문금액</li>
+            <li>${afn:getMessage('total_order_amount',sessionScope.locale)}</li>
             <li class="sum-span1"></li>
         </ul>
         <ul class="calculator">
-            <li>총 할인금액</li>
+            <li>${afn:getMessage('total_discount_amount',sessionScope.locale)}</li>
             <li class="sum-span2"></li>
         </ul>
         <ul class="calculator">
-            <li>배송비</li>
+            <li>${afn:getMessage('shippingFee',sessionScope.locale)}</li>
             <li class="sum-span3"></li>
         </ul>
         <hr>
         <ul class="calculator">
-            <li>원결제예정금액</li>
+            <li>${afn:getMessage('payment_scheduled_amount',sessionScope.locale)}</li>
             <li class="txtRed sum-span4"></li>
         </ul>
         <script type="text/javascript" >
@@ -245,8 +246,8 @@
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" id="selectOrder" class="cartPaymentOrder" data-id="selectCheck">선택 주문하기</a></li>
-           <li><a href="#" id="allOrder" class="cartPaymentOrder" data-id="allCheck">전체 주문하기</a></li>
+           <li><a href="#" id="selectOrder" class="cartPaymentOrder" data-id="selectCheck">${afn:getMessage('selective_order',sessionScope.locale)}</a></li>
+           <li><a href="#" id="allOrder" class="cartPaymentOrder" data-id="allCheck">${afn:getMessage('all_order',sessionScope.locale)}</a></li>
         </ul>
     </div>
 
@@ -315,10 +316,10 @@ function computePayment(ids){
 		delivery += val;
 	});
 	
-	$(".sum-span1").html(payment.toLocaleString('en') + '<span>원</span>');
-	$(".sum-span2").html('- ' + discount.toLocaleString('en') + '<span>원</span>');
-	$(".sum-span3").html('+ ' + delivery.toLocaleString('en') + '<span>원</span>');
-	$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span>원</span>');
+	$(".sum-span1").html(payment.toLocaleString('en') + '<span>${afn:getMessage('korea_won',sessionScope.locale)}</span>');
+	$(".sum-span2").html('- ' + discount.toLocaleString('en') + '<span>${afn:getMessage('korea_won',sessionScope.locale)}</span>');
+	$(".sum-span3").html('+ ' + delivery.toLocaleString('en') + '<span>${afn:getMessage('korea_won',sessionScope.locale)}</span>');
+	$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span>${afn:getMessage('korea_won',sessionScope.locale)}</span>');
 }
 </script>
     <c:import url="/layout/footer"/>

@@ -9,7 +9,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %>'
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -20,14 +21,14 @@
                 <form id="form1" name="form1" method="get">
                     <input type="hidden" name="date_pick_con">
                 <div class="r-input-box">
-                    <p class="r-in-p1">주문현황</p>
+                    <p class="r-in-p1">${afn:getMessage('order_status',sessionScope.locale)}</p>
 
                     <div class="r-in-box">
                         <div class="input-box1">
-                            <p class="ra-num <c:if test="${param.date_pick_con=='con1'}">on</c:if>" data-id="con1">오늘</p>
-                            <p class="ra-num <c:if test="${param.date_pick_con=='con2'}">on</c:if>" data-id="con2">1주일</p>
-                            <p class="ra-num <c:if test="${param.date_pick_con=='con3'}">on</c:if>" data-id="con3">1개월</p>
-                            <p class="ra-num <c:if test="${param.date_pick_con=='con4'}">on</c:if>" data-id="con4">3개월</p>
+                            <p class="ra-num on" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</p>
+                            <p class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</p>
                         </div>
                         <div class="input-box2">
                             <div class="cla">
@@ -39,12 +40,12 @@
                                 <input type="text" id="to_date" name="end_date" class="date_pick" value="<c:if test="${param.end_date} != null"><c:out value="${param.end_date}"/></c:if><c:out value="${param.end_date}"/>">
                                 <div class="cla-img1"></div>
                             </div>
-                            <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">조회</a></p>
+                            <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                         </div>
                         <div class="input-box3">
                             <select name="payment_status" >
                                 <c:if test="${not empty getSelectorList}">
-                                    <option value="">주문상태 선택</option>
+                                    <option value="">${afn:getMessage('order_statusselection',sessionScope.locale)}</option>
                                     <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
                                     <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
                                     </c:forEach>
@@ -52,12 +53,12 @@
                             </select>
                         </div>
                     </div>
-                    <p class="r-in-p2">조회일자를 설정하시면 최대 3개월 간의 주문내역을 조회하실 수 있습니다.</p>
+                    <p class="r-in-p2">${afn:getMessage('msg.order.search3m',sessionScope.locale)}</p>
                 </div>
                 <div class="con on" id="con1">
                     <div class="r-sec4">
                         <div class="sec4-txt">
-                            <p class="txt-tit">주문상품</p>
+                            <p class="txt-tit">${afn:getMessage('order_product',sessionScope.locale)}</p>
                             <!-- <p class="mor-a">
                                 <a href="">더보기 ></a>
                             </p> -->
@@ -73,12 +74,12 @@
                             </colgroup>
                             <thead class="lis-head">
                             <tr>
-                                <th>주문일/상점주문번호</th>
-                                <th>상품정보</th>
-                                <th>상품금액</th>
-                                <th>수량</th>
-                                <th>주문금액</th>
-                                <th>진행상태</th>
+                                <th>${afn:getMessage('order_date',sessionScope.locale)}/${afn:getMessage('storeorder_num',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('product_info',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('product_amount',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('quantity',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('order_payment',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('status',sessionScope.locale)}</th>
                             </tr>
                             </thead>
                             <tbody class="lis-body">
@@ -101,27 +102,27 @@
 			                                            </div>
 			                                        </a>
 			                                    </td>
-			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
-			                                    <td class="lis-font-w" rowspan="${fn:length(map.value)}"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>원</span></td>
+			                                    <td class="lis-font-w" rowspan="${fn:length(map.value)}"><span><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 			                                    <td class="pointer">
 		                                            <p class="lis-font-w ">${paymentList.payment_status_name}</p>
 		                                            <div class="lis-txt-box lis-txt-box1-2">
-		                                                <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                                <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>${afn:getMessage('order_detail',sessionScope.locale)}</span></a>
 		                                            </div>
 		                                            <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
 		                                                <div class="lis-txt-box lis-txt-box1-3">
-		                                                    <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.no}">배송조회</a>
+		                                                    <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.no}">${afn:getMessage('delivery_check',sessionScope.locale)}</a>
 		                                                </div>
 		                                            </c:if>
 													
 													<c:if test="${paymentList.payment_status == 'O' || paymentList.payment_status eq 'S'}">
 		                                            <div class="lis-txt-box lis-txt-box1-4">
 		                                            	<c:if test="${paymentList.review_id == null}">
-		                                                <a href="#" class="review-write" data-id="${paymentList.no}"><span>상품평작성</span></a>
+		                                                <a href="#" class="review-write" data-id="${paymentList.no}"><span>${afn:getMessage('review_writing',sessionScope.locale)}</span></a>
 		                                                </c:if>
 		                                                <c:if test="${paymentList.review_id != null}">
-		                                                <a href="/MyPage/Reviews"><span>상품평보기</span></a>
+		                                                <a href="/MyPage/Reviews"><span>${afn:getMessage('review_reading',sessionScope.locale)}</span></a>
 		                                                </c:if>
 		                                            </div>
 		                                            </c:if>
@@ -129,12 +130,12 @@
 		                                            <c:if test="${paymentList.payment_status == 'C'}">
 		                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
 		                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
-		                                                        <a href="#" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'"><span>재주문</span></a>
+		                                                        <a href="#" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'"><span>${afn:getMessage('reordering',sessionScope.locale)}</span></a>
 		                                                    </div>
 		                                                </c:if>
 		                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
 		                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
-		                                                        <a href="#" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'"><span>부분취소</span></a>
+		                                                        <a href="#" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'"><span>${afn:getMessage('partial_cancellation',sessionScope.locale)}</span></a>
 		                                                    </div>
 		                                                </c:if>
 		                                            </c:if>
@@ -153,26 +154,26 @@
 			                                            </div>
 			                                        </a>
 			                                    </td>
-			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>원</span></td>
+			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /><fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></td>
 			                                    <td class="lis-font-w"><span><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /></span></td>
 			                                    <td class="pointer">
 		                                            <p class="lis-font-w ">${paymentList.payment_status_name}</p>
 		                                            <div class="lis-txt-box lis-txt-box1-2">
-		                                                <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>주문상세</span></a>
+		                                                <a href="/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}"><span>${afn:getMessage('order_detail',sessionScope.locale)}</span></a>
 		                                            </div>
 		                                            <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
 		                                                <div class="lis-txt-box lis-txt-box1-3">
-		                                                    <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.no}">배송조회</a>
+		                                                    <a href="#" id="SearchDelivery" class="click-span" data-id="${paymentList.no}">${afn:getMessage('delivery_check',sessionScope.locale)}</a>
 		                                                </div>
 		                                            </c:if>
 													
 													<c:if test="${paymentList.payment_status == 'O' || paymentList.payment_status eq 'S'}">
 		                                            <div class="lis-txt-box lis-txt-box1-4">
 		                                            	<c:if test="${paymentList.review_id == null}">
-		                                                <a href="#" class="review-write" data-id="${paymentList.no}"><span>상품평작성</span></a>
+		                                                <a href="#" class="review-write" data-id="${paymentList.no}"><span>${afn:getMessage('review_writing',sessionScope.locale)}</span></a>
 		                                                </c:if>
 		                                                <c:if test="${paymentList.review_id != null}">
-		                                                <a href="/MyPage/Reviews"><span>상품평보기</span></a>
+		                                                <a href="/MyPage/Reviews"><span>${afn:getMessage('review_reading',sessionScope.locale)}</span></a>
 		                                                </c:if>
 		                                            </div>
 		                                            </c:if>
@@ -180,12 +181,12 @@
 		                                            <c:if test="${paymentList.payment_status == 'C'}">
 		                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
 		                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
-		                                                        <a href="#" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'"><span>재주문</span></a>
+		                                                        <a href="#" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'"><span>${afn:getMessage('reordering',sessionScope.locale)}</span></a>
 		                                                    </div>
 		                                                </c:if>
 		                                                <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
 		                                                    <div class="lis-txt-box lis-txt-box1-4 txt-color1">
-		                                                        <a href="#" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'"><span>부분취소</span></a>
+		                                                        <a href="#" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'"><span>${afn:getMessage('partial_cancellation',sessionScope.locale)}</span></a>
 		                                                    </div>
 		                                                </c:if>
 		                                            </c:if>
@@ -197,7 +198,7 @@
 	                        </c:if>
 	                        <c:if test="${empty paymentList}">
 	                            <tr>
-	                                <td colspan="8">표시할 내용이 없습니다.</td>
+	                                <td colspan="8">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
 	                            </tr>
 	                        </c:if>
                             </tbody>

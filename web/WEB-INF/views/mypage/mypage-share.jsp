@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box clearfix">
        <main>
@@ -44,7 +45,7 @@
                     <div class="con on" id="con1" style="margin-top: 45px;">
                         <div class="r-sec4">
                             <div class="sec4-txt">
-                                <p class="txt-tit">공유상품</p>
+                                <p class="txt-tit">${afn:getMessage('shared_product',sessionScope.locale)}</p>
                                 <p class="mor-a">
 <%--                                    <a href="">더보기 ></a>--%>
                                 </p>
@@ -59,9 +60,9 @@
                                 <thead class="lis-head">
                                     <tr>
 <%--                                        <th>번호</th>--%>
-                                        <th>상품정보</th>
-                                        <th>공유날짜</th>
-                                        <th>공유SNS</th>
+                                        <th>${afn:getMessage('product_information',sessionScope.locale)}</th>
+                                        <th>${afn:getMessage('shared_date',sessionScope.locale)}</th>
+                                        <th>${afn:getMessage('shared_sns',sessionScope.locale)}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="lis-body">
@@ -92,7 +93,7 @@
 
                                     <c:if test="${empty list}">
                                         <tr>
-                                            <td colspan="8">표시할 내용이 없습니다.</td>
+                                            <td colspan="8">${afn:getMessage('msg.none_content',sessionScope.locale)}</td>
                                         </tr>
                                     </c:if>
 

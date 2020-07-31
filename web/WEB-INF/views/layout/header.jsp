@@ -7,18 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Onejoy life</title>
+    <title>${afn:getMessage('onejoylife',sessionScope.locale)}</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=yes">
     <meta property="og:url" content="http://onejoy-life.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="원조이라이프" />
+    <meta property="og:title" content="${afn:getMessage('ojl_prize',sessionScope.locale)}" />
     <meta property="og:description" content="" />
     <meta property="og:image" content="http://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
     <meta property="og:image:width" content="1100" />
@@ -81,7 +82,7 @@
             <li>
                 <a href="" onclick="snsSubmit('fackbook', '');">
                   <div class="fbic"></div>
-                   페이스북
+                   ${afn:getMessage('facebook',sessionScope.locale)}
                 </a>
             </li>
 <!--
@@ -113,7 +114,7 @@
        </ul>
        <div class="sharelink">
             <input name="share_link" id="share_link" type="text" value="" readonly>
-            <button type="button" class="copybtn" onclick="copyURL()">URL 복사</button>
+            <button type="button" class="copybtn" onclick="copyURL()">${afn:getMessage('url_copy',sessionScope.locale)}</button>
         </div>
    </div>
 </div>
@@ -123,34 +124,34 @@
             <ul class="usermenu">
     <c:if test="${!sessionScope.login}">
 
-        <li><a href="/sign/signup">회원가입</a></li>
-        <li><a href="/sign/login">로그인</a></li>
-        <li><a href="/MyPage/ShoppingBasket">장바구니</a></li>
-        <li><a href="/MyPage/OrderAndDelivery">주문배송</a></li>
-        <li><a href="/Help/csinfo">고객센터</a></li>
-        <li class="language-nav"><a href="javascrip:void(0)">국가선택</a>
+        <li><a href="/sign/signup">${afn:getMessage('join',sessionScope.locale)}</a></li>
+        <li><a href="/sign/login">${afn:getMessage('login',sessionScope.locale)}</a></li>
+        <li><a href="/MyPage/ShoppingBasket">${afn:getMessage('cart',sessionScope.locale)}</a></li>
+        <li><a href="/MyPage/OrderAndDelivery">${afn:getMessage('order_and_delivery',sessionScope.locale)}</a></li>
+        <li><a href="/Help/csinfo">${afn:getMessage('customer_service',sessionScope.locale)}</a></li>
+        <li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a>
             <ul>
-                <li><a href="javascript:setGlobalLocale('ko')">한국</a></li>
-                <li><a href="javascript:setGlobalLocale('en')">미국</a></li>
-                <li><a href="javascript:setGlobalLocale('cn')">중국</a></li>
-                <li><a href="javascript:setGlobalLocale('jp')">일본</a></li>
+                <li><a href="javascript:setGlobalLocale('ko')">${afn:getMessage('korea',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('en')">${afn:getMessage('america',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('cn')">${afn:getMessage('china',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('jp')">${afn:getMessage('japan',sessionScope.locale)}</a></li>
             </ul>
         </li>
 
     </c:if>
     <c:if test="${sessionScope.login}">
-        <li><a href="/MyPage/ShoppingBasket">장바구니</a></li>
-        <li><a href="/MyPage/OrderAndDelivery">주문배송</a></li>
-        <li><a href="/MyPage/DashBoard">MyPage</a></li>
-        <li><a href="/Help/csinfo">고객센터</a></li>
-        <li><a href="/sign/logout" class="logoutBtn">로그아웃</a></li>
+        <li><a href="/MyPage/ShoppingBasket">${afn:getMessage('cart',sessionScope.locale)}</a></li>
+        <li><a href="/MyPage/OrderAndDelivery">${afn:getMessage('order_and_delivery',sessionScope.locale)}</a></li>
+        <li><a href="/MyPage/DashBoard">${afn:getMessage('header_mypage',sessionScope.locale)}</a></li>
+        <li><a href="/Help/csinfo">${afn:getMessage('customer_service',sessionScope.locale)}</a></li>
+        <li><a href="/sign/logout" class="logoutBtn">${afn:getMessage('logout',sessionScope.locale)}</a></li>
         <!-- <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li> -->
-        <li class="language-nav"><a href="javascrip:void(0)">국가선택</a>
+        <li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a>
             <ul>
-                <li><a href="javascript:setGlobalLocale('ko')">한국</a></li>
-                <li><a href="javascript:setGlobalLocale('en')">미국</a></li>
-                <li><a href="javascript:setGlobalLocale('cn')">중국</a></li>
-                <li><a href="javascript:setGlobalLocale('jp')">일본</a></li>
+                <li><a href="javascript:setGlobalLocale('ko')">${afn:getMessage('korea',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('en')">${afn:getMessage('america',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('cn')">${afn:getMessage('china',sessionScope.locale)}</a></li>
+                <li><a href="javascript:setGlobalLocale('jp')">${afn:getMessage('japan',sessionScope.locale)}</a></li>
             </ul>
         </li>
     </c:if>
@@ -160,7 +161,7 @@
     </div>
     <div class="header-logo">
         <div class="header-logo-inner">
-            <a href="/"><h1>onejoylife</h1></a>
+            <a href="/"><h1>${afn:getMessage('onejoylife',sessionScope.locale)}</h1></a>
         </div>
     </div>
     <c:import url="/layout/mainTopNav"/>
