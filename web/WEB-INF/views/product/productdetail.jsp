@@ -41,7 +41,7 @@
 		        showMethod: 'slideDown',
 		        timeOut: 0
 		    }
-		    toastr.error("", '옵션은 필수사항입니다.');
+		    toastr.error("", '${afn:getMessage('msg.addcart.opCheck',sessionScope.locale)}');
 			return;
 		}
 	    optionStr[0] = optionStr[0] ? optionStr[0] : ' ';
@@ -58,12 +58,12 @@
 	    		shipping_type = "PAYED";
 	    	}
 	    }
-	    
+
 	    //상품갯수
 	    var item_uprice = '${list.product_payment}';
 	    var item_tprice = item_uprice * $("input[name=payment_order_quantity]").val();
 	    var total_price = item_tprice + (shipping_type == 'ONDELIVERY' ? 0 : parseInt($("input[name=product_delivery_payment]").val()));
-	    
+
 	    //데이터
 		var formData = {
 			SHOP_ID: 'np_xqqgk375177',
@@ -77,7 +77,7 @@
 			SHIPPING_PRICE: $("input[name=product_delivery_payment]").val(),
 			SHIPPING_TYPE: shipping_type,
 			TOTAL_PRICE: total_price,
-			BACK_URL: 'http://onejoy-life.com/product/productDetail?product_cd=${list.product_cd}' 
+			BACK_URL: 'http://onejoy-life.com/product/productDetail?product_cd=${list.product_cd}'
 		};
 
 		$.ajax({
@@ -99,7 +99,7 @@
 		var item_image = "http://onejoy-life.com/" + '${list.file_1}';
 		var item_thumb = "http://onejoy-life.com/" + '${list.file_1}';
 		var item_url = "http://onejoy-life.com/product/productDetail?product_cd=" + '${list.product_cd}';
-		
+
 		//데이터
 		var formData = {
 			SHOP_ID: 'np_xqqgk375177',
@@ -110,7 +110,7 @@
 			ITEM_UPRICE: [item_uprice],
 			ITEM_IMAGE: [item_image],
 			ITEM_THUMB: [item_thumb],
-			ITEM_URL: [item_url] 
+			ITEM_URL: [item_url]
 		};
 
 		$.ajax({
@@ -173,10 +173,10 @@
                     <div class="goods-price-wrap">
                         <div class="goods-price-row text-gray">
                             <div class="price-title">
-                                소비자가
+                                ${afn:getMessage("before_price",sessionScope.locale)}
                             </div>
                             <div class="price-number before-price">
-                                <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원
+                                <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}
                             </div>
                         </div>
     <%--                    <div class="goods-price-row text-gray">--%>
@@ -189,11 +189,11 @@
     <%--                    </div>--%>
                         <div class="goods-price-row text-gray">
                             <div class="price-title">
-                                판매가<br>
+                                ${afn:getMessage("real_price",sessionScope.locale)}<br>
     <%--                            <span class="coupon-rate">20% 쿠폰</span><span class="coupon-date">19.03.18-19.04.17</span>--%>
                             </div>
                             <div class="price-number">
-                                <span class="real-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</span>
+                                <span class="real-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>${afn:getMessage("korea_won",sessionScope.locale)}</span>
                             </div>
                         </div>
                         <div class="goods-price-row">
@@ -210,14 +210,14 @@
                     </div>
                     <div class="goods-point-wrap">
                         <div class="goods-point-row">
-                            <div class="point-title">ONEJOY 포인트 적립예상</div>
+                            <div class="point-title">ONEJOY ${afn:getMessage("pointAccEx",sessionScope.locale)}</div>
                             <div class="point-number">${list.product_point_rate}%</div>
                         </div>
                     </div>
                     <div class="shipping-fee-wrap">
                         <div class="shipping-fee-row">
                             <div class="shipping-title text-gray">
-                                배송안내
+                                ${afn:getMessage("delivery_info",sessionScope.locale)}
                             </div>
                             <div class="shipping-number">
                                 <c:forEach var="companyList" items="${companyList}" varStatus="status">
@@ -225,7 +225,7 @@
                                         <c:set var="t_code_name" value="${companyList.Name}"/>
                                     </c:if>
                                 </c:forEach>
-                                ${list.product_delivery_international_type_name} ${list.product_delivery_type_name} 
+                                ${list.product_delivery_international_type_name} ${list.product_delivery_type_name}
                                 <br><c:out value="${t_code_name}"/> ${list.product_delivery_payment_type_name} ${delivery.delivery_payment}
                             </div>
                         </div>
@@ -244,7 +244,7 @@
 
                     </div>
                     <div class="quantity-box">
-                        <span>구매수량</span>
+                        <span>${afn:getMessage("saleCount",sessionScope.locale)}</span>
                         <div class="total-quantity">
                             <div class="minus" tabindex="0">-</div>
                             <input type="hidden" name="payment_order_quantity" value="1">
@@ -260,8 +260,8 @@
 
 
                     <div class="buy-wrap">
-                        <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button>
-                        <button class="buynow" type="button" id="paymentSubmit">바로구매</button>
+                        <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">${afn:getMessage("cart",sessionScope.locale)}</button>
+                        <button class="buynow" type="button" id="paymentSubmit">${afn:getMessage("buyNow",sessionScope.locale)}</button>
                         <input type="hidden" name="order_max" value="${list.product_max_limit}" />
                         <input type="hidden" name="order_min" value="${list.product_min_limit}" />
                         <input type="hidden" name="product_delivery_bundle_yn" value="${list.product_delivery_bundle_yn}" />
@@ -301,19 +301,19 @@
     </article>
     <article class="related-goods-section">
         <div class="inner">
-            <h2>관련 상품</h2>
+            <h2>${afn:getMessage("relePro",sessionScope.locale)}</h2>
             <ul class="related-goods">
             	<c:if test="${not empty relatedProductList}">
             	<c:forEach var="list" items="${relatedProductList}">
 	            	<li><a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
 	                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 	                    <p class="goods-name">${list.product_name}</p>
-	                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</p>
+	                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>${afn:getMessage("korea_won",sessionScope.locale)}</p>
 	                </a></li>
                 </c:forEach>
             	</c:if>
             	<c:if test="${empty relatedProductList}">
-            		관련상품이 없습니다.
+            		${afn:getMessage("msg.proDetail.none_Relecontent",sessionScope.locale)}
             	</c:if>
             </ul>
         </div>
@@ -322,45 +322,45 @@
         <div class="inner">
             <div class="goods-detail-wrap" id="goods-description">
                 <ul class="detail-nav">
-                    <li><a href="#goods-description" class="active"><span>상품설명</span></a></li>
-                    <li><a href="#goods-information"><span>상품정보</span></a></li>
-                    <li><a href="#goods-review"><span>상품평</span></a></li>
-                    <li><a href="#goods-qna"><span>상품Q &amp; A</span></a></li>
-                    <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
+                    <li><a href="#goods-description" class="active"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
+                    <li><a href="#goods-information"><span>${afn:getMessage("product_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="#goods-review"><span>${afn:getMessage("product_review",sessionScope.locale)}</span></a></li>
+                    <li><a href="#goods-qna"><span>${afn:getMessage("product_qna",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-shipping"><span>${afn:getMessage("pro_info_etc",sessionScope.locale)}</span></a></li>
                 </ul>
                 <div class="description-img">
                     ${list.product_html}
                 </div>
             </div>
             <div class="also-viewed-goods">
-                <h5>함께 본 상품</h5>
+                <h5>${afn:getMessage("view_pro_together",sessionScope.locale)}</h5>
                 <ul class="related-goods">
                     <c:if test="${not empty serialProductList}">
 	            	<c:forEach var="list" items="${serialProductList}">
 		            	<li><a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
 		                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 		                    <p class="goods-name">${list.product_name}</p>
-		                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</p>
+		                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>${afn:getMessage("korea_won",sessionScope.locale)}</p>
 		                </a></li>
 	                </c:forEach>
 	            	</c:if>
 	            	<c:if test="${empty serialProductList}">
-	            		함께 본 상품이 없습니다.
+	            		${afn:getMessage("msg.proDetail.none_Togecontent",sessionScope.locale)}
 	            	</c:if>
                 </ul>
             </div>
             <div class="goods-detail-wrap" id="goods-information">
                 <ul class="detail-nav">
-                    <li><a href="goods-description"><span>상품설명</span></a></li>
-                    <li><a href="goods-information" class="active"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
-                    <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
+                    <li><a href="goods-description"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-information" class="active"><span>${afn:getMessage("product_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-review"><span>${afn:getMessage("product_review",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-qna"><span>${afn:getMessage("product_qna",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-shipping"><span>${afn:getMessage("pro_info_etc",sessionScope.locale)}</span></a></li>
                 </ul>
                 <c:out value="${configtop.market_config_value}" escapeXml="false"/>
-                
+
                 <div class="goods-information-wrap ">
-                    <h5>상품 필수정보</h5>
+                    <h5>${afn:getMessage("prod_es_info",sessionScope.locale)}</h5>
                     <!-- <p class="goods-name">SM-G05-ZR/SS</p>
                     <p class="goods-subtitle">일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p> -->
                     <table class="goods-information-table">
@@ -526,33 +526,33 @@
 						</c:if>
                     </table>
                 </div>
-                
+
                 <c:out value="${configbot.market_config_value}" escapeXml="false"/>
             </div>
             <div class="goods-detail-wrap" id="goods-review">
                 <ul class="detail-nav">
-                    <li><a href="goods-description"><span>상품설명</span></a></li>
-                    <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review" class="active"><span>상품평</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
-                    <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
+                    <li><a href="goods-description"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-information"><span>${afn:getMessage("product_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-review" class="active"><span>${afn:getMessage("product_review",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-qna"><span>${afn:getMessage("product_qna",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-shipping"><span>${afn:getMessage("pro_info_etc",sessionScope.locale)}</span></a></li>
                 </ul>
                 <c:import url="/product/productDetailReview"/>
 
             <div class="goods-detail-wrap" id="goods-qna">
                 <ul class="detail-nav">
-                    <li><a href="goods-description"><span>상품설명</span></a></li>
-                    <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평</span></a></li>
-                    <li><a href="goods-qna" class="active"><span>상품Q &amp; A</span></a></li>
-                    <li><a href="goods-shipping"><span>배송/교환/반품/환불</span></a></li>
+                    <li><a href="goods-description"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-information"><span>${afn:getMessage("product_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-review"><span>${afn:getMessage("product_review",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-qna" class="active"><span>${afn:getMessage("product_qna",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-shipping"><span>${afn:getMessage("pro_info_etc",sessionScope.locale)}</span></a></li>
                 </ul>
                 <div class="qna-wrap">
-                    <h5>상품 Q&amp;A</h5>
+                    <h5>${afn:getMessage("product_qna2",sessionScope.locale)}</h5>
                     <div class="qna-data-container">
                         <div class="qna-data-option-box">
                                 <span class="all active">
-                                    <a href="#none">전체&#40;<span>24</span>&#41;</a>
+                                    <a href="#none">${afn:getMessage("all",sessionScope.locale)}&#40;<span>24</span>&#41;</a>
                                 </span>
                             <div class="qna-data-option-box-right">
 <%--                                <select name="order" class="order-select">--%>
@@ -562,7 +562,7 @@
 <%--                                    <option value="refund">반품/환불/취소</option>--%>
 <%--                                    <option value="etc">기타</option>--%>
 <%--                                </select>--%>
-                                <button type="button" class="write-review" id="productqna" data-id="${list.product_cd}">작성하기</button>
+                                <button type="button" class="write-review" id="productqna" data-id="${list.product_cd}">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button>
                             </div>
                         </div>
                         <ul class="qna-data-list">
@@ -575,52 +575,52 @@
 
             </div>
             <div class="same-product-goods">
-                <h5>같은 공급사 상품</h5>
+                <h5>${afn:getMessage("sameSupplierPro",sessionScope.locale)}</h5>
                 <ul class="related-goods">
                     <c:if test="${not empty sameSupplierProductList}">
 	            	<c:forEach var="list" items="${sameSupplierProductList}">
 		            	<li><a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
 		                    <div class="img-box"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 		                    <p class="goods-name">${list.product_name}</p>
-		                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</p>
+		                    <p class="goods-price"><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>${afn:getMessage("korea_won",sessionScope.locale)}</p>
 		                </a></li>
 	                </c:forEach>
 	            	</c:if>
 	            	<c:if test="${empty sameSupplierProductList}">
-	            		같은 공급사 상품이 없습니다.
+	            		${afn:getMessage("msg.proDetail.none_Suppliercontent",sessionScope.locale)}
 	            	</c:if>
                 </ul>
             </div>
             <div class="goods-detail-wrap" id="goods-shipping">
                 <ul class="detail-nav">
-                    <li><a href="goods-description"><span>상품설명</span></a></li>
-                    <li><a href="goods-information"><span>상품정보</span></a></li>
-                    <li><a href="goods-review"><span>상품평</span></a></li>
-                    <li><a href="goods-qna"><span>상품Q &amp; A</span></a></li>
-                    <li><a href="goods-shipping" class="active"><span>배송/교환/반품/환불</span></a></li>
+                    <li><a href="goods-description"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-information"><span>${afn:getMessage("product_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-review"><span>${afn:getMessage("product_review",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-qna"><span>${afn:getMessage("product_qna",sessionScope.locale)}</span></a></li>
+                    <li><a href="goods-shipping" class="active"><span>${afn:getMessage("pro_info_etc",sessionScope.locale)}</span></a></li>
                 </ul>
                 <div class="shipping-wrap">
-                    <h5>배송/결제/교환/환불</h5>
+                    <h5>${afn:getMessage("pro_info_etc",sessionScope.locale)}</h5>
                     <div class="shipping-box">
-                        <h6>배송 안내<i class="arrow-down"></i></h6>
+                        <h6>${afn:getMessage("delivery_info",sessionScope.locale)}<i class="arrow-down"></i></h6>
                         ${list.product_delivery_info}
                         <br>
-                        <b>상품 출고지</b>
+                        <b>${afn:getMessage("delivery_forward",sessionScope.locale)}</b>
                         <br>
                         ${store_delivery.forward_value}
                           <br>
                     </div>
                     <div class="return-box">
-                        <h6>교환/반품 안내<i class="arrow-down"></i></h6>
+                        <h6>${afn:getMessage("returnInfo",sessionScope.locale)}<i class="arrow-down"></i></h6>
                         <br>
-                        <b>교환 및 반품 주소</b>
+                        <b>${afn:getMessage("returnAdd",sessionScope.locale)}</b>
                         <br>
                         ${store_delivery.refund_value}
                           <br><br>
                         ${list.product_change_info}
                     </div>
                     <div class="refund-box">
-                        <h6>환불 안내<i class="arrow-down"></i></h6>
+                        <h6>${afn:getMessage("refundInfo",sessionScope.locale)}<i class="arrow-down"></i></h6>
                         ${list.product_service_info}
                     </div>
                 </div>

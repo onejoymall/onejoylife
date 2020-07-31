@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 
 <!--
@@ -70,27 +71,27 @@
 <div class="underPop" id="review">
     <div class="content">
         <header>
-           <h3>상품평 작성하기</h3>
+           <h3>${afn:getMessage("writereview",sessionScope.locale)}</h3>
             <button class="popClose">
                 <i class="ri-close-line"></i>
             </button>
         </header>
         <content>
-            <p class="text-md mt-2 mb-05">제목 *</p>
-            <input type="text" class="width-100 mb-05" placeholder="50자 이내로 입력해주세요">
-            <p class="text-md mt-1 mb-05">내용</p>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("title",sessionScope.locale)} *</p>
+            <input type="text" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}">
+            <p class="text-md mt-1 mb-05">${afn:getMessage("brd_content",sessionScope.locale)}</p>
             <div class="textarea mt-05">
-               <span>(0/1000자)</span>
+               <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
                <textarea class="width-100"></textarea>
             </div>
-            <p class="text-md mt-1 mb-05">이미지 첨부</p>
+            <p class="text-md mt-1 mb-05">${afn:getMessage("QA_img",sessionScope.locale)}</p>
             <div class="mb-2">
                 <input type="text" class="width-100 mb-1">
-                <button class="btn btn-black width-50">파일찾기</button> <span class="ml-1 text-sm grey">1개 / 5MB 이하만 가능</span>
+                <button class="btn btn-black width-50">${afn:getMessage("QA_findfile",sessionScope.locale)}</button> <span class="ml-1 text-sm grey">${afn:getMessage("msg_faqFile",sessionScope.locale)}</span>
             </div>
             <ul class="btns mt-3 mb-0">
-                <li><a href="#">취소</a></li>
-                <li><a href="#" class="active">등록</a></li>
+                <li><a href="#">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
+                <li><a href="#" class="active">${afn:getMessage("registration",sessionScope.locale)}</a></li>
            </ul>
         </content>
     </div>
@@ -98,28 +99,28 @@
 <div class="underPop" id="qna">
     <div class="content">
         <header>
-           <h3>상품Q&A 작성하기</h3>
+           <h3>${afn:getMessage("writeItemQA",sessionScope.locale)}</h3>
             <button class="popClose">
                 <i class="ri-close-line"></i>
             </button>
         </header>
         <content>
-            <p class="text-md mt-2 mb-05">제목 *</p>
-            <input type="text" class="width-100 mb-05" placeholder="50자 이내로 입력해주세요">
+            <p class="text-md mt-2 mb-05">${afn:getMessage("title",sessionScope.locale)} *</p>
+            <input type="text" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}">
             <input type="checkbox" id="replysns" class="b8 mt-1">
-            <label for="replysns">비공개</label>
-            <p class="text-md mt-2 mb-05">문의 유형 * </p>
+            <label for="replysns">${afn:getMessage("private",sessionScope.locale)}</label>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)} * </p>
             <select class="width-100">
-                <option value="" selected>주문/결제</option>
+                <option value="" selected>${afn:getMessage("orders_payments",sessionScope.locale)}</option>
             </select>
-            <p class="text-md mt-1 mb-05">내용</p>
+            <p class="text-md mt-1 mb-05">${afn:getMessage("QA_content",sessionScope.locale)}</p>
             <div class="textarea mt-05 mb-2">
-               <span>(0/1000자)</span>
+               <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
                <textarea class="width-100"></textarea>
             </div>
             <ul class="btns mt-2 mb-0">
-                <li><a href="#">취소</a></li>
-                <li><a href="#" class="active">등록</a></li>
+                <li><a href="#">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
+                <li><a href="#" class="active">${afn:getMessage("registration",sessionScope.locale)}</a></li>
            </ul>
         </content>
     </div>
@@ -142,27 +143,27 @@
        <h2 class="my-2">${detail.get("giveaway_name")}</h2>
        <hr class="grey">
        <div class="progress-wrap view">
-            <p class="progress-now">참여율 <b class="red">${detail.parti_rate}%</b> (<span><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중)</p>
+            <p class="progress-now">${afn:getMessage("parti_rate",sessionScope.locale)} <b class="red">${detail.parti_rate}%</b> (<span><fmt:formatNumber value="${detail.player_count}" groupingUsed="true" /></span>명 참여 중${afn:getMessage("parti_rate_num",sessionScope.locale)})</p>
             <div class="progress-bar">
                 <div class="progress-bar-active" style="width:${detail.parti_rate}%"></div>
             </div>
             <p class="parti"><b class="red"><fmt:formatNumber value="${detail.sum_play_point}" groupingUsed="true" /></b> / <fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /> E-point</p>
         </div>
         <ul class="flexbetween py-05 mt-2">
-           <li>베송비</li>
+           <li>${afn:getMessage("shippingFee",sessionScope.locale)}</li>
            <li>${delivery.get("delivery_payment")}</li>
        </ul>
        <ul class="flexbetween py-05 mt-1">
             <c:if test="${sessionScope.login}">
-               <li>보유 포인트</li>
+               <li>${afn:getMessage("mypoint",sessionScope.locale)}</li>
                <li class="text-lg"><fmt:formatNumber value="${point_amount}" groupingUsed="true" /> point</li>
             </c:if>
             <c:if test="${!sessionScope.login}">
-                <a href="<c:url value="/sign/login"/>"> 로그인 후 포인트확인</a>
+                <a href="<c:url value="/sign/login"/>"> ${afn:getMessage("lgpointchk",sessionScope.locale)}</a>
             </c:if>
         </ul>
        <ul class="flexbetween py-05">
-           <li>응모 포인트</li>
+           <li>${afn:getMessage("used_point",sessionScope.locale)}</li>
            <li class="">
                <form name="defaultForm" id="defaultForm" method="post">
                    <input type="number" class="epoint" id="point" name="point" value="${detail.giveaway_play_winner_point - detail.sum_play_point}">
@@ -174,7 +175,7 @@
            </li>
        </ul>
        <ul class="flexbetween py-05">
-           <li>응모 E-point</li>
+           <li>${afn:getMessage("applE-Point",sessionScope.locale)}</li>
            <li class="text-lg text-bold red"><fmt:formatNumber value="${detail.giveaway_play_winner_point}" groupingUsed="true" /><span class="text-sm"> point</span></li>
        </ul>
         <ul class="winner-wrap flexbetween py-05">
@@ -184,14 +185,14 @@
     </section>
     <section class="subheader">
         <ul class="shareBtns">
-            <li><a href="javascript:wish()" class="wish favorite ready" >위시리스트</a></li>
-            <li><a href="#" class="share" onclick="share_giveaway('${detail.giveaway_id}', '${detail.giveaway_name}')">공유하기</a></li>
+            <li><a href="javascript:wish()" class="wish favorite ready" >${afn:getMessage("mywishlist",sessionScope.locale)}</a></li>
+            <li><a href="#" class="share" onclick="share_giveaway('${detail.giveaway_id}', '${detail.giveaway_name}')">${afn:getMessage("share",sessionScope.locale)}</a></li>
         </ul>
         <img src="../../assets/img/goods-view/bnr1.jpg" alt="" class="width-100">
         <ul class="taps" id="tap">
-           <li><a href="javascript:move(1)" class="active">상품설명</a></li>
-           <li><a href="javascript:move(2)">상품정보</a></li>
-           <li><a href="javascript:move(3)">경품안내</a></li>
+           <li><a href="javascript:move(1)" class="active">${afn:getMessage("product_description",sessionScope.locale)}</a></li>
+           <li><a href="javascript:move(2)">${afn:getMessage("product_information",sessionScope.locale)}</a></li>
+           <li><a href="javascript:move(3)">${afn:getMessage("prize_guide_info",sessionScope.locale)}</a></li>
        </ul>        
         <div class="my-1" id="content01">
            ${detail.giveaway_html}
@@ -199,7 +200,7 @@
     </section>
     <section class="wrap">
     	<div class="mt-1 mb-3">
-            <h3 class="mb-1">함께 본 경품</h3>
+            <h3 class="mb-1">함께 본 경품${afn:getMessage("otherUserSeen",sessionScope.locale)}</h3>
             <hr class="mb-1">
             <div class="shareProducts">
             	<c:if test="${not empty serialProductList}">
@@ -207,17 +208,17 @@
 	                <a href="<c:url value="/giveaway/giveawaydetail?giveaway_id=${list.giveaway_cd}"/>" class="product">
 	                    <div class="productImg"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 	                    <h5 class="mt-05">${list.giveaway_name}</h5>
-	                    <h4 class="text-bold red"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> <span class="text-sm">원</span></h4>
+	                    <h4 class="text-bold red"><fmt:formatNumber value="${list.giveaway_play_winner_point}" groupingUsed="true" /> <span class="text-sm">원${afn:getMessage("korea_won",sessionScope.locale)}</span></h4>
 	                </a>
                 </c:forEach>
             	</c:if>
             	<c:if test="${empty serialProductList}">
-            		함께 본 경품이 없습니다.
+            		${afn:getMessage("msg_notSeenothewrPrize",sessionScope.locale)}
             	</c:if>
        		</div>
         </div>
         <div class="my-1" id="content02">
-            <h3 class="mb-1">상품 필수정보</h3>
+            <h3 class="mb-1">${afn:getMessage("prod_es_info",sessionScope.locale)}</h3>
             <!-- <hr class="mb-1">
             <h2 class="mb-05">SM-G05-ZR/SS</h2>
             <p>일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p> -->

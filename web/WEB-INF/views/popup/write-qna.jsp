@@ -2,9 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
     <header>
-        <h2>상품 Q&amp;A 작성</h2>
+        <h2>${afn:getMessage("qnatext1",sessionScope.locale)}&amp;${afn:getMessage("qnatext2",sessionScope.locale)}</h2>
     </header>
     <form id="defaultForm" name="defaultForm" method="POST">
         <input type="hidden" name="product_cd" value="${param.product_cd}">
@@ -17,37 +18,37 @@
                 </colgroup>
                 <tbody class="sec1-tbody">
                     <tr>
-                        <td class="sec1-td-bor1">제목</td>
+                        <td class="sec1-td-bor1">${afn:getMessage("title",sessionScope.locale)}</td>
                         <td class="body-td2 padding-left">
-                            <input type="text" name="qna_title" placeholder="50자 이내로 입력해주세요" maxlength="50">
+                            <input type="text" name="qna_title" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50">
                             <input name="secret" id="secret" type="checkbox">
-                            <label for="secret">비공개</label>
+                            <label for="secret">${afn:getMessage('private',sessionScope.locale)}</label>
                             <input type="hidden" name="qna_open_type" value="F">
                         </td>
                     </tr>
                     <tr>
-                        <td class="sec1-td-bor1">문의 유형</td>
+                        <td class="sec1-td-bor1">${afn:getMessage('QA_type',sessionScope.locale)}</td>
                         <td class="body-td2 padding-left">
-                            <select name="qna_type" id="qna_type">
-                                <option value="O">주문/결제</option>
-                                <option value="C">교환/반품/환불</option>
-                                <option value="D">배송</option>
-                                <option value="G">기타</option>
+                          <select name="qna_type" id="qna_type">
+                                <option value="O">${afn:getMessage('orders_payments',sessionScope.locale)}</option>
+                                <option value="C">${afn:getMessage('change_return_refund',sessionScope.locale)}</option>
+                                <option value="D">${afn:getMessage('deliv',sessionScope.locale)}</option>
+                                <option value="G">${afn:getMessage('QA_others',sessionScope.locale)}</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td class="sec1-td-bor1">내용</td>
+                         <td class="sec1-td-bor1">${afn:getMessage('content',sessionScope.locale)}</td>
                         <td class="body-td2 padding-left">
-                            <textarea name=qna_memo placeholder="500자 이내로 입력해주세요" style="resize:none;" maxlength="500"></textarea>
+                              <textarea name=qna_memo placeholder="${afn:getMessage('msg_below500word',sessionScope.locale)}"  style="resize:none;" maxlength="500">${detail.qna_memo}</textarea>
                             <p class="txt-counting">&#40;<span>0</span>/500&#41;</p>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="button-box">
-                <button type="button" id="qnaWriteSubmit">등록</button>
-                <button type="button" class="grey-button" onclick="window.close()">취소</button>
+                <button type="button" id="qnaWriteSubmit">${afn:getMessage('registration',sessionScope.locale)}</button>
+                <button type="button" class="grey-button" onclick="window.close()">${afn:getMessage('reviewCancel',sessionScope.locale)}</button>
             </div>
 
         </div>

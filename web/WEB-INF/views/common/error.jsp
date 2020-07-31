@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html>
-<head><title>Exception 에러</title></head>
+<head><title>${afn:getMessage("error_title",sessionScope.locale)}</title></head>
 <body>
-<strong>요청한 페이지에 오류가 있습니다</strong>
+<strong>${afn:getMessage("msg_errorInfo1-1",sessionScope.locale)}</strong>
 <br><br>
-관리자에게 문의하세요.
+${afn:getMessage("msg_errorInfo1-2",sessionScope.locale)}
 </body>
 </html>

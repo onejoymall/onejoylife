@@ -9,9 +9,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <main class="clearfix">
     <div class="header-top">
-        <p>배송조회</p>
+        <p>${afn:getMessage("delivery_check",sessionScope.locale)}</p>
     </div>
     <div class="body-mar">
         <div class="txt-box1">
@@ -20,7 +21,7 @@
                     <c:set var="t_code_name" value="${companyList.Name}"/>
                 </c:if>
             </c:forEach>
-            <p>송장번호<span class="bar"></span><span>${deliveryInfoVO.delivery_t_invoice}</span><span> / <c:out value="${t_code_name}"/></span></p>
+            <p>${afn:getMessage("delivery_t_invoice",sessionScope.locale)}<span class="bar"></span><span>${deliveryInfoVO.delivery_t_invoice}</span><span> / <c:out value="${t_code_name}"/></span></p>
 <%--            <p>판매자 정보<span class="bar"></span><span>대우전자 </span><span>(1577-1234)</span></p>--%>
         </div>
 <%--        <div class="txt-box2 dis-none">--%>
@@ -36,10 +37,10 @@
             </colgroup>
             <thead>
             <tr class="h-tr">
-                <td>처리일시</td>
-                <td>현재위치</td>
-                <td>상태</td>
-                <td>연락처</td>
+                <td>${afn:getMessage("disposeDate",sessionScope.locale)}</td>
+                <td>${afn:getMessage("locatedArea",sessionScope.locale)}</td>
+                <td>${afn:getMessage("cur_status",sessionScope.locale)}</td>
+                <td>${afn:getMessage("contact_num",sessionScope.locale)}</td>
             </tr>
             </thead>
             <tbody>

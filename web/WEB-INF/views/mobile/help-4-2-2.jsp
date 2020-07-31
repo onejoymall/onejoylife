@@ -3,13 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:import url="/mobile/layout/sub-header"/>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 
     <section class="subheader">
-        <div class="subTitle">1:1문의</div>
+        <div class="subTitle">${afn:getMessage("1:1question",sessionScope.locale)}</div>
         <ul class="taps">
-            <li><a href="<c:url value="/Help/csBoard?bgno=15"/>" id="tap1" class="active">1:1문의 작성</a></li>
-            <li><a href="<c:url value="/Board/boardList?bgno=15"/>" id="tap2">문의내역</a></li>
+            <li><a href="<c:url value="/Help/csBoard?bgno=15"/>" id="tap1" class="active">${afn:getMessage("writeqeustion",sessionScope.locale)}</a></li>
+            <li><a href="<c:url value="/Board/boardList?bgno=15"/>" id="tap2">${afn:getMessage("myQuestions",sessionScope.locale)}</a></li>
         </ul>
     </section>
     
@@ -17,13 +18,13 @@
     <section class="wrap" id="write">
         <form id="form1" name="form1" action="/Board/boardSave" method="post" enctype="multipart/form-data">
         <ul class="flexstart pb-2">
-            <li>이름</li>
+            <li>${afn:getMessage("QA_name",sessionScope.locale)} </li>
             <li><c:out value="${boardInfo.brdwriter}"/></li>
         </ul>
-        <p class="text-md mb-05">이메일 *</p>
+        <p class="text-md mb-05">${afn:getMessage("email",sessionScope.locale)} *</p>
         <input type="text" class="width-100" id="email" name="email">
         <input type="checkbox" id="reply" class="b8">
-        <p class="text-md mt-2 mb-05">휴대폰 번호</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("QA_ph",sessionScope.locale)}</p>
         <select class="width-25 mt-05 mb-05" name="phoneNum-1" id="phoneNum-1">
             <option value="010" selected>010</option>
             <option value="011">011</option>
@@ -35,40 +36,39 @@
         <input type="hidden" name="phone">
 <%--        <label for="replysns">답변 여부를 SMS로 받으시겠습니까?</label>--%>
 <%--        <input type="checkbox" id="replysns" class="b8 mt-1">--%>
-        <p class="text-md mt-2 mb-05">문의 유형 * </p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)} * </p>
         <select class="width-100" name="sort" id="sort">
-            <option value="선택" selected>선택</option>
-            <option value="주문결제">주문/결제</option>
-            <option value="교환반품환불">교환/반품/환불</option>
-            <option value="이벤트">이벤트</option>
-            <option value="배송">배송</option>
-            <option value="기타">기타</option>
+            <option value="${afn:getMessage('check',sessionScope.locale)}" selected>${afn:getMessage('check',sessionScope.locale)}</option>
+            <option value="${afn:getMessage('ordersPayment',sessionScope.locale)}">${afn:getMessage("orders_payment",sessionScope.locale)}</option>
+            <option value="${afn:getMessage('changeReturnRefund',sessionScope.locale)}">${afn:getMessage("change_return_refund",sessionScope.locale)}</option>
+            <option value="${afn:getMessage('QA_event',sessionScope.locale)}">${afn:getMessage('QA_event',sessionScope.locale)}</option>
+            <option value="${afn:getMessage('deliv',sessionScope.locale)}">${afn:getMessage('deliv',sessionScope.locale)}</option>
+            <option value="${afn:getMessage('QA_others',sessionScope.locale)}">${afn:getMessage('QA_others',sessionScope.locale)}</option>
         </select>
         <%--<button class="btn btn-lg btn-black width-100 mt-3">주문 상품 조회</button>
         <input type="text" class="width-100 mt-05" placeholder="1354681383854">--%>
-        <p class="text-md mt-2 mb-05">문의 제목 * </p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("QA_title",sessionScope.locale)} * </p>
         <div class="textarea mt-05">
-           <span>(0/1000자)</span>
+           <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
            <input type="text" class="width-100" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>" />
         </div>
-        <p class="text-md mt-2 mb-05">문의 내용 * </p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("QA_content",sessionScope.locale)} * </p>
         <div class="textarea mt-05">
-           <span>(0/1000자)</span>
+           <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
            <textarea name="brdmemo" id="brdmemo" style="resize:none;"></textarea>
         </div>
-        <p class="text-md mt-2 mb-05">이미지 첨부</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("QA_img",sessionScope.locale)}</p>
         <div class="fileBox">
             <input type="text" class="width-100 mb-05 fileName" id="fileName" name="fileName" readonly="readonly">
-            <button for="uploadBtn" class="btn btn-black width-50">파일찾기</button>
+            <button for="uploadBtn" class="btn btn-black width-50">${afn:getMessage("QA_findfile",sessionScope.locale)}</button>
             <input type="file" id="uploadBtn" name="uploadfile" class="uploadBtn">
-            <span class="ml-1 text-sm grey">1개 / 5MB 이하만 가능</span>
+            <span class="ml-1 text-sm grey">${afn:getMessage("msg_faqFile",sessionScope.locale)}</span>
         </div>
         <ul class="information">
-            <li>문의하신 내용에 대한 답변은 문의내역 탭에서 확인하실 수 있습니다.</li>
-            <li>쇼핑몰 관련 1:1 문의하기 페이지입니다.
-매장 이용 관련 불편사항은 고객지원센터(1811-9590)를 이용해주세요.</li>
+            <li>${afn:getMessage("msg_faq1-1",sessionScope.locale)}</li>
+            <li>${afn:getMessage("msg_faq1-2",sessionScope.locale)}</li>
         </ul>
-        <button class="btn btn-lg btn-redcover width-100 mb-3" onclick="fn_formSubmit();">접수</button>
+        <button class="btn btn-lg btn-redcover width-100 mb-3" onclick="fn_formSubmit();">${afn:getMessage("QAinsert",sessionScope.locale)}</button>
         <input type="hidden" name="bgno" value="<c:out value="${bgno}"/>">
         <input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
         </form>
@@ -84,11 +84,11 @@
        </select>--%>
        <hr>
        <ul class="qnaTitle">
-           <li>번호</li>
-           <li>제목</li>
+          <li>${afn:getMessage("cs_num",sessionScope.locale)}</li>
+           <li>${afn:getMessage("title",sessionScope.locale)}</li>
        </ul>
         <c:if test="${empty listview}">
-       <div class="qnaNothing">문의 내역이 없습니다.</div>
+       <div class="qnaNothing">${afn:getMessage("noQuestions",sessionScope.locale)}</div>
         </c:if>
         <c:if test="${not empty listview}">
         <c:forEach var="listview" items="${listview}" varStatus="status">

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
     <main class="clearfix">
     <form id="taxInvoiceForm" name="taxInvoiceForm">
@@ -12,7 +13,7 @@
     	<input type="hidden" name="total_amount" value="${supply_total + tax_total}"/>
     	<input type="hidden" name="reg_date" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
         <div class="header-top">
-            <p>세금계산서 작성</p>
+            <p>${afn:getMessage("taxSheet",sessionScope.locale)}</p>
         </div>
         <div class="body-mar">
            <table>
@@ -24,21 +25,21 @@
                </colgroup>
                <tbody class="t-body2">
                    <tr>
-                       <th class="tr-tit">부가세 유형</th>
+                       <th class="tr-tit"> ${afn:getMessage("surtaxtype",sessionScope.locale)}</th>
                        <td>
                            <input type="radio" name="tax_type" id="vat1" value=1 checked>
-                           <label for="vat1">과세</label>
+                           <label for="vat1">${afn:getMessage("taxation",sessionScope.locale)}</label>
                            <input type="radio" name="tax_type" id="vat2" value=2>
-                           <label for="vat2">영세율</label>
+                           <label for="vat2">${afn:getMessage("zeroTaxrate",sessionScope.locale)}</label>
                        </td>
-                       <th class="tr-tit">공급받는자 구분</th>
+                       <th class="tr-tit">${afn:getMessage("supplier",sessionScope.locale)}</th>
                        <td>
                            <input type="radio" name="invoicee_party_type" id="buyer1" value="corp">
-                           <label for="buyer1">사업자</label>
+                           <label for="buyer1">${afn:getMessage("licensee",sessionScope.locale)}</label>
                            <input type="radio" name="invoicee_party_type" id="buyer2" value="person" checked>
-                           <label for="buyer2">개인</label>
+                           <label for="buyer2">${afn:getMessage("personal",sessionScope.locale)}</label>
                            <input type="radio" name="invoicee_party_type" id="buyer3" value="foreigner">
-                           <label for="buyer3">외국인</label>
+                           <label for="buyer3">${afn:getMessage("foreigner",sessionScope.locale)}</label>
                        </td>
                    </tr>
                </tbody>
@@ -58,55 +59,62 @@
                 </colgroup>
                 <tbody class="t-body1">
                    <tr class>
-                       <td colspan="5">전자세금계산서 &#40;공급자 보관용&#41;</td>
-                       <th colspan="2">책 번호</th>
+                       <td colspan="5">${afn:getMessage("elecTaxSta",sessionScope.locale)}&#40;${afn:getMessage("forsupplier",sessionScope.locale)}&#41;</td>
+                       <th colspan="2">${afn:getMessage("bookNum",sessionScope.locale)}</th>
                        <td>
                            <input type="text" id="volume" name="kwon">
-                           <label for="volume">권</label>
+                           <label for="volume">${afn:getMessage("ko1",sessionScope.locale)}</label>
                            <input type="text" id="issue" name="ho">
-                           <label for="issue">호</label>
+                           <label for="issue">${afn:getMessage("ko2",sessionScope.locale)}</label>
                        </td>
-                       <th>일련번호</th>
+                       <th>${afn:getMessage("corp_num",sessionScope.locale)}</th>
                        <td><input type="text" id="number" name="serial_num"></td>
                    </tr>
                     <tr class="tr-tit">
-                        <td rowspan="5">공<br>급<br>자</td>
-                        <td>등록번호</td>
+                        <td rowspan="5">${afn:getMessage("ko3",sessionScope.locale)}<br>
+							                  ${afn:getMessage("ko4",sessionScope.locale)} <br>
+							             ${afn:getMessage("ko5",sessionScope.locale)}  </td>
+                        <td>${afn:getMessage("reservNum",sessionScope.locale)}</td>
                         <td colspan="3"><span>487-88-01223</span></td>
-                        <td rowspan="5">공<br>급<br>받<br>는<br>자</td>
-                        <td>등록번호</td>
+                        <td rowspan="5">
+		                 ${afn:getMessage("ko6",sessionScope.locale)}<br>
+		                 ${afn:getMessage("ko7",sessionScope.locale)}<br>
+		           		 ${afn:getMessage("ko8",sessionScope.locale)}<br>
+		                 ${afn:getMessage("ko9",sessionScope.locale)}<br>
+		                 ${afn:getMessage("ko10",sessionScope.locale)}</td>
+                        <td> ${afn:getMessage("reservNum",sessionScope.locale)}</td>
                         <td colspan="3"><span><input type="text" name="corp_num"></span></td>
                     </tr>
                     <tr>
-                        <td>상호(법인명)</td>
-                        <td><span>주식회사 원조이</span></td>
-                        <td>성명</td>
-                        <td><span>김수현</span></td>
-                        <td>상호(법인명)</td>
+                        <td> ${afn:getMessage("corpName",sessionScope.locale)}</td>
+                        <td><span> ${afn:getMessage("onejoyName",sessionScope.locale)}</span></td>
+                        <td> ${afn:getMessage("name",sessionScope.locale)}</td>
+                        <td><span> ${afn:getMessage("ksy",sessionScope.locale)}</span></td>
+                        <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td><span><input type="text" name="corp_name"></span></td>
-                        <td>성명</td>
+                        <td> ${afn:getMessage("name",sessionScope.locale)}</td>
                         <td><span><input type="text" name="ceo_name"></span></td>
                     </tr>
                     <tr class="tr-tit">
-                        <td>사업장 주소</td>
-                        <td colspan="3"><span>서울시 서초구 서리풀길4, 4층<br> (서초동 영호빌딩)</span></td>
-                        <td>사업장 주소</td>
+                        <td> ${afn:getMessage("store_address",sessionScope.locale)}</td>
+                        <td colspan="3"><span> ${afn:getMessage("msg_cr_1-10-1",sessionScope.locale)}<br> (${afn:getMessage("msg_cr_1-10-2",sessionScope.locale)})</span></td>
+                        <td> ${afn:getMessage("store_address",sessionScope.locale)}</td>
                         <td colspan="3"><span><input type="text" name="addr"></span></td>
                     </tr>
                     <tr>
-                        <td>업태</td>
-                        <td><span>도소매업외</span></td>
-                        <td>종목</td>
-                        <td><span>전자상거래업외</span></td>
-                        <td>업태</td>
+                        <td> ${afn:getMessage("business_condition",sessionScope.locale)}</td>
+                        <td><span> ${afn:getMessage("wholesaleretail",sessionScope.locale)}</span></td>
+                        <td> ${afn:getMessage("event",sessionScope.locale)}</td>
+                        <td><span> ${afn:getMessage("elecStores",sessionScope.locale)}</span></td>
+                        <td> ${afn:getMessage("business_condition",sessionScope.locale)}</td>
                         <td><span><input type="text" name="biz_type"></span></td>
-                        <td>종목</td>
+                        <td> ${afn:getMessage("event",sessionScope.locale)}</td>
                         <td><span><input type="text" name="biz_class"></span></td>
                     </tr>
                     <tr class="tr-tit">
-                        <td>이메일</td>
+                        <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td colspan="3"><span>onejoy@onejoy.co.kr</span></td>
-                        <td>이메일</td>
+                        <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td colspan="3"><span><input type="text" name="email"></span></td>
                     </tr>
                 </tbody>
@@ -142,37 +150,37 @@
                 </colgroup>
                 <thead class="tr-tit t-body1">
                 	<tr>
-	                    <th colspan="3">작성일자</th>
-	                    <th colspan="12">공급가액</th>
-	                    <th colspan="10">세액</th>
-	                    <th rowspan="2">비고</th>
+	                    <th colspan="3">${afn:getMessage("dayWrite",sessionScope.locale)}작성일자</th>
+	                    <th colspan="12">${afn:getMessage("supplyValue",sessionScope.locale)}공급가액</th>
+	                    <th colspan="10">${afn:getMessage("additionalPrice",sessionScope.locale)}세액</th>
+	                    <th rowspan="2">${afn:getMessage("remark",sessionScope.locale)}비고</th>
                     </tr>
                     <tr>
-                    	<th>년</th>
-                    	<th>월</th>
-                    	<th>일</th>
-                    	<th>공란수</th>
-                    	<th>백</th>
-                    	<th>십</th>
-                    	<th>억</th>
-                    	<th>천</th>
-                    	<th>백</th>
-                    	<th>십</th>
-                    	<th>만</th>
-                    	<th>천</th>
-                    	<th>백</th>
-                    	<th>십</th>
-                    	<th>일</th>
-                    	<th>십</th>
-                    	<th>억</th>
-                    	<th>천</th>
-                    	<th>백</th>
-                    	<th>십</th>
-                    	<th>만</th>
-                    	<th>천</th>
-                    	<th>백</th>
-                    	<th>십</th>
-                    	<th>일</th>
+ 				<th>${afn:getMessage("year",sessionScope.locale)} </th>
+				<th>${afn:getMessage("month",sessionScope.locale)}</th>
+				<th>${afn:getMessage("day",sessionScope.locale)}  </th>
+				<th>${afn:getMessage("blank",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num1",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num2",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num3",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num4",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num5",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num6",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num7",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num8",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num9",sessionScope.locale)} </th>
+				<th>${afn:getMessage("num10",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num11",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num12",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num13",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num14",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num15",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num16",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num17",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num18",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num19",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num20",sessionScope.locale)}</th>
+				<th>${afn:getMessage("num22",sessionScope.locale)}</th>
                     </tr>
                 </thead>
                 <tbody class="t-body1">
@@ -220,15 +228,15 @@
                 </colgroup>
                 <tbody class="t-body1">
                     <tr class="tr-tit">
-                        <td>월</td>
-                        <td>일</td>
-                        <td>품목</td>
-                        <td>규격</td>
-                        <td>수량</td>
-                        <td>단가</td>
-                        <td>공급가액</td>
-                        <td>세액</td>
-                        <td>비고</td>
+                        <td>${afn:getMessage("month",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("day",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("subject",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("standard",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("quantity",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("unitPrice",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("publicValue",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("taxAmount",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("remark",sessionScope.locale)}</td>
                     </tr>
                     <c:forEach items="${paymentBundleList}" var="list">
                     <input type="hidden" name="purchaseExpiry" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
@@ -252,7 +260,7 @@
 	                    </tr>
                     </c:forEach>
                     <input type="hidden" name="purchaseExpiry" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
-                    <input type="hidden" name="name" value="배송비"/>
+                    <input type="hidden" name="name" value="${afn:getMessage('shippingFee',sessionScope.locale)}"/>
                     <input type="hidden" name="infomation" value=""/>
                     <input type="hidden" name="chargeableUnit" value="1"/>
                     <input type="hidden" name="unitPrice" value="${delivery_payment}"/>
@@ -262,7 +270,7 @@
                     <tr>
                         <td><span><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></span></td>
 						<td><span><fmt:formatDate value="${detail.reg_date}" pattern="dd"/></span></td>
-                        <td><span>배송비</span></td>
+                        <td><span>${afn:getMessage("shippingFee",sessionScope.locale)}</span></td>
                         <td><span>1</span></td>
                         <td><span>1</span></td>
                         <td><span><fmt:formatNumber value="${delivery_payment}" groupingUsed="true" /></span></td>
@@ -283,12 +291,17 @@
                 </colgroup>
                 <tbody class="t-body1">
                     <tr class="tr-tit">
-                        <td>합계금액</td>
-                        <td>현금</td>
-                        <td>수표</td>
-                        <td>어음</td>
-                        <td>외상미수금</td>
-                        <td rowspan="2">이 금액을 <input type="radio" id="receiving" name="purpose_type" value="1" checked><label for="receiving">영수</label><input type="radio" id="requesting" name="purpose_type"><label for="requesting" value="2">청구</label> 함</td>
+                        <td>${afn:getMessage("shippingFee",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("totalPrice",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("cash",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("paycheck",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("AccountsRec",sessionScope.locale)}</td>
+                        <td rowspan="2">${afn:getMessage("msg_tax1",sessionScope.locale)} 
+                        <input type="radio" id="receiving" name="purpose_type" value="1" checked>
+                        <label for="receiving">${afn:getMessage("msg_tax2",sessionScope.locale)} </label>
+                        <input type="radio" id="requesting" name="purpose_type">
+                        <label for="requesting" value="2">${afn:getMessage("msg_tax3",sessionScope.locale)} </label>
+                        ${afn:getMessage("msg_tax4",sessionScope.locale)}</td>
                     </tr>
                     <tr>
                         <td><fmt:formatNumber value="${supply_total + tax_total}" groupingUsed="true" /></td>
@@ -300,13 +313,13 @@
                 </tbody>
             </table>
             <div>
-            	<p>※ 개인인경우 등록번호에 주민번호 입력해주세요.</p>
-            	<p>※ 외국인경우 등록번호에 외국인등록번호 또는 여권번호 입력해주세요.</p>
-            	<p>※ 모든번호는 - 없이 숫자만 입력해주세요.</p>
+            	<p>※ ${afn:getMessage("msg_tax5",sessionScope.locale)}</p>
+            	<p>※ ${afn:getMessage("msg_tax6",sessionScope.locale)}</p>
+            	<p>※ ${afn:getMessage("msg_tax7",sessionScope.locale)}</p>
             </div>
             <div class="but-box">
-                <button class="but2" type="button" onclick="window.print();">인쇄</button>
-                <button class="but1" type="button" id="taxInvoceSendBtn">국세청 전송</button>
+                <button class="but2" type="button" onclick="window.print();">인쇄${afn:getMessage("print",sessionScope.locale)}</button>
+                <button class="but1" type="button" id="taxInvoceSendBtn">국세청 전송${afn:getMessage("sendToNTS",sessionScope.locale)}</button>
             </div>
         </div>
     </form>
