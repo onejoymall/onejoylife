@@ -2,18 +2,19 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 <form id="form1" name="form1"  method="get">
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
 	</section>
     <section class="wrap">
-        <h2 class="pb-1">주문현황</h2>
+        <h2 class="pb-1">${afn:getMessage('order_status',sessionScope.locale)}</h2>
         <ul class="btns">
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <div class="date-box">
             <div class="input-box2">
@@ -27,17 +28,17 @@
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="submit" class="date-btn">조회</button>
+            <button type="submit" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
         <select name="payment_status" id="mo-select" class="mo-select">
             <c:if test="${not empty getSelectorList}">
-                <option value="">주문상태 선택</option>
+                <option value="">${afn:getMessage('order_statusselection',sessionScope.locale)}</option>
                 <c:forEach var="getSelectorList" items="${getSelectorList}" varStatus="status">
                 <option value="${getSelectorList.code_value}" <c:if test="${getSelectorList.code_value eq param.payment_status}">selected</c:if>>${getSelectorList.code_name}</option>
                 </c:forEach>
             </c:if>
         </select>
-        <h2 class="py-1">주문상품</h2>
+        <h2 class="py-1">${afn:getMessage('order_product',sessionScope.locale)}</h2>
         <hr>
         <c:if test="${not empty paymentList}">
         	<c:forEach var="map" items="${paymentList}">
@@ -54,39 +55,39 @@
 		                    </li>
 		                </ul>
 		                <ul class="options">
-		                    <li>상품금액</li>
-		                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /><span>원</span></li>
+		                    <li>${afn:getMessage('product_amount',sessionScope.locale)}</li>
+		                    <li><fmt:formatNumber value="${paymentList.product_payment}" groupingUsed="true" /> <fmt:formatNumber value="${paymentList.giveaway_payment}" groupingUsed="true" /><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></li>
 		                </ul>
 		                <ul class="options">
-		                    <li>수량</li>
-		                    <li><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /> <span>개</span></li>
+		                    <li>${afn:getMessage('quantity',sessionScope.locale)}</li>
+		                    <li><fmt:formatNumber value="${paymentList.payment_order_quantity}" groupingUsed="true" /> <span>${afn:getMessage('piece',sessionScope.locale)}</span></li>
 		                </ul>
 		                <hr>
 		                <ul class="options mb-1">
-		                    <li>주문금액</li>
-		                    <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>원</span></li>
+		                    <li>${afn:getMessage('order_payment',sessionScope.locale)}</li>
+		                    <li><fmt:formatNumber value="${paymentList.payment}" groupingUsed="true" /> <span>${afn:getMessage('korea_won',sessionScope.locale)}</span></li>
 		                </ul>
 		                <ul class="options bg_grey p-1">
 		                    <li class="w100px">${paymentList.payment_status_name}</li>
 		                    <li>
-		                        <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >주문상세</button>
+		                        <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderAndDeliveryDetail?order_no=${paymentList.order_no}'" >${afn:getMessage('order_detail',sessionScope.locale)}</button>
 		                        <c:if test="${paymentList.payment_status eq 'R' || paymentList.payment_status eq 'S'}">
-		                            <button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >배송조회</button>
+		                            <button type="button" id="SearchDelivery" class="btn btn-red" data-id="${paymentList.order_no}" >${afn:getMessage('delivery_check',sessionScope.locale)}</button>
 		                        </c:if>
 		                        <c:if test="${paymentList.payment_status == 'O' || paymentList.payment_status eq 'S'}">
 		                            <c:if test="${paymentList.review_id == null}">
-		                            <button type="button" class="btn btn-red review-write" data-id="${paymentList.no}" >상품평작성</button>
+		                            <button type="button" class="btn btn-red review-write" data-id="${paymentList.no}" >${afn:getMessage('review_writing',sessionScope.locale)}</button>
 		                            </c:if>
 		                            <c:if test="${paymentList.review_id != null}">
-		                            <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">상품평보기</button>
+		                            <button type="button" class="btn btn-red" onclick="location.href='/MyPage/Reviews';">${afn:getMessage('review_reading',sessionScope.locale)}</button>
 		                            </c:if>
 		                        </c:if>
 		                        <c:if test="${paymentList.payment_status == 'C'}">
 		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PD')}">
-		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">재주문</button>
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPayment?order_no=${paymentList.order_no}'">${afn:getMessage('reordering',sessionScope.locale)}</button>
 		                            </c:if>
 		                            <c:if test="${fn:startsWith(paymentList.order_no, 'PO')}">
-		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">부분취소</button>
+		                                <button type="button" class="btn btn-blue" onclick="location.href='/product/productPaymentCart?order_no=${paymentList.order_no}'">${afn:getMessage('partial_cancellation',sessionScope.locale)}</button>
 		                            </c:if>
 		                        </c:if>
 		                    </li>
@@ -108,7 +109,7 @@
    		</c:if>
    		
         <c:if test="${empty paymentList}">
-        	표시할 내용이 없습니다.
+        	${afn:getMessage('msg.none_content',sessionScope.locale)}
         	<hr>
         </c:if>
         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />

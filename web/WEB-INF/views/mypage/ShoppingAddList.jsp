@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box clearfix">
         <main>
@@ -24,10 +25,10 @@
                         <div class="ojt-box">
                             <div class="r-sec4">
                                 <div class="sec4-txt">
-                                    <p class="txt-tit">찜 목록</p>
+                                    <p class="txt-tit">${afn:getMessage('wishlist',sessionScope.locale)}</p>
                                     <div class="txt-right">
-                                        <button type="button" id="del-chk-btn" class="deleteFavorites">삭제하기</button>
-                                        <button type="button" id="cart-chk-btn" class="addAllCart">장바구니 담기</button>
+                                        <button type="button" id="del-chk-btn" class="deleteFavorites">${afn:getMessage('delete',sessionScope.locale)}</button>
+                                        <button type="button" id="cart-chk-btn" class="addAllCart">${afn:getMessage('add_cart',sessionScope.locale)}</button>
                                     </div>
                                 </div>
                                 <table class="sec4-lis">
@@ -43,9 +44,9 @@
                                             <input type="checkbox" id="tr-ck1-1"><label for="tr-ck1-1" class="tr-icon"></label>
                                         </th>
                                         <td></td>
-                                        <th>상품정보</th>
-                                        <th>가격</th>
-                                        <th>조회</th>
+                                        <th>${afn:getMessage('product_information',sessionScope.locale)}</th>
+                                        <th>${afn:getMessage('price',sessionScope.locale)}</th>
+                                        <th>${afn:getMessage('lookup',sessionScope.locale)}</th>
 
                                     </tr>
                                     </thead>
@@ -71,17 +72,17 @@
                                                 </td>
                                                     <%--                                    <td><p class="op-td1">옵션변경</p></td>--%>
     <%--                                            <td><input type="number" value="1" class="num-box"></td>--%>
-                                                <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>원</td>
+                                                <td><span><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /></span>${afn:getMessage('korea_won',sessionScope.locale)}</td>
                                                     <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
 <%--                                                <td><button class="x" data-id="${list.product_cd}"></button></td>--%>
                                                 <td>
                                                 	<c:if test="${list.product_option_yn !='Y' }">
-                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >삭제하기</p></a>
-                                                    <a href="javascript:void(0);" onclick="addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1" >장바구니 담기</p></a>
+                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >${afn:getMessage('delete',sessionScope.locale)}</p></a>
+                                                    <a href="javascript:void(0);" onclick="addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1" >${afn:getMessage('add_cart',sessionScope.locale)}</p></a>
                                                     </c:if>
                                                 	<c:if test="${list.product_option_yn =='Y' }">
-                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >삭제하기</p></a>
-                                                    <a href="javascript:void(0);" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';"><p class="lis-txt-box txt-color1" >옵션선택하기</p></a>
+                                                	<a href="javascript:void(0);" onclick="deleteFavorite('${list.product_cd}')"><p class="lis-txt-box txt-color2" >${afn:getMessage('delete',sessionScope.locale)}</p></a>
+                                                    <a href="javascript:void(0);" onclick="location.href='/product/productDetail?product_cd=${list.product_cd}';"><p class="lis-txt-box txt-color1" >${afn:getMessage('select_option',sessionScope.locale)}</p></a>
                                                     </c:if>
                                                 </td>
                                                 <input type="hidden" name="payment_order_quantity" value="1">
@@ -91,7 +92,7 @@
                                     <c:if test="${empty list}">
                                         <tr>
                                             <td colspan="8">
-                                                표시할 내용이 없습니다.
+                                                ${afn:getMessage('msg.none_content',sessionScope.locale)}
                                             </td>
                                         </tr>
 

@@ -1,38 +1,39 @@
         <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
                 <div class="left-nav">
-                    <h2 class="left-tit">마이페이지</h2>
+                    <h2 class="left-tit">${afn:getMessage('mypage',sessionScope.locale)}</h2>
                     <ul class="outer-ul">
-                        <li class="outer-li">나의 혜택관리
+                        <li class="outer-li">${afn:getMessage('mybenefit',sessionScope.locale)}
                             <ul class="inner-ul">
-                                <li><a href="<c:url value="/MyPage/ePoint"/>" class="<c:if test="${leftNavOrder == 2}">active</c:if>">E.POINT 조회</a></li>
-                                <li><a href="<c:url value="/MyPage/Coupon"/>" class="<c:if test="${leftNavOrder == 3}">active</c:if>">쿠폰 조회</a></li>
+                                <li><a href="<c:url value="/MyPage/ePoint"/>" class="<c:if test="${leftNavOrder == 2}">active</c:if>">${afn:getMessage('e-point_lookup',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/Coupon"/>" class="<c:if test="${leftNavOrder == 3}">active</c:if>">${afn:getMessage('coupon_lookup',sessionScope.locale)}</a></li>
                             </ul>
                         </li>
-                        <li class="outer-li">나의 쇼핑관리
+                        <li class="outer-li">${afn:getMessage('myshopping',sessionScope.locale)}
                             <ul class="inner-ul">
-                                <li><a href="<c:url value="/MyPage/ShoppingBasket"/>" class="<c:if test="${leftNavOrder == 4}">active</c:if>">장바구니</a></li>
-                                <li><a href="<c:url value="/MyPage/ShoppingAddList"/>" class="<c:if test="${leftNavOrder == 5}">active</c:if>">찜 목록</a></li>
-                                <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>" class="<c:if test="${leftNavOrder == 6}">active</c:if>">주문/배송 조회</a></li>
+                                <li><a href="<c:url value="/MyPage/ShoppingBasket"/>" class="<c:if test="${leftNavOrder == 4}">active</c:if>">${afn:getMessage('cart',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/ShoppingAddList"/>" class="<c:if test="${leftNavOrder == 5}">active</c:if>">${afn:getMessage('wishlist',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/OrderAndDelivery"/>" class="<c:if test="${leftNavOrder == 6}">active</c:if>">${afn:getMessage('order_and_delivery_lookup',sessionScope.locale)}</a></li>
 <%--                                <li><a href="<c:url value="/MyPage/OrderCancels"/>" class="<c:if test="${leftNavOrder == 7}">active</c:if>">취소/재결제/교환/반품</a></li>--%>
-                                <li><a href="<c:url value="/MyPage/Reviews"/>" class="<c:if test="${leftNavOrder == 8}">active</c:if>">나의 상품평 보기</a></li>
-                                <li><a href="<c:url value="/MyPage/Qna"/>" class="<c:if test="${leftNavOrder == 14}">active</c:if>">나의 QnA 보기</a></li>
-                                <li><a href="<c:url value="/MyPage/Favorites"/>" class="<c:if test="${leftNavOrder == 9}">active</c:if>">자주 구매하는 상품</a></li>
-                                <li><a href="<c:url value="/MyPage/mypage-share"/>" class="<c:if test="${leftNavOrder == 15}">active</c:if>">공유한 상품</a></li>
+                                <li><a href="<c:url value="/MyPage/Reviews"/>" class="<c:if test="${leftNavOrder == 8}">active</c:if>">${afn:getMessage('my_review',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/Qna"/>" class="<c:if test="${leftNavOrder == 14}">active</c:if>">${afn:getMessage('my_qna',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/Favorites"/>" class="<c:if test="${leftNavOrder == 9}">active</c:if>">${afn:getMessage('favorite_product',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/mypage-share"/>" class="<c:if test="${leftNavOrder == 15}">active</c:if>">${afn:getMessage('shared_product',sessionScope.locale)}</a></li>
                             </ul>
                         </li>
-                        <li class="outer-li">나의 경품관리
+                        <li class="outer-li">${afn:getMessage('my_giveaway',sessionScope.locale)}
                             <ul class="inner-ul">
                                 <%-- <li><a href="<c:url value="/MyPage/GiveawayExperience"/>" class="<c:if test="${leftNavOrder == 10}">active</c:if>">경품 체험하기</a></li> --%>
-                                <li><a href="javascript:void(0)" class="ready">경품 체험하기</a></li>
-                                <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>" class="<c:if test="${leftNavOrder == 11}">active</c:if>">경품 당첨내역 조회</a></li>
+                                <li><a href="javascript:void(0)" class="ready">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>" class="<c:if test="${leftNavOrder == 11}">active</c:if>">${afn:getMessage('giveaway_win_list_lookup',sessionScope.locale)}</a></li>
                             </ul>
                         </li>
-                        <li class="outer-li">나의 정보
+                        <li class="outer-li">${afn:getMessage('my_info',sessionScope.locale)}
                             <ul class="inner-ul">
-                                <li><a href="<c:url value="/MyPage/mypage-12"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">회원정보 변경</a></li>
-                                <li><a href="<c:url value="/MyPage/DeliveryAddress"/>"  class="<c:if test="${leftNavOrder == 13}">active</c:if>">배송지 정보</a></li>
+                                <li><a href="<c:url value="/MyPage/mypage-12"/>" class="<c:if test="${leftNavOrder == 12}">active</c:if>">${afn:getMessage('user_info_change',sessionScope.locale)}</a></li>
+                                <li><a href="<c:url value="/MyPage/DeliveryAddress"/>"  class="<c:if test="${leftNavOrder == 13}">active</c:if>">${afn:getMessage('delivery_address',sessionScope.locale)}</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box">
         <main>
@@ -9,8 +10,8 @@
             <div class="right-contain">
                 <form id="defaultForm" name="defaultForm"  method="POST">
                     <div class="r-sec1">
-                        <p class="sec1-h1">교환신청</p>
-                        <p class="sec1-p1">상점주문번호 : <span>${paymentDetail.order_no}</span><span> │ </span>주문일 : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
+                        <p class="sec1-h1">${afn:getMessage('change_request',sessionScope.locale)}</p>
+                        <p class="sec1-p1">${afn:getMessage('storeorder_num',sessionScope.locale)} : <span>${paymentDetail.order_no}</span><span> │ </span>${afn:getMessage('order_date',sessionScope.locale)} : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
                         <input type="hidden" name="order_no" value="${paymentDetail.no}">
                         <table>
                             <colgroup>
@@ -25,11 +26,11 @@
                             <thead class="sec1-thead">
                             <tr>
                                 <th></th>
-                                <th>상품정보</th>
+                                <th>${afn:getMessage('product_information',sessionScope.locale)}</th>
                                 <%--                                        <th>판매자</th>--%>
-                                <th>상품금액</th>
-                                <th>수량</th>
-                                <th>쿠폰할인</th>
+                                <th>${afn:getMessage('product_amount',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('quantity',sessionScope.locale)}</th>
+                                <th>${afn:getMessage('coupon_discount',sessionScope.locale)}</th>
                             </tr>
                             </thead>
                             <tbody class="sec1-tbody">
@@ -40,15 +41,15 @@
                                     <p>${paymentDetail.option_name}</p>
                                 </td>
                                 <%--                                        <td><span>${paymentDetail.product_made_company}</span></td>--%>
-                                <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>원</td>
+                                <td><span><fmt:formatNumber value="${paymentDetail.product_payment}" groupingUsed="true" /></span>${afn:getMessage('korea_won',sessionScope.locale)}</td>
                                 <td><span><fmt:formatNumber value="${paymentDetail.payment_order_quantity}" groupingUsed="true" /></span></td>
-                                <td><span><fmt:formatNumber value="${paymentDetail.coupon_discount}" groupingUsed="true" /></span>원</td>
+                                <td><span><fmt:formatNumber value="${paymentDetail.coupon_discount}" groupingUsed="true" /></span>${afn:getMessage('korea_won',sessionScope.locale)}</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="r-sec2">
-                        <p class="sec-h1">교환사유</p>
+                        <p class="sec-h1">${afn:getMessage('change_reason',sessionScope.locale)}</p>
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -67,7 +68,7 @@
 <%--                                </td>--%>
 <%--                            </tr>--%>
                             <tr>
-                                <td class="body-td-tit">사유입력</td>
+                                <td class="body-td-tit">${afn:getMessage('reason_input',sessionScope.locale)}</td>
                                 <td class="body-td-txt1">
                                     <textarea name="reason" id="reason" cols="97" rows="4" style="resize: none; margin-top: 10px;" class="area-content" maxlength="250"></textarea>
                                     <p class="area-num">(0/250)</p>
@@ -77,7 +78,7 @@
                         </table>
                     </div>
                     <div class="r-sec3">
-                        <p class="sec-h1">원상품 회수지 정보</p>
+                        <p class="sec-h1">${afn:getMessage('product_reclamation_information',sessionScope.locale)}</p>
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -85,20 +86,20 @@
                             </colgroup>
                             <tbody class="sec3-body body-tr-s">
                             <tr>
-                                <td class="body-td-tit">수령인</td>
+                                <td class="body-td-tit">${afn:getMessage('delivery_user_name',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "return_user_name" type="text" value="${delivery.delivery_user_name}" class="select-op"></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">연락처</td>
+                                <td class="body-td-tit">${afn:getMessage('contact_num',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "return_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op"></td>
                             </tr>
 
                             <tr>
-                                <td class="body-td-tit">우편번호</td>
-                                <td class="body-td-txt2"><input name = "postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button" id="daumMapCall">주소지 변경</button></td>
+                                <td class="body-td-tit">${afn:getMessage('postcode',sessionScope.locale)}</td>
+                                <td class="body-td-txt2"><input name = "postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button" id="daumMapCall">${afn:getMessage('address_change',sessionScope.locale)}</button></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">주소</td>
+                                <td class="body-td-tit">${afn:getMessage('address',sessionScope.locale)}</td>
                                 <td class="body-td-txt2">
                                     <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
                                     <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
@@ -106,14 +107,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">상세주소</td>
+                                <td class="body-td-tit">${afn:getMessage('extraAddress',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="r-sec4">
-                        <p class="sec-h1">교환상품 배송지 정보</p>
+                        <p class="sec-h1">${afn:getMessage('changepro_deliv_info',sessionScope.locale)}</p>
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -121,20 +122,20 @@
                             </colgroup>
                             <tbody class="sec3-body body-tr-s">
                             <tr>
-                                <td class="body-td-tit">수령인</td>
+                                <td class="body-td-tit">${afn:getMessage('delivery_user_name',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "refund_user_name" type="text" value="${delivery.delivery_user_name}" class="select-op"></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">연락처</td>
+                                <td class="body-td-tit">${afn:getMessage('contact_num',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "refund_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op"></td>
                             </tr>
 
                             <tr>
-                                <td class="body-td-tit">우편번호</td>
-                                <td class="body-td-txt2"><input name = "refund_postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button"  id="daumMapCall2">주소지 변경</button></td>
+                                <td class="body-td-tit">${afn:getMessage('postcode',sessionScope.locale)}</td>
+                                <td class="body-td-txt2"><input name = "refund_postcode" type="text" value="${delivery.postcode}" class="select-op"><button class="sec-but" type="button"  id="daumMapCall2">${afn:getMessage('address_change',sessionScope.locale)}</button></td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">주소</td>
+                                <td class="body-td-tit">${afn:getMessage('address',sessionScope.locale)}</td>
                                 <td class="body-td-txt2">
                                     <input name = "refund_roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
                                     <input name = "refund_jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
@@ -142,7 +143,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="body-td-tit">상세주소</td>
+                                <td class="body-td-tit">${afn:getMessage('extraAddress',sessionScope.locale)}</td>
                                 <td class="body-td-txt2"><input name = "refund_extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
@@ -150,8 +151,8 @@
                     </div>
 
                     <div class="r-sec5">
-                        <button type="button" id="formSubmit">교환신청</button>
-                        <button type="button" onclick="location.href='${header.referer}'">이전</button>
+                        <button type="button" id="formSubmit">${afn:getMessage('change_request',sessionScope.locale)}</button>
+                        <button type="button" onclick="location.href='${header.referer}'">${afn:getMessage('prev',sessionScope.locale)}</button>
                     </div>
                 </form>
             </div>

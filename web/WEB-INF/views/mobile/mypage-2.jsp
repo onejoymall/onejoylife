@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+
 <c:import url="/mobile/layout/sub-header"/>
 <form id="form1" name="form1"  method="get">
     <section class="subheader">

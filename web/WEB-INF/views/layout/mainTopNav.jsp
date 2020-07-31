@@ -9,12 +9,13 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
     <div class="gnb-section">
         <div class="gnb-inner">
             <ul class="gnb">
                 <li>
-                    <i class="main-menu-ic"></i>전체 카테고리
+                    <i class="main-menu-ic"></i>${afn:getMessage('catechory_all',sessionScope.locale)}
                     <ul class="gnb-submenu">
                     <c:if test="${not empty categoryList}">
                     <c:forEach var="ctegoryList" items="${categoryList}" varStatus="status">
@@ -47,12 +48,12 @@
                     </c:if>
                     </ul>
                 </li>
-                <li><a href="/mall/today">오늘의 특가</a></li>
+                <li><a href="/mall/today">${afn:getMessage('todayPrice_cate',sessionScope.locale)}</a></li>
 <%--                <li><a href="#">이벤트</a></li>--%>
-                <li><a href="/giveaway">경품</a></li>
-                <li><a href="/product?product_ct=808">특판</a></li>
-                <li><a href="/product?product_ct=880">여행</a></li>
-                <li><a href="http://onejoymcm.com">라이브 쇼핑</a></li>
+                <li><a href="/giveaway">${afn:getMessage('giveaway',sessionScope.locale)}</a></li>
+                <li><a href="/product?product_ct=808">${afn:getMessage('special_edition',sessionScope.locale)}</a></li>
+                <li><a href="/product?product_ct=880">${afn:getMessage('travel',sessionScope.locale)}</a></li>
+                <li><a href="http://onejoymcm.com">${afn:getMessage('live_shopping',sessionScope.locale)}</a></li>
             </ul>
             <div class="search-box">
                 <div class="cart-box">
