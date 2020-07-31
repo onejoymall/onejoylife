@@ -9,6 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
@@ -37,7 +38,7 @@
             </div>
             <button type="button" class="date-btn">조회</button>
         </div>--%>
-        <h2 class="py-1">공유상품</h2>
+        <h2 class="py-1">${afn:getMessage('shared_product',sessionScope.locale)}</h2>
         <hr>
 
         <c:if test="${not empty list}">
@@ -62,8 +63,8 @@
                 </li>
             </ul>
             <ul class="options mt-1 bg_grey p-1">
-                <li>공유방법</li>
-                <li class="fs-15">카카오톡</li>
+                <li>${afn:getMessage('shared_method',sessionScope.locale)}</li>
+                <li class="fs-15">${afn:getMessage('cacaotake',sessionScope.locale)}</li>
             </ul>
 
         </ul>
@@ -72,7 +73,7 @@
         </c:if>
 
     <c:if test="${empty list}">
-        	표시할 내용이 없습니다.
+        	${afn:getMessage('msg.none_content',sessionScope.locale)}
         	<hr>
         </c:if>
         <jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />

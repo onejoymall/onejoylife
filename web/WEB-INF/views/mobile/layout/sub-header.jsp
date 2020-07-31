@@ -9,11 +9,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>onejoy life</title>
+    <title>${afn:getMessage('onejoylife',sessionScope.locale)}</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -117,7 +118,7 @@
                 <li>
                     <a href="" onclick="snsSubmit('fackbook', '');">
                       <div class="fbic"></div>
-                       페이스북
+                       ${afn:getMessage('facebook',sessionScope.locale)}
                     </a>
                 </li>
                 <%--<li>
@@ -147,14 +148,14 @@
            </ul>
            <div class="sharelink">
                 <input type="text" name="share_link" id="share_link" value="" readonly>
-                <button type="button" class="copybtn" onclick="copyURL()">URL 복사</button>
+                <button type="button" class="copybtn" onclick="copyURL()">${afn:getMessage('url_copy',sessionScope.locale)}</button>
             </div>
        </div>
     </div>
         <header class="header clearfix">
             <div class="top-inner">
                 <button class="back-arr"><i class="back-ic"></i></button>
-                <h1><a href="/">원조이몰</a></h1>
+                <h1><a href="/">${afn:getMessage('onejoymall',sessionScope.locale)}</a></h1>
                 <div class="h-cart">
                     <a href="/MyPage/ShoppingBasket" class="cart-inner">
                         <i class="cart"></i>

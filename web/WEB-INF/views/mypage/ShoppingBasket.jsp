@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <!-- <style>
 .npay_storebtn_bx{
 	zoom:2;
@@ -17,6 +18,20 @@
 </style> -->
 <script type="text/javascript">
 	function buy_nc(){
+		if($('input[name=chk]:checked').length <= 0){
+            $.toast({
+                heading: '${afn:getMessage('msg.payment_product',sessionScope.locale)}',
+                // text: [
+                //     '<a href="/sign/signup">회원 가입 후 이용</a>',
+                //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
+                // ],
+                showHideTransition: 'plain', //펴짐
+                position: 'bottom-right',
+                icon: 'info',
+            });
+            return;
+        }
+		
 		var item_ids = [];
 		var item_names = [];
 		var item_counts = [];
@@ -116,9 +131,9 @@
 
         <main class="clearfix main-tab">
             <c:import url="/layout/scrollRight"/>
-            <h2 class="head-h2">장바구니</h2>
+            <h2 class="head-h2">${afn:getMessage('cart',sessionScope.locale)}</h2>
             <div class="tab-box">
-                <p class="tab on" data-tab="t-box1">일반 <span>(${searchVO.totRow})</span></p>
+                <p class="tab on" data-tab="t-box1">${afn:getMessage('brd_usual',sessionScope.locale)} <span>(${searchVO.totRow})</span></p>
 <%--                <p class="tab" data-tab="t-box2">경품 <span>(5)</span></p>--%>
             </div>
             <div class="box on" id="t-box1">
@@ -128,7 +143,7 @@
 
                     <div class="click-txt">
 <%--                        <p class="txt1">선택 찜하기</p>--%>
-                        <p class="txt2 commonlistDelete">선택 삭제</p>
+                        <p class="txt2 commonlistDelete">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
                     </div>
                     <table class="box1-table">
                         <colgroup>
@@ -146,11 +161,11 @@
                         <tr class="head-tr">
                             <td><input type="checkbox" id="tr-ck1-1"><label for="tr-ck1-1" class="tr-icon"></label></td>
                             <td></td>
-                            <td>상품정보</td>
-							<td>옵션</td>
-                            <td>수량</td>
-                            <td>소비자가</td>
-                            <td>상품가격</td>
+                            <td>${afn:getMessage('product_information',sessionScope.locale)}</td>
+							<td>${afn:getMessage('product_option_set_name',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('product_quantity',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('before_price',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('product_amount',sessionScope.locale)}</td>
 <%--                            <td>배송비</td>--%>
                             <td></td>
                         </tr>
@@ -186,10 +201,10 @@
                                     </td>
                                     <td>
                                         <div class="price-number before-price">
-                                            <fmt:formatNumber value="${list.product_user_payment*list.payment_order_quantity}" groupingUsed="true" />원
+                                            <fmt:formatNumber value="${list.product_user_payment*list.payment_order_quantity}" groupingUsed="true" />${afn:getMessage('korea_won',sessionScope.locale)}
                                         </div>
                                     </td>
-                                    <td><span><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /></span>원</td>
+                                    <td><span><fmt:formatNumber value="${list.product_payment*list.payment_order_quantity}" groupingUsed="true" /></span>${afn:getMessage('korea_won',sessionScope.locale)}</td>
 <%--                                    <td><span><fmt:formatNumber value="${list.product_delivery_payment}" groupingUsed="true" /></span>원</td>--%>
                                     <td><button class="x" data-id="${list.product_cd}"></button></td>
                                 </tr>
@@ -198,7 +213,7 @@
                         <c:if test="${empty list}">
                             <tr>
                                 <td colspan="8">
-                                    표시할 내용이 없습니다.
+                                    ${afn:getMessage('msg.none_content',sessionScope.locale)}
                                 </td>
                             </tr>
 
@@ -224,38 +239,38 @@
                                 <input type="checkbox" id="all-chk" name="all-chk"><label for="all-chk" class="tr-icon"></label>
                             </td>
                             <td></td>
-                            <td>상품정보</td>
-                            <td>옵션병경</td>
-                            <td>수량</td>
-                            <td>상품가격</td>
-                            <td>배송정보</td>
+                            <td>${afn:getMessage('product_information',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('change_options',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('product_quantity',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('before_price',sessionScope.locale)}</td>
+                            <td>${afn:getMessage('delivery_address',sessionScope.locale)}</td>
                             <td></td>
                         </tr>
                         </thead>
                         <tbody class="body-t">
                         <tr>
-                            <td colspan="8">장바구니에 담긴 상품이 없습니다.</td>
+                            <td colspan="8">${afn:getMessage('msg.cart.empty',sessionScope.locale)}</td>
                         </tr>
                         </tbody>
                     </table>
                     <div class="click-txt">
 <%--                        <p class="txt1">선택 찜하기</p>--%>
-                        <p class="txt2 commonlistDelete">선택 삭제</p>
+                        <p class="txt2 commonlistDelete">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
                     </div>
                     <div class="sum">
                         <div class="sum-in">
-                            <p><span>총 주문금액</span><br><span class="font-s sum-span1"></span><span>원</span></p>
+                            <p><span>${afn:getMessage('total_order_amount',sessionScope.locale)}</span><br><span class="font-s sum-span1"></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></p>
                             <div class="sum-icon1"></div>
-                            <p><span>총 할인금액</span><br><span class="font-s sum-span2"></span><span>원</span></p>
+                            <p><span>${afn:getMessage('total_discount_amount',sessionScope.locale)}</span><br><span class="font-s sum-span2"></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></p>
                             <div class="sum-icon2"></div>
-                            <p><span>배송비</span><br><span class="font-s sum-span3"></span><span>원</span></p>
+                            <p><span>${afn:getMessage('shippingFee',sessionScope.locale)}</span><br><span class="font-s sum-span3"></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></p>
                             <div class="sum-icon3"></div>
-                            <p><span>결제예정금액</span><br><span class="font-s  sum-span4"></span><span>원</span></p>
+                            <p><span>${afn:getMessage('payment_scheduled_amount',sessionScope.locale)}</span><br><span class="font-s  sum-span4"></span><span>${afn:getMessage('korea_won',sessionScope.locale)}</span></p>
                         </div>
                     </div>
                     <div class="but-box">
-                        <button type="button" class="but1 cartPaymentOrder" data-id="allCheck">전체 주문하기</button>
-                        <button type="button" class="but2 cartPaymentOrder" data-id="selectCheck">선택 주문하기</button>
+                        <button type="button" class="but1 cartPaymentOrder" data-id="allCheck">${afn:getMessage('all_order',sessionScope.locale)}</button>
+                        <button type="button" class="but2 cartPaymentOrder" data-id="selectCheck">${afn:getMessage('selective_order',sessionScope.locale)}</button>
                         <script type="text/javascript" >
                         naver.NaverPayButton.apply({
                             BUTTON_KEY: "353CD814-8087-4896-AEE9-B9FE1EA7FA7F", // 네이버페이에서 제공받은 버튼 인증 키 입력

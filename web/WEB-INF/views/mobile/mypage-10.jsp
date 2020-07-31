@@ -2,17 +2,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
 	</section>
     <section class="wrap">
-       <h1 class="mb-2">나의 QnA 보기</h1>
+       <h1 class="mb-2">${afn:getMessage('my_qna',sessionScope.locale)}</h1>
        <ul class="btns">
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <form id="form2">
         <div class="date-box">
@@ -27,7 +28,7 @@
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="submit" class="date-btn">조회</button>
+            <button type="submit" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
         </form>
         <hr>
@@ -57,9 +58,9 @@
             </div>
             <div class="my-1">
                 <c:if test="${list.qna_rewrite_memo eq NULL}">
-                	<button class="btn btn-blue qna-update"  data-id="${list.qna_id}">수정하기</button>
+                	<button class="btn btn-blue qna-update"  data-id="${list.qna_id}">${afn:getMessage('update',sessionScope.locale)}</button>
                 </c:if>
-                <button class="btn btn-red qna-delete" data-id="${list.qna_id}">삭제하기</button>
+                <button class="btn btn-red qna-delete" data-id="${list.qna_id}">${afn:getMessage('delete',sessionScope.locale)}</button>
             </div>
         </ul>
         <hr>

@@ -9,12 +9,13 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+    <%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 
     <div class="out-box">
-        <a href="/MyPage/ShoppingBasket"><p class="out-h">장바구니</p></a>
+        <a href="/MyPage/ShoppingBasket"><p class="out-h">${afn:getMessage('cart',sessionScope.locale)}</p></a>
         <div class="out-in">
-            <p>최근 본 상품 <span></span></p>
+            <p>${afn:getMessage('recent_product',sessionScope.locale)} <span></span></p>
             <div id="todaySlider" class="out-in-box">
             <c:if test="${not empty todayList}">
                 <c:forEach var="todayList" items="${todayList}" varStatus="status">
@@ -32,11 +33,11 @@
         </div>
         <div class="fo-box ">
             <a href="" class="top-but">
-            <div>TOP</div>
+            <div>${afn:getMessage('top',sessionScope.locale)}</div>
             <div class="ar-top"></div>
             </a>
             <a href="" class="down-but">
-            <div>DOWN</div>
+            <div>${afn:getMessage('down',sessionScope.locale)}</div>
             <div class="ar-down"></div>
             </a>
         </div>

@@ -2,17 +2,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 	<section class="subheader">
 		<c:import url="/MyPage/RightHeaderSub"/>
 	</section>
     <section class="wrap">
-       <h1 class="mb-2">나의 상품평 보기</h1>
-       <ul class="btns">
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">오늘</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1주일</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1개월</a></li>
-            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3개월</a></li>
+       <h1 class="mb-2">${afn:getMessage('my_review',sessionScope.locale)}</h1>
+        <ul class="btns">
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con1">${afn:getMessage('today',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con2">1${afn:getMessage('week',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con3">1${afn:getMessage('month',sessionScope.locale)}</a></li>
+            <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <form id="form2">
         <div class="date-box">
@@ -27,7 +28,7 @@
                     <!-- <div class="cla-img1"></div> -->
                 </div>
             </div>
-            <button type="submit" class="date-btn">조회</button>
+            <button type="submit" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
         </form>
         <hr>
@@ -56,8 +57,8 @@
                 <p>${list.review_content}</p>
             </div>
             <div class="my-1">
-                <button type="button" class="btn btn-blue"  data-id="${list.no}" onclick="reviewUpdateBtn('${list.no}')">수정하기</button>
-                <button type="button" class="btn btn-red" data-id="${list.no}" onclick="reviewDeleteBtn('${list.no}')">삭제하기</button>
+                <button type="button" class="btn btn-blue"  data-id="${list.no}" onclick="reviewUpdateBtn('${list.no}')">${afn:getMessage('update',sessionScope.locale)}</button>
+                <button type="button" class="btn btn-red" data-id="${list.no}" onclick="reviewDeleteBtn('${list.no}')">${afn:getMessage('delete',sessionScope.locale)}</button>
             </div>
         </ul>
         <hr>
