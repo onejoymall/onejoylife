@@ -1039,10 +1039,10 @@ $(document).on("click","#productqna",function () {
     var product_cd = $(this).attr("data-id");
     if(isLogin==''){
         $.toast({
-            heading: '비회원으로 이용중 입니다.',
+            heading: getMessageAjax('msg.nonMemUser'),
             text: [
-                '<a href="/sign/login">로그인 후 이용</a>',
-                '<a href="/sign/signup">회원 가입 후 이용</a>',
+                '<a href="/sign/login">'+ getMessageAjax('loginAndUse') +'</a>',
+                '<a href="/sign/signup">'+ getMessageAjax('JoinAndUse') +'</a>',
             ],
             showHideTransition: 'plain', //펴짐
             position: 'bottom-right',
@@ -1051,7 +1051,7 @@ $(document).on("click","#productqna",function () {
         });
     }else{
     	// $(this).prev().submit();
-        window.open('/Popup/write-qna?product_cd='+product_cd,'상품 문의','width=720, height=600,loaction=no,status=no,scrollbars=yes');
+        window.open('/Popup/write-qna?product_cd='+product_cd,getMessageAjax('proQnatit'),'width=720, height=600,loaction=no,status=no,scrollbars=yes');
     }
 })
 
