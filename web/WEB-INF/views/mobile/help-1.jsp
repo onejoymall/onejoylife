@@ -2,39 +2,40 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 
     <section class="subheader">
-        <div class="subTitle">원조이몰</div>
+        <div class="subTitle">${afn:getMessage("onejoymall",sessionScope.locale)}<</div>
     </section>
     <div class="intro-imgbox clearfix">
-         <p class="intro-img-txt">원조이라이프는 여러분의 행복을 책임집니다.</p>
+         <p class="intro-img-txt">${afn:getMessage("msg_forOneJoyMall",sessionScope.locale)}<</p>
      </div>
     <div class="wrap clearfix page-list help-1">
         <ul>
             <li><!--2020.05.21 경품안내 추가-->
-                <a href="<c:url value="/Help/help-1-1"/>">경품안내</a>
+                <a href="<c:url value="/Help/help-1-1"/>">${afn:getMessage("prize_guide_info",sessionScope.locale)}</a>
                 <hr>
             </li>
             <li>
-                <a href="<c:url value="/Help/usePointGuid"/>">포인트 사용안내</a>
+                <a href="<c:url value="/Help/usePointGuid"/>">${afn:getMessage("tousePoint",sessionScope.locale)}</a>
                 <hr>
             </li>
             <li>
-                <a href="<c:url value="/Help/faqCenter"/>">FAQ 센터</a>
+                <a href="<c:url value="/Help/faqCenter"/>">${afn:getMessage("FAQcenter",sessionScope.locale)}</a>
                 <hr>
             </li>
             <li>
-                1:1 문의
+                ${afn:getMessage("brd_one_to_one",sessionScope.locale)}
                 <hr>
                 <ul class="in-ul">
-                    <li><a href="<c:url value="/Board/boardList?bgno=15"/>">1:1 문의</a></li>
-                    <li><a href="<c:url value="/Help/csBoard?bgno=15"/>">1:1 문의 작성</a></li>
-                    <li><a href="<c:url value="/Help/csCenter"/>">고객센터 전화번호 안내</a></li>
+                    <li><a href="<c:url value="/Board/boardList?bgno=15"/>">${afn:getMessage("brd_one_to_one",sessionScope.locale)}</a></li>
+                    <li><a href="<c:url value="/Help/csBoard?bgno=15"/>">${afn:getMessage("one_to_oneWrite",sessionScope.locale)}</a></li>
+                    <li><a href="<c:url value="/Help/csCenter"/>">${afn:getMessage("myQA",sessionScope.locale)}</a></li>
                 </ul>
             </li>
             <li>
-                <a href="<c:url value="/Board/boardList?bgno=8"/>">공지사항</a>
+                <a href="<c:url value="/Board/boardList?bgno=8"/>">${afn:getMessage("notice",sessionScope.locale)}</a>
                 <hr>
             </li>
         </ul>

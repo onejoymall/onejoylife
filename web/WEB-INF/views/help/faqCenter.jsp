@@ -10,80 +10,81 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box">
         <main class="clearfix">
             <%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
             <div class="right-contain">
                 <div class="r-sec1">
-                    <p class="sec1-h1">FAQ</p>
+                    <p class="sec1-h1">${afn:getMessage("faq",sessionScope.locale)}</p>
                     <div class="faq-search-box">
-                        <span>FAQ 검색</span>
+                        <span>${afn:getMessage("findFAQ",sessionScope.locale)}</span>
                         <form id="faq-search-form" name="faq-search-form" method="get" >
                             <input type="hidden" name="searchType" value="brdmemo">
                             <input type="text" id="faq-search" class="input-text" name="searchKeyword" value="${param.searchKeyword}">
-                            <button id="faq-search-btn" type="submit" class="search-btn">검색</button>
+                            <button id="faq-search-btn" type="submit" class="search-btn">${afn:getMessage("searchFAQ",sessionScope.locale)}</button>
                         </form>
                     </div>
                     <div class="faq-sort-list">
                         <div class="faq-sort-item" id="faq-faq">
                             <a href="/Help/faqCenter?bgno=16&question_type=F">
                                 <div class="imgbox"><i></i></div>
-                                <p>자주하는질문</p>
+                                <p>${afn:getMessage("FQ",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-qna">
                             <a href="/Help/faqCenter?bgno=16&question_type=P">
                                 <div class="imgbox"><i></i></div>
-                                <p>상품문의</p>
+                                <p>${afn:getMessage("question",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-pay">
                             <a href="/Help/faqCenter?bgno=16&question_type=O">
                                 <div class="imgbox"><i></i></div>
-                                <p>주문/결제</p>
+                                <p>${afn:getMessage("orders_payments",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-refund">
                             <a href="/Help/faqCenter?bgno=16&question_type=C">
                                 <div class="imgbox"><i></i></div>
-                                <p>교환/반품/환불</p>
+                                <p>${afn:getMessage("change_return_refund",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-shipping">
                             <a href="/Help/faqCenter?bgno=16&question_type=A">
                                 <div class="imgbox"><i></i></div>
-                                <p>배송/설치/AS</p>
+                                <p>${afn:getMessage("del_set_as",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-event">
                             <a href="/Help/faqCenter?bgno=16&question_type=V">
                                 <div class="imgbox"><i></i></div>
-                                <p>이벤트/경품</p>
+                                <p>${afn:getMessage("event_prize",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-epoint">
                             <a href="/Help/faqCenter?bgno=16&question_type=S">
                                 <div class="imgbox"><i></i></div>
-                                <p>E-포인트</p>
+                                <p>${afn:getMessage("e-point",sessionScope.locale)}</p>
                             </a>
                         </div>
                         <div class="faq-sort-item" id="faq-etc">
                             <a href="/Help/faqCenter?bgno=16&question_type=G">
                                 <div class="imgbox"><i></i></div>
-                                <p>기타</p>
+                                <p>${afn:getMessage("others_",sessionScope.locale)}</p>
                             </a>
                         </div>
                     </div>
                     <c:if test="${not empty param.searchKeyword}">
                     <div class="faq-search-result active">
-                        <p><b class="text-red">"<span id="search1">${param.searchKeyword}</span>"</b>관련 검색결과 총 <b class="text-red"><span id="search2">${searchVO.totRow}</span></b> 개가 검색되었습니다.</p>
+                        <p><b class="text-red">"<span id="search1">${param.searchKeyword}</span>"</b> ${afn:getMessage("search_result1-1",sessionScope.locale)}<b class="text-red"><span id="search2">${searchVO.totRow}</span></b>${afn:getMessage("search_result1-2",sessionScope.locale)}</p>
                     </div>
                     </c:if>
                     <ul class="faq-data-list">
                         <li class="faq-data-title">
-                            <div class="faq-sort">타입</div>
-                            <div class="faq-title">질문 제목</div>
+                            <div class="faq-sort">${afn:getMessage("search_type",sessionScope.locale)}</div>
+                            <div class="faq-title">${afn:getMessage("Qtitle",sessionScope.locale)}</div>
                         </li>
 
                         <c:if test="${not empty listview}">
@@ -106,7 +107,7 @@
                                             </p>
                                         </div>
                                         <div class="faq-content-body-c">
-                                            <p>답변이 충분하지 않으셨다면 1:1 문의를 이용해주세요. <span><a href="/Board/boardList?bgno=15">1:1 문의하기</a></span></p>
+                                            <p>${afn:getMessage("msg_FAQresults",sessionScope.locale)}<span><a href="/Board/boardList?bgno=15">${afn:getMessage("FAQone_to_one",sessionScope.locale)}</a></span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +115,7 @@
                             </c:forEach>
                         </c:if>
                         <li class="faq-data-item-none">
-                            <p>검색된 결과가 없습니다.</p>
+                            <p>${afn:getMessage("msg_no_results",sessionScope.locale)}</p>
                         </li>
                     </ul>
                     <form id="form1" name="form1"  method="get">

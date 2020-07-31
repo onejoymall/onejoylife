@@ -10,23 +10,24 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box">
         <main class="clearfix">
             <%@ include file="/WEB-INF/views/layout/helpLeftNav.jsp" %>
             <div class="right-contain">
-                <p class="sec1-h1">고객센터 전화번호 안내</p>
+                <p class="sec1-h1">${afn:getMessage("CS_PH",sessionScope.locale)}</p>
                 <div class="qna-inner">
                     <div class="qna-wrap">
                         <div class="qna-button">
                             <a href="#">
                                 <i class="chat-ic"></i>
                                 <p class="qna-title">1811-9590</p>
-                                <p class="qna-subtitle">문의하기</p>
+                                <p class="qna-subtitle">${afn:getMessage("myQA2",sessionScope.locale)}</p>
                             </a>
                         </div>
-                        <p class="qna-info">오전 10시 ~ 오후 6시 주말, 공휴일 휴무<br><span>&#40; 점심시간: 12:00 ~ 13:00 &#41;</span></p>
-                        <p>&#40; 업무 외 시간에는 1:1 문의하기를 이용해 주세요. &#41;</p>
+                        <p class="qna-info">${afn:getMessage("msg_CS_operationTime",sessionScope.locale)}<br><span>&#40; ${afn:getMessage("CS_lunchT",sessionScope.locale)}: 12:00 ~ 13:00 &#41;</span></p>
+                        <p>&#40; ${afn:getMessage("msg_CS_info1",sessionScope.locale)} &#41;</p>
                     </div>
                 </div>
             </div>

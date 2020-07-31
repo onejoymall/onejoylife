@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerHeader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <script type="text/javascript"> 
 var selectedNode = null;
 
@@ -47,15 +48,15 @@ function fn_groupNew(){
 
 function fn_groupDelete(value){
     if (selectedNode==null){
-    	alert("삭제할 게시판을 선택해 주세요!");
+    	alert("${afn:getMessage('brd_alert7',sessionScope.locale)}");
     	return;
     }
     if (selectedNode.childList){
-    	alert("하위 게시판이 있는 게시판은 삭제 할 수 없습니다.");
+    	alert("${afn:getMessage('brd_alert1',sessionScope.locale)}");
     	return;
     }
     
-    if(!confirm("삭제하시겠습니까?")) return;
+    if(!confirm("${afn:getMessage('brd_alert2',sessionScope.locale)}")) return;
     $.ajax({
     	url: "/Manager/boardGroupDelete",
     	cache: false,
@@ -64,7 +65,7 @@ function fn_groupDelete(value){
 }
 
 function receiveData4Delete(data){
-	alert("삭제되었습니다!");
+	alert("${afn:getMessage('brd_alert3',sessionScope.locale)}");
 	selectedNode.remove();		
 	selectedNode = null;
 	fn_groupNew();
@@ -72,13 +73,13 @@ function receiveData4Delete(data){
 
 function fn_groupSave(){
 	if($("#bgname").val() == ""){
-		alert("게시판 이름을 입력해주세요.");
+		alert("${afn:getMessage('brd_alert4',sessionScope.locale)}");
 		return;
 	}
 	var pid=null;
     if (selectedNode!=null) pid=selectedNode.data.key;
 
-    if (!confirm("저장하시겠습니까?")) return;
+    if (!confirm("${afn:getMessage('brd_alert5',sessionScope.locale)}")) return;
 
     $.ajax({
     	url: "/Manager/boardGroupSave",
@@ -96,7 +97,7 @@ function receiveData4Save(data){
 		addNode(data.bgno, data.bgname);
 	}
 	
-	alert("저장되었습니다.");
+	alert("${afn:getMessage('brd_alert6',sessionScope.locale)}");
 }
 
 function addNode(nodeNo, nodeTitle){
@@ -112,7 +113,7 @@ function addNode(nodeNo, nodeTitle){
 <main>
 	<div class="main-content">
 		<div class="main-title">
-			<h2>게시판 관리</h2>
+			<h2>${afn:getMessage("brd_mng",sessionScope.locale)}</h2>
 		</div>
 		<div class="join-form-box">
 			<div style="width:300px; height:400px; overflow:auto; display: inline-block;" >
@@ -124,11 +125,11 @@ function addNode(nodeNo, nodeTitle){
 			</div>
 			<div style="width:1000px ; padding-left: 10px; display: inline-block;vertical-align:top;background: #fff;padding:15px;">
 				<div class="left">
-					<p>* 대분류 추가시 화면세로고침 후 그룹명 입력 > 저장</p>
-					<p>* 하위 분류 추가시 상위 게시판 선택 후 "추가" 버튼 클릭 > 그룹명 입력 > 저장</p>
+					<p>* ${afn:getMessage("msg_infoToSave1-1",sessionScope.locale)}</p>
+					<p>* ${afn:getMessage("msg_infoToSave1-2",sessionScope.locale)}</p>
 
 				</div>
-				<div class="right"><button class="btn-default" onclick="fn_groupNew()" >추가</button></div>
+				<div class="right"><button class="btn-default" onclick="fn_groupNew()" >${afn:getMessage("brd_add",sessionScope.locale)}</button></div>
 
 				<p>&nbsp;</p>
 				<form name="defalutForm" id="defaultForm" method="POST">
@@ -140,52 +141,52 @@ function addNode(nodeNo, nodeTitle){
 						</colgroup>
 						<tbody class="sec1-tbody">
 						<tr>
-							<td>그룹명</td>
+							<td>${afn:getMessage("groupN",sessionScope.locale)}</td>
 							<td>
 								<input name="bgname" id="bgname" style="width: 300px;" type="text" maxlength="100" value="">
 							</td>
 						</tr>
 						<tr>
-							<td>관리</td>
+							<td>${afn:getMessage("brdmanage",sessionScope.locale)}</td>
 							<td>
-								<a href="" id="showMgBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
+								<a href="" id="showMgBgno" class="btn-default">* ${afn:getMessage("msg_chooseBrdTypeMng",sessionScope.locale)}</a>
 							</td>
 						</tr>
 						<tr>
-							<td>일반</td>
+							<td>${afn:getMessage("brd_usual",sessionScope.locale)}</td>
 							<td>
-								<a href="" id="showBgno" class="btn-default">* 관리할 게시판을 선택하세요</a>
+								<a href="" id="showBgno" class="btn-default">* ${afn:getMessage("msg_chooseBrdTypeMng",sessionScope.locale)}</a>
 							</td>
 						</tr>
 						<tr class="radio-td">
-							<td>사용여부</td>
+							<td>${afn:getMessage("brd_usechk",sessionScope.locale)}</td>
 							<td class="radio-td">
 								<input name="bgused" id="bgusedY" type="radio" checked="checked" value="Y" class="styleClass">
-								<label for="bgusedY"><span>사용</span></label>
+								<label for="bgusedY"><span>${afn:getMessage("brd_use",sessionScope.locale)}</span></label>
 								<input name="bgused" id="bgusedN" type="radio" value="N" class="styleClass">
-								<label for="bgusedN"><span>사용중지</span></label>
+								<label for="bgusedN"><span>${afn:getMessage("brd_nonuse",sessionScope.locale)}</span></label>
 							</td>
 						</tr>
 						<tr class="radio-td">
-							<td>등록가능</td>
+							<td>${afn:getMessage("brd_insertallow",sessionScope.locale)}</td>
 							<td>
-								<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N" class="styleClass"><label for="bgreadonlyN"><span>사용</span></label>
-								<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y" class="styleClass"><label for="bgreadonlyY"><span>사용중지</span></label>
+								<input name="bgreadonly" id="bgreadonlyN" type="radio" checked="checked" value="N" class="styleClass"><label for="bgreadonlyN"><span>${afn:getMessage("brd_use",sessionScope.locale)}</span></label>
+								<input name="bgreadonly" id="bgreadonlyY" type="radio" value="Y" class="styleClass"><label for="bgreadonlyY"><span>${afn:getMessage("brd_nonuse",sessionScope.locale)}</span></label>
 							</td>
 						</tr>
 						<tr class="radio-td">
-							<td>답변</td>
+							<td>${afn:getMessage("brd_A",sessionScope.locale)}</td>
 							<td>
-								<input name="bgtype" id="board" type="radio" checked="checked" value="board" class="styleClass"><label for="board"><span>게시판</span></label>
-								<input name="bgtype" id="faq" type="radio" value="faq" class="styleClass"><label for="faq"><span>FAQ</span></label>
-								<input name="bgtype" id="1:1" type="radio" value="1:1" class="styleClass"><label for="1:1"><span>1:1 문의</span></label>
+								<input name="bgtype" id="board" type="radio" checked="checked" value="board" class="styleClass"><label for="board"><span>${afn:getMessage("brd_brd",sessionScope.locale)}</span></label>
+								<input name="bgtype" id="faq" type="radio" value="faq" class="styleClass"><label for="faq"><span>${afn:getMessage("brd_FAQ",sessionScope.locale)}</span></label>
+								<input name="bgtype" id="1:1" type="radio" value="1:1" class="styleClass"><label for="1:1"><span>${afn:getMessage("brd_one_to_one",sessionScope.locale)}</span></label>
 							</td>
 						</tr>
 						<tr class="radio-td">
-							<td>게시판 종류</td>
+							<td>${afn:getMessage("brd_type",sessionScope.locale)}</td>
 							<td>
-								<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y" class="styleClass"><label for="bgreplyY"><span>사용</span></label>
-								<input name="bgreply" id="bgreplyN" type="radio" value="N" class="styleClass"><label for="bgreplyN"><span>사용중지</span></label>
+								<input name="bgreply" id="bgreplyY" type="radio" checked="checked" value="Y" class="styleClass"><label for="bgreplyY"><span>${afn:getMessage("brd_use",sessionScope.locale)}</span></label>
+								<input name="bgreply" id="bgreplyN" type="radio" value="N" class="styleClass"><label for="bgreplyN"><span>${afn:getMessage("brd_nonuse",sessionScope.locale)}</span></label>
 							</td>
 						</tr>
 						</tbody>
@@ -193,8 +194,8 @@ function addNode(nodeNo, nodeTitle){
 					<p>&nbsp;</p>
 				</form>
 				<div style="text-align: right;">
-					<button class="btn-default" onclick="fn_groupSave()" href="#">저장</button>
-					<button class="btn-default" onclick="fn_groupDelete()" href="#">삭제</button>
+					<button class="btn-default" onclick="fn_groupSave()" href="#">${afn:getMessage("brd_save",sessionScope.locale)}</button>
+					<button class="btn-default" onclick="fn_groupDelete()" href="#">${afn:getMessage("brd_delete",sessionScope.locale)}</button>
 				</div>
 			</div>
 		</div>

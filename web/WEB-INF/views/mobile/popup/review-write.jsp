@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <head>
     <title>onejoy life</title>
     <meta charset="UTF-8">
@@ -36,7 +37,7 @@
 	<div class="underPop on" id="review">
 	    <div class="content">
 	        <header>
-	           <h3>상품평 작성</h3>
+	           <h3>${afn:getMessage("review_writing",sessionScope.locale)}</h3>
 	            <button class="popClose">
 	                <i class="ri-close-line"></i>
 	            </button>
@@ -45,7 +46,7 @@
 		    <input type="hidden" name="order_no" value="${productDetail.no}"/>
     		<input type="hidden" name="product_cd" value="${productDetail.product_cd}"/>
 	        <content>
-	        	<p class="text-md mt-2 mb-05">상품평가</p>
+	        	<p class="text-md mt-2 mb-05">${afn:getMessage("estimateItem",sessionScope.locale)}</p>
 	            <div class="star-wrap">
                             <input <c:if test="${review.review_score == '5'}">checked="checked"</c:if> type="radio" name="review_score" id="radio1" value="5"/>
                             <label for="radio1" class="ra-icon"></label>
@@ -91,23 +92,23 @@
                                 <i class="y-star-full"></i>
                             </div>
                         </div>
-	            <p class="text-md mt-2 mb-05">제목</p>
-	            <input type="text" value="${review.review_title}" name="review_title" class="width-100 mb-05" placeholder="50자 이내로 입력해주세요" maxlength="50">
-	            <p class="text-md mt-1 mb-05">내용</p>
+	            <p class="text-md mt-2 mb-05">${afn:getMessage("title",sessionScope.locale)}</p>
+	            <input type="text" value="${review.review_title}" name="review_title" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50">
+	            <p class="text-md mt-1 mb-05">${afn:getMessage("content",sessionScope.locale)}</p>
 	            <div class="textarea mt-05">
-	               <textarea class="width-100" name="review_content"  placeholder="2,000자 이내로 입력해주세요" style="resize:none;" maxlength="2000">${review.review_content}</textarea>
+	               <textarea class="width-100" name="review_content"  placeholder="${afn:getMessage('msg_below2000word',sessionScope.locale)}" style="resize:none;" maxlength="2000">${review.review_content}</textarea>
 	            </div>
-	            <p class="text-md mt-1 mb-05">이미지 첨부</p>
+	            <p class="text-md mt-1 mb-05">${afn:getMessage("QA_img",sessionScope.locale)}</p>
 	            <div class="mb-2">
 	                <input type="text" class="fileName width-100 mb-1" name="fileName" readonly="readonly" value="${review.file_name}">
-	                <label for="rvImg1" class="btn_file">파일선택</label>
+	                <label for="rvImg1" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}</label>
                     <input type="file" id="rvImg1" name="uploadfile" class="uploadBtn1"  style="display:none;">
                     <button type="button" class="xBox">x</button>
 	            </div>
-	             <p class="text-md mt-1 mb-05">동영상 등록</p>
+	             <p class="text-md mt-1 mb-05">${afn:getMessage("review_mp4",sessionScope.locale)}</p>
 	              <div class="mb-2">
 	                <input type="text" class="fileName width-100 mb-1" name="fileName" readonly="readonly" value="${review.file_name2}">
-	                <label for="pdImg6" class="btn_file">파일선택</label>
+	                <label for="pdImg6" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}</label>
                    <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo1"  style="display:none;">
                     <button type="button" class="xBox">x</button>
 	            </div>
@@ -115,8 +116,8 @@
 	            
 	            
 	            <ul class="btns mt-3 mb-0">
-	                <li><a href="javascript:self.close();">취소</a></li>
-	                <li><a href="#" class="on" id="insertReviewBtn">등록</a></li>
+	                <li><a href="javascript:self.close();">${afn:getMessage("reviewCancel",sessionScope.locale)}</a></li>
+	                <li><a href="#" class="on" id="insertReviewBtn">${afn:getMessage("registration",sessionScope.locale)}</a></li>
 	           </ul>
 	        </content>
 	        </form>
@@ -149,7 +150,7 @@
                 url:'/MyPage/insertReview',
                 success: function (data) {
                	 if (data.success) {
-                  	alert("상품평이 등록되었습니다.");
+                  	alert("${afn:getMessage('msg_review_1-10',sessionScope.locale)}");
                   	self.close();
                   	opener.location.reload();
                   } else{
@@ -177,7 +178,7 @@
         
         filesArr.forEach(function (f) {
             if(!f.type.match("image.*")){
-                alert("이미지파일만 등록 가능합니다.");
+            	alert("${afn:getMessage('msg_review_1-8-1',sessionScope.locale)}");
                 return false;
             }
             sel_file = f;
@@ -209,11 +210,11 @@
         var maxSize = 100 * 1024 * 1024;
         filesArr.forEach(function (f) {
         	if(files[0].size > maxSize){
-        		alert("크기 100MB 미만의 파일만 등록 가능합니다.");
+        		alert("${afn:getMessage('msg_review_1-9-1',sessionScope.locale)}");
                 return false;
         	}
             if(!f.type.match("video.*")){
-                alert("동영상파일만 등록 가능합니다.");
+                alert("${afn:getMessage('msg_review_1-9-2',sessionScope.locale)}");
                 return false;
             }
             sel_file = f;

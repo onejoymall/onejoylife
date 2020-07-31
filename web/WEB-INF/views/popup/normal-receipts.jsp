@@ -2,10 +2,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
-
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
+<%-- ${afn:getMessage("delivery_t_invoice",sessionScope.locale)} --%>
     <main class="clearfix">
         <div class="header-top">
-            <p>구매영수증</p>
+            <p>${afn:getMessage("purchaseReceipt",sessionScope.locale)} </p>
         </div>
         <div class="body-mar">
             <table>
@@ -15,35 +16,35 @@
                 </colgroup>
                 <tbody class="body-tr">
                     <tr>
-                       <td>상점주문번호<br><span>(ORDER NO.)</span></td>
+                       <td>${afn:getMessage("storeOrderNum",sessionScope.locale)} <br><span>(ORDER NO.)</span></td>
                        <td><span>${detail.order_no}</span></td>
                     </tr>
                     <tr>
-                        <td>거래일시<br><span>(TRANS DATE)</span></td>
+                        <td>${afn:getMessage("transaction_date_time",sessionScope.locale)} <br><span>(TRANS DATE)</span></td>
                         <td><span><fmt:formatDate value="${detail.reg_date}" pattern="yyyy.MM.dd"/></span></td>
                      </tr>
                      <tr>
-                        <td>상품명<br><span>(DESCRIPTION)</span></td>
+                        <td>${afn:getMessage("product_name",sessionScope.locale)} <br><span>(DESCRIPTION)</span></td>
                         <td><span>${detail.product_order_name}</span></td>
                      </tr>
                      <tr>
-                        <td>합계<br><span>(TOTAL)</span></td>
+                        <td>${afn:getMessage("sum_total",sessionScope.locale)} <br><span>(TOTAL)</span></td>
                         <td><span><fmt:formatNumber value="${detail.payment}" groupingUsed="true" />원</span></td>
                      </tr>
                      <tr>
-                        <td>회사명<br><span>(COMPANY NAME)</span></td>
+                        <td>${afn:getMessage("companyName",sessionScope.locale)}<br><span>(COMPANY NAME)</span></td>
                         <td><span>ONEJOY</span></td>
                      </tr>
                      <tr>
-                        <td>서명<br><span>(SIGNATURE)</span></td>
+                        <td>${afn:getMessage("userSign",sessionScope.locale)}<br><span>(SIGNATURE)</span></td>
                         <td><span>${userInfo.username}</span></td>
                      </tr>
                 </tbody>
             </table>
-            <p>구매 영수증은 세금계산서 등 증빙서류로 활용할 수 없습니다.</p>
+            <p>${afn:getMessage("msg_receipts_1-1",sessionScope.locale)}</p>
             <div class="mar-but">
-                <button class="but1" type="button" onclick="window.print();">인쇄</button>
-                <button class="but2" type="button" onclick="self.close();">확인</button>
+                <button class="but1" type="button" onclick="window.print();">${afn:getMessage("print",sessionScope.locale)}</button>
+                <button class="but2" type="button" onclick="self.close();">${afn:getMessage("cur_status",sessionScope.locale)}</button>
             </div>
         </div>
         <div class="mar-f">
@@ -51,10 +52,10 @@
                 <div class="logo-icon"><a href="../index.html"></a></div>
                 <div class="left-bar"></div>
                 <div class="txt-box">
-                    <p>서울시 서초구 서리풀길4, 4층 (서초동 영호빌딩)<br>
-                        대표이사 : 김수현<br>
-                        사업자등록번호 : 478-88-01223<br>
-                        문의전화 : 1811-9500
+                    <p>${afn:getMessage("msg_cr_1-10",sessionScope.locale)}<br>
+                 ${afn:getMessage("msg_cr_1-11",sessionScope.locale)}     <br>
+               ${afn:getMessage("msg_cr_1-12",sessionScope.locale)}  <br>
+                ${afn:getMessage("msg_cr_1-13",sessionScope.locale)}
                     </p>
                 </div>
             </div>
