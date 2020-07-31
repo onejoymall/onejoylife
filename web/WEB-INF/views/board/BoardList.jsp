@@ -2,6 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <%--	<c:if test="${bgInfo.bgreadonly=='N'}">--%>
 <%--		<a href="boardForm?bgno=<c:out value="${searchVO.bgno}"/>">글쓰기</a>--%>
@@ -16,8 +17,8 @@
 					<p class="sec1-h1"><c:out value="${bgInfo.bgname}"/></p>
 					<ul class="notice-data-list">
 						<li class="notice-data-title">
-							<div class="notice-sort">번호</div>
-							<div class="notice-title">제목</div>
+							<div class="notice-sort">${afn:getMessage("noti_sort",sessionScope.locale)}</div>
+							<div class="notice-title">${afn:getMessage("noti_title",sessionScope.locale)}</div>
 						</li>
 <%--						<li class="notice-data-item" tabindex="0">--%>
 <%--							<div class="main-title-box notice" tabindex="0">--%>
@@ -67,7 +68,7 @@
 								</div>
 								<div class="content-box">
 									<div class="notice-setting-box">
-										<span>첨부파일 : <i class="file-ic"></i>
+										<span>${afn:getMessage("noti_file",sessionScope.locale)} : <i class="file-ic"></i>
 											<%--<a href="#" class="file-name">설치신청서.DOC</a>--%>
 											<a href="/Board/fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>">
 											<c:out value="${listview.filename}"/></a><br/>

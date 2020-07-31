@@ -2,6 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
     <div class="wrap">
         <div class="page-box">
             <main class="clearfix">
@@ -9,8 +10,8 @@
                 <div class="right-contain">
                     <form id="form1" name="form1"  method="get">
                         <div class="r-sec1">
-                            <p class="sec1-h1">1:1 문의하기</p>
-                            <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변을 확인하실 수 있습니다.</p>
+                            <p class="sec1-h1">${afn:getMessage("FAQone_to_one",sessionScope.locale)}</p>
+                            <p class="sec1-p1"><span>·</span>${afn:getMessage("msg_FAQresultmsg",sessionScope.locale)}</p>
                             <div class="qna-data-option-box">
                                 <div class="qna-data-option-box-right">
 <%--                                    <select name="question_type" id="question_type" class="order-select">--%>
@@ -22,7 +23,7 @@
 <%--                                        <option value="배송">배송</option>--%>
 <%--                                        <option value="기타">기타</option>--%>
 <%--                                    </select>--%>
-                                    <button type="button" class="write-review" onclick="location.href='/Help/csBoard?bgno=15'">작성하기</button>
+                                    <button type="button" class="write-review" onclick="location.href='/Help/csBoard?bgno=15'">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button>
                                 </div>
                             </div>
                             <ul class="qna-data-list">
@@ -37,12 +38,12 @@
                                         <div class="qna-answer">
                                             <c:if test="${empty listview.redate}">
                                             <span class="waiting">
-                                                답변대기
+                                          		    ${afn:getMessage("FAQwait",sessionScope.locale)}
                                             </span>
                                             </c:if>
                                             <c:if test="${not empty listview.redate}">
                                             <span class="complete">
-                                                답변완료
+                                        		       ${afn:getMessage("FAQanswered",sessionScope.locale)}
                                             </span>
                                             </c:if>
                                         </div>
@@ -67,8 +68,8 @@
                                                 </p>
                                            </div>
                                             <p class="answer-date">
-                                                <span class="answer-author">상담원 : <span id="rewriter"></span></span>
-                                                <span class="answer-time">답변시간 : <span id="redate"></span></span>
+                                                <span class="answer-author">${afn:getMessage("consultant",sessionScope.locale)}: <span id="rewriter"></span></span>
+                                                <span class="answer-time">${afn:getMessage("answerTime",sessionScope.locale)}: <span id="redate"></span></span>
                                             </p>
                                         </div>
                                     </div>
@@ -76,12 +77,12 @@
                         </c:forEach>
                         <c:if  test="${empty listview}">
                                <li class="qna-data-none" style="display:none">
-                                   <p>문의하신 내역이 없습니다.</p>
+                                   <p>${afn:getMessage("noQasked",sessionScope.locale)}</p>
                                 </li>
                         </c:if>
                             </ul>
                             <p class="ex">
-                                <span>쇼핑몰 관련 1:1 문의하기 입니다.<br>매장 이용관련 불편사항은<a href="">[원조이몰 고객지원센터]</a>를 이용하여 글을 남겨주세요.</span>
+                                <span>${afn:getMessage("msg_oto_ShoppingQA",sessionScope.locale)}<br>${afn:getMessage("msg_shop_info1-1",sessionScope.locale)}<a href="">[${afn:getMessage("msg_shop_info1-2",sessionScope.locale)}]</a>${afn:getMessage("msg_shop_info1-3",sessionScope.locale)}</span>
                             </p>
                             </ul>
 
@@ -159,7 +160,7 @@
             var toogleOpenStatus = objectThis.parent().parent().find('.active').length;
             // console.log(toogleOpenStatus)
             $(this).parent($('.notice-data-item')).toggleClass('active');
-            var userInput = prompt("비밀번호를 입력해주세요." + "");
+            var userInput = prompt("${afn:getMessage('msg_needPassword',sessionScope.locale)}" + "");
             var formData = {"password":userInput, "brdno": brdno};
             $.ajax({
                 type: "POST",

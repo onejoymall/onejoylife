@@ -2,8 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/layout/noneheader.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
     <header>
-        <h2>상품평 수정</h2>
+        <h2>${afn:getMessage("modiReview",sessionScope.locale)}</h2>
     </header>
     <div class="main-section">
     <form id="defaultForm">
@@ -12,8 +13,8 @@
     <input type="hidden" name="product_cd" value="${review.product_cd}"/>
         <p class="goods-name">${review.product_name}</p>
         <div>
-            <span><span class="red-star">*</span>필수 입력 사항</span>
-            <span>※상품평 내용 작성 없이 상품평 등록 가능합니다.</span>
+            <span><span class="red-star">*</span>${afn:getMessage("needinfo",sessionScope.locale)}</span>
+            <span>※ ${afn:getMessage("msg_review_1-1",sessionScope.locale)}</span>
         </div>
         <table>
             <colgroup>
@@ -22,7 +23,7 @@
             </colgroup>
             <tbody class="sec1-tbody">
                 <tr>
-                    <td class="sec1-td-bor1">상품평가<span class="red-star">*</span></td>
+                    <td class="sec1-td-bor1">${afn:getMessage("estimateItem",sessionScope.locale)}<span class="red-star">*</span></td>
                     <td class="body-td2 padding-left">
                         <div class="star-wrap">
                             <input <c:if test="${review.review_score == '5'}">checked="checked"</c:if> type="radio" name="review_score" id="radio1" value="5"/>
@@ -72,40 +73,40 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="sec1-td-bor1">제목<span class="red-star"></span></td>
+                    <td class="sec1-td-bor1">${afn:getMessage("title",sessionScope.locale)}<span class="red-star"></span></td>
                     <td class="body-td2 padding-left">
-                        <input type="text" value="${review.review_title}" name="review_title" placeholder="50자 이내로 입력해주세요" maxlength="50">
+                        <input type="text" value="${review.review_title}" name="review_title" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50">
                     </td>
                 </tr>
                 <tr>
-                    <td class="sec1-td-bor1">내용</td>
+                    <td class="sec1-td-bor1">${afn:getMessage("content",sessionScope.locale)}</td>
                     <td class="body-td2 padding-left">
-                        <textarea name="review_content"  placeholder="2,000자 이내로 입력해주세요" style="resize:none;" maxlength="2000">${review.review_content}</textarea>
+                        <textarea name="review_content"  placeholder="${afn:getMessage('msg_below2000word',sessionScope.locale)}" style="resize:none;" maxlength="2000">${review.review_content}</textarea>
                     </td>
                 </tr>
                 <tr>
-                    <td class="sec1-td-bor1">이미지 첨부</td>
+                    <td class="sec1-td-bor1">${afn:getMessage("review_img",sessionScope.locale)}</td>
                     <td class="body-td2 padding-left">
                         <div class="fileBox">
                             <input type="text" class="fileName" name="fileName" readonly="readonly" value="${review.file_name}">
-                            <label for="rvImg1" class="btn_file">파일선택</label>
+                            <label for="rvImg1" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}</label>
                             <input type="file" id="rvImg1" name="uploadfile" class="uploadBtn2">
                             <button type="button" data-id="${review.file_name}"  data-rid="${review.review_id}" class="xBox">x</button>
                         </div>
                         <ul class="file-info">
-                            <li>사진 첨부 가능 갯수 : 1개</li>
-                            <li>첨부 가능 파일 형식 : JPG, PNG, GIF</li>
-                            <li>파일명 : 영문, 숫자 가능</li>
-                            <li>이미지 별 용량 제한 : 2MB 이하</li>
+                            <li>${afn:getMessage("msg_review_1-2",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-3",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-4",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-5",sessionScope.locale)}</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
-                    <td class="sec1-td-bor1">동영상 등록</td>
+                    <td class="sec1-td-bor1">${afn:getMessage("review_mp4",sessionScope.locale)}</td>
                     <td class="body-td2 padding-left">
                         <div class="fileBox">
                             <input type="text" class="fileName" name="fileName" readonly="readonly"  value="${review.file_name2}">
-                            <label for="pdImg6" class="btn_file">파일선택</label>
+                            <label for="pdImg6" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}</label>
                             <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo2">
                             <button type="button"  data-id="${review.file_name2}"  data-rid="${review.review_id}" class="xBox">x</button>
                             
@@ -113,19 +114,20 @@
                             
                         </div>
                         <ul class="file-info">
-                            <li>영상 첨부 가능 갯수 : 1개</li>
-                            <li>첨부 가능 파일 형식 : mp4</li>
-                            <li>파일명 : 영문, 숫자 가능</li>
-                            <li>이미지 별 용량 제한 : 2MB 이하</li>
+   
+                            <li>${afn:getMessage("msg_review_1-8",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-7",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-4",sessionScope.locale)}</li>
+                            <li>${afn:getMessage("msg_review_1-9",sessionScope.locale)}</li>
                         </ul>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <p>· 상품과 직접적으로 관계가 없는 내용이나, 약관 및 법률 등에 위배되는 글은 고객님께 사전 동의 없이 삭제 될 수 있습니다.</p>
+        <p>· ${afn:getMessage("msg_review_1-6",sessionScope.locale)}</p>
         <div class="button-box">
-            <button type="button" id="updateReviewBtn">수정</button>
-            <button type="button" class="grey-button" onclick="self.close();">취소</button>
+            <button type="button" id="updateReviewBtn">${afn:getMessage("update",sessionScope.locale)}</button>
+            <button type="button" class="grey-button" onclick="self.close();">${afn:getMessage("reviewCancel",sessionScope.locale)}</button>
         </div>
         
     </form>
@@ -166,7 +168,7 @@
                 success: function (data) {
                 	
                 	 if (data.success) {
-                     	alert("상품평이 수정되었습니다.");
+                     	alert("${afn:getMessage('msg_review_1-10',sessionScope.locale)}");
                      	self.close();
                      	opener.location.reload();
                      } else{
@@ -193,7 +195,7 @@
         
         filesArr.forEach(function (f) {
             if(!f.type.match("image.*")){
-                alert("이미지파일만 등록 가능합니다.");
+                alert("${afn:getMessage('msg_review_1-8-1',sessionScope.locale)}");
                 return false;
             }
             sel_file = f;
@@ -226,11 +228,11 @@
         var maxSize = 100 * 1024 * 1024;
         filesArr.forEach(function (f) {
         	if(files[0].size > maxSize){
-        		alert("크기 100MB 미만의 파일만 등록 가능합니다.");
+        		alert("${afn:getMessage('msg_review_1-9-1',sessionScope.locale)}");
                 return false;
         	}
             if(!f.type.match("video.*")){
-                alert("동영상파일만 등록 가능합니다.");
+                alert("${afn:getMessage('msg_review_1-9-2',sessionScope.locale)}");
                 return false;
             }
             sel_file = f;

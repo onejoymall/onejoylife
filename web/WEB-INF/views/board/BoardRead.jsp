@@ -2,20 +2,21 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 <script>
 
 function chkInputValue(id, msg){
 	if ( $.trim($(id).val()) == "") {
-		alert(msg+" 입력해주세요.");
+		alert(msg+"${afn:getMessage('msg_toWrite',sessionScope.locale)}");
 		$(id).focus();
 		return false;
 	} 
 	return true;
 }
 function fn_SafeFormSubmit(){
-	if ( ! chkInputValue("#rewriter1", "작성자를")) return;
-	if ( ! chkInputValue("#rememo1", "글 내용을")) return;
+	if ( ! chkInputValue("#rewriter1", "${afn:getMessage('rewriter1',sessionScope.locale)}")) return;
+	if ( ! chkInputValue("#rememo1", "${afn:getMessage('rememo1',sessionScope.locale)}")) return;
 	
 	var formData = $("#form1").serialize();
 	$.ajax({
@@ -27,16 +28,16 @@ function fn_SafeFormSubmit(){
 				$("#rewriter1").val("");
 				$("#rememo1").val("");
 				$("#replyList").append(result);
-				alert("저장되었습니다.");
+				alert("${afn:getMessage('msg_saved',sessionScope.locale)}");
 			} else{
-				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+				alert("${afn:getMessage('brd_brd',sessionScope.locale)}");
 			}
 		}
 	})		
 }
 
 function fn_replyDelete(reno){
-	if (!confirm("삭제하시겠습니까?")) {
+	if (!confirm("${afn:getMessage('msg_deleteask',sessionScope.locale)}")) {
 		return;
 	}
 	$.ajax({
@@ -46,9 +47,9 @@ function fn_replyDelete(reno){
 		success: function(result){
 			if (result=="OK") {
 				$("#replyItem"+reno).remove();
-				alert("삭제되었습니다.");
+				alert("${afn:getMessage('msg_delete',sessionScope.locale)}");
 			} else{
-				alert("답변이 있어서 삭제할 수 없습니다.");
+				alert("${afn:getMessage('msg_errorbyReply',sessionScope.locale)}");
 			}
 		}
 	})
@@ -75,7 +76,7 @@ function fn_replyUpdate(reno){
 } 
 
 function fn_replyUpdateSave(){
-	if ( ! chkInputValue("#rememo2", "글 내용을")) return;
+	if ( ! chkInputValue("#rememo2", "${afn:getMessage('rememo1',sessionScope.locale)}")) return;
 	
 	var formData = $("#form2").serialize();
 	$.ajax({
@@ -86,9 +87,9 @@ function fn_replyUpdateSave(){
 			if (result!=="") {
 				$("#reply"+updateReno).text($("#rememo2").val());
 				$("#replyDiv").hide();
-				alert("저장되었습니다.");
+				alert("${afn:getMessage('msg_saved',sessionScope.locale)}");
 			} else{
-				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+				alert("${afn:getMessage('brd_brd',sessionScope.locale)}");
 			}
 		}
 	})
@@ -123,8 +124,8 @@ function fn_replyReplyCancel(){
 } 
 
 function fn_replyReplySave(){
-	if ( ! chkInputValue("#rewriter3", "작성자를")) return;
-	if ( ! chkInputValue("#rememo3", "글 내용을")) return;
+	if ( ! chkInputValue("#rewriter3", "${afn:getMessage('rewriter1',sessionScope.locale)}")) return;
+	if ( ! chkInputValue("#rememo3", "${afn:getMessage('rememo1',sessionScope.locale)}")) return;
 
 	var formData = $("#form3").serialize();
 	$.ajax({
@@ -140,7 +141,7 @@ function fn_replyReplySave(){
 				$("#rewriter3").val("");
 				$("#rememo3").val("");
 			} else{
-				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+				alert("${afn:getMessage('brd_brd',sessionScope.locale)}");
 			}
 		}
 	})	
@@ -152,26 +153,26 @@ function fn_replyReplySave(){
 	<h1><c:out value="${bgInfo.bgname}"/></h1>				
 
 		<table border="1" style="width:600px">
-			<caption>게시판</caption>
+			<caption>${afn:getMessage("brd_brd",sessionScope.locale)}</caption>
 			<colgroup>
 				<col width='15%' />
 				<col width='*%' />
 			</colgroup>
 			<tbody>
 				<tr>
-					<td>작성자</td> 
+					<td>${afn:getMessage("brd_writer",sessionScope.locale)}</td> 
 					<td><c:out value="${boardInfo.brdwriter}"/></td> 
 				</tr>
 				<tr>
-					<td>제목</td> 
+					<td>${afn:getMessage("brd_title",sessionScope.locale)}</td> 
 					<td><c:out value="${boardInfo.brdtitle}"/></td>  
 				</tr>
 				<tr>
-					<td>내용</td> 
+					<td>${afn:getMessage("brd_content",sessionScope.locale)}</td> 
 					<td><c:out value="${boardInfo.brdmemo}" escapeXml="false"/></td> 
 				</tr>
 				<tr>
-					<td>첨부</td> 
+					<td>${afn:getMessage("brd_addfile",sessionScope.locale)}</td> 
 					<td>
 						<c:forEach var="listview" items="${listview}" varStatus="status">	
             				<a href="/Board/fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>">
@@ -181,18 +182,18 @@ function fn_replyReplySave(){
 				</tr>
 			</tbody>
 		</table>    
-		<a href="/Board/boardList?bgno=<c:out value="${boardInfo.bgno}"/>">돌아가기</a>
-		<a href="/Board/boardDelete?bgno=<c:out value="${boardInfo.bgno}"/>&brdno=<c:out value="${boardInfo.brdno}"/>">삭제</a>
-		<a href="/Board/boardForm?brdno=<c:out value="${boardInfo.brdno}"/>">수정</a>
+		<a href="/Board/boardList?bgno=<c:out value="${boardInfo.bgno}"/>">${afn:getMessage("brd_back",sessionScope.locale)}</a>
+		<a href="/Board/boardDelete?bgno=<c:out value="${boardInfo.bgno}"/>&brdno=<c:out value="${boardInfo.brdno}"/>">${afn:getMessage("brd_delete",sessionScope.locale)}</a>
+		<a href="/Board/boardForm?brdno=<c:out value="${boardInfo.brdno}"/>">${afn:getMessage("brd_modify",sessionScope.locale)}</a>
 		<p>&nbsp;</p>
 		
 		<c:if test="${bgInfo.bgreply=='Y'}">
 			<div style="border: 1px solid; width: 600px; padding: 5px">
 				<form id="form1" name="form1">
 					<input type="hidden" id="brdno1" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
-					작성자: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
-					<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="답변을 달아주세요."></textarea>
-					<a href="#" onclick="fn_formSubmit()">저장</a>
+					${afn:getMessage("brd_writer",sessionScope.locale)}: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
+					<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="+${afn:getMessage('msg_answer_PH',sessionScope.locale)}+"></textarea>
+					<a href="#" onclick="fn_formSubmit()">${afn:getMessage("brd_save",sessionScope.locale)}</a>
 				</form>
 			</div>
 		</c:if>
@@ -202,9 +203,9 @@ function fn_replyReplySave(){
 				<div id="replyItem<c:out value="${replylist.reno}"/>"
 							style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*replylist.redepth}"/>px; display: inline-block">	
 					<c:out value="${replylist.rewriter}"/> <c:out value="${replylist.redate}"/>
-					<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.reno}"/>')">삭제</a>
-					<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.reno}"/>')">수정</a>
-					<a href="#" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">답변</a>
+					<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.reno}"/>')">${afn:getMessage("brd_delete",sessionScope.locale)}</a>
+					<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.reno}"/>')">${afn:getMessage("brd_modify",sessionScope.locale)}</a>
+					<a href="#" onclick="fn_replyReply('<c:out value="${replylist.reno}"/>')">${afn:getMessage("brd_A",sessionScope.locale)}</a>
 					<br/>
 					<div id="reply<c:out value="${replylist.reno}"/>"><c:out value="${replylist.rememo}"/></div>
 				</div><br/>
@@ -216,8 +217,8 @@ function fn_replyReplySave(){
 				<input type="hidden" id="brdno2" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
 				<input type="hidden" id="reno2" name="reno"> 
 				<textarea id="rememo2" name="rememo" rows="3" cols="60" maxlength="500"></textarea>
-				<a href="#" onclick="fn_replyUpdateSave()">저장</a>
-				<a href="#" onclick="fn_replyUpdateCancel()">취소</a>
+				<a href="#" onclick="fn_replyUpdateSave()">${afn:getMessage("brd_save",sessionScope.locale)}</a>
+				<a href="#" onclick="fn_replyUpdateCancel()">${afn:getMessage("QAcancel",sessionScope.locale)}</a>
 			</form>
 		</div>
 		
@@ -226,10 +227,10 @@ function fn_replyReplySave(){
 				<input type="hidden" id="brdno3" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
 				<input type="hidden" id="reno3" name="reno"> 
 				<input type="hidden" id="reparent3" name="reparent"> 
-				작성자: <input type="text" id="rewriter3" name="rewriter" size="20" maxlength="20"> <br/>
+				${afn:getMessage("brd_writer",sessionScope.locale)}: <input type="text" id="rewriter3" name="rewriter" size="20" maxlength="20"> <br/>
 				<textarea id="rememo3" name="rememo" rows="3" cols="60" maxlength="500"></textarea>
-				<a href="#" onclick="fn_replyReplySave()">저장</a>
-				<a href="#" onclick="fn_replyReplyCancel()">취소</a>
+				<a href="#" onclick="fn_replyReplySave()">${afn:getMessage("brd_save",sessionScope.locale)}</a>
+				<a href="#" onclick="fn_replyReplyCancel()">${afn:getMessage("QAcancel",sessionScope.locale)}</a>
 			</form>
 		</div>							
 

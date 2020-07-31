@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box">
         <main class="clearfix">
@@ -17,14 +18,14 @@
             <div class="right-contain">
                 <form action="" method="POST">
                     <div class="r-sec1">
-                        <p class="sec1-h1">1:1 문의하기</p>
-                        <p class="sec1-p1"><span>·</span> 문의하신 내용에 대한 답변은 질문 시 등록하신 이메일에서 확인하실 수 있습니다.</p>
+                        <p class="sec1-h1">${afn:getMessage("FAQone_to_one",sessionScope.locale)}</p>
+                        <p class="sec1-p1"><span>·</span>${afn:getMessage("msg_QAbyEmail",sessionScope.locale)}</p>
                         <div></div>
                     </div>
                     <div class="main-box">
-                        <p>1:1 문의가 접수 되었습니다.</p>
+                        <p>${afn:getMessage("msg_QAinsert",sessionScope.locale)}</p>
                         <div class="button-box">
-                            <button type="button">확인</button>
+                            <button type="button">${afn:getMessage("QAok",sessionScope.locale)}</button>
                         </div>
                     </div>
                 </form>
