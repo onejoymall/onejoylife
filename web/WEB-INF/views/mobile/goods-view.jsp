@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 <style>
 .npay_storebtn_bx{
@@ -36,7 +37,7 @@
 		
 		if(isOptionCheck){
 			$.toast({
-				heading : '옵션은 필수사항입니다.',
+				heading : getMessageAjax('msg.addcart.opCheck'),
 				text: '',
 				showHideTransition: 'plain', //펴짐
 				position: 'bottom-right',
@@ -164,7 +165,7 @@
                             <input type="hidden" name="option_name"/>
                         </div>
                     </li>
-                    <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">원</span></h3></li>
+                    <li><h3><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /><span class="text-sm">${afn:getMessage("korea_won",sessionScope.locale)}</span></h3></li>
                 </ul>
             </div>
             <%--<div class="purchaseBox mb-1">
@@ -208,8 +209,8 @@
             </ul>
         </div>
         <ul class="footerBtns">
-            <li><a href="#" onclick="addShoppingBasketM('${list.product_cd}')">장바구니</a></li>
-            <li><a href="#" id="paymentSubmitM">바로구매</a></li>
+            <li><a href="#" onclick="addShoppingBasketM('${list.product_cd}')">${afn:getMessage("cart",sessionScope.locale)}</a></li>
+            <li><a href="#" id="paymentSubmitM">${afn:getMessage("buyNow",sessionScope.locale)}</a></li>
         </ul>
             <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
         </form>
@@ -220,27 +221,27 @@
 <div class="underPop" id="review">
     <div class="content">
         <header>
-           <h3>상품평 작성하기</h3>
+           <h3>${afn:getMessage("writereview",sessionScope.locale)}</h3>
             <button type="button" class="popClose">
                 <i class="ri-close-line"></i>
             </button>
         </header>
         <content>
-            <p class="text-md mt-2 mb-05">제목 *</p>
-            <input type="text" class="width-100 mb-05" placeholder="50자 이내로 입력해주세요">
-            <p class="text-md mt-1 mb-05">내용</p>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("brd_title",sessionScope.locale)} *</p>
+            <input type="text" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}">
+            <p class="text-md mt-1 mb-05">${afn:getMessage("brd_content",sessionScope.locale)}</p>
             <div class="textarea mt-05">
-               <span>(0/1000자)</span>
+               <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
                <textarea class="width-100"></textarea>
             </div>
-            <p class="text-md mt-1 mb-05">이미지 첨부</p>
+            <p class="text-md mt-1 mb-05">${afn:getMessage("QA_img",sessionScope.locale)}</p>
             <div class="mb-2">
                 <input type="text" class="width-100 mb-1">
-                <button class="btn btn-black width-50">파일찾기</button> <span class="ml-1 text-sm grey">1개 / 5MB 이하만 가능</span>
+                <button class="btn btn-black width-50">${afn:getMessage("QA_findfile",sessionScope.locale)}</button> <span class="ml-1 text-sm grey">${afn:getMessage("msg_faqFile",sessionScope.locale)}</span>
             </div>
             <ul class="btns mt-3 mb-0">
-                <li><a href="#">취소</a></li>
-                <li><a href="#" class="active">등록</a></li>
+                <li><a href="#">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
+                <li><a href="#" class="active">${afn:getMessage("registration",sessionScope.locale)}</a></li>
            </ul>
         </content>
     </div>
@@ -248,28 +249,28 @@
 <div class="underPop" id="qna">
     <div class="content">
         <header>
-           <h3>상품Q&A 작성하기</h3>
+           <h3>${afn:getMessage("writeItemQA",sessionScope.locale)}</h3>
             <button class="popClose">
                 <i class="ri-close-line"></i>
             </button>
         </header>
         <content>
-            <p class="text-md mt-2 mb-05">제목 *</p>
-            <input type="text" class="width-100 mb-05" placeholder="50자 이내로 입력해주세요">
+            <p class="text-md mt-2 mb-05">${afn:getMessage("brd_title",sessionScope.locale)} *</p>
+            <input type="text" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}">
             <input type="checkbox" id="replysns" class="b8 mt-1">
-            <label for="replysns">비공개</label>
-            <p class="text-md mt-2 mb-05">문의 유형 * </p>
+            <label for="replysns">${afn:getMessage("private",sessionScope.locale)}</label>
+            <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)}  * </p>
             <select class="width-100">
-                <option value="" selected>주문/결제</option>
+                <option value="" selected>${afn:getMessage("QA_order_payment",sessionScope.locale)}</option>
             </select>
-            <p class="text-md mt-1 mb-05">내용</p>
+            <p class="text-md mt-1 mb-05">${afn:getMessage("brd_content",sessionScope.locale)}</p>
             <div class="textarea mt-05 mb-2">
-               <span>(0/1000자)</span>
+               <span>${afn:getMessage("limitWords",sessionScope.locale)}</span>
                <textarea class="width-100"></textarea>
             </div>
             <ul class="btns mt-2 mb-0">
-                <li><a href="#">취소</a></li>
-                <li><a href="#" class="active">등록</a></li>
+                <li><a href="#">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
+                <li><a href="#" class="active">${afn:getMessage("registration",sessionScope.locale)}</a></li>
            </ul>
         </content>
     </div>
@@ -298,16 +299,16 @@
        <h2 class="my-2">${list.product_brand_name}<br> ${list.product_name}</h2>
        <hr class="grey">
        <ul class="flexbetween py-05 mt-2">
-           <li>소비자가</li>
-           <li class="line-through grey"><fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</li>
+           <li>${afn:getMessage("before_price",sessionScope.locale)}</li>
+           <li class="line-through grey"><fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</li>
        </ul>
        <%--<ul class="flexbetween py-05">
            <li>세일</li>
            <li class="line-through grey">319,000원</li>
        </ul>--%>
        <ul class="flexbetween py-05">
-           <li>판매가</li>
-           <li class="text-lg text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원</span></li>
+           <li>${afn:getMessage("real_price",sessionScope.locale)}</li>
+           <li class="text-lg text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}</li>
        </ul>
 <%--       <p class="coupon-late py-05"><span class="red text-lg">20% 쿠폰</span><span class="grey text-light mx-1">|</span>19.03.18-19.04.17</p>>--%>
        <%--<ul class="flexbetween py-05">
@@ -320,18 +321,18 @@
             <li><a href="#" class="wish favorite <c:if test="${heart}">on</c:if>"  data-id="${list.product_cd}">
 
                 <i class="heart-empty <c:if test="${heart}">heart-full</c:if>"> </i>
-                위시리스트</a></li>
-            <li><a href="#" class="share" onclick="share_product('${list.product_cd}', '${list.product_name}')">공유하기</a></li>
+                ${afn:getMessage("mywishlist",sessionScope.locale)}</a></li>
+            <li><a href="#" class="share" onclick="share_product('${list.product_cd}', '${list.product_name}')">${afn:getMessage("share",sessionScope.locale)}</a></li>
         </ul>
         <a href="${lineBannerList1.url}" class="width-100">
             <img src="${lineBannerList1.file_1}" class="width-100" /></a>
         <img src="../../assets/img/goods-view/bnr1.jpg" alt="" class="width-100">
         <ul class="taps" id="tap">
-           <li><a href="javascript:move(1)" class="active">상품설명</a></li>
-           <li><a href="javascript:move(2)">상품정보</a></li>
-           <li><a href="javascript:move(3)">리뷰 <span class="red text-sm">65</span></a></li>
-           <li><a href="javascript:move(4)">Q&A <span class="red text-sm">65</span></a></li>
-           <li><a href="javascript:move(5)">배송/환불</a></li>
+           <li><a href="javascript:move(1)" class="active">${afn:getMessage("product_description",sessionScope.locale)}</a></li>
+           <li><a href="javascript:move(2)">${afn:getMessage("product_info",sessionScope.locale)}</a></li>
+           <li><a href="javascript:move(3)">${afn:getMessage("review",sessionScope.locale)} <span class="red text-sm"><%--65--%></span></a></li>
+           <li><a href="javascript:move(4)">${afn:getMessage("qna",sessionScope.locale)} <span class="red text-sm"><%--65--%></span></a></li>
+           <li><a href="javascript:move(5)">${afn:getMessage("pro_info_etc2",sessionScope.locale)}</a></li>
        </ul>        
         <div class="my-1" id="content01">
            <c:out value="${list.product_html}" escapeXml="false"/>
@@ -339,7 +340,7 @@
     </section>
     <section class="wrap">
         <div class="mt-1 mb-3">
-            <h3 class="mb-1">함께 본 상품</h3>
+            <h3 class="mb-1">${afn:getMessage("view_pro_together",sessionScope.locale)}</h3>
             <hr class="mb-1">
             <div class="shareProducts">
             	<c:if test="${not empty sameSupplierProductList}">
@@ -347,17 +348,17 @@
 	                <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>" class="product">
 	                    <div class="productImg"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 	                    <h5 class="mt-05">${list.product_name}</h5>
-	                    <h4 class="text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span class="text-sm">원</span></h4>
+	                    <h4 class="text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span class="text-sm">${afn:getMessage("korea_won",sessionScope.locale)}</span></h4>
 	                </a>
                 </c:forEach>
             	</c:if>
             	<c:if test="${empty sameSupplierProductList}">
-            		함께 본 상품이 없습니다.
+            		${afn:getMessage("msg.proDetail.none_Togecontent",sessionScope.locale)}
             	</c:if>
        		</div>
         </div>
         <div class="my-1 " id="content02">
-             <h3 class="mb-1">상품 필수정보</h3>
+             <h3 class="mb-1">${afn:getMessage("prod_es_info",sessionScope.locale)}</h3>
              <hr class="mb-1">
          </div>
          <c:out value="${configtop.market_config_value}" escapeXml="false"/>
@@ -596,11 +597,12 @@
         </div> -->
         <div class="mt-4 mb-2" id="content04">
            <ul class="flexbetween mb-1">
-               <li><h3>상품 Q&A<span class="red text-md ml-1">65</span></h3></li>
-               <li><button class="btn btn-black" data-id="${list.product_cd}" id="btn_qna">작성하기</button></li>
+               <li><h3>${afn:getMessage("product_qna2",sessionScope.locale)}<span class="red text-md ml-1"><%--65--%></span></h3></li>
+               <li><button class="btn btn-black" data-id="${list.product_cd}" id="btn_qna">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button></li>
            </ul>
            <hr>
-           <div class="qnaNothing">문의 내역이 없습니다.</div>
+           <%--
+           <div class="qnaNothing">${afn:getMessage("msg.proDetail.none_qnacontent",sessionScope.locale)}</div>
            <div class="goodsQna active">
                <div class="goodsHeader">
                   <p>
@@ -612,18 +614,18 @@
                </div>
                <div class="goodsBody">
                    <div class="goodsBodyQ text-md">
-                      <span>질문</span>
+                      <span>${afn:getMessage("qust",sessionScope.locale)}</span>
                        매장에서 봤는데 화이트말고 메탈색이 있던데 쇼핑몰에서도 구입할 수 있나요?
                        <p class="mt-1">
-                           <button class="btn">수정</button>
-                           <button class="btn">삭제</button>   
+                           <button class="btn">${afn:getMessage("update",sessionScope.locale)}</button>
+                           <button class="btn">${afn:getMessage("delete",sessionScope.locale)}</button>
                        </p>
                        
                    </div>
                    <div class="goodsBodyA text-md">
-                      <span>답변</span>
+                      <span>${afn:getMessage("brd_A",sessionScope.locale)}</span>
                        안녕하세요, 고객님. 원조이라이프 고객센터입니다. 문의하신 상품의 다른 색상을 확인해 본 결과, 오프라인 매장에서만 판매하고 있는 제품임을 양해 부탁드립니다.감사합니다.
-                       <p class="mt-1 grey">답변일 : 2019.05.07</p>
+                       <p class="mt-1 grey">${afn:getMessage("replyDate",sessionScope.locale)} : 2019.05.07</p>
                    </div>
                </div>
            </div>
@@ -652,7 +654,7 @@
                        <p class="mt-1 grey">답변일 : 2019.05.07</p>
                    </div>
                </div>
-           </div>
+           </div>--%>
            <ul class="centerBtns mt-3">
                 <li><a href="#"><i class="ri-arrow-left-s-line"></i></a></li>
                 <li><a href="#" class="active">1</a></li>
@@ -662,7 +664,7 @@
             </ul>
         </div>
         <div class="mt-4 mb-2">
-            <h3 class="mb-1">같은 공급사 상품</h3>
+            <h3 class="mb-1">${afn:getMessage("sameSupplierPro",sessionScope.locale)}</h3>
             <hr class="mb-1">
             <div class="shareProducts">
                 <div class="shareProducts">
@@ -671,46 +673,46 @@
 		                <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>" class="product">
 		                    <div class="productImg"><img src="${list.file_1}"  onerror="this.src='http://placehold.it/200'"/></div>
 		                    <h5 class="mt-05">${list.product_name}</h5>
-		                    <h4 class="text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span class="text-sm">원</span></h4>
+		                    <h4 class="text-bold red"><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" /> <span class="text-sm">${afn:getMessage("korea_won",sessionScope.locale)}</span></h4>
 		                </a>
 	                </c:forEach>
 	            	</c:if>
 	            	<c:if test="${empty sameSupplierProductList}">
-	            		함께 본 상품이 없습니다.
+	            		${afn:getMessage("msg.proDetail.none_Suppliercontent",sessionScope.locale)}
 	            	</c:if>
            		</div>
             </div>
         </div>
         <div class="mt-4 mb-2" id="content05">
-            <h3 class="mb-1">배송/결제/교환/환불</h3>
+            <h3 class="mb-1">${afn:getMessage("pro_info_etc",sessionScope.locale)}</h3>
             <hr>
             <div class="grey bg_grey p-2">
-                <h3 class="mb-1">배송 안내</h3>
+                <h3 class="mb-1">${afn:getMessage("delivery_info",sessionScope.locale)}</h3>
                 <hr class="grey mb-1">
                 ${list.product_delivery_info}
                 <br>
-                <b>상품 출고지</b>
+                <b>${afn:getMessage("delivery_forward",sessionScope.locale)}</b>
                 <br>
                 - (${store_delivery.forward_postcode}) 
                   ${store_delivery.forward_roadAddress}
                   ${store_delivery.forward_extraAddress}
                   <br><br>
-                <h3 class="mb-1">교환/반품 안내</h3>
+                <h3 class="mb-1">${afn:getMessage("returnInfo",sessionScope.locale)}</h3>
                 <hr class="grey mb-1">
-                <b>교환 및 반품 주소</b>
+                <b>${afn:getMessage("returnAdd",sessionScope.locale)}</b>
                 <br>
                 - (${store_delivery.refund_postcode}) 
                   ${store_delivery.refund_roadAddress}
                   ${store_delivery.refund_extraAddress}
                   <br><br>
                 ${list.product_change_info}
-                <h3 class="mb-1">환불 안내</h3>
+                <h3 class="mb-1">${afn:getMessage("refundInfo",sessionScope.locale)}</h3>
                 <hr class="grey mb-1">
                 ${list.product_service_info}
             </div>
         </div>
     </section>
-    <button type="button" class="btn btn_bottom btn-redcover" id="btn_purchase">구매하기</button>
+    <button type="button" class="btn btn_bottom btn-redcover" id="btn_purchase">${afn:getMessage("buy",sessionScope.locale)}</button>
 
 <script>
 $(document).ready(function(){
@@ -778,10 +780,10 @@ $(document).ready(function(){
         var product_cd = $(this).attr("data-id");
         if(isLogin==''){
             $.toast({
-                heading: '비회원으로 이용중 입니다.',
+                heading: getMessageAjax('msg.nonMemUser'),
                 text: [
-                    '<a href="/sign/login">로그인 후 이용</a>',
-                    '<a href="/sign/signup">회원 가입 후 이용</a>',
+                    '<a href="/sign/login">'+ getMessageAjax('loginAndUse') +'</a>',
+                    '<a href="/sign/signup">'+ getMessageAjax('JoinAndUse') +'</a>',
                 ],
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',

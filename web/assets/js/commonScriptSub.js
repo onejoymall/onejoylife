@@ -37,7 +37,7 @@ function deleteFavorite(product_cd) {
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -91,7 +91,7 @@ function addFavorite(product_cd){
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -105,10 +105,10 @@ function addFavorite(product_cd){
 
             } else {
                 $.toast({
-                	heading: '등록 성공!',
+                	heading: getMessageAjax('addcartSuccess'),
                     text: [
-                        '<a href="/MyPage/ShoppingAddList">찜목록 이동</a>',
-                        '<a href="">쇼핑 계속!</a>',
+                        '<a href="/MyPage/ShoppingAddList">' + getMessageAjax('locationFavorite') + '</a>',
+                        '<a href="">' + getMessageAjax('shoppingContinue') + '</a>',
                     ],
 
                     showHideTransition: 'plain', //펴짐
@@ -185,7 +185,7 @@ $('.mgPointPaid').on("click",function () {
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -264,7 +264,7 @@ $('.modal-enable-menu-btn').on("click",function () {
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -301,7 +301,7 @@ $('.modal-enable-menu-btn').on("click",function () {
 $('#deleteDeliveryInfo').on("click",function () {
     var formData = $('#myDeliveryForm').serialize();
     if(!formData.includes("orderNo=")){
-    	alert("배송지를 선택해주세요.");
+    	alert(getMessageAjax('error.check_addr'));
     	return;
     }
     jQuery.ajax({
@@ -316,7 +316,7 @@ $('#deleteDeliveryInfo').on("click",function () {
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -364,7 +364,7 @@ $('#updateDefaultDeliveryInfo').on("click",function () {
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -420,7 +420,7 @@ $("#updateDeliveryInfo").click(function(){
     event.preventDefault();
     var formData = $('#myDeliveryForm').serialize();
     if(!formData.includes("orderNo=")){
-    	alert("배송지를 선택해주세요.");
+    	alert(getMessageAjax('error.check_addr'));
     	return;
     }
     $(".modal2").attr("style", "display:block");
@@ -459,7 +459,7 @@ $("#updateDeliveryBtn").click(function(){
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -505,7 +505,7 @@ $("#newDeliveryBtn").click(function(){
                         showText = item;
                     } else {
                         alertType = "error";
-                        showText = index + "는 (은) " + item;
+                        showText = index + getMessageAjax('is3') + " "  + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -653,7 +653,7 @@ $("button[name=coupon-confirm-btn]").click(function(){
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     $.toast({
                         text: showText,
@@ -689,9 +689,9 @@ $("button[name=coupon-confirm-btn]").click(function(){
 //관리자 쿠폰 상세보기
 $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	if($(this).attr("data-id")){
-		$("#couponTitle").text("수정");
+		$("#couponTitle").text(getMessageAjax('update'));
 		$("button[name=coupon-confirm-btn]").attr("data-id","update");
-		$("button[name=coupon-confirm-btn]").text("수정하기");
+		$("button[name=coupon-confirm-btn]").text(getMessageAjax('replymodi'));
 		
 		jQuery.ajax({
 	        type: 'POST',
@@ -843,9 +843,9 @@ $(".couponDetailBtn, #couponInsertBtn").click(function(){
 	        },
 	    });
 	}else{
-		$("#couponTitle").text("등록");
+		$("#couponTitle").text(getMessageAjax('registration'));
 		$("button[name=coupon-confirm-btn]").attr("data-id","insert");
-		$("button[name=coupon-confirm-btn]").text("등록하기");
+		$("button[name=coupon-confirm-btn]").text(getMessageAjax('register'));
 		
 		$("input[name=coupon_name]").val("");
 		$("input[name=coupon_issued_target_id]").val("");
@@ -891,7 +891,7 @@ $("#couponRegButton").click(function(){
 $("#couponBatchUpdateBtn").click(function(){
 	if(!$('#defaultListForm input[name=chk]:checked').val()){
 		$.toast({
-            text: "항목을 선택해주세요.",
+            text: getMessageAjax('error.selectField'),
             showHideTransition: 'plain', //펴짐
             position: 'bottom-right',
             heading: 'Error',
@@ -924,7 +924,7 @@ $('#coupon-update-batch-btn').on("click",function(){
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     $.toast({
                         text: showText,
@@ -1001,7 +1001,7 @@ $(".couponDownBtn").click(function(){
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     $.toast({
                         text: showText,
@@ -1150,7 +1150,7 @@ function copyURL() {
     shareURL.select();
     document.execCommand("copy");
 
-    alert("URL이 클립보드에 복사되었습니다");
+    alert(getMessageAjax('msg.urlCopy'));
 }
 
 function snsSubmit(type, title) {
@@ -1178,7 +1178,7 @@ function snsSubmit(type, title) {
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -1229,7 +1229,7 @@ $('.uploadBtn').on('change', function(object){
     var filesArr =Array.prototype.slice.call(files);
     filesArr.forEach(function (f) {
         if(!f.type.match("image.*")){
-            alert("이미지파일만 등록 가능합니다.");
+            alert(getMessageAjax('msg_review_1-8-1'));
             return false;
         }
         sel_file = f;
@@ -1252,7 +1252,7 @@ $('.uploadBtn').on('change', function(object){
 //입점업체 신청
 $(document).on("click","#modalStoreAddProc",function () {
     if(!pwCheck){
-        $('#password_cfValidation').html('* 비밀번호를 확인 해주세요.');
+        $('#password_cfValidation').html('* ' + getMessageAjax('error.sign.pwdcfMsg'));
         $('input[name=store_password]').focus();
         $("#password_cfValidation").removeClass("text-success");
         return;
@@ -1280,7 +1280,7 @@ $(document).on("click","#modalStoreAddProc",function () {
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -1323,17 +1323,17 @@ $(document).on('input','input[name=store_password],input[name=store_passwordCf]'
     var pw = $('input[name=store_password]').val();
     var pw_cf = $('input[name=store_passwordCf]').val();
     if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-        $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+        $("#passwordValidation").text(" * " + getMessageAjax('error.sign.pwdpattern'));
         $("#passwordValidation").removeClass("text-success");
         $("#password_cfValidation").text('');
     }else{
         $("#passwordValidation").text('');
         if(pw != pw_cf){
-            $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+            $("#password_cfValidation").text(" * " + getMessageAjax('error.sign.pwdDis'));
             $("#password_cfValidation").removeClass("text-success");
         }else{
             pwCheck = true;
-            $("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+            $("#password_cfValidation").text(" * " + getMessageAjax('msg.sign.pwdSuccess'));
             $("#password_cfValidation").addClass("text-success");
         }
     }
@@ -1359,7 +1359,7 @@ $(document).on("click","#modalstorIdDupCheck",function () {
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -1409,7 +1409,7 @@ $(document).on("click","#modalstorRegDupCheck",function () {
                         showText = item;
                     }else{
                         alertType = "error";
-                        showText = index + " (은) " + item;
+                        showText = index + getMessageAjax('is2') + item;
                     }
                     // $.toast().reset('all');//토스트 초기화
                     $.toast({
@@ -1440,47 +1440,3 @@ $(document).on("click","#modalstorRegDupCheck",function () {
         }
     });
 })
-
-//sns 리스트
-/*$(document).on("click","#shareForm",function () {
-    var formData = $('#shareForm').serialize();
-    jQuery.ajax({
-        type: 'POST',
-        data: formData,
-        url:'/layout/sns_share',
-        success: function (data) {
-            if (data.validateError) {
-                $('.validateError').empty();
-                $.each(data.validateError, function (index, item) {
-                    if(index == "Error"){//일반에러메세지
-                        alertType = "error";
-                        showText = item;
-                    }else{
-                        alertType = "error";
-                        showText = index + " (은) " + item;
-                    }
-                    // $.toast().reset('all');//토스트 초기화
-                    $.toast({
-                        text: showText,
-                        showHideTransition: 'plain', //펴짐
-                        position: 'bottom-right',
-                        heading: 'Error',
-                        icon: 'error'
-                    });
-                });
-
-            } else {
-                // loginAuth(data.access_token);
-                $.toast({
-                    text: "SUCCESS",
-                    showHideTransition: 'plain', //펴짐
-                    position: 'bottom-right',
-                    icon: 'success'
-                });
-            }
-        },
-        error: function (xhr, status, error) {
-            alert("error");
-        }
-    });
-})*/

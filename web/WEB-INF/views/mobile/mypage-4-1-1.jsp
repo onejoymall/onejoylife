@@ -2,22 +2,23 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 
 
 <section class="subheader">
-    <div class="subTitle">주문/결제</div>
+    <div class="subTitle">${afn:getMessage("orders_payment",sessionScope.locale)}</div>
 </section>
 <form name="defaultForm" id="defaultForm" method="POST">
 <section class="wrap">
-        <h2 class="pb-1">주문자 정보</h2>
+        <h2 class="pb-1">${afn:getMessage("userinformation",sessionScope.locale)}</h2>
         <hr>
-        <p class="text-md mt-2 mb-05">주문하시는 분</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("userN",sessionScope.locale)}</p>
         <input type="text" class="width-100 mb-05" name="order_user_name" id="order_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>">
-        <p class="text-md mt-2 mb-05">이메일 주소</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("order_user_email",sessionScope.locale)}</p>
         <input type="text" class="width-100 mb-05" name="order_user_email" id="order_user_email" value="<c:if test="${not empty sessionScope.email}">${sessionScope.email}</c:if>">
 
-        <p class="text-md mt-2 mb-05">휴대폰 번호
+        <p class="text-md mt-2 mb-05">${afn:getMessage("userPH",sessionScope.locale)}
             <!-- Map 선언 -->
             <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
 
@@ -48,34 +49,34 @@
         <input type="hidden" name="order_user_phone" id="order_user_phone" value="<c:if test="${not empty sessionScope.email}"><c:out value="${phoneNumber}"/> </c:if>">
 
         <c:if test="${detail.product_delivery_International_type eq 'B' || detail.product_delivery_International_type eq 'C'}">
-        <p class="text-md mt-2 mb-05">통관고유번호</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("cusClearNum",sessionScope.locale)}</p>
         <input type="text" name="customs_clearance_number" id="customs_clearance_number" class="sec1-in1" /> </td>
         </c:if>
 
         <c:if test="${empty sessionScope.email}">
-        <p class="text-md mt-2 mb-05">주문확인용 비밀번호 입력</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("orderChkPwd",sessionScope.locale)}</p>
         <input type="password" name="password" id="password" class="sec1-in1">
         <p id="passwordValidation" style="float:right;line-height: 33px;color: red"></p>
-        <p class="text-md mt-2 mb-05">주문확인용 비밀번호 입력 확인</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("orderChkPwdCf",sessionScope.locale)}</p>
         <input type="password" name="password_cf" id="password_cf" class="sec1-in1">
         <p id="password_cfValidation" style="float:right;line-height: 33px;color: red"></p>
         </c:if>
 
-        <h2 class="pb-1 mt-4">배송지 정보</h2>
+        <h2 class="pb-1 mt-4">${afn:getMessage("deliv_info",sessionScope.locale)}</h2>
         <hr>
         <c:if test="${sessionScope.login}">
-        <p class="text-md mt-2 mb-05">배송지 선택</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_choose",sessionScope.locale)}</p>
         <div class="my-1">
-            <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD"><label for="ra1-1">기본 배송지</label>
-            <input type="radio" id="ra1-2" name="selectAddress" value="LAST"><label for="ra1-2">최신 배송지</label>
-            <input type="radio" id="ra1-3" name="selectAddress" value="NEW"><label for="ra1-3">새로입력</label>
-            <input type="radio" id="ra1-4" name="selectAddress" value="LIST"><label for="ra1-4">배송지 목록</label>
+            <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD"><label for="ra1-1">${afn:getMessage("deliv_main",sessionScope.locale)}</label>
+            <input type="radio" id="ra1-2" name="selectAddress" value="LAST"><label for="ra1-2">${afn:getMessage("deliv_recent",sessionScope.locale)}</label>
+            <input type="radio" id="ra1-3" name="selectAddress" value="NEW"><label for="ra1-3">${afn:getMessage("deliv_new",sessionScope.locale)}</label>
+            <input type="radio" id="ra1-4" name="selectAddress" value="LIST"><label for="ra1-4">${afn:getMessage("deliv_list",sessionScope.locale)}</label>
         </div>
         </c:if>
-        <p class="text-md mt-2 mb-05">받으시는 분</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_receiveN",sessionScope.locale)}</p>
         <input type="text" class="width-100 mb-05"  name="delivery_user_name" id="delivery_user_name" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.order_user_name}</c:if>">
 
-        <p class="text-md mt-2 mb-05">휴대폰 번호
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_receiveCPH",sessionScope.locale)}
             <!-- Map 선언 -->
             <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
             <c:if test="${empty userInfo.phone}">
@@ -104,7 +105,7 @@
         <input type="text" name="delivery_user_phone_c" id="delivery_user_phone_c" value="${phoneMap.key3}" class="delivery_user_phone width-30 mb-05" maxlength="4">
         <input type="hidden" name="delivery_user_phone" id="delivery_user_phone" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.delivery_user_phone}</c:if>">
 
-        <p class="text-md mt-2 mb-05">전화 번호
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_receivePH",sessionScope.locale)}
             <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
             <c:if test="${empty userInfo.phone}">
                 <c:set var="phoneNumber" value="" />
@@ -142,36 +143,36 @@
         <input type="text" name="delivery_user_tel_c" id="delivery_user_tel_c" value="${phoneMap.key3}" class="delivery_user_tel width-30 mb-05" maxlength="4">
         <input type="hidden" name="delivery_user_tel" id="delivery_user_tel" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.delivery_user_tel}</c:if>">
 
-        <p class="text-md mt-2 mb-05">주소</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("address",sessionScope.locale)}</p>
         <div class="input-group mb-05">
             <input type="text" name="postcode" id="postcode" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.postcode}</c:if>">
-            <button type="button" id="daumMapCall" class="grey">우편번호 찾기</button>
+            <button type="button" id="daumMapCall" class="grey">${afn:getMessage("find_zipcode",sessionScope.locale)}</button>
         </div>
         <input type="text" class="width-100 mb-05" name="roadAddress" id="roadAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.roadAddress}</c:if>">
         <input type="text" class="width-100 mb-05" name="extraAddress" id="extraAddress" value="<c:if test="${not empty sessionScope.email}">${latestDelivery.extraAddress}</c:if>">
         <p class="hidden"><input type="hidden" name="jibunAddress" id="jibunAddress"></p>
 
-        <p class="text-md mt-2 mb-05">배송시 요청사항</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_msg",sessionScope.locale)}</p>
         <select class="full mt-05 mb-05" name="delivery_message_select" id="delivery_message_select" >
-            <option value="" disabled selected>요청사항</option>
-            <option value="">직접 받고 부재 시 문 앞</option>
-            <option value="">경비실</option>
-            <option value="">택배함</option>
-            <option value="self">직접입력</option>
+            <option value="" disabled selected>${afn:getMessage("deliv_msg_option",sessionScope.locale)}</option>
+            <option value="">${afn:getMessage("deliv_msg_option_door",sessionScope.locale)}</option>
+            <option value="">${afn:getMessage("security_office",sessionScope.locale)}</option>
+            <option value="">${afn:getMessage("deliv_box",sessionScope.locale)}</option>
+            <option value="self">${afn:getMessage("deliv_msg_option_write",sessionScope.locale)}</option>
         </select>
         <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
         
         <c:if test="${store_delivery.product_delivery_hope_date_yn == 'Y'}">
-        <p class="text-md mt-2 mb-05">배송 희망일자</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_wish_date",sessionScope.locale)}</p>
         <input type="text" id="start_date" name="hope_date" class="date_pick width-100 mb-05">
         </c:if>
         
         <c:if test="${store_delivery.product_delivery_hope_time_yn == 'Y'}">
-        <p class="text-md mt-2 mb-05">배송 희망시간</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("deliv_wish_time",sessionScope.locale)}</p>
         <input type="text" name="hope_time" class="time_pick width-100 mb-05">
         </c:if>
 
-        <h2 class="pb-1 mt-4">주문상품 정보</h2>
+        <h2 class="pb-1 mt-4">${afn:getMessage("order_product_info",sessionScope.locale)}</h2>
         <hr>
         <ul class="product pt-1 pb-0">
             <%--<ul class="options">
@@ -190,95 +191,95 @@
                 </li>
             </ul>
             <ul class="options">
-                <li>상품금액</li>
-                <li><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /> <span>원</span></li>
+                <li>${afn:getMessage("proPrice",sessionScope.locale)}</li>
+                <li><fmt:formatNumber value="${detail.product_payment}" groupingUsed="true" /> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
             </ul>
             <ul class="options">
-                <li>수량</li>
+                <li>${afn:getMessage("quantity",sessionScope.locale)}</li>
                 <li><span>${param.payment_order_quantity}<input type="hidden" name="payment_order_quantity" value="${param.payment_order_quantity}"></span><span>개</span></li>
             </ul>
             <hr class="grey my-1">
             <ul class="options mb-1">
-                <li>주문금액</li>
-                <li><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>원</span></li>
+                <li>${afn:getMessage("order_payment",sessionScope.locale)}</li>
+                <li><fmt:formatNumber value="${detail.product_payment*param.payment_order_quantity+deliveryPayment}" groupingUsed="true" /> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
             </ul>
         </ul>
 
-        <h2 class="mt-4">할인 정보</h2>
+        <h2 class="mt-4">${afn:getMessage("discount_info",sessionScope.locale)}</h2>
         <hr class="my-1">
          <select class="full mt-05 mb-05" id="couponBox">
          	<c:if test="${not empty enableCouponList}">
-        		<option value="">선택 안함</option>
+        		<option value="">${afn:getMessage("NotSelect",sessionScope.locale)}</option>
         		<c:forEach var="list" items="${enableCouponList}" varStatus="status">
             		<option value="${status.index}">${list.coupon_name} ( ~ ${list.coupon_valid_date_end})</option>
             	</c:forEach>
             </c:if>
             <c:if test="${empty enableCouponList}">
-            	<option value="">사용가능 쿠폰이 없습니다.</option>
+            	<option value="">${afn:getMessage("msg.none_Coucontent",sessionScope.locale)}</option>
             </c:if>
          </select>
          <input type="hidden" name="coupon_discount" value="0"/>
          <ul class="calculator">
-            <li>사용가능 쿠폰</li>
-            <li><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /> <span>장</span></li>
+            <li>${afn:getMessage("UsableCou",sessionScope.locale)}</li>
+            <li><fmt:formatNumber value="${fn:length(enableCouponList)}" groupingUsed="true" /> <span>${afn:getMessage("cou_count",sessionScope.locale)}</span></li>
         </ul>
 
-        <h2 class="pb-1 mt-4">결제 정보</h2>
+        <h2 class="pb-1 mt-4">${afn:getMessage("payment_info2",sessionScope.locale)}</h2>
         <hr>
         <div class="ck-box">
             <input type="checkbox" id="escrow">
-            <label for="escrow"><span class="le-ck-txt"> 에스크로 사용</span></label>
+            <label for="escrow"><span class="le-ck-txt"> ${afn:getMessage("escrow_use",sessionScope.locale)}</span></label>
         </div>
-        <p class="text-md mt-2 mb-05">결제수단</p>
+        <p class="text-md mt-2 mb-05">${afn:getMessage("pay_method",sessionScope.locale)}</p>
         <div class="my-1">
-            <input type="radio" id="purchase01" name="payment_type_cd" checked value="card"><label for="purchase01">신용카드</label>
-            <input type="radio" id="purchase02" name="payment_type_cd" value="trans"><label for="purchase02">실시간계좌이체</label>
-            <input type="radio" id="purchase03" name="payment_type_cd" value="vbank"><label for="purchase03">가상계좌</label>
+            <input type="radio" id="purchase01" name="payment_type_cd" checked value="card"><label for="purchase01">${afn:getMessage("card",sessionScope.locale)}</label>
+            <input type="radio" id="purchase02" name="payment_type_cd" value="trans"><label for="purchase02">${afn:getMessage("trans",sessionScope.locale)}</label>
+            <input type="radio" id="purchase03" name="payment_type_cd" value="vbank"><label for="purchase03">${afn:getMessage("vbank",sessionScope.locale)}</label>
             <%--<input type="radio" id="purchase03" name="purchase"><label for="purchase03">휴대폰결제</label>--%>
         </div>
 </section>
 <hr>
 <section class="wrap bg_grey">
-    <h1 class="pb-1">최종 결제 금액 확인</h1>
+    <h1 class="pb-1">${afn:getMessage("final_payment_confirm",sessionScope.locale)}</h1>
     <hr>
     <ul class="calculator pt-2 pb-1">
     	<c:set var = "productTotal" value = "${detail.product_user_payment * detail.payment_order_quantity}" />
        	<c:set var = "discountTotal" value = "${(detail.product_user_payment - detail.product_payment) * detail.payment_order_quantity}" />
-        <li class="text-lg">총 상품 금액</li>
-        <li><fmt:formatNumber value="${productTotal}" groupingUsed="true" /> <span>원</span></li>
+        <li class="text-lg">${afn:getMessage("total_price",sessionScope.locale)}</li>
+        <li><fmt:formatNumber value="${productTotal}" groupingUsed="true" /> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
     </ul>
     <ul class="calculator pb-1">
-        <li>할인금액</li>
-        <li>- <span class="in1-font3" id="discountSpan"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> <span>원</span></li>
+        <li>${afn:getMessage("discount_price",sessionScope.locale)}</li>
+        <li>- <span class="in1-font3" id="discountSpan"><fmt:formatNumber value="${discountTotal}" groupingUsed="true" /></span> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
     </ul>
     <%--        <ul class="calculator pb-1">--%>
     <%--            <li>할인쿠폰</li>--%>
     <%--            <li>- 9,000 <span>원</span></li>--%>
     <%--        </ul>--%>
     <ul class="calculator pb-1">
-        <li>배송비</li>
+        <li>${afn:getMessage("shippingFee",sessionScope.locale)}</li>
         <c:if test="${not empty deliveryPayment}">
-            <li><span id="deliverySpan"><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> <span>원</span></li>
+            <li><span id="deliverySpan"><fmt:formatNumber value="${deliveryPayment}" groupingUsed="true" /></span> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
         </c:if>
     </ul>
     <hr class="grey my-1">
     <ul class="calculator pb-1">
-        <li>최종 결제 금액</li>
-        <li class="text-lg red"><span id="paymentSpan"><fmt:formatNumber value="${productTotal - discountTotal + deliveryPayment}" groupingUsed="true" /></span> <span>원</span></li>
+        <li>${afn:getMessage("final_price",sessionScope.locale)}</li>
+        <li class="text-lg red"><span id="paymentSpan"><fmt:formatNumber value="${productTotal - discountTotal + deliveryPayment}" groupingUsed="true" /></span> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
     </ul>
     <ul class="calculator pb-1">
-        <li>E-POINT 적립예정</li>
-        <li class="text-md red"><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> <span>원</span></li>
+        <li>E-POINT ${afn:getMessage("accEx",sessionScope.locale)}</li>
+        <li class="text-md red"><fmt:formatNumber value="${(detail.product_payment*detail.product_point_rate)/100}" groupingUsed="true" /> <span>${afn:getMessage("korea_won",sessionScope.locale)}</span></li>
     </ul>
     <hr class="my-1">
     <input type="checkbox" id="replysns" class="b8 mb-2">
-    <label for="replysns"><span class="red text-bold">필수</span> 주문 상품정보 및 결제대행 서비스 이용약관에 모두 동의하십니까?</label>
+    <label for="replysns"><span class="red text-bold">(${afn:getMessage("require",sessionScope.locale)})</span> ${afn:getMessage("msg.payment.confirm1",sessionScope.locale)} ${afn:getMessage("msg.payment.confirm2",sessionScope.locale)}</label>
 </section>
 <div class="bottomBtns">
  <div class="underPop" id="S-list">
         <div class="content">
             <header>
-               <h3>내배송지</h3>
+               <h3>${afn:getMessage("myDeliv_add",sessionScope.locale)}</h3>
                 <button class="popClose">
                     <i class="ri-close-line"></i>
                 </button>
@@ -299,7 +300,7 @@
         </div>
     </div>
     <ul>
-        <li><a href="javascript:void(0);" class="btn btn-redcover" id="submitPayment">결제하기</a></li>
+        <li><a href="javascript:void(0);" class="btn btn-redcover" id="submitPayment">${afn:getMessage("do_payment",sessionScope.locale)}</a></li>
     </ul>
 </div>
 
@@ -377,7 +378,7 @@
 	$("#submitPayment").on("click",function() {
 		if($('#order_user_name').val() == ""){
             $.toast({
-                text: "주문자 성함을 입력해주세요.",
+                text: getMessageAjax('error.payment.orderNameInput'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -386,7 +387,7 @@
         }
         else if($('#order_user_email').val() == ""){
             $.toast({
-                text: "이메일주소를 입력해주세요.",
+                text: getMessageAjax('error.payment.emailInput'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -395,7 +396,7 @@
         }
         else if($('#order_user_phone_a').val() == "" || $('#order_user_phone_b').val() == "" || $('#order_user_phone_c').val() == ""){
             $.toast({
-                text: "휴대폰 번호를 입력해주세요.",
+                text: getMessageAjax('error.payment.hpInput'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -405,7 +406,7 @@
         <c:if test="${empty sessionScope.email}">
         else if(!noneLoginPWCheck){
             $.toast({
-                text: "주문확인용 비밀번호를 확인해주세요.",
+                text: getMessageAjax('error.payment.orderPwdInput'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -415,7 +416,7 @@
         </c:if>
         else if($('#delivery_user_name').val() == ""){
             $.toast({
-                text: "받으시는 분 성함을 입력해주세요.",
+                text: getMessageAjax('error.payment.delivName'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -424,7 +425,7 @@
         }
         else if($('#postcode').val() == "" || $('#roadAddress').val() == "" || $('#extraAddress').val() == ""){
             $.toast({
-                text: "배송 주소를 입력해주세요.",
+                text:  getMessageAjax('error.payment.delivAddInpu'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -433,7 +434,7 @@
         }
         else if(!$('#replysns').is(":checked")){
             $.toast({
-                text: "이용약관 동의는 필수 항목입니다.",
+                text: getMessageAjax('error.payment.agreeChek'),
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -457,7 +458,7 @@
                                 showText = item;
                             }else{
                                 alertType = "error";
-                                showText = index + " (은) " + item;
+                                showText = index + ${afn:getMessage("is2",sessionScope.locale)} + item;
                             }
                             // $.toast().reset('all');//토스트 초기화
                             $.toast({
@@ -542,17 +543,17 @@
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text(" * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.");
+            $("#passwordValidation").text(" * ${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}\"");
             $("#passwordValidation").removeClass("text-success");
             $("#password_cfValidation").text('');
         }else{
         	$("#passwordValidation").text('');
         	if(pw != pw_cf){
-                $("#password_cfValidation").text(" * 비밀번호가 일치하지 않습니다.");
+                $("#password_cfValidation").text(" * ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
                 $("#password_cfValidation").removeClass("text-success");
             }else{
             	noneLoginPWCheck = true;
-            	$("#password_cfValidation").text(" * 비밀번호가 일치합니다.");
+            	$("#password_cfValidation").text(" * ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
                 $("#password_cfValidation").addClass("text-success");	
             }
         }

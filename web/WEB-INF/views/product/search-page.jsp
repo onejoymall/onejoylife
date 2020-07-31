@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
     <section class="main-section">
         <h2 class="main-section-title hide">main section</h2>
@@ -11,9 +12,9 @@
                 <div class="inner-left">
                     <p>필터</p>
                     <div class="inner-filter1 category">
-                        <p class="filter-tit">카테고리</p>
+                        <p class="filter-tit">${afn:getMessage('category',sessionScope.locale)}</p>
                         <ul>
-                            <li><a href="/product/search-page?product_name=${param.product_name}" <c:if test="${empty param.product_ct}">class="active"</c:if>><span>전체</span></a></li>
+                            <li><a href="/product/search-page?product_name=${param.product_name}" <c:if test="${empty param.product_ct}">class="active"</c:if>><span>${afn:getMessage("all",sessionScope.locale)}</span></a></li>
                     <c:if test="${not empty categoryList}">
                         <c:forEach var="ctegoryList" items="${categoryList}" varStatus="status">
                             <li>
@@ -49,30 +50,30 @@
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">국내/해외</p>
+                        <p class="filter-tit">${afn:getMessage("domestic_foreign",sessionScope.locale)}</p>
                         <ul>
 
                             <li>
                                 <input type="checkbox" id="in-ck1" name="product_delivery_International_type" value="A" <c:forTokens items="${param.product_delivery_International_type}" delims="^" var="item"><c:if test="${item eq 'A'}">checked</c:if></c:forTokens>>
-                                <label for="in-ck1"><span><span>국내</span></span></label>
+                                <label for="in-ck1"><span><span>${afn:getMessage("domestic",sessionScope.locale)}</span></span></label>
                             </li>
                             <li>
                                 <input type="checkbox" id="in-ck2" name="product_delivery_International_type" value="C" <c:forTokens items="${param.product_delivery_International_type}" delims="^" var="item"><c:if test="${item eq 'C'}">checked</c:if></c:forTokens>>
-                                <label for="in-ck2"><span><span>해외</span></span></label>
+                                <label for="in-ck2"><span><span>${afn:getMessage("foreign",sessionScope.locale)}</span></span></label>
                             </li>
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">배송혜택</p>
+                        <p class="filter-tit">${afn:getMessage("shoppingBenefit",sessionScope.locale)}</p>
                         <ul>
                             <li>
                                 <input type="checkbox" id="in-ck3" name="product_delivery_payment_class" value="T" <c:forTokens items="${param.product_delivery_payment_class}" delims="^" var="item"><c:if test="${item eq 'T'}">checked</c:if></c:forTokens>>
-                                <label for="in-ck3"><span><span>무료배송</span></span></label>
+                                <label for="in-ck3"><span><span>${afn:getMessage("free_shipping",sessionScope.locale)}</span></span></label>
                             </li>
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">브랜드</p>
+                        <p class="filter-tit">${afn:getMessage("brand",sessionScope.locale)}</p>
                         <ul>
                     <c:if test="${not empty brandList}">
                         <c:forEach var="brandList" items="${brandList}" varStatus="status">
@@ -85,7 +86,7 @@
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">색상</p>
+                        <p class="filter-tit">${afn:getMessage("color",sessionScope.locale)}</p>
                         <ul>
                             <li>
                                 <input type="checkbox" id="in-ck8" name="product_option_color" value="red" <c:forTokens items="${param.product_option_color}" delims="^" var="item"><c:if test="${item eq 'red'}">checked</c:if></c:forTokens>>
@@ -118,7 +119,7 @@
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">평점</p>
+                        <p class="filter-tit">${afn:getMessage("reviewRating",sessionScope.locale)}</p>
                         <ul>
                             <li>
                                 <input type="checkbox" id="in-ck15" name="product_score" value="5" <c:forTokens items="${param.product_score}" delims="^" var="item"><c:if test="${item eq 5}">checked</c:if></c:forTokens>>
@@ -131,7 +132,7 @@
                                             <i class="y-star-full"></i>
                                             <i class="y-star-full"></i>
                                         </div>
-                                        <p class="score">(5점)</p>
+                                        <p class="score">(${afn:getMessage("score_5",sessionScope.locale)})</p>
                                     </span>
                                 </label>
                             </li>
@@ -146,7 +147,7 @@
                                             <i class="y-star-full"></i>
                                             <i class="y-star-empty"></i>
                                         </div>
-                                        <p class="score">(4점)</p>
+                                        <p class="score">(${afn:getMessage("score_4",sessionScope.locale)})</p>
                                     </span>
                                 </label>
                             </li>
@@ -161,7 +162,7 @@
                                             <i class="y-star-empty"></i>
                                             <i class="y-star-empty"></i>
                                         </div>
-                                        <p class="score">(3점)</p>
+                                        <p class="score">(${afn:getMessage("score_3",sessionScope.locale)})</p>
                                     </span>
                                 </label>
                             </li>
@@ -176,7 +177,7 @@
                                             <i class="y-star-empty"></i>
                                             <i class="y-star-empty"></i>
                                         </div>
-                                        <p class="score">(2점)</p>
+                                        <p class="score">(${afn:getMessage("score_2",sessionScope.locale)})</p>
                                     </span>
                                 </label>
                             </li>
@@ -191,21 +192,21 @@
                                             <i class="y-star-empty"></i>
                                             <i class="y-star-empty"></i>
                                         </div>
-                                        <p class="score">(1점)</p>
+                                        <p class="score">(${afn:getMessage("score_1",sessionScope.locale)})</p>
                                     </span>
                                 </label>
                             </li>
                         </ul>
                     </div>
                     <div class="inner-filter1">
-                        <p class="filter-tit">가격</p>
+                        <p class="filter-tit">${afn:getMessage("price",sessionScope.locale)}</p>
                         <ul>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(0,10000);" data-id="1" class="filter-tit-a"><span>1만원 이하</span></a></li>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(10000,20000);" data-id="2" class="filter-tit-a"><span>1만원 ~ 2만원</span></a></li>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(20000,30000);" data-id="3" class="filter-tit-a"><span>2만원 ~ 3만원</span></a></li>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(30000,40000);" data-id="4" class="filter-tit-a"><span>3만원 ~ 4만원</span></a></li>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(40000,50000);" data-id="5" class="filter-tit-a"><span>4만원 ~ 5만원</span></a></li>
-                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(50000,100000000);" data-id="6" class="filter-tit-a"><span>5만원 이상</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(0,10000);" data-id="1" class="filter-tit-a"><span>${afn:getMessage("1_thousand",sessionScope.locale)} ${afn:getMessage("Lessthan",sessionScope.locale)}</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(10000,20000);" data-id="2" class="filter-tit-a"><span>${afn:getMessage("1_thousand",sessionScope.locale)} ~ ${afn:getMessage("2_thousand",sessionScope.locale)}</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(20000,30000);" data-id="3" class="filter-tit-a"><span>${afn:getMessage("2_thousand",sessionScope.locale)} ~ ${afn:getMessage("3_thousand",sessionScope.locale)}</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(30000,40000);" data-id="4" class="filter-tit-a"><span>${afn:getMessage("3_thousand",sessionScope.locale)} ~ ${afn:getMessage("4_thousand",sessionScope.locale)}</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(40000,50000);" data-id="5" class="filter-tit-a"><span>${afn:getMessage("4_thousand",sessionScope.locale)} ~ ${afn:getMessage("5_thousand",sessionScope.locale)}</span></a></li>
+                            <li><a href="javascript:void(0)" onclick="setPaymentfilter(50000,100000000);" data-id="6" class="filter-tit-a"><span>${afn:getMessage("5_thousand",sessionScope.locale)} ${afn:getMessage("Morethan",sessionScope.locale)}</span></a></li>
                         </ul>
                         <div class="input-search">
                             <input type="text" name="searchToPayment" id="searchToPayment" value="${param.searchToPayment}">
@@ -219,30 +220,30 @@
                     <form id="form1" name="form1"  method="get">
 
 
-                        <p class="gift-amount"><span>${param.product_name}</span> 에 대한 검색 결과 <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span> 건</p>
+                        <p class="gift-amount"><span>${param.product_name}</span> ${afn:getMessage("msg.search.search_results_for",sessionScope.locale)} <span class="gift-amount-number"><fmt:formatNumber value="${searchVO.totRow}" groupingUsed="true" /></span> ${afn:getMessage("case",sessionScope.locale)}</p>
                         <div class="sort-tab">
                             <div class="sort-tab-left">
                                 <c:if test="${not empty param.product_ct}">
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=1&product_name=${param.product_name}"/>'">랭킹순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=ASC&sortOrder=2&product_name=${param.product_name}"/>'">낮은가격순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=DESC&sortOrder=3&product_name=${param.product_name}"/>'">높은가격순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=4&product_name=${param.product_name}"/>'">판매량</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=5&product_name=${param.product_name}"/>'">최신순</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=1&product_name=${param.product_name}"/>'">${afn:getMessage("shortRanking",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=ASC&sortOrder=2&product_name=${param.product_name}"/>'">${afn:getMessage("shortLowPrice",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&orderByKey=product_payment&orderByValue=DESC&sortOrder=3&product_name=${param.product_name}"/>'">${afn:getMessage("shorthighPrice",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=4&product_name=${param.product_name}"/>'">${afn:getMessage("shortSales",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?product_ct=${param.product_ct}&sortOrder=5&product_name=${param.product_name}"/>'">${afn:getMessage("shortNewest",sessionScope.locale)}</button>
                                 </c:if>
                                 <c:if test="${empty param.product_ct}">
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=1&product_name=${param.product_name}"/>'">랭킹순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?orderByKey=product_payment&orderByValue=ASC&sortOrder=2&product_name=${param.product_name}"/>'">낮은가격순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?orderByKey=product_payment&orderByValue=DESC&sortOrder=3&product_name=${param.product_name}"/>'">높은가격순</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=4&product_name=${param.product_name}"/>'">판매량</button>
-                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=5&product_name=${param.product_name}"/>'">최신순</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == 1}"><c:out value=" active"/></c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=1&product_name=${param.product_name}"/>'">${afn:getMessage("shortRanking",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder == '2'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?orderByKey=product_payment&orderByValue=ASC&sortOrder=2&product_name=${param.product_name}"/>'">${afn:getMessage("shortLowPrice",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 3}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?orderByKey=product_payment&orderByValue=DESC&sortOrder=3&product_name=${param.product_name}"/>'">${afn:getMessage("shorthighPrice",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq '4'}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=4&product_name=${param.product_name}"/>'">${afn:getMessage("shortSales",sessionScope.locale)}</button>
+                                    <button type="button" class="sort-tab-item <c:if test="${searchVO.sortOrder eq 5}">active</c:if>" onclick="location.href='<c:url value="/product/search-page?sortOrder=5&product_name=${param.product_name}"/>'">${afn:getMessage("shortNewest",sessionScope.locale)}</button>
                                 </c:if>
                             </div>
                             <div class="sort-tab-right">
                                 <select name="displayRowCount" class="order-select">
-                                    <option value="12" <c:if test="${searchVO.displayRowCount ==12}">selected</c:if>>12개씩 보기</option>
-                                    <option value="32" <c:if test="${searchVO.displayRowCount ==32}">selected</c:if>>32개씩 보기</option>
-                                    <option value="64" <c:if test="${searchVO.displayRowCount ==64}">selected</c:if>>64개씩 보기</option>
-                                    <option value="128" <c:if test="${searchVO.displayRowCount ==128}">selected</c:if>>128개씩 보기</option>
+                                    <option value="12" <c:if test="${searchVO.displayRowCount ==12}">selected</c:if>>${afn:getMessage("display_row12",sessionScope.locale)}</option>
+                                    <option value="32" <c:if test="${searchVO.displayRowCount ==32}">selected</c:if>>${afn:getMessage("display_row32",sessionScope.locale)}</option>
+                                    <option value="64" <c:if test="${searchVO.displayRowCount ==64}">selected</c:if>>${afn:getMessage("display_row64",sessionScope.locale)}</option>
+                                    <option value="128" <c:if test="${searchVO.displayRowCount ==128}">selected</c:if>>${afn:getMessage("display_row128",sessionScope.locale)}</option>
                                 </select>
                             </div>
                         </div>
@@ -266,16 +267,16 @@
                                     </a>
                                     <p class="info-price">
                     <span class="price-before">
-                        <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />원</span>
-                                        <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />원
+                        <fmt:formatNumber value="${list.product_user_payment}" groupingUsed="true" />>${afn:getMessage("korea_won",sessionScope.locale)}</span>
+                                        <i class="right-arrow"></i><fmt:formatNumber value="${list.product_payment}" groupingUsed="true" />${afn:getMessage("korea_won",sessionScope.locale)}
                                     </p>
                                     <p class="info-score">
                                         <i class="star-ic"></i>
                                         	<c:if test="${list.review_score == 0 }"><span class="score-number" >0.0</span></c:if>
 					    					<c:if test="${list.review_score != NULL and list.review_score != 0 }"><span class="score-number" >${list.review_score}</span></c:if>
 					                       
-					                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0개 평가</span></c:if>
-					                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}개 평가</span></c:if>
+					                        <c:if test="${list.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
+					                        <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 					                        <input type="hidden" name="product_option_yn" value="${list.product_option_yn}" />
 					                        <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')"  data-yn="${list.product_option_yn}" class="list-cartic"></a>
                                     </p>
@@ -287,7 +288,7 @@
                                 </c:forEach>
                                 </c:if>
                                 <c:if test="${empty list}">
-                                    표시할 내용이 없습니다.
+                                    ${afn:getMessage("msg.none_content",sessionScope.locale)}
                                 </c:if>
                             </div>
                         </div>

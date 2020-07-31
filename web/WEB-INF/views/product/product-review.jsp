@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="total-review">
-    <h5>평가 및 리뷰</h5>
+    <h5>${afn:getMessage("EvaluateAndreview",sessionScope.locale)}평가 및 리뷰</h5>
     <div class="total-review-box">
         <div class="total-star">
             <div class="total-star-left">
@@ -13,7 +14,7 @@
                    	<i class="y-star-full"></i>
                     </c:forEach>
                 </div>
-                <p><span>${searchVO.totRow}</span>개의 상품평이 있습니다.</p>
+                <p><span>${searchVO.totRow}</span>${afn:getMessage("msg.review.review_count_for",sessionScope.locale)}</p>
             </div>
             <div class="total-star-right">
                 <div class="score-box">
@@ -42,8 +43,8 @@
 	                    <div class="content-box">
 	                        <div class="review-setting-box">
 	                        	<c:if test="${list.email == sessionScope.email}">
-		                            <button type="button"  data-id="${list.order_no}" class="review-update modify">수정</button>
-		                            <button type="button" data-id="${list.order_no}" class="review-delete delete">삭제</button>
+		                            <button type="button"  data-id="${list.order_no}" class="review-update modify">${afn:getMessage("update",sessionScope.locale)}</button>
+		                            <button type="button" data-id="${list.order_no}" class="review-delete delete">${afn:getMessage("delete",sessionScope.locale)}</button>
 	                            </c:if>
 	                        </div>
 	                        <div class="review-content-body">
@@ -51,7 +52,7 @@
 	                            <div class="review-content-body-media-box">
 	                           
 	                            <c:if test="${not empty list.file_1}">
-	                 			     <img src="${list.file_1}" onerror="this.src='http://placehold.it/600x300'" alt="후기이미지" />
+	                 			     <img src="${list.file_1}" onerror="this.src='http://placehold.it/600x300'" alt="${afn:getMessage('reviewImg',sessionScope.locale)}" />
 	                           </c:if>
 	                            </div>
 	                             

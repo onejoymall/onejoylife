@@ -162,7 +162,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="email" id="email" type="text" placeholder="${afn:getMessage("msg.signEmailRe",sessionScope.locale)}" required>
+                                    <input name="email" id="email" type="text" placeholder="${afn:getMessage('msg.signEmailRe',sessionScope.locale)}" required>
                                 </div>
                             </td>
                         </tr>
@@ -208,7 +208,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("pwd",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="password" id="password" type="password" placeholder="${afn:getMessage("msg.signPwdMsg",sessionScope.locale)}" >
+                                    <input name="password" id="password" type="password" placeholder="${afn:getMessage('msg.signPwdMsg',sessionScope.locale)}" >
                                 </div>
                             </td>
                         </tr>
@@ -221,7 +221,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("pswdCfm",sessionScope.locale)}</p>
                                 <div class="mem-id2">
-                                    <input name="password_cf" id="password_cf" type="password" placeholder="${afn:getMessage("msg.signPwdcfMsg",sessionScope.locale)}" >
+                                    <input name="password_cf" id="password_cf" type="password" placeholder="${afn:getMessage('msg.signPwdcfMsg',sessionScope.locale)}" >
                                 </div>
                             </td>
                         </tr>

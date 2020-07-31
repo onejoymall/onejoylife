@@ -16,10 +16,10 @@
             <div class="login-out">
                 <div class="login-in">
                     <div class="in-box1">
-                        <label for="id-input" class="id-la">${afn:getMessage("idEmail",sessionScope.locale)}</label><input type="text" name="email" id="id-input" placeholder="${afn:getMessage("msg.login.idinputRequest",sessionScope.locale)}" class="form-con">
+                        <label for="id-input" class="id-la">${afn:getMessage("idEmail",sessionScope.locale)}</label><input type="text" name="email" id="id-input" placeholder="${afn:getMessage('msg.login.idinputRequest',sessionScope.locale)}" class="form-con">
                     </div>
                     <div class="in-box2">
-                        <label for="pw-input" class="id-la">${afn:getMessage("pwd",sessionScope.locale)}</label><input type="password" name="password" id="pw-input" placeholder="${afn:getMessage("msg.login.pwdinputRequest",sessionScope.locale)}" class="form-con">
+                        <label for="pw-input" class="id-la">${afn:getMessage("pwd",sessionScope.locale)}</label><input type="password" name="password" id="pw-input" placeholder="${afn:getMessage('msg.login.pwdinputRequest',sessionScope.locale)}" class="form-con">
                     </div>
                 </div>
                 <div class="login-but">
@@ -64,9 +64,9 @@
                     <form name="orderForm" id="orderForm" method="post">
                         <div class="nonmem-in">
                             <p>${afn:getMessage("ordernum",sessionScope.locale)}</p>
-                            <input type="text" name="imp_uid" placeholder="${afn:getMessage("msg.login.impOrderNum",sessionScope.locale)}">
+                            <input type="text" name="imp_uid" placeholder="${afn:getMessage('msg.login.impOrderNum',sessionScope.locale)}">
                             <p>${afn:getMessage("pwd",sessionScope.locale)}</p>
-                            <input type="password" name="password" placeholder="${afn:getMessage("msg.login.paymentPwd",sessionScope.locale)}">
+                            <input type="password" name="password" placeholder="${afn:getMessage('msg.login.paymentPwd',sessionScope.locale)}">
                         </div>
                         <button type="button" id="orderDetailGuestBtn">${afn:getMessage("lookup",sessionScope.locale)}</button>
                     </form>

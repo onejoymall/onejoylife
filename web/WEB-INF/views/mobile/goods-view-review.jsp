@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 		<div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">
-               <li><h3>평가 및 리뷰<span class="red text-md ml-1">${searchVO.totRow}</span></h3></li>
+               <li><h3>${afn:getMessage("EvaluateAndreview",sessionScope.locale)}<span class="red text-md ml-1">${searchVO.totRow}</span></h3></li>
                <!-- <li><button class="btn btn-black" id="btn_review">작성하기</button></li> -->
            </ul>
             <hr>
@@ -15,7 +15,7 @@
                     </c:forEach>
 				</h2>
                 <h2 class="text-bold pb-1">${scoreAvg}</h2>
-                <p>${searchVO.totRow}개의 상품평이 있습니다.</p>
+                <p>${searchVO.totRow}${afn:getMessage("msg.review.review_count_for",sessionScope.locale)}</p>
             </div>
             <hr>
             <c:if test="${not empty list}">
@@ -32,7 +32,7 @@
                 <ul>
                 
                  <c:if test="${not empty list.file_1}">
-                    <li><img src="${list.file_1}" onerror="this.src='http://placehold.it/300x300'" alt="후기이미지"></li>
+                    <li><img src="${list.file_1}" onerror="this.src='http://placehold.it/300x300'" alt="${afn:getMessage('reviewImg',sessionScope.locale)}"></li>
                    </c:if>
                     <c:if test="${not empty list.file_2}">
 <%-- 				  <img src='${list.file_2}' onerror="this.src='http://placehold.it/550'" > --%>

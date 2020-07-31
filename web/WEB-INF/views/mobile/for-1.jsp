@@ -202,7 +202,7 @@
             <input type="radio" id="id-num-rd2" name="" checked>
             <label for="id-num-rd2">${afn:getMessage("emailAdd",sessionScope.locale)}</label>
             <p class="text-md mt-3 mb-05">${afn:getMessage("idEmail",sessionScope.locale)}</p>
-            <input type="text" name="email" placeholder="${afn:getMessage("emailEx",sessionScope.locale)}">
+            <input type="text" name="email" placeholder="${afn:getMessage('emailEx',sessionScope.locale)}">
             <p class="mt-05">* ${afn:getMessage("error.finduserinfo.emailCheckinput",sessionScope.locale)}</p>
             <p class="error mt-05">* ${afn:getMessage("error.finduserinfo.NotEmailinfo",sessionScope.locale)}</p>
             <p class="error mt-05">* ${afn:getMessage("msg.findUserInfo.mailNewPwdsend",sessionScope.locale)}</p>

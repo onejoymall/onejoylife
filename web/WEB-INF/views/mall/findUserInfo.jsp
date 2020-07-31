@@ -238,6 +238,7 @@
                                 <p class="tit-id">아이디(이메일)</p>
                                 <div class="la-box2">
                                     <input name="email" type="text" placeholder="gildonghong@onejoy.co.kr">
+
                                     <div class="num">
                                         <a href="#" id="senderFindPassword">이메일 전송</a>
                                     </div>
