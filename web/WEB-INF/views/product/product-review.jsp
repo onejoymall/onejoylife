@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="total-review">
-    <h5>${afn:getMessage("EvaluateAndreview",sessionScope.locale)}평가 및 리뷰</h5>
+    <h5>${afn:getMessage("EvaluateAndreview",sessionScope.locale)}</h5>
     <div class="total-review-box">
         <div class="total-star">
             <div class="total-star-left">
