@@ -171,7 +171,7 @@
                     <li><a href="#goods-shipping"><span>${afn:getMessage("prize_guide_info",sessionScope.locale)}</span></a></li>
                 </ul>
                 <div class="goods-information-wrap">
-                    <h5>${afn:getMessage("prod_es_info",sessionScope.locale)}</h5>
+                   <h5>상품 필수정보</h5>
                     <!-- <p class="goods-name">SM-G05-ZR/SS</p>
                     <p class="goods-subtitle">일반세탁기 WA15M6551KS [15KG / 워블세탁기 / 회오리세탁 / 다이아몬드필터 / 인버터모터 / 무세제통세척]</p> -->
                     <table class="goods-information-table">
@@ -188,264 +188,262 @@
                     				  !afn:contains(product_ct_arr,'126') &&
                     				  !afn:contains(product_ct_arr,'906') &&
                     				  !afn:contains(product_ct_arr,'174')}">
-	                        <tr><th>1. ${afn:getMessage("giveaway_item",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("giveaway_color",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("giveaway_size",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("giveaway_manu",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+	                        <tr><th>1. 소재</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 색상</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 크기</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조자</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'882')}">
-							<tr><th>1. ${afn:getMessage("giveaway_itemname",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("giveaway_certi",sessionScope.locale)}(${afn:getMessage("msg_giveaway_certi",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. </th><td>${afn:getMessage("giveaway_color",sessionScope.locale)}</td></tr>
-							<tr><th>4. </th><td>${afn:getMessage("giveaway_components",sessionScope.locale)}</td></tr>
-							<tr><th>5. </th><td>${afn:getMessage("giveaway_main_mat",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("giveaway_manu",sessionScope.locale)}, ${afn:getMessage("msg_giveaway_manu1-1",sessionScope.locale)} (${afn:getMessage("msg_giveaway_manu1-2",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th> ＊ ${afn:getMessage("msg_giveaway_manu1-3",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th> ＊ ${afn:getMessage("msg_giveaway_orgin_coun1",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							
-							
-							<tr><th>8. ${afn:getMessage("giveaway_size",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("giveaway_deliv_inst",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>10. ${afn:getMessage("giveaway_quality",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>11. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 품명</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. KC 인증 필 유뮤(품질경영 및 공산품안전관리법상 안전º품질표시대상공산품에 한함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 색상</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 구성품</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 주요 소재</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th> ＊ 구성품 별 제조자가 다른 경우 각 구성품의 제조자, 수입자</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 제조국</th><td>상세페이지 참조</td></tr>
+							<tr><th> ＊ 구성품 별 제조자가 다른 경우 각 구성품의 제조자, 수입자</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 크기</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. 배송º설치비용</th><td>상세페이지 참조</td></tr>
+							<tr><th>10. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>11. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'32')}">
-							<tr><th>1. ${afn:getMessage("msg_giveaway_rules_1-1",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-1. ${afn:getMessage("giveaway_foodtype",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-2. ${afn:getMessage("msg_giveaway_rules_1-2",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-3. ${afn:getMessage("msg_giveaway_rules_1-3",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-4. ${afn:getMessage("msg_giveaway_rules_1-4",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-5. ${afn:getMessage("msg_giveaway_rules_1-5",sessionScope.locale)}(${afn:getMessage("msg_giveaway_rules_1-6",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-6. ${afn:getMessage("giveaway_nutrient",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-7. ${afn:getMessage("giveaway_Functioninfo",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-8. ${afn:getMessage("msg_giveaway_rules_1-7",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-9. ${afn:getMessage("msg_giveaway_rules_1-8",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-10. ${afn:getMessage("msg_giveaway_rules_1-9",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-11. ${afn:getMessage("msg_giveaway_rules_1-10",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-12. ${afn:getMessage("msg_giveaway_rules_1-11",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2.	 ${afn:getMessage("msg_giveaway_rules_1-12",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 건강기능식품에 관한 법률에 따른 표시사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-1. 식품의 유형</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-3. 제조연월일, 유통기한 또는 품질유지기한</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-4. 포장단위별 용량(중량), 수량</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-5. 원재료명 및 함량(농수산물의 원산지 표시에 관한 법률에 따른 원산지 표시 포함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-6. 영양성분</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-7. 기능정보</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-8. 섭취량, 섭취방법 및 섭취 시 주의사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-9. 질병의 예방 및 치료를 위한 의약품이 아니라는 내용의 표현</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-10. 유전자재조합식품에 해당하는 경우의 표시</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-11. 표시광고 사전심의필</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-12. 수입식품에 해당하는 경우 "건강기능식품에 관한 법률에 따른 수입신고를 필함"의 문구</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'126') ||
 									  afn:contains(product_ct_arr,'174')}">
-							<tr><th>1. ${afn:getMessage("name_modelN",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("msg_giveaway_energy1-1",sessionScope.locale)}(${afn:getMessage("msg_giveaway_energy1-2",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("msg_giveaway_energy1-3",sessionScope.locale)}(${afn:getMessage("msg_giveaway_energy1-4",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("sameModelcmyear",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("msg_giveaway_energy1-5",sessionScope.locale)} (${afn:getMessage("msg_giveaway_energy1-6",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("size_shape",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("acArea",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("addsetupPrize",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>10. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>11. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 전기용품 안전인증 필 유무(전기용품안전관리법상 안전인증대상전기용품, 자율안전확인대상전기용품, 공급자적합성확인대상전기용품에 한함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 정격전압, 소비전력, 에너지소비효율등급(에너지이용합리화법상 의무대상상품에 한함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 동일모델의 출시년월</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 제조국</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 크기(형태 및 실외기 포함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 냉난방면적</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. 추가설치비용</th><td>상세페이지 참조</td></tr>
+							<tr><th>10. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>11. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'122')}">
-							<tr><th>1. ${afn:getMessage("typesOf",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("giveaway_item",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("disparity",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("msg_giveaway_energy1-5",sessionScope.locale)} (${afn:getMessage("msg_giveaway_energy1-6",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("giveaway_handle",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 종류</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 소재</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 치수</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조자, 수입품의 경우 수입자들 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 재조국</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 취급시 주의사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 품질보증기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'27')}">
-							<tr><th>1. ${afn:getMessage("name_modelN",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("msg_giveaway_rules1-13",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("giveaway_orgin_coun2",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("msg_giveaway_rules1-14",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("msg_giveaway_rules1-15",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 법에 의한 인증, 허가 등을 받았음을 확인할 수 있는 경우 그에 대한 사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 제조국 또는 원산지</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조자, 수입품의 경우 수입자들 함께 표기</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. A/S 책임자와 전화번호 또는 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'461')}">
-							<tr><th>1. ${afn:getMessage("volume_weight",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("msg_giveaway_product1-1",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("msg_giveaway_product1-2",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("howtoUse",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("orgin_coun_seller",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("msg_giveaway_product1-3",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("msg_giveaway_product1-4",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("whenUseWarn",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>10. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>11. ${afn:getMessage("counselNum",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th colspan="2">※${afn:getMessage("msg_giveaway_product1-5",sessionScope.locale)} 
-							<br>※ ${afn:getMessage("msg_giveaway_product1-6",sessionScope.locale)}</th></tr>
+							<tr><th>1. 용량 또는 중량</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 제품 주용 사양(피부타입, 색상(호,번) 등)</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 사용기한 또는 개봉 후 사용기간(개봉 후 사용기 간을 기재할 경우에는 제조연월일을 병행표기)</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 사용방법</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 제조자 및 제조판매업자</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 제조국</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 주요성분(유기농 화장품의 경우 유기농 원료 함량 표함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 기능성 화장품의 경우 화장품법에 따른 식품의약 품안전청 심사 필 유무(미백, 주름개선, 자외선차단 등)</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. 사용할 때 주의사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>10. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>11. 소비자상담관련 전화번호</th><td>상세페이지 참조</td></tr>
+							<tr><th colspan="2">※ 사용기한을 기재하는 경우 ex)2013.10, 2013.10~2014.8., 2013.10~, 주문일로부터 1 년 이상 남음
+							<br>※ 제조연월일과 개봉 후 사용기간을 기재하는 경우 ex) 제조일 2011.10~2012.4, 개봉후 2 년내 사용 / 주문일로부터 1 년 이내, 개봉후 2 년내 사용</th></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'906')}">
-							<tr><th>1. ${afn:getMessage("msg_giveaway_product1-7",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("weight",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("msg_giveaway_product1-8",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("msg_giveaway_product1-9",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("disparity",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("wearWarn",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("wearNoti",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7-1. ${afn:getMessage("msg_giveaway_product1-10",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7-2. ${afn:getMessage("msg_giveaway_product1-11",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("guaranteeYN",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>10. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 소재/순도/밴드재질(시계의 경우)</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 중량</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 제조자, 수입품의 수입자를 함께 표기 (병행수입 의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조국(원산지와 가공지 등이 다를 경우 함께 표기)</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 치수</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 착용 시 주의사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 주요사양</th><td>상세페이지 참조</td></tr>
+							<tr><th>7-1. 귀금속, 보석류 - 등급</th><td>상세페이지 참조</td></tr>
+							<tr><th>7-2. 시계-기능, 방수 등</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 보증서 제공여부</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>10. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'25')}">
-							<tr><th>1. ${afn:getMessage("foodSanActLaw",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-1. ${afn:getMessage("giveaway_foodtype",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-2. ${afn:getMessage("msg_giveaway_rules_1-2",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-3. ${afn:getMessage("msg_giveaway_rules_1-3",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-4. ${afn:getMessage("msg_giveaway_rules_1-4",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-5. ${afn:getMessage("msg_giveaway_rules_1-5",sessionScope.locale)}(${afn:getMessage("msg_giveaway_rules_1-6",sessionScope.locale)})</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-6. ${afn:getMessage("msg_giveaway_rules_1-16",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-7. ${afn:getMessage("msg_giveaway_rules_1-17",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-8. ${afn:getMessage("msg_giveaway_rules_1-18",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>1-9. ${afn:getMessage("msg_giveaway_rules_1-19",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2.  ${afn:getMessage("msg_giveaway_rules_1-12",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 식품위생버에 따른 표시사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-1. 식품의 유형</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-2. 생산자 및 소재지, 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-3. 제조연월일, 유통기한 또는 품질유지기한</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-4. 포장단위별 용량(중량), 수량</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-5. 원재료명 및 함량(농수산물의 원산지 표시에 관한 법률에 따른 원산지 표시 포함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-6. 영양성분(식품위생법에 따른 영양성분 표시대상식품에 한함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-7. 유전자재조합식품에 해당하는 경우에 표시</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-8. 영유아식 또는 체중조절식품 등에 해당하는 경우 표시광고 사전심의필</th><td>상세페이지 참조</td></tr>
+							<tr><th>1-9. 수입식품에 해당하는 경우 '식품위생법에 따른 수입신고를 필함'의 문구</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'152')}">
-							<tr><th>1. ${afn:getMessage("name_modelN",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("sameModelcmyear",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("msg_giveaway_rules_1-20",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("msg_giveaway_energy1-5",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("giveaway_size",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("moreinfoPg",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 동일모델의 출시년월</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 자동차관리법에 따른 자동차부품 자기인증 유무(인증 대상 자동차부품에 한함)</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조자, 수입품의 경우 수입자를 함께 표기 (병행수입의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 제조국</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 크기</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 적용차종</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'50') ||
 									  afn:contains(product_ct_arr,'51')}">
-							<tr><th>1. ${afn:getMessage("msg_giveaway_rules_1-4-1",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("msg_giveaway_rules_1-21",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("msg_giveaway_rules_1-22",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("msg_giveaway_rules_1-23",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("relate_law",sessionScope.locale)}</th><td>{afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5-1. ${afn:getMessage("msg_giveaway_rules_1-24",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5-2. ${afn:getMessage("msg_giveaway_rules_1-25",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5-3. ${afn:getMessage("msg_giveaway_rules_1-26",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5-4. ${afn:getMessage("msg_giveaway_rules_1-27",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("productMakeups",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("howTOHandle2",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("msg_giveaway_rules_1-12",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 포장단위별 용량(중량), 수량, 크기</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 생산자. 수입품의 경우 수입자를 함께 표기</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 농수산물의 원산지 표시에 관한 법률에 따른 원산지</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 제조연월일(포장지 또는 생산연도), 유통기한 또는 품질유지기한</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 관련벙상 표시사항</th><td>상세페이지 참조</td></tr>
+							<tr><th>5-1. 농산물 - 농산물품질관리법상 유전자변형농산물 표시, 지리적표시</th><td>상세페이지 참조</td></tr>
+							<tr><th>5-2. 축산물 - 축산법에 따른 등급 표시, 쇠고기의 경우 이력관리에 따른 표시 유무</th><td>상세페이지 참조</td></tr>
+							<tr><th>5-3. 수산물 -  수산물품질관리법상 유전자변형수산물 표시, 지리적표시</th><td>상세페이지 참조</td></tr>
+							<tr><th>5-4. 수입식품에 해당하는 경우 '식품위생법에 따른 수입신고를 필함'의 문구</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 상품구성</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 보관방법 또는 취급방법</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 소비자상담 관련 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
 						<c:if test="${afn:contains(product_ct_arr,'815')}">
-							<tr><th>1. ${afn:getMessage("name_modelN",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>2. ${afn:getMessage("itemquality",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>3. ${afn:getMessage("giveaway_components",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>4. ${afn:getMessage("giveaway_size",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>5. ${afn:getMessage("sameModelcmyear",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>6. ${afn:getMessage("msg_giveaway_product1-8",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>7. ${afn:getMessage("giveaway_orgin_coun",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>8. ${afn:getMessage("msg_giveaway_rules_1-28",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>9. ${afn:getMessage("qualityQuarantee",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
-							<tr><th>10. ${afn:getMessage("giveaway_AS_ph",sessionScope.locale)}</th><td>${afn:getMessage("moreinfoPg",sessionScope.locale)}</td></tr>
+							<tr><th>1. 품명 및 모델명</th><td>상세페이지 참조</td></tr>
+							<tr><th>2. 재질</th><td>상세페이지 참조</td></tr>
+							<tr><th>3. 구성품</th><td>상세페이지 참조</td></tr>
+							<tr><th>4. 크기</th><td>상세페이지 참조</td></tr>
+							<tr><th>5. 동일모델의 출시년월</th><td>상세페이지 참조</td></tr>
+							<tr><th>6. 제조자, 수입품의 수입자를 함께 표기 (병행수입 의 경우 병행수입 여부로 대체 가능)</th><td>상세페이지 참조</td></tr>
+							<tr><th>7. 제조국</th><td>상세페이지 참조</td></tr>
+							<tr><th>8. 식품위생법에 따른 수입 기구-용기의 경우 '식품위생법에 따른 수입신고를 필함'의 문구</th><td>상세페이지 참조</td></tr>
+							<tr><th>9. 품질보증 기준</th><td>상세페이지 참조</td></tr>
+							<tr><th>10. A/S 책임자와 전화번호</th><td>상세페이지 참조</td></tr>
 						</c:if>
                     </table>
                 </div>
             </div>
             <div class="goods-detail-wrap" id="goods-shipping">
                 <ul class="detail-nav">
-                    <li><a href="#goods-description"><span>${afn:getMessage("product_description",sessionScope.locale)}</span></a></li>
-                    <li><a href="#goods-information"><span>${afn:getMessage("product_information",sessionScope.locale)}</span></a></li>
-                    <li><a href="#goods-shipping" class="active"><span>${afn:getMessage("prize_guide_info",sessionScope.locale)}</span></a></li>
+                    <li><a href="#goods-description"><span>상품설명</span></a></li>
+                    <li><a href="#goods-information"><span>상품정보</span></a></li>
+                    <li><a href="#goods-shipping" class="active"><span>경품안내</span></a></li>
                 </ul>
                 <div class="shipping-wrap">
-                    <h5>${afn:getMessage("prizeAppl_system_tax",sessionScope.locale)}</h5>
+                    <h5>경품응모/당첨방식/세금</h5>
                     <div class="shipping-box">
-                        <h6>${afn:getMessage("prizeAppl",sessionScope.locale)}<i class="arrow-down"></i></h6>
+                        <h6>경품 응모<i class="arrow-down"></i></h6>
                         <table class="shipping-table">
                             <tr>
-                                <th>${afn:getMessage("deliv_area",sessionScope.locale)}</th>
-                                <td>${afn:getMessage("deliv_allPlace",sessionScope.locale)}&#40;${afn:getMessage("deliv_excep",sessionScope.locale)}&#41;</td>
+                                <th>배송지역</th>
+                                <td>전국&#40;일부 도서지역 제외&#41;</td>
                             </tr>
                             <tr>
-                                <th>${afn:getMessage("shippingFee",sessionScope.locale)}</th>
+                                <th>배송비</th>
                                 <td>
-                                   ${afn:getMessage("msg_shipping_info1-1",sessionScope.locale)} &#40;${afn:getMessage("msg_shipping_info1-2",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-3",sessionScope.locale)}<br>
-                                    ${afn:getMessage("msg_shipping_info1-4",sessionScope.locale)}<br>
-                                  ${afn:getMessage("msg_shipping_info1-5",sessionScope.locale)}<br>
-                                   ${afn:getMessage("msg_shipping_info1-6",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-7",sessionScope.locale)}&#41;<br>
-                                  ${afn:getMessage("msg_shipping_info1-8",sessionScope.locale)}<br>
-                                    &#40;${afn:getMessage("msg_shipping_info1-9",sessionScope.locale)}&#41; ${afn:getMessage("msg_shipping_info1-10",sessionScope.locale)}&#41;
+                                    전국 무료배송 &#40;일부 도서지역 제외&#41;이 원칙이나 결제 금액이 3만원 미만인 경우에는 택배비 2,500원이 부과됩니다.<br>
+                                    동일상품, 동일제조사 상품 3만원 이상 주문시 배송비 무료<br>
+                                    동일상품, 동일제조사 상품 3만원 미만 주문시 묶음배송 2,500원 부과<br>
+                                    기본 택배비는 2,500원이나 일부 지역에 한해 추가 요금이 발생할 수 있습니다. ▷ex&#41;제주 : 5,500원, 섬지역 7,000원&#41;<br>
+                                    교환 / 반품 배송비 : 단순변심 등 고객님의 귀책사유로 인한 교환 / 반품 시 왕복 배송비 5,000원 고객 부담.<br>
+                                    &#40;단, 일부 지역 추가 요금 발생 ex&#41; 제주 : 11,000원, 섬지역 14,000원&#41;
                                 </td>
                             </tr>
                             <tr>
-                                <th>${afn:getMessage("company_products",sessionScope.locale)}</th>
+                                <th>업체상품</th>
                                 <td>
-                                    ${afn:getMessage("msg_shipping_info1-11",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("delivDirec",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-12",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-13",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-14",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-15",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("itemToDeliv",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-16",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-17",sessionScope.locale)}
+                                    업체 배송 정책에 따라 업체 배송 기사가 직접 배송하거나 택배로 발송될 수 있습니다.<br><br>
+                                    직접 배송 상품<br>
+                                    -익일 배송이 원칙이며, 주문 시 희망 배송일을 신청하실 수 있습니다.<br>
+                                    -업체 사정에 의해 상품수량이 부족하여 배송이 지연되거나 안 될 수 있습니다.<br>
+                                    -도서산간 지역의 경우 반드시 자격을 갖춘 가스 사업소에서 설치해야 하므로 직접 설치에서 제외됩니다.<br>
+                                    -설치 시 추가 설치 비용이 발생할 수 있습니다.<br><br>
+                                    택배 배송 상품<br>
+                                    -택배 상품은 결제 후 2~3일의 배송 기간이 소요됩니다.<br>
+                                    -도서산간 지역의 경우 배송 기간이 지연될 수 있습니다.
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="return-box">
-                        <h6>${afn:getMessage("howToWin",sessionScope.locale)}<i class="arrow-down"></i></h6>
+                        <h6>당첨 방식<i class="arrow-down"></i></h6>
                         <table class="return-table">
                             <tr>
- 							<th>${afn:getMessage("deliv_area",sessionScope.locale)}</th>
-                                <td>${afn:getMessage("deliv_allPlace",sessionScope.locale)}&#40;${afn:getMessage("deliv_excep",sessionScope.locale)}&#41;</td>
+                                <th>배송지역</th>
+                                <td>전국&#40;일부 도서지역 제외&#41;</td>
                             </tr>
                             <tr>
-                                <th>${afn:getMessage("shippingFee",sessionScope.locale)}</th>
+                                <th>배송비</th>
                                 <td>
-                                   ${afn:getMessage("msg_shipping_info1-1",sessionScope.locale)} &#40;${afn:getMessage("msg_shipping_info1-2",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-3",sessionScope.locale)}<br>
-                                    ${afn:getMessage("msg_shipping_info1-4",sessionScope.locale)}<br>
-                                  ${afn:getMessage("msg_shipping_info1-5",sessionScope.locale)}<br>
-                                   ${afn:getMessage("msg_shipping_info1-6",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-7",sessionScope.locale)}&#41;<br>
-                                  ${afn:getMessage("msg_shipping_info1-8",sessionScope.locale)}<br>
-                                    &#40;${afn:getMessage("msg_shipping_info1-9",sessionScope.locale)}&#41; ${afn:getMessage("msg_shipping_info1-10",sessionScope.locale)}&#41;
+                                    전국 무료배송 &#40;일부 도서지역 제외&#41;이 원칙이나 결제 금액이 3만원 미만인 경우에는 택배비 2,500원이 부과됩니다.<br>
+                                    동일상품, 동일제조사 상품 3만원 이상 주문시 배송비 무료<br>
+                                    동일상품, 동일제조사 상품 3만원 미만 주문시 묶음배송 2,500원 부과<br>
+                                    기본 택배비는 2,500원이나 일부 지역에 한해 추가 요금이 발생할 수 있습니다. ▷ex&#41;제주 : 5,500원, 섬지역 7,000원&#41;<br>
+                                    교환 / 반품 배송비 : 단순변심 등 고객님의 귀책사유로 인한 교환 / 반품 시 왕복 배송비 5,000원 고객 부담.<br>
+                                    &#40;단, 일부 지역 추가 요금 발생 ex&#41; 제주 : 11,000원, 섬지역 14,000원&#41;
                                 </td>
                             </tr>
-                           <tr>
-                                <th>${afn:getMessage("company_products",sessionScope.locale)}</th>
+                            <tr>
+                                <th>업체상품</th>
                                 <td>
-                                    ${afn:getMessage("msg_shipping_info1-11",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("delivDirec",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-12",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-13",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-14",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-15",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("itemToDeliv",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-16",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-17",sessionScope.locale)}
+                                    업체 배송 정책에 따라 업체 배송 기사가 직접 배송하거나 택배로 발송될 수 있습니다.<br><br>
+                                    직접 배송 상품<br>
+                                    -익일 배송이 원칙이며, 주문 시 희망 배송일을 신청하실 수 있습니다.<br>
+                                    -업체 사정에 의해 상품수량이 부족하여 배송이 지연되거나 안 될 수 있습니다.<br>
+                                    -도서산간 지역의 경우 반드시 자격을 갖춘 가스 사업소에서 설치해야 하므로 직접 설치에서 제외됩니다.<br>
+                                    -설치 시 추가 설치 비용이 발생할 수 있습니다.<br><br>
+                                    택배 배송 상품<br>
+                                    -택배 상품은 결제 후 2~3일의 배송 기간이 소요됩니다.<br>
+                                    -도서산간 지역의 경우 배송 기간이 지연될 수 있습니다.
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="refund-box">
-                        <h6>${afn:getMessage("prizeTaxInfo",sessionScope.locale)}<i class="arrow-down"></i></h6>
+                        <h6>경품 세금 안내<i class="arrow-down"></i></h6>
                         <table class="refund-table">
-                           <tr>
-                                <th>${afn:getMessage("deliv_area",sessionScope.locale)}</th>
-                                <td>${afn:getMessage("deliv_allPlace",sessionScope.locale)}&#40;${afn:getMessage("deliv_excep",sessionScope.locale)}&#41;</td>
+                            <tr>
+                                <th>배송지역</th>
+                                <td>전국&#40;일부 도서지역 제외&#41;</td>
                             </tr>
-                                                      <tr>
-                                <th>${afn:getMessage("shippingFee",sessionScope.locale)}</th>
+                            <tr>
+                                <th>배송비</th>
                                 <td>
-                                   ${afn:getMessage("msg_shipping_info1-1",sessionScope.locale)} &#40;${afn:getMessage("msg_shipping_info1-2",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-3",sessionScope.locale)}<br>
-                                    ${afn:getMessage("msg_shipping_info1-4",sessionScope.locale)}<br>
-                                  ${afn:getMessage("msg_shipping_info1-5",sessionScope.locale)}<br>
-                                   ${afn:getMessage("msg_shipping_info1-6",sessionScope.locale)}&#41;${afn:getMessage("msg_shipping_info1-7",sessionScope.locale)}&#41;<br>
-                                  ${afn:getMessage("msg_shipping_info1-8",sessionScope.locale)}<br>
-                                    &#40;${afn:getMessage("msg_shipping_info1-9",sessionScope.locale)}&#41; ${afn:getMessage("msg_shipping_info1-10",sessionScope.locale)}&#41;
+                                    전국 무료배송 &#40;일부 도서지역 제외&#41;이 원칙이나 결제 금액이 3만원 미만인 경우에는 택배비 2,500원이 부과됩니다.<br>
+                                    동일상품, 동일제조사 상품 3만원 이상 주문시 배송비 무료<br>
+                                    동일상품, 동일제조사 상품 3만원 미만 주문시 묶음배송 2,500원 부과<br>
+                                    기본 택배비는 2,500원이나 일부 지역에 한해 추가 요금이 발생할 수 있습니다. ▷ex&#41;제주 : 5,500원, 섬지역 7,000원&#41;<br>
+                                    교환 / 반품 배송비 : 단순변심 등 고객님의 귀책사유로 인한 교환 / 반품 시 왕복 배송비 5,000원 고객 부담.<br>
+                                    &#40;단, 일부 지역 추가 요금 발생 ex&#41; 제주 : 11,000원, 섬지역 14,000원&#41;
                                 </td>
                             </tr>
                             <tr>
-                                <th>${afn:getMessage("company_products",sessionScope.locale)}</th>
+                                <th>업체상품</th>
                                 <td>
-                                    ${afn:getMessage("msg_shipping_info1-11",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("delivDirec",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-12",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-13",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-14",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-15",sessionScope.locale)}<br><br>
-                                    ${afn:getMessage("itemToDeliv",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-16",sessionScope.locale)}<br>
-                                    -${afn:getMessage("msg_shipping_info1-17",sessionScope.locale)}
+                                    업체 배송 정책에 따라 업체 배송 기사가 직접 배송하거나 택배로 발송될 수 있습니다.<br><br>
+                                    직접 배송 상품<br>
+                                    -익일 배송이 원칙이며, 주문 시 희망 배송일을 신청하실 수 있습니다.<br>
+                                    -업체 사정에 의해 상품수량이 부족하여 배송이 지연되거나 안 될 수 있습니다.<br>
+                                    -도서산간 지역의 경우 반드시 자격을 갖춘 가스 사업소에서 설치해야 하므로 직접 설치에서 제외됩니다.<br>
+                                    -설치 시 추가 설치 비용이 발생할 수 있습니다.<br><br>
+                                    택배 배송 상품<br>
+                                    -택배 상품은 결제 후 2~3일의 배송 기간이 소요됩니다.<br>
+                                    -도서산간 지역의 경우 배송 기간이 지연될 수 있습니다.
                                 </td>
                             </tr>
                         </table>
@@ -455,6 +453,7 @@
         </div>
     </article>
 </section>
+
 
 <script>
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +7,7 @@
 <title>board9</title>
 </head>
 <body>
-사용할 수 없는 게시판 입니다. 
+${afn:getMessage("msg_brd_cantUse",sessionScope.locale)}
 </body>
 </html>
  

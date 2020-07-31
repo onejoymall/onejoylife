@@ -11,6 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <div class="wrap">
     <div class="page-box">
 
@@ -21,10 +22,10 @@
                 <input name="giveaway_cd1"  type="hidden" value="${giveaway_cd}">
                 <input name="giveaway_play_cd1"  type="hidden" value="${giveaway_play_cd}">
                 <input name="order_no"  type="hidden" value="${order_no}">
-                <h2 class="head-h2">정보입력</h2>
+                <h2 class="head-h2">${afn:getMessage("insertinfo",sessionScope.locale)}</h2>
                 <div class="in-box">
                     <div class="sec1">
-                        <p class="sec-h1">주문자 정보</p>
+                        <p class="sec-h1">${afn:getMessage("userinformation",sessionScope.locale)}</p>
 
                         <table>
                             <colgroup>
@@ -33,15 +34,15 @@
                             </colgroup>
                             <tbody class="sec1-tbody">
                             <tr>
-                                <td>주문하시는 분</td>
+                                <td>${afn:getMessage("userN",sessionScope.locale)}</td>
                                 <td><input type="text" name="order_user_name" id="order_user_name"  class="sec1-in1" value="<c:out value="${userInfo.username}"/>"></td>
                             </tr>
                             <tr>
-                                <td>이메일주소</td>
+                                <td>${afn:getMessage("userE",sessionScope.locale)}</td>
                                 <td><input type="text" name="order_user_email" id="order_user_email"  class="sec1-in1" value="<c:out value="${sessionScope.email}"/>"></td>
                             </tr>
                             <tr class="bor-none">
-                                <td>휴대폰 번호
+                                <td>${afn:getMessage("userPH",sessionScope.locale)}
                                     <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
@@ -73,10 +74,10 @@
                             </tr>
                             </tbody>
                         </table>
-                        <p class="sec1-f-txt">·<span> 주문자 정보로 주문과 관련된 SMS와 E-MAIL이 발송됩니다. 정확한 정보인지 확인해주세요.</span></p>
+                        <p class="sec1-f-txt">·<span>${afn:getMessage("msg_msg_deliv1-3",sessionScope.locale)}</span></p>
                     </div>
                     <div class="sec2">
-                        <p class="sec-h1">배송지 정보</p>
+                        <p class="sec-h1">${afn:getMessage("deliv_info",sessionScope.locale)}</p>
                         <table>
                             <colgroup>
                                 <col style="width: 180px;">
@@ -85,28 +86,28 @@
                             <tbody class="sec2-tbody">
 
                             <tr>
-                                <td>배송지 선택</td>
+                                <td>${afn:getMessage("deliv_choose",sessionScope.locale)}</td>
                                 <td class="sec2-ov">
                                     <p>
                                         <input type="radio" name="selectAddress" id="ra1-1" checked value="OLD">
-                                        <label for="ra1-1"><span class="ra-txt">기본 배송지</span></label>
+                                        <label for="ra1-1"><span class="ra-txt">${afn:getMessage("deliv_main",sessionScope.locale)}</span></label>
                                     </p>
                                     <p>
                                         <input type="radio" name="selectAddress" id="ra1-2" value="LAST">
-                                        <label for="ra1-2"><span class="ra-txt">최근 배송지</span></label>
+                                        <label for="ra1-2"><span class="ra-txt">${afn:getMessage("deliv_recent",sessionScope.locale)}</span></label>
                                     </p>
                                     <p>
                                         <input type="radio" name="selectAddress" id="ra1-3" value="NEW">
-                                        <label for="ra1-3"><span class="ra-txt">새로입력</span></label>
+                                        <label for="ra1-3"><span class="ra-txt">${afn:getMessage("deliv_new",sessionScope.locale)}</span></label>
                                     </p>
                                 </td>
                             </tr>
                             <tr>
-                                <td>받으시는 분</td>
-                                <td><input type="text" placeholder="김말자" class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="${latestDelivery.order_user_name}"></td>
+                                <td>${afn:getMessage("deliv_receiveN",sessionScope.locale)}</td>
+                                <td><input type="text" placeholder="+${afn:getMessage('delivPlaceHolder',sessionScope.locale)}+" class="sec2-in1" name="delivery_user_name" id="delivery_user_name" value="${latestDelivery.order_user_name}"></td>
                             </tr>
                             <tr class="bor-none">
-                                <td>휴대폰 번호 <!-- Map 선언 -->
+                                <td>${afn:getMessage("deliv_receiveCPH",sessionScope.locale)} <!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
 
@@ -136,7 +137,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>전화 번호<!-- Map 선언 -->
+                                <td>${afn:getMessage("deliv_receivePH",sessionScope.locale)}<!-- Map 선언 -->
                                     <c:set var="phoneMap" value="<%=new java.util.HashMap()%>" />
                                     <c:if test="${empty userInfo.phone}">
 
@@ -166,11 +167,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>주소</td>
+                                <td>${afn:getMessage("deliv_receiveADDR",sessionScope.locale)}</td>
                                 <td>
                                     <p class="mar-p1">
                                         <input type="text" name="postcode" id="postcode" class="sec2-in1" value="${latestDelivery.postcode}">
-                                        <button type="button" id="daumMapCall">우편번호 찾기</button>
+                                        <button type="button" id="daumMapCall">우편번호 찾기${afn:getMessage("find_zipcode",sessionScope.locale)}</button>
                                     </p>
                                     <p class="mar-p2"><input type="text" class="sec2-in2" name="roadAddress" id="roadAddress" value="${latestDelivery.roadAddress}"></p>
                                     <p class="mar-p2"><input type="text" class="sec2-in2" name="extraAddress" id="extraAddress" value="${latestDelivery.extraAddress}"></p>
@@ -180,13 +181,13 @@
                                 </td>
                             </tr>
                             <tr class="bor-none">
-                                <td>배송시 요청사항</td>
+                                <td>${afn:getMessage("deliv_msg",sessionScope.locale)}</td>
                                 <td class="sel-td">
 
                                     <select name="delivery_message_select" id="delivery_message_select" >
-                                        <option value="">배송시 요청사항 (선택사항)</option>
-                                        <option value="">직접 받고 부재 시 문 앞</option>
-                                        <option value="self">직접입력</option>
+                                        <option value="">${afn:getMessage("deliv_msg_option",sessionScope.locale)}</option>
+                                        <option value="">${afn:getMessage("deliv_msg_option_door",sessionScope.locale)}</option>
+                                        <option value="self">${afn:getMessage("deliv_msg_option_write",sessionScope.locale)}</option>
                                     </select>
 
                                     <p class="mar-p2 hidden" id="delivery_message_box"><input type="text" class="sec2-in2" name="delivery_message" id="delivery_message"></p>
@@ -196,11 +197,11 @@
                         </table>
                     </div>
                     <div class="sec3">
-                        <p class="sec3-in1" ><span class="sec3-span1"></span><span class="sec3-span2">꼭 확인해주세요!</span></p>
-                        <p class="sec3-in2">※ 소득세법에 의해 경품금액 5만원 이상 경우 제세공과금 (소득세 및 주민세) 22%와 부가세10%는 고객(본인) 부담 입니다.</p>
+                        <p class="sec3-in1" ><span class="sec3-span1"></span><span class="sec3-span2">${afn:getMessage("msg_deliv1-1",sessionScope.locale)}</span></p>
+                        <p class="sec3-in2">※ ${afn:getMessage("msg_deliv1-2",sessionScope.locale)}</p>
                     </div>
                     <div class="sec4">
-                        <a href="#" id="formSubmitGiveaway">다음단계</a>
+                        <a href="#" id="formSubmitGiveaway">${afn:getMessage("nextStp",sessionScope.locale)}</a>
                     </div>
                 </div>
             </form>

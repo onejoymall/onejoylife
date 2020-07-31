@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 
 
 <div class="wrap">
@@ -19,19 +20,19 @@
                             </colgroup>
                             <tbody class="sec1-tbody">
                             <tr class="name-box">
-                                <td>작성자</td>
+                                <td>${afn:getMessage("brd_writer",sessionScope.locale)}</td>
                                 <td><input type="text" id="brdwriter" name="brdwriter" size="20" maxlength="20" value="<c:out value="${boardInfo.brdwriter}"/>"></td>
                             </tr>
                             <tr>
-                                <td>제목</td>
+                                <td>${afn:getMessage("brd_title",sessionScope.locale)}</td>
                                 <td><input type="text" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>"></td>
                             </tr>
                             <tr>
-                                <td>내용</td>
+                                <td>${afn:getMessage("brd_content",sessionScope.locale)}</td>
                                 <td><textarea id="brdmemo" name="brdmemo" rows="5" cols="60"><c:out value="${boardInfo.brdmemo}"/></textarea></td>
                             </tr>
                             <tr>
-                                <td>첨부</td>
+                                <td>${afn:getMessage("brd_addfile",sessionScope.locale)}</td>
                                 <td>
                                     <c:forEach var="listview" items="${listview}" varStatus="status">
                                         <input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">
@@ -49,7 +50,7 @@
                         <input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
                     </div>
                     <div class="button-box">
-                        <button type="button" onclick="fn_formSubmit()">저장</button>
+                        <button type="button" onclick="fn_formSubmit()">${afn:getMessage("brd_save",sessionScope.locale)}</button>
                     </div>
                 </form>
             </div>
