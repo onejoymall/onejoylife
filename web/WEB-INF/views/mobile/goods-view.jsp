@@ -8,6 +8,8 @@
 .npay_storebtn_bx{
 	zoom:1.4;
 }
+
+
 </style>
 <script type="text/javascript">
 	var delivery_payment_type = '${list.product_delivery_payment_type}';
