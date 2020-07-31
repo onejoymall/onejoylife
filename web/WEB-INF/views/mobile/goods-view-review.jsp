@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 		<div class="mt-4 mb-2" id="content03">
            <ul class="flexbetween mb-1">
                <li><h3>${afn:getMessage("EvaluateAndreview",sessionScope.locale)}<span class="red text-md ml-1">${searchVO.totRow}</span></h3></li>

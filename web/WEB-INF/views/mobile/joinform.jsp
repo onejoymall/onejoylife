@@ -35,14 +35,14 @@
 		
 		if(obj.cert_enc_use == 'Y' && obj.res_cd == '0000'){
 			$('#phoneBtn').addClass("bg-success");
-            $('#phoneBtn').text("${afn:getMessage("certiOk",sessionScope.locale)}");
+            $('#phoneBtn').text("${afn:getMessage('certiOk',sessionScope.locale)}");
             $('#phoneBtn').attr("id","");
             $('input[name=phone]').val(obj.phone_no);
             $('input[name=username]').val(obj.user_name);
             $('input[name=sex]').val(obj.sex_code);
             $('input[name=birth]').val(obj.birth_day);
 		}else{
-			alert("${afn:getMessage("certiFail",sessionScope.locale)}");
+			alert("${afn:getMessage('certiFail',sessionScope.locale)}");
 		}
 	}
     // 인증창 종료 후 인증데이터 리턴 함수
@@ -55,7 +55,7 @@
         // up_hash 검증 
         if( frm.up_hash.value != auth_form.veri_up_hash.value )
         {
-            alert("${afn:getMessage("error.sign.uphashRiskTamp",sessionScope.locale)}");
+            alert("${afn:getMessage('error.sign.uphashRiskTamp',sessionScope.locale)}");
 
         }              
         
@@ -77,7 +77,7 @@
 
         if( auth_form.ordr_idxx.value == "" )
         {
-            alert( "${afn:getMessage("error.sign.reNum_Required",sessionScope.locale)}" );
+            alert( "${afn:getMessage('error.sign.reNum_Required',sessionScope.locale)}" );
 
             return false;
         }
@@ -160,12 +160,12 @@
             <div class="form-box">
                 <form method="POST" name="defaultJoinform" id="defaultJoinform">
                     <div class="join-cell">
-                        <input type="text" name="email" id="email" placeholder="${afn:getMessage("idEmail",sessionScope.locale)}" required>
+                        <input type="text" name="email" id="email" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}" required>
                         <p class="error" id="emailValidation"></p>
                     </div>
                     <div class="join-cell">
                         <div class="join-cell-in">
-                            <input type="text" name="email_auth_code" id="email_auth_code" placeholder="${afn:getMessage("msg.sign.emailCerti_4inp",sessionScope.locale)}" class="num-txt" readonly>
+                            <input type="text" name="email_auth_code" id="email_auth_code" placeholder="${afn:getMessage('msg.sign.emailCerti_4inp',sessionScope.locale)}" class="num-txt" readonly>
                             <button type="button" class="btn-auth" id="mailSender"><span>${afn:getMessage("certiNumSend",sessionScope.locale)}</span></button>
 <%--                            <button type="button" class="btn-color"><span>60초</span></button>--%>
 <%--                            <button type="button" class="btn-color"><span>인증완료</span></button>--%>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="join-cell">
                         <div class="join-cell-in">
-                            <input type="text" name="phone" id="phone" class="num-txt" placeholder="${afn:getMessage("phone",sessionScope.locale)}" readonly>
+                            <input type="text" name="phone" id="phone" class="num-txt" placeholder="${afn:getMessage('phone',sessionScope.locale)}" readonly>
                             <input name="sex" id="sex" type="hidden" readonly>
                             <input name="birth" id="birth" type="hidden" readonly>
                             <input name="username" id="username" type="hidden" readonly>
@@ -183,11 +183,11 @@
                         <p class="error" id="phoneValidation"></p>
                     </div>
                     <div class="join-cell">
-                        <input type="password" name="password" id="password" placeholder="${afn:getMessage("msg.sign.pwdplaceholder",sessionScope.locale)}">
+                        <input type="password" name="password" id="password" placeholder="${afn:getMessage('msg.sign.pwdplaceholder',sessionScope.locale)}">
                         <p class="error" id="passwordValidation"></p>
                     </div>
                     <div class="join-cell">
-                        <input type="password" name="password_cf" id="password_cf" placeholder="${afn:getMessage("pswdCfm",sessionScope.locale)}">
+                        <input type="password" name="password_cf" id="password_cf" placeholder="${afn:getMessage('pswdCfm',sessionScope.locale)}">
                         <p class="error" id="password_cfValidation"></p>
                     </div>
                     <div class="join-ck-box clearfix">
