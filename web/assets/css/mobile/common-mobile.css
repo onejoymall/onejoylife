@@ -2085,49 +2085,49 @@ ul.shipping li:last-child{
     color: #DA394A;
 }
 
-.goodsQna{
+.goodsQnaList .goodsQna{
     display: block;
 }
-.goodsQna .goodsHeader{
+.goodsQnaList .goodsQna .goodsHeader{
     padding: 1em 0;
     border-bottom: 1px solid #e1e1e1;
 }
-.goodsQna .goodsHeader p{
+.goodsQnaList .goodsQna .goodsHeader p{
     padding: 0.2em 0 0.6em 0;
     color: #8b8b8b;
     font-weight: 300;
 }
-.goodsQna .goodsHeader h4{
+.goodsQnaList .goodsQna .goodsHeader h4{
     padding-right: 30px;
     background: url(../../img/arrow-down-bk.png) 100% 100% no-repeat;
     background-size: 23px auto;
 }
-.goodsQna.active .goodsHeader h4{
+.goodsQnaList .goodsQna.active .goodsHeader h4{
     padding-right: 30px;
     background: url(../../img/arrow-up-bk.png) 100% 100% no-repeat;
     background-size: 23px auto;
 }
-.goodsQna .goodsHeader span.tapGrey{
+.goodsQnaList .goodsQna .goodsHeader span.tapGrey{
     padding: 0.2em 0.3em;
     background: #ccc;
     color: #fff;
     font-size: 0.7em;
     margin-right: 3px;
 }
-.goodsQna .goodsHeader span.tapRed{
+.goodsQnaList .goodsQna .goodsHeader span.tapRed{
     padding: 0.2em 0.3em;
     background: #CE3948;
     color: #fff;
     font-size: 0.7em;
     margin-right: 3px;
 }
-.goodsQna .goodsHeader span.date{
+.goodsQnaList .goodsQna .goodsHeader span.date{
     position: relative;
     margin-right: 1em;
     padding-right: 1em;
     padding-left: 0.6em;
 }
-.goodsQna .goodsHeader span.date::after{
+.goodsQnaList .goodsQna .goodsHeader span.date::after{
     content: '';
     position: absolute;
     top: 50%;
@@ -2137,29 +2137,29 @@ ul.shipping li:last-child{
     background: #e1e1e1;
     transform: translateY(-50%);
 }
-.goodsQna.active .goodsBody{
+.goodsQnaList .goodsQna.active .goodsBody{
     display: block;
     border-bottom: 1px solid #e1e1e1;
 }
-.goodsQna .goodsBody{
+.goodsQnaList .goodsQna .goodsBody{
     display: none;
 }
-.goodsQna .goodsBody .goodsBodyQ{
+.goodsQnaList .goodsQna .goodsBody .goodsBodyQ{
     padding: 14px;
     box-sizing: border-box;
 }
-.goodsQna .goodsBody .goodsBodyQ span{
+.goodsQnaList .goodsQna .goodsBody .goodsBodyQ span{
     display: block;
     font-weight: 600;
     font-size: 1.2em;
     padding-bottom: 7px;
 }
-.goodsQna .goodsBody .goodsBodyA{
+.goodsQnaList .goodsQna .goodsBody .goodsBodyA{
     background: #f9f9f9;
     padding: 20px 14px;
     box-sizing: border-box;
 }
-.goodsQna .goodsBody .goodsBodyA span{
+.goodsQnaList .goodsQna .goodsBody .goodsBodyA span{
     display: block;
     font-weight: 600;
     font-size: 1.2em;
@@ -2172,11 +2172,11 @@ body.black .qnaNothing{
     box-sizing: border-box;
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
-body.black .goodsQna .goodsHeader{
+body.black .goodsQnaList .goodsQna .goodsHeader{
     padding: 1em 0;
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
-body.black .goodsQna .goodsBody .goodsBodyA{
+body.black .goodsQnaList .goodsQna .goodsBody .goodsBodyA{
     background: rgba(255,255,255,0.05);
 }
 
@@ -5353,4 +5353,14 @@ input[type=password]::placeholder{
 
 .er {
     color:#da394d;
+}
+
+
+.lock-ic{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin:-2px 5px;
+    background:url(../../img/goods-view/lock-ic.svg) center center no-repeat;
+    background-size:contain;
 }

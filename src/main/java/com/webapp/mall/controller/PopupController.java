@@ -152,7 +152,11 @@ public class PopupController {
         }
         model.addAttribute("style", "write-qna");
         Device device = DeviceUtils.getCurrentDevice(request);
-        return "popup/write-qna";
+    	if(device.isMobile()){
+            return "mobile/popup/write-qna";
+        } else {
+		    return "popup/write-qna";
+	    }
     }
     //상품문의Q&A 수정 팝업
     @RequestMapping("/Popup/update-qna")
