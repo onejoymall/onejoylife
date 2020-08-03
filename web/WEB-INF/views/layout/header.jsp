@@ -129,7 +129,7 @@
         <li><a href="/MyPage/ShoppingBasket">${afn:getMessage('cart',sessionScope.locale)}</a></li>
         <li><a href="/MyPage/OrderAndDelivery">${afn:getMessage('order_and_delivery',sessionScope.locale)}</a></li>
         <li><a href="/Help/csinfo">${afn:getMessage('customer_service',sessionScope.locale)}</a></li>
-        <li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a>
+      <%--   <li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a> 
             <ul>
                 <li><a href="javascript:setGlobalLocale('ko')">${afn:getMessage('korea',sessionScope.locale)}</a></li>
                 <li><a href="javascript:setGlobalLocale('en')">${afn:getMessage('america',sessionScope.locale)}</a></li>
@@ -137,7 +137,7 @@
                 <li><a href="javascript:setGlobalLocale('jp')">${afn:getMessage('japan',sessionScope.locale)}</a></li>
             </ul>
         </li>
-
+--%>
     </c:if>
     <c:if test="${sessionScope.login}">
         <li><a href="/MyPage/ShoppingBasket">${afn:getMessage('cart',sessionScope.locale)}</a></li>
