@@ -565,6 +565,7 @@ public class ProductController {
 
             params.put("email",session.getAttribute("email"));
             Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+            
 
             if(params.get("order_no") != null){
                 //재결제
@@ -630,7 +631,11 @@ public class ProductController {
 
                 model.addAttribute("option", new String(((String) params.get("option_name")).getBytes("8859_1"), "UTF-8"));
                 //보유 쿠폰
+              
+           
+              if(userInfo !=null) {
                 params.put("coupon_paid_user_id", userInfo.get("usr_id"));
+              }
                 params.put("coupon_ct", ((String) detail.get("product_ct")).split("\\|"));
                 params.put("coupon_use_range", "P");
 
