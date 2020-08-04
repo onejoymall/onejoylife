@@ -958,8 +958,8 @@ public class ManagerController {
         model.addAttribute("topNav", 4);
         model.addAttribute("style", "order");
         model.addAttribute("postUrl", "/Manager/order");
-        model.addAttribute("table_name", "payment");
-        model.addAttribute("Pk", "order_no");
+        model.addAttribute("table_name", "payment_bundle");
+        model.addAttribute("Pk", "no");
         return "/manager/order";
     }
 

@@ -550,6 +550,21 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    //경품주문내역 선택
+    @RequestMapping(value = "/Manager/selectPaymentG", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerSelectPaymentG(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	try {
+    		Map<String,Object> list = paymentDAO.getPaymentDetail(params);
+    		resultMap.put("list",list);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
+    }
     //주문상태 일괄 처리
     @RequestMapping(value = "/Manager/paymentStatusUpdate", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> paymentStatusUpdate(@RequestParam HashMap params, MgCommonVO mgCommonVO, HttpServletRequest request){
@@ -557,9 +572,9 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
 
         try {
-            mgCommonVO.setTable_name("payment");
+            mgCommonVO.setTable_name("payment_bundle");
             mgCommonVO.setColumn("payment_status");
-            mgCommonVO.setPk("order_no");
+            mgCommonVO.setPk("no");
             mgCommonVO.setUpdate_value((String)params.get("payment_status"));
             if(mgCommonVO.getChk() ==null){
                 error.put("Error", messageSource.getMessage("error.selectModify","ko"));
@@ -654,6 +669,56 @@ public class ManagerRestapiController {
 	            	deliveryInfoVO.setOrder_no(String.valueOf(detail.get("no")));
 	                paymentDAO.updatePaymentBundleManger(deliveryInfoVO);
             	}
+                resultMap.put("success",messageSource.getMessage("success.done","ko"));
+                resultMap.put("redirectUrl",request.getHeader("Referer"));
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+    //경품배송처리
+    @RequestMapping(value = "/Manager/SaveDeliveryG", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> managerSaveDeliveryG(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+
+        try {
+            if(deliveryInfoVO.getDelivery_t_code() != "00"){
+                if(deliveryInfoVO.getDelivery_status()!=null && deliveryInfoVO.getDelivery_status().equals("O")) {
+                    if(deliveryInfoVO.getDelivery_t_invoice() == null || deliveryInfoVO.getDelivery_t_invoice().isEmpty()){
+                        error.put(messageSource.getMessage("delivery_t_invoice","ko"), messageSource.getMessage("error.required","ko"));
+                    }
+                    if(deliveryInfoVO.getDelivery_t_code() == null || deliveryInfoVO.getDelivery_t_code().isEmpty()){
+                        error.put(messageSource.getMessage("delivery_t_code","ko"), messageSource.getMessage("error.required","ko"));
+                    }
+                }
+            }
+            if(deliveryInfoVO.getDelivery_status()!=null && (deliveryInfoVO.getDelivery_status().equals("G") || deliveryInfoVO.getDelivery_status().equals("C"))){
+                //환불을위한 토큰발급
+                IamportClient client;
+                String test_api_key = "7152058542143411";
+                String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+                client = new IamportClient(test_api_key, test_api_secret);
+                String test_already_cancelled_merchant_uid = deliveryInfoVO.getOrder_no();
+                CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); //merchant_uid를 통한 전액취소
+
+                Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+                Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+                if(impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+                
+                IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
+                if(payment_response.getResponse()==null){
+                    error.put("Error", payment_response.getMessage());
+                }
+            }
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                deliveryDAO.updateDeliveryManager(deliveryInfoVO);
+                paymentDAO.updatePaymentManger(deliveryInfoVO);
                 resultMap.put("success",messageSource.getMessage("success.done","ko"));
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }

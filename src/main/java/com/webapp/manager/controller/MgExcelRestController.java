@@ -23,6 +23,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -170,8 +171,44 @@ public class MgExcelRestController {
     
     //양식다운로드
     @RequestMapping(value = "/downloadFile/{type}")
-    public void downloadFile(@PathVariable String type, HttpServletRequest request,HttpServletResponse response) throws Exception {
-    	excelDown(request,response,type,null);
+    public void downloadFile(@RequestParam HashMap params, @PathVariable String type, HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception {
+    	try{
+	    	Object adminLogin = session.getAttribute("adminLogin");
+	    	String email = (String)session.getAttribute("email");
+			if(adminLogin.equals("admin")){
+				params.put("store_id","admin");
+			}else {
+				params.put("store_id",email);
+			}
+			params.put("type_value",type);
+			Map<String, Object> getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+			if(getExcelSettingDetail == null) {
+				params.put("store_id","admin");
+			}
+			getExcelSettingDetail = mgSystemDAO.getExcelSettingDetail(params);
+			
+	    	excelDownPoi(request,response,type,null,getExcelSettingDetail);
+	    }catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    //사용방법다운로드
+    @RequestMapping(value = "/downloadHowUse/{type}")
+    public void downloadHowUse(@RequestParam HashMap params, @PathVariable String type, HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception {
+    	try{
+    		String tempPath = request.getSession().getServletContext().getRealPath("/assets/template/");
+        	try(InputStream is = new BufferedInputStream(new FileInputStream(tempPath+type+"_howtouse.xlsx"))) {
+        		//파일 네임 설정
+        		response.setHeader("Content-Disposition", "attachment; filename=\"" + type+"_howtouse.xlsx");            
+        		try (OutputStream os = response.getOutputStream()) {
+        			Context context = new Context();
+        			JxlsHelper.getInstance().processTemplate(is, os, context);
+        		}
+        	}
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
     
     //엑셀업로드
@@ -334,7 +371,7 @@ public class MgExcelRestController {
         XSSFSheet sheet = workbook.getSheetAt(0);
         
         //칼럼네임 설정
-        XSSFRow columnNameRow = sheet.getRow(1);
+        XSSFRow columnNameRow = sheet.getRow(0);
         String[] columnNames = new String[columnNameRow.getLastCellNum()+1];
         for(int i=0;i<columnNameRow.getLastCellNum()+1;i++) {
         	XSSFCell cell = columnNameRow.getCell(i);
@@ -342,7 +379,7 @@ public class MgExcelRestController {
         }
         
         //데이터 row 리스트에 넣기
-        for(int i=4; i<sheet.getLastRowNum() + 1; i++) {
+        for(int i=2; i<sheet.getLastRowNum() + 1; i++) {
         	Map<String, Object> map = new HashMap<>();
             XSSFRow row = sheet.getRow(i);
             
@@ -356,15 +393,15 @@ public class MgExcelRestController {
 	            if(null != cell) {
 	            	String value = "";
 	            	if( cell.getCellType() == CellType.FORMULA ) {
-	                    value = cell.getCellFormula() + "";
+	                    value = String.valueOf(cell.getCellFormula());
 	                }else if( cell.getCellType() == CellType.NUMERIC ) {
-	                    value = cell.getNumericCellValue() + "";
+	                    value = String.valueOf(cell.getNumericCellValue());
 	                }else if( cell.getCellType() == CellType.STRING ) {
-	                    value = cell.getStringCellValue();
+	                    value = String.valueOf(cell.getStringCellValue());
 	                }else if( cell.getCellType() == CellType.BOOLEAN ) {
-	                    value = cell.getBooleanCellValue() + "";
+	                    value = String.valueOf(cell.getBooleanCellValue());
 	                }else if( cell.getCellType() == CellType.ERROR ) {
-	                    value = cell.getErrorCellValue() + "";
+	                    value = String.valueOf(cell.getErrorCellValue());
 	                }else if( cell.getCellType() == CellType.BLANK ) {
 	                    value = "";
 	                }
@@ -384,7 +421,7 @@ public class MgExcelRestController {
     private SXSSFWorkbook makeWorkBook(List<Map<String,Object>> list,String keyword,Map<String,Object> setting) {    	
     	SXSSFWorkbook workbook = new SXSSFWorkbook();
     	// 시트 생성
-        SXSSFSheet sheet = workbook.createSheet(keyword);
+        SXSSFSheet sheet = workbook.createSheet((String)setting.get("type_name"));
         
         //시트 열 너비 설정
 //        sheet.setColumnWidth(0, 1500);
@@ -404,10 +441,16 @@ public class MgExcelRestController {
         }
         
         //헤더행
+        CellStyle generalCellStyle = workbook.createCellStyle();
+        DataFormat generalFormat = workbook.createDataFormat();
+        generalCellStyle.setDataFormat(generalFormat.getFormat("@"));
+        
         CellStyle headerCellStyle = workbook.createCellStyle();
         Font fontBold = workbook.createFont();
         fontBold.setBold(true);
         headerCellStyle.setFont(fontBold);
+        headerCellStyle.setDataFormat(generalFormat.getFormat("@"));
+        
         Row headerRow = sheet.createRow(1);
         
         for(int i=0; i<column_val_arr.length; i++) {
@@ -417,13 +460,20 @@ public class MgExcelRestController {
         }
         
         //데이터 리스트
-        for(int i=0; i<list.size(); i++) {
-        	//행 생성
-        	Row bodyRow = sheet.createRow(i+2);
-        	for(int j=0; j<column_val_arr.length; j++) {
-        		Cell bodyCell = bodyRow.createCell(j);
-        		bodyCell.setCellValue(String.valueOf(list.get(i).get(column_val_arr[j])));
-        	}
+        if(list != null) {
+	        for(int i=0; i<list.size(); i++) {
+	        	//행 생성
+	        	Row bodyRow = sheet.createRow(i+2);
+	        	for(int j=0; j<column_val_arr.length; j++) {
+	        		Cell bodyCell = bodyRow.createCell(j);
+	        		bodyCell.setCellStyle(generalCellStyle);
+	        		if(list.get(i).get(column_val_arr[j]) != null && !list.get(i).get(column_val_arr[j]).equals("")) {
+	        			bodyCell.setCellValue(String.valueOf(list.get(i).get(column_val_arr[j])));
+	        		}else {
+	        			bodyCell.setCellValue("");
+	        		}
+	        	}
+	        }
         }
         
         return workbook;
