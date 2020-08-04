@@ -500,7 +500,8 @@
                     <tbody>
                         <tr>
                            <th>양식</th>
-                           <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="order"><i class="exel-ic"></i>양식 다운받기</button></td>
+                           <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="order"><i class="exel-ic"></i>양식 다운받기</button>
+                           <button class="btn-default downlaodHowToUseBtn" type="button" data-id="order"><i class="exel-ic"></i>사용방법</button></td>
                        </tr>
                        <tr>
                           

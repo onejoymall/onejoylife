@@ -158,7 +158,7 @@
                                 </c:if>
                                 <td>
 	                                <c:if test="${not empty list.giveaway_winner_reg_date && list.winner_id > 0 && not empty list.order_no}">
-	                                    <button type="button" class="goods-list-btn"  onclick="selectPayment('${list.order_no}')">상세보기</button>
+	                                    <button type="button" class="goods-list-btn"  onclick="selectPaymentG('${list.order_no}')">상세보기</button>
 	                                    <button type="button" class="goods-list-btn"  onclick="withholding('${list.order_no}')">원천징수</button>
 	                                </c:if>
                                 </td>
@@ -316,7 +316,8 @@
                     <tbody>
                         <tr>
                            <th>양식</th>
-                           <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="giveawayPart"><i class="exel-ic"></i>양식 다운받기</button></td>
+                           <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="giveawayPart"><i class="exel-ic"></i>양식 다운받기</button>
+                           <button class="btn-default downlaodHowToUseBtn" type="button" data-id="giveawayPart"><i class="exel-ic"></i>사용방법</button></td>
                        </tr>
                        <tr>
                           
