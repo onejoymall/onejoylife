@@ -43,28 +43,33 @@
 	            </button>
 	        </header>
 	        <form id="defaultForm" name="defaultForm" method="POST">
-    		<input type="hidden" name="product_cd" value="${param.product_cd}"/>
+    		<input type="hidden" name="qna_id" value="${detail.qna_id}"/>
 	        <content>
 	        	<p class="text-md mt-2 mb-05">${afn:getMessage("brd_title",sessionScope.locale)} *</p>
-                <input type="text" name="qna_title" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50">
-                <input type="checkbox" name="secret" id="secret" class="b8 mt-1">
+                <input type="text" name="qna_title" class="width-100 mb-05" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50" value="${detail.qna_title}">
+                <c:if test="${detail.qna_open_type eq 'T'}">
+                    <input name="secret" id="secret" type="checkbox" class="b8 mt-1" checked>
+                </c:if>
+                <c:if test="${detail.qna_open_type eq 'F'}">
+                    <input name="secret" id="secret" type="checkbox" class="b8 mt-1">
+                </c:if>
                 <label for="secret">${afn:getMessage("private",sessionScope.locale)}</label>
-                <input type="hidden" name="qna_open_type" value="F">
+                <input type="hidden" name="qna_open_type" value="${detail.qna_open_type}">
                 <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)} *</p>
                 <select class="width-100" name="qna_type" id="qna_type">
-                    <option value="O">${afn:getMessage('orders_payments',sessionScope.locale)}</option>
-                    <option value="C">${afn:getMessage('change_return_refund',sessionScope.locale)}</option>
-                    <option value="D">${afn:getMessage('deliv',sessionScope.locale)}</option>
-                    <option value="G">${afn:getMessage('QA_others',sessionScope.locale)}</option>
+                    <option value="O" <c:if test="${detail.qna_type eq \"O\"}">selected</c:if>>${afn:getMessage('orders_payments',sessionScope.locale)}</option>
+                    <option value="C" <c:if test="${detail.qna_type eq \"C\"}">selected</c:if>>${afn:getMessage('change_return_refund',sessionScope.locale)}</option>
+                    <option value="D" <c:if test="${detail.qna_type eq \"D\"}">selected</c:if>>${afn:getMessage('deliv',sessionScope.locale)}</option>
+                    <option value="G" <c:if test="${detail.qna_type eq \"G\"}">selected</c:if>>${afn:getMessage('QA_others',sessionScope.locale)}</option>
                 </select>
                 <p class="text-md mt-1 mb-05">${afn:getMessage("brd_content",sessionScope.locale)} *</p>
                 <div class="textarea mt-05 mb-2">
                    <span>&#40;0/500&#41;</span>
-                   <textarea name="qna_memo" class="width-100" maxlength="500"></textarea>
+                   <textarea name="qna_memo" class="width-100" maxlength="500">${detail.qna_memo}</textarea>
                 </div>
                 <ul class="btns mt-2 mb-0">
                     <li><a href="javascript:self.close();">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
-                    <li><a href="#" class="active" id="qnaWriteSubmit">${afn:getMessage("registration",sessionScope.locale)}</a></li>
+                    <li><a href="#" class="active" id="qnaModifySubmit">${afn:getMessage("update",sessionScope.locale)}</a></li>
                </ul>
 	        </content>
 	        </form>

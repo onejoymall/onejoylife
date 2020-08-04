@@ -18,7 +18,7 @@
                 </colgroup>
                 <tbody class="sec1-tbody">
                     <tr>
-                        <td class="sec1-td-bor1">${afn:getMessage("title",sessionScope.locale)}</td>
+                        <td class="sec1-td-bor1">${afn:getMessage("brd_title",sessionScope.locale)} *</td>
                         <td class="body-td2 padding-left">
                             <input type="text" name="qna_title" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50">
                             <input name="secret" id="secret" type="checkbox">
@@ -38,9 +38,9 @@
                         </td>
                     </tr>
                     <tr>
-                         <td class="sec1-td-bor1">${afn:getMessage('content',sessionScope.locale)}</td>
+                         <td class="sec1-td-bor1">${afn:getMessage('content',sessionScope.locale)} *</td>
                         <td class="body-td2 padding-left">
-                              <textarea name=qna_memo placeholder="${afn:getMessage('msg_below500word',sessionScope.locale)}"  style="resize:none;" maxlength="500">${detail.qna_memo}</textarea>
+                              <textarea name=qna_memo placeholder="${afn:getMessage('msg_below500word',sessionScope.locale)}"  style="resize:none;" maxlength="500"></textarea>
                             <p class="txt-counting">&#40;<span>0</span>/500&#41;</p>
                         </td>
                     </tr>

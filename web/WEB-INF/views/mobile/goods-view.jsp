@@ -333,7 +333,7 @@
            <li><a href="javascript:move(1)" class="active">${afn:getMessage("product_description",sessionScope.locale)}</a></li>
            <li><a href="javascript:move(2)">${afn:getMessage("product_info",sessionScope.locale)}</a></li>
            <li><a href="javascript:move(3)">${afn:getMessage("review",sessionScope.locale)} <span class="red text-sm"><%--65--%></span></a></li>
-           <li><a href="javascript:move(4)">${afn:getMessage("qna",sessionScope.locale)} <span class="red text-sm qnaCnt">65</span></a></li>
+           <li><a href="javascript:move(4)">${afn:getMessage("qna",sessionScope.locale)} <span class="red text-sm qnaCnt"></span></a></li>
            <li><a href="javascript:move(5)">${afn:getMessage("pro_info_etc2",sessionScope.locale)}</a></li>
        </ul>        
         <div class="my-1" id="content01">
@@ -599,7 +599,7 @@
         </div> -->
         <div class="mt-4 mb-2" id="content04">
            <ul class="flexbetween mb-1">
-               <li><h3>${afn:getMessage("product_qna2",sessionScope.locale)}<span class="red text-md ml-1">65</span></h3></li>
+               <li><h3>${afn:getMessage("product_qna2",sessionScope.locale)}<span class="red text-md ml-1"></span></h3></li>
                <li><button class="btn btn-black" data-id="${list.product_cd}" id="productqna">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button></li>
            </ul>
            <hr>

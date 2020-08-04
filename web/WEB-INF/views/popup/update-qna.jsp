@@ -18,7 +18,7 @@
                 </colgroup>
                 <tbody class="sec1-tbody">
                     <tr>
-                        <td class="sec1-td-bor1">${afn:getMessage("title",sessionScope.locale)}</td>
+                        <td class="sec1-td-bor1">${afn:getMessage("brd_title",sessionScope.locale)} *</td>
                         <td class="body-td2 padding-left">
                             <input type="text" name="qna_title" placeholder="${afn:getMessage('msg_below50word',sessionScope.locale)}" maxlength="50" value="${detail.qna_title}">
                            	<c:if test="${detail.qna_open_type eq 'T'}">
@@ -28,24 +28,24 @@
                             	<input name="secret" id="secret" type="checkbox">           
                        		</c:if>
                             <label for="secret">${afn:getMessage('private',sessionScope.locale)}</label>
-                            <input type="hidden" name="qna_open_type"  >
+                            <input type="hidden" name="qna_open_type" value="${detail.qna_open_type}" >
                         </td>
                     </tr>
                     <tr>
                         <td class="sec1-td-bor1">${afn:getMessage('QA_type',sessionScope.locale)}</td>
                         <td class="body-td2 padding-left">
                             <select name="qna_type" id="qna_type">
-                                <option value="O">${afn:getMessage('orders_payments',sessionScope.locale)}</option>
-                                <option value="C">${afn:getMessage('change_return_refund',sessionScope.locale)}</option>
-                                <option value="D">${afn:getMessage('deliv',sessionScope.locale)}</option>
-                                <option value="G">${afn:getMessage('QA_others',sessionScope.locale)}</option>
+                                <option value="O" <c:if test="${detail.qna_type eq \"O\"}">selected</c:if>>${afn:getMessage('orders_payments',sessionScope.locale)}</option>
+                                <option value="C" <c:if test="${detail.qna_type eq \"C\"}">selected</c:if>>${afn:getMessage('change_return_refund',sessionScope.locale)}</option>
+                                <option value="D" <c:if test="${detail.qna_type eq \"D\"}">selected</c:if>>${afn:getMessage('deliv',sessionScope.locale)}</option>
+                                <option value="G" <c:if test="${detail.qna_type eq \"G\"}">selected</c:if>>${afn:getMessage('QA_others',sessionScope.locale)}</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td class="sec1-td-bor1">${afn:getMessage('content',sessionScope.locale)}</td>
+                        <td class="sec1-td-bor1">${afn:getMessage('content',sessionScope.locale)} *</td>
                         <td class="body-td2 padding-left">
-                            <textarea name=qna_memo placeholder="${afn:getMessage('msg_below500word',sessionScope.locale)}"  style="resize:none;" maxlength="500">${detail.qna_memo}</textarea>
+                            <textarea name=qna_memo placeholder="${afn:getMessage('msg_below500word',sessionScope.locale)}" style="resize:none;" maxlength="500">${detail.qna_memo}</textarea>
                             <p class="txt-counting">&#40;<span>0</span>/500&#41;</p>
                         </td>
                     </tr>

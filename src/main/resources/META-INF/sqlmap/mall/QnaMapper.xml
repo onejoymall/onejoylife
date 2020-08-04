@@ -121,6 +121,8 @@
        update product_qna set
         qna_rewrite_reg_date=now(),
         qna_memo=#{qna_memo},
+        qna_type = #{qna_type},
+        qna_open_type = #{qna_open_type},
         qna_title=#{qna_title}
         where qna_id=#{qna_id}
     </update>

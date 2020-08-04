@@ -3782,19 +3782,23 @@ $(document).on("click",".ra-num",function () {
     	}
     }
 
+//Q&A 수정
+$(document).ready(function() {
     $('.qna-update').click(function () {
         var child;
-        var qna_id=$(this).attr("data-id");
+        var qna_id = $(this).attr("data-id");
 
 
-        if(child != undefined){
+        if (child != undefined) {
             child.close()
         }
 
-        child = window.open('/Popup/update-qna?qna_id='+qna_id,'_blank','width=750, height=900');
-    });
+        child = window.open('/Popup/update-qna?qna_id=' + qna_id, '_blank', 'width=750, height=900');
+    })
+});
 
-	//Q&A삭제
+//Q&A삭제
+$(document).ready(function() {
     $('.qna-delete').click(function () {
     	if(confirm(getMessageAjax('msg_deleteask'))){
     		var qna_id = $(this).attr("data-id");
@@ -3824,7 +3828,8 @@ $(document).on("click",".ra-num",function () {
     		return false;
     	}
 
-    });
+    })
+});
 
 
 
@@ -4132,8 +4137,16 @@ function commonAjaxSaveCall(type,url,formData,popup){
                     icon: 'success',
                     hideAfter:2000,
                     afterHidden: function () {
-                        if(popup){
-                            window.close()
+                        var filter = "win16|win32|win64|macintel|mac|";
+                        if(navigator.platform){
+                            if(filter.indexOf(navigator.platform.toLowerCase()) < 0){
+                                opener.parent.location.reload();
+                                window.close();
+                            } else {
+                               if(popup){
+                                   window.close()
+                               }
+                            }
                         }
                     }
                 });
@@ -4222,11 +4235,6 @@ $(document).on("click","#qnaModifySubmit",function () {
 
 
 
-	
-
-
-
-
 $(document).on("click",'#toastLoginLink',function () {
     opener.location.href='/sign/login';
     window.close();
@@ -4239,11 +4247,18 @@ function callQnalist(product_cd,page) {
     var html='';
     var qnaAnswer='';
     var lock='';
+    var qna_rewrite_memo = '';
     var paging ='';
     $('.qna-data-list').html('');
 
     $.each(dataList.list,function (key,value) {
 
+        if(value.qna_rewrite_memo == null){
+            value.qna_rewrite_memo = "";
+        }
+        if(value.qna_rewrite_reg_date == null){
+            value.qna_rewrite_reg_date = "";
+        }
         if(value.rewriter_name != null){
             qnaAnswer = '<span class="waiting">' + getMessageAjax('qna.ansYes') + '</span>';
         }else{
@@ -4269,8 +4284,8 @@ function callQnalist(product_cd,page) {
         if(value.qna_writer_id == dataList.usr_id){
             html +='' +
                 '    <div class="qna-setting-box">\n' +
-                '        <button type="button" class="modify">' + getMessageAjax('update') + '</button>\n' +
-                '        <button type="button" class="delete" onclick="deleteSelectQna()">' + getMessageAjax('delete') + '</button>\n' +
+                '        <button type="button" class="qna-update" data-id="'+ value.qna_id +'">' + getMessageAjax('update') + '</button>\n' +
+                '        <button type="button" class="qna-delete" data-id="'+ value.qna_id +'">' + getMessageAjax('delete') + '</button>\n' +
                 '    </div>\n';
         }
         //공개
@@ -4333,6 +4348,12 @@ function callQnalistM(product_cd,page) {
 
     $.each(dataList.list,function (key,value) {
 
+        if(value.qna_rewrite_memo == null){
+            value.qna_rewrite_memo = "";
+        }
+        if(value.qna_rewrite_reg_date == null){
+            value.qna_rewrite_reg_date = "";
+        }
         if(value.rewriter_name != null){
             qnaAnswer = '<span class="tapRed">' + getMessageAjax('qna.ansYes') + '</span>';
         }else{
@@ -4368,8 +4389,8 @@ function callQnalistM(product_cd,page) {
 					if(value.qna_writer_id == dataList.usr_id){
 			            html +='' +
 							'<p class="mt-1">' +
-	                            '<button class="btn" class="modify">' + getMessageAjax('update') + '</button>\n' +
-		                        '<button class="btn" onclick="deleteSelectQna()">' + getMessageAjax('delete') + '</button>\n' +
+	                            '<button class="btn qna-update" data-id="'+ value.qna_id +'">' + getMessageAjax('update') + '</button>\n' +
+		                        '<button class="btn qna-delete" data-id="'+ value.qna_id +'">' + getMessageAjax('delete') + '</button>\n' +
 	                        '</p>';
 			        }
 			html +='' +
@@ -4391,8 +4412,8 @@ function callQnalistM(product_cd,page) {
 						if(value.qna_writer_id == dataList.usr_id){
 				            html +='' +
 								'<p class="mt-1">' +
-		                            '<button class="btn" class="modify">' + getMessageAjax('update') + '</button>\n' +
-			                        '<button class="btn" onclick="deleteSelectQna()">' + getMessageAjax('delete') + '</button>\n' +
+		                            '<button class="btn qna-update" data-id="'+ value.qna_id +'">' + getMessageAjax('update') + '</button>\n' +
+			                        '<button class="btn qna-delete" data-id="'+ value.qna_id +'">' + getMessageAjax('delete') + '</button>\n' +
 		                        '</p>';
 				        }
 				html +='' +
