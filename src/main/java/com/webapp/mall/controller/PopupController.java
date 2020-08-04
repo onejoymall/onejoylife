@@ -160,7 +160,7 @@ public class PopupController {
     }
     //상품문의Q&A 수정 팝업
     @RequestMapping("/Popup/update-qna")
-    public String updateQna(ModelMap model, QnaVO qnaVO) throws Exception {
+    public String updateQna(ModelMap model, QnaVO qnaVO, HttpServletRequest request) throws Exception {
         try {
         	 Map<String,Object>detail =qnaDAO.getQnaDetail(qnaVO);
              //resultMap.put("detail", detail);
@@ -169,8 +169,13 @@ public class PopupController {
             e.printStackTrace();
         }
         model.addAttribute("style", "write-qna");
-     //   Device device = DeviceUtils.getCurrentDevice(request);
-        return "popup/update-qna";
+        Device device = DeviceUtils.getCurrentDevice(request);
+    	if(device.isMobile()){
+            return "mobile/popup/update-qna";
+        } else {
+		    return "popup/update-qna";
+	    }
+
     }
 
     //리뷰작성
