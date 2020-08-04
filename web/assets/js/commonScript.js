@@ -4465,6 +4465,109 @@ function callQnalist(product_cd,page) {
     $('.pagination').html('');
     $('.pagination').append(ajaxPaging(dataList.pageVO,product_cd))
 }
+
+function callQnalistM(product_cd,page) {
+	if(!page) page = 1;
+    var formData = {"product_cd":product_cd,"page":page};
+    var dataList = commonAjaxListCall("POST","/product/listQna",formData);
+    var html='';
+    var qnaAnswer='';
+    var lock='';
+    var paging ='';
+    $('.goodsQnaList').html('');
+
+    $.each(dataList.list,function (key,value) {
+
+        if(value.rewriter_name != null){
+            qnaAnswer = '<span class="tapRed">' + getMessageAjax('qna.ansYes') + '</span>';
+        }else{
+            qnaAnswer = '<span class="tapGrey">' + getMessageAjax('FAQwait') + '</span>';
+        }
+        if(value.qna_open_type=="T"){
+            lock='<i class="lock-ic"></i>'
+        }else{
+            lock='';
+        }
+
+        html +='' +
+                '<div class="goodsQna">' +
+                '<div class="goodsHeader">' +
+	                '<p>' +
+	                    '<span>'+qnaAnswer+'</span>' +
+	                    '<span class="date">'+value.reg_date+'</span>' +
+	                    // '<span>'+value.qna_type_name+'</span>' +
+	                    '<span class="">'+value.email+'</span>' +
+	                '</p>' +
+	                '<h4 class="pt-1">'+value.qna_title+lock+'</h4>' +
+                '</div>';
+
+        html +='' +
+            '<div class="goodsBody">\n';
+        //공개
+        if(value.qna_open_type == "F"){
+            html +='' +
+                '<div class="goodsBodyQ text-md">' +
+                '<span>' + getMessageAjax('qust') + '</span>' +
+                    value.qna_memo ;
+                    //비공개 시 글쓴이만 열람 가능
+					if(value.qna_writer_id == dataList.usr_id){
+			            html +='' +
+							'<p class="mt-1">' +
+	                            '<button class="btn" class="modify">' + getMessageAjax('update') + '</button>\n' +
+		                        '<button class="btn" onclick="deleteSelectQna()">' + getMessageAjax('delete') + '</button>\n' +
+	                        '</p>';
+			        }
+			html +='' +
+				'</div>' +
+				'<div class="goodsBodyA text-md">' +
+					'<span>' + getMessageAjax('brd_A') + '</span>' +
+						value.qna_rewrite_memo +
+                    '<p class="mt-1 grey">' + getMessageAjax('replyDate') + ' : ' + value.qna_rewrite_reg_date + '</p>' +
+                '</div>';
+
+        //비공개
+        }else{
+            if(value.qna_writer_id == dataList.usr_id){
+                html +='' +
+                    '<div class="goodsBodyQ text-md">' +
+	                '<span>' + getMessageAjax('qust') + '</span>' +
+	                    value.qna_memo;
+	                    //비공개 시 글쓴이만 열람 가능
+						if(value.qna_writer_id == dataList.usr_id){
+				            html +='' +
+								'<p class="mt-1">' +
+		                            '<button class="btn" class="modify">' + getMessageAjax('update') + '</button>\n' +
+			                        '<button class="btn" onclick="deleteSelectQna()">' + getMessageAjax('delete') + '</button>\n' +
+		                        '</p>';
+				        }
+				html +='' +
+					'</div>' +
+					'<div class="goodsBodyA text-md">' +
+						'<span>' + getMessageAjax('brd_A') + '</span>' +
+							value.qna_rewrite_memo +
+	                    '<p class="mt-1 grey">' + getMessageAjax('replyDate') + ' : ' + value.qna_rewrite_reg_date + '</p>' +
+	                '</div>';
+            }else{
+                html +='' +
+                    '    <div class="goodsBody">\n' +
+                    '       <div class="goodsBodyQ">\n' +
+	                            getMessageAjax('msg.board.privateWriting') +
+                    '       </div>\n'+
+                    '    </div>\n';
+            }
+        }
+        html +='' +
+                '</div>\n' +
+            '</div>\n';
+    });
+
+    $('#content04 .flexbetween .red').html(dataList.listCnt);
+    $('#tap li a .qnaCnt').html(dataList.listCnt);
+    $('.goodsQnaList').append(html);
+    $('.pagination').html('');
+    $('.pagination').append(ajaxPaging(dataList.pageVO,product_cd))
+}
+
 $('#secret').on("change",function () {
     if($(this).is(":checked")){
         $('input[name=qna_open_type]').val("T");
