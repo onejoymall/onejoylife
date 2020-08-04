@@ -30,8 +30,37 @@ public class StoreVO extends SearchVO {
     private String store_bank_name;
     private String enable_mg_menu_id;
     private Integer level;
+    private String store_info_chkDate;
+    private String info_alert_date;
+    private String alert_chk;
+    
+    
 
-    public Integer getLevel() {
+    public String getStore_info_chkDate() {
+		return store_info_chkDate;
+	}
+
+	public void setStore_info_chkDate(String store_info_chkDate) {
+		this.store_info_chkDate = store_info_chkDate;
+	}
+
+	public String getInfo_alert_date() {
+		return info_alert_date;
+	}
+
+	public void setInfo_alert_date(String info_alert_date) {
+		this.info_alert_date = info_alert_date;
+	}
+
+	public String getAlert_chk() {
+		return alert_chk;
+	}
+
+	public void setAlert_chk(String alert_chk) {
+		this.alert_chk = alert_chk;
+	}
+
+	public Integer getLevel() {
         return level;
     }
 

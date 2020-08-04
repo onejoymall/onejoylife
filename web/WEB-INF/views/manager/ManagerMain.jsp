@@ -14,6 +14,9 @@
             <a href="/Manager/order?start_date=<fmt:formatDate value="${today}" pattern="YYYY-MM-dd"/>" class="content-sales item">
       <input type="hidden" id="store_id" value="${info.store_id}" data-id="${info.store_id}">
       <input type="hidden" id="reg_date" value="<fmt:formatDate value="${info.reg_date}" pattern="YYYY-MM-dd"/>" data-id="${info.reg_date}">
+      <input type="hidden" id="reg_date" value="<fmt:formatDate value="${info.store_info_chkDate}" pattern="YYYY-MM-dd"/>" data-id="${info.store_info_chkDate}">
+      <input type="hidden" id="reg_date" value="<fmt:formatDate value="${info.info_alert_date}" pattern="YYYY-MM-dd"/>" data-id="${info.info_alert_date}">
+      <input type="hidden" id="ALERT_CHK" value="${info.ALERT_CHK}" data-id="${info.ALERT_CHK}">
       
                 <span class="item-icon"></span>
                 <span class="content-item-text">
@@ -191,11 +194,20 @@
 
 <script type="text/javascript">
 
-/* 
+
 $(document).ready(function() {
 	var store_id= $("#store_id").val();
 	var reg_date= $("#reg_date").val();
+	var store_id= $("#info_alert_date").val();
+	var reg_date= $("#store_info_chkDate").val();
+	var alert_chk= $("#ALERT_CHK").val();
 	
+	if(alert_chk =='Y'){	 
+		alert("정보 체크 요청")	
+		location.href = "/Manager/storeInfo"
+		//이동 
+		
+	}
 	
 	/* var d = new Date(reg_date);
 	console.log(d.toLocaleDateString());
@@ -221,7 +233,7 @@ $(document).ready(function() {
 
 	 */
 	
-/* 	  
+
 	jQuery.ajax({
         type: 'POST',
         url: '/Manager/managerChk3mth',
@@ -242,6 +254,6 @@ $(document).ready(function() {
     });
 
 
-	}); */
+	}); 
 </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>
