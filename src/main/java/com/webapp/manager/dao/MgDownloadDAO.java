@@ -40,7 +40,9 @@ public class MgDownloadDAO {
     @Transactional
 	public void upadteOrderBatch(List<Map<String, Object>> list) throws SQLException {
 		for(Map<String, Object> map:list) {
-			sql.update("mall.MgDownloadMapper.updateOrder", map);
+			if(map.get("no") != null && !map.get("no").equals("")) {
+				sql.update("mall.MgDownloadMapper.updatePaymentBundleBatch", map);
+			}
 		}
 	}
     @Transactional

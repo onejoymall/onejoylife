@@ -79,9 +79,9 @@
   <select id="getOrderDtoList" parameterType="com.webapp.mall.vo.CommonVO" resultType="java.util.Map">
     <![CDATA[
         SELECT 
-        	date_format(B.delivery_start_date,'%Y-%m-%d') delivery_start_date,
-        	date_format(A.reg_date,'%Y-%m-%d') reg_date,
-            A.*,B.*, C.*,
+	        	DATE_FORMAT(A.delivery_start_date,'%Y-%m-%d') delivery_start_date,
+	        	date_format(A.reg_date,'%Y-%m-%d') reg_date,
+            A.*,D.*,B.*,C.*,
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'M' AND Z.product_class_code = C.product_made_company_cd) AS product_made_company_name,
             (SELECT Z.store_name FROM store Z WHERE Z.supplier_cd = C.product_supplier) AS product_supplier_name,
             (SELECT Z.store_id FROM store Z WHERE Z.supplier_cd = C.product_supplier) AS product_supplier_id,
@@ -89,17 +89,19 @@
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'T' AND Z.product_class_code = C.product_trend) AS product_trend_name,
             (SELECT Z.product_class_name FROM product_class_code Z WHERE Z.product_class_code_type = 'O' AND Z.product_class_code = C.product_origin) AS product_origin_name,
             (SELECT Z.code_name FROM code Z WHERE Z.code = 'payment_status' AND Z.code_value = A.payment_status ) AS payment_status_name,
-            (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = A.pay_method) as pay_method_name,
+            (select Z.code_name from code Z where Z.code = 'product_payment_type' AND Z.code_value = D.pay_method) as pay_method_name,
             (SELECT if(SUBSTRING_INDEX(C.product_tex_class, '|', 1) = 'A','과세상품',Z.code_name) FROM code Z WHERE Z.code = 'product_tex_class' AND Z.code_value = SUBSTRING_INDEX(C.product_tex_class, '|', 1) ) AS product_tex_class_name,
             if(SUBSTRING_INDEX(C.product_tex_class, '|', -1) IN ('A','B','C'),NULL,SUBSTRING_INDEX(C.product_tex_class, '|', -1)) AS product_tex
             
-        FROM payment A 
+        FROM payment_bundle A
+        LEFT JOIN payment D
+        ON A.order_no = D.order_no
         LEFT JOIN delivery_info B
         ON A.order_no = B.order_no
         LEFT JOIN product C
         ON A.product_cd = C.product_cd
         WHERE A.order_no NOT LIKE 'GW%'
-and A.payment_status != 'N'
+		and A.payment_status != 'N'
         AND A.${pk} in
         ]]>
         <!-- <if test="payment_status != null and payment_status !=''"><![CDATA[AND A.payment_status = #{payment_status} ]]></if>
@@ -156,6 +158,25 @@ and A.payment_status != 'N'
 			B.delivery_start_date = #{delivery_start_date}
 		WHERE A.order_no = B.order_no
 		AND A.order_no = #{order_no}
+  </update>
+  <update id="updatePaymentBundleBatch" parameterType="hashmap">
+	  UPDATE payment_bundle A, delivery_info B SET
+			A.payment_status = #{payment_status},
+			B.order_user_name = #{order_user_name},
+			B.order_user_phone = #{order_user_phone},
+			B.delivery_user_name = #{delivery_user_name},
+			B.delivery_user_phone = #{delivery_user_phone},
+			B.delivery_user_tel = #{delivery_user_tel},
+			B.postcode = #{postcode},
+			B.roadAddress = #{roadAddress},
+			B.extraAddress = #{extraAddress},
+			B.jibunAddress = #{jibunAddress},
+			B.delivery_message = #{delivery_message},
+			A.delivery_t_code = #{delivery_t_code},
+			A.delivery_t_invoice = #{delivery_t_invoice},
+			A.delivery_start_date = #{delivery_start_date}
+		WHERE A.order_no = B.order_no
+		AND A.no = #{no}
   </update>
   <update id="upadteGiveawayPart" parameterType="hashmap">
 	  UPDATE giveaway_play_history C, payment A, delivery_info B SET

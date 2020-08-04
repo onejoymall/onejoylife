@@ -1911,6 +1911,101 @@ $(document).on("click",".ra-num",function () {
             },
         });
     }
+    
+    //경품주문현황 선택
+    function selectPaymentG(order_no){
+    	var file_link='';
+    	$(".modal").attr("style", "display:block");
+    	
+    	var html;
+    	$("#upate_addr_tr").hide();
+    	$("#upate_addr_basic").show();
+    	html='';
+    	$('#setButton').html(html);
+    	$('input[name=delivery_t_invoice]').val('');
+    	jQuery.ajax({
+    		type: 'POST',
+    		url: '/Manager/selectPaymentG',
+    		data: {"order_no":order_no},
+    		success: function (data) {
+//    			var leftHtml = '';
+//    			leftHtml += '';
+//    			if(data.impPayment && data.impPayment.status == 'paid'){
+//    				leftHtml += '<button type="button" class="btn-gray" onclick="taxInvoice(\'' + data.list.order_no + '\');">세금계산서</button>' +
+//    				'<button type="button" class="btn-gray" onclick="normalReceipt(\'' + data.list.order_no + '\');">영수증</button>' +
+//    				'<button type="button" class="btn-gray" onclick="transactionStatement(\'' + data.list.order_no + '\');">거래명세서</button>';
+//    				if(data.impPayment.payMethod == 'card'){
+//    					leftHtml += '<button type="button" class="btn-gray" onclick="salesStatement(\'' + data.list.order_no + '\');">매출전표</button>';
+//    				}else{
+//    					leftHtml += '<button type="button" class="btn-gray" onclick="cashReceipt(\'' + data.list.order_no + '\');">현금영수증</button>';
+//    				}
+//    			}
+//    			$("#setDefaultButton").html(leftHtml);
+    			console.log(data);
+    			$.each(data.list, function (index, item) {
+    				$("input[name="+index+"]").val(item);
+    				$('.' + index).html(item);
+    				if(index=="delivery_t_code"){
+    					$('select[name=delivery_t_code]').val(item);
+    				}
+    				if(index=="delivery_t_invoice"){
+    					$('input[name=delivery_t_invoice]').val(item);
+    				}
+    				if(index=="payment_status" && item=="W" || item=="D" || item=="I"){
+    					html='' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'I\')">상품준비중</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'D\')">배송준비중</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'R\')">배송처리</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(data.list.order_no)+'\',\'C\')">전액취소</button>';
+    					if(index=="payment_status" && item=="W"){
+    						html += '<button type="button" name="detail" class="btn-gray" onclick="addrmodi(\''+$.trim(data.list.order_no)+'\')">배송지 수정</button>';
+    						$("#upate_addr_tr").show();
+    						$("#upate_addr_basic").hide();
+    					}
+    					$('#setButton').html(html);
+    				}
+    				if(index=="payment_status" && item=="R"){
+    					html='<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'R\')">배송정보수정</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'O\')">배송완료</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(order_no)+'\',\'W\')">배송취소</button>' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(data.list.order_no)+'\',\'C\')">전액취소</button>';
+    					$('#setButton').html(html);
+    				}
+    				if(index=="payment_status" && item=="O"){
+    					html='' +
+    					'<button type="button" name="detail" class="btn-gray" onclick="deliverySaveG(\''+$.trim(data.list.order_no)+'\',\'C\')">전액취소</button>';
+    					$('#setButton').html(html);
+    				}
+    				if(index=="delivery_start_date" || index=="reg_date"){
+    					$('.' + index).html($.datepicker.formatDate('yy-mm-dd', new Date(item)));
+    					
+    				}
+    				if(index=="product_name"){
+    					$('.' + index).html(item + (data.list.option_name ? " / "+data.list.option_name : "") +" [" + data.list.payment_order_quantity + "개]");
+    				}
+    			});
+    			
+    			/*if(data.paymentBundleList && data.paymentBundleList.length > 1 ) {
+                	var product_made_company_name_html = '';
+                	var product_name_html = '';
+                	var payment_order_quantity_html = '';
+                	
+                	data.paymentBundleList.forEach(function(el, idx){
+                		product_made_company_name_html += (idx == 0 ? '' : '<br>') + (el.product_made_company_name ? el.product_made_company_name : '-');
+                		product_name_html += (idx == 0 ? '' : '<br>') + el.product_name + (el.option_name ? ' '+el.option_name : '') + " [" + el.payment_order_quantity + "개]";
+//                		payment_order_quantity_html += el.payment_order_quantity;
+                	});
+                	
+                	$(".product_made_company_name").html(product_made_company_name_html);
+                	$(".product_order_name").html(product_name_html);
+//                	$(".payment_order_quantity").html(payment_order_quantity_html);
+                }*/
+    		},
+    		error: function (xhr, status, error) {
+    			alert(error);
+    		},
+    	});
+    }
 
     //교환 반품 취소
     function refundCancel(order_no,delivery_status){
@@ -2013,6 +2108,56 @@ $(document).on("click",".ra-num",function () {
                 alert(error);
             },
         })
+    }
+    
+    //경품배송정보 저장
+    function deliverySaveG(order_no,delivery_status){
+    	var formData = $('#saveDelivery').serialize()+'&order_no='+order_no+'&delivery_status='+delivery_status+'&payment_status='+delivery_status;
+    	$.ajax({
+    		type: 'POST',
+    		data: formData,
+    		url:'/Manager/SaveDeliveryG',
+    		success: function (data) {
+    			if (data.validateError) {
+    				$('.validateError').empty();
+    				$.each(data.validateError, function (index, item) {
+    					if(index == "Error"){//일반에러메세지
+    						alertType = "error";
+    						showText = item;
+    					}else{
+    						alertType = "error";
+    						showText = index + " "+getMessageAjax('is')+" " + item;
+    					}
+    					// $.toast().reset('all');//토스트 초기화
+    					$.toast({
+    						text: showText,
+    						showHideTransition: 'plain', //펴짐
+    						position: 'bottom-right',
+    						heading: 'Error',
+    						icon: 'error'
+    					});
+    				});
+    				
+    			} else {
+    				$.toast({
+    					text: data.success,
+    					showHideTransition: 'plain', //펴짐
+    					position: 'bottom-right',
+    					icon: 'success',
+    					hideAfter: 2000,
+    					afterHidden: function () {
+//                            location.href=data.redirectUrl;
+    						location.reload();
+    					}
+    				});
+    				// loginAuth(data.access_token);
+    				// location.href=data.redirectUrl;
+    			}
+    		},
+    		error: function (xhr, status, error) {
+    			alert(error);
+    		},
+    	})
     }
 
     //배송 주소 수정
@@ -4775,6 +4920,10 @@ $(".uploadModalBtn").click(function(){
 //업로드양식다운
 $(".downlaodTemplateBtn").click(function(){
 	location.href="/downloadFile/"+$(this).attr("data-id");
+})
+//업로드사용방법다운
+$(".downlaodHowToUseBtn").click(function(){
+	location.href="/downloadHowUse/"+$(this).attr("data-id");
 })
 //엑셀업로드
 $(".uploadExcelBtn").click(function(){
