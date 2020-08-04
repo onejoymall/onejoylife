@@ -271,8 +271,8 @@
                <textarea class="width-100"></textarea>
             </div>
             <ul class="btns mt-2 mb-0">
-                <li><a href="#">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
-                <li><a href="#" class="active">${afn:getMessage("registration",sessionScope.locale)}</a></li>
+                <li><a href="#" onclick="window.close()">${afn:getMessage("QAcancel",sessionScope.locale)}</a></li>
+                <li><a href="#" class="active" id="qnaWriteSubmit">${afn:getMessage("registration",sessionScope.locale)}</a></li>
            </ul>
         </content>
     </div>
@@ -333,7 +333,7 @@
            <li><a href="javascript:move(1)" class="active">${afn:getMessage("product_description",sessionScope.locale)}</a></li>
            <li><a href="javascript:move(2)">${afn:getMessage("product_info",sessionScope.locale)}</a></li>
            <li><a href="javascript:move(3)">${afn:getMessage("review",sessionScope.locale)} <span class="red text-sm"><%--65--%></span></a></li>
-           <li><a href="javascript:move(4)">${afn:getMessage("qna",sessionScope.locale)} <span class="red text-sm"><%--65--%></span></a></li>
+           <li><a href="javascript:move(4)">${afn:getMessage("qna",sessionScope.locale)} <span class="red text-sm qnaCnt">65</span></a></li>
            <li><a href="javascript:move(5)">${afn:getMessage("pro_info_etc2",sessionScope.locale)}</a></li>
        </ul>        
         <div class="my-1" id="content01">
@@ -599,10 +599,16 @@
         </div> -->
         <div class="mt-4 mb-2" id="content04">
            <ul class="flexbetween mb-1">
-               <li><h3>${afn:getMessage("product_qna2",sessionScope.locale)}<span class="red text-md ml-1"><%--65--%></span></h3></li>
-               <li><button class="btn btn-black" data-id="${list.product_cd}" id="btn_qna">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button></li>
+               <li><h3>${afn:getMessage("product_qna2",sessionScope.locale)}<span class="red text-md ml-1">65</span></h3></li>
+               <li><button class="btn btn-black" data-id="${list.product_cd}" id="productqna">${afn:getMessage("writemyFAQ",sessionScope.locale)}</button></li>
            </ul>
            <hr>
+            <div class="goodsQnaList">
+
+            </div>
+            <ul class="pagination" style="margin-top:10px;">
+
+                    </ul>
            <%--
            <div class="qnaNothing">${afn:getMessage("msg.proDetail.none_qnacontent",sessionScope.locale)}</div>
            <div class="goodsQna active">
@@ -657,13 +663,13 @@
                    </div>
                </div>
            </div>--%>
-           <ul class="centerBtns mt-3">
+           <%--<ul class="centerBtns mt-3">
                 <li><a href="#"><i class="ri-arrow-left-s-line"></i></a></li>
                 <li><a href="#" class="active">1</a></li>
                 <li><a href="#">2</a></li>
                 <li><a href="#">3</a></li>
                 <li><a href="#"><i class="ri-arrow-right-s-line"></i></a></li>
-            </ul>
+            </ul>--%>
         </div>
         <div class="mt-4 mb-2">
             <h3 class="mb-1">${afn:getMessage("sameSupplierPro",sessionScope.locale)}</h3>
@@ -718,6 +724,8 @@
 
 <script>
 $(document).ready(function(){
+    callQnalistM('${param.product_cd}',1);
+
      $('.goods-slider').bxSlider({
         auto:false,
         autoHover:true,
