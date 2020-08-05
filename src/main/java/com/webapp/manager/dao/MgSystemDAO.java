@@ -91,4 +91,12 @@ public class MgSystemDAO {
 	public void insertExcelSetting(HashMap params) {
 		sql.insert("mall.MgSystemMapper.insertExcelSetting",params);
 	}
+	public Map<String, Object> getStoreForId(HashMap params) {
+		Map<String,Object> getStoreForId=sql.selectOne("mall.MgSystemMapper.getStoreForId",params);
+    	return getStoreForId;
+	}
+	public Map<String, Object> getStoreProductDefinition(HashMap params) {
+		Map<String,Object> getStoreProductDefinition=sql.selectOne("mall.MgSystemMapper.getStoreProductDefinition",params);
+    	return getStoreProductDefinition;
+	}
 }

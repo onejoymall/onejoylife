@@ -72,8 +72,14 @@
 	                          	 </td>
                          	 </tr>
 	                          <tr>
-		                          <th></th>
-		                          <td></td>
+		                          <th>승인여부</th>
+		                          <td>
+		                          	<select name="product_approval_yn">
+		                          		<option value="" <c:if test="${empty params.product_approval_yn}">selected="selected"</c:if>>전체</option>
+		                          		<option value="Y" <c:if test="${params.product_approval_yn == 'Y'}">selected="selected"</c:if>>승인</option>
+		                          		<option value="N" <c:if test="${params.product_approval_yn == 'N'}">selected="selected"</c:if>>미승인</option>
+		                          	</select>
+		                          </td>
 		                          <th></th>
 	                        	  <td>
 		                              <div class="input-box2">
@@ -97,6 +103,10 @@
             <div class="list-sort-wrap">
                 <div class="left">
                     <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
+                    <c:if test="${sessionScope.adminLogin == 'admin'}">
+                    	<button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_approval_yn','Y')">상품승인</button>
+                    	<button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_approval_yn','N')">상품미승인</button>
+                    </c:if>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_use_yn','Y')">진열함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_use_yn','N')">진열암함</button>
                     <button type="button" class="btn-default" name="copy" onclick="listProductUpdate('product_sale_yn','Y')">판매함</button>
@@ -132,8 +142,8 @@
                     <col width="5%">
 <%--                    <col width="10%">--%>
 <%--                    <col width="5%">--%>
-<%--                    <col width="10%">--%>
-                    <col width="14%">
+                    <col width="4%">
+                    <col width="10%">
                 </colgroup>
                 <thead>
                 <tr>
@@ -147,6 +157,7 @@
                     <td>배송</td>
 <%--                    <td>구매수량</td>--%>
                     <td name="detail">상태</td>
+                    <td>승인여부</td>
                     <td>관리</td>
                 </tr>
                 </thead>
@@ -168,6 +179,7 @@
                             <td>${productList.product_delivery_type_name}</td>
 <%--                            <td></td>--%>
                             <td>${productList.product_sale_yn_name}</td>
+                            <td>${productList.product_approval_yn == 'Y' ? '승인' : '미승인'}</td>
                             <td>
                                 <button type="button" class="goods-list-btn" name="copy" onclick="productCopy('${productList.product_cd}')">복사 등록</button>
                                 <button type="button" class="goods-list-btn" name="" onclick="defaultModal('${productList.product_cd}')" >상세보기</button>
@@ -775,15 +787,17 @@
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
+                    <c:if test="${sessionScope.adminLogin == 'admin'}">
                     <tr>
                         <th>공급사</th>
                         <td>
                             <p class="cc2"><a href="#" class="codeSrc" data-id ="S">&#91;상품 코드정보조회&#93;</a>
                             </p>
-                            <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
-                            <input type="hidden" name="product_store_id"/>
+                            <input type="text" id="goods-s" name="product_supplier" placeholder="입점업체 코드" readonly="readonly">
+                            <input type="text" name="product_store_id" readonly="readonly" placeholder="입점업체 id" />
                         </td>
                     </tr>
+                    </c:if>
                     <tr>
                         <th>브랜드</th>
                         <td>

@@ -24,6 +24,8 @@ public class SearchVO extends PageVO{
     private String category1;
     private String category2;
     private String category3;
+    private String product_approval_yn;
+    private String store_id;
 
     public String getQuestion_type() {
         return question_type;
@@ -207,6 +209,22 @@ public class SearchVO extends PageVO{
 
 	public void setCategory3(String category3) {
 		this.category3 = category3;
+	}
+
+	public String getProduct_approval_yn() {
+		return product_approval_yn;
+	}
+
+	public void setProduct_approval_yn(String product_approval_yn) {
+		this.product_approval_yn = product_approval_yn;
+	}
+
+	public String getStore_id() {
+		return store_id;
+	}
+
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
 	}
 }
  

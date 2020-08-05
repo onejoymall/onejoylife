@@ -24,6 +24,7 @@
         </if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_approval_yn != null"> <![CDATA[AND product_approval_yn= #{product_approval_yn} ]]></if>
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
     </select>
     <select id="getProductList" parameterType="com.webapp.manager.vo.ProductVO" resultType="java.util.Map">
@@ -61,6 +62,7 @@
         <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_approval_yn != null"> <![CDATA[AND product_approval_yn= #{product_approval_yn} ]]></if>
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
         <if test="product_ct != null and product_ct != ''"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
         <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
@@ -84,6 +86,7 @@
         <if test="product_name != null"> <![CDATA[AND product_name LIKE CONCAT('%', #{product_name},'%' ) ]]></if>
         <if test="product_sale_yn != null"> <![CDATA[AND product_sale_yn= #{product_sale_yn} ]]></if>
         <if test="product_use_yn != null"> <![CDATA[AND product_use_yn= #{product_use_yn} ]]></if>
+        <if test="product_approval_yn != null"> <![CDATA[AND product_approval_yn= #{product_approval_yn} ]]></if>
         <if test="product_use_member_yn != null"> <![CDATA[AND product_use_member_yn= #{product_use_member_yn} ]]></if>
         <if test="product_ct != null"> <![CDATA[AND find_in_set(#{product_ct},replace(product_ct,'|',',')) > 0 ]]></if>
         <if test="mainViewType != null"> <![CDATA[AND find_in_set('Y',replace(${mainViewType},'|',',')) > 0 ]]></if>
@@ -305,6 +308,7 @@ and A.payment_status != 'N'
     </insert>
     <insert id="insertProduct" parameterType="com.webapp.manager.vo.ProductVO">
        insert into product(
+       <if test='product_approval_yn == "Y"'>product_approval_yn,</if>
         product_cd,
         product_store_id,
         product_market_cd,
@@ -413,6 +417,7 @@ and A.payment_status != 'N'
         delivery_t_code,
         product_type
        )values(
+       <if test='product_approval_yn == "Y"'>'Y',</if>
         #{product_cd},
         #{product_store_id},
         #{product_market_cd},
@@ -525,6 +530,7 @@ and A.payment_status != 'N'
     </insert>
     <insert id="insertProductCopy" parameterType="java.util.Map">
         insert into product (
+        <if test='product_approval_yn == "Y"'>product_approval_yn,</if>
         product_cd,
         product_market_cd,
         product_use_yn,
@@ -633,6 +639,7 @@ and A.payment_status != 'N'
         product_type
         )
         select
+        <if test='product_approval_yn == "Y"'>'Y',</if>
         #{product_cd},
         product_market_cd,
         product_use_yn,
@@ -762,6 +769,7 @@ and A.payment_status != 'N'
     <update id="updateProduct" parameterType="com.webapp.manager.vo.ProductVO">
         <![CDATA[
         update product set
+        product_approval_yn=#{product_approval_yn},
         product_market_cd=#{product_market_cd},
         product_store_id=#{product_store_id},
         product_use_yn=#{product_use_yn},
@@ -919,6 +927,8 @@ and A.payment_status != 'N'
         </if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="product_approval_yn != null and product_approval_yn !=''"><![CDATA[AND A.product_approval_yn = #{product_approval_yn}]]></if>
+        <if test="store_id != null and store_id !=''"><![CDATA[AND B.store_id = #{store_id}]]></if>
         <if test="category1 != null and  category1 != ''">
         	<![CDATA[
         		AND (
@@ -951,6 +961,8 @@ and A.payment_status != 'N'
         </if>
         <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        <if test="product_approval_yn != null and product_approval_yn !=''"><![CDATA[AND A.product_approval_yn = #{product_approval_yn}]]></if>
+        <if test="store_id != null and store_id !=''"><![CDATA[AND B.store_id = #{store_id}]]></if>
         <if test="category1 != null and  category1 != ''">
         	<![CDATA[
         		AND (

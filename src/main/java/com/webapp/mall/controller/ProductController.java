@@ -110,6 +110,7 @@ public class ProductController {
             }
             searchFilterVO.setProduct_sale_yn("Y");
             searchFilterVO.setProduct_use_yn("Y");
+            searchFilterVO.setProduct_approval_yn("Y");
             searchFilterVO.pageCalculate(searchDAO.getSearchProductListCount(searchFilterVO));
 
             params.put("rowStart",searchFilterVO.getRowStart());
@@ -176,6 +177,7 @@ public class ProductController {
             }
             searchVO.setProduct_sale_yn("Y");
             searchVO.setProduct_use_yn("Y");
+            searchVO.setProduct_approval_yn("Y");
             searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
 
             params.put("rowStart",searchVO.getRowStart());
@@ -334,7 +336,53 @@ public class ProductController {
             	}
             }
             model.addAttribute("lineBannerList1", lineBannerList.get(0));
-            model.addAttribute("product_ct_arr",Arrays.asList(((String)list.get("product_ct")).split("\\|")));
+            
+            //상품정보고시
+            List<Map<String,Object>> product_definition = null;
+            if(list.get("product_definition_key") != null && !list.get("product_definition_key").equals("")) {
+            	product_definition = new ArrayList<>();
+            	String[] product_definition_key = ((String)list.get("product_definition_key")).split(",");
+            	String[] product_definition_val = ((String)list.get("product_definition_value")).split(",");
+            	for(int i=0; i<product_definition_key.length; i++) {
+            		Map<String,Object> tmpMap = new HashMap<>();
+            		tmpMap.put(product_definition_key[i],product_definition_val[i]);
+            		product_definition.add(tmpMap);
+            	}
+            }else {
+            	String[] product_ct_arr = ((String)list.get("product_ct")).split("\\|");
+            	
+        		if(list.get("store_id") != null && !list.get("store_id").equals("")){
+        			params.put("store_id",list.get("store_id"));
+        		}else {
+        			params.put("store_id","admin");
+        		}
+        		
+        		Map<String, Object> store_product_definition = null;
+        		for(int i=0; i<product_ct_arr.length; i++) {
+	        		params.put("product_ct", product_ct_arr[i]);
+	        		store_product_definition = mgSystemDAO.getStoreProductDefinition(params);
+	        		if(store_product_definition != null) break;
+        		}
+        		if(store_product_definition == null) {
+        			params.put("store_id","admin");
+        			for(int i=0; i<product_ct_arr.length; i++) {
+    	        		params.put("product_ct", product_ct_arr[i]);
+    	        		store_product_definition = mgSystemDAO.getStoreProductDefinition(params);
+    	        		if(store_product_definition != null) break;
+            		}
+        		}
+        		if(store_product_definition != null) {
+        			product_definition = new ArrayList<>();
+                	String[] product_definition_key = ((String)store_product_definition.get("product_definition_key")).split(",");
+                	String[] product_definition_val = ((String)store_product_definition.get("product_definition_value")).split(",");
+                	for(int i=0; i<product_definition_key.length; i++) {
+                		Map<String,Object> tmpMap = new HashMap<>();
+                		tmpMap.put(product_definition_key[i],product_definition_val[i]);
+                		product_definition.add(tmpMap);
+                	}
+        		}
+            }
+            model.addAttribute("product_definition",product_definition);
         }catch (Exception e){
             e.printStackTrace();
         }

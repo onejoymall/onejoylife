@@ -1265,6 +1265,17 @@ public class ManagerRestapiController {
 
 //                mgProductDAO.insertProduct(productVO);
 //                mgProductDAO.updateProduct();
+                Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+                params.put("store_id", email);
+                Map<String,Object> storeDetail =  mgSystemDAO.getStoreForId(params);
+            	if(adminLogin.equals("admin")){
+            		productVO.setProduct_approval_yn("Y");
+        		}else {
+        			productVO.setProduct_approval_yn("N");
+        			productVO.setStore_id(email);
+        			productVO.setProduct_supplier((String)storeDetail.get("supplier_cd"));
+        		}
                 mgProductDAO.updateProduct(productVO);
 //                mgProductDAO.updasteProduct(productVO);
                 String Referer =request.getHeader("Referer");
@@ -1426,6 +1437,18 @@ public class ManagerRestapiController {
                     mgProductDAO.deleteProductFile(filelist6,fileVO);
                     mgProductDAO.insertProductFile(filelist6,fileVO);
                 }
+                
+                Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+                params.put("store_id", email);
+                Map<String,Object> storeDetail =  mgSystemDAO.getStoreForId(params);
+            	if(adminLogin.equals("admin")){
+            		productVO.setProduct_approval_yn("Y");
+        		}else {
+        			productVO.setProduct_approval_yn("N");
+        			productVO.setStore_id(email);
+        			productVO.setProduct_supplier((String)storeDetail.get("supplier_cd"));
+        		}
                 mgProductDAO.insertProduct(productVO);
                 resultMap.put("redirectUrl","/Manager/Product");
             }
@@ -1444,6 +1467,10 @@ public class ManagerRestapiController {
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+            	Object adminLogin = session.getAttribute("adminLogin");
+            	if(adminLogin.equals("admin")){
+        			params.put("product_approval_yn","Y");
+        		}
                 //등록될 키는 다시 만들어준다
                 params.put("product_cd",product_cd);
                 mgProductDAO.insertProductCopy(params);
