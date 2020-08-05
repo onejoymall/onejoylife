@@ -93,6 +93,7 @@ public class MainController {
 
             searchVO.setProduct_sale_yn("Y");
             searchVO.setProduct_use_yn("Y");
+            searchVO.setProduct_approval_yn("Y");
 
             //경품목록
             if(device.isMobile()){
@@ -110,6 +111,7 @@ public class MainController {
             //상품공통
             productVO.setProduct_use_yn("Y");
             productVO.setProduct_sale_yn("Y");
+            productVO.setProduct_approval_yn("Y");
 
             //카테고리 상품목록
             productVO.setDisplayRowCount(8);
@@ -498,6 +500,7 @@ public class MainController {
             }
             searchVO.setProduct_sale_yn("Y");
             searchVO.setProduct_use_yn("Y");
+            searchVO.setProduct_approval_yn("Y");
             searchVO.setMainViewType("product_sp_class");
             if(searchVO.getProduct_ct()!=null){
                 searchVO.setPd_category_id(Integer.parseInt(searchVO.getProduct_ct()));

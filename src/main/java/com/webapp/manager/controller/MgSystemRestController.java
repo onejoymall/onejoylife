@@ -68,14 +68,15 @@ public class MgSystemRestController {
     public HashMap<String, Object> systemDelivery(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgDeliveryVO mgDeliveryVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
-        Object adminLogin = session.getAttribute("adminLogin");
         try{
-//            if(productVO.getProduct_name().isEmpty()){
-//                error.put(messageSource.getMessage("product_name","ko"), messageSource.getMessage("error.required","ko"));
-//            }
-            if(adminLogin.equals("admin")){
-                mgDeliveryVO.setStore_id("admin");
-            }
+        	Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			mgDeliveryVO.setStore_id("admin");
+    		}else {
+    			mgDeliveryVO.setStore_id(email);
+    		}
+    		
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -278,11 +279,14 @@ public class MgSystemRestController {
     public HashMap<String, Object> updateDeliveryArea(@RequestParam HashMap params, HttpServletRequest request,HttpSession session){
     	HashMap<String, Object> resultMap = new HashMap<String, Object>();
     	HashMap<String, Object> error = new HashMap<String, Object>();
-    	Object adminLogin = session.getAttribute("adminLogin");
         try {
-            if(adminLogin.equals("admin")){
-                params.put("store_id","admin");
-            }
+        	Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
+    		}
     		if(!isEmpty(error)){
     			resultMap.put("validateError",error);
     		}else{
@@ -300,10 +304,13 @@ public class MgSystemRestController {
     	HashMap<String, Object> resultMap = new HashMap<String, Object>();
     	HashMap<String, Object> error = new HashMap<String, Object>();
     	
-    	Object adminLogin = session.getAttribute("adminLogin");
     	try {
+    		Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
     		if(adminLogin.equals("admin")){
     			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
     		}
     		
     		if(params.get("area_name") == null || params.get("area_name").equals("")){

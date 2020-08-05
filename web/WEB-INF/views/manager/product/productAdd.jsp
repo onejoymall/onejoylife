@@ -596,15 +596,17 @@
                             <input type="text" id="goods-m" name="product_made_company_cd" placeholder="ex) M00000000">
                         </td>
                     </tr>
+                    <c:if test="${sessionScope.adminLogin == 'admin'}">
                     <tr>
                         <th>공급사</th>
                         <td>
                             <p class="cc2"><a href="#" class="codeSrc" data-id ="S">&#91;상품 코드정보조회&#93;</a>
                             </p>
-                            <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000">
-                            <input type="hidden" name="product_store_id"/>
+                            <input type="text" id="goods-s" name="product_supplier" placeholder="입점업체 코드" readonly="readonly">
+                            <input type="text" name="product_store_id" readonly="readonly" placeholder="입점업체 id" />
                         </td>
                     </tr>
+                    </c:if>
                     <tr>
                         <th>브랜드</th>
                         <td>

@@ -201,7 +201,7 @@ public class ManagerController {
     }
     //상품관리
     @RequestMapping(value = "/Manager/Product")
-    public String managerProduct(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO) throws Exception {
+    public String managerProduct(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, ModelMap model, SearchVO searchVO,MgOptionVO mgOptionVO, HttpSession session) throws Exception {
 
         try {
             if(searchVO.getDisplayRowCount()==null){
@@ -211,6 +211,12 @@ public class ManagerController {
             params.put("pd_category_upper_code", "T");
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
+            
+            Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+        	if(!adminLogin.equals("admin")){
+        		searchVO.setStore_id(email);
+    		}
             searchVO.pageCalculate(productDAO.getMgProductListCount(searchVO));
             params.put("rowStart", searchVO.getRowStart());
             params.put("staticRowEnd", searchVO.getStaticRowEnd());
@@ -287,7 +293,7 @@ public class ManagerController {
     		model.addAttribute("list", list);
     		model.addAttribute("subList", subList);
     		model.addAttribute("thirdList", thirdList);
-    		model.addAttribute("topNav", 2);
+    		model.addAttribute("topNav", 1);
     		model.addAttribute("style", "category");
     		model.addAttribute("postUrl", "/Manager/productCategoryDisplayProc");
 //            model.addAttribute("productList",productList);

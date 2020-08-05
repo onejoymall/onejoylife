@@ -248,4 +248,15 @@
 	column_value = #{column_value},
 	column_name = #{column_name}
   </insert>
+  <select id="getStoreForId" resultType="hashmap" parameterType="hashmap">
+  	select *
+  	from store
+  	where store_id = #{store_id}
+  </select>
+  <select id="getStoreProductDefinition" resultType="hashmap" parameterType="hashmap">
+  	select *
+  	from product_definition
+  	where store_id = #{store_id}
+  	and product_ct = #{product_ct}
+  </select>
 </mapper>
