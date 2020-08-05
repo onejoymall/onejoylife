@@ -81,7 +81,7 @@
                     </div>
                     <div class="modal-body clearfix">
                         <h3>${afn:getMessage('default_info',sessionScope.locale)}</h3>
-                        <table class="goods-detail-table">
+                        <table class="goods-detail-table2">
                             <colgroup>
                                 <col width="142px">
                                 <col width="800px">
@@ -109,7 +109,7 @@
                             </tbody>
                         </table>
                         <h3>${afn:getMessage('sellerInfo',sessionScope.locale)}</h3>
-                        <table class="goods-detail-table">
+                        <table class="goods-detail-table2">
                             <colgroup>
                                 <col width="142px">
                                 <col width="800px">
