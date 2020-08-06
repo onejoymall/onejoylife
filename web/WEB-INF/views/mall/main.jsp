@@ -176,7 +176,7 @@
 				<li class="nav-item"><a href="javascript:void(0)"
 					class="nav-link active" data-tab="product_md_class">${afn:getMessage("md_reco_tit",sessionScope.locale)}</a></li>
 				<li class="nav-item"><a href="javascript:void(0)"
-					class="nav-link" data-tab="product_popular_class"> </a></li>
+					class="nav-link" data-tab="product_popular_class">${afn:getMessage("popular_pro",sessionScope.locale)}</a></li>
 				<li class="nav-item"><a href="javascript:void(0)"
 					class="nav-link" data-tab="product_new_class">${afn:getMessage("new_tit",sessionScope.locale)}</a></li>
 			</ul>
