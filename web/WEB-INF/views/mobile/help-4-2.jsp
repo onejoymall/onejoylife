@@ -39,13 +39,15 @@
 <%--        <input type="checkbox" id="replysns" class="b8 mt-1">--%>
         <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)} * </p>
         <select class="width-100" name="question_type" id="question_type">
-            <option value="${afn:getMessage('check',sessionScope.locale)}" selected>${afn:getMessage("check",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('QA_largeorder',sessionScope.locale)}">${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('ordersPayment',sessionScope.locale)}">${afn:getMessage("orders_payment",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('changeReturnRefund',sessionScope.locale)}">${afn:getMessage("change_return_refund",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('QA_event',sessionScope.locale)}">${afn:getMessage("QA_event",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('deliv',sessionScope.locale)}">${afn:getMessage("deliv",sessionScope.locale)}</option>
-            <option value="${afn:getMessage('QA_others',sessionScope.locale)}">${afn:getMessage("QA_others",sessionScope.locale)}</option>
+            <option value="">${afn:getMessage("QA_choose",sessionScope.locale)}</option>
+            <option value="S">${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
+            <option value="O">${afn:getMessage("QA_order_payment",sessionScope.locale)}</option>
+            <option value="C">${afn:getMessage("QA_change_return_refund",sessionScope.locale)}</option>
+            <option value="E">${afn:getMessage("QA_event",sessionScope.locale)}</option>
+            <option value="D">${afn:getMessage("QA_delivery",sessionScope.locale)}</option>
+            <option value="G">${afn:getMessage("QA_others",sessionScope.locale)}</option>
+            <option value="B">${afn:getMessage("QA_inconvenience",sessionScope.locale)}</option>
+            <option value="M">${afn:getMessage("QA_store",sessionScope.locale)}</option>
         </select>
         <%--<button class="btn btn-lg btn-black width-100 mt-3">주문 상품 조회</button>
         <input type="text" class="width-100 mt-05" placeholder="1354681383854">--%>
