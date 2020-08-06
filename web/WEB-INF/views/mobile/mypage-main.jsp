@@ -34,7 +34,8 @@
                     <hr>
                     <ul class="in-ul">
                         <%-- <li><a href="<c:url value="/MyPage/GiveawayExperience"/>" class="ready">경품 체험하기</a></li> --%>
-                        <li><a href="#" class="ready">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li>
+                        <%-- <li><a href="#" class="ready">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li> --%>
+                        <li><a href="/Help/help-1-1" >${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li>
                         <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>">${afn:getMessage('giveaway_win_list',sessionScope.locale)}${afn:getMessage('lookup',sessionScope.locale)}</a></li>
                     </ul>
                 </li>

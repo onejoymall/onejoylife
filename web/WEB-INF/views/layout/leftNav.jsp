@@ -26,7 +26,8 @@
                         <li class="outer-li">${afn:getMessage('my_giveaway',sessionScope.locale)}
                             <ul class="inner-ul">
                                 <%-- <li><a href="<c:url value="/MyPage/GiveawayExperience"/>" class="<c:if test="${leftNavOrder == 10}">active</c:if>">경품 체험하기</a></li> --%>
-                                <li><a href="javascript:void(0)" class="ready">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li>
+                                <%-- <li><a href="javascript:void(0)" class="ready">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li> --%>
+                                <li><a href="/Help/csinfo">${afn:getMessage('my_giveaway_experience',sessionScope.locale)}</a></li>
                                 <li><a href="<c:url value="/MyPage/GiveawayWinningList"/>" class="<c:if test="${leftNavOrder == 11}">active</c:if>">${afn:getMessage('giveaway_win_list_lookup',sessionScope.locale)}</a></li>
                             </ul>
                         </li>
