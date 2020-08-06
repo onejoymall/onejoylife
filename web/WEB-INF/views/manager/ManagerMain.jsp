@@ -146,9 +146,14 @@
                         <p>최근 판매된 상품이 없습니다.</p>
                     </div>
                     <ul class="content-section-ul">
+                        <input type="hidden" id="nowday" value="${nowday}">
                         <c:if test="${not empty noticeListView}">
                             <c:forEach var="noticeListView" items="${noticeListView}" varStatus="status">
-                                <li><a href="/Manager/boardRead?brdno=${noticeListView.brdno}" class="font-weight">${noticeListView.brdtitle}</a><span class="new-icon">new</span><span class="new-date">${noticeListView.brddate}</span></li>
+                                <li><a href="/Manager/boardRead?brdno=${noticeListView.brdno}" class="font-weight">${noticeListView.brdtitle}</a>
+                                    <c:if test="${noticeListView.brddate >= newday}">
+                                        <span class="new-icon">new</span>
+                                    </c:if>
+                                    <span class="new-date">${noticeListView.brddate}</span></li>
                             </c:forEach>
                         </c:if>
 <%--                        <li><a href="#" class="font-weight">[필독]  원조이라이프 2월 오프라인 창업 교육 취소</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>--%>
@@ -163,7 +168,11 @@
                     <ul class="content-section-ul">
                         <c:if test="${not empty listOneOne}">
                             <c:forEach var="listOneOne" items="${listOneOne}" varStatus="status">
-                                <li><a href="/Manager/boardRead?brdno=${listOneOne.brdno}" class="font-weight">${listOneOne.brdtitle}</a><span class="new-icon">new</span><span class="new-date">${listOneOne.brddate}</span></li>
+                                <li><a href="/Manager/boardRead?brdno=${listOneOne.brdno}" class="font-weight">${listOneOne.brdtitle}</a>
+                                    <c:if test="${listOneOne.brddate >= newday}">
+                                        <span class="new-icon">new</span>
+                                    </c:if>
+                                    <span class="new-date">${listOneOne.brddate}</span></li>
                             </c:forEach>
                         </c:if>
 <%--                        <li><a href="#" class="font-weight">[필독]  1:1 문의하기</a><span class="new-icon">new</span><span class="new-date">2020.02.10</span></li>--%>
@@ -208,7 +217,6 @@ $(document).ready(function() {
 		//이동 
 		
 	}
-	
 	/* var d = new Date(reg_date);
 	console.log(d.toLocaleDateString());
 	d.setMonth(d.getMonth() + 3);
@@ -254,6 +262,42 @@ $(document).ready(function() {
     });
 
 
-	}); 
+	});
+
+$(document).ready(function() {
+	var store_id= $("#store_id").val();
+    var bgno = 9;
+    var formData = {"bgno":bgno,"store_id":store_id};
+
+    if(store_id != ""){
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Manager/boardList2?bgno='+bgno,
+            dataType: 'json',
+            data: JSON.stringify(formData),
+            success: function (data) {
+                $.each(data.list, function (key, value) {
+                    $.toast({
+                        heading: "공지사항 알림",
+                        text: [
+                            '<a href=/Manager/boardRead?brdno=' + value.brdno + '>' + value.brdtitle + '</a>',
+                        ],
+
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: false,
+                    })
+                })
+            },
+            error: function (xhr, status, error) {
+                alert(xhr + status + error);
+                console.log(xhr, status, error)
+            }
+        });
+    }
+
+
+});
 </script>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

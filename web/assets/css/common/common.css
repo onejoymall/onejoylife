@@ -641,6 +641,9 @@ input[class='styleClass']:checked + label
 }
 
 /*입점업체 신청 모달*/
+#modal-store .modal-body{
+    font-size:12px;
+}
 .goods-detail-table2{
     width:100%;
     margin-bottom:20px;
