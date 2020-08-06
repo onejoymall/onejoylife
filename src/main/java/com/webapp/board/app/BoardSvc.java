@@ -33,6 +33,9 @@ public class BoardSvc {
     public List<?> selectMgBoardList(SearchVO param) {
         return sqlSession.selectList("selectMgBoard8List", param);
     }
+    public List<?> selectMgBoardListToast(SearchVO param) {
+        return sqlSession.selectList("selectMgBoardListToast", param);
+    }
     
     /**
      * 글 저장.
