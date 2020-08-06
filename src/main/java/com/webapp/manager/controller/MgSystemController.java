@@ -27,11 +27,14 @@ public class MgSystemController {
     //배송관리
     @RequestMapping(value = "/Manager/Delivery")
     public String MgDelivery(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session) throws Exception {
-        Object adminLogin = session.getAttribute("adminLogin");
         try {
-            if(adminLogin.equals("admin")){
-                mgDeliveryVO.setStore_id("admin");
-            }
+        	Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+        	if(adminLogin.equals("admin")){
+    			mgDeliveryVO.setStore_id("admin");
+    		}else {
+    			mgDeliveryVO.setStore_id(email);
+    		}
             Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
             model.addAttribute("detail", detail);
         } catch (Exception e) {
@@ -45,12 +48,16 @@ public class MgSystemController {
     //지역별 배송비 관리
     @RequestMapping(value = "/Manager/Delivery-area")
     public String MgDeliveryArea(@RequestParam HashMap params, ModelMap model, MgDeliveryVO mgDeliveryVO, HttpSession session, SearchVO searchVO) throws Exception {
-        Object adminLogin = session.getAttribute("adminLogin");
         try {
-            if(adminLogin.equals("admin")){
-                mgDeliveryVO.setStore_id("admin");
-                params.put("store_id","admin");
-            }
+        	Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+        	if(adminLogin.equals("admin")){
+    			mgDeliveryVO.setStore_id("admin");
+    			params.put("store_id","admin");
+    		}else {
+    			mgDeliveryVO.setStore_id(email);
+    			params.put("store_id",email);
+    		}
             Map<String,Object> detail = mgSystemDAO.getSystemDelivery(mgDeliveryVO);
             model.addAttribute("detail", detail);
             searchVO.setDisplayRowCount(10);

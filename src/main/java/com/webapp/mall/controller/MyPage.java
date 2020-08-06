@@ -802,6 +802,7 @@ public class MyPage {
 
                 searchVO.pageCalculate(1);
                 searchVO.setProduct_sale_yn("Y");
+                searchVO.setProduct_approval_yn("Y");
                 productList = productDAO.getProductList(searchVO);
                 model.addAttribute("productList", productList);
                 model.addAttribute("searchVO", searchVO);

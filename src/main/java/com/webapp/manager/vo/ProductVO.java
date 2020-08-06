@@ -117,6 +117,7 @@ public class ProductVO extends SearchVO {
     String product_exposure_jp = "N";
     String delivery_t_code;
     String product_type;//상품형태
+    String product_approval_yn;
     String parentPK;
     String fileorder;
     
@@ -1031,5 +1032,13 @@ public class ProductVO extends SearchVO {
 
 	public void setProduct_definition_value(String product_definition_value) {
 		this.product_definition_value = product_definition_value;
+	}
+
+	public String getProduct_approval_yn() {
+		return product_approval_yn;
+	}
+
+	public void setProduct_approval_yn(String product_approval_yn) {
+		this.product_approval_yn = product_approval_yn;
 	}
 }

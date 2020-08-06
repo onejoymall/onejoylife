@@ -3,6 +3,7 @@ package com.webapp.mall.controller;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,12 +29,15 @@ import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.TodayVO;
 import com.webapp.manager.dao.BannerDAO;
 import com.webapp.manager.dao.CategoryDAO;
+import com.webapp.manager.dao.MgSystemDAO;
 @Controller
 public class GiveawayController {
     @Autowired
     UserDAO userDAO;
     @Autowired
     GiveawayDAO giveawayDAO;
+    @Autowired
+    MgSystemDAO mgSystemDAO;
     @Autowired
     SelectorDAO selectorDAO;
     @Autowired
@@ -145,7 +149,6 @@ public class GiveawayController {
             
             model.addAttribute("delivery",delivery);
             model.addAttribute("delivery_type_list", delivery.get("selector"));
-            model.addAttribute("product_ct_arr",Arrays.asList(((String)detail.get("giveaway_ct")).split("\\|")));
             
             //관련상품 (카테고리기준)
             detail.put("rowStart",1);
@@ -176,6 +179,40 @@ public class GiveawayController {
             model.addAttribute("detail", detail);
             //포인트 확인 url
             model.addAttribute("postUrl", "/giveaway/PointAmountCheckProc");
+            
+            //상품정보고시
+            List<Map<String,Object>> product_definition = null;
+            if(detail.get("giveaway_definition_key") != null && !detail.get("giveaway_definition_key").equals("")) {
+            	product_definition = new ArrayList<>();
+            	String[] product_definition_key = ((String)detail.get("giveaway_definition_key")).split(",");
+            	String[] product_definition_val = ((String)detail.get("giveaway_definition_value")).split(",");
+            	for(int i=0; i<product_definition_key.length; i++) {
+            		Map<String,Object> tmpMap = new HashMap<>();
+            		tmpMap.put(product_definition_key[i],product_definition_val[i]);
+            		product_definition.add(tmpMap);
+            	}
+            }else {
+            	String[] product_ct_arr = ((String)detail.get("giveaway_ct")).split("\\|");
+            	
+    			params.put("store_id","admin");
+        		Map<String, Object> store_product_definition = null;
+        		for(int i=0; i<product_ct_arr.length; i++) {
+	        		params.put("product_ct", product_ct_arr[i]);
+	        		store_product_definition = mgSystemDAO.getStoreProductDefinition(params);
+	        		if(store_product_definition != null) break;
+        		}
+        		if(store_product_definition != null) {
+        			product_definition = new ArrayList<>();
+                	String[] product_definition_key = ((String)store_product_definition.get("product_definition_key")).split(",");
+                	String[] product_definition_val = ((String)store_product_definition.get("product_definition_value")).split(",");
+                	for(int i=0; i<product_definition_key.length; i++) {
+                		Map<String,Object> tmpMap = new HashMap<>();
+                		tmpMap.put(product_definition_key[i],product_definition_val[i]);
+                		product_definition.add(tmpMap);
+                	}
+        		}
+            }
+            model.addAttribute("product_definition",product_definition);
         }catch (Exception e){
             e.printStackTrace();
         }

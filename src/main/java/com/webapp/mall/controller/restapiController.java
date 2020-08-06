@@ -1212,6 +1212,7 @@ public class restapiController {
 			searchVO.setStaticRowEnd(8);
 			searchVO.pageCalculate(productDAO.getProductListCount(searchVO));
 			searchVO.setProduct_sale_yn("Y");
+			searchVO.setProduct_approval_yn("Y");
 			List<Map<String, Object>> list = productDAO.getProductList(searchVO);
 			if (list.size() < 8 && searchVO.getOrderByKey().equals("sales_count")) {
 				searchVO.setOrderByKey("product_id");
