@@ -645,7 +645,7 @@
 
     	if(isDup){
     		$.toast({
-                text: ${afn:getMessage("error.payment.couAlready_sel",sessionScope.locale)},
+                text: "${afn:getMessage('error.payment.couAlready_sel',sessionScope.locale)}",
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -761,7 +761,7 @@
                 icon: 'error'
             });
         }else{
-        	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + ${afn:getMessage(other,sessionScope.locale)} + " " + (cartList.length-1) + ${afn:getMessage("case",sessionScope.locale)};
+        	var product_name = cartList.length <= 1 ? cartList[0].product_name : cartList[0].product_name + "${afn:getMessage('other',sessionScope.locale)}" + " " + (cartList.length-1) + "${afn:getMessage('case',sessionScope.locale)}";
         	$("input[name=product_order_name]").val(product_name);
         	$('input[name=order_no]').val('PO-ORDER-'+numberGen(7));
         	var formData = $('#defaultForm').serialize()
@@ -780,7 +780,7 @@
                                 showText = item;
                             }else{
                                 alertType = "error";
-                                showText = index + ${afn:getMessage("is2",sessionScope.locale)} + item;
+                                showText = index + "${afn:getMessage('is2',sessionScope.locale)}" + item;
                             }
                             // $.toast().reset('all');//토스트 초기화
                             $.toast({
@@ -790,7 +790,7 @@
                                 heading: 'Error',
                                 icon: 'error'
                             });
-                        });
+                        })
                     } else {
                     	IMP.request_pay({ // param
                     		pg: "kcp",
