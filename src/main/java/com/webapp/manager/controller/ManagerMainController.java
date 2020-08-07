@@ -1,9 +1,7 @@
 package com.webapp.manager.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,6 +39,17 @@ public class ManagerMainController {
 
         	
             //공지사항
+            if(session.getAttribute("adminLogin").equals("manager")) {
+                searchVO.setStore_id((String) session.getAttribute("email"));
+            }
+            //날짜 계산
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_MONTH, 0);
+            String nowday = format.format(cal.getTime());
+            cal.add(Calendar.DAY_OF_MONTH, -3);
+            String newday = format.format(cal.getTime());
+
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("9");
             searchVO.setBgno("9");
             searchVO.setDisplayRowCount(8);
@@ -48,13 +57,14 @@ public class ManagerMainController {
             searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
 
             List<?> listview  = boardSvc.selectBoardList(searchVO);
-
+            model.addAttribute("nowday", nowday);
+            model.addAttribute("newday", newday);
             model.addAttribute("noticeListView", listview);
 
 
             //1:1
             bgInfo = boardGroupSvc.selectBoardGroupOne4Used("15");
-            searchVO.setBgno("9");
+            searchVO.setBgno("15");
             searchVO.setDisplayRowCount(8);
             searchVO.setStaticRowEnd(8);
             searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); // startRow, endRow
@@ -72,10 +82,7 @@ public class ManagerMainController {
             
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("bgInfo", bgInfo);
-            
-            
-            
-            
+
             
         }catch (Exception e){
         	e.printStackTrace();

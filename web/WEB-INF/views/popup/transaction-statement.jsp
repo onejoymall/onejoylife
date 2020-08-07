@@ -37,7 +37,7 @@
                         ${afn:getMessage("ko8",sessionScope.locale)}<br>
                         ${afn:getMessage("ko9",sessionScope.locale)}<br>
                         ${afn:getMessage("ko10",sessionScope.locale)}</td>
-                        <td>성명</td>
+                        <td>${afn:getMessage("name",sessionScope.locale)}</td>
                         <td colspan="3"><span>${userInfo.username}</span></td>
                     </tr>
                     <tr>
@@ -103,8 +103,8 @@
             <p class="txt-p">* ${afn:getMessage("msg_trans_1",sessionScope.locale)}</p>
             <p class="txt-p">* ${afn:getMessage("msg_trans_2",sessionScope.locale)}</p>
             <div class="but-box">
-                <button class="but1" type="button" onclick="window.print();">{afn:getMessage("print",sessionScope.locale)}</button>
-                <button class="but2" type="button" onclick="self.close();">{afn:getMessage("confirm",sessionScope.locale)}</button>
+                <button class="but1" type="button" onclick="window.print();">${afn:getMessage("print",sessionScope.locale)}</button>
+                <button class="but2" type="button" onclick="self.close();">${afn:getMessage("confirm",sessionScope.locale)}</button>
             </div>
         </div>
         <div class="mar-f">

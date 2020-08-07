@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <!-- Toastr -->
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
+    <link href="<c:url value="/assets/css/toastr.css"/>" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<c:url value="/assets/js/dynatree/ui.dynatree.css" />" id="skinSheet"/>
     <!-- timepicker -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">

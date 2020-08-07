@@ -63,11 +63,11 @@
 	                                <th>등록일</th>
 	                             <td>
 		                             <div class="input-box1">
-			                             <button type="button" class="ra-num" data-id="con1">오늘</p>
-			                             <button type="button" class="ra-num" data-id="con2">1주일</p>
-			                             <button type="button" class="ra-num" data-id="con3">1개월</p>
-			                             <button type="button" class="ra-num" data-id="con4">3개월</p>
-			                             <button type="button" class="ra-num" data-id="con5">6개월</p>
+			                             <button type="button" class="ra-num" data-id="con1">오늘</button>
+			                             <button type="button" class="ra-num" data-id="con2">1주일</button>
+			                             <button type="button" class="ra-num" data-id="con3">1개월</button>
+			                             <button type="button" class="ra-num" data-id="con4">3개월</button>
+			                             <button type="button" class="ra-num" data-id="con5">6개월</button>
 		                             </div>
 	                          	 </td>
                          	 </tr>
@@ -95,6 +95,17 @@
 		                              </div>
 	                          	  </td>
 	                          </tr>
+                            <tr>
+                                <th>상품형태</th>
+                                <td>
+                                    <select name="product_type">
+                                        <option value="" <c:if test="${empty params.product_type}">selected="selected"</c:if>>전체</option>
+                                        <option value="p" <c:if test="${params.product_type == 'p'}">selected="selected"</c:if>>일반상품</option>
+                                        <option value="t" <c:if test="${params.product_type == 't'}">selected="selected"</c:if>>티켓</option>
+                                        <option value="r" <c:if test="${params.product_type == 'r'}">selected="selected"</c:if>>여행</option>
+                                    </select>
+                                </td>
+                            </tr>
                         </tbody>
                 </table>
             </form>

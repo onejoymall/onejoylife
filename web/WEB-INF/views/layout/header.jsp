@@ -146,14 +146,14 @@
         <li><a href="/Help/csinfo">${afn:getMessage('customer_service',sessionScope.locale)}</a></li>
         <li><a href="/sign/logout" class="logoutBtn">${afn:getMessage('logout',sessionScope.locale)}</a></li>
         <!-- <li><a href="https://kauth.kakao.com/oauth/logout?client_id=edae5e01f6d81723613c9cd06f550593&logout_redirect_uri=http://onejoy-life.com/sign/logout&state=?">로그아웃</a></li> -->
-        <li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a>
+        <%--<li class="language-nav"><a href="javascrip:void(0)">${afn:getMessage('national_selection',sessionScope.locale)}</a>
             <ul>
                 <li><a href="javascript:setGlobalLocale('ko')">${afn:getMessage('korea',sessionScope.locale)}</a></li>
                 <li><a href="javascript:setGlobalLocale('en')">${afn:getMessage('america',sessionScope.locale)}</a></li>
                 <li><a href="javascript:setGlobalLocale('cn')">${afn:getMessage('china',sessionScope.locale)}</a></li>
                 <li><a href="javascript:setGlobalLocale('jp')">${afn:getMessage('japan',sessionScope.locale)}</a></li>
             </ul>
-        </li>
+        </li>--%>
     </c:if>
 
             </ul>

@@ -442,7 +442,9 @@
         giveaway_point_rate_cash,
         giveaway_members_limit,
         giveaway_view_locale_cd,
-        giveaway_play_winner_point
+        giveaway_play_winner_point,
+        giveaway_definition_key,
+        giveaway_definition_value
         )
         select
         #{giveaway_cd},

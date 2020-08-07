@@ -929,6 +929,7 @@ and A.payment_status != 'N'
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_approval_yn != null and product_approval_yn !=''"><![CDATA[AND A.product_approval_yn = #{product_approval_yn}]]></if>
         <if test="store_id != null and store_id !=''"><![CDATA[AND B.store_id = #{store_id}]]></if>
+        <if test="product_type != null and product_type !=''"><![CDATA[AND A.product_type = #{product_type}]]></if>
         <if test="category1 != null and  category1 != ''">
         	<![CDATA[
         		AND (
@@ -963,6 +964,7 @@ and A.payment_status != 'N'
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="product_approval_yn != null and product_approval_yn !=''"><![CDATA[AND A.product_approval_yn = #{product_approval_yn}]]></if>
         <if test="store_id != null and store_id !=''"><![CDATA[AND B.store_id = #{store_id}]]></if>
+        <if test="product_type != null and product_type !=''"><![CDATA[AND A.product_type = #{product_type}]]></if>
         <if test="category1 != null and  category1 != ''">
         	<![CDATA[
         		AND (

@@ -2344,6 +2344,7 @@ $(document).on("click",".ra-num",function () {
         $('#formStoreSubmit').addClass('hidden');
         $('.updateBtn').removeClass('hidden');
         $('.modal-header h2').html("입점업체 수정");
+        $('.store_pwd').remove();
         // $('input:radio[name=store_reg_type]').eq(0).click();
         jQuery.ajax({
             type: 'POST',
@@ -2354,7 +2355,7 @@ $(document).on("click",".ra-num",function () {
                 $.each(data.list, function (index, item) {
 		            if(index=="enable_mg_menu_id" && data.list.level != 1){
 	                    item.split("|").forEach(function(el){
-	                    $("input[name=enable_menu]:checkbox[value="+el+"]").prop("checked",true);
+	                    $('input[name=enable_menu]:checkbox[value=\''+el+'\']').prop('checked',true);
 	                    });
 	                }
                     $('input[name^="' + index + '"]').val(item);
@@ -2366,6 +2367,11 @@ $(document).on("click",".ra-num",function () {
                     // }else{
                     //     $('input:radio[name=store_reg_type]').eq(1).click();
                     // }
+                    if(index=="store_creator_yn" || data.list.store_creator_yn == "N"){
+                        $('#store_creator_yn1').prop('checked', true);
+                    } else {
+                        $('#store_creator_yn2').prop('checked', true);
+                    }
                 });
                 $('#store_reg').attr("readonly",true);
                 $('#store_id').attr("readonly",true);
@@ -2373,6 +2379,8 @@ $(document).on("click",".ra-num",function () {
                 $('#storIdDupCheck').html('OK');
                 $('#storRegDupCheck').attr('disabled', true);
                 $('#storRegDupCheck').html('OK');
+                $('#store_creator_yn1').val('N');
+                $('#store_creator_yn2').val('Y');
             },
             error: function (xhr, status, error) {
                 alert(error);
@@ -4107,26 +4115,28 @@ $(document).ready(function(){
 });
 
 //상품코드정보 조회 모달
-$(".codeSrc").click(function(e){
-    e.preventDefault();
-    $(".codeSrcModal").attr("style", "display:block");
-    $('body').css("overflow", "hidden");
-    $(".srcButton").attr("data-id",$(this).attr("data-id"));
-    var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":$(this).attr("data-id")});
-    var html;
-    $.each(dataList.getProductCodeList,function (key,value) {
-        html +='' +
-            '<tr data-id="'+value.product_class_code+'" store-id="'+value.product_class_name.split("ID:")[1]+'">' +
-            '<td><div class="codeRadio"></div></td>' +
-            '<td>'+value.product_class_code+'</td>' +
-            '<td>'+value.product_class_name+'</td>' +
-            '<td>'+value.product_class_code_type_name+'</td>' +
-            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
-            '</tr>';
-    })
-    $('.dataListView').html(html);
+$(document).ready(function() {
+    $(".codeSrc").click(function (e) {
+        e.preventDefault();
+        $(".codeSrcModal").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+        $(".srcButton").attr("data-id", $(this).attr("data-id"));
+        var dataList = commonAjaxListCall('POST', '/Manager/CallCodeList', {"product_class_code_type": $(this).attr("data-id")});
+        var html;
+        $.each(dataList.getProductCodeList, function (key, value) {
+            html += '' +
+                '<tr data-id="' + value.product_class_code + '" store-id="' + value.product_class_name.split("ID:")[1] + '">' +
+                '<td><div class="codeRadio"></div></td>' +
+                '<td>' + value.product_class_code + '</td>' +
+                '<td>' + value.product_class_name + '</td>' +
+                '<td>' + value.product_class_code_type_name + '</td>' +
+                '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id=' + value.product_class_code + '>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id=' + value.product_class_code + '> [삭제]</a></p></td>' +
+                '</tr>';
+        })
+        $('.dataListView').html(html);
 
-    callTableTrStyle($(this).attr("data-id"))
+        callTableTrStyle($(this).attr("data-id"))
+    });
 });
 //상품코드등록
 $(".srcButton").click(function(e){

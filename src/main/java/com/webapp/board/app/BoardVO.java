@@ -33,6 +33,24 @@ public class BoardVO extends SearchVO{
     private String[] answer_yn_arr;
     private String filename;
     private String realname;
+    private String store_id;
+    private String supplier_cd;
+
+    public String getSupplier_cd() {
+        return supplier_cd;
+    }
+
+    public void setSupplier_cd(String supplier_cd) {
+        this.supplier_cd = supplier_cd;
+    }
+
+    public String getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
+    }
 
     public String getFilename() {
         return filename;

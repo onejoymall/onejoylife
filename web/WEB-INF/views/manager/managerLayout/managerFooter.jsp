@@ -76,6 +76,7 @@
 <script src='<c:url value="/assets/js/summernote-ko-KR.js"/>'></script>
 <script type="text/javascript" src="/assets/js/index.js"></script>
 <script src='<c:url value="/assets/plugins/toast/jquery.toast.min.js"/>'></script>
+<script src='<c:url value="/assets/js/toastr.js"/>'></script>
 <script src='<c:url value="/assets/js/commonScript.js"/>'></script>
 <script src='<c:url value="/assets/js/commonScriptSub.js"/>'></script>
 <script src='<c:url value="/assets/js/commonMgScript.js"/>'></script>
