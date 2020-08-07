@@ -1600,6 +1600,6 @@ $(".proposalDetailBtn, #proposalInsertBtn").click(function(){
 		$("button[name=proposal-confirm-btn]").text("등록");
 		
 		$("#insertForm input").val("");
-		$("#insertForm textarea").summernote('code', "제안 상세 설명을 적어주세요.");
+		$("#insertForm textarea[name=proposal_html]").summernote('code', "제안 상세 설명을 적어주세요.");
 	}
 });
