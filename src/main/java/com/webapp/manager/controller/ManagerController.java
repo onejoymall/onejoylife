@@ -262,19 +262,49 @@ public class ManagerController {
     }
 
     @RequestMapping(value = "/Manager/Category")
-    public String managerCategory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public String managerCategory(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session) throws Exception {
         try {
-            params.put("pd_category_upper_code", "T");
-            List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
-            params.put("pd_category_upper_code", null);
-            List<Map<String, Object>> subList = categoryDAO.getCategorySubList(params);
-            List<Map<String, Object>> thirdList = categoryDAO.getCategoryThirdList(params);
+        	Object adminLogin = session.getAttribute("adminLogin");
+            String email = (String)session.getAttribute("email");
+            
+            List<Map<String, Object>> list = null;
+    		List<Map<String, Object>> subList = null;
+    		List<Map<String, Object>> thirdList = null;
+        	if(adminLogin.equals("admin")){
+        		params.put("pd_category_upper_code", "T");
+                list = categoryDAO.getCategoryList(params);
+                params.put("pd_category_upper_code", null);
+                subList = categoryDAO.getCategorySubList(params);
+                thirdList = categoryDAO.getCategoryThirdList(params);
+    		}else {
+    			params.put("store_login", "Y");
+                list = categoryDAO.getCategoryList(params);
+                params.put("store_login", null);
+                params.put("store_id", email);
+                subList = categoryDAO.getCategoryList(params);
+                thirdList = categoryDAO.getCategoryList(params);
+    		}
+        	
+        	searchVO.setDisplayRowCount(10);
+        	searchVO.setStaticRowEnd(10); 
+        	params.put("searchTypeArr",searchVO.getSearchTypeArr());
+    		searchVO.pageCalculate(categoryDAO.getEventApprovalListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		params.put("searchTypeArr",searchVO.getSearchTypeArr());
+    		List<Map<String, Object>> eventApprovalList = categoryDAO.getEventApprovalList(params);
+    		
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("eventApprovalList", eventApprovalList);
+            
             model.addAttribute("list", list);
             model.addAttribute("subList", subList);
             model.addAttribute("thirdList", thirdList);
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "category");
             model.addAttribute("postUrl", "/Manager/productCategoryDisplayProc");
+            model.addAttribute("table_name", "product_category_event");
+            model.addAttribute("Pk", "pd_category_id");
 //            model.addAttribute("productList",productList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,6 +339,7 @@ public class ManagerController {
         try {
             Object adminLogin = session.getAttribute("adminLogin");
             params.put("pd_category_upper_code", "T");
+            params.put("pd_category_use_yn","Y");
             if(adminLogin == "admin"){
                 mgDeliveryVO.setStore_id("admin");
             }
@@ -746,6 +777,41 @@ public class ManagerController {
         model.addAttribute("style", "promotion-coupon");
         model.addAttribute("postUrl", "/Manager/promotion-coupon");
         return "/manager/promotion-coupon";
+    }
+    
+    //상품제안
+    @RequestMapping(value = "/Manager/product-proposal")
+    public String managerProductProposal(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session) throws Exception {
+    	try {
+    		Object adminLogin = session.getAttribute("adminLogin");
+            String email = (String)session.getAttribute("email");
+        	if(adminLogin.equals("admin")){
+        		params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
+    		}
+        	
+    		searchVO.setDisplayRowCount(10);
+    		searchVO.setStaticRowEnd(10); 
+    		params.put("searchTypeArr",searchVO.getSearchTypeArr());
+    		searchVO.pageCalculate(mgProductDAO.getProductProposalListCount(params));
+    		params.put("displayRowCount", searchVO.getDisplayRowCount());
+    		params.put("rowStart", searchVO.getRowStart());
+    		params.put("searchTypeArr",searchVO.getSearchTypeArr());
+    		List<Map<String, Object>> list = mgProductDAO.getProductProposalList(params);
+    		
+    		model.addAttribute("list", list);
+    		model.addAttribute("searchVO", searchVO);
+    		model.addAttribute("table_name", "product_proposal");
+    		model.addAttribute("Pk", "proposal_id");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("params", params);
+    	model.addAttribute("topNav", 2);
+    	model.addAttribute("style", "promotion-coupon");
+    	model.addAttribute("postUrl", "/Manager/product-proposal");
+    	return "/manager/product-proposal";
     }
 
     //옵션관리

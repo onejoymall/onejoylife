@@ -230,6 +230,7 @@ body{
 }
 .main-right>.main-right-4{
     border: 0px;
+    margin-bottom: 10px;
 }
 .right-table-4 thead td {
     line-height: 45px;
@@ -250,12 +251,12 @@ body{
     text-align: left;
     padding-left: 10px;
 }
-.right-table-4 tbody tr:nth-of-type(1) input {
+/* .right-table-4 tbody tr:nth-of-type(1) input {
     width: 135px;
     height: 30px;
-    /* border: 1px solid #a7a8aa; */
-}
-.product-list, .product-list1 {
+    border: 1px solid #a7a8aa;
+} */
+.product-list, .product-list1, .event-detail-btn {
     background: #da394a;
     color: #fff;
     padding: 5px 10px;

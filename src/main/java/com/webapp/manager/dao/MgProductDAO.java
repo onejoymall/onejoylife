@@ -64,4 +64,25 @@ public class MgProductDAO {
     public void updateProductList(CommonVO commonVO)throws SQLException{
         sql.insert("mall.ProductMapper.updateProductList", commonVO);
     }
+	public void insertProductProposal(Map<String,Object> params) {
+		sql.insert("mall.ProductMapper.insertProductProposal", params);
+	}
+	public void updateProductProposal(Map<String,Object> params) {
+		sql.update("mall.ProductMapper.updateProductProposal", params);
+	}
+	public Integer getProductProposalListCount(HashMap params) {
+		Integer getProductProposalListCount = sql.selectOne("mall.ProductMapper.getProductProposalListCount",params);
+		return getProductProposalListCount;
+	}
+	public List<Map<String, Object>> getProductProposalList(HashMap params) {
+		List<Map<String, Object>> getProductProposalList = sql.selectList("mall.ProductMapper.getProductProposalList",params);
+		return getProductProposalList;
+	}
+	public Map<String, Object> getProposalDetail(HashMap params) {
+		Map<String, Object> getProposalDetail = sql.selectOne("mall.ProductMapper.getProposalDetail",params);
+    	return getProposalDetail;
+	}
+	public void acceptProductProposal(HashMap params) {
+		sql.update("mall.ProductMapper.acceptProductProposal", params);
+	}
 }

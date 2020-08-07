@@ -99,4 +99,12 @@ public class MgSystemDAO {
 		Map<String,Object> getStoreProductDefinition=sql.selectOne("mall.MgSystemMapper.getStoreProductDefinition",params);
     	return getStoreProductDefinition;
 	}
+	public List<Map<String, Object>> getStoreProductList(Map<String, Object> params) {
+		List<Map<String,Object>> getStoreProductList=sql.selectList("mall.MgSystemMapper.getStoreProductList",params);
+    	return getStoreProductList;
+	}
+	public List<Map<String, Object>> getStoreList(HashMap params) {
+		List<Map<String,Object>> getStoreList=sql.selectList("mall.MgSystemMapper.getStoreList",params);
+    	return getStoreList;
+	}
 }

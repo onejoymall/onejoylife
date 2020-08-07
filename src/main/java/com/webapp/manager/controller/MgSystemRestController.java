@@ -45,11 +45,15 @@ public class MgSystemRestController {
     public HashMap<String, Object> getDefaultDelivery(@RequestParam HashMap params, HttpServletRequest request, HttpSession session,MgDeliveryVO mgDeliveryVO){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
-        Object adminLogin = session.getAttribute("adminLogin");
+        
         try {
-            if(adminLogin.equals("admin")){
-                mgDeliveryVO.setStore_id("admin");
-            }
+        	Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			mgDeliveryVO.setStore_id("admin");
+    		}else {
+    			mgDeliveryVO.setStore_id(email);
+    		}
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
@@ -356,5 +360,65 @@ public class MgSystemRestController {
             e.printStackTrace();
         }
         return resultMap;
+    }
+    
+    //업체 상품정보조회
+    @RequestMapping(value = "/Manager/CallStoreProductList", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> CallStoreProductList(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgProductCodeVO mgProductCodeVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>(); 
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	try{
+    		Object adminLogin = session.getAttribute("adminLogin");
+        	String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
+    		}
+    		
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			List<Map<String,Object>> getStoreProductList = mgSystemDAO.getStoreProductList(params);
+    			resultMap.put("getStoreProductList",getStoreProductList);
+    		}
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return resultMap;
+    }
+    
+    //업체 타업체조회
+    @RequestMapping(value = "/Manager/CallStoreTargetList", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> CallStoreTargetList(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, MgProductCodeVO mgProductCodeVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>(); 
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	try{
+    		Object adminLogin = session.getAttribute("adminLogin");
+    		String email = (String)session.getAttribute("email");
+    		if(adminLogin.equals("admin")){
+    			params.put("store_id","admin");
+    		}else {
+    			params.put("store_id",email);
+    			Map<String,Object> storeDetail = mgSystemDAO.getStoreForId(params);
+    			if(storeDetail.get("store_creator_yn") != null) {
+    				if(storeDetail.get("store_creator_yn").equals("Y")) {
+    					params.put("store_creator_yn", "N");
+    				}else {
+    					params.put("store_creator_yn", "Y");
+    				}
+    			}
+    		}
+    		
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			List<Map<String,Object>> getStoreList = mgSystemDAO.getStoreList(params);
+    			resultMap.put("getStoreList",getStoreList);
+    		}
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return resultMap;
     }
 }

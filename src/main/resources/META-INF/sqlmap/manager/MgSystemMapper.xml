@@ -259,4 +259,16 @@
   	where store_id = #{store_id}
   	and product_ct = #{product_ct}
   </select>
+  <select id="getStoreProductList" parameterType="hashmap" resultType="hashmap">
+  	SELECT A.product_cd, A.product_name, A.product_payment
+	FROM product A
+	<if test='store_id != "admin"'>WHERE A.product_store_id = #{store_id}</if>
+	order by reg_date desc
+  </select>
+  <select id="getStoreList" parameterType="hashmap" resultType="hashmap">
+  	SELECT A.store_id, A.store_name
+	FROM store A
+	<if test="store_creator_yn != null and store_creator_yn != ''">WHERE A.store_creator_yn = #{store_creator_yn}</if>
+	ORDER BY A.reg_date desc
+  </select>
 </mapper>

@@ -10,6 +10,12 @@
             *
         FROM product_category  where 1=1
         ]]>
+        <if test="store_login!=null and store_login!=''">
+        	AND pd_category_id in (793,802)
+        </if>
+        <if test="store_id != null and store_id != ''">
+        	AND store_id = #{store_id}
+        </if>
         <if test="pd_category_id!=null and pd_category_id!=''">
             AND pd_category_id=#{pd_category_id}
         </if>
@@ -18,6 +24,9 @@
         </if>
         <if test="pd_category_main_view!=null and pd_category_main_view!=''">
             AND pd_category_main_view=#{pd_category_main_view}
+        </if>
+        <if test="pd_category_use_yn!=null and pd_category_use_yn!=''">
+            AND pd_category_use_yn=#{pd_category_use_yn}
         </if>
         <if test="pd_category_main_view_sp!=null and pd_category_main_view_sp!=''">
             AND pd_category_main_view_sp=#{pd_category_main_view_sp}
@@ -82,11 +91,13 @@
 
     </select>
     <insert id="insertCategory" parameterType="java.util.Map">
-        insert into product_category(pd_category_upper_code,pd_category_name)values(#{pd_category_upper_code},#{pd_category_name})
+        insert into product_category(pd_category_upper_code,pd_category_name,store_id)values(#{pd_category_upper_code},#{pd_category_name},#{store_id})
 
     </insert>
     <insert id="insertCategoryEvent" parameterType="java.util.Map">
         insert into product_category_event(
+	        store_id,
+	        event_approval_yn,
             pd_category_id,
             pd_category_event_title,
             pd_category_event_memo,
@@ -106,6 +117,8 @@
             event_use_yn,
             manager_name
         )values(
+        	#{store_id},
+	        #{event_approval_yn},
             #{pd_category_id},
             #{pd_category_event_title},
             #{pd_category_event_memo},
@@ -126,6 +139,8 @@
             #{manager_name}
         )
          on duplicate KEY update
+        store_id=#{store_id},
+        event_approval_yn=#{event_approval_yn},
         pd_category_id=#{pd_category_id},
         pd_category_event_title=#{pd_category_event_title},
         pd_category_event_memo=#{pd_category_event_memo},
@@ -191,7 +206,7 @@
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=4) as file_link4,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=5) as file_link5,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id order by Z.file_order desc limit 1) as main_big_banner_src
-        FROM product_category_event A  where 1=1
+        FROM product_category_event A  where 1=1 AND A.event_approval_yn = 'Y'
 
         ]]>
         <if test="pd_category_event_end != null and pd_category_event_end !=''">
@@ -220,7 +235,7 @@
         <![CDATA[
         SELECT
             count(*) as cnt
-        FROM product_category_event  where 1=1 AND event_use_yn='Y' and event_end_date >= now() and event_start_date < now()
+        FROM product_category_event  where 1=1 AND event_approval_yn = 'Y' AND event_use_yn='Y' and event_end_date >= now() and event_start_date < now()
         ]]>
     </select>
     <delete id="deleteCategoryFile" parameterType="java.util.Map">
@@ -277,4 +292,30 @@
 		FROM product_category A
 		WHERE A.pd_category_id = #{product_ct}
     </select>
+    <select id="getEventApprovalList" parameterType="hashmap" resultType="hashmap">
+	    SELECT A.*,
+			(SELECT Z.store_name FROM store Z WHERE Z.store_id = A.store_id) AS store_name
+		FROM product_category_event A
+		WHERE A.event_approval_yn = 'N'
+		<if test='store_id != "" and store_id != null'>AND A.store_id = #{store_id}</if>
+		order by A.reg_date desc
+		LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    <select id="getEventApprovalListCount" parameterType="hashmap" resultType="Integer">
+	    SELECT ifnull(count(*),0) as cnt
+		FROM product_category_event A
+		WHERE A.event_approval_yn = 'N'
+		<if test='store_id != "" and store_id != null'>AND A.store_id = #{store_id}</if>
+    </select>
+    <update id="eventApprovalUpdate" parameterType="com.webapp.manager.vo.MgCommonVO">
+    	UPDATE product_category A, product_category_event B SET
+			A.pd_category_main_view = 'Y',
+			A.pd_category_use_yn = 'Y',
+			B.event_approval_yn = 'Y'
+		WHERE A.pd_category_id = B.pd_category_id
+		AND B.pd_category_id in
+        <foreach collection="chk" item="item" open="(" separator="," close=")">
+             #{item}
+        </foreach>
+    </update>
 </mapper>

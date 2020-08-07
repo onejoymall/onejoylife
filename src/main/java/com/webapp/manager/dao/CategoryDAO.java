@@ -2,11 +2,14 @@ package com.webapp.manager.dao;
 
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
+import com.webapp.manager.vo.MgCommonVO;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,5 +79,16 @@ public class CategoryDAO {
 	public Map<String, Object> getRootCategoty(Map<String, Object> params) {
 		Map<String, Object> getRootCategory = sql.selectOne("mall.CategoryMapper.getRootCategory", params);
 		return getRootCategory;
+	}
+	public Integer getEventApprovalListCount(HashMap params) throws SQLException {
+        Integer getEventApprovalListCount = sql.selectOne("mall.CategoryMapper.getEventApprovalListCount",params);
+        return getEventApprovalListCount;
+    }
+	public List<Map<String, Object>> getEventApprovalList(HashMap params) {
+		List<Map<String, Object>> getEventApprovalList = sql.selectList("mall.CategoryMapper.getEventApprovalList", params);
+		return getEventApprovalList;
+	}
+	public void eventApprovalUpdate(MgCommonVO mgCommonVO) {
+		sql.update("mall.CategoryMapper.eventApprovalUpdate",mgCommonVO);
 	}
 }
