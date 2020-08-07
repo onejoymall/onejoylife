@@ -152,7 +152,7 @@
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=3) as file_link3,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=4) as file_link4,
             (select Z.file_link from product_category_file Z where Z.key_id = A.pd_category_id and Z.file_order=5) as file_link5
-        FROM product_category_event A  where 1=1
+        FROM product_category_event A  where 1=1 AND A.event_approval_yn = 'Y'
 
         ]]>
         <if test="pd_category_event_end != null and pd_category_event_end !=''">

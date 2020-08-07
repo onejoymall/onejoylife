@@ -412,7 +412,7 @@ public class ManagerRestapiController {
                 resultMap.put("redirectUrl",request.getHeader("Referer"));
             }
         } catch (Exception e) {
-
+        	e.printStackTrace();
             resultMap.put("e", e);
         }
         return resultMap;
@@ -985,7 +985,7 @@ public class ManagerRestapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
         try {
-            params.put("pd_category_main_view","Y");
+            params.put("pd_category_use_yn","Y");
             List<Map<String,Object>> list = categoryDAO.getCategoryList(params);
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
@@ -1042,6 +1042,13 @@ public class ManagerRestapiController {
                 error.put("카테고리 명", messageSource.getMessage("error.required","ko"));
             }
             if(isEmpty(error)){
+            	Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+            	if(adminLogin.equals("admin")){
+            		params.put("store_id", "admin");
+        		}else {
+        			params.put("store_id", email);
+        		}
                 categoryDAO.insertCategory(params);
                 resultMap.put("redirectUrl","/Manager/Category");
 
@@ -1052,6 +1059,24 @@ public class ManagerRestapiController {
             e.printStackTrace();
         }
         return resultMap;
+    }
+    
+    //카테고리 승인
+    @RequestMapping(value = "/Manager/eventApprovalUpdate",method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> eventApprovalUpdate(@RequestParam HashMap params, HttpServletRequest request, MgCommonVO mgCommonVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	try{
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			categoryDAO.eventApprovalUpdate(mgCommonVO);
+    		}
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	return resultMap;
     }
     //상품분류 삭제
     @RequestMapping(value = "/Manager/productCategoryDeleteProc", method = RequestMethod.POST, produces = "application/json")
@@ -1108,7 +1133,17 @@ public class ManagerRestapiController {
             }
             if(isEmpty(error)){
                 fileVO.setParentPK((String)params.get("pd_category_id"));
-                categoryDAO.updateCategory(params);
+                Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+                if(adminLogin.equals("admin")){
+            		params.put("store_id", "admin");
+            		params.put("event_approval_yn", "Y");
+            		categoryDAO.updateCategory(params);
+        		}else {
+        			params.put("store_id", email);
+        			params.put("event_approval_yn", "N");
+        		}
+                
                 if(!isEmpty(filelist)){
                     fileVO.setFileorder(1);
                     categoryDAO.deleteCategoryFile(filelist,fileVO);
@@ -1156,10 +1191,6 @@ public class ManagerRestapiController {
                 if(params.get("event_end_date").equals("")){
                     params.put("event_end_date",null);
                 }
-
-
-
-
 
                 categoryDAO.insertCategoryEvent(params);
                 resultMap.put("redirectUrl","/Manager/Category");
@@ -2930,5 +2961,158 @@ public class ManagerRestapiController {
             resultMap.put("e", e);
         }
         return resultMap;
+    }
+    
+    //상품제안등록
+    @Transactional
+    @RequestMapping(value = "/Manager/insertProposal", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> insertProposal(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        
+        if(params.get("product_name") == null || params.get("product_name").equals("")){
+            error.put(messageSource.getMessage("product_name","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        if(params.get("product_cd") == null || params.get("product_cd").equals("")){
+            error.put(messageSource.getMessage("product_cd","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        if(params.get("target_store_id") == null || params.get("target_store_id").equals("")){
+        	error.put(messageSource.getMessage("target_store_id","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        if(params.get("proposal_fee") == null || params.get("proposal_fee").equals("")){
+        	error.put(messageSource.getMessage("proposal_fee","ko"),messageSource.getMessage("error.required","ko"));
+        }
+        
+        try {
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+            	Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+            	if(adminLogin.equals("admin")){
+            		params.put("store_id","admin");
+        		}else {
+        			params.put("store_id",email);
+        		}
+            	mgProductDAO.insertProductProposal(params);
+            	
+                resultMap.put("success", "success");
+                resultMap.put("redirectUrl", "/Manager/product-proposal");
+            } 
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+    
+    //상품제안수정
+    @Transactional
+    @RequestMapping(value = "/Manager/updateProposal", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> updateProposal(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	if(params.get("accept_yn") != null && params.get("accept_yn").equals("Y")) {
+    		error.put("Error",messageSource.getMessage("error.proposal_accept", "ko"));
+    	}
+    	if(params.get("product_name") == null || params.get("product_name").equals("")){
+    		error.put(messageSource.getMessage("product_name","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("product_cd") == null || params.get("product_cd").equals("")){
+    		error.put(messageSource.getMessage("product_cd","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("target_store_id") == null || params.get("target_store_id").equals("")){
+    		error.put(messageSource.getMessage("target_store_id","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("proposal_fee") == null || params.get("proposal_fee").equals("")){
+    		error.put(messageSource.getMessage("proposal_fee","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	
+    	try {
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+            	if(adminLogin.equals("admin")){
+            		params.put("store_id","admin");
+        		}else {
+        			params.put("store_id",email);
+        		}
+            	
+    			mgProductDAO.updateProductProposal(params);
+    			
+    			resultMap.put("success", "success");
+    			resultMap.put("redirectUrl", "/Manager/product-proposal");
+    		} 
+    	} catch (Exception e) {
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
+    }
+    
+    //상품제안수락
+    @Transactional
+    @RequestMapping(value = "/Manager/acceptProposal", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Object> acceptProposal(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, CouponVO couponVO, BoardVO boardInfo, FileVO fileVO){
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	
+    	if(params.get("product_name") == null || params.get("product_name").equals("")){
+    		error.put(messageSource.getMessage("product_name","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("product_cd") == null || params.get("product_cd").equals("")){
+    		error.put(messageSource.getMessage("product_cd","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("target_store_id") == null || params.get("target_store_id").equals("")){
+    		error.put(messageSource.getMessage("target_store_id","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	if(params.get("proposal_fee") == null || params.get("proposal_fee").equals("")){
+    		error.put(messageSource.getMessage("proposal_fee","ko"),messageSource.getMessage("error.required","ko"));
+    	}
+    	
+    	try {
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			params.put("accept_yn", "Y");
+    			mgProductDAO.acceptProductProposal(params);
+    			
+    			resultMap.put("success", "success");
+    			resultMap.put("redirectUrl", "/Manager/product-proposal");
+    		} 
+    	} catch (Exception e) {
+    		resultMap.put("e", e);
+    	}
+    	return resultMap;
+    }
+    
+    //상품제안상세
+    @RequestMapping(value = "/Manager/getProposalDetail" ,method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> getProposalDetail (@RequestParam HashMap params,SearchVO searchVO, ModelMap modelMap, HttpServletRequest request,HttpSession session) throws Exception{
+    	HashMap<String, Object> error = new HashMap<String, Object>();
+    	HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	try{
+    		if(!isEmpty(error)){
+    			resultMap.put("validateError",error);
+    		}else{
+    			Object adminLogin = session.getAttribute("adminLogin");
+                String email = (String)session.getAttribute("email");
+            	if(adminLogin.equals("admin")){
+            		email = "admin";
+        		}
+            	
+    			Map<String,Object> data = mgProductDAO.getProposalDetail(params);
+    			resultMap.put("proposal",data);
+    			if(data.get("store_id").equals(email)) {
+    				resultMap.put("mySelf",true);
+    			}
+    		}
+    		
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	return resultMap;
     }
 }

@@ -441,6 +441,7 @@ $(document).on("click",".ra-num",function () {
                 $('input:radio[name=banner_use_yn][value=\''+categorySelect.banner_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=event_use_yn][value=\''+categorySelect.event_use_yn+'\']').prop("checked",true);
                 $('input:radio[name=pd_category_use_yn][value=\''+categorySelect.pd_category_use_yn+'\']').prop("checked",true);
+                $('input:radio[name=pd_category_main_view][value=\''+categorySelect.pd_category_main_view+'\']').prop("checked",true);
                 $('input:radio[name=pd_category_main_view_sp][value=\''+categorySelect.pd_category_main_view_sp+'\']').prop("checked",true);
 
                 $('.file_link').attr('src',categorySelect.file_link);
@@ -4625,6 +4626,11 @@ function ajaxPaging(pageVO,key){
 function listProductUpdate(column,update_value) {
     var formData = $('#defaultListForm').serialize()+'&column='+column+'&update_value='+update_value
     commonAjaxCall("POST","/Manager/productListUpdate",formData);
+}
+//관리자 > 상품관리 > 카테고리 승인
+function listEventApprovalUpdate() {
+	var formData = $('#defaultListForm').serialize();
+	commonAjaxCall("POST","/Manager/eventApprovalUpdate",formData);
 }
 //관리자 > 상품관리 > 재고 수정
 function  listProductUpdateStock() {

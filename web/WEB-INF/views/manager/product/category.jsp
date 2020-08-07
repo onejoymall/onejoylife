@@ -7,7 +7,12 @@
             <h2 name="detail">카테고리</h2>
             <div class="main-hd-btn-wrap">
 <%--                <button type="button" name="detail">화면 보기</button>--%>
+				<c:if test="${sessionScope.adminLogin == 'admin' }">
                 <button type="button" id="formCtegorySubmit">저장하기</button>
+                </c:if>
+				<c:if test="${sessionScope.adminLogin != 'admin' }">
+                <button type="button" id="formCtegorySubmit">신청하기</button>
+                </c:if>
             </div>
         </div>
         <div class="main-body">
@@ -21,13 +26,17 @@
                         <input type="button" class="add-folder" value="생성" onclick="addCategory(0,$('input[name=pd_category_name_add]').val())">
                         <input type="hidden" name="pd_category_id" value="7">
                         <input type="hidden" name="pd_category_upper_code" value="7">
+                        <c:if test="${sessionScope.adminLogin == 'admin' }">
                         <input type="button" class="remove-folder" onclick="deleteCategory()" value="삭제">
+                        </c:if>
                     </div>
                 </div>
                 <ul class="category-tree">
+                	<c:if test="${sessionScope.adminLogin == 'admin' }">
                     <li>
                         <a href="#" onclick="$('input[name=pd_category_name_add]').val('');$('input[name=pd_category_upper_code]').val(0);$('input[name=pd_category_name_add]').attr('placeholder','대분류');"><span></span>대분류</a>
                     </li>
+                    </c:if>
                 <c:if test="${not empty list}">
                     <c:forEach var="list" items="${list}" varStatus="status">
                         <li>
@@ -88,6 +97,7 @@
                                 <td>상품수</td>
                                 <td><span id="product_cnt"></span> 개 <%--(하위 카테고리 포함)--%></td>
                             </tr>
+                            <c:if test="${sessionScope.adminLogin == 'admin' }">
                             <tr>
                                 <td>카테고리 숨김처리 여부</td>
                                 <td class="radio-td">
@@ -117,6 +127,7 @@
                                     <label for="pd_category_main_view_sp2"><span>표시안함</span></label>
                                 </td>
                             </tr>
+                            </c:if>
 <%--                            <tr>--%>
 <%--                                <td>관련상품 등록/수정</td>--%>
 <%--                                <td>--%>
@@ -316,97 +327,83 @@
                             </tbody>
                         </table>
                     </div>
-<%--                    <div class="main-right-sec">--%>
-<%--                        <table class="right-table-4">--%>
-<%--                            <colgroup>--%>
-<%--                                <col style="width: 3%;">--%>
-<%--                                <col style="width: 5%;">--%>
-<%--                                <col style="width: 10%;">--%>
-<%--                                <col style="width: 5%;">--%>
-<%--                                <col style="width: 50%;">--%>
-<%--                                <col style="width: 15%;">--%>
-<%--                                <col style="width: 5%;">--%>
-<%--                                <col style="width: 7%;">--%>
-<%--                            </colgroup>--%>
-<%--                            <thead>--%>
-<%--                            <tr>--%>
-<%--                                <td>번호</td>--%>
-<%--                                <td>상태</td>--%>
-<%--                                <td>업체명</td>--%>
-<%--                                <td>행사종류</td>--%>
-<%--                                <td>행사명</td>--%>
-<%--                                <td>기간</td>--%>
-<%--                                <td>처리</td>--%>
-<%--                                <td>정보</td>--%>
-<%--                            </tr>--%>
-<%--                            </thead>--%>
-<%--                            <tbody>--%>
-<%--                            <tr>--%>
-<%--                                <td>01</td>--%>
-<%--                                <td>신청</td>--%>
-<%--                                <td>안다르</td>--%>
-<%--                                <td>기획전</td>--%>
-<%--                                <td>가을 전품목 할인</td>--%>
-<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
-<%--                                <td>---</td>--%>
-<%--                                <td>--%>
-<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td>02</td>--%>
-<%--                                <td>재신청</td>--%>
-<%--                                <td>안다르</td>--%>
-<%--                                <td>기획전</td>--%>
-<%--                                <td>가을 전품목 할인</td>--%>
-<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
-<%--                                <td>---</td>--%>
-<%--                                <td>--%>
-<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td>03</td>--%>
-<%--                                <td>승인</td>--%>
-<%--                                <td>안다르</td>--%>
-<%--                                <td>기획전</td>--%>
-<%--                                <td>가을 전품목 할인</td>--%>
-<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
-<%--                                <td>승인</td>--%>
-<%--                                <td>--%>
-<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td>04</td>--%>
-<%--                                <td>반려</td>--%>
-<%--                                <td>안다르</td>--%>
-<%--                                <td>기획전</td>--%>
-<%--                                <td>가을 전품목 할인</td>--%>
-<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
-<%--                                <td>반려</td>--%>
-<%--                                <td>--%>
-<%--                                    <button type="button" class="product-list2">상세보기</button>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td>05</td>--%>
-<%--                                <td>승인</td>--%>
-<%--                                <td>안다르</td>--%>
-<%--                                <td>기획전</td>--%>
-<%--                                <td>가을 전품목 할인</td>--%>
-<%--                                <td>2020.02.20 ~ 2020.03.10</td>--%>
-<%--                                <td>승인</td>--%>
-<%--                                <td>--%>
-<%--                                    <button type="button" class="product-list1">승인하기</button>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
-<%--                    </div>--%>
+                    </form>
+                    <div class="left" style="margin-top: 10px;">
+	                    <button type="button" class="btn-default" name="copy" id="listDelete">선택 삭제</button>
+	                    <c:if test="${sessionScope.adminLogin == 'admin'}">
+	                    	<button type="button" class="btn-default" name="copy" onclick="listEventApprovalUpdate()">승인하기</button>
+	                    </c:if>
+	
+	                </div>
+                    <div class="main-right-sec">
+                   	<form name="defaultListForm" id="defaultListForm" method="POST">
+                   		<input type="hidden" name="Pk" value="${Pk}">
+                		<input type="hidden" name="table_name" value="${table_name}">
+                       <table class="right-table-4">
+                           <colgroup>
+                               <col style="width: 5%;">
+                               <col style="width: 15%;">
+                               <col style="width: 10%;">
+                               <col style="width: 10%;">
+                               <col style="width: 15%;">
+                               <col style="width: 10%;">
+                               <col style="width: 10%;">
+                               <col style="width: 10%;">
+                           </colgroup>
+                           <thead>
+                           <tr>
+                               <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                               <td>업체명</td>
+                               <td>업체아이디</td>
+                               <td>담당자명</td>
+                               <td>메인상단 큰 배너</td>
+                               <td>기획전</td>
+                               <td>이벤트</td>
+                               <td>상태</td>
+                               <td>정보</td>
+                           </tr>
+                           </thead>
+                           <tbody id="eventApprovalList" class="goods-list-wrap">
+                           		<c:forEach var="list" items="${eventApprovalList}">
+		                           <tr>
+		                               <td>
+				                   	   	<input type="checkbox" id="chk" name="chk" value="${list.pd_category_id}">
+				                        <input type="hidden" name="pd_category_id" value="${list.pd_category_id}">
+				                       </td>
+		                               <td>${list.store_name}</td>
+		                               <td>${list.store_id}</td>
+		                               <td>${list.manager_name}</td>
+		                               <td>
+		                               	<c:if test="${list.banner_use_yn == 'Y'}">표시함</c:if>
+		                               	<c:if test="${list.banner_use_yn != 'Y'}">표시안함</c:if>
+									   </td>
+		                               <td>
+		                               	<c:if test="${list.pd_category_event_use_yn == 'Y'}">표시함</c:if>
+		                               	<c:if test="${list.pd_category_event_use_yn != 'Y'}">표시안함</c:if>
+									   </td>
+									   <td>
+		                               	<c:if test="${list.event_use_yn == 'Y'}">표시함</c:if>
+		                               	<c:if test="${list.event_use_yn != 'Y'}">표시안함</c:if>
+									   </td>
+		                               <td>
+		                               	<c:if test="${list.event_approval_yn == 'Y'}">승인</c:if>
+		                               	<c:if test="${list.event_approval_yn != 'Y'}">미승인</c:if>
+									   </td>
+		                               <td>
+		                                   <button type="button" class="event-detail-btn" onclick="selectCategory(${list.pd_category_id});">상세보기</button>
+		                               </td>
+		                           </tr>
+	                       		</c:forEach>
+                           </tbody>
+                       </table>
+                     </form>
+                   </div>
                 </div>
+                <form id="form1" name="form1"  method="get">
+	                <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
+	                <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
+	            </form>
             </div>
-            </form>
         </div>
     </div>
 </main>
@@ -871,5 +868,18 @@
         </div>
     </div>
 </div>
-
+<c:if test="${sessionScope.adminLogin != 'admin'}">
+<script>
+$(function(){
+	$("#formCtegorySubmit").hide();
+	
+	$(".category-tree>li>a").click(function(){
+		$("#formCtegorySubmit").hide();
+	});
+	$(".category-tree-2dp>li>a").click(function(){
+		$("#formCtegorySubmit").show();
+	});
+});
+</script>
+</c:if>
 <%@ include file="/WEB-INF/views/manager/managerLayout/managerFooter.jsp" %>

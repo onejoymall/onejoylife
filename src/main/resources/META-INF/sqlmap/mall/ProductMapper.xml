@@ -1042,4 +1042,86 @@ and A.payment_status != 'N'
             #{item}
         </foreach>
     </select>
+    <insert id="insertProductProposal" parameterType="hashmap">
+    	insert into product_proposal(
+    		store_id,
+    		target_store_id,
+    		product_cd,
+    		proposal_fee,
+    		proposal_html
+    	)values(
+	    	#{store_id},
+			#{target_store_id},
+			#{product_cd},
+			#{proposal_fee},
+			#{proposal_html}
+    	);
+    </insert>
+    <update id="updateProductProposal" parameterType="hashmap">
+    	update product_proposal SET
+    		store_id = #{store_id},
+			target_store_id = #{target_store_id},
+			product_cd = #{product_cd},
+			proposal_fee = #{proposal_fee},
+			proposal_html = #{proposal_html}
+    	where proposal_id = #{proposal_id}
+    </update>
+    <update id="acceptProductProposal" parameterType="hashmap">
+    	update product_proposal SET
+    		accept_yn = #{accept_yn}
+    	where proposal_id = #{proposal_id}
+    </update>
+    <select id="getProductProposalList" parameterType="hashmap" resultType="hashmap">
+    	SELECT A.*,
+    		D.product_name,
+			B.store_name AS store_name,
+			C.store_name AS target_store_name
+		FROM product_proposal A
+		LEFT JOIN store B
+		ON A.store_id = B.store_id
+		LEFT JOIN store C
+		ON A.target_store_id = C.store_id
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		WHERE 1=1
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+		<if test="proposal_type == null or proposal_type == ''">AND A.store_id = #{store_id}</if>
+		<if test='proposal_type == "O"'>AND A.target_store_id = #{store_id}</if>
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+        order by A.reg_date desc 
+        LIMIT ${rowStart-1}, ${displayRowCount}
+    </select>
+    <select id="getProductProposalListCount" parameterType="hashmap" resultType="int">
+    	SELECT ifnull(count(*),0) as cnt
+		FROM product_proposal A
+		LEFT JOIN store B
+		ON A.store_id = B.store_id
+		LEFT JOIN store C
+		ON A.target_store_id = C.store_id
+		LEFT JOIN product D
+		ON A.product_cd = D.product_cd
+		WHERE 1=1
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>
+		<if test="proposal_type == null or proposal_type == ''">AND A.store_id = #{store_id}</if>
+		<if test='proposal_type == "O"'>AND A.target_store_id = #{store_id}</if>
+		<if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
+        <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
+    </select>
+    <select id="getProposalDetail" resultType="hashmap" parameterType="hashmap">
+    	select A.*,
+    		B.product_name
+    	from product_proposal A
+    	join product B
+    	on A.product_cd = B.product_cd
+    	where A.proposal_id = #{proposal_id}
+    </select>
 </mapper>

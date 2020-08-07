@@ -985,6 +985,62 @@ $(".userModalBtn").click(function(e){
         $(".userModal").attr("style", "display:none");
     });
 });
+//상품 조회 모달
+$(".productModalBtn").click(function(e){
+	$('.dataListView').html();
+	e.preventDefault();
+	$(".productModal").attr("style", "display:block");
+	$('body').css("overflow", "hidden");
+	var dataList = commonAjaxListCall('POST','/Manager/CallStoreProductList');
+	var html;
+	$.each(dataList.getStoreProductList,function (key,value) {
+		html +='' +
+		'<tr data-cd="'+value.product_cd+'" data-id="'+value.product_name+'">' +
+		'<td><div class="codeRadio"></div></td>' +
+		'<td>'+(value.product_cd ? value.product_cd : '')+'</td>' +
+		'<td>'+value.product_name+'</td>' +
+		'<td>'+parseInt(value.product_payment).toLocaleString('en')+'</td>' +
+		'</tr>';
+	})
+	$('.dataListView').html(html);
+	
+	//row클릭시 이벤트
+	$(".codeSrcTable .sotreProductTable tr").on("click",function(){
+		$(".codeSrcTable tbody tr").removeClass('active');
+		$(this).addClass('active');
+		$("input[name=product_cd]").val($(this).attr("data-cd"));
+		$("input[name=product_name]").val($(this).attr("data-id"));
+		
+		$(".productModal").attr("style", "display:none");
+	});
+});
+//업체 조회 모달
+$(".storeModalBtn").click(function(e){
+	$('.dataListView').html();
+	e.preventDefault();
+	$(".storeModal").attr("style", "display:block");
+	$('body').css("overflow", "hidden");
+	var dataList = commonAjaxListCall('POST','/Manager/CallStoreTargetList');
+	var html;
+	$.each(dataList.getStoreList,function (key,value) {
+		html +='' +
+		'<tr data-id="'+value.store_id+'">' +
+		'<td><div class="codeRadio"></div></td>' +
+		'<td>'+(value.store_id ? value.store_id : '')+'</td>' +
+		'<td>'+value.store_name+'</td>' +
+		'</tr>';
+	})
+	$('.dataListView').html(html);
+	
+	//row클릭시 이벤트
+	$(".codeSrcTable .storeTable tr").on("click",function(){
+		$(".codeSrcTable tbody tr").removeClass('active');
+		$(this).addClass('active');
+		$("input[name=target_store_id]").val($(this).attr("data-id"));
+		
+		$(".storeModal").attr("style", "display:none");
+	});
+});
 
 //쿠폰다운
 $(".couponDownBtn").click(function(){
@@ -1440,3 +1496,110 @@ $(document).on("click","#modalstorRegDupCheck",function () {
         }
     });
 })
+
+//상품제안 등록
+$("button[name=proposal-confirm-btn]").click(function(){
+	var proc = $(this).attr('data-id');
+	var formData = new FormData($("#insertForm")[0]);
+	jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/Manager/'+proc+'Proposal',
+        success: function (data) {
+        	console.log(data);
+        	if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + getMessageAjax('is2') + item;
+                    }
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else if(data.success){
+            	$.toast({
+                    text: 'success',
+                    showHideTransition: 'plain', //펴짐
+                    position: 'bottom-right',
+                    icon: 'success',
+                    hideAfter: 1000,
+                    afterHidden: function () {
+                        location.reload();
+                    }
+                });
+            }
+        	if(data.e){
+        		alert("error");
+        	}
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+
+//상품제안 상세보기
+$(".proposalDetailBtn, #proposalInsertBtn").click(function(){
+	$(".storeModalBtn").show();
+	$(".productModalBtn").show();
+	
+	if($(this).attr("data-id")){
+		jQuery.ajax({
+	        type: 'POST',
+	        url: '/Manager/getProposalDetail',
+	        data: "proposal_id="+$(this).attr("data-id"),
+	        success: function (data) {
+	        	console.log(data);
+	        	var proposal = data.proposal;
+	        	if(data.mySelf){
+	        		$("#proposalTitle").text('수정');
+	        		$("button[name=proposal-confirm-btn]").attr("data-id","update");
+	        		$("button[name=proposal-confirm-btn]").text("수정");
+	        		
+	        		$.each(proposal,function(index, item){
+		        		$("#insertForm input[name="+index+"]").val(item);
+		        		$("#insertForm input[name="+index+"]").prop('readonly', false);
+		        		$("#insertForm textarea[name="+index+"]").summernote('code', item);
+		        		$("#insertForm textarea[name="+index+"]").summernote('enable');
+		        	});
+	        	}else{
+	        		$("#proposalTitle").text('확인');
+	        		$("button[name=proposal-confirm-btn]").attr("data-id","accept");
+	        		$("button[name=proposal-confirm-btn]").text("수락");
+	        		$(".storeModalBtn").hide();
+	        		$(".productModalBtn").hide();
+	        		
+		        	$.each(proposal,function(index, item){
+		        		$("#insertForm input[name="+index+"]").val(item);
+		        		$("#insertForm input[name="+index+"]").prop('readonly', true);
+		        		$("#insertForm textarea[name="+index+"]").summernote('code', item);
+		        		$("#insertForm textarea[name="+index+"]").summernote('disable');
+		        	});
+	        	}
+	        },
+	        error: function (xhr, status, error) {
+	            console.log(error,xhr,status );
+	        },
+	    });
+	}else{
+		$("#proposalTitle").text('등록');
+		$("button[name=proposal-confirm-btn]").attr("data-id","insert");
+		$("button[name=proposal-confirm-btn]").text("등록");
+		
+		$("#insertForm input").val("");
+		$("#insertForm textarea").summernote('code', "제안 상세 설명을 적어주세요.");
+	}
+});

@@ -56,14 +56,14 @@
                         <li><a href="/Manager/ManagerSign/ManagerLogOut">로그아웃</a></li>
                         <li  class="pass-btn"><a href="">비밀번호 변경</a></li>
                     </c:if>
-                    <li class="language-nav"><a href="">국가선택</a>
+                    <!-- <li class="language-nav"><a href="">국가선택</a>
                         <ul>
                             <li><a href="">한국</a></li>
                             <li><a href="">미국</a></li>
                             <li><a href="">중국</a></li>
                             <li><a href="">일본</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -122,7 +122,8 @@
                 			  afn:contains(menuList, '36') ||
                 			  afn:contains(menuList, '37') ||
                 			  afn:contains(menuList, '45') ||
-                			  afn:contains(menuList, '50')}">
+                			  afn:contains(menuList, '50') ||
+                			  afn:contains(menuList, '58')}">
                 <li <c:if test="${topNav == 2}">class="active" </c:if>><a href="/Manager/Product">상품관리</a>
                     <ul class="gnb-in-ul">
                     	<c:if test="${afn:contains(menuList, '29') || afn:contains(menuList, '30')}">
@@ -153,10 +154,15 @@
                             </ul>
                         </li>
                         </c:if>
-                        <c:if test="${afn:contains(menuList, '33')}">
+                        <c:if test="${afn:contains(menuList, '33') || afn:contains(menuList, '58')}">
                         <li><a href="/Manager/promotion-coupon">프로모션관리</a>
                             <ul>
+                            	<c:if test="${afn:contains(menuList, '33')}">
                                 <li><a href="/Manager/promotion-coupon">쿠폰 등록 및 관리</a></li>
+                                </c:if>
+                                <c:if test="${afn:contains(menuList, '58')}">
+                                <li><a href="/Manager/product-proposal">상품제안</a></li>
+                                </c:if>
 <%--                                <li><a href="">메인페이지, 기획전/이벤트 관리</a></li>--%>
                             </ul>
                         </li>
