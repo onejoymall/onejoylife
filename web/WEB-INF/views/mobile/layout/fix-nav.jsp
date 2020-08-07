@@ -59,8 +59,8 @@
             <ul class="language-ul">
                 <li><button type="button" onclick="setGlobalLocale('ko')">${afn:getMessage('korea',sessionScope.locale)}</button></li>
                 <li><button type="button" onclick="setGlobalLocale('en')">${afn:getMessage('america',sessionScope.locale)}</button></li>
-                <li><button type="button" onclick="setGlobalLocale('cn')">${afn:getMessage('china',sessionScope.locale)}</button></li>
-                <li><button type="button" onclick="setGlobalLocale('jp')">${afn:getMessage('japan',sessionScope.locale)}</button></li>
+                <li><button type="button" onclick="setGlobalLocale('zh')">${afn:getMessage('china',sessionScope.locale)}</button></li>
+                <li><button type="button" onclick="setGlobalLocale('ja')">${afn:getMessage('japan',sessionScope.locale)}</button></li>
             </ul>
         </content>
     </div>
