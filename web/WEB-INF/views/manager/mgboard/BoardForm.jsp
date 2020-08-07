@@ -42,6 +42,16 @@
                                     <input type="file" name="uploadfile" multiple="" />
                                 </td>
                             </tr>
+                            <c:if test="${bgno eq 9}">
+                                <tr>
+                                    <td>입점업체 선택</td>
+                                    <td>
+                                        <a href="#" class="codeSrc" data-id ="S">&#91;입점업체 조회&#93;</a>
+                                        <input type="text" id="goods-s" name="product_supplier" placeholder="ex) S00000000" value="${boardInfo.supplier_cd}">
+                                        <input type="hidden" name="product_store_id" value="${boardInfo.store_id}"/>
+                                    </td>
+                                </tr>
+                            </c:if>
                             </tbody>
                         </table>
                         <p class="ex"><span class="bullet-point">·</span><span>&nbsp;</span></p>
@@ -54,6 +64,37 @@
                 </form>
             </div>
         </main>
+    </div>
+</div>
+<div class="modal codeSrcModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>분류코드 정보조회</h2>
+            <button type="button" class="modal-close-code">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="wrap">
+                <table class="codeSrcTable">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="50%">
+                        <col width="13%">
+                        <col width="12%">
+                    </colgroup>
+                    <thead>
+                    <td></td>
+                    <td>분류코드</td>
+                    <td>분류코드명</td>
+                    <td>종류</td>
+                    <td>관리</td>
+                    </thead>
+                    <tbody class="dataListView">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <script>

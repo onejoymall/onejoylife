@@ -79,6 +79,8 @@
                                         <option value="E">${afn:getMessage("QA_event",sessionScope.locale)}</option>
                                         <option value="D">${afn:getMessage("QA_delivery",sessionScope.locale)}</option>
                                         <option value="G">${afn:getMessage("QA_others",sessionScope.locale)}</option>
+                                        <option value="B">${afn:getMessage("QA_inconvenience",sessionScope.locale)}</option>
+                                        <option value="M">${afn:getMessage("QA_store",sessionScope.locale)}</option>
                                     </select>
                                 </td>
                             </tr>

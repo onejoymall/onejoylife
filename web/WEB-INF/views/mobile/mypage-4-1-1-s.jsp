@@ -440,11 +440,11 @@ function show(num){
 		
 		discount += couponDiscount;
 		
-		$(".sum-span1").html(payment.toLocaleString('en') + '<span> ' + ${afn:getMessage("korea_won",sessionScope.locale)} + '</span>');
-		$(".sum-span2").html("- " + discount.toLocaleString('en') + '<span> ' + ${afn:getMessage("korea_won",sessionScope.locale)} + '</span>');
-		$(".sum-span3").html("+ " + delivery.toLocaleString('en') + '<span> ' + ${afn:getMessage("korea_won",sessionScope.locale)} + '</span>');
-		$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span> ' + ${afn:getMessage("korea_won",sessionScope.locale)} + '</span>');
-		$(".sum-span5").html(point.toLocaleString('en') + '<span> ' + ${afn:getMessage("korea_won",sessionScope.locale)} + '</span>');
+		$(".sum-span1").html(payment.toLocaleString('en') + '<span> ' + "${afn:getMessage('korea_won',sessionScope.locale)}" + '</span>');
+		$(".sum-span2").html("- " + discount.toLocaleString('en') + '<span> ' + "${afn:getMessage('korea_won',sessionScope.locale)}" + '</span>');
+		$(".sum-span3").html("+ " + delivery.toLocaleString('en') + '<span> ' + "${afn:getMessage('korea_won',sessionScope.locale)}" + '</span>');
+		$(".sum-span4").html((payment-discount+delivery).toLocaleString('en') + '<span> ' + "${afn:getMessage('korea_won',sessionScope.locale)}" + '</span>');
+		$(".sum-span5").html(point.toLocaleString('en') + '<span> ' + "${afn:getMessage('korea_won',sessionScope.locale)}" + '</span>');
 		$('input[name=payment]').val(payment-discount+delivery);
 		$('input[name=point_add]').val(point);
 		$('input[name=quantity_total]').val(quantity);
@@ -521,7 +521,7 @@ function show(num){
 	
 		if(isDup){
 			$.toast({
-                text: ${afn:getMessage("error.payment.couAlready_sel",sessionScope.locale)},
+                text: "${afn:getMessage("error.payment.couAlready_sel",sessionScope.locale)}",
                 showHideTransition: 'plain', //펴짐
                 position: 'bottom-right',
                 heading: 'Error',
@@ -576,7 +576,7 @@ function show(num){
     var product_name ='';
     var orderSize = $('input[name=product_cd]').length;
     if(orderSize >= 0){
-        product_name = $('input[name=product_name]').eq(1).val()+ ${afn:getMessage(other,sessionScope.locale)} + " " +orderSize + ${afn:getMessage("case",sessionScope.locale)};
+        product_name = $('input[name=product_name]').eq(1).val()+ "${afn:getMessage('other',sessionScope.locale)}" + " " +orderSize + "${afn:getMessage('case',sessionScope.locale)}";
     }else{
         product_name = $('input[name=product_name]').eq(0).val();
     }
@@ -669,7 +669,7 @@ function show(num){
                                 showText = item;
                             }else{
                                 alertType = "error";
-                                showText = index + ${afn:getMessage("is2",sessionScope.locale)} + item;
+                                showText = index + "${afn:getMessage('is2',sessionScope.locale)}" + item;
                             }
                             // $.toast().reset('all');//토스트 초기화
                             $.toast({
@@ -787,7 +787,7 @@ function show(num){
             	for (var i=0;i<data.deliveryList.length;i++) {
             		var item = data.deliveryList[i];
           
-            		$("#list_address").append('<tr><td><p align="left" >' + item.order_user_name + '</p><p align="left" >' + item.roadAddress +'</p><p align="left" >' + item.extraAddress +'</p></td><td> <button type="button" class="c-btn" id="choose" data-id="' + item.order_no + '">선택</button></td>');
+            		$("#list_address").append('<tr><td><p align="left" >' + item.order_user_name + '</p><p align="left" >' + item.roadAddress +'</p><p align="left" >' + item.extraAddress +'</p></td><td> <button type="button" class="c-btn" id="choose" data-id="' + item.order_no + '">"${afn:getMessage('select',sessionScope.locale)}"</button></td>');
             		 
             	}
             	

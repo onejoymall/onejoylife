@@ -4106,26 +4106,28 @@ $(document).ready(function(){
 });
 
 //상품코드정보 조회 모달
-$(".codeSrc").click(function(e){
-    e.preventDefault();
-    $(".codeSrcModal").attr("style", "display:block");
-    $('body').css("overflow", "hidden");
-    $(".srcButton").attr("data-id",$(this).attr("data-id"));
-    var dataList = commonAjaxListCall('POST','/Manager/CallCodeList',{"product_class_code_type":$(this).attr("data-id")});
-    var html;
-    $.each(dataList.getProductCodeList,function (key,value) {
-        html +='' +
-            '<tr data-id="'+value.product_class_code+'" store-id="'+value.product_class_name.split("ID:")[1]+'">' +
-            '<td><div class="codeRadio"></div></td>' +
-            '<td>'+value.product_class_code+'</td>' +
-            '<td>'+value.product_class_name+'</td>' +
-            '<td>'+value.product_class_code_type_name+'</td>' +
-            '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id='+value.product_class_code+'>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id='+value.product_class_code+'> [삭제]</a></p></td>' +
-            '</tr>';
-    })
-    $('.dataListView').html(html);
+$(document).ready(function() {
+    $(".codeSrc").click(function (e) {
+        e.preventDefault();
+        $(".codeSrcModal").attr("style", "display:block");
+        $('body').css("overflow", "hidden");
+        $(".srcButton").attr("data-id", $(this).attr("data-id"));
+        var dataList = commonAjaxListCall('POST', '/Manager/CallCodeList', {"product_class_code_type": $(this).attr("data-id")});
+        var html;
+        $.each(dataList.getProductCodeList, function (key, value) {
+            html += '' +
+                '<tr data-id="' + value.product_class_code + '" store-id="' + value.product_class_name.split("ID:")[1] + '">' +
+                '<td><div class="codeRadio"></div></td>' +
+                '<td>' + value.product_class_code + '</td>' +
+                '<td>' + value.product_class_name + '</td>' +
+                '<td>' + value.product_class_code_type_name + '</td>' +
+                '<td><p class="cc2"><a class="codeUpdate" href="javascript:void(0)" data-id=' + value.product_class_code + '>[수정] </a><a class="codeDelete" href="javascript:void(0)" data-id=' + value.product_class_code + '> [삭제]</a></p></td>' +
+                '</tr>';
+        })
+        $('.dataListView').html(html);
 
-    callTableTrStyle($(this).attr("data-id"))
+        callTableTrStyle($(this).attr("data-id"))
+    });
 });
 //상품코드등록
 $(".srcButton").click(function(e){
