@@ -18,6 +18,15 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>입점업체/크리에이터</th>
+                                    <td>
+                                        <input type="radio" name="store_creator_yn" id="store_creator_yn1" value="N" <c:if test="${info.store_creator_yn eq 'N'}">checked</c:if>/>
+                                        <label for="store_creator_yn1">입점업체</label>
+                                        <input type="radio" name="store_creator_yn" id="store_creator_yn2" value="Y" <c:if test="${info.store_creator_yn eq 'Y'}">checked</c:if>/>
+                                        <label for="store_creator_yn2">크리에이터</label>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>사업자등록번호</th>
                                     <td>
 <%--                                        <input type="radio" id="table-ra1" name="store_reg_type" value="D">--%>

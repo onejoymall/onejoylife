@@ -105,6 +105,15 @@
                                         <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>${afn:getMessage('store',sessionScope.locale)}/${afn:getMessage('creator',sessionScope.locale)}</th>
+                                    <td>
+                                        <input type="radio" name="store_creator_yn" id="store_creator_yn1" value="N" checked/>
+                                        <label for="store_creator_yn1">${afn:getMessage('store',sessionScope.locale)}</label>
+                                        <input type="radio" name="store_creator_yn" id="store_creator_yn2" value="Y"/>
+                                        <label for="store_creator_yn2">${afn:getMessage('creator',sessionScope.locale)}</label>
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>

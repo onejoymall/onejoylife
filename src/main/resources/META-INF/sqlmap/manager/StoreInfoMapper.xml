@@ -23,6 +23,7 @@
 		update store set 
 		store_name			= #{store_name},
 		store_reg			=#{store_reg},
+		store_creator_yn	=#{store_creator_yn},
 		store_ceo_name		=#{store_ceo_name},
 		store_type			=#{store_type},
 		store_item			=#{store_item},

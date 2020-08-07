@@ -26,6 +26,15 @@ public class SearchVO extends PageVO{
     private String category3;
     private String product_approval_yn;
     private String store_id;
+    private String product_type;
+
+    public String getProduct_type() {
+        return product_type;
+    }
+
+    public void setProduct_type(String product_type) {
+        this.product_type = product_type;
+    }
 
     public String getQuestion_type() {
         return question_type;

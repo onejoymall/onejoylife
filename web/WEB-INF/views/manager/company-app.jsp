@@ -150,13 +150,22 @@
                                     <input type="hidden" name="storIdDupCheck" value="">
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="store_pwd">
                                 <th>비밀번호 설정</th>
                                 <td>
                                     <p><input type="password" name="store_password" placeholder="비밀번호"><span class="er" id="passwordValidation"></span></p>
                                     <p><input type="password" name="store_passwordCf" placeholder="비밀번호 확인"><span class="er" id="password_cfValidation"></span></p>
                                     <p class="s-font">- 6~20자의 영문,숫자를 조합하여 입력하여 주세요.</p>
 <%--                                    <p class="s-font">- 사용가능 특수문자 # $ % &amp; ( ) * + - / : &#60; = &#62; ? @ [ \ ] ^ _ { | } ~</p>--%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>입점업체/크리에이터</th>
+                                <td>
+                                    <input type="radio" name="store_creator_yn" id="store_creator_yn1" value="N" checked/>
+                                    <label for="store_creator_yn1">입점업체</label>
+                                    <input type="radio" name="store_creator_yn" id="store_creator_yn2" value="Y"/>
+                                    <label for="store_creator_yn2">크리에이터</label>
                                 </td>
                             </tr>
 

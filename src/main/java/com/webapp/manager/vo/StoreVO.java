@@ -33,8 +33,15 @@ public class StoreVO extends SearchVO {
     private String store_info_chkDate;
     private String info_alert_date;
     private String alert_chk;
-    
-    
+    private String store_creator_yn;
+
+    public String getStore_creator_yn() {
+        return store_creator_yn;
+    }
+
+    public void setStore_creator_yn(String store_creator_yn) {
+        this.store_creator_yn = store_creator_yn;
+    }
 
     public String getStore_info_chkDate() {
 		return store_info_chkDate;
