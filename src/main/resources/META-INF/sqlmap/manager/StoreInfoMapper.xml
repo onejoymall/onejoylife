@@ -16,6 +16,8 @@
 	]]>
     from store where store_id=#{store_id}
     </select>
+    
+    
    <update id="updateStoreInfo" parameterType="java.util.Map">
   /*updateStoreInfo*/
 		update store set 
