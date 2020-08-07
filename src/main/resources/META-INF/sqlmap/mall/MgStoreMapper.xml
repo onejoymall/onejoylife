@@ -73,6 +73,7 @@
     from store where store_reg=#{store_reg}
   </select>
   <insert id="insertStore" parameterType="com.webapp.manager.vo.StoreVO">
+    /*insertStore*/
       insert into store
       (
         store_id,
@@ -97,7 +98,9 @@
         store_bank_holder,
         store_bank_name,
         level,
-        enable_mg_menu_id
+        enable_mg_menu_id,
+        info_alert_date,
+        store_info_chkDate
       )
       values
       (
@@ -123,7 +126,9 @@
         #{store_bank_holder},
         #{store_bank_name},
         #{level},
-        #{enable_mg_menu_id}
+        #{enable_mg_menu_id},
+        date_add(CURRENT_TIMESTAMP(), interval 3 MONTH),
+        CURRENT_TIMESTAMP()
       )
     </insert>
   <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">

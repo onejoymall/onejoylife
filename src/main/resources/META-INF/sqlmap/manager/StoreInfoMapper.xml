@@ -10,8 +10,8 @@
     (select product_file.file_link from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_1,
     (select product_file.file_name from product_file where product_file.key_id = store.store_id and product_file.file_order = 1) as file_name,
 	<![CDATA[    
-    CASE WHEN  DATE_FORMAT(store_info_chkDate,'%Y-%m-%d' ) >= DATE_FORMAT(info_alert_date,'%Y-%m-%d' ) THEN 'Y'
-    ELSE 'N'
+	 CASE WHEN  DATE_FORMAT(CURRENT_TIMESTAMP(),'%Y-%m-%d' ) >= DATE_FORMAT(info_alert_date,'%Y-%m-%d' ) THEN 'Y'
+    	ELSE 'N'
 	 END AS ALERT_CHK
 	]]>
     from store where store_id=#{store_id}
