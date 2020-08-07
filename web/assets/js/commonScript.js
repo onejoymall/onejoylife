@@ -2343,6 +2343,7 @@ $(document).on("click",".ra-num",function () {
         $('#formStoreSubmit').addClass('hidden');
         $('.updateBtn').removeClass('hidden');
         $('.modal-header h2').html("입점업체 수정");
+        $('.store_pwd').remove();
         // $('input:radio[name=store_reg_type]').eq(0).click();
         jQuery.ajax({
             type: 'POST',
@@ -2353,7 +2354,7 @@ $(document).on("click",".ra-num",function () {
                 $.each(data.list, function (index, item) {
 		            if(index=="enable_mg_menu_id" && data.list.level != 1){
 	                    item.split("|").forEach(function(el){
-	                    $("input[name=enable_menu]:checkbox[value="+el+"]").prop("checked",true);
+	                    $('input[name=enable_menu]:checkbox[value=\''+el+'\']').prop('checked',true);
 	                    });
 	                }
                     $('input[name^="' + index + '"]').val(item);
@@ -2365,6 +2366,11 @@ $(document).on("click",".ra-num",function () {
                     // }else{
                     //     $('input:radio[name=store_reg_type]').eq(1).click();
                     // }
+                    if(index=="store_creator_yn" || data.list.store_creator_yn == "N"){
+                        $('#store_creator_yn1').prop('checked', true);
+                    } else {
+                        $('#store_creator_yn2').prop('checked', true);
+                    }
                 });
                 $('#store_reg').attr("readonly",true);
                 $('#store_id').attr("readonly",true);
@@ -2372,6 +2378,8 @@ $(document).on("click",".ra-num",function () {
                 $('#storIdDupCheck').html('OK');
                 $('#storRegDupCheck').attr('disabled', true);
                 $('#storRegDupCheck').html('OK');
+                $('#store_creator_yn1').val('N');
+                $('#store_creator_yn2').val('Y');
             },
             error: function (xhr, status, error) {
                 alert(error);

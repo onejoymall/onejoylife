@@ -1551,6 +1551,7 @@ public class ManagerRestapiController {
                 fileVO.setFileorder(1);
                 mgProductDAO.insertProductFile(filelist,fileVO);
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+                storeVO.setStore_creator_yn((String) params.get("store_creator_yn"));
                 storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
                 mgStoreDAO.insertStore(storeVO);
                 Object obj = session.getAttribute("adminLogin");
@@ -1645,7 +1646,8 @@ public class ManagerRestapiController {
                     
                 }
 
-                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+//                storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
+                storeVO.setStore_creator_yn((String) params.get("store_creator_yn"));
                 storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
                 mgStoreDAO.updateStore(storeVO);
                 resultMap.put("redirectUrl","/Manager/company-app");
