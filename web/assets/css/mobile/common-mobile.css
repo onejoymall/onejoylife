@@ -2286,7 +2286,7 @@ body.black .subheader .subTitle{
 }
 
 .bottomBtns{
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     left: 0;
     width: 100%;
