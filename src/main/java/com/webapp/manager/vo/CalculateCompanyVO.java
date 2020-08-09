@@ -10,6 +10,9 @@ public class CalculateCompanyVO extends StoreVO {
 	private String[] coupon_cd_arr;
 	private Integer level;
 	
+	private String product_store_id;
+	
+	
 	
 	public String getStore_pur_com() {
 		return store_pur_com;
@@ -41,6 +44,12 @@ public class CalculateCompanyVO extends StoreVO {
 	}
 	public void setLevel(Integer level) {
 		this.level = level;
+	}
+	public String getProduct_store_id() {
+		return product_store_id;
+	}
+	public void setProduct_store_id(String product_store_id) {
+		this.product_store_id = product_store_id;
 	}
 
 

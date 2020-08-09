@@ -195,13 +195,13 @@
       		  d.coupon_cd is ${item}
       		  </foreach>
         </if>
-        
 		 <if test="level == 9"> 
 			and b.product_store_id = #{product_store_id}
 		 </if> 
 		
   	   <![CDATA[
   		   order by b.reg_date desc
+  		    LIMIT ${rowStart-1}, ${displayRowCount} 
   ]]>
     	 
 	</select>

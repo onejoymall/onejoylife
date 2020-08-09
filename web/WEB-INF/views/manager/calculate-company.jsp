@@ -34,30 +34,26 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th>할인쿠폰</th>
-                                <!-- <td>
-                                   <input type="checkbox" name="src-before" id="src-before" checked>
-                                   <label for="src-before">사용</label>
-                                   <input type="checkbox" name="src-after" id="src-after" checked>
-                                   <label for="src-after">사용안함</label>
-                                </td>
-                                 -->
+                                 <c:set var="deadline1" value="${fn:split(searchVO.coupon_cd,',')}"/>
+                                <th>할인쿠폰${deadline1[0]}//${deadline1[1]}</th>
                                 <td>
                                 <input type="checkbox" name="coupon_cd" value="not null" id="src-before"
-                                   <c:if test="${fn:contains(params.coupon_cd, 'not null')}">checked</c:if>>
+                                  <c:if test="${deadline1[0] eq 'not null' ||deadline1[1] eq 'not null'}"></c:if>>
+                                  
                                    <label for="src-before" >사용</label>
                                    <input type="checkbox" name="coupon_cd" value="null" id="src-after" 
-                                   <c:if test="${fn:contains(params.coupon_cd, 'null')}">checked</c:if>>
+                                  <c:if test="${deadline1[1] eq 'null'}">checked</c:if>>
                                    <label for="src-after">사용안함</label>
                                 </td>
                                 
-                                <th>매입/위탁 </th>
+ 								<c:set var="deadline" value="${fn:split(searchVO.store_pur_com,',')}"/>
+                                <th>매입/위탁</th>
                                 <td>
                                 <input type="checkbox" name="store_pur_com" value="A" id="src-q1"
-                                <c:if test="${fn:contains(params.store_pur_com, 'A')}">checked</c:if>>
+                                <c:if test="${deadline[0]eq'A'||deadline[1]eq'A' }">checked</c:if>>
                                    <label for="src-q1" >매입</label>
                                    <input type="checkbox" name="store_pur_com" value="B" id="src-q2" 
-                            	  <c:if test="${fn:contains(params.store_pur_com, 'B')}">checked</c:if>>
+                            	  <c:if test="${deadline[0]eq'B'||deadline[1]eq'B'}">checked</c:if>>
                                    <label for="src-q2">위탁</label>
                                 </td>
                             </tr>
@@ -181,12 +177,13 @@
                     <jsp:include page="/WEB-INF/views/common/pagingforManagerList.jsp" />
                     <input type="hidden" name="staticRowEnd" id="staticRowEnd" value="<c:out value="${param.staticRowEnd}"/>">
                   	<input type="hidden" class="keyword-src" name="searchKeyword" value="${param.searchKeyword}">
+                    <input type="hidden" name="displayRowCount" value="${param.displayRowCount}">
                      <c:forEach items="${params.searchTypeArr}" var="list">
                     	<input type="hidden" name="searchType" value="${list}">	
                     </c:forEach>
-                     <c:forEach items="${params.searchChkArr}" var="list">
+              <%--        <c:forEach items="${params.searchChkArr}" var="list">
                     	<input type="hidden" name="chkType" value="${list}">	
-                    </c:forEach>
+                    </c:forEach> --%>
                     
                     <%--  <input type="hidden" name="src-before" value="${list.coupon_cd}">  --%>
                     <input type="hidden" name="src-after" value="${param.src-after}">
