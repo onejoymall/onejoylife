@@ -966,7 +966,7 @@ public class ManagerController {
         return "/manager/company-anno";
     }
     //주문관리
-    @RequestMapping(value = "/Manager/order")
+    @RequestMapping(value = "/Manager/order")//jmjm
     public String managerOrder(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
         	if(searchVO.getDisplayRowCount()==null){
@@ -1397,18 +1397,28 @@ public class ManagerController {
            calculateCompanyVO.setDisplayRowCount(10);
            calculateCompanyVO.pageCalculate(calculateCompanyDAO.getCalculateCompanyCount(calculateCompanyVO)
 		  );
-           params.put("displayRowCount",10);
-			/*
-			 * params.put("rowStart",searchVO.getRowStart());
-			 * params.put("displayRowCount",searchVO.getDisplayRowCount());
-			 * params.put("staticRowEnd", searchVO.getStaticRowEnd());
-			 * 
-			 * 
-			 * params.put("searchTypeArr",searchVO.getSearchTypeArr());
-			 * params.put("product_store_id",(String)session.getAttribute("email"));
-			 * params.put("level",(Integer)loginUserList.get("level"));
-			 * 
-			 */
+         //  params.put("displayRowCount",10);
+			
+			// params.put("rowStart",searchVO.getRowStart());
+			// params.put("displayRowCount",searchVO.getDisplayRowCount());
+			// params.put("staticRowEnd", searchVO.getStaticRowEnd());
+			 
+			
+			// params.put("searchTypeArr",searchVO.getSearchTypeArr());
+			// params.put("product_store_id",(String)session.getAttribute("email"));
+			// params.put("level",(Integer)loginUserList.get("level"));
+			 
+			 
+			 //calculateCompanyVO.setRowStart(searchVO.getRowStart());
+		//	 calculateCompanyVO.setStaticRowEnd(searchVO.getStaticRowEnd());
+           //params.put("staticRowEnd",searchVO.getDisplayRowCount());
+           calculateCompanyVO.setStaticRowEnd(searchVO.getDisplayRowCount());
+           calculateCompanyVO.setSearchTypeArr(searchVO.getSearchTypeArr());
+			 calculateCompanyVO.setProduct_store_id((String)session.getAttribute("email"));
+			 calculateCompanyVO.setLevel((Integer)loginUserList.get("level"));
+			 
+			 
+			 
            model.addAttribute("searchVO", calculateCompanyVO); 
        	  List<Map<String,Object>> list = calculateCompanyDAO.getCalculateCompanyList(calculateCompanyVO);
        	 
