@@ -208,6 +208,15 @@
                                         <input type="text" id="store_type" name="store_type"> / <input type="text" id="store_item" name="store_item">
                                     </td>
                                 </tr>
+    					 <tr> 
+                               	  <th>매입/위탁</th>
+                                <td class="radio-td">
+                                    <input type="radio" id="right-ra1" name="store_pur_com" class="styleClass" value="A">
+                                    <label for="right-ra1"><span>매입</span></label>
+                                    <input type="radio" id="right-ra2" name="store_pur_com" class="styleClass" value="B">
+                                    <label for="right-ra2"><span>위탁</span></label>
+                                </td>
+							</tr>
 
                                 <tr>
                                     <th>사업자등록증 사본</th>
