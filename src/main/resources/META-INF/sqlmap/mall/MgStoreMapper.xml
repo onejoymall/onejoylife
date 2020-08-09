@@ -101,7 +101,8 @@
         level,
         enable_mg_menu_id,
         info_alert_date,
-        store_info_chkDate
+        store_info_chkDate,
+		store_pur_com
       )
       values
       (
@@ -130,7 +131,8 @@
         #{level},
         #{enable_mg_menu_id},
         date_add(CURRENT_TIMESTAMP(), interval 3 MONTH),
-        CURRENT_TIMESTAMP()
+        CURRENT_TIMESTAMP(),
+        #{store_pur_com}
       )
     </insert>
   <update id="updateStore" parameterType="com.webapp.manager.vo.StoreVO">

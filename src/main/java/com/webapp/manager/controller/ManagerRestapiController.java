@@ -79,6 +79,7 @@ import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.mall.vo.UserVO;
 import com.webapp.manager.dao.BannerDAO;
+import com.webapp.manager.dao.CalculateCompanyDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.CompanyInfoDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -173,6 +174,9 @@ public class ManagerRestapiController {
     private CompanyInfoDAO companyInfoDAO;    
     @Autowired
     private StoreInfoDAO storeInfoDAO;
+    @Autowired
+    private CalculateCompanyDAO calculateCompanyDAO;
+    
     
     IamportClient client;
     @Value("${api_key}")
@@ -2964,6 +2968,23 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+//업체 별 정산(상세내역)
+    @RequestMapping(value = "/Manager/calculate-companyDetail")
+    public Map<String,Object> managerCalculateCompanyDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	 HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	 HashMap<String, Object> error = new HashMap<String, Object>();
+
+    	try {
+        	Map<String,Object> detail = calculateCompanyDAO.getCalculateCompanyListDetail(params);
+            resultMap.put("detail",detail);
+              
+              
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
     
     //상품제안등록
     @Transactional

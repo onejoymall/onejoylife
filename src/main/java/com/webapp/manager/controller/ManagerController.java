@@ -38,10 +38,12 @@ import com.webapp.mall.dao.PaymentDAO;
 import com.webapp.mall.dao.ProductDAO;
 import com.webapp.mall.dao.RefundDAO;
 import com.webapp.mall.dao.UserDAO;
+import com.webapp.mall.vo.CartPaymentVO;
 import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.GiveawayVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.manager.dao.BannerDAO;
+import com.webapp.manager.dao.CalculateCompanyDAO;
 import com.webapp.manager.dao.CategoryDAO;
 import com.webapp.manager.dao.CompanyInfoDAO;
 import com.webapp.manager.dao.ConfigDAO;
@@ -59,6 +61,7 @@ import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
 import com.webapp.manager.dao.StoreInfoDAO;
+import com.webapp.manager.vo.CalculateCompanyVO;
 import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.MgBrandVO;
 import com.webapp.manager.vo.MgDeliveryVO;
@@ -127,7 +130,10 @@ public class ManagerController {
     private CompanyInfoDAO companyInfoDAO;
     @Autowired
     private StoreInfoDAO storeInfoDAO;
+  @Autowired
+    private CalculateCompanyDAO calculateCompanyDAO;
     
+        
     /**
      *  리스트.
      */
@@ -1377,19 +1383,51 @@ public class ManagerController {
         model.addAttribute("postUrl", "/Manager/cs-review");
         return "/manager/cs-review";
     }
-    //업체 별 정산
-    @RequestMapping(value = "/Manager/calculate-company")
-    public String managerCalculateCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+      //업체 별 정산
+    @RequestMapping(value = "/Manager/calculate-company")//jmjm
+    public String managerCalculateCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session,CalculateCompanyVO calculateCompanyVO  ) throws Exception {
         try {
-
+        	
+   		 String email = (String)params.get("email");
+   		 params.put("email", session.getAttribute("email"));
+           Map<String,Object> loginUserList = userDAO.getUserStoreList(params);
+   
+       	//storeVO.setStore_id((String)session.getAttribute("email"));
+		
+           calculateCompanyVO.setDisplayRowCount(10);
+           calculateCompanyVO.pageCalculate(calculateCompanyDAO.getCalculateCompanyCount(calculateCompanyVO)
+		  );
+           params.put("displayRowCount",10);
+			/*
+			 * params.put("rowStart",searchVO.getRowStart());
+			 * params.put("displayRowCount",searchVO.getDisplayRowCount());
+			 * params.put("staticRowEnd", searchVO.getStaticRowEnd());
+			 * 
+			 * 
+			 * params.put("searchTypeArr",searchVO.getSearchTypeArr());
+			 * params.put("product_store_id",(String)session.getAttribute("email"));
+			 * params.put("level",(Integer)loginUserList.get("level"));
+			 * 
+			 */
+           model.addAttribute("searchVO", calculateCompanyVO); 
+       	  List<Map<String,Object>> list = calculateCompanyDAO.getCalculateCompanyList(calculateCompanyVO);
+       	 
+       	  model.addAttribute("list", list);
+              
         } catch (Exception e) {
             e.printStackTrace();
         }
+        model.addAttribute("table_name", "payment");
+        model.addAttribute("Pk", "payment_cd");
+        model.addAttribute("params", params); 
         model.addAttribute("topNav", 8);
         model.addAttribute("style", "calculate-company");
         model.addAttribute("postUrl", "/Manager/calculate-company");
+       
         return "/manager/calculate-company";
     }
+
+    
     //이포인트
     @RequestMapping(value="/Manager/MgEPoint")
     public String myPagePoint(@RequestParam HashMap params, SearchVO searchVO, Model model, HttpServletRequest request, HttpSession session, MgPointVO mgPointVO) throws SQLException {

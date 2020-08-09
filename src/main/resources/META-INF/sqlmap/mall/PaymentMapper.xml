@@ -136,6 +136,107 @@
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
         <if test="payment_user_id != null"> <![CDATA[AND B.payment_user_id= #{payment_user_id} ]]></if>
 	</select>
+	
+	
+	<select id="getCalculateCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
+		/*getCalculateCompanyCount*/
+		SELECT 
+			count(*) as cnt
+		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
+		LEFT JOIN store c ON c.store_id = b.product_store_id
+		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
+		WHERE
+		1=1
+	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+      </foreach>
+    </if> 
+	 <if test="level == 9"> 
+			and b.product_store_id = #{product_store_id}
+		 </if> 
+	</select>
+	<select id="getCalculateCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
+		/*getCalculateCompanyList*/
+		SELECT 
+			a.payment_cd,
+			a.order_no,
+			b.product_store_id,
+			b.product_cd ,
+			(SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com,
+			b.product_tex_class ,
+			b.product_delivery_payment ,
+			b.product_company_payment,
+			a.payment_order_quantity ,
+			b.product_type,
+		    b.product_name,
+		    b.reg_date, 
+		    d.coupon_cd,
+		    CASE WHEN  d.coupon_cd IS null  THEN '사용안함'
+   		 		ELSE '사용'
+			 END AS coupon_use,
+			((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
+		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
+		LEFT JOIN store c ON c.store_id = b.product_store_id
+		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
+		WHERE 1=1
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if> 
+	     <if test="store_pur_com !=null  and store_pur_com !=''">
+	       <foreach item="item" index="index" collection="store_pur_com_arr" separator=" OR " open="AND (" close=")">
+      		  c.store_pur_com = #{item}
+      		  </foreach>
+        </if>
+      	<if test="coupon_cd !=null  and coupon_cd !=''">
+	       <foreach item="item" index="index" collection="coupon_cd_arr" separator=" OR " open="AND (" close=")">
+      		  d.coupon_cd is ${item}
+      		  </foreach>
+        </if>
+        
+		 <if test="level == 9"> 
+			and b.product_store_id = #{product_store_id}
+		 </if> 
+		
+  	   <![CDATA[
+  		   order by b.reg_date desc
+  ]]>
+    	 
+	</select>
+	<select id="getCalculateCompanyListDetail" parameterType="hashmap" resultType="hashmap">
+	
+		/*getCalculateCompanyListDetail*/	
+	SELECT 
+			a.payment_cd,
+			a.order_no,
+			b.product_store_id,
+			b.product_cd ,
+			b.product_tex_class ,
+			(SELECT left(a.code_name,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= b.product_tex_class ) AS product_tex_class,
+			(SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com,
+			b.product_delivery_payment ,
+			b.product_company_payment,
+			a.payment_order_quantity ,
+		    b.product_name,
+		    c.level,
+		    d.coupon_cd,
+		   CASE WHEN  d.coupon_cd IS null  THEN '사용안함'
+   		 		ELSE '사용'
+			 END AS coupon_use,
+			(select Z.code_name from code Z where Z.code='product_type' and Z.code_value = b.product_type)AS product_type,
+		   a.coupon_discount,
+			((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
+		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
+		LEFT JOIN store c ON c.store_id = b.product_store_id
+		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
+		WHERE a.payment_cd =#{payment_cd}
+		GROUP BY a.order_no
+	</select>
+	
+	
+	
 	<select id="getUserPaymentBundleList" parameterType="hashmap" resultType="hashmap">
 		SELECT A.*,B.*,C.*,D.*,E.*,
 			(select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
