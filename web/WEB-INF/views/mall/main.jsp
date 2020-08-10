@@ -14,7 +14,7 @@
 
 <section class="main-section">
 	<h2 class="main-section-title hide">main section</h2>
-	<article class="main-slider">
+	<article class="main-slider" id="loading" style="visibility:hidden;opacity:0">
 		<h3 class="main-slider-title hide">main slider</h3>
 		<div class="main-slider-inner">
 			<ul class="main-slider-wrap">
@@ -577,6 +577,9 @@
 		controls : true,
 		useCSS : false,
 		touchEnabled : false,
+		onSliderLoad: function(){
+                    $("#loading").css("visibility", "visible").animate({opacity:1});
+                },
 	});
 	$('.sub-slider-wrap').bxSlider({
 		auto : false,
