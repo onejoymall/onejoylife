@@ -41,7 +41,7 @@
 		</div>
 	</article>
 	<article class="e-point-section">
-		<h3 class="e-point-title hide">${afn:getMessage("main_epoint_tit",sessionScope.locale)}/h3>
+		<h3 class="e-point-title hide">${afn:getMessage("main_epoint_tit",sessionScope.locale)}</h3>
 		<div class="point-bnr">
 			<div class="point-bnr-inner">
 				<a href="<c:url value="${giveawayLineBanner.url}"/>"><img
