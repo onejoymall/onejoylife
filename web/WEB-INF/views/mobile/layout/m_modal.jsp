@@ -130,6 +130,11 @@
             <p class="text-md mb-05 mt-2">${afn:getMessage('pswdCfm',sessionScope.locale)}</p>
             <input type="password" name="store_passwordCf" class="width-100">
             <p id="password_cfValidation" class="er">
+            <p class="text-md mb-05 mt-2">${afn:getMessage('store',sessionScope.locale)}/${afn:getMessage('creator',sessionScope.locale)}</p>
+            <input type="radio" name="store_creator_yn" id="store_creator_yn1" value="N" checked/>
+            <label for="store_creator_yn1">${afn:getMessage('store',sessionScope.locale)}</label>
+            <input type="radio" name="store_creator_yn" id="store_creator_yn2" value="Y"/>
+            <label for="store_creator_yn2">${afn:getMessage('creator',sessionScope.locale)}</label>
             <h3 class="table-title mb-1 mt-5">${afn:getMessage('sellerInfo',sessionScope.locale)}</h3>
             <hr class="mb-3">
             <p class="text-md mb-05">${afn:getMessage('company_name',sessionScope.locale)}</p>
