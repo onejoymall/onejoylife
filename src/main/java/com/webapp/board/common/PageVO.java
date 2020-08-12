@@ -10,7 +10,7 @@ public class PageVO {
     private Integer pageStart;                      // 시작페이지
     private Integer pageEnd;                        // 종료페이지
     private Integer staticRowEnd = 9;
-    private Integer displayPagingCount=10; //출력할 페이징수
+    private Integer displayPagingCount=10;  //출력할 페이징수
 
     public Integer getDisplayPagingCount() {
         return displayPagingCount;

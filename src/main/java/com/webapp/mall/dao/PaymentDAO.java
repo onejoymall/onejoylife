@@ -129,4 +129,15 @@ public class PaymentDAO {
 		Integer getUserPaymentBundleListCount = sql.selectOne("mall.PaymentMapper.getUserPaymentBundleListCount",params);
 		return getUserPaymentBundleListCount;
 	}
+	public void insertStoreTaxinvoiceHistory(TaxVO taxVO) {
+		sql.insert("mall.PaymentMapper.insertStoreTaxinvoiceHistory",taxVO);
+	}
+	public void updateStoreTaxinvoiceHistory(TaxVO taxVO) {
+		sql.insert("mall.PaymentMapper.updateStoreTaxinvoiceHistory",taxVO);
+	}
+	   public List<Map<String, Object>> getStoreInvoiceList(Map<String, String> params) throws SQLException {
+	        List<Map<String, Object>> getStoreInvoiceList = sql.selectList("mall.PaymentMapper.getStoreInvoiceList",params);
+	        return getStoreInvoiceList;
+	    }
+	
 }

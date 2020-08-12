@@ -176,6 +176,9 @@ public class ManagerRestapiController {
     private StoreInfoDAO storeInfoDAO;
     @Autowired
     private CalculateCompanyDAO calculateCompanyDAO;
+
+    
+    
     
     
     IamportClient client;
@@ -530,7 +533,7 @@ public class ManagerRestapiController {
         return resultMap;
     }
     //주문내역 선택
-    @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")//JMJMJM
     public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -554,6 +557,33 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+    
+  //업체 별 정산(상세내역)
+    @RequestMapping(value = "/Manager/calculate-companyDetail")
+    public Map<String,Object> managerCalculateCompanyDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    	 HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    	 HashMap<String, Object> error = new HashMap<String, Object>();
+
+    	try {
+    		
+    		
+        	Map<String,Object> detail = calculateCompanyDAO.getCalculateCompanyListDetail(params);
+            
+            client = new IamportClient(apiKey, apiSecret);
+            Payment impPayment = client.paymentByImpUid((String)detail.get("imp_uid")).getResponse();
+            resultMap.put("impPayment", impPayment);
+            if(!isEmpty(error)){
+            	  resultMap.put("validateError",error);
+            }else{
+            	resultMap.put("detail",detail);
+            
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
     //경품주문내역 선택
     @RequestMapping(value = "/Manager/selectPaymentG", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerSelectPaymentG(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
@@ -2682,6 +2712,8 @@ public class ManagerRestapiController {
   					resultMap.put("validateError", error);
   				}
   				paymentDAO.insertTaxinvoiceHistory(taxVO);
+  				
+  				
   			}
   		} catch (Exception e) {
   			e.printStackTrace();
@@ -2689,6 +2721,109 @@ public class ManagerRestapiController {
   		}
   		return resultMap;
   	}
+ 
+  	 //바로빌 세금계산서 신청
+  	@RequestMapping(value = "/api/taxInvoice2", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoice2(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO, PaymentDAO paymentDAO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		//List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+  		
+  		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
+  			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getCeo_name() == null || taxVO.getCeo_name().equals("")) {
+  			error.put(messageSource.getMessage("ceo_name", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getAddr() == null || taxVO.getAddr().equals("")) {
+  			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				paymentDAO.insertStoreTaxinvoiceHistory(taxVO);
+  				resultMap.put("success","success");
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+  	
+    //바로빌 세금계산서 발행
+  	@RequestMapping(value = "/api/taxInvoice3", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoice3(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		
+  		
+  	//	taxVO.setReg_date("20200812");
+  		
+  		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
+  			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getCeo_name() == null || taxVO.getCeo_name().equals("")) {
+  			error.put(messageSource.getMessage("ceo_name", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getAddr() == null || taxVO.getAddr().equals("")) {
+  			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				int resultCode = RegistAndIssueTaxInvoice(taxVO);
+  				String resultCodeS = Integer.toString(resultCode);
+  	/*			if(resultCode ==-10002) {*/
+  				if(resultCode ==1) {
+  					resultMap.put("success","success");
+  					taxVO.setTaxinvoice_status("Y");
+  					taxVO.setResult_code(resultCodeS);
+  					paymentDAO.updateStoreTaxinvoiceHistory(taxVO);
+  				}else {
+  					error.put("Error", "ERROR CODE: "+resultCode);
+  					resultMap.put("validateError", error);
+  				}
+  			
+  				paymentDAO.insertTaxinvoiceHistory(taxVO);
+  				
+  				
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+ 	@RequestMapping(value = "/api/notSend", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> notSend(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				
+  					taxVO.setTaxinvoice_status("F");
+  					paymentDAO.updateStoreTaxinvoiceHistory(taxVO);
+  					
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+ 
   	
   	//세금계산서 국세청전송
   	public int RegistAndIssueTaxInvoice(TaxVO taxVO) throws RemoteException, MalformedURLException {
@@ -2844,7 +2979,8 @@ public class ManagerRestapiController {
 		String mailTitle = "";                            //전송되는 이메일의 제목 설정 (공백 시 바로빌 기본 제목으로 전송됨)
 
 		//-------------------------------------------
-		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.RELEASE);
+		//BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.RELEASE);
+		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.TESTBED);
 		int result = barobillApiService.taxInvoice.registAndIssueTaxInvoice(certKey, taxInvoice.getInvoicerParty().getCorpNum(), taxInvoice, sendSms, forceIssue, mailTitle);
 
 		System.out.println(result);
@@ -2968,23 +3104,7 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
-//업체 별 정산(상세내역)
-    @RequestMapping(value = "/Manager/calculate-companyDetail")
-    public Map<String,Object> managerCalculateCompanyDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
-    	 HashMap<String, Object> resultMap = new HashMap<String, Object>();
-    	 HashMap<String, Object> error = new HashMap<String, Object>();
 
-    	try {
-        	Map<String,Object> detail = calculateCompanyDAO.getCalculateCompanyListDetail(params);
-            resultMap.put("detail",detail);
-              
-              
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultMap;
-    }
-    
     
     //상품제안등록
     @Transactional

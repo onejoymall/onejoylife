@@ -23,6 +23,7 @@ public class TaxVO extends SearchVO {
 	private String order_no;
 	private String mgt_num;
 	private String result_code;
+	private String no;
 	
 	private String purchaseExpiry;
 	private String name;
@@ -32,7 +33,30 @@ public class TaxVO extends SearchVO {
 	private String amount;
 	private String tax;
 	private String description;
+	private String taxinvoice_status;
+	private String taxinvoice_applyDate;
 	
+	
+	
+	
+	public String getNo() {
+		return no;
+	}
+	public void setNo(String no) {
+		this.no = no;
+	}
+	public String getTaxinvoice_status() {
+		return taxinvoice_status;
+	}
+	public void setTaxinvoice_status(String taxinvoice_status) {
+		this.taxinvoice_status = taxinvoice_status;
+	}
+	public String getTaxinvoice_applyDate() {
+		return taxinvoice_applyDate;
+	}
+	public void setTaxinvoice_applyDate(String taxinvoice_applyDate) {
+		this.taxinvoice_applyDate = taxinvoice_applyDate;
+	}
 	private String remark1;
 	
 	public String getInvoicee_party_type() {

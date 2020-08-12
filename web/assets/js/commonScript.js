@@ -3820,6 +3820,23 @@ $(document).on("click",".ra-num",function () {
     	
     	child = window.open('/Popup/taxInvoice?order_no='+order_no,'_blank','width=1010, height=910');
     }
+    function taxStoreInvoice(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxStoreInvoice?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    function taxStoreInvoiceApproval(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxStoreInvoiceApproval?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
     
     function salesStatement(order_no){
     	var child;

@@ -823,6 +823,7 @@ $(document).on("click",".definitionInsertUpdateBtn",function () {
 });
 
 $(document).on("click","#taxInvoceSendBtn",function () {
+
 	var formData = $("#taxInvoiceForm").serialize();
 	
 	jQuery.ajax({

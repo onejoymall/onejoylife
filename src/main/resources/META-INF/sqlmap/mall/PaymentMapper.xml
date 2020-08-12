@@ -140,46 +140,51 @@
 	
 	<select id="getCalculateCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
 		/*getCalculateCompanyCount*/
-		SELECT 
-			count(*) as cnt
-		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
-		LEFT JOIN store c ON c.store_id = b.product_store_id
-		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
-		WHERE
-		1=1
+		  SELECT count(*)
+		FROM payment_bundle A LEFT JOIN payment B ON A.order_no = B.order_no
+		 LEFT JOIN delivery_info C ON B.order_no = C.order_no LEFT JOIN product D ON A.product_cd = D.product_cd LEFT JOIN store E ON D.product_store_id = E.store_id where 
+		1=1 
+		and B.order_no 
+		NOT LIKE 'GW%' 
+		and B.payment_status != 'N' 
+		and A.payment_status != 'N'
+		 AND A.payment_status = 'O' 
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if> 
 	 <if test="level == 9"> 
-			and b.product_store_id = #{product_store_id}
-		 </if> 
+		and D.product_store_id = #{product_store_id}
+	 </if> 
+		
 	</select>
 	<select id="getCalculateCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
 		/*getCalculateCompanyList*/
 		SELECT 
-			a.payment_cd,
-			a.order_no,
-			b.product_store_id,
-			b.product_cd ,
+			d.payment_cd, 
+			d.order_no, 
+			b.product_store_id, 
+			b.product_cd , 
 			(SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com,
-			b.product_tex_class ,
-			b.product_delivery_payment ,
+			(SELECT LEFT(b.product_tex_class,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= left(b.product_tex_class,1) ) AS product_tex_class,
+			b.product_delivery_payment , 
 			b.product_company_payment,
 			a.payment_order_quantity ,
 			b.product_type,
-		    b.product_name,
-		    b.reg_date, 
-		    d.coupon_cd,
-		    CASE WHEN  d.coupon_cd IS null  THEN '사용안함'
-   		 		ELSE '사용'
-			 END AS coupon_use,
-			((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
-		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
-		LEFT JOIN store c ON c.store_id = b.product_store_id
-		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
-		WHERE 1=1
+			b.product_name,
+			b.reg_date, 
+			d.coupon_cd,
+		 	CASE WHEN d.coupon_cd IS null THEN '사용안함' ELSE '사용' END AS coupon_use, 
+			 ((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum 
+		FROM payment_bundle d  LEFT JOIN payment a ON d.order_no =a.order_no 
+		 LEFT JOIN delivery_info e ON a.order_no = e.order_no
+		 LEFT JOIN product b ON b.product_cd=d.product_cd 
+		 LEFT JOIN store c ON c.store_id = b.product_store_id 
+		 WHERE 1=1 AND a.payment_status ='O' 
+		and d.payment_status='O'
+		AND a.payment_status != 'N' 
+		AND a.order_no NOT LIKE 'GW%'
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -187,34 +192,37 @@
 	    </if> 
 	     <if test="store_pur_com !=null  and store_pur_com !=''">
 	       <foreach item="item" index="index" collection="store_pur_com_arr" separator=" OR " open="AND (" close=")">
-      		  c.store_pur_com = #{item}
-      		  </foreach>
+      		 c.store_pur_com = #{item}
+      		</foreach>
         </if>
       	<if test="coupon_cd !=null  and coupon_cd !=''">
 	       <foreach item="item" index="index" collection="coupon_cd_arr" separator=" OR " open="AND (" close=")">
-      		  d.coupon_cd is ${item}
-      		  </foreach>
+      		d.coupon_cd is ${item}
+      		</foreach>
         </if>
 		 <if test="level == 9"> 
-			and b.product_store_id = #{product_store_id}
-		 </if> 
-		
+		 	and b.product_store_id = #{product_store_id}
+		 </if>
   	   <![CDATA[
-  		   order by b.reg_date desc
-  		    LIMIT ${rowStart-1}, ${displayRowCount} 
+  		  order by b.reg_date desc
+  		 LIMIT ${rowStart-1}, ${displayRowCount} 
   ]]>
     	 
 	</select>
 	<select id="getCalculateCompanyListDetail" parameterType="hashmap" resultType="hashmap">
 	
 		/*getCalculateCompanyListDetail*/	
-	SELECT 
+	SELECT  d.no,
+			aa.tax_type,
+			aa.taxinvoice_status, 
+			(SELECT a.code_name FROM 
+code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status ) AS taxinvoice_status_name,
+			a.imp_uid,
 			a.payment_cd,
 			a.order_no,
 			b.product_store_id,
 			b.product_cd ,
-			b.product_tex_class ,
-			(SELECT left(a.code_name,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= b.product_tex_class ) AS product_tex_class,
+			(SELECT LEFT(b.product_tex_class,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= left(b.product_tex_class,1) ) AS product_tex_class,
 			(SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com,
 			b.product_delivery_payment ,
 			b.product_company_payment,
@@ -231,12 +239,69 @@
 		FROM payment a LEFT JOIN product b ON b.product_cd=a.product_cd 
 		LEFT JOIN store c ON c.store_id = b.product_store_id
 		LEFT JOIN payment_bundle d ON a.product_cd =d.product_cd
-		WHERE a.payment_cd =#{payment_cd}
+		LEFT JOIN taxinvoice_store_history aa ON aa.order_no = a.order_no
+		WHERE a.order_no =#{order_no}
 		GROUP BY a.order_no
 	</select>
+		<select id="getCalculateApplyCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
+					/*getCalculateApplyCompanyList*/
+					SELECT d.payment_cd
+					, d.order_no
+					, aa.tax_type
+					, b.product_store_id, b.product_cd 
+					, (SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com
+					, (SELECT LEFT(b.product_tex_class,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= left(b.product_tex_class,1) ) AS product_tex_class
+					, b.product_delivery_payment 
+					, b.product_company_payment
+					, a.payment_order_quantity 
+					, b.product_type
+					, b.product_name
+					, b.reg_date, 
+					d.coupon_cd
+					, CASE WHEN d.coupon_cd IS null THEN '사용안함' ELSE '사용' END AS coupon_use
+					, ((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
+				 FROM payment_bundle d LEFT JOIN payment a ON d.order_no =a.order_no 
+				LEFT JOIN delivery_info e ON a.order_no = e.order_no 
+				LEFT JOIN product b ON b.product_cd=d.product_cd 
+				LEFT JOIN store c ON c.store_id = b.product_store_id 
+				LEFT JOIN taxinvoice_store_history f ON d.no = f.no
+				LEFT Join taxinvoice_store_history aa ON aa.order_no = d.order_no
+				WHERE 1=1 
+				AND a.payment_status ='O' 
+				and d.payment_status='O' 
+				AND a.payment_status != 'N'
+				AND a.order_no NOT LIKE 'GW%' 
+				AND f.taxinvoice_status ='S'
+				<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+			      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+			        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+			      </foreach>
+			    </if> 
+				 order by b.reg_date desc LIMIT 0, 10 
 	
-	
-	
+			</select>
+			<select id="getCalculateApplyCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
+			/*getCalculateCompanyCount*/
+			  SELECT count(*)
+			FROM payment_bundle A LEFT JOIN payment B ON A.order_no = B.order_no
+			 LEFT JOIN delivery_info C ON B.order_no = C.order_no LEFT JOIN product D ON A.product_cd = D.product_cd
+			  LEFT JOIN store E ON D.product_store_id = E.store_id  
+			  LEFT JOIN taxinvoice_store_history F ON A.no = F.no
+			  where
+			1=1 
+			and B.order_no 
+			NOT LIKE 'GW%' 
+			and B.payment_status != 'N' 
+			and A.payment_status != 'N'
+			 AND A.payment_status = 'O' 
+			 AND F.taxinvoice_status ='S'
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+	      </foreach>
+	    </if> 
+	    </select>
+
 	<select id="getUserPaymentBundleList" parameterType="hashmap" resultType="hashmap">
 		SELECT A.*,B.*,C.*,D.*,E.*,
 			(select Z.username from user Z where Z.usr_id=B.payment_user_id) as username,
@@ -455,6 +520,7 @@ and A.payment_status != 'N'
         <if test="order_no != null"> <![CDATA[AND A.order_no= #{order_no} ]]></if>
     </select>
     <select id="getPaymentDetail" resultType="java.util.HashMap" parameterType="java.util.Map" >
+/*getPaymentDetail*/        
         <![CDATA[
         SELECT
             A.*,B.*,C.*,
@@ -584,6 +650,7 @@ and A.payment_status != 'N'
     </insert>
     
     <select id="getPaymentBundleList" resultType="hashmap" parameterType="hashmap">
+    	/*getPaymentBundleList*/
     	SELECT A.*, B.*,
 			(SELECT Z.file_link FROM product_file Z WHERE Z.key_id = B.product_cd AND Z.file_order = 1) AS file_1,
 			(SELECT Z.store_name FROM store Z where Z.supplier_cd = B.product_supplier) as product_made_company_name,
@@ -595,6 +662,8 @@ and A.payment_status != 'N'
     </select>
     
     <insert id="insertTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
+       /*insertTaxinvoiceHistory
+       */
         insert into taxinvoice_history(
 			mgt_num,
 			order_no,
@@ -605,4 +674,68 @@ and A.payment_status != 'N'
 			#{result_code}
         )
     </insert>
+       <insert id="insertStoreTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
+       /*insertStoreTaxinvoiceHistory*/
+              insert into taxinvoice_store_history(
+           		no,
+				order_no,
+				result_code,
+				reg_date,
+				taxinvoice_applyDate,
+				taxinvoice_status,
+				tax_type,
+				invoicee_party_type,
+				kwon,
+				ho,
+				serial_num,
+				corp_num,
+				corp_name,
+				ceo_name,
+				addr,
+				biz_type,
+				biz_class,
+				email,
+				remark1,
+				purpose_type  )VALUES(
+							        	#{no},
+										#{order_no},
+										#{result_code},
+										SYSDATE(),
+										SYSDATE(),
+										'S',
+										#{tax_type},
+										#{invoicee_party_type},
+										#{kwon},
+										#{ho},
+										#{serial_num},
+										#{corp_num},
+										#{corp_name},
+										#{ceo_name},
+										#{addr},
+										#{biz_type},
+										#{biz_class},
+										#{email},
+										#{remark1},
+										#{purpose_type})
+    </insert>
+     <update id="updateStoreTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
+            <![CDATA[
+            update 
+            taxinvoice_store_history set
+            mgt_num =#{mgt_num}
+            ,taxinvoice_status=#{taxinvoice_status}
+            ,taxinvoice_approvalDate=SYSDATE()
+            ,result_code=#{result_code}
+            where order_no = #{order_no}
+            ]]>
+    </update>
+    
+     <select id="getStoreInvoiceList" resultType="java.util.HashMap">
+ 		/*getStoreInvoiceList*/
+ 		  SELECT * FROM taxinvoice_store_history
+		where order_no =#{order_no}
+
+    </select>
+    
+    
 </mapper>

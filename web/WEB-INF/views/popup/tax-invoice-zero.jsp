@@ -90,7 +90,7 @@
                         <td><span> ${afn:getMessage("onejoyName",sessionScope.locale)}</span></td>
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
                         <td><span> ${afn:getMessage("ksy",sessionScope.locale)}</span></td>
-                        <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
+                        <td>${afn:getMessage("corpName",sessionScope.locale)}</td>
                         <td><span><input type="text" name="corp_name"></span></td>
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
                         <td><span><input type="text" name="ceo_name"></span></td>
@@ -150,10 +150,10 @@
                 </colgroup>
                 <thead class="tr-tit t-body1">
                 	<tr>
-	                    <th colspan="3">${afn:getMessage("dayWrite",sessionScope.locale)}작성일자</th>
-	                    <th colspan="12">${afn:getMessage("supplyValue",sessionScope.locale)}공급가액</th>
-	                    <th colspan="10">${afn:getMessage("additionalPrice",sessionScope.locale)}세액</th>
-	                    <th rowspan="2">${afn:getMessage("remark",sessionScope.locale)}비고</th>
+	                    <th colspan="3">${afn:getMessage("dayWrite",sessionScope.locale)}</th>
+	                    <th colspan="12">${afn:getMessage("supplyValue",sessionScope.locale)}</th>
+	                    <th colspan="10">${afn:getMessage("additionalPrice",sessionScope.locale)}</th>
+	                    <th rowspan="2">${afn:getMessage("remark",sessionScope.locale)}</th>
                     </tr>
                     <tr>
                     <th>${afn:getMessage("year",sessionScope.locale)} </th>
@@ -317,7 +317,7 @@
             	<p>※ ${afn:getMessage("msg_tax6",sessionScope.locale)}</p>
             	<p>※ ${afn:getMessage("msg_tax7",sessionScope.locale)}</p>
             </div>
-            <div class="but-box">
+           <div class="but-box">
                 <button class="but2" type="button" onclick="window.print();">${afn:getMessage("print",sessionScope.locale)}</button>
                 <button class="but1" type="button" id="taxInvoceSendBtn"> ${afn:getMessage("sendToNTS",sessionScope.locale)}</button>
             </div>
