@@ -162,6 +162,7 @@
 	<select id="getCalculateCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
 		/*getCalculateCompanyList*/
 		SELECT 
+		c.level,
 			d.payment_cd, 
 			d.order_no, 
 			b.product_store_id, 
@@ -175,7 +176,8 @@
 			b.product_name,
 			b.reg_date, 
 			d.coupon_cd,
-		 	CASE WHEN d.coupon_cd IS null THEN '사용안함' ELSE '사용' END AS coupon_use, 
+		 	CASE WHEN d.coupon_cd IS not null AND d.coupon_cd!=''
+				THEN '사용' ELSE '사용안함' END AS coupon_use,
 			 ((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum 
 		FROM payment_bundle d  LEFT JOIN payment a ON d.order_no =a.order_no 
 		 LEFT JOIN delivery_info e ON a.order_no = e.order_no
@@ -212,11 +214,13 @@
 	<select id="getCalculateCompanyListDetail" parameterType="hashmap" resultType="hashmap">
 	
 		/*getCalculateCompanyListDetail*/	
-	SELECT  d.no,
+		SELECT 
+			c.level  ,
+			d.no,
 			aa.tax_type,
 			aa.taxinvoice_status, 
 			(SELECT a.code_name FROM 
-code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status ) AS taxinvoice_status_name,
+				code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status ) AS taxinvoice_status_name,
 			a.imp_uid,
 			a.payment_cd,
 			a.order_no,
@@ -230,9 +234,8 @@ code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status )
 		    b.product_name,
 		    c.level,
 		    d.coupon_cd,
-		   CASE WHEN  d.coupon_cd IS null  THEN '사용안함'
-   		 		ELSE '사용'
-			 END AS coupon_use,
+		 	CASE WHEN d.coupon_cd IS not null AND d.coupon_cd!=''
+				THEN '사용' ELSE '사용안함' END AS coupon_use,
 			(select Z.code_name from code Z where Z.code='product_type' and Z.code_value = b.product_type)AS product_type,
 		   a.coupon_discount,
 			((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
@@ -245,9 +248,13 @@ code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status )
 	</select>
 		<select id="getCalculateApplyCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
 					/*getCalculateApplyCompanyList*/
-					SELECT d.payment_cd
+					SELECT 
+					c.level
+					,(SELECT a.code_name 
+					FROM code a WHERE a.code='taxinvoice_status' AND a.code_value= f.taxinvoice_status ) AS taxinvoice_status_name
+					, d.payment_cd
 					, d.order_no
-					, aa.tax_type
+					, f.tax_type
 					, b.product_store_id, b.product_cd 
 					, (SELECT a.code_name FROM code a WHERE a.code='store_pur_com' AND a.code_value= c.store_pur_com ) AS store_pur_com
 					, (SELECT LEFT(b.product_tex_class,1) FROM code a WHERE a.code='product_tex_class' AND a.code_value= left(b.product_tex_class,1) ) AS product_tex_class
@@ -256,8 +263,8 @@ code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status )
 					, a.payment_order_quantity 
 					, b.product_type
 					, b.product_name
-					, b.reg_date, 
-					d.coupon_cd
+					, b.reg_date 
+					, d.coupon_cd
 					, CASE WHEN d.coupon_cd IS null THEN '사용안함' ELSE '사용' END AS coupon_use
 					, ((b.product_company_payment* a.payment_order_quantity)+ b.product_delivery_payment ) AS totalSum
 				 FROM payment_bundle d LEFT JOIN payment a ON d.order_no =a.order_no 
@@ -265,19 +272,21 @@ code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status )
 				LEFT JOIN product b ON b.product_cd=d.product_cd 
 				LEFT JOIN store c ON c.store_id = b.product_store_id 
 				LEFT JOIN taxinvoice_store_history f ON d.no = f.no
-				LEFT Join taxinvoice_store_history aa ON aa.order_no = d.order_no
 				WHERE 1=1 
 				AND a.payment_status ='O' 
 				and d.payment_status='O' 
 				AND a.payment_status != 'N'
 				AND a.order_no NOT LIKE 'GW%' 
-				AND f.taxinvoice_status ='S'
+			 AND f.taxinvoice_status IS NOT null
 				<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 			      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
 			        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
 			      </foreach>
 			    </if> 
-				 order by b.reg_date desc LIMIT 0, 10 
+			     <if test="level == 9"> 
+		 		and b.product_store_id = #{product_store_id}
+				 </if>
+					 order by b.reg_date desc LIMIT 0, 10 
 	
 			</select>
 			<select id="getCalculateApplyCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
@@ -293,8 +302,8 @@ code a WHERE a.code='taxinvoice_status' AND a.code_value= aa.taxinvoice_status )
 			NOT LIKE 'GW%' 
 			and B.payment_status != 'N' 
 			and A.payment_status != 'N'
-			 AND A.payment_status = 'O' 
-			 AND F.taxinvoice_status ='S'
+			 AND A.payment_status = 'O'
+			AND f.taxinvoice_status IS NOT null
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
@@ -674,9 +683,11 @@ and A.payment_status != 'N'
 			#{result_code}
         )
     </insert>
+    
+    
        <insert id="insertStoreTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
        /*insertStoreTaxinvoiceHistory*/
-              insert into taxinvoice_store_history(
+             insert into taxinvoice_store_history(
            		no,
 				order_no,
 				result_code,
@@ -716,8 +727,13 @@ and A.payment_status != 'N'
 										#{biz_class},
 										#{email},
 										#{remark1},
-										#{purpose_type})
+										#{purpose_type}) 
+										
+									
     </insert>
+    
+    
+    
      <update id="updateStoreTaxinvoiceHistory" parameterType="com.webapp.manager.vo.TaxVO">
             <![CDATA[
             update 

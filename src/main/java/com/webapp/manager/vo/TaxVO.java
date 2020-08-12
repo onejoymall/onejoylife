@@ -35,6 +35,7 @@ public class TaxVO extends SearchVO {
 	private String description;
 	private String taxinvoice_status;
 	private String taxinvoice_applyDate;
+	private String remark1;
 	
 	
 	
@@ -57,7 +58,7 @@ public class TaxVO extends SearchVO {
 	public void setTaxinvoice_applyDate(String taxinvoice_applyDate) {
 		this.taxinvoice_applyDate = taxinvoice_applyDate;
 	}
-	private String remark1;
+	
 	
 	public String getInvoicee_party_type() {
 		return invoicee_party_type;

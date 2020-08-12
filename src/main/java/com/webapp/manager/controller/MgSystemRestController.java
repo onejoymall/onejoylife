@@ -408,6 +408,18 @@ public class MgSystemRestController {
     					params.put("store_creator_yn", "Y");
     				}
     			}
+    			
+    			
+    			if(storeDetail.get("store_pur_com") != null) {
+    				if(storeDetail.get("store_pur_com").equals("A")) {
+    					params.put("store_pur_com", "A");
+    				}else {
+    					params.put("store_pur_com", "B");
+    				}
+    			}
+    			
+    			
+    			
     		}
     		
     		if(!isEmpty(error)){

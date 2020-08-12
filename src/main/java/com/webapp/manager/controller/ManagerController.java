@@ -937,6 +937,7 @@ public class ManagerController {
             storeVO.setDisplayRowCount(10);
             storeVO.setStaticRowEnd(10);
             storeVO.pageCalculate(mgStoreDAO.getStoreListCount(storeVO));
+            
             List<Map<String, Object>> storeList = mgStoreDAO.getStoreList(storeVO);
             List<Map<String,Object>> depthList = mgUserDAO.getMenuDepth();
             model.addAttribute("depthList", depthList);
@@ -966,7 +967,7 @@ public class ManagerController {
         return "/manager/company-anno";
     }
     //주문관리
-    @RequestMapping(value = "/Manager/order")//jmjm
+    @RequestMapping(value = "/Manager/order")
     public String managerOrder(@RequestParam HashMap params, ModelMap model, SearchVO searchVO, DeliveryInfoVO deliveryInfoVO) throws Exception {
         try {
         	if(searchVO.getDisplayRowCount()==null){
@@ -1384,7 +1385,7 @@ public class ManagerController {
         return "/manager/cs-review";
     }
       //업체 별 정산
-    @RequestMapping(value = "/Manager/calculate-company")//jmjm
+    @RequestMapping(value = "/Manager/calculate-company")
     public String managerCalculateCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session,CalculateCompanyVO calculateCompanyVO  ) throws Exception {
         try {
 			
@@ -1402,23 +1403,7 @@ public class ManagerController {
           // calculateCompanyVO.setDisplayRowCount(10);
            calculateCompanyVO.pageCalculate(calculateCompanyDAO.getCalculateCompanyCount(calculateCompanyVO)
 		  );
-         //  params.put("displayRowCount",10);
-			
-			// params.put("rowStart",searchVO.getRowStart());
-			// params.put("displayRowCount",searchVO.getDisplayRowCount());
-			// params.put("staticRowEnd", searchVO.getStaticRowEnd());
-			 
-			
-			// params.put("searchTypeArr",searchVO.getSearchTypeArr());
-			// params.put("product_store_id",(String)session.getAttribute("email"));
-			// params.put("level",(Integer)loginUserList.get("level"));
-			 
-			 
-           //calculateCompanyVO.setRowStart(searchVO.getRowStart());
-           //calculateCompanyVO.setStaticRowEnd(searchVO.getStaticRowEnd());
-           //params.put("staticRowEnd",searchVO.getDisplayRowCount());
-           // calculateCompanyVO.setStaticRowEnd(searchVO.getDisplayRowCount());
-           //calculateCompanyVO.setSearchTypeArr(searchVO.getSearchTypeArr());
+
 			 calculateCompanyVO.setProduct_store_id((String)session.getAttribute("email"));
 			 calculateCompanyVO.setLevel((Integer)loginUserList.get("level"));
 			 
@@ -1443,7 +1428,7 @@ public class ManagerController {
     }
 
     //업체 별 정산
-    @RequestMapping(value = "/Manager/calculate-applyCompany")//jmjm
+    @RequestMapping(value = "/Manager/calculate-applyCompany")
     public String managerCalculateApplyCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session,CalculateCompanyVO calculateCompanyVO  ) throws Exception {
         try {
 			
@@ -1465,6 +1450,7 @@ public class ManagerController {
        	  List<Map<String,Object>> list = calculateCompanyDAO.getCalculateApplyCompanyList(calculateCompanyVO);
        	 
        	  model.addAttribute("list", list);
+       	  
               
         } catch (Exception e) {
             e.printStackTrace();
