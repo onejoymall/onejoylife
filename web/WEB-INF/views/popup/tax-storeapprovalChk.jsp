@@ -136,7 +136,7 @@
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td colspan="3"><span>onejoy@onejoy.co.kr</span></td>
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
-                        <td colspan="3"><span><input type="text" name="email" value="${info.email}" readonly></span></td>
+                        <td colspan="3"><span><input type="text" name="taxemail" value="${info.taxemail}" readonly></span></td>
                     </tr>
                     
                     </c:forEach>

@@ -705,7 +705,7 @@ and A.payment_status != 'N'
 				addr,
 				biz_type,
 				biz_class,
-				email,
+				taxemail,
 				remark1,
 				purpose_type  )VALUES(
 							        	#{no},
@@ -725,7 +725,7 @@ and A.payment_status != 'N'
 										#{addr},
 										#{biz_type},
 										#{biz_class},
-										#{email},
+										#{taxemail},
 										#{remark1},
 										#{purpose_type}) 
 										
