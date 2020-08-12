@@ -261,7 +261,7 @@
 <%--                        <li><a href="">사용자 계정관리</a></li>--%>
 <%--                    </ul>--%>
 <%--                </li> --%>
-				<c:if test="${afn:contains(menuList, '24' || afn:contains(menuList, '59')}">
+				<c:if test="${afn:contains(menuList, '24') ||  afn:contains(menuList, '59')}">
                 <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="/Manager/calculate-company">정산관리</a>
                     <ul class="gnb-in-ul">
                     <c:if test="${afn:contains(menuList, '24')}">

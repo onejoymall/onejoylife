@@ -2843,8 +2843,8 @@ public class ManagerRestapiController {
   		HashMap<String, Object> error = new HashMap<String, Object>();
   		
   		// 테스트시 아래 주석 풀고  현재 날짜로 입력 
-  		taxVO.setReg_date("20200812");
-  		taxVO.setPurchaseExpiry("20200812");
+  		taxVO.setReg_date("20200813");
+  		taxVO.setPurchaseExpiry("20200813");
   		//-------------------------------
   		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
   			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
