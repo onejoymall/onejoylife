@@ -266,6 +266,7 @@
 	order by reg_date desc
   </select>
   <select id="getStoreList" parameterType="hashmap" resultType="hashmap">
+  /*getStoreList*/
   	SELECT A.store_id, A.store_name
 	FROM store A
 	<if test="store_creator_yn != null and store_creator_yn != ''">WHERE A.store_creator_yn = #{store_creator_yn}</if>

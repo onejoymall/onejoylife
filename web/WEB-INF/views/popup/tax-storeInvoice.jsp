@@ -348,7 +348,7 @@
     	
     	jQuery.ajax({
             type: 'post',
-            url: "/api/taxInvoice2",
+            url: "/api/taxInvoiceApply",
             data:formData,
             success: function (data) {
              	console.log(data)

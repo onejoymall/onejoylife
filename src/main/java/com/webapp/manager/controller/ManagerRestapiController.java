@@ -98,6 +98,7 @@ import com.webapp.manager.dao.MgUserDAO;
 import com.webapp.manager.dao.MgUserGrantDAO;
 import com.webapp.manager.dao.QnaDAO;
 import com.webapp.manager.dao.StoreInfoDAO;
+import com.webapp.manager.vo.CalculateCompanyVO;
 import com.webapp.manager.vo.CompanyInfoVO;
 import com.webapp.manager.vo.CouponVO;
 import com.webapp.manager.vo.ExcelSettingVO;
@@ -533,7 +534,7 @@ public class ManagerRestapiController {
         return resultMap;
     }
     //주문내역 선택
-    @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")//JMJMJM
+    @RequestMapping(value = "/Manager/selectPayment", method = RequestMethod.POST, produces = "application/json")
     public HashMap<String, Object> managerSelectPayment(@RequestParam HashMap params, DeliveryInfoVO deliveryInfoVO, HttpServletRequest request){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         HashMap<String, Object> error = new HashMap<String, Object>();
@@ -560,23 +561,20 @@ public class ManagerRestapiController {
     
   //업체 별 정산(상세내역)
     @RequestMapping(value = "/Manager/calculate-companyDetail")
-    public Map<String,Object> managerCalculateCompanyDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+    public Map<String,Object> managerCalculateCompanyDetail(@RequestParam HashMap params, ModelMap model, SearchVO searchVO,HttpSession session,CalculateCompanyVO calculateCompanyVO) throws Exception {
     	 HashMap<String, Object> resultMap = new HashMap<String, Object>();
     	 HashMap<String, Object> error = new HashMap<String, Object>();
-
     	try {
-    		
-    		
         	Map<String,Object> detail = calculateCompanyDAO.getCalculateCompanyListDetail(params);
-            
             client = new IamportClient(apiKey, apiSecret);
             Payment impPayment = client.paymentByImpUid((String)detail.get("imp_uid")).getResponse();
             resultMap.put("impPayment", impPayment);
             if(!isEmpty(error)){
             	  resultMap.put("validateError",error);
             }else{
-            	resultMap.put("detail",detail);
-            
+	              resultMap.put("detail",detail);
+	          	  resultMap.put("email", session.getAttribute("email"));
+	        	  resultMap.put("level", session.getAttribute("level"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1618,6 +1616,7 @@ public class ManagerRestapiController {
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 storeVO.setStore_creator_yn((String) params.get("store_creator_yn"));
                 storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
+                storeVO.setStore_pur_com((String) params.get("store_pur_com"));
                 mgStoreDAO.insertStore(storeVO);
                 Object obj = session.getAttribute("adminLogin");
                 if ( obj == null ){
@@ -2700,10 +2699,12 @@ public class ManagerRestapiController {
   			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
   		}
   		
+  		
   		try {
   			if (!isEmpty(error)) {
   				resultMap.put("validateError", error);
   			} else {
+  				/*
   				int resultCode = RegistAndIssueTaxInvoice(taxVO);
   				if(resultCode == 1) {
   					resultMap.put("success","success");
@@ -2711,9 +2712,9 @@ public class ManagerRestapiController {
   					error.put("Error", "ERROR CODE: "+resultCode);
   					resultMap.put("validateError", error);
   				}
-  				paymentDAO.insertTaxinvoiceHistory(taxVO);
-  				
-  				
+  				*/
+  				paymentDAO.insertStoreTaxinvoiceHistory(taxVO);
+  				resultMap.put("success","success");
   			}
   		} catch (Exception e) {
   			e.printStackTrace();
@@ -2721,7 +2722,7 @@ public class ManagerRestapiController {
   		}
   		return resultMap;
   	}
- 
+ /*
   	 //바로빌 세금계산서 신청
   	@RequestMapping(value = "/api/taxInvoice2", method = RequestMethod.POST, produces = "application/json")
   	public HashMap<String, Object> taxInvoice2(@RequestParam HashMap params, HttpServletRequest request,
@@ -2745,6 +2746,15 @@ public class ManagerRestapiController {
   			if (!isEmpty(error)) {
   				resultMap.put("validateError", error);
   			} else {
+  				
+  				int resultCode = RegistAndIssueTaxInvoice(taxVO);
+  				if(resultCode == 1) {
+  					resultMap.put("success","success");
+  				}else {
+  					error.put("Error", "ERROR CODE: "+resultCode);
+  					resultMap.put("validateError", error);
+  				}
+  				
   				paymentDAO.insertStoreTaxinvoiceHistory(taxVO);
   				resultMap.put("success","success");
   			}
@@ -2754,10 +2764,10 @@ public class ManagerRestapiController {
   		}
   		return resultMap;
   	}
-  	
-    //바로빌 세금계산서 발행
-  	@RequestMapping(value = "/api/taxInvoice3", method = RequestMethod.POST, produces = "application/json")
-  	public HashMap<String, Object> taxInvoice3(@RequestParam HashMap params, HttpServletRequest request,
+  	*/
+    //바로빌 세금계산서 승인
+  	@RequestMapping(value = "/api/taxInvoiceApply", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoiceApply(@RequestParam HashMap params, HttpServletRequest request,
   			HttpSession session, TaxVO taxVO) {
   		HashMap<String, Object> resultMap = new HashMap<String, Object>();
   		HashMap<String, Object> error = new HashMap<String, Object>();
@@ -2765,6 +2775,77 @@ public class ManagerRestapiController {
   		
   	//	taxVO.setReg_date("20200812");
   		
+  		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
+  			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getCeo_name() == null || taxVO.getCeo_name().equals("")) {
+  			error.put(messageSource.getMessage("ceo_name", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getAddr() == null || taxVO.getAddr().equals("")) {
+  			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				
+  			
+  				paymentDAO.insertStoreTaxinvoiceHistory(taxVO);
+  				resultMap.put("success","success");
+  				
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+  	@RequestMapping(value = "/api/taxInvoiceApplyzero", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoiceApplyzero(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		
+
+  		
+  		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
+  			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getCeo_name() == null || taxVO.getCeo_name().equals("")) {
+  			error.put(messageSource.getMessage("ceo_name", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		if (taxVO.getAddr() == null || taxVO.getAddr().equals("")) {
+  			error.put(messageSource.getMessage("roadAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+  		}
+  		
+  		try {
+  			if (!isEmpty(error)) {
+  				resultMap.put("validateError", error);
+  			} else {
+  				
+  			
+  				paymentDAO.insertStoreTaxinvoiceHistory(taxVO);
+  				resultMap.put("success","success");
+  				
+  			}
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			resultMap.put("e", e);
+  		}
+  		return resultMap;
+  	}
+    //바로빌 세금계산서 발행
+  	@RequestMapping(value = "/api/taxInvoice3", method = RequestMethod.POST, produces = "application/json")
+  	public HashMap<String, Object> taxInvoice3(@RequestParam HashMap params, HttpServletRequest request,
+  			HttpSession session, TaxVO taxVO) {
+  		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+  		HashMap<String, Object> error = new HashMap<String, Object>();
+  		
+  		// 테스트시 아래 주석 풀고  현재 날짜로 입력 
+  		taxVO.setReg_date("20200812");
+  		taxVO.setPurchaseExpiry("20200812");
+  		//-------------------------------
   		if (taxVO.getCorp_num() == null || taxVO.getCorp_num().equals("")) {
   			error.put(messageSource.getMessage("corp_num", "ko"), messageSource.getMessage("error.required", "ko"));
   		}
@@ -2979,6 +3060,7 @@ public class ManagerRestapiController {
 		String mailTitle = "";                            //전송되는 이메일의 제목 설정 (공백 시 바로빌 기본 제목으로 전송됨)
 
 		//-------------------------------------------
+		//테스트시 TESTBED 주석 풀기 
 		//BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.RELEASE);
 		BarobillApiService barobillApiService = new BarobillApiService(BarobillApiProfile.TESTBED);
 		int result = barobillApiService.taxInvoice.registAndIssueTaxInvoice(certKey, taxInvoice.getInvoicerParty().getCorpNum(), taxInvoice, sendSms, forceIssue, mailTitle);

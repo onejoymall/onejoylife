@@ -222,6 +222,7 @@ public class restapiSubController {
                 mgProductDAO.insertProductFile(filelist,fileVO);
                 storeVO.setStore_password(passwordEncoder.encode((String)params.get("store_password")));
                 storeVO.setStore_creator_yn((String) params.get("store_creator_yn"));
+               storeVO.setStore_pur_com((String) params.get("store_pur_com"));
                 storeVO.setEnable_mg_menu_id((String) params.get("enable_menu"));
                 mgStoreDAO.insertStore(storeVO);
 

@@ -288,7 +288,6 @@
     <script>
     
     function defaultModalStore11(order_no){
-    	alert(order_no)
     	$(".taxinvoice_status_name").empty();
         $(".modal").attr("style", "display:block");
         jQuery.ajax({
@@ -296,8 +295,6 @@
             url: '/Manager/calculate-companyDetail',
             data: {"order_no":order_no},
             success: function (data) {
-            	
-            	
             	
 			$.each(data.detail,function(key,val){
 				$('td.'+key).html(val);
@@ -307,9 +304,20 @@
 			var leftHtml = '';
 	    	leftHtml += '';
 	    	
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status !='S' ){ 
-	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서</button>' ;
+	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status ==null && data.detail.level =='9'){ //S 요청 Y완료 F 거절
+	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서 요청</button>' ;
 	    	 } 
+	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='F' && data.detail.level =='9'){ 
+		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서 요청</button>' ;
+		    	 } 
+	    	 
+	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='Y'  && data.detail.level =='9'){ 
+		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApprovalChk(\'' + data.detail.order_no + '\');">세금계산서 확인</button>' ;
+		    	 } 
+	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='S'  && data.detail.level =='9'){ 
+		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApprovalChk(\'' + data.detail.order_no + '\');">세금계산서 확인</button>' ;
+		    	 } 
+	    	 
     			$("#setDefaultButton").html(leftHtml);
 	 		 },
             error: function (xhr, status, error) {

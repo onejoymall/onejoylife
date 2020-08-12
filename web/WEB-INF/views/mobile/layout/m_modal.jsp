@@ -151,7 +151,15 @@
             <input type="text" class="width-100">--%>
             <p class="text-md mb-05 mt-2">${afn:getMessage('business_condition',sessionScope.locale)}/${afn:getMessage('industry',sessionScope.locale)}</p>
             <input type="text" class="width-half" id="store_type" name="store_type"><span class="in-text">/</span><input type="text" class="width-half" id="store_item" name="store_item">
+            
+             <p class="text-md mb-05 mt-2">${afn:getMessage('purchase',sessionScope.locale)}/${afn:getMessage('consign',sessionScope.locale)}</p>
+            <input type="radio" name="store_pur_com" id="store_pur_com1" value="1" checked/>
+            <label for="store_pur_com1">${afn:getMessage('purchase',sessionScope.locale)}</label>
+            <input type="radio" name="store_pur_com" id="store_pur_com2" value="2"/>
+            <label for="store_pur_com2">${afn:getMessage('consign',sessionScope.locale)}</label>
+            
             <p class="text-md mb-05 mt-2">${afn:getMessage('business_license_copy',sessionScope.locale)}</p>
+            
             <div class="fileBox">
                 <input type="text" class="width-100 fileName" class="fileName" id="fileName" name="fileName" readonly="readonly">
 <%--                <button class="btn width-50 mt-05" for="uploadBtn">파일찾기</button>--%>
