@@ -33,8 +33,16 @@ public class CalculateCompanyDAO {
 	        Integer getCalculateCompanyCount =sql.selectOne("mall.PaymentMapper.getCalculateCompanyCount",calculateCompanyVO);
 	        return getCalculateCompanyCount;
 	    }
+		public List<Map<String, Object>> getCalculateApplyCompanyList(CalculateCompanyVO calculateCompanyVO) {
+			List<Map<String, Object>> getCalculateApplyCompanyList = sql.selectList("mall.PaymentMapper.getCalculateApplyCompanyList",calculateCompanyVO);
+	        return getCalculateApplyCompanyList;
 		
-		
+		}
+	   public Integer getCalculateApplyCompanyCount(CalculateCompanyVO calculateCompanyVO) throws SQLException{
+	        Integer getCalculateApplyCompanyCount =sql.selectOne("mall.PaymentMapper.getCalculateApplyCompanyCount",calculateCompanyVO);
+	        return getCalculateApplyCompanyCount;
+	    }
+	   
 
     
 }

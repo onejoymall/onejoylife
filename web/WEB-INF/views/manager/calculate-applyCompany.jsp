@@ -6,7 +6,7 @@
     <main>
         <div class="main-content">
             <div class="main-header">
-                <h2 name="detail">업체별 정산내역</h2>
+                <h2 name="detail">업체별 세금계산서 신청내역</h2>
             </div>
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
@@ -32,7 +32,7 @@
                             <col width="80px">
                             <col width="420px">
                         </colgroup>
-   						   <tbody>
+   						<%--    <tbody>
                             <tr>
                                 <th>할인쿠폰 </th>
                                 <td>
@@ -56,7 +56,7 @@
                                    <label for="src-q2">위탁</label>
                                 </td>
                             </tr>
-                        </tbody>		
+                        </tbody>	 --%>	
                     </table>
                 </form>
 
@@ -129,7 +129,7 @@
 							<c:when test="${list.product_tex_class eq 'A' }">
 								<td>과세상품</td>
 							</c:when>
-								<c:when test="${list.product_tex_class eq 'B' }">
+								<c:when test="${list.product_tex_class eq 'ㅠ' }">
 								<td>면세상품</td>
 							</c:when>
 							<c:otherwise> 
@@ -158,7 +158,7 @@
                             <td>+ 000</td>
                             <td>${list.product_company_payment}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalStore11('${list.order_no}')" >상세보기</button>
+                                <button type="button" data-id="${list.tax_type}" class="goods-list-btn" name="detail" onclick="defaultModalStore22('${list.order_no}')" >상세보기</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -240,7 +240,7 @@
 
                         <tr>
                             <th>할인쿠폰 사용여부</th>
-                            <td class="coupon_use">사용</td>
+                            <td class="">사용</td>
                         </tr>
                         <tr>
                             <th>매입/위탁</th>
@@ -269,10 +269,6 @@
                             <th>정산내역</th>
                             <td class="product_company_payment"> - </td>
                         </tr> 
-                         <tr>
-                            <th>세금계산서 승인요청 상태</th>
-                            <td class="taxinvoice_status_name" > - </td>
-                        </tr> 
                     </tbody>
                 </table>
               <div id="setButton">
@@ -287,28 +283,24 @@
     <script type="text/javascript" src="../assets/js/index.js"></script>
     <script>
     
-    function defaultModalStore11(order_no){
-    	alert(order_no)
-    	$(".taxinvoice_status_name").empty();
+    function defaultModalStore22(order_no){
+
+    	   var id = $(this).data('id');
+    	   alert(id)
         $(".modal").attr("style", "display:block");
         jQuery.ajax({
             type: 'GET',
             url: '/Manager/calculate-companyDetail',
             data: {"order_no":order_no},
             success: function (data) {
-            	
-            	
-            	
 			$.each(data.detail,function(key,val){
 				$('td.'+key).html(val);
 			});
-			
-			
 			var leftHtml = '';
 	    	leftHtml += '';
-	    	
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status !='S' ){ 
-	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서</button>' ;
+	    	 if(data.impPayment && data.impPayment.status == 'paid'){ 
+	    		 
+	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApproval(\'' + data.detail.order_no + '\');">세금계산서</button>' ;
 	    	 } 
     			$("#setDefaultButton").html(leftHtml);
 	 		 },
@@ -318,7 +310,40 @@
         });
     }
     
- 
+    /*
+    function selectPayment(order_no){
+    	
+    	alert(order_no)
+        var file_link='';
+        $(".modal").attr("style", "display:block");
+
+        var html;
+      //  $("#upate_addr_tr").hide();
+        $("#upate_addr_basic").show();
+        html='';
+    	$('#setButton').html(html);
+    	$('input[name=delivery_t_invoice]').val('');
+        jQuery.ajax({
+            type: 'POST',
+            url: '/Manager/selectPayment',
+            data: {"order_no":order_no},
+            success: function (data) {
+            	console.log(data)
+            	var leftHtml = '';
+            	leftHtml += '';
+            	if(data.impPayment && data.impPayment.status == 'paid'){
+            		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.list.order_no + '\');">세금계산서</button>' ;
+            	}
+            	$("#setDefaultButton").html(leftHtml);
+            
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+        });
+    }
+    
+     */
    
     $(".modal-close").click(function(){
         $(".modal").removeClass('on');

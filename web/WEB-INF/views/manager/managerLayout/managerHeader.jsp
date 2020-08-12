@@ -265,6 +265,7 @@
                 <li <c:if test="${topNav == 8}">class="active" </c:if>><a href="/Manager/calculate-company">정산관리</a>
                     <ul class="gnb-in-ul">
                         <li><a href="/Manager/calculate-company">업체별 정산내역</a>
+                          <li><a href="/Manager/calculate-applyCompany">업체별 정산신청내역</a>
 <%--                            <ul>--%>
 <%--                                <li><a href="">업체별 정산내역</a></li>--%>
 <%--                                <li><a href="">크리에이터 정산내역</a></li>--%>
