@@ -6,14 +6,24 @@ public class CalculateCompanyVO extends StoreVO {
 
 	private String store_pur_com;
 	private String coupon_cd;
+	private String coupon_cd2;
+	
 	private String[] store_pur_com_arr; 
 	private String[] coupon_cd_arr;
 	private Integer level;
+	
+	private String coupon_cd_arr_str;
 	
 	private String product_store_id;
 	
 	
 	
+	public String getCoupon_cd_arr_str() {
+		return coupon_cd_arr_str;
+	}
+	public void setCoupon_cd_arr_str(String coupon_cd_arr_str) {
+		this.coupon_cd_arr_str = coupon_cd_arr_str;
+	}
 	public String getStore_pur_com() {
 		return store_pur_com;
 	}
@@ -51,6 +61,14 @@ public class CalculateCompanyVO extends StoreVO {
 	public void setProduct_store_id(String product_store_id) {
 		this.product_store_id = product_store_id;
 	}
+	public String getCoupon_cd2() {
+		return coupon_cd2;
+	}
+	public void setCoupon_cd2(String coupon_cd2) {
+		this.coupon_cd2 = coupon_cd2;
+	}
+	
+	
 
 
 	

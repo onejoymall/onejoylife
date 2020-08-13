@@ -141,19 +141,31 @@
 	<select id="getCalculateCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
 		/*getCalculateCompanyCount*/
 		  SELECT count(*)
-		FROM payment_bundle A LEFT JOIN payment B ON A.order_no = B.order_no
-		 LEFT JOIN delivery_info C ON B.order_no = C.order_no LEFT JOIN product D ON A.product_cd = D.product_cd LEFT JOIN store E ON D.product_store_id = E.store_id where 
+		FROM payment_bundle d LEFT JOIN payment B ON d.order_no = B.order_no
+		 LEFT JOIN delivery_info C ON B.order_no = C.order_no
+		  LEFT JOIN product D ON d.product_cd = D.product_cd 
+		 LEFT JOIN store E ON D.product_store_id = E.store_id where 
 		1=1 
 		and B.order_no 
 		NOT LIKE 'GW%' 
 		and B.payment_status != 'N' 
-		and A.payment_status != 'N'
-		 AND A.payment_status = 'O' 
+		and d.payment_status != 'N'
+		 AND d.payment_status = 'O' 
 	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
     </if> 
+       <if test="store_pur_com !=null  and store_pur_com !=''">
+	       <foreach item="item" index="index" collection="store_pur_com_arr" separator=" OR " open="AND (" close=")">
+      		 E.store_pur_com = #{item}
+      		</foreach>
+        </if>
+      	<if test="coupon_cd !=null  and coupon_cd !=''">
+	       <foreach item="item" index="index" collection="coupon_cd_arr"  open="AND (" close=")">
+      			d.coupon_cd  ${item}
+      		</foreach>
+        </if>
 	 <if test="level == 9"> 
 		and D.product_store_id = #{product_store_id}
 	 </if> 
@@ -199,10 +211,11 @@
       		</foreach>
         </if>
       	<if test="coupon_cd !=null  and coupon_cd !=''">
-	       <foreach item="item" index="index" collection="coupon_cd_arr" separator=" OR " open="AND (" close=")">
-      		d.coupon_cd is ${item}
+	       <foreach item="item" index="index" collection="coupon_cd_arr" open="AND (" close=")">
+     	 	d.coupon_cd  ${item}
       		</foreach>
         </if>
+
 		 <if test="level == 9"> 
 		 	and b.product_store_id = #{product_store_id}
 		 </if>
