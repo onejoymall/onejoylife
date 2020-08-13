@@ -11,6 +11,7 @@ public class TaxVO extends SearchVO {
 	private String biz_class;
 	private String biz_type;
 	private String email;
+	private String taxemail;
 	private String serial_num;
 	private String kwon;
 	private String ho;
@@ -40,6 +41,12 @@ public class TaxVO extends SearchVO {
 	
 	
 	
+	public String getTaxemail() {
+		return taxemail;
+	}
+	public void setTaxemail(String taxemail) {
+		this.taxemail = taxemail;
+	}
 	public String getNo() {
 		return no;
 	}
