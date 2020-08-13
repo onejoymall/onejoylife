@@ -163,7 +163,6 @@
 		/*getCalculateCompanyList*/
   SELECT 
 		c.level,
-		c.store_pur_com,
 			d.payment_cd, 
 			d.order_no, 
 			b.product_store_id, 
