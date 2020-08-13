@@ -84,14 +84,14 @@
                 <table>
                     <colgroup>
                         <col width="2%">
+                        <col width="6%">
+                        <col width="5%">
+                        <col width="35%">
                         <col width="3%">
-                        <col width="10%">
+                        <col width="6%">
+                        <col width="13%">
                         <col width="7%">
                         <col width="7%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
                         <col width="10%">
                         <col width="11%">
                         <col width="13%">
