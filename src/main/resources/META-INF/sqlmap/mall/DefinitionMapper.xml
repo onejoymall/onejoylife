@@ -20,7 +20,7 @@
 	    </if>
 	    <if test="start_date != null and start_date !=''"><![CDATA[AND A.reg_date >= date_format(#{start_date},'%y-%m-%d 00:00:00') ]]></if>
         <if test="end_date != null and end_date !=''"><![CDATA[AND A.reg_date <= date_format(date_add(#{end_date},interval 1 day),'%y-%m-%d 00:00:00') ]]></if>
-        <if test="store_id != null and store_id !=''">and store_id = #{store_id}</if>
+        <if test="store_id != null and store_id !=''">and A.store_id = #{store_id}</if>
         <if test='category1 != null and category1 != ""'>
 		    AND (
 		    	product_ct = #{category1}
