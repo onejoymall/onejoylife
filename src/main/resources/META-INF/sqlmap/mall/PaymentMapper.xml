@@ -198,7 +198,7 @@
 		 WHERE 1=1
 		and d.payment_status='O'
 		AND a.payment_status != 'N' 
-			AND d.payment_status != 'N' 
+		AND d.payment_status != 'N' 
 		AND a.order_no NOT LIKE 'GW%'
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -317,7 +317,7 @@
 			and B.payment_status != 'N' 
 			and A.payment_status != 'N'
 			 AND A.payment_status = 'O'
-			AND f.taxinvoice_status IS NOT null
+			AND F.taxinvoice_status IS NOT null
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
 	        ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
