@@ -6,7 +6,7 @@
     <main>
         <div class="main-content">
             <div class="main-header">
-                <h2 name="detail">업체별 정산내역</h2>
+                <h2 name="detail">업체별 세금계산서 신청내역</h2>
             </div>
             <div class="search-form">
                 <form name="listSrcForm" id="listSrcForm" method="get">
@@ -32,7 +32,7 @@
                             <col width="80px">
                             <col width="420px">
                         </colgroup>
-   						   <tbody>
+   						<%--    <tbody>
                             <tr>
                                 <th>할인쿠폰 </th>
                                 <td>
@@ -56,7 +56,7 @@
                                    <label for="src-q2">위탁</label>
                                 </td>
                             </tr>
-                        </tbody>		
+                        </tbody>	 --%>	
                     </table>
                 </form>
 
@@ -64,7 +64,7 @@
             <div class="goods-list-wrap">
                 <div class="list-sort-wrap">
                     <div class="left">
-                        <button type="button" class="goods-list-btn" name="copy" id="listDelete">선택 삭제</button>
+                        
                         <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>선택 다운로드</button>
                         <button type="button" class="btn-default" name="copy"><i class="exel-ic"></i>전체 다운로드</button>
                     </div>
@@ -83,7 +83,7 @@
                     <input type="hidden" name="table_name" value="${table_name}">
                 <table>
                     <colgroup>
-                        <col width="2%">
+                        
                         <col width="3%">
                         <col width="10%">
                         <col width="7%">
@@ -95,11 +95,12 @@
                         <col width="10%">
                         <col width="11%">
                         <col width="13%">
+                        <col width="13%">
                         <col width="7%">
                     </colgroup>
                     <thead>
                         <tr>
-                            <td><input type="checkbox" id="all-chk" name="all-chk"></td>
+                         
                             <td>상품코드</td>
                             <td>업체명</td>
                             <td>상품명</td>
@@ -110,6 +111,7 @@
                             <td>PG사 수수료</td>
                             <td>PG사 포인트 적립/사용</td>
                             <td>정산내역</td>
+                            <td>세금계산서 요청 상태</td>
                             <td>관리</td>
                         </tr>
                     </thead>
@@ -117,7 +119,7 @@
                         <c:forEach var="list" items="${list}">
                        <tr>
                             <%-- <td><input type="checkbox" id="chk10" name="chk10"  value="${list.payment_cd}"></td> --%>
-                            <td><input type="checkbox" id="chk" name="chk"  value="${list.payment_cd}"></td> 
+                          
                             
                             <td>${list.payment_cd}</td>
                             <td>${list.product_store_id}</td>
@@ -129,7 +131,7 @@
 							<c:when test="${list.product_tex_class eq 'A' }">
 								<td>과세상품</td>
 							</c:when>
-								<c:when test="${list.product_tex_class eq 'B' }">
+								<c:when test="${list.product_tex_class eq 'ㅠ' }">
 								<td>면세상품</td>
 							</c:when>
 							<c:otherwise> 
@@ -157,8 +159,9 @@
                             <td>-</td>
                             <td>+ 000</td>
                             <td>${list.product_company_payment}</td>
+                            <td>${list.taxinvoice_status_name}</td>
                             <td>
-                                <button type="button" class="goods-list-btn" name="detail" onclick="defaultModalStore11('${list.order_no}')" >상세보기</button>
+                                <button type="button" data-id="${list.tax_type}" class="goods-list-btn" name="detail" onclick="defaultModalStore22('${list.order_no}')" >상세보기</button>
                             </td>
                         </tr>
                         </c:forEach>
@@ -268,11 +271,11 @@
                         <tr>
                             <th>정산내역</th>
                             <td class="product_company_payment"> - </td>
-                        </tr> 
-                         <tr>
-                            <th>세금계산서 승인요청 상태</th>
-                            <td class="taxinvoice_status_name" > - </td>
-                        </tr> 
+                        </tr>
+                        <tr>
+                            <th>세금계산서 요청 상태</th>
+                            <td class="taxinvoice_status_name"> - </td>
+                        </tr>  
                     </tbody>
                 </table>
               <div id="setButton">
@@ -287,37 +290,30 @@
     <script type="text/javascript" src="../assets/js/index.js"></script>
     <script>
     
-    function defaultModalStore11(order_no){
-    	$(".taxinvoice_status_name").empty();
-        $(".modal").attr("style", "display:block");
-        jQuery.ajax({
+    function defaultModalStore22(order_no){
+    	   
+	        $(".modal").attr("style", "display:block");
+	        jQuery.ajax({
             type: 'GET',
             url: '/Manager/calculate-companyDetail',
             data: {"order_no":order_no},
             success: function (data) {
-            	
+            	console.log(data.level)
 			$.each(data.detail,function(key,val){
 				$('td.'+key).html(val);
 			});
-			
-			
 			var leftHtml = '';
 	    	leftHtml += '';
-	    	
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status ==null && data.level =='9' ){ //S 요청 Y완료 F 거절
-	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서 요청</button>' ;
-	    	 } 
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='F' && data.level =='9'){ 
-		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoice(\'' + data.detail.order_no + '\');">세금계산서 요청</button>' ;
-		    	 } 
-	    	 
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='Y'  && data.level =='9'){ 
-		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApprovalChk(\'' + data.detail.order_no + '\');">세금계산서 확인</button>' ;
-		    	 } 
-	    	 if(data.impPayment && data.impPayment.status == 'paid' &&  data.detail.taxinvoice_status =='S'  && data.level =='9'){ 
-		    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApprovalChk(\'' + data.detail.order_no + '\');">세금계산서 확인</button>' ;
-		    	 } 
-	    	 
+	    	  if(data.impPayment && data.impPayment.status == 'paid' && data.level =='10' &&  data.detail.taxinvoice_status =='S' ){  
+	    		leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApproval(\'' + data.detail.order_no + '\');">세금계산서</button>' ;
+	    	 }else if(data.impPayment && data.impPayment.status == 'paid' && data.level =='10' &&  data.detail.taxinvoice_status =='F'  ){
+	    		 leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApproval(\'' + data.detail.order_no + '\');">세금계산서</button>' ;
+	    		 
+	    	 }
+	    	  else {
+	    		 leftHtml += '<button type="button" class="btn-gray" onclick="taxStoreInvoiceApprovalChk(\'' + data.detail.order_no + '\');">세금계산서 확인</button>' ;
+	    		 
+	    	 }
     			$("#setDefaultButton").html(leftHtml);
 	 		 },
             error: function (xhr, status, error) {
@@ -326,7 +322,6 @@
         });
     }
     
- 
    
     $(".modal-close").click(function(){
         $(".modal").removeClass('on');

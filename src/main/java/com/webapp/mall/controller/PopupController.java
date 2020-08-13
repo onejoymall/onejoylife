@@ -388,6 +388,213 @@ public class PopupController {
     	model.addAttribute("style", "tax-bill");
     	return "popup/tax-invoice";
     }
+    //입점업체세금계산서신청
+    @RequestMapping("/Popup/taxStoreInvoice")
+    public String taxStoreInvoice(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+    		
+    		int payment_total = Integer.parseInt(String.valueOf(paymentDetail.get("payment")));
+    		int delivery_payment = 0;
+    		int delivery_supply_payment = 0;
+    		int supply_total = 0;
+    		int tax_total = 0;
+    		int empty_count = 0;
+
+    		for(Map<String,Object> bundle:paymentBundleList) {
+    			int bundlePayment =  Integer.parseInt(String.valueOf(bundle.get("product_payment"))) * Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int bundleCouponDiscount = Integer.parseInt(String.valueOf(bundle.get("coupon_discount")));
+    			int unit_price = (bundlePayment - bundleCouponDiscount) / Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int unit_supply_price = (int)Math.round(unit_price / 1.1);
+    			bundle.put("unit_price",unit_price);
+    			bundle.put("unit_supply_price",unit_supply_price);
+    			
+    			supply_total += unit_supply_price;
+    			tax_total += (unit_price - unit_supply_price);
+    			payment_total -= (bundlePayment - bundleCouponDiscount);
+    		}
+    		delivery_payment = payment_total;
+    		delivery_supply_payment = (int)Math.round(delivery_payment / 1.1);
+    		supply_total += delivery_supply_payment;
+    		tax_total += (delivery_payment - delivery_supply_payment);
+    		
+    		String supply_total_str = String.format("% 11d", supply_total);
+    		String tax_total_str = String.format("% 10d", tax_total);
+    		
+    		for(int i=0; i<supply_total_str.length(); i++) {
+    			if(supply_total_str.charAt(i) == ' ') empty_count++;
+    		}
+    		
+    		model.addAttribute("delivery_payment", delivery_payment);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("supply_total", supply_total);
+    		model.addAttribute("supply_total_str", supply_total_str);
+    		model.addAttribute("tax_total", tax_total);
+    		model.addAttribute("tax_total_str", tax_total_str);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("empty_count", empty_count);
+    		
+    		
+            model.addAttribute("paymentBundleList", paymentBundleList);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "tax-bill");
+    	return "popup/tax-storeInvoice";
+    }
+    //입점업체세금계산서 승인확인
+    @RequestMapping("/Popup/taxStoreInvoiceApproval")
+    public String taxStoreInvoiceApproval(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+    		List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+    		
+    		String tax_type = String.valueOf(storeInvoiceList.get(0).get("tax_type"));
+    		int payment_total = Integer.parseInt(String.valueOf(paymentDetail.get("payment")));
+    		int delivery_payment = 0;
+    		int delivery_supply_payment = 0;
+    		int supply_total = 0;
+    		int tax_total = 0;
+    		int empty_count = 0;
+
+    		for(Map<String,Object> bundle:paymentBundleList) {
+    			int bundlePayment =  Integer.parseInt(String.valueOf(bundle.get("product_payment"))) * Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int bundleCouponDiscount = Integer.parseInt(String.valueOf(bundle.get("coupon_discount")));
+    			int unit_price = (bundlePayment - bundleCouponDiscount) / Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int unit_supply_price = (int)Math.round(unit_price / 1.1);
+    			bundle.put("unit_price",unit_price);
+    			bundle.put("unit_supply_price",unit_supply_price);
+    			
+    			supply_total += unit_supply_price;
+    			tax_total += (unit_price - unit_supply_price);
+    			payment_total -= (bundlePayment - bundleCouponDiscount);
+    		}
+    		delivery_payment = payment_total;
+    		delivery_supply_payment = (int)Math.round(delivery_payment / 1.1);
+    		supply_total += delivery_supply_payment;
+    		tax_total += (delivery_payment - delivery_supply_payment);
+    		
+    		String supply_total_str = String.format("% 11d", supply_total);
+    		String tax_total_str = String.format("% 10d", tax_total);
+  
+    		for(int i=0; i<supply_total_str.length(); i++) {
+    			if(supply_total_str.charAt(i) == ' ') empty_count++;
+    		}
+    		
+    		model.addAttribute("delivery_payment", delivery_payment);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("supply_total", supply_total);
+    		model.addAttribute("supply_total_str", supply_total_str);
+    		model.addAttribute("tax_total", tax_total);
+    		model.addAttribute("tax_total_str", tax_total_str);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("empty_count", empty_count);
+    		model.addAttribute("storeInvoiceList",storeInvoiceList);
+            model.addAttribute("paymentBundleList", paymentBundleList);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "tax-bill");
+    	List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+		
+		String tax_type = String.valueOf(storeInvoiceList.get(0).get("tax_type"));
+		String taxinvoice_status = String.valueOf(storeInvoiceList.get(0).get("taxinvoice_status"));
+		/*
+		 * if(taxinvoice_status.equals("S")) {
+		 * 
+		 * 
+		 * }
+		 */
+		
+		if(tax_type.equals("2") ) {
+			return "popup/tax-storeapprove-zero";
+    	}else {
+    		return "popup/tax-storeapproval";
+    	}
+    	
+    	
+    }
+    
+    
+    //입점업체세금계산서 내용 확인
+    @RequestMapping("/Popup/taxStoreInvoiceApprovalChk")
+    public String taxStoreInvoiceApprovalChk(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+    		List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+    		
+    		String tax_type = String.valueOf(storeInvoiceList.get(0).get("tax_type"));
+    		int payment_total = Integer.parseInt(String.valueOf(paymentDetail.get("payment")));
+    		int delivery_payment = 0;
+    		int delivery_supply_payment = 0;
+    		int supply_total = 0;
+    		int tax_total = 0;
+    		int empty_count = 0;
+
+    		for(Map<String,Object> bundle:paymentBundleList) {
+    			int bundlePayment =  Integer.parseInt(String.valueOf(bundle.get("product_payment"))) * Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int bundleCouponDiscount = Integer.parseInt(String.valueOf(bundle.get("coupon_discount")));
+    			int unit_price = (bundlePayment - bundleCouponDiscount) / Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int unit_supply_price = (int)Math.round(unit_price / 1.1);
+    			bundle.put("unit_price",unit_price);
+    			bundle.put("unit_supply_price",unit_supply_price);
+    			
+    			supply_total += unit_supply_price;
+    			tax_total += (unit_price - unit_supply_price);
+    			payment_total -= (bundlePayment - bundleCouponDiscount);
+    		}
+    		delivery_payment = payment_total;
+    		delivery_supply_payment = (int)Math.round(delivery_payment / 1.1);
+    		supply_total += delivery_supply_payment;
+    		tax_total += (delivery_payment - delivery_supply_payment);
+    		
+    		String supply_total_str = String.format("% 11d", supply_total);
+    		String tax_total_str = String.format("% 10d", tax_total);
+  
+    		for(int i=0; i<supply_total_str.length(); i++) {
+    			if(supply_total_str.charAt(i) == ' ') empty_count++;
+    		}
+    		
+    		model.addAttribute("delivery_payment", delivery_payment);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("supply_total", supply_total);
+    		model.addAttribute("supply_total_str", supply_total_str);
+    		model.addAttribute("tax_total", tax_total);
+    		model.addAttribute("tax_total_str", tax_total_str);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("empty_count", empty_count);
+    		model.addAttribute("storeInvoiceList",storeInvoiceList);
+            model.addAttribute("paymentBundleList", paymentBundleList);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "tax-bill");
+    	List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+		
+		String tax_type = String.valueOf(storeInvoiceList.get(0).get("tax_type"));
+		String taxinvoice_status = String.valueOf(storeInvoiceList.get(0).get("taxinvoice_status"));
+		/*
+		 * if(taxinvoice_status.equals("S")) {
+		 * 
+		 * 
+		 * }
+		 */
+		
+		if(tax_type.equals("2") ) {
+			return "popup/tax-storeapprove-zeroChk";
+    	}else {
+    		return "popup/tax-storeapprovalChk";
+    	}
+    	
+    	
+    }
+    
     
     //세금계산서발행영세
     @RequestMapping("/Popup/taxInvoiceZero")
@@ -446,5 +653,63 @@ public class PopupController {
     	}
     	model.addAttribute("style", "tax-bill");
     	return "popup/tax-invoice-zero";
+    }
+    //세금계산서발행영세
+    @RequestMapping("/Popup/taxStoreInvoiceZero")
+    public String taxStoreInvoiceZero(@RequestParam HashMap params, ModelMap model, HttpServletRequest request, SearchVO searchVO, HttpSession session) throws Exception {
+    	try {
+    		Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+    		List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+    		List<Map<String,Object>> storeInvoiceList = paymentDAO.getStoreInvoiceList(params);
+    		int payment_total = Integer.parseInt(String.valueOf(paymentDetail.get("payment")));
+    		int delivery_payment = 0;
+    		int delivery_supply_payment = 0;
+    		int supply_total = 0;
+    		int tax_total = 0;
+    		int empty_count = 0;
+    		
+    		for(Map<String,Object> bundle:paymentBundleList) {
+    			int bundlePayment =  Integer.parseInt(String.valueOf(bundle.get("product_payment"))) * Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int bundleCouponDiscount = Integer.parseInt(String.valueOf(bundle.get("coupon_discount")));
+    			int unit_price = (bundlePayment - bundleCouponDiscount) / Integer.parseInt(String.valueOf(bundle.get("payment_order_quantity")));
+    			int unit_supply_price = (int)Math.round(unit_price / 1.1);
+    			bundle.put("unit_price",unit_price);
+    			bundle.put("unit_supply_price",unit_supply_price);
+    			
+    			supply_total += unit_supply_price;
+    			tax_total += (unit_price - unit_supply_price);
+    			payment_total -= (bundlePayment - bundleCouponDiscount);
+    		}
+    		delivery_payment = payment_total;
+    		delivery_supply_payment = (int)Math.round(delivery_payment / 1.1);
+    		supply_total += delivery_supply_payment;
+    		tax_total += (delivery_payment - delivery_supply_payment);
+    		
+    		String supply_total_str = String.format("% 11d", supply_total);
+    		String total_amount_str = String.format("% 11d", supply_total+tax_total);
+    		String tax_total_str = String.format("% 10d", tax_total);
+    		
+    		for(int i=0; i<total_amount_str.length(); i++) {
+    			if(total_amount_str.charAt(i) == ' ') empty_count++;
+    		}
+    		
+    		model.addAttribute("delivery_payment", delivery_payment);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("supply_total", supply_total);
+    		model.addAttribute("supply_total_str", supply_total_str);
+    		model.addAttribute("tax_total", tax_total);
+    		model.addAttribute("tax_total_str", tax_total_str);
+    		model.addAttribute("total_amount_str", total_amount_str);
+    		model.addAttribute("delivery_supply_payment", delivery_supply_payment);
+    		model.addAttribute("empty_count", empty_count);
+    		model.addAttribute("storeInvoiceList",storeInvoiceList);
+    		
+    		model.addAttribute("paymentBundleList", paymentBundleList);
+    		model.addAttribute("detail", paymentDetail);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("style", "tax-bill");
+    	return "popup/tax-storeInvoice-zero";
     }
 }

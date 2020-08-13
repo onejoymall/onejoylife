@@ -1743,7 +1743,10 @@ $(document).on("click",".ra-num",function () {
         $('body').css("overflow", "hidden");
     }
     $("button[name='detail0']").click(function(){
-        resetStoreForm();
+    	
+    	
+    	resetStoreForm();
+        
     });
     //  $("#modal-store").click(function(){
     //     resetStoreForm();
@@ -2372,6 +2375,15 @@ $(document).on("click",".ra-num",function () {
                     } else {
                         $('#store_creator_yn2').prop('checked', true);
                     }
+                    if(index=="store_pur_com" || data.list.store_pur_com == "A"){
+                        $('#store_pur_com1').prop('checked', true);
+                    } else if(index=="store_pur_com" || data.list.store_pur_com == "B"){
+                        $('#store_pur_com2').prop('checked', true);
+                    }else {
+                    	 $('#store_pur_com1').prop('checked', false);
+                    	 $('#store_pur_com2').prop('checked', false);
+                    }
+                    
                 });
                 $('#store_reg').attr("readonly",true);
                 $('#store_id').attr("readonly",true);
@@ -3820,6 +3832,32 @@ $(document).on("click",".ra-num",function () {
     	
     	child = window.open('/Popup/taxInvoice?order_no='+order_no,'_blank','width=1010, height=910');
     }
+    function taxStoreInvoice(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxStoreInvoice?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    function taxStoreInvoiceApproval(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxStoreInvoiceApproval?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    function taxStoreInvoiceApprovalChk(order_no){
+    	var child;
+    	if(child != undefined){
+    		child.close()
+    	}
+    	
+    	child = window.open('/Popup/taxStoreInvoiceApprovalChk?order_no='+order_no,'_blank','width=1010, height=910');
+    }
+    
+    
     
     function salesStatement(order_no){
     	var child;

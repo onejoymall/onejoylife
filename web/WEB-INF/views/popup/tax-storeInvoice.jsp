@@ -12,6 +12,8 @@
     	<input type="hidden" name="tax_total" value="${tax_total}"/>
     	<input type="hidden" name="total_amount" value="${supply_total + tax_total}"/>
     	<input type="hidden" name="reg_date" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
+    
+       
         <div class="header-top">
             <p>${afn:getMessage("taxSheet",sessionScope.locale)}</p>
         </div>
@@ -58,7 +60,6 @@
                     <col style="width: 143px;">
                 </colgroup>
                 <tbody class="t-body1">
-                
                    <tr class>
                        <td colspan="5">${afn:getMessage("elecTaxSta",sessionScope.locale)}&#40;${afn:getMessage("forsupplier",sessionScope.locale)}&#41;</td>
                        <th colspan="2">${afn:getMessage("bookNum",sessionScope.locale)}</th>
@@ -92,9 +93,9 @@
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
                         <td><span> ${afn:getMessage("ksy",sessionScope.locale)}</span></td>
                         <td> ${afn:getMessage("corpName",sessionScope.locale)}</td>
-                        
                         <td><span><input type="text" name="corp_name"></span></td>
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
+                        
                         <td><span><input type="text" name="ceo_name"></span></td>
                     </tr>
                     <tr class="tr-tit">
@@ -117,7 +118,7 @@
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td colspan="3"><span>onejoy@onejoy.co.kr</span></td>
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
-                        <td colspan="3"><span><input type="text" name="email"></span></td>
+                        <td colspan="3"><span><input type="text" name="taxemail"></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -187,6 +188,7 @@
                 </thead>
                 <tbody class="t-body1">
 					<tr>
+					<input type="hidden" name="unitPrice" value="${supply_total_str}"/>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="yyyy"/></td>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></td>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="dd"/></td>
@@ -230,6 +232,7 @@
                 </colgroup>
                 <tbody class="t-body1">
                     <tr class="tr-tit">
+                    
                         <td>${afn:getMessage("month",sessionScope.locale)}</td>
                         <td>${afn:getMessage("day",sessionScope.locale)}</td>
                         <td>${afn:getMessage("subject",sessionScope.locale)}</td>
@@ -241,11 +244,13 @@
                         <td>${afn:getMessage("remark",sessionScope.locale)}</td>
                     </tr>
                     <c:forEach items="${paymentBundleList}" var="list">
+                    <input type="hidden" name="no" value="${list.no}"/>
                     <input type="hidden" name="purchaseExpiry" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
                     <input type="hidden" name="name" value="${list.product_name}"/>
                     <input type="hidden" name="infomation" value="1"/>
                     <input type="hidden" name="chargeableUnit" value="${list.payment_order_quantity}"/>
                     <input type="hidden" name="unitPrice" value="${list.unit_price}"/>
+                   
                     <input type="hidden" name="amount" value="${list.unit_supply_price}"/>
                     <input type="hidden" name="tax" value="${list.unit_price - list.unit_supply_price}"/>
                     <input type="hidden" name="description" value=""/>
@@ -321,7 +326,9 @@
             </div>
             <div class="but-box">
                 <button class="but2" type="button" onclick="window.print();">${afn:getMessage("print",sessionScope.locale)}</button>
-                <button class="but1" type="button" id="taxInvoceSendBtn">${afn:getMessage("sendToNTS",sessionScope.locale)}</button>
+                <%-- ${afn:getMessage("print",sessionScope.locale)} --%>
+                <button class="but1" type="button" id="taxInvoiceApplyBtn">신청</button>
+                <%-- ${afn:getMessage("sendToNTS",sessionScope.locale)} --%>
             </div>
         </div>
     </form>
@@ -331,10 +338,40 @@
     	var order_no = '${param.order_no}';
     	$("input[name=tax_type]").on("input", function(){
     		if($("input[name=tax_type]:checked").val() == '2'){
-    			location.href="/Popup/taxInvoiceZero?order_no="+order_no;
+    			location.href="/Popup/taxStoreInvoiceZero?order_no="+order_no;
     		}
     	});
     });
+    
+    $(document).on("click","#taxInvoiceApplyBtn",function () {
+    	var formData = $("#taxInvoiceForm").serialize();
+    	
+    	jQuery.ajax({
+            type: 'post',
+            url: "/api/taxInvoiceApply",
+            data:formData,
+            success: function (data) {
+             	console.log(data)
+              	if (data.success){
+            		alert("신청완료");
+            		self.close();
+            	}else{
+            		$.toast({
+                        text: "ERROR",
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+            	}
+            
+            },
+            error: function (e){
+            	console.log(e);
+            }
+        });
+    });
+
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>

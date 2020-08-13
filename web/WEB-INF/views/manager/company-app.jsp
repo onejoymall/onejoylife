@@ -168,6 +168,8 @@
                                     <label for="store_creator_yn2">크리에이터</label>
                                 </td>
                             </tr>
+       
+                           
 
                         </tbody>
                     </table>
@@ -208,7 +210,16 @@
                                         <input type="text" id="store_type" name="store_type"> / <input type="text" id="store_item" name="store_item">
                                     </td>
                                 </tr>
-
+    						 <tr> 
+                                <tr>
+		                           <th>매입/위탁</th>
+		                                <td>
+		                                    <input type="radio" name="store_pur_com" id="store_pur_com1" value="A" checked >
+		                                    <label for="store_pur_com1">매입</label>
+		                                    <input type="radio" name="store_pur_com" id="store_pur_com2" value="B" >
+		                                    <label for="store_pur_com2">위탁</label>
+		                                </td>
+		                            </tr>
                                 <tr>
                                     <th>사업자등록증 사본</th>
                                     <td>

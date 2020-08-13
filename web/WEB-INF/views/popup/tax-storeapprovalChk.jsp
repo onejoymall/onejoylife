@@ -12,6 +12,8 @@
     	<input type="hidden" name="tax_total" value="${tax_total}"/>
     	<input type="hidden" name="total_amount" value="${supply_total + tax_total}"/>
     	<input type="hidden" name="reg_date" value="<fmt:formatDate value="${detail.reg_date}" pattern="yyyyMMdd"/>"/>
+    
+       
         <div class="header-top">
             <p>${afn:getMessage("taxSheet",sessionScope.locale)}</p>
         </div>
@@ -24,24 +26,41 @@
                    <col style="width:350px">
                </colgroup>
                <tbody class="t-body2">
+                <c:forEach items="${storeInvoiceList}" var="info">
                    <tr>
                        <th class="tr-tit"> ${afn:getMessage("surtaxtype",sessionScope.locale)}</th>
                        <td>
-                           <input type="radio" name="tax_type" id="vat1" value=1 checked>
+                           <input type="radio" name="tax_type" id="vat1" value="${info.tax_type}" 
+							<c:if test="${info.tax_type eq \"1\"}">checked</c:if>>
                            <label for="vat1">${afn:getMessage("taxation",sessionScope.locale)}</label>
-                           <input type="radio" name="tax_type" id="vat2" value=2>
+                           
+                           <input type="radio" name="tax_type" id="vat2" value="${info.tax_type}"
+                           <c:if test="${info.tax_type eq \"2\"}">checked</c:if>>
                            <label for="vat2">${afn:getMessage("zeroTaxrate",sessionScope.locale)}</label>
+                           
+                           
+                           
+                           
+                           
                        </td>
                        <th class="tr-tit">${afn:getMessage("supplier",sessionScope.locale)}</th>
                        <td>
-                           <input type="radio" name="invoicee_party_type" id="buyer1" value="corp">
+                           <input type="radio" name="invoicee_party_type" id="buyer1" value="corp"
+                            <c:if test="${info.invoicee_party_type eq 'corp'}">checked</c:if>>
                            <label for="buyer1">${afn:getMessage("licensee",sessionScope.locale)}</label>
-                           <input type="radio" name="invoicee_party_type" id="buyer2" value="person" checked>
+                           
+                           
+                           <input type="radio" name="invoicee_party_type" id="buyer2" value="person" 
+ 							<c:if test="${info.invoicee_party_type eq  'person'}">checked</c:if>>
                            <label for="buyer2">${afn:getMessage("personal",sessionScope.locale)}</label>
-                           <input type="radio" name="invoicee_party_type" id="buyer3" value="foreigner">
+                           
+                           
+                           <input type="radio" name="invoicee_party_type" id="buyer3" value="foreigner"
+                            <c:if test="${info.invoicee_party_type eq  'foreigner'}">checked</c:if>>
                            <label for="buyer3">${afn:getMessage("foreigner",sessionScope.locale)}</label>
                        </td>
                    </tr>
+                   </c:forEach>
                </tbody>
            </table>
             <table>
@@ -58,18 +77,18 @@
                     <col style="width: 143px;">
                 </colgroup>
                 <tbody class="t-body1">
-                
+                    <c:forEach items="${storeInvoiceList}" var="info">
                    <tr class>
                        <td colspan="5">${afn:getMessage("elecTaxSta",sessionScope.locale)}&#40;${afn:getMessage("forsupplier",sessionScope.locale)}&#41;</td>
                        <th colspan="2">${afn:getMessage("bookNum",sessionScope.locale)}</th>
                        <td>
-                           <input type="text" id="volume" name="kwon">
+                           <input type="text" id="volume" name="kwon" value="${info.kwon}" readonly>
                            <label for="volume">${afn:getMessage("ko1",sessionScope.locale)}</label>
-                           <input type="text" id="issue" name="ho">
+                           <input type="text" id="issue" name="ho" value="${info.ho}" readonly>
                            <label for="issue">${afn:getMessage("ko2",sessionScope.locale)}</label>
                        </td>
                        <th>${afn:getMessage("corp_num",sessionScope.locale)}</th>
-                       <td><input type="text" id="number" name="serial_num"></td>
+                       <td><input type="text" id="number" name="serial_num" value="${info.serial_num}" readonly></td>
                    </tr>
                     <tr class="tr-tit">
                         <td rowspan="5">${afn:getMessage("ko3",sessionScope.locale)}<br>
@@ -84,7 +103,7 @@
 		                 ${afn:getMessage("ko9",sessionScope.locale)}<br>
 		                 ${afn:getMessage("ko10",sessionScope.locale)}</td>
                         <td> ${afn:getMessage("reservNum",sessionScope.locale)}</td>
-                        <td colspan="3"><span><input type="text" name="corp_num"></span></td>
+                        <td colspan="3"><span><input type="text" name="corp_num" value="${info.corp_num}" readonly></span></td>
                     </tr>
                     <tr>
                         <td> ${afn:getMessage("corpName",sessionScope.locale)}</td>
@@ -92,16 +111,16 @@
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
                         <td><span> ${afn:getMessage("ksy",sessionScope.locale)}</span></td>
                         <td> ${afn:getMessage("corpName",sessionScope.locale)}</td>
-                        
-                        <td><span><input type="text" name="corp_name"></span></td>
+                        <td><span><input type="text" name="corp_name" value="${info.corp_name}" readonly></span></td>
                         <td> ${afn:getMessage("name",sessionScope.locale)}</td>
-                        <td><span><input type="text" name="ceo_name"></span></td>
+                        
+                        <td><span><input type="text" name="ceo_name" value="${info.ceo_name}" readonly></span></td>
                     </tr>
                     <tr class="tr-tit">
                         <td> ${afn:getMessage("store_address",sessionScope.locale)}</td>
                         <td colspan="3"><span> ${afn:getMessage("msg_cr_1-10-1",sessionScope.locale)}<br> (${afn:getMessage("msg_cr_1-10-2",sessionScope.locale)})</span></td>
                         <td> ${afn:getMessage("store_address",sessionScope.locale)}</td>
-                        <td colspan="3"><span><input type="text" name="addr"></span></td>
+                        <td colspan="3"><span><input type="text" name="addr" value="${info.addr}" readonly></span></td>
                     </tr>
                     <tr>
                         <td> ${afn:getMessage("business_condition",sessionScope.locale)}</td>
@@ -109,16 +128,18 @@
                         <td> ${afn:getMessage("event",sessionScope.locale)}</td>
                         <td><span> ${afn:getMessage("elecStores",sessionScope.locale)}</span></td>
                         <td> ${afn:getMessage("business_condition",sessionScope.locale)}</td>
-                        <td><span><input type="text" name="biz_type"></span></td>
+                        <td><span><input type="text" name="biz_type" value="${info.biz_type}" readonly></span></td>
                         <td> ${afn:getMessage("event",sessionScope.locale)}</td>
-                        <td><span><input type="text" name="biz_class"></span></td>
+                        <td><span><input type="text" name="biz_class" value="${info.biz_class}" readonly></span></td>
                     </tr>
                     <tr class="tr-tit">
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
                         <td colspan="3"><span>onejoy@onejoy.co.kr</span></td>
                         <td> ${afn:getMessage("ko6",sessionScope.locale)}</td>
-                        <td colspan="3"><span><input type="text" name="email"></span></td>
+                        <td colspan="3"><span><input type="text" name="taxemail" value="${info.taxemail}" readonly></span></td>
                     </tr>
+                    
+                    </c:forEach>
                 </tbody>
             </table>
             <table>
@@ -186,7 +207,9 @@
                     </tr>
                 </thead>
                 <tbody class="t-body1">
+                  <c:forEach items="${storeInvoiceList}" var="info"> 
 					<tr>
+				
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="yyyy"/></td>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="MM"/></td>
 						<td><fmt:formatDate value="${detail.reg_date}" pattern="dd"/></td>
@@ -212,8 +235,9 @@
 						<td>${fn:substring(tax_total_str,7,8)}</td>
 						<td>${fn:substring(tax_total_str,8,9)}</td>
 						<td>${fn:substring(tax_total_str,9,10)}</td>
-						<td><input type="text" name="remark1"/></td>
+						<td><input type="text" name="remark1" value="${info.remark1}"/></td>
 					</tr>
+					  </c:forEach>
                 </tbody>
             </table>
             <table>
@@ -230,6 +254,7 @@
                 </colgroup>
                 <tbody class="t-body1">
                     <tr class="tr-tit">
+                    
                         <td>${afn:getMessage("month",sessionScope.locale)}</td>
                         <td>${afn:getMessage("day",sessionScope.locale)}</td>
                         <td>${afn:getMessage("subject",sessionScope.locale)}</td>
@@ -246,6 +271,7 @@
                     <input type="hidden" name="infomation" value="1"/>
                     <input type="hidden" name="chargeableUnit" value="${list.payment_order_quantity}"/>
                     <input type="hidden" name="unitPrice" value="${list.unit_price}"/>
+                    <input type="hidden" name="no" value="${list.no}"/>
                     <input type="hidden" name="amount" value="${list.unit_supply_price}"/>
                     <input type="hidden" name="tax" value="${list.unit_price - list.unit_supply_price}"/>
                     <input type="hidden" name="description" value=""/>
@@ -292,6 +318,7 @@
                     <col style="width: 289px;">
                 </colgroup>
                 <tbody class="t-body1">
+                  <c:forEach items="${storeInvoiceList}" var="info">
                     <tr class="tr-tit">
                         <td>${afn:getMessage("shippingFee",sessionScope.locale)}</td>
                         <td>${afn:getMessage("totalPrice",sessionScope.locale)}</td>
@@ -299,10 +326,13 @@
                         <td>${afn:getMessage("paycheck",sessionScope.locale)}</td>
                         <td>${afn:getMessage("AccountsRec",sessionScope.locale)}</td>
                         <td rowspan="2">${afn:getMessage("msg_tax1",sessionScope.locale)} 
-                        <input type="radio" id="receiving" name="purpose_type" value="1" checked>
+                        <input type="radio" id="receiving" name="purpose_type" value="${info.purpose_type}"
+                        <c:if test="${info.purpose_type eq \"1\"}">checked</c:if>>
                         <label for="receiving">${afn:getMessage("msg_tax2",sessionScope.locale)} </label>
-                        <input type="radio" id="requesting" name="purpose_type">
-                        <label for="requesting" value="2">${afn:getMessage("msg_tax3",sessionScope.locale)} </label>
+                        
+                        <input type="radio" id="requesting" name="purpose_type" value="${info.purpose_type}"
+                        <c:if test="${info.purpose_type eq \"2\"}">checked</c:if>>
+                        <label for="requesting" >${afn:getMessage("msg_tax3",sessionScope.locale)} </label>
                         ${afn:getMessage("msg_tax4",sessionScope.locale)}</td>
                     </tr>
                     <tr>
@@ -312,6 +342,7 @@
                         <td>-</td>
                         <td>-</td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             <div>
@@ -321,20 +352,28 @@
             </div>
             <div class="but-box">
                 <button class="but2" type="button" onclick="window.print();">${afn:getMessage("print",sessionScope.locale)}</button>
-                <button class="but1" type="button" id="taxInvoceSendBtn">${afn:getMessage("sendToNTS",sessionScope.locale)}</button>
+                <%-- ${afn:getMessage("print",sessionScope.locale)} --%>
+            
+                <%-- ${afn:getMessage("sendToNTS",sessionScope.locale)} --%>
             </div>
         </div>
     </form>
     </main>
     <script>
+ 
+    
     $(function(){
     	var order_no = '${param.order_no}';
     	$("input[name=tax_type]").on("input", function(){
     		if($("input[name=tax_type]:checked").val() == '2'){
-    			location.href="/Popup/taxInvoiceZero?order_no="+order_no;
+    			location.href="/Popup/taxStoreInvoiceZero?order_no="+order_no;
     		}
     	});
     });
+    
+  
+
+    
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>

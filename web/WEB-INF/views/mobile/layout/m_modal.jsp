@@ -130,6 +130,11 @@
             <p class="text-md mb-05 mt-2">${afn:getMessage('pswdCfm',sessionScope.locale)}</p>
             <input type="password" name="store_passwordCf" class="width-100">
             <p id="password_cfValidation" class="er">
+            <p class="text-md mb-05 mt-2">${afn:getMessage('store',sessionScope.locale)}/${afn:getMessage('creator',sessionScope.locale)}</p>
+            <input type="radio" name="store_creator_yn" id="store_creator_yn1" value="N" checked/>
+            <label for="store_creator_yn1">${afn:getMessage('store',sessionScope.locale)}</label>
+            <input type="radio" name="store_creator_yn" id="store_creator_yn2" value="Y"/>
+            <label for="store_creator_yn2">${afn:getMessage('creator',sessionScope.locale)}</label>
             <h3 class="table-title mb-1 mt-5">${afn:getMessage('sellerInfo',sessionScope.locale)}</h3>
             <hr class="mb-3">
             <p class="text-md mb-05">${afn:getMessage('company_name',sessionScope.locale)}</p>
@@ -146,7 +151,15 @@
             <input type="text" class="width-100">--%>
             <p class="text-md mb-05 mt-2">${afn:getMessage('business_condition',sessionScope.locale)}/${afn:getMessage('industry',sessionScope.locale)}</p>
             <input type="text" class="width-half" id="store_type" name="store_type"><span class="in-text">/</span><input type="text" class="width-half" id="store_item" name="store_item">
+            
+             <p class="text-md mb-05 mt-2">${afn:getMessage('purchase',sessionScope.locale)}/${afn:getMessage('consign',sessionScope.locale)}</p>
+            <input type="radio" name="store_pur_com" id="store_pur_com1" value="1" checked/>
+            <label for="store_pur_com1">${afn:getMessage('purchase',sessionScope.locale)}</label>
+            <input type="radio" name="store_pur_com" id="store_pur_com2" value="2"/>
+            <label for="store_pur_com2">${afn:getMessage('consign',sessionScope.locale)}</label>
+            
             <p class="text-md mb-05 mt-2">${afn:getMessage('business_license_copy',sessionScope.locale)}</p>
+            
             <div class="fileBox">
                 <input type="text" class="width-100 fileName" class="fileName" id="fileName" name="fileName" readonly="readonly">
 <%--                <button class="btn width-50 mt-05" for="uploadBtn">파일찾기</button>--%>
