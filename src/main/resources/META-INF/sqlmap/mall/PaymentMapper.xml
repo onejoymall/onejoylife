@@ -161,8 +161,9 @@
 	</select>
 	<select id="getCalculateCompanyList" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="hashmap">
 		/*getCalculateCompanyList*/
-		SELECT 
+  SELECT 
 		c.level,
+		c.store_pur_com,
 			d.payment_cd, 
 			d.order_no, 
 			b.product_store_id, 
@@ -182,10 +183,11 @@
 		FROM payment_bundle d  LEFT JOIN payment a ON d.order_no =a.order_no 
 		 LEFT JOIN delivery_info e ON a.order_no = e.order_no
 		 LEFT JOIN product b ON b.product_cd=d.product_cd 
-		 LEFT JOIN store c ON c.store_id = b.product_store_id 
-		 WHERE 1=1 AND a.payment_status ='O' 
+		 LEFT JOIN store c ON  b.product_store_id  =c.store_id 
+		 WHERE 1=1
 		and d.payment_status='O'
 		AND a.payment_status != 'N' 
+			AND d.payment_status != 'N' 
 		AND a.order_no NOT LIKE 'GW%'
 		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
 	      <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
