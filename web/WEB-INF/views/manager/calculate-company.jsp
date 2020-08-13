@@ -34,14 +34,14 @@
                         </colgroup>
    						   <tbody>
                             <tr>
-                                <th>할인쿠폰 </th>
+                                <th>할인쿠폰${coupon_cd_arr_str}</th>
                                 <td>
                                 <c:set var="coupon_cd_arr" value="${fn:split(searchVO.coupon_cd,',')}"/>
-                                <input type="checkbox" name="coupon_cd" value="not null" id="src-before"
-                                  <c:if test="${coupon_cd_arr[0] eq 'not null' || coupon_cd_arr[1] eq 'not null'}">checked</c:if>>
+                                <input type="checkbox" name="coupon_cd" value="Y" id="src-before"
+                                  <c:if test="${searchVO.coupon_cd_arr_str eq 'Y' || searchVO.coupon_cd_arr_str eq 'YN'}">checked</c:if>>
                                    <label for="src-before" >사용</label>
-                                   <input type="checkbox" name="coupon_cd" value="null" id="src-after" 
-                                  <c:if test="${coupon_cd_arr[0] eq 'null' || coupon_cd_arr[1] eq 'null'}">checked</c:if>>
+                                   <input type="checkbox" name="coupon_cd" value="N" id="src-after" 
+                                  <c:if test="${searchVO.coupon_cd_arr_str eq 'N' || searchVO.coupon_cd_arr_str eq 'YN'}">checked</c:if>>
                                    <label for="src-after">사용안함</label>
                                 </td>
                                 

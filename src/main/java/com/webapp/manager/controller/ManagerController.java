@@ -1392,7 +1392,26 @@ public class ManagerController {
 			  if(calculateCompanyVO.getDisplayRowCount()==null){
 				  calculateCompanyVO.setDisplayRowCount(10);
 			  }
-			 
+				/* if("Y".equals(sslYn)) { */
+			  String coupon_cd =calculateCompanyVO.getCoupon_cd();
+			  if("N".equals(coupon_cd)) {
+				  calculateCompanyVO.setCoupon_cd("='' ||  d.coupon_cd IS NULL");
+				  calculateCompanyVO.setCoupon_cd_arr_str("N");
+			  }
+			  if("Y".equals(coupon_cd)) {
+				  calculateCompanyVO.setCoupon_cd("!=''");
+				  calculateCompanyVO.setCoupon_cd_arr_str("Y");
+			  }	
+			  
+			  if("Y,N".equals(coupon_cd)) {
+				  calculateCompanyVO.setCoupon_cd("='' ||  d.coupon_cd IS NULL ||d.coupon_cd ='' ");
+				  calculateCompanyVO.setCoupon_cd_arr_str("YN");
+				  
+			  }
+			
+			  
+			  
+			  
    		 String email = (String)params.get("email");
    		 params.put("email", session.getAttribute("email"));
            Map<String,Object> loginUserList = userDAO.getUserStoreList(params);

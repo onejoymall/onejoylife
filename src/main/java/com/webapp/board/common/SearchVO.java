@@ -27,8 +27,40 @@ public class SearchVO extends PageVO{
     private String product_approval_yn;
     private String store_id;
     private String product_type;
+    private String coupon_cd;
+    private String coupon_cd2;
+    private String store_pur_com;
+    
 
-    public String getProduct_type() {
+    
+    
+    
+
+    public String getStore_pur_com() {
+		return store_pur_com;
+	}
+
+	public void setStore_pur_com(String store_pur_com) {
+		this.store_pur_com = store_pur_com;
+	}
+
+	public String getCoupon_cd() {
+		return coupon_cd;
+	}
+
+	public void setCoupon_cd(String coupon_cd) {
+		this.coupon_cd = coupon_cd;
+	}
+
+	public String getCoupon_cd2() {
+		return coupon_cd2;
+	}
+
+	public void setCoupon_cd2(String coupon_cd2) {
+		this.coupon_cd2 = coupon_cd2;
+	}
+
+	public String getProduct_type() {
         return product_type;
     }
 
