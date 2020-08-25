@@ -285,28 +285,14 @@ public class ProductController {
             if(!isEmpty(heart)){
                 model.addAttribute("heart",true);
             }
-            //기본 배송설정
-            Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
-            model.addAttribute("store_delivery",storeInfo);
-
             //배송정보
             params.put("delivery_class",list.get("product_delivery_class"));
-            if(list.get("product_delivery_class").equals("T")){
-                //배송밥법
-                params.put("delivery_type",list.get("product_delivery_type"));
-                //배송비구분
-                params.put("delivery_payment_class",list.get("product_delivery_payment_class"));
-                //배송비 구분별 값
-                params.put("delivery_payment",list.get("product_delivery_payment"));
-            } else {
-                //배송밥법
-                params.put("delivery_type",storeInfo.get("product_delivery_type"));
-                //배송비구분
-                params.put("delivery_payment_class",storeInfo.get("product_delivery_payment_class"));
-                //배송비 구분별 값
-                params.put("delivery_payment",storeInfo.get("product_delivery_payment"));
-            }
-
+            //배송밥법
+            params.put("delivery_type",list.get("product_delivery_type"));
+            //배송비구분
+            params.put("delivery_payment_class",list.get("product_delivery_payment_class"));
+            //배송비 구분별 값
+            params.put("delivery_payment",list.get("product_delivery_payment"));
             Map<String,Object> delivery = giveawayDelivery(params);
 
             model.addAttribute("delivery",delivery);
@@ -333,9 +319,9 @@ public class ProductController {
             model.addAttribute("configtop",configtop);
             model.addAttribute("configbot",configbot);
             
-            /*//기본 배송설정
+            //기본 배송설정
             Map<String,Object> storeInfo = mgSystemDAO.getStoreDelivery(params);
-            model.addAttribute("store_delivery",storeInfo);*/
+            model.addAttribute("store_delivery",storeInfo);
             
             //띠배너
             params.put("banner_type","product_line");
