@@ -80,14 +80,19 @@ public class PopupController {
         deliveryInfoVO.setDelivery_t_code((String)delivery.get("delivery_t_code"));
         deliveryInfoVO.setDelivery_t_invoice((String)delivery.get("delivery_t_invoice"));
         //택배사목록
-        Map<String, Object> companylist = CurlPost.curlPostFn(
-                deliveryInfoVO.getDelivery_t_url()
-                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                "",
-                "",
-                "get"
-        );
-        List<Map<String,Object>> company = (List)companylist.get("Company");
+		Map<String, Object> companylist = CurlPost.curlPostFn(
+			deliveryInfoVO.getDelivery_t_url()
+					+"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+			"",
+			"",
+			"get"
+		);
+		List<Map<String,Object>> company = (List)companylist.get("Company");
+		if(!isEmpty(company)){
+			deliveryDAO.insertDeliveryCompany(company);
+		}
+		List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+		model.addAttribute("companyList", resultCompay);
 
         Map<String, Object> postToken = CurlPost.curlPostFn(
                 deliveryInfoVO.getDelivery_t_url()
@@ -99,7 +104,7 @@ public class PopupController {
                 "get"
         );
         model.addAttribute("deliveryInfoVO",deliveryInfoVO);
-        model.addAttribute("companyList",company);
+//        model.addAttribute("companyList",company);
         model.addAttribute("style", "mypage-6-mo");
         model.addAttribute("list",postToken);
         return "popup/deliverySearch";

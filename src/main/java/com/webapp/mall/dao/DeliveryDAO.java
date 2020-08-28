@@ -22,6 +22,18 @@ public class DeliveryDAO {
     public Integer getDeliveryListCount(Map<String,Object> paramas) throws SQLException{
         return sql.selectOne("mall.DeliveryMapper.getDeliveryListCount", paramas);
     }
+    public void insertDeliveryCompany(List<Map<String,Object>> company) throws SQLException {
+        for(int i=0; i < company.size(); i++){
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", company.get(i).get("Code"));
+            map.put("name", company.get(i).get("Name"));
+            sql.insert("mall.DeliveryMapper.insertDeliveryCompany", map);
+        }
+    }
+    public List<Map<String,Object>> getDeliveryCompanyList(Map<String,Object> paramas) throws SQLException{
+        List<Map<String,Object>> getDeliveryCompanyList = sql.selectList("mall.DeliveryMapper.getDeliveryCompanyList",paramas);
+        return getDeliveryCompanyList;
+    }
     public void insertDelivery(DeliveryInfoVO deliveryInfoVO) throws SQLException {
         sql.insert("mall.DeliveryMapper.insertDelivery",deliveryInfoVO);
     }

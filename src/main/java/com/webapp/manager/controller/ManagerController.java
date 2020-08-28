@@ -240,9 +240,14 @@ public class ManagerController {
                 "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
 
             model.addAttribute("productList", productList);
-            model.addAttribute("companyList", company);
+//            model.addAttribute("companyList", company);
             model.addAttribute("table_name", "product");
             model.addAttribute("Pk", "product_id");
             model.addAttribute("topNav", 2);
@@ -356,17 +361,22 @@ public class ManagerController {
             deliveryInfoVO.setDelivery_t_url(t_url);
             //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(
-                    deliveryInfoVO.getDelivery_t_url()
-                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                    "",
-                    "",
-                    "get"
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
 
             List<Map<String, Object>> list = categoryDAO.getCategoryList(params);
             model.addAttribute("list", list);
-            model.addAttribute("companyList",company);
+//            model.addAttribute("companyList",company);
             model.addAttribute("topNav", 2);
             model.addAttribute("style", "goods-add");
             model.addAttribute("postUrl", "/Manager/productAddProc");
@@ -480,18 +490,20 @@ public class ManagerController {
             model.addAttribute("searchVO", searchVO);
             model.addAttribute("params", params);
             
-          //택배사목록
-            //스위트레커 연동필요
+            //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(
-                    deliveryInfoVO.getDelivery_t_url()
-                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                    "",
-                    "",
-                    "get"
+            deliveryInfoVO.getDelivery_t_url()
+                    +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+            "",
+            "",
+            "get"
             );
-
             List<Map<String,Object>> company = (List)companylist.get("Company");
-            model.addAttribute("companyList", company);
+            if(!isEmpty(company)){
+            deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -1008,16 +1020,19 @@ public class ManagerController {
 	    		model.addAttribute("list", list_entries);
             }
             //택배사목록
-            //스위트레커 연동필요
             Map<String, Object> companylist = CurlPost.curlPostFn(
-                    deliveryInfoVO.getDelivery_t_url()
-                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                    "",
-                    "",
-                    "get"
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
             );
-
             List<Map<String,Object>> company = (List)companylist.get("Company");
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
 
             //코드 목록
             params.put("code", "payment_status");
@@ -1028,7 +1043,7 @@ public class ManagerController {
             Map<String, Object> getStatusCount = paymentDAO.getStatusCount(params);
             model.addAttribute("statusCount", getStatusCount);
             
-            model.addAttribute("companyList", company);
+//            model.addAttribute("companyList", company);
             model.addAttribute("searchVO", searchVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1072,14 +1087,18 @@ public class ManagerController {
             List<Map<String,Object>> list = refundDAO.getDeliveryRefundList(deliveryInfoVO);
             //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(
-                    deliveryInfoVO.getDelivery_t_url()
-                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                    "",
-                    "",
-                    "get"
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
-            model.addAttribute("companyList", company);
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
             
           //상태 카운트
             Map<String, Object> getStatusCount = paymentDAO.getStatusCount(params);

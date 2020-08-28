@@ -40,6 +40,19 @@
 		ORDER BY A.default_delivery_info_yn = 'Y' DESC, A.reg_date desc
 		limit 5
     </select>
+    <insert id="insertDeliveryCompany" parameterType="java.util.Map">
+        INSERT IGNORE INTO delivery_company(
+        code,
+        name
+        ) VALUES (
+        #{code},
+        #{name}
+        )
+    </insert>
+    <select id="getDeliveryCompanyList" resultType="java.util.Map" parameterType="java.util.Map">
+        select A.*
+        from delivery_company A
+    </select>
     <insert id="insertDelivery" parameterType="com.webapp.mall.vo.DeliveryInfoVO">
         insert into delivery_info(
         giveaway_play_cd,

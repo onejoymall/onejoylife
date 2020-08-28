@@ -673,14 +673,18 @@ public class MyPage {
 
             //택배사목록
             Map<String, Object> companylist = CurlPost.curlPostFn(
-                    deliveryInfoVO.getDelivery_t_url()
-                            +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
-                    "",
-                    "",
-                    "get"
+                deliveryInfoVO.getDelivery_t_url()
+                        +"/api/v1/companylist?t_key="+deliveryInfoVO.getDelivery_t_key(),
+                "",
+                "",
+                "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
-            model.addAttribute("companyList", company);
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
 
             params.put("code","kcp_bank_code");
             List<Map<String,Object>> getSelectorList = selectorDAO.getSelectorList(params);

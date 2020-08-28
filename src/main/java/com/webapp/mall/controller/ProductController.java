@@ -223,7 +223,11 @@ public class ProductController {
                 "get"
             );
             List<Map<String,Object>> company = (List)companylist.get("Company");
-            model.addAttribute("companyList", company);
+            if(!isEmpty(company)){
+                deliveryDAO.insertDeliveryCompany(company);
+            }
+            List<Map<String,Object>> resultCompay = deliveryDAO.getDeliveryCompanyList(params);
+            model.addAttribute("companyList", resultCompay);
 
             //상품 상세페이지 로드시 최근 본 상품 세션에 적용
             if(isEmpty((List<String>)session.getAttribute("today"))){
