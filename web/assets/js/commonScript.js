@@ -700,7 +700,7 @@ $(document).on("click",".ra-num",function () {
 													}else{
 														html += '<span class="score-text"> '+ productList.review_cnt + reviewCount+'</span>';
 													}
-	                                 html +=        html +='<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+ 	
+	                                        html +='<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+ 	
 	                            '			 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +	                            '             </p>\n' +
 	                            '         </div>\n' +
 	                            '     </a>\n' +

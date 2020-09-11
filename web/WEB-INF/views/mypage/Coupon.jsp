@@ -111,7 +111,7 @@
                                             <span class="text-bold">${afn:getMessage('amount',sessionScope.locale)}</span>&nbsp;&nbsp;:&nbsp;&nbsp;${afn:getMessage('no_limit',sessionScope.locale)}<br>
                                         </c:if>
                                         <c:if test="${not empty userCouponList.category_name}">
-                                            ${afn:getMessage('category',sessionScope.locale)}&nbsp;&nbsp;:&nbsp;&nbsp;${list.category_name}<br>
+                                            ${afn:getMessage('category',sessionScope.locale)}&nbsp;&nbsp;:&nbsp;&nbsp;${userCouponList.category_name}<br>
                                         </c:if>
                                         <c:if test="${empty userCouponList.category_name}">
                                             ${afn:getMessage('category',sessionScope.locale)}&nbsp;&nbsp;:&nbsp;&nbsp;${afn:getMessage('no_limit',sessionScope.locale)}<br>

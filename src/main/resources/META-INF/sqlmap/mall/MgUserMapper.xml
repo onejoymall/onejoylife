@@ -39,12 +39,14 @@
 
     <select id="getUserDetail" resultType="java.util.Map" parameterType="com.webapp.manager.vo.MgUserVO">
         <![CDATA[
-        SELECT
-          A.*,
-          (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name,
-          (select Z.user_grant_name from user_grant Z where Z.user_grant_no=A.user_grant) grant_name,
-          (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
-        FROM user A where A.email = #{email}
+        SELECT A.*, B.*
+		, (select Z.code_name from code Z where Z.code='level' and Z.code_value = A.level) level_name
+		, (select Z.user_grant_name from user_grant Z where Z.user_grant_no=A.user_grant) grant_name
+		, (select IFNULL((sum(IFNULL (Z.point_add,0))-sum(IFNULL (Z.point_use,0))),0) from point_history Z where Z.point_paid_user_id = A.usr_id ) point_amount
+		FROM user A JOIN delivery_info_user B
+			ON A.email = #{email}
+			AND B.order_user_email = A.email
+			AND B.default_delivery_info_yn = 'Y'
         ]]>
     </select>
     <select id="getUserHistory" resultType="java.util.Map" parameterType="com.webapp.manager.vo.MgUserVO">

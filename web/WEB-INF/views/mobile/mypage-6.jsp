@@ -30,6 +30,8 @@
             </div>
             <button type="submit" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
+        <!-- 2020-09-10 고객사측에서 	주문상태선택은 불필요하다 판단하여 주석처리    
+        
         <select name="payment_status" id="mo-select" class="mo-select">
             <c:if test="${not empty getSelectorList}">
                 <option value="">${afn:getMessage('order_statusselection',sessionScope.locale)}</option>
@@ -38,6 +40,7 @@
                 </c:forEach>
             </c:if>
         </select>
+         -->
         <h2 class="py-1">${afn:getMessage('order_product',sessionScope.locale)}</h2>
         <hr>
         <c:if test="${not empty paymentList}">
