@@ -1,0 +1,210 @@
+*{box-sizing: border-box; }
+body{font-family: "noto sans kr"!important;}
+main{overflow: hidden;}
+.wrap{width:100%;margin:0 auto;}
+.page-box{width: 1100px; margin: 0px auto; padding: 20px 0 100px;}
+.h1-box {
+    padding: 70px 0 50px;
+    text-align: center;
+    color: #232a32;
+}
+.h1-box > h1 { display: inline-block;}
+.h1-box > h1:nth-child(1) {color: #da394d;}
+/* left-nav */
+.left-nav {
+    width: 186px;
+    float: left;
+}
+.left-tit{
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 30px 0 10px 0;
+    line-height: 28px;
+}
+.outer-ul {
+    background: #f7f7f9;
+    border-style: solid;
+    border-width: 2px 0 1px;
+    border-color: #232a32;
+    
+}
+.outer-li {
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    line-height: 2.5rem;
+    color: #62606b;
+}
+.inner-ul {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7rem;
+}
+.inner-ul > li > a {color: #848484;}
+.inner-ul > li > a.active {color: #da394d;font-weight: 600;}
+
+/* right-contain */
+.right-contain {
+    width: calc(914px - 20px);
+    float: left;
+    margin-left: 20px;
+}
+/* sec1 */
+.sec1-h1 {
+    font-size: 1.5rem;
+    line-height: 28px;
+}
+.sec1-p1 {
+    font-size: 0.9rem;
+    margin: 7px 0 5px;
+    line-height: 28px;
+}
+.sec1-thead > tr {
+    height: 45px;
+    border-top: 1px solid #232a32;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.sec1-tbody > tr {
+    height: 150px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.sec1-tbody tr > td > span {
+    font-size: 1rem;
+}
+.sec1-tbody > tr > td:nth-child(2) > p {
+    text-align: left;
+    padding-left: 40px;
+}
+.sec1-td-img {
+    height: 150px;
+    background: url(../img/my-5-img.jpg)no-repeat center / cover;
+}
+.sec1-tbody-p1 > p:nth-child(2){
+    font-size: 0.8rem;
+    font-weight: 100;
+    color: #b0b3bc;
+    line-height: 1rem;
+}
+.sec1-tbody-p2 > p {
+    width: 100px;
+    border: 1px solid #232a32;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin: 5px auto;
+}
+.sec1-tbody-p2 > p > a {
+    color: #232a32;
+}
+
+/* sec * */
+.sec-h1 {
+    font-size: 1.6rem;
+    margin: 50px 0 20px;
+}
+.sec2-body,.sec3-body,.sec4-body {
+    border-top: 1px solid #232a32;
+    border-bottom: 1px solid #b0b3bc;
+}
+.body-tr-s > tr {
+    height: 60px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.body-tr-s > tr:nth-child(1) {
+    border: none;
+}
+.body-td-tit {
+    background: #f7f7f9;
+    text-align: center;
+}
+.body-td-txt1{
+    padding-left: 10px;
+    color: #848484;
+}
+.body-td-txt2 {
+    padding-left: 40px;
+    color: #848484;
+}
+.td-txt-un{
+    margin: 0 15px;
+}
+/* sec2 */
+.txt1-select {
+    width: 280px;
+    height: 30px;
+}
+.ch-display{
+    width: 200px;
+    display: inline-block;
+    margin-left: 30px;
+}
+input[id="ch-box"] + label
+{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url(../img/icon/ch1-icon.png)no-repeat center / 15px;
+    cursor: pointer;
+}
+input[id="ch-box"]:checked + label
+{
+    background: url(../img/icon/ch2-icon.png)no-repeat center / 15px;
+}
+input[id="ch-box"] {
+    display: none;
+}
+.id-box2 > div {
+    padding: 30px 0;
+}
+/* sec3*/
+.txt-color{
+    color: #da394d;
+    font-weight: 700;
+}
+/* sec4 */
+.select-op {
+    width: 240px;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+}
+.sec4-body > tr > td {
+    height: 60px;
+}
+.sec-but{
+    width: 90px;
+    height: 35px;
+    background: #717080;
+    color: #fff;
+    line-height: 1.1rem;
+    outline: none;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.pad-top {padding-top: 15px;}
+.pad-bottom{padding-bottom: 15px;}
+/* sec5 */
+.r-sec5{
+    clear: both;
+    width: 553px;
+    margin: 70px auto;
+}
+.r-sec5 > button {
+    width: 270px;
+    height: 60px;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.r-sec5 > button:nth-child(1){
+    background: #232a32;
+    color: #fff;
+    margin-right: 10px;
+}
+.r-sec5 > button:nth-child(2){
+    background: #fff;
+    border: 1px solid #232a32;
+    color: #232a32;
+}

@@ -41,7 +41,18 @@
                         <tbody class="sec1-tbody">
 	                        <c:forEach var="list" items="${paymentBundleList}" varStatus="status">
 	                        <tr>
-	                            <td><img src="${list.file_1}" style="width: 80px;"/></td>
+	                            <%-- <td>
+	                            <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>
+	                            <img src="${list.file_1}" style="width: 80px;"/>
+	                            </a>
+	                            </td> --%>
+	                            <td>
+                                  <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>"><!-- 정민 -->
+                                      <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" style="width: 80px;">
+                                  </a>
+                                </td>   
+	                            
+	                            
 	                            <td class="sec1-tbody-p1">
 	                                <p>${list.product_name} <c:if test="${not empty list.option_name}"> / ${list.option_name}</c:if></p>
 	                            </td>
@@ -63,6 +74,10 @@
 	                                <c:if test="${list.payment_status eq 'O'}">
 	                                	<p class="lis-txt-box text-danger"><a href="/MyPage/OrderChange?order_no=${list.no}">${afn:getMessage('change_request',sessionScope.locale)}</a></p>
 	                                    <p class="lis-txt-box text-danger"><a href="/MyPage/OrderRollback?order_no=${list.no}">${afn:getMessage('rollback_req',sessionScope.locale)}</a></p>
+	                                </c:if>
+	                                    <c:if test="${list.payment_status eq 'M'}">
+	                                	<p class="lis-txt-box text-danger" ><a href="/MyPage/OrderCancel?order_no=${list.order_no}">${afn:getMessage('full_cancellation',sessionScope.locale)}</p>
+	                                 
 	                                </c:if>
 	<%--                                    <p><a href="">판매자 문의</a></p>--%>
 	                                </div>

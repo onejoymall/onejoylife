@@ -50,6 +50,8 @@ import com.webapp.mall.vo.DeliveryInfoVO;
 import com.webapp.mall.vo.MyPageVO;
 import com.webapp.mall.vo.QnaVO;
 import com.webapp.manager.dao.QnaDAO;
+
+import ch.qos.logback.core.status.Status;
 @Controller
 public class MyPage {
     @Autowired
@@ -589,12 +591,13 @@ public class MyPage {
     }
 
     //취소
-    @RequestMapping(value="/MyPage/OrderCancel")
+	@RequestMapping(value = "/MyPage/OrderCancel")
     public String myPageOrderChangeCancel(HttpSession session,Model model,HttpServletRequest request,@RequestParam HashMap params) {
         try{
             Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
             Map<String,Object> delivery = deliveryDAO.getDeliveryDetail(params);
             List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+            String pstatus = paymentBundleList.get(0).get("payment_status").toString();
 
             model.addAttribute("paymentBundleList", paymentBundleList);
             model.addAttribute("paymentDetail", paymentDetail);
@@ -602,19 +605,35 @@ public class MyPage {
             params.put("code","kcp_bank_code");
             List<Map<String,Object>> getSelectorList = selectorDAO.getSelectorList(params);
             model.addAttribute("getSelectorList",getSelectorList);
+   
         }catch (Exception e){
             e.printStackTrace();
         }
-        model.addAttribute("postUrl","/SavePaymentCancel");
+        List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
+        String pstatus1 = paymentBundleList.get(0).get("payment_status").toString();
+        if(pstatus1.equals("M")) {
+      	  model.addAttribute("postUrl","/SavePaymentCancelNC"); // 미결제
+      }else {
+      model.addAttribute("postUrl","/SavePaymentCancel");
+      }
         model.addAttribute("leftNavOrder", 6);
-        model.addAttribute("style", "mypage-6-1-1");
+       model.addAttribute("style", "mypage-6-1-1");
+        
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
             return "mobile/mypage-6-1-1";
         } else {
-            return "mypage/mypage-6-1-1";
+        	 if(pstatus1.equals("M")) {
+        		 return "mypage/mypage-6-1-2";//미결제
+             }else {
+            	 return "mypage/mypage-6-1-1";
+             }
+        	
+        	
+            
         }
     }
+	
     //주문상세 무통장
     @RequestMapping(value="/MyPage/OrderAndDeliveryDetailVA")
     public String myPageOrderAndDeliveryDetailVA(Model model) {

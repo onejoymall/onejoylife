@@ -42,6 +42,7 @@
                             </div>
                             <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                         </div>
+                  <!--   2020-09-10 	주문상태선택은 불필요하다 판단하여 주석처리    
                         <div class="input-box3">
                             <select name="payment_status" >
                                 <c:if test="${not empty getSelectorList}">
@@ -52,6 +53,7 @@
                                 </c:if>
                             </select>
                         </div>
+                         -->
                     </div>
                     <p class="r-in-p2">${afn:getMessage('msg.order.search3m',sessionScope.locale)}</p>
                 </div>

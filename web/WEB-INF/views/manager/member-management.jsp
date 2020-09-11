@@ -120,12 +120,11 @@
                         <c:forEach var="list" items="${list}">
                            <tr>
                                 <td><input type="checkbox" id="chk" name="chk" value="${list.usr_id}"></td>
-
                                 <td>${list.username}</td>
                                 <td>${list.user_id}</td>
                                 <td>${list.email}</td>
                                 <td>${list.level_name}</td>
-                               <td>${list.grant_name}</td>
+                                <td>${list.grant_name}</td>
                                 <td>${list.sex}</td>
                                 <td>${list.birth}</td>
                                 <td><fmt:formatNumber value="${list.point_amount}" groupingUsed="true" /></td>
@@ -246,6 +245,18 @@
                         <tr>
                             <th>이메일</th>
                             <td class="email"></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호</th>
+                            <td class="phone"></td>
+                        </tr>
+                        <tr>
+                            <th >주소</th>
+                            <td class="roadAddress"></td>
+                        </tr>
+                        <tr>
+                        	<th >상세 주소</th>
+                        	<td class="extraAddress"></td>
                         </tr>
                         <tr>
                             <th>회원등급</th>
@@ -451,6 +462,7 @@
                                     <label for="mem-class-ck3">나그네회원</label>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <th>나이</th>
                                 <td>

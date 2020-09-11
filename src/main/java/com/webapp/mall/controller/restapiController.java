@@ -1032,6 +1032,70 @@ public class restapiController {
 		}
 		return resultMap;
 	}
+	// 결제 취소요청
+	@RequestMapping(value = "/SavePaymentCancelNC", method = RequestMethod.POST, produces = "application/json")
+	public HashMap<String, Object> SavePaymentCancelNC(@RequestParam HashMap params, HttpServletRequest request,
+			HttpSession session, DeliveryInfoVO deliveryInfoVO, GiveawayVO giveawayVO) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		HashMap<String, Object> error = new HashMap<String, Object>();
+
+		try {
+			params.put("email", session.getAttribute("email"));
+			// 로그인 확인
+			Map<String, Object> userInfo = userDAO.getLoginUserList(params);
+			if (isEmpty(userInfo)) {
+				// 비회원 주문
+				resultMap.put("redirectUrl", "/");
+			} else {
+				params.put("payment_user_id", userInfo.get("usr_id"));
+				resultMap.put("redirectUrl", "/MyPage/OrderAndDelivery");
+			}
+/*
+//            //환불을위한 토큰발급
+			IamportClient client;
+			String test_api_key = "7152058542143411";
+			String test_api_secret = "mVKoCqCox7EBEya9KmB8RLeEzFwZBhpYd9mPAZe76SILqTVbgxj7jyLSdhSPzhNMraC19Q9gJS2aLXl1";
+			client = new IamportClient(test_api_key, test_api_secret);
+//            IamportResponse<AccessToken> auth_response = client.getAuth();
+			
+			String test_already_cancelled_merchant_uid = deliveryInfoVO.getMerchant_uid();
+			CancelData cancel_data = new CancelData(test_already_cancelled_merchant_uid, false); // merchant_uid를 통한
+
+			cancel_data.setReason(deliveryInfoVO.getReason());//취소사유
+			cancel_data.setRefund_account(deliveryInfoVO.getRefund_account());//계좌번호
+			cancel_data.setRefund_bank(deliveryInfoVO.getRefund_bank());//kcp 은행코드
+			cancel_data.setRefund_holder(deliveryInfoVO.getRefund_holder());// 수취인명 *수취인명과 은행코드 안맞으면 오류
+
+			// 전액취소
+			Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
+            Payment impPayment = client.paymentByImpUid((String)paymentDetail.get("imp_uid")).getResponse();
+            if(!impPayment.getPayMethod().equals("card") && impPayment.isEscrow()) cancel_data.setEscrowConfirmed(true);
+            
+			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);//요청 결과 확인
+
+			if (payment_response.getResponse() == null) {
+				error.put("Error", payment_response.getMessage());
+			}
+
+			if (!isEmpty(error)) {
+				resultMap.put("validateError", error);
+			} else {
+				*/			
+				deliveryInfoVO.setDelivery_status("C");
+				deliveryInfoVO.setPayment_status("C");
+				deliveryInfoVO.setOrder_no(deliveryInfoVO.getMerchant_uid());
+				deliveryDAO.updateDelivery(deliveryInfoVO);
+				paymentDAO.updatePayment(deliveryInfoVO);
+				paymentDAO.updatePaymentBundleCancel(deliveryInfoVO);
+//				paymentDAO.insertPaymentRefund(deliveryInfoVO);
+		
+		//	}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 
 	// 찜
 	@RequestMapping(value = "/cart/addFavorites", method = RequestMethod.POST, produces = "application/json")
