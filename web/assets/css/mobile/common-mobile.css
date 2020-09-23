@@ -5101,6 +5101,7 @@ input[type=password]::placeholder{
 }
 .bg-success {
     background: #28a745!important;;
+    color:#fff;
 }
 /* 20.07.07 추가 */
 .body-mar {
