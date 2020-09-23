@@ -49,7 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]
 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js"/>"></script>
     <!-- timepicker -->
@@ -62,7 +62,7 @@
     </c:if>
     var isLogin ='<c:out value="${sessionScope.login}"/>';
     </script>
-    <script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+    <script type='text/javascript' src='https://wcs.naver.net/wcslog.js'></script>
 
 	<script type='text/javascript'> 
 	
