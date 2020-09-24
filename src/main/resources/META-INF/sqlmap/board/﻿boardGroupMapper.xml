@@ -34,6 +34,7 @@
          WHERE BGNO=#{bgno}
     </select>
     <select id="selectBoardGroupOne4Used" parameterType="String" resultType="com.webapp.board.app.BoardGroupVO">
+      /*selectBoardGroupOne4Used*/
         SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY,BGTYPE
           FROM TBL_BOARDGROUP
          WHERE BGDELETEFLAG='N' AND BGNO=#{bgno} 

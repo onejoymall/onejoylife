@@ -1,10 +1,13 @@
 package com.webapp.board.app;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
@@ -12,6 +15,7 @@ import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.webapp.board.common.FileUtil;
 import com.webapp.board.common.FileVO;
 import com.webapp.board.common.SearchVO;
 
@@ -22,7 +26,11 @@ public class BoardSvc {
     private SqlSessionTemplate sqlSession;    
     @Autowired
     private DataSourceTransactionManager txManager;
-        
+    
+	@Value("${downloadPath}")
+	private String downloadPath;
+	
+	
     public Integer selectBoardCount(SearchVO param) {
         return sqlSession.selectOne("selectBoard8Count", param);
     }
@@ -40,7 +48,7 @@ public class BoardSvc {
     /**
      * 글 저장.
      */
-    public void insertBoard(BoardVO param, List<FileVO> filelist, String[] fileno) {
+    public void insertBoard(BoardVO param, List<FileVO> filelist, String[] fileno,BoardVO boardInfo,FileVO fileVO) {
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         TransactionStatus status = txManager.getTransaction(def);
@@ -61,9 +69,15 @@ public class BoardSvc {
             if (filelist != null) {
 	            for (FileVO f : filelist) {
 	                f.setParentPK(param.getBrdno());
+	                f.setFilelink(fileVO.getFilepath()+f.getRealname());
+	                f.setFileorder(fileVO.getFileorder());
+	                
 	                sqlSession.insert("insertBoard8File", f);
 	            }
             }
+
+            
+            
             txManager.commit(status);
         } catch (TransactionException ex) {
             txManager.rollback(status);

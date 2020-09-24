@@ -102,7 +102,9 @@
                                     <p class="txt-counting">&#40;<span>0</span>/1000&#41;</p>
                                 </td>
                             </tr>
-                            <tr class="imagefile-box hidden">
+                            <!-- <tr class="imagefile-box hidden"> -->
+                            <tr class="imagefile-box ">
+                            
                                 <td>${afn:getMessage("QA_img",sessionScope.locale)}</td>
                                 <td>
                                     <div class="fileBox">

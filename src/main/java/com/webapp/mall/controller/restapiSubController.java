@@ -234,6 +234,24 @@ public class restapiSubController {
         return resultMap;
     }
 
+	/*
+	 * //이메일 중복체크
+	 * 
+	 * @RequestMapping(value = "/layout/modalstoreIdDupCheck", method =
+	 * RequestMethod.POST, produces = "application/json") public HashMap<String,
+	 * Object> modalstoreIdDupCheck(StoreVO storeVO){ HashMap<String, Object>
+	 * resultMap = new HashMap<String, Object>(); HashMap<String, Object> error =
+	 * new HashMap<String, Object>(); try{ Map<String,Object> soterInfo =
+	 * mgStoreDAO.getMgUserList(storeVO);
+	 * 
+	 * if(storeVO.getStore_id().isEmpty()){
+	 * error.put(messageSource.getMessage("store_id","ko"),
+	 * messageSource.getMessage("error.required","ko")); } if(!isEmpty(soterInfo)){
+	 * error.put(messageSource.getMessage("store_id","ko"),
+	 * messageSource.getMessage("error.chkDplcId","ko")); } if(!isEmpty(error)){
+	 * resultMap.put("validateError",error); }else{ resultMap.put("status",true); }
+	 * }catch (Exception e){ e.printStackTrace(); } return resultMap; }
+	 */
     //입점업체 아이디 중복체크
     @RequestMapping(value = "/layout/modalstoreIdDupCheck", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> modalstoreIdDupCheck(StoreVO storeVO){

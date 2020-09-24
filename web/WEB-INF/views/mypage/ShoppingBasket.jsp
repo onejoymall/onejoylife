@@ -18,9 +18,10 @@
 </style> -->
 <script type="text/javascript">
 	function buy_nc(){
+	
 		if($('input[name=chk]:checked').length <= 0){
             $.toast({
-                heading: '${afn:getMessage('msg.payment_product',sessionScope.locale)}',
+                heading: "${afn:getMessage('msg.payment_product',sessionScope.locale)}",
                 // text: [
                 //     '<a href="/sign/signup">회원 가입 후 이용</a>',
                 //     '<a href="#" onclick="$(\'#defaultForm\').submit();">비 회원 주문</a>',
@@ -125,6 +126,63 @@
 		})
 		return;
 	}
+	
+    $(document).ready(function(){
+    	$('.commonlistDelete3').on("click",function(){
+	        var formData = $('#defaultForm').serialize();
+
+	        if(!formData.includes("chk")){
+	        	$.toast({
+	                text: "항목을 선택해주세요.",
+	                showHideTransition: 'plain', //펴짐
+	                position: 'bottom-right',
+	                heading: 'Error',
+	                icon: 'error'
+	            });
+	        	return;
+	        }
+	        var alertType;
+	        var showText;
+	        
+	        console.log(formData);
+	        
+	        jQuery.ajax({
+	            type: 'POST',
+	            url: '/cart/commonListDelete',
+	            data: formData,
+	            success: function (data) {
+	            	console.log(data.validateError);
+	                if (data.validateError) {
+	                    $('.validateError').empty();
+	                    $.each(data.validateError, function (index, item) {
+	                        if(index == "Error"){//일반에러메세지
+	                            alertType = "error";
+	                            showText = item;
+	                        }else{
+	                            alertType = "error";
+	                            showText = index + " "+getMessageAjax('is')+" " + item;
+	                        }
+	                        // $.toast().reset('all');//토스트 초기화
+	                        $.toast({
+	                            text: showText,
+	                            showHideTransition: 'plain', //펴짐
+	                            position: 'bottom-right',
+	                            heading: 'Error',
+	                            icon: 'error'
+	                        });
+	                    });
+
+	                } else {
+	                 location.reload();
+	               
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                alert("error");
+	            }
+	        });
+	    });
+    });	
 </script>
 <div class="wrap">
     <div class="page-box">
@@ -143,7 +201,7 @@
 
                     <div class="click-txt">
 <%--                        <p class="txt1">선택 찜하기</p>--%>
-                        <p class="txt2 commonlistDelete">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
+                        <p class="txt2 commonlistDelete3">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
                     </div>
                     <table class="box1-table">
                         <colgroup>
@@ -255,7 +313,7 @@
                     </table>
                     <div class="click-txt">
 <%--                        <p class="txt1">선택 찜하기</p>--%>
-                        <p class="txt2 commonlistDelete">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
+                        <p class="txt2 commonlistDelete3">${afn:getMessage('chkdelete',sessionScope.locale)}</p>
                     </div>
                     <div class="sum">
                         <div class="sum-in">

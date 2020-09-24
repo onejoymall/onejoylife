@@ -256,7 +256,8 @@
 											onerror="this.src='http://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productMDList.percent_discount}<span>%</span></p>
-										<i class="share-ic" onclick="share_product('${productMDList.product_cd}', '${productMDList.product_name}')"></i>
+									
+								
 									</div>
 									<div class="product-info">
 										<p class="info-production">${productMDList.product_made_company_name}</p>
@@ -275,6 +276,7 @@
 											<c:if test="${productMDList.review_cnt != NULL }"><span class="score-text">${productMDList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span>
 											</c:if>
 											<input type="hidden" name="product_option_yn" value="${productMDList.product_option_yn}" />
+												<i class="share-ic" onclick="share_product('${productMDList.product_cd}', '${productMDList.product_name}')"></i>
 											<a href="#" onclick="addShoppingBasketF('${productMDList.product_cd}')"  class="list-cartic"></a>
 										</p>
 									</div>
@@ -347,7 +349,7 @@
 										<img src='${productSpList.file_1}'	onerror="this.src='http://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productSpList.percent_discount}<span>%</span></p>
-										<i class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></i>
+									
 									</div>
 									<div class="product-info">
 										<p class="info-production">${productSpList.product_made_company_name}</p>
@@ -369,6 +371,7 @@
 											<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 											<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">${productSpList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 											<input type="hidden" name="product_option_yn" value="${productSpList.product_option_yn}" />
+											<i class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></i>
 											<a href="#" onclick="addShoppingBasketF('${productSpList.product_cd}')" class="list-cartic"></a>
 										</p>
 									</div>
@@ -425,7 +428,7 @@
 										<p class="sale-percent">${productList.percent_discount}
 											<span>%</span>
 										</p>
-										<i class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></i>
+										
 
 									</div>
 									<div class="product-info">
@@ -451,6 +454,7 @@
 											<c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span>
 											</c:if> 
 											<input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+											<i class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></i>
 											<a href="#" onclick="addShoppingBasketF('${productList.product_cd}')" class="list-cartic"></a>
 										</p>
 									</div>

@@ -159,7 +159,18 @@
         )
         ]]>
     </insert>
+        <insert id="insertEmailAuth2" parameterType="String">
+    /*insertEmailAuth2*/
+        <![CDATA[
+        insert into email_auth(
+        email
+      )VALUES (
+        #{email}
+        )
+        ]]>
+    </insert>
     <insert id="insertEmailAuth" parameterType="String">
+    
         <![CDATA[
         insert into email_auth(
         email,email_auth_code)

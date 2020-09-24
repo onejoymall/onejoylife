@@ -67,6 +67,9 @@ public class UserDAO {
     public void insertEmailAuth(Map<String, String> params) throws SQLException {
         sql.insert("mall.UserMapper.insertEmailAuth", params);
     }
+    public void insertEmailAuth2(Map<String, String> params) throws SQLException {
+        sql.insert("mall.UserMapper.insertEmailAuth2", params);
+    }
     public void updatePasswordChangeMember(UserVO userVO) throws SQLException {
         sql.update("mall.UserMapper.updatePasswordChangeMember", userVO);
     }

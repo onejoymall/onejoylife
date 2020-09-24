@@ -723,6 +723,7 @@ $(document).on("click",".ra-num",function () {
     //공통 리스트 삭제
     $('.commonlistDelete').on("click",function(){
         var formData = $('#defaultForm').serialize();
+
         if(!formData.includes("chk")){
         	$.toast({
                 text: "항목을 선택해주세요.",
@@ -735,7 +736,7 @@ $(document).on("click",".ra-num",function () {
         }
         var alertType;
         var showText;
-        jQuery.ajax({
+        jQuery.ajax({	
             type: 'POST',
             url: '/MyPage/commonListDelete',
             data: formData,
@@ -761,7 +762,8 @@ $(document).on("click",".ra-num",function () {
                     });
 
                 } else {
-                    location.reload();
+                  location.reload();
+         
                 }
             },
             error: function (xhr, status, error) {
@@ -769,6 +771,7 @@ $(document).on("click",".ra-num",function () {
             }
         });
     });
+  
     //장바구니 삭제
     $(document).on("click","button.x",function(){
         var product_cd = $(this).attr("data-id");
@@ -3738,6 +3741,7 @@ $(document).on("click",".ra-num",function () {
         }).open();
     });
     $("#daumMapCall2").on("click",function () {
+    	
     //다음 지도
     new daum.Postcode({
         oncomplete: function(data) {
@@ -3767,9 +3771,9 @@ $(document).on("click",".ra-num",function () {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            $('input[name=postcode]').val(data.zonecode);
-            $('input[name=roadAddress]').val(roadAddr);
-            $('input[name=jibunAddress]').val(data.jibunAddress);
+            $('input[name=refund_postcode]').val(data.zonecode);
+            $('input[name=refund_roadAddress]').val(roadAddr);
+            $('input[name=refund_jibunAddress]').val(data.jibunAddress);
 
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){

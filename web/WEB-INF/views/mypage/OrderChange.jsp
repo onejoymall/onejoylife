@@ -68,12 +68,27 @@
 <%--                                </td>--%>
 <%--                            </tr>--%>
                             <tr>
+                            
                                 <td class="body-td-tit">${afn:getMessage('reason_input',sessionScope.locale)}</td>
+                                
                                 <td class="body-td-txt1">
                                     <textarea name="reason" id="reason" cols="97" rows="4" style="resize: none; margin-top: 10px;" class="area-content" maxlength="250"></textarea>
                                     <p class="area-num">(0/250)</p>
+                                    	<div class="card-rd-box">
+										     <input type="radio" id="card-rd1" name="card-rd" value="카드변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd1">카드변경</label>
+										     <input type="radio" id="card-rd2" name="card-rd" value="결제방식 변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd2">결제방식 변경</label>
+										</div>
                                 </td>
                             </tr>
+                            <script>
+								function txInput(Obj,Str)
+								{
+								  document.getElementById(Obj).value = Str;
+								}
+							</script>
+                            
                             </tbody>
                         </table>
                     </div>
@@ -101,8 +116,8 @@
                             <tr>
                                 <td class="body-td-tit">${afn:getMessage('address',sessionScope.locale)}</td>
                                 <td class="body-td-txt2">
-                                    <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
-                                    <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
+                                    <input name = "roadAddress" id="roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
+                                    <input name = "jibunAddress" id="jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
                                     <input name = "guide" type="hidden" value="${delivery.jibunAddress}" >
                                 </td>
                             </tr>
@@ -137,14 +152,14 @@
                             <tr>
                                 <td class="body-td-tit">${afn:getMessage('address',sessionScope.locale)}</td>
                                 <td class="body-td-txt2">
-                                    <input name = "refund_roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
-                                    <input name = "refund_jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
-                                    <input name = "refund_guide" type="hidden" value="${delivery.jibunAddress}" >
+                                    <input name = "refund_roadAddress" id="refund_roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
+                                    <input name = "refund_jibunAddress" id="refundjibunAddress" type="hidden" value="${delivery.jibunAddress}" >
+                                    <input name = "refund_guide" id="" type="hidden" value="${delivery.jibunAddress}" >
                                 </td>
                             </tr>
                             <tr>
                                 <td class="body-td-tit">${afn:getMessage('extraAddress',sessionScope.locale)}</td>
-                                <td class="body-td-txt2"><input name = "refund_extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
+                                <td class="body-td-txt2"><input id = "refundextraAddress" name = "refund_extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long"></td>
                             </tr>
                             </tbody>
                         </table>

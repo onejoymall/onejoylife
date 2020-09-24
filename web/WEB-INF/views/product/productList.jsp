@@ -77,7 +77,7 @@
                             <img src='${list.file_1}' onerror="this.src='http://placehold.it/300x300'" >
                         </div>
                         <p class="sale-percent">${list.percent_discount} <span>%</span></p>
-                        <i class="share-ic" onclick="share_product('${list.product_cd}', '${list.product_name}')"></i>
+                   <%--      <i class="share-ic" onclick="share_product('${list.product_cd}', '${list.product_name}')"></i> --%>
                         <p class="info-production">${list.product_made_company_name}</p>
                         <p class="point-pdt-title">${list.product_name}</p>
                     </a>
@@ -95,6 +95,7 @@
                        
                         <c:if test="${list.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
                         <c:if test="${list.review_cnt != NULL }"><span class="score-text">${list.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
+                       <i class="share-ic" onclick="share_product('${list.product_cd}', '${list.product_name}')"></i> 
                        <a href="#"  onclick="addShoppingBasketF('${list.product_cd}')" class="list-cartic"></a>
                        <%--  <button class="incart" type="button" onclick="addShoppingBasket('${list.product_cd}')">장바구니</button> --%>
                     </p>

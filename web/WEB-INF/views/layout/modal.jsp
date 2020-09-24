@@ -71,6 +71,64 @@
                 </div>
             </div>
         </div>
+       
+      <div class="modal modalTop" id="termsmodal">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title">원조이몰 이용약관</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-wrap">
+                    <p> ${infoJoin.market_config_value}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <div class="modal modalTop" id="termsmodal2">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title">제3자동의 이용약관</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-wrap">
+                    <p>${infoMain2.market_config_value}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modalTop" id="termsmodal3">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title">개인정보 수집 및 이용</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-wrap">
+                    <p>${infoPrivacy2.market_config_value}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal modalTop" id="termsmodal4">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title">개인정보 수집 및 이용</h2>
+                <button type="button" class="modal-close">×</button>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-body-wrap">
+                    <p>${infoPrivacy3.market_config_value}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+       
+        
+        
         <!-- 업체신청 모달 -->
         <div class="main_modal" id="modal-store">
             <div class="modal-content">

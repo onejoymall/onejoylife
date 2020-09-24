@@ -26,14 +26,14 @@
 		
 		if(obj.cert_enc_use == 'Y' && obj.res_cd == '0000'){
 			$('#phoneBtn').addClass("bg-success");
-            $('#phoneBtn').text("${afn:getMessage("certiOk",sessionScope.locale)}");
+            $('#phoneBtn').text("${afn:getMessage('certiOk',sessionScope.locale)}");
             $('#phoneBtn').attr("id","");
             $('input[name=phone]').val(obj.phone_no);
             $('input[name=username]').val(obj.user_name);
             $('input[name=sex]').val(obj.sex_code);
             $('input[name=birth]').val(obj.birth_day);
 		}else{
-			alert("${afn:getMessage("certiFail",sessionScope.locale)}");
+			alert("${afn:getMessage('certiFail',sessionScope.locale)}");
 		}
 	}
     // 인증창 종료 후 인증데이터 리턴 함수
@@ -46,7 +46,7 @@
         // up_hash 검증 
         if( frm.up_hash.value != auth_form.veri_up_hash.value )
         {
-            alert("${afn:getMessage("error.sign.uphashRiskTamp",sessionScope.locale)}");
+            alert("${afn:getMessage('error.sign.uphashRiskTamp',sessionScope.locale)}");
             
         }              
         
@@ -68,7 +68,7 @@
 
         if( auth_form.ordr_idxx.value == "" )
         {
-            alert( "${afn:getMessage("error.sign.reNum_Required",sessionScope.locale)}" );
+            alert( "${afn:getMessage('error.sign.reNum_Required',sessionScope.locale)}" );
 
             return false;
         }
@@ -161,16 +161,19 @@
                         <tr>
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
-                                <div class="mem-id2">
-                                    <input name="email" id="email" type="text" placeholder="${afn:getMessage('msg.signEmailRe',sessionScope.locale)}" required>
+                                <div class="mem-id2 id2-w" >
+                                    <input name="email" id="email" type="text"  required>
+                                     <button class="btn-auth" id="emailChk" type="button">중복체크</button>
                                 </div>
                             </td>
                         </tr>
+                            
                         <tr >
                             <td class="er" id="emailValidation">
                                 &nbsp;
                             </td>
                         </tr>
+                      <!--  
                         <tr>
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("certiNum",sessionScope.locale)}</p>
@@ -178,10 +181,11 @@
                                     <input name="email_auth_code" id="email_auth_code" type="text" class="num-txt" readonly>
                                     <button class="btn-auth" id="mailSender" type="button">${afn:getMessage("certiNumSend",sessionScope.locale)}</button>
                                     <!-- <a href="" class="none"><span>인증완료</span></a>
-                                    <a href="" class="none"><span>300s</span></a> -->
+                                    <a href="" class="none"><span>300s</span></a> 
                                 </div>
                             </td>
                         </tr>
+                         -->
                         <tr>
                             <td class="er" id="email_auth_codeValidation">
                                 &nbsp;
@@ -190,7 +194,7 @@
                         <tr>
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("phone",sessionScope.locale)}</p>
-                                <div class="mem-id2 id2-w">
+                                <div class="mem-id2 id2-w" onclick="return auth_type_check();" type="button">
                                     <input name="phone" id="phone" type="text" class="num-txt" readonly>
                                     <input name="sex" id="sex" type="hidden" readonly>
                                     <input name="birth" id="birth" type="hidden" readonly>
@@ -248,8 +252,19 @@
                     </div>
                     <div class="join-box">
                         <a href="javascript:void(0)" id="formSignUpSubmit">${afn:getMessage("join",sessionScope.locale)}</a>
-                        <a id="kakao-login-btn"></a>
+                     <!--    <a id="kakao-login-btn"></a> -->
                     </div>
+                    
+		             <div class="sns-login-wrap">
+		            			<div class="sns-login-inner">
+		                    		<div class="sns-login-ttl">
+		                        	<div class="ttl-line"></div>
+		                        		<span>${afn:getMessage("msg.login.orSocialLogin",sessionScope.locale)}</span>
+		                        	<div class="ttl-line"></div>
+		                    	</div>
+		                    <button type="button" class="kko-login-btn"><i class="kko-ic"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
+		                </div>
+		            </div>
                 </form>
             </div>
         </div>
@@ -260,6 +275,11 @@
 </div>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.610.0.min.js"></script>
 <script>
+
+$('.kko-login-btn').click(function () {
+    window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');
+});
+
 	var pwCheck = false;
    $('#formSignUpSubmit').on("click",function () {
        var password = $('#password').val();
@@ -307,7 +327,7 @@
        }
    })
 
-//    //이메일인증
+//이메일인증
    $(document).on("click","#mailSender",function () {
         $('.er').html('');
         var formData = $('#defaultJoinform').serialize();
@@ -332,11 +352,47 @@
                     });
                 }else{
                     $('#mailSender').addClass("bg-secondary");
-                    $('#mailSender').text("${afn:getMessage("certi",sessionScope.locale)}");
-                    $('#email_auth_code').attr("placeholder","${afn:getMessage("msg.sign.certi_4input",sessionScope.locale)}");
+                    $('#mailSender').text("${afn:getMessage('certi',sessionScope.locale)}");
+                    $('#email_auth_code').attr("placeholder","${afn:getMessage('msg.sign.certi_4input',sessionScope.locale)}");
                     $('#email_auth_code').attr("readonly",false);
                     //인증버튼으로 변경
                     $('#mailSender').attr("id","mailauth");
+                }
+            },
+
+            complete : function(data) {
+                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                // TODO
+                $('.loading-bar-wrap').addClass("hidden");
+            },
+            error : function(xhr, status, error) {
+                console.log(xhr+status+error);
+            }
+        });
+    })
+    //이메일중복체크
+   $(document).on("click","#emailChk",function () {
+        $('.er').html('');
+        var formData = $('#defaultJoinform').serialize();
+        $('.loading-bar-wrap').removeClass("hidden");
+
+        jQuery.ajax({
+            type:"GET",
+            // contentType: 'application/json',
+            url:"/sign/emailChk",
+            // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+            data:formData,
+
+            success : function(data) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                // TODO
+                console.log(data);
+                if(data.validateError){
+                    $.each(data.validateError, function (index, item) {
+                        if(index != "Error"){//일반에러메세지
+                            $('#'+index+'Validation').html(item);
+                        }
+                    });
                 }
             },
 
@@ -358,17 +414,17 @@
     	var pw = $('input[name=password]').val();
     	var pw_cf = $('input[name=password_cf]').val();
         if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text("* ${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}");
+            $("#passwordValidation").text("* ${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}");
             $("#passwordValidation").removeClass("text-success");
             $("#password_cfValidation").text('');
         }else{
         	$("#passwordValidation").text('');
         	if(pw != pw_cf){
-                $("#password_cfValidation").text("* ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
+                $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
                 $("#password_cfValidation").removeClass("text-success");
             }else{
             	pwCheck = true;
-            	$("#password_cfValidation").text("* ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
+            	$("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
                 $("#password_cfValidation").addClass("text-success");
             }
         }
@@ -398,7 +454,7 @@
                 }else{
                     $('#mailauth').removeClass("bg-secondary");
                     $('#mailauth').addClass("bg-success");
-                    $('#mailauth').text("${afn:getMessage("certiOk",sessionScope.locale)}");
+                    $('#mailauth').text("${afn:getMessage('certiOk',sessionScope.locale)}");
                     $('#email_auth_code').attr("readonly",true);
                     $('#email').attr("readonly",true);
                     //인증버튼으로 변경

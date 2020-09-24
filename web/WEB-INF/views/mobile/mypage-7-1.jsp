@@ -51,7 +51,20 @@
         <div class="textarea mt-05">
            <span>(0/250)</span>
            <textarea name="reason" id="reason" class="width-100"></textarea>
-        </div>
+        </div>      
+         <div class="card-rd-box">
+		     <input type="radio" id="card-rd1" value="카드변경" onclick="txInput('reason',this.value)">
+		     <label for="card-rd1">${afn:getMessage('changeCard',sessionScope.locale)}</label>
+		     <input type="radio" id="card-rd2" value="결제방식 변경" onclick="txInput('reason',this.value)">
+		     <label for="card-rd2">${afn:getMessage('changePay',sessionScope.locale)}</label>
+		</div>
+		   <script>
+			function txInput(Obj,Str)
+			{
+			  document.getElementById(Obj).value = Str;
+				}
+		  </script>
+        
         
         <h2 class="pb-1 mt-4">${afn:getMessage('product_reclamation_information',sessionScope.locale)}</h2>
         <hr class="pb-1">

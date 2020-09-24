@@ -257,7 +257,8 @@
         <if test="pd_payment_class_cd != null"> <![CDATA[AND A.coupon_paid_class_cd= #{pd_payment_class_cd} ]]></if>
     </select>
     <select id="getFavoritesProductList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-    	SELECT A.product_cd,
+    /*getFavoritesProductList*/
+    	SELECT  A.*,A.product_cd,
 				(select Z.code_name from code Z where Z.code='product_brand' and Z.code_value =B.product_brand) as product_brand_name,
 				ifnull(B.product_payment,0) product_payment,
 				(select Z.file_link from product_file Z where Z.key_id = B.product_cd and Z.file_order = 1) as file_1,
@@ -271,7 +272,7 @@
 		ON A.payment_user_id = C.usr_id
 		WHERE C.email = #{email}
 		and A.order_no NOT LIKE 'GW%'
-and A.payment_status != 'N'
+		and A.payment_status != 'N'
 		GROUP BY A.product_cd
 		HAVING COUNT(A.product_cd) > 1
 		ORDER BY COUNT(A.product_cd) desc

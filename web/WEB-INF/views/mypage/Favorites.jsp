@@ -75,11 +75,12 @@
 				                            <input type="hidden" name="product_delivery_payment" value="${list.product_delivery_payment}">
 				                            <input type="hidden" name="payment_order_quantity" value="1">
 				                            <input type="hidden" name="product_cd" id="product_cd" value="${list.product_cd}">
+				                            <input type="hidden" name="order_no" id="order_no" value="${list.order_no}">
 			                            </form>
 			                            <c:if test="${list.product_option_yn !='Y' }">
                                         <a href="javascript:void(0)" class="favoriteSubmit"><p class="lis-txt-box txt-color2">${afn:getMessage('pay_now',sessionScope.locale)}</p></a>
                                         <a href="javascript:void(0)" class="favorite" data-id="${list.product_cd}"><p class="lis-txt-box txt-color3">${afn:getMessage('add_wish',sessionScope.locale)}</p></a>
-                                        <a href="javascript:addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1">${afn:getMessage('add_cart',sessionScope.locale)} 담기</p></a>
+                                        <a href="javascript:addShoppingBasketM('${list.product_cd}')"><p class="lis-txt-box txt-color1">${afn:getMessage('add_cart',sessionScope.locale)}</p></a>
                                         </c:if>
 			                            <c:if test="${list.product_option_yn =='Y' }">
                                         <a href="/product/productDetail?product_cd=${list.product_cd}"><p class="lis-txt-box txt-color2">${afn:getMessage('select_option',sessionScope.locale)}</p></a>

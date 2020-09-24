@@ -38,6 +38,7 @@
     </select> 
     
     <select id="selectBoard8List" resultType="com.webapp.board.app.BoardVO" parameterType="com.webapp.board.common.SearchVO">
+        /*selectBoard8List*/
         SELECT
             BRDNO, BRDTITLE, BRDWRITER, DATE_FORMAT(BRDDATE,'%Y-%m-%d') BRDDATE, BRDHIT,
                 (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
@@ -49,6 +50,7 @@
                 question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
                 (SELECT FILENAME  FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO order by FILENO  DESC limit 1) FILENAME,
                 (SELECT REALNAME  FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO order by FILENO  DESC limit 1) REALNAME,
+                (SELECT FILElINK FROM TBL_BOARDFILE WHERE BRDNO=TB.BRDNO order by FILENO DESC limit 1) FILELINK,
                 email,phone,password,BRDMEMO,usr_id,store_id
 
         FROM TBL_BOARD TB
@@ -152,14 +154,15 @@
     </update> 
         
     <select id="selectBoard8One" parameterType="String" resultType="com.webapp.board.app.BoardVO">
-        SELECT
+/*selectBoard8One*/   
+    SELECT
             (select Z.BGTYPE from TBL_BOARDGROUP Z where Z.BGNO = TB.BGNO) as BGTYPE,
             (select Z.REMEMO from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rememo,
               (select Z.reno from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as reno,
             (select Z.REWRITER from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rewriter,
             (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
             question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
-            BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email, phone,
+            BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email,email AS email1, phone, 
             order_no,password,usr_id,store_id, supplier_cd
           FROM TBL_BOARD TB
          WHERE BRDDELETEFLAG='N'
@@ -187,9 +190,13 @@
     </select> 
 
     <insert id="insertBoard8File" parameterType="com.webapp.board.common.FileVO" >
-        INSERT INTO TBL_BOARDFILE (BRDNO, FILENAME, REALNAME, FILESIZE)
-        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize})
+     /*insertBoard8File*/
+        INSERT INTO TBL_BOARDFILE (BRDNO, FILENAME, REALNAME, FILESIZE, FILELINK, FILEORDER)
+        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
     </insert>
+  
+  
+    
     <delete id="deleteBoard8File" parameterType="hashmap"> 
         DELETE 
           FROM TBL_BOARDFILE

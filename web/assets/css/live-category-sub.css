@@ -269,6 +269,20 @@ select.order-select::-ms-expand {
 }
 .share-ic{
     position: absolute;
+    bottom: -10px;
+    right: 43px;
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: url(../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size: contain;
+    opacity: 0.6;
+}
+
+/*
+.share-ic{
+    position: absolute;
     top:10px;
     right:10px;
     display: block;
@@ -279,6 +293,7 @@ select.order-select::-ms-expand {
     background-size:contain;
     opacity: 0.6;
 }
+*/
 .share-ic:hover{
     background:url(../img/share-hv.png)#da394d;
 }
@@ -358,21 +373,7 @@ select.order-select::-ms-expand {
     font-size:14px;
     font-weight: 100;
 }
-.share-ic{
-    position: absolute;
-    top:10px;
-    right:10px;
-    display: block;
-    width:35px;
-    height:35px;
-    border-radius: 50%;
-    background:url(../img/share.png) center center no-repeat rgb(199, 199, 199);
-    background-size:contain;
-    opacity: 0.6;
-}
-.share-ic:hover{
-    background:url(../img/share-hv.png)#da394d;
-}
+
 .live-shopping-title{
     width:100%;
     font-size:18px;

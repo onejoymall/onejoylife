@@ -42,7 +42,7 @@
                             </div>
                             <p class="cla-p2"><a href="#" onclick="$('#form1').submit();">${afn:getMessage('lookup',sessionScope.locale)}</a></p>
                         </div>
-                  <!--   2020-09-10 	주문상태선택은 불필요하다 판단하여 주석처리    
+                  <!--   2020-09-10 	주문상태선택은 불필요하다 판단하여 주석처리      
                         <div class="input-box3">
                             <select name="payment_status" >
                                 <c:if test="${not empty getSelectorList}">
@@ -53,9 +53,11 @@
                                 </c:if>
                             </select>
                         </div>
-                         -->
+                       -->
                     </div>
                     <p class="r-in-p2">${afn:getMessage('msg.order.search3m',sessionScope.locale)}</p>
+                    <!-- <button type="button" class="ex-order" onclick="location.href='/Help/csBoard?bgno=15'" >1:1 대량주문문의</button>class="write-review" -->
+                <button type="button" class="ex-order" onclick="location.href='/Help/csBoardLargeOrder?bgno=15'" >1:1 대량주문문의</button>
                 </div>
                 <div class="con on" id="con1">
                     <div class="r-sec4">
@@ -218,3 +220,50 @@
 </div>
 <c:import url="/layout/footer"/>
 <%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>
+<script>
+$('#ex-order').on("click",function () {
+    var formData = $('#defaultForm').serialize();
+    var alertType;
+    var showText;
+
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/Manager/productCategoryDisplayProc',
+        success: function (data) {
+            console.log(data.validateError)
+            if (data.validateError) {
+                $('.validateError').empty();
+                
+                $.each(data.validateError, function (index, item) {
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " "+getMessageAjax('is')+" " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                location.href=data.redirectUrl;
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+</script>

@@ -50,6 +50,7 @@
         )
     </insert>
     <select id="getDeliveryCompanyList" resultType="java.util.Map" parameterType="java.util.Map">
+       /*getDeliveryCompanyList*/
         select A.*
         from delivery_company A
     </select>

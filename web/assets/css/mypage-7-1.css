@@ -175,3 +175,27 @@ main{overflow: hidden;}
     border: 1px solid #232a32;
     color: #232a32;
 }
+/* ¶óµð¿À */
+.card-rd-box {
+    padding: 10px 0;
+    overflow: hidden;
+}
+input[type="radio"] {
+    display: none;
+}
+input[name="card-rd"] + label
+{
+    float: left;
+    display: block;
+    height: 28px;
+    background: url(../img/icon/but-g-1.png)no-repeat left center / 20px;
+    cursor: pointer;
+    padding-left: 26px;
+    line-height: 26px;
+    margin-right: 20px;
+}
+input[name="card-rd"]:checked + label
+{
+    background: url(../img/icon/but-g-2.png)no-repeat left center / 20px;
+}
+
