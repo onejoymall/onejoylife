@@ -57,7 +57,7 @@
                     </div>
                     <p class="r-in-p2">${afn:getMessage('msg.order.search3m',sessionScope.locale)}</p>
                     <!-- <button type="button" class="ex-order" onclick="location.href='/Help/csBoard?bgno=15'" >1:1 대량주문문의</button>class="write-review" -->
-                <button type="button" class="ex-order" onclick="location.href='/Help/csBoardLargeOrder?bgno=15'" >1:1 대량주문문의</button>
+                <button type="button" class="ex-order" onclick="location.href='/Help/csBoardLargeOrder?bgno=15'" >${afn:getMessage('1:1largeorder',sessionScope.locale)}</button>
                 </div>
                 <div class="con on" id="con1">
                     <div class="r-sec4">

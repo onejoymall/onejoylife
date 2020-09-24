@@ -17,7 +17,7 @@
             <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <div class="date-box">
-        <button class="ex-order">${afn:getMessage('1:1largeorder',sessionScope.locale)}</button>
+       
         
             <div class="input-box2">
                 <div class="cla">
@@ -32,8 +32,11 @@
             </div>
             <button type="submit" class="date-btn">${afn:getMessage('lookup',sessionScope.locale)}</button>
         </div>
+         <button  type="button"  class="ex-order" onclick="location.href='/Help/csBoardLargeOrder?bgno=15'">
+         	${afn:getMessage('1:1largeorder',sessionScope.locale)}
+         </button>
         <!-- 2020-09-10 고객사측에서 	주문상태선택은 불필요하다 판단하여 주석처리    
-        
+     
         <select name="payment_status" id="mo-select" class="mo-select">
             <c:if test="${not empty getSelectorList}">
                 <option value="">${afn:getMessage('order_statusselection',sessionScope.locale)}</option>
@@ -122,3 +125,6 @@
     </form>
      <c:import url="/layout/footer"/>
 <%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>
+<script>
+
+</script>

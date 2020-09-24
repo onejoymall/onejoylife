@@ -40,7 +40,7 @@
         <p class="text-md mt-2 mb-05">${afn:getMessage("QA_type",sessionScope.locale)} * </p>
         <select class="width-100" name="question_type" id="question_type">
             <option value="">${afn:getMessage("QA_choose",sessionScope.locale)}</option>
-            <option value="S">${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
+           <option value="S" <c:if test="${bgQuestionType eq \"LO\"}">selected</c:if>>${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
             <option value="O">${afn:getMessage("QA_order_payment",sessionScope.locale)}</option>
             <option value="C">${afn:getMessage("QA_change_return_refund",sessionScope.locale)}</option>
             <option value="E">${afn:getMessage("QA_event",sessionScope.locale)}</option>

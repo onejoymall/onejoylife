@@ -27,7 +27,7 @@
             <li><a href="javascript:void(0)" class="ra-num" data-id="con4">3${afn:getMessage('month',sessionScope.locale)}</a></li>
         </ul>
         <div class="date-box">
-        <button class="ex-order">${afn:getMessage('1:1largeorder',sessionScope.locale)}</button>
+     
             <div class="input-box2">
                 <div class="cla">
                     <input type="text" id="from_date" name="start_date" class="date_pick" value="<c:out value="${param.start_date}"/>">

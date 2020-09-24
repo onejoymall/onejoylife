@@ -160,12 +160,12 @@ public class restapiController {
 		String memo;
 		String subject = messageSource.getMessage("authSendMailTitle", "ko");//
 		memo = messageSource.getMessage("atuhSendMailContent", "ko");//
-
+userVO.setEmail(userVO.getEmail1());
 		try {
 
 			// 이메일 필수 체크
 			if (userVO.getEmail().isEmpty()) {
-				error.put("email", messageSource.getMessage("error.required", "ko"));
+				error.put("email1", messageSource.getMessage("error.required", "ko"));
 			}
 
 			// 이메일 유효성검사
@@ -190,7 +190,7 @@ public class restapiController {
                 resultMap.put("validateError",error);
             }else{
               
-				userDAO.insertEmailAuth2(params);/* 정민 */
+				userDAO.insertEmailAuth2(params);
             }
         } catch (Exception e) {
             resultMap.put("e", e);
@@ -207,17 +207,17 @@ public class restapiController {
 			String memo;
 			String subject = messageSource.getMessage("authSendMailTitle", "ko");//
 			memo = messageSource.getMessage("atuhSendMailContent", "ko");//
-
+			
 			try {
 
 				// 이메일 필수 체크
-				if (userVO.getEmail().isEmpty()) {
+				if (userVO.getEmail1().isEmpty()) {
 					error.put("email", messageSource.getMessage("error.required", "ko"));
 				}
 
 				// 이메일 유효성검사
 				String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
-				Boolean emailValidation = userVO.getEmail().matches(regex);
+				Boolean emailValidation = userVO.getEmail1().matches(regex);
 				if (emailValidation) {
 					// 이메일 중복확인
 //	                params.put("email",userVO.getEmail());
@@ -237,7 +237,7 @@ public class restapiController {
 	                resultMap.put("validateError",error);
 	            }else{
 	              
-					userDAO.insertEmailAuth2(params);/* 정민 */
+					userDAO.insertEmailAuth2(params);
 	            }
 	        } catch (Exception e) {
 	            resultMap.put("e", e);
@@ -342,8 +342,13 @@ public class restapiController {
         try { 
         	session.setAttribute("RefererUrl",request.getHeader("Referer"));
        		 Object siteUrl = session.getAttribute("RefererUrl");
-             if(userVO.getEmail().isEmpty()){
-                error.put("email", messageSource.getMessage("error.required","ko"));
+         /*   
+       		 email1 =(String)params.get("email1");
+             userVO.setEmail(email1);
+       		 */
+       		 
+       		 if(userVO.getEmail().isEmpty()){
+                error.put("email1", messageSource.getMessage("error.required","ko"));
             }
             /* 이메일 인증 필요없다하여 주석처리20200923
             if(userVO.getEmail_auth_code()==null){
@@ -426,7 +431,7 @@ public class restapiController {
     //로그인 처리 1
     @RequestMapping(value = "/sign/loginProc", method = RequestMethod.GET, produces = "application/json")
     public HashMap<String, Object> loginProc(@RequestParam HashMap params,HttpSession session,UserInfo userInfo,HttpServletRequest request,UserVO userVO){
-        Map<String, Object> postToken = null;//정민
+        Map<String, Object> postToken = null;
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
 

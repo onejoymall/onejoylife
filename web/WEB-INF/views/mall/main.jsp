@@ -63,8 +63,8 @@
 							<li><a
 								href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
 									<img src='${list.file_1}'
-									onerror="this.src='http://placehold.it/190x190'"> <i
-									class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></i>
+									onerror="this.src='http://placehold.it/190x190'">
+									
 									<p class="point-pdt-title">${list.giveaway_name}</p>
 							</a>
 								<p class="point-pdt-price">
@@ -99,6 +99,7 @@
 											E-point
 										</p>
 										<p>&#40;${afn:getMessage("msg_giveawaypointinfo",sessionScope.locale)}&#41;</p>
+										 <i class="share-ic2" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></i>
 									</div>
 								</div></li>
 						</c:forEach>

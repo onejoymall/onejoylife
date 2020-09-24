@@ -12,7 +12,7 @@
                 <div class="right-contain">
                     <form name="defaultForm" id="defaultForm" method="POST">
                         <div class="r-sec1">
-                            <p class="sec1-h1">${afn:getMessage('cancel_req',sessionScope.locale)}</p><!-- 정민 -->
+                            <p class="sec1-h1">${afn:getMessage('cancel_req',sessionScope.locale)}</p>
                             <p class="sec1-p1">${afn:getMessage('store_order_no',sessionScope.locale)} : <span>${paymentDetail.order_no}</span><span> │ </span>${afn:getMessage('order_date',sessionScope.locale)} : <span><fmt:formatDate value="${paymentDetail.reg_date}" pattern="yyyy.MM.dd"/></span></p>
                             <input type="hidden" name="merchant_uid" value="${paymentDetail.order_no}">
                             <input type="hidden" name="cancel_request_amount" value="${paymentDetail.payment}">

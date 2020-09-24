@@ -43,7 +43,7 @@
 <%--                                <p class="saleBox">35%</p>--%>
   
  							<p class="sale-percent">${productSpList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></a>
+                               
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productSpList.product_name}</p>
@@ -57,6 +57,7 @@
                       			<c:if test="${productSpList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
                         		<c:if test="${productSpList.review_cnt != NULL }"><span class="score-text">(${productSpList.review_cnt})</span></c:if>
                       			   <input type="hidden" name="product_option_yn" value="${productSpList.product_option_yn}" />
+                      			 <a href="#" class="share-ic" onclick="share_product('${productSpList.product_cd}', '${productSpList.product_name}')"></a>
                       			  <a href="#"  onclick="addShoppingBasketF('${productSpList.product_cd}')"class="list-cartic"></a>
                       			  
                             </div>
@@ -90,7 +91,6 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
  							<p class="sale-percent">${productList.percent_discount}<span>%</span></p>
-                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -102,6 +102,7 @@
 	                       		<c:if test="${productList.review_cnt == NULL }"><span class="score-text">(0)</span></c:if>
 	                        	<c:if test="${productList.review_cnt != NULL }"><span class="score-text">(${productList.review_cnt})</span></c:if>
 	                        	<input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
 	                        	<a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
 							</p>
                             </div>
@@ -151,7 +152,6 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                 <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -162,6 +162,7 @@
 			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                        <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
 			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 
                                 </p>
@@ -189,7 +190,6 @@
                                 <img src='${productList.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
 <%--                                <p class="saleBox">35%</p>--%>
                                  <p class="sale-percent">${productList.percent_discount} <span>%</span></p>
-                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
                             </div>
                             <a href="#" class="mainList-sm-text">
                                 <p class="list-title">${productList.product_name}</p>
@@ -200,6 +200,7 @@
 			                        <c:if test="${productList.review_cnt == NULL }"><span class="score-text">0${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                        <c:if test="${productList.review_cnt != NULL }"><span class="score-text">${productList.review_cnt}${afn:getMessage("reviewCount",sessionScope.locale)}</span></c:if>
 			                         <input type="hidden" name="product_option_yn" value="${productList.product_option_yn}" />
+                                <a href="#" class="share-ic" onclick="share_product('${productList.product_cd}', '${productList.product_name}')"></a>
 			                        <a href="#"  onclick="addShoppingBasketF('${productList.product_cd}')"class="list-cartic"></a>
                                 </p>
                             </a>
@@ -264,10 +265,10 @@
                             <div class="img-box">
                                    <img src='${list.file_1}' onerror="this.src='http://placehold.it/190x190'" height="200">
             <!--                    <p class="saleBox">35%</p>-->
-                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>
+                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                                 <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> ${afn:getMessage("korea_won",sessionScope.locale)}</ins></p>
                                 <div class="progress-wrap">
                                     <p class="progress-now">${afn:getMessage("parti_rate",sessionScope.locale)} <b class="red">${list.parti_rate}%</b></p>

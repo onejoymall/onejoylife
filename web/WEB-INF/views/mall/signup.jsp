@@ -162,7 +162,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w" >
-                                    <input name="email" id="email" type="text"  required>
+                                    <input name="email1" id="email1" type="text"  required>
                                      <button class="btn-auth" id="emailChk" type="button">중복체크</button>
                                 </div>
                             </td>

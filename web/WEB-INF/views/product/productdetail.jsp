@@ -672,7 +672,7 @@
                         </tr>
                         <tr>
                             <td class="er"  id="passwordValidation">
-                                    * 6~20자의 영문,숫자를 조합하여 입력하여 주세요.
+                                    &nbsp;
                             </td>
                         </tr>
                         <tr>

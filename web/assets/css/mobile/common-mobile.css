@@ -2999,7 +2999,7 @@ body.black .img-box .saleBox{
     background:#ec407a;
 }
 .share-ic {
-  position: absolute;
+    position: absolute;
     bottom: 5px;
     right: 40px;
     display: block;
@@ -3139,9 +3139,10 @@ body.black .mainList-wrap ins{
     padding:5px 0 10px;
     font-size: 14px;
 }
-.progress-wrap{
-    width:100%;
-    padding-top:10px;
+.progress-wrap {
+    position: relative;
+    width: 80%;
+    padding-top: 10px;
     text-align: center;
 }
 .progress-bar {
@@ -5360,3 +5361,26 @@ input[type=password]::placeholder{
     background:url(../../img/goods-view/lock-ic.svg) center center no-repeat;
     background-size:contain;
 }
+
+.ex-order {
+    border: 1px solid #62606b;
+    background: #fff;
+    color: #62606b;
+    padding: 5px 10px;
+    border-radius: 30px;
+    margin: 0 0 0 auto;
+    display: block;
+}
+.share-ic2 {
+    position: absolute;
+    top: 20px;
+    right: -34px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: url(http://onejoylife.com/assets/css/mobile/../../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size: contain;
+    opacity: 0.6;
+}
+

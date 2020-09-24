@@ -47,7 +47,7 @@
 	                            </a>
 	                            </td> --%>
 	                            <td>
-                                  <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>"><!-- 정민 -->
+                                  <a href="<c:url value="/product/productDetail?product_cd=${list.product_cd}"/>">
                                       <img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" style="width: 80px;">
                                   </a>
                                 </td>   

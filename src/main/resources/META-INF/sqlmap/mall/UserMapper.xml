@@ -24,7 +24,7 @@
         <![CDATA[
         SELECT
           A.*
-        FROM user A where email =#{email}
+        FROM user A where email =#{email1}
         ]]>
         <if test="level == 10"> <![CDATA[AND A.level >= 9 ]]></if>
         <if test="level != null and level != 10"> <![CDATA[AND A.level= #{level} ]]></if>
@@ -165,7 +165,7 @@
         insert into email_auth(
         email
       )VALUES (
-        #{email}
+        #{email1}
         )
         ]]>
     </insert>
