@@ -1,6 +1,8 @@
 package com.webapp.board.app;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +126,7 @@ public class BoardCtr {
      * 글 저장.
      */
     @RequestMapping(value = "/Board/boardSave")
-    public String boardSave(HttpServletRequest request, BoardVO boardInfo, HttpSession session,HashMap params)throws Exception{
+    public String boardSave(HttpServletRequest request, BoardVO boardInfo, HttpSession session,HashMap params,FileVO fileVO)throws Exception{
         try{
             params.put("email",session.getAttribute("email"));
             //로그인 확인
@@ -137,8 +139,14 @@ public class BoardCtr {
 
             String[] fileno = request.getParameterValues("fileno");
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),"");
-            boardSvc.insertBoard(boardInfo, filelist, fileno);
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"question");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+			
+            fileVO.setFileorder(1);
+			fileVO.setFilepath("/fileupload/question/" + ft.format(new Date()) + "/");
+            
+            boardSvc.insertBoard(boardInfo, filelist, fileno, boardInfo, fileVO);
+               
         }catch (Exception e){
             e.printStackTrace();
         }

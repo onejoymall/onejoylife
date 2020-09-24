@@ -37,12 +37,15 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.siot.IamportRestClient.IamportClient;
@@ -149,7 +152,100 @@ public class restapiController {
 		}
 		return resultMap;
 	}
+	// 이메일 중복확인
+	@RequestMapping(value = "/sign/emailChk1", method = RequestMethod.GET, produces = "application/json")
 
+	public HashMap<String, Object> emailChk1(@RequestParam HashMap params, UserVO userVO,HttpServletRequest request, HttpSession session) {
+		HashMap<String, Object> error = new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String memo;
+		String subject = messageSource.getMessage("authSendMailTitle", "ko");//
+		memo = messageSource.getMessage("atuhSendMailContent", "ko");//
+		userVO.setEmail(userVO.getEmail1());
+		try {
+
+			// 이메일 필수 체크
+			if (userVO.getEmail1().isEmpty()) {
+				error.put("email", messageSource.getMessage("error.required", "ko"));
+			}
+
+			// 이메일 유효성검사
+			String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+			Boolean emailValidation = userVO.getEmail1().matches(regex);
+			if (emailValidation) {
+				// 이메일 중복확인
+//                params.put("email",userVO.getEmail());
+                params.put("password",null);
+                params.put("phone",null);
+                Map<String, Object> userData= userDAO.getLoginUserList(params);
+                //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
+                if(!isEmpty(userData)){
+                    //이메일 중복 메세지 출력
+                    error.put("email", messageSource.getMessage("error.exsnIdExst","ko"));
+                }
+            }else{
+                error.put("email", messageSource.getMessage("error.emailForm","ko"));
+            }
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+              
+				userDAO.insertEmailAuth2(params);
+            }
+        } catch (Exception e) {
+            resultMap.put("e", e);
+        }
+        return resultMap;
+    }
+	// 이메일 중복확인
+		@RequestMapping(value = "/sign/emailChk", method = RequestMethod.GET, produces = "application/json")
+
+		public HashMap<String, Object> emailChk(@RequestParam HashMap params, UserVO userVO,HttpServletRequest request, HttpSession session) {
+			HashMap<String, Object> error = new HashMap<String, Object>();
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			
+			String memo;
+			String subject = messageSource.getMessage("authSendMailTitle", "ko");//
+			memo = messageSource.getMessage("atuhSendMailContent", "ko");//
+			
+			try {
+
+				// 이메일 필수 체크
+				if (userVO.getEmail1().isEmpty()) {
+					error.put("email", messageSource.getMessage("error.required", "ko"));
+				}
+
+				// 이메일 유효성검사
+				String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+				Boolean emailValidation = userVO.getEmail1().matches(regex);
+				if (emailValidation) {
+					// 이메일 중복확인
+//	                params.put("email",userVO.getEmail());
+	                params.put("password",null);
+	                params.put("phone",null);
+	                Map<String, Object> userData= userDAO.getLoginUserList(params);
+	                //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
+	                if(!isEmpty(userData)){
+	                    //이메일 중복 메세지 출력
+	                    error.put("email", messageSource.getMessage("error.exsnIdExst","ko"));
+	                }
+	            }else{
+	                error.put("email", messageSource.getMessage("error.emailForm","ko"));
+	            }
+
+	            if(!isEmpty(error)){
+	                resultMap.put("validateError",error);
+	            }else{
+	              
+					userDAO.insertEmailAuth2(params);
+	            }
+	        } catch (Exception e) {
+	            resultMap.put("e", e);
+	        }
+	        return resultMap;
+	    }
 	// 이메일 인증번호 전송
 	@RequestMapping(value = "/sign/authemail", method = RequestMethod.GET, produces = "application/json")
 
@@ -239,17 +335,25 @@ public class restapiController {
     //회원 가입 처리
     @RequestMapping(value = "/sign/signupProc", method = RequestMethod.GET, produces = "application/json")
 
-    public HashMap<String, Object> signupProc(@RequestParam HashMap params, UserVO userVO){
+    public HashMap<String, Object> signupProc(@RequestParam HashMap params,ModelMap model, UserVO userVO,HttpServletRequest request,HttpSession session){
 
         HashMap<String, Object> error = new HashMap<String, Object>();
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        Device device = DeviceUtils.getCurrentDevice(request);
+       
         try {
-            if(userVO.getEmail().isEmpty()){
+        
+        
+       		 Object siteUrl = session.getAttribute("RefererUrl");
+
+       		 if(userVO.getEmail1().isEmpty()){
                 error.put("email", messageSource.getMessage("error.required","ko"));
             }
+            /* 이메일 인증 필요없다하여 주석처리20200923
             if(userVO.getEmail_auth_code()==null){
                 error.put("email_auth_code", messageSource.getMessage("error.required","ko"));
             }else{
+         
                 Map<String, Object> getAuthCode= userDAO.getEmailAuthCode(userVO);
                 //이메일 인증실패
                 if(isEmpty(getAuthCode)){
@@ -260,7 +364,11 @@ public class restapiController {
                         error.put("email_auth_code", messageSource.getMessage("error.notVldtAthrzCd","ko"));
                     }
                 }
+               
+                
             }
+            */
+            
             if(userVO.getPassword().isEmpty()){
                 error.put("password", messageSource.getMessage("error.required","ko"));
             }
@@ -270,10 +378,13 @@ public class restapiController {
             if(userVO.getPhone().isEmpty()){
             	error.put("phone", messageSource.getMessage("error.required","ko"));
             }
+            
 
             if(!isEmpty(error)){
                 resultMap.put("validateError",error);
             }else{
+            	session.setAttribute("RefererUrl",request.getHeader("Referer"));
+            	//Object RefererUrl = session.getAttribute("RefererUrl");
                 params.put("password", passwordEncoder.encode((String)params.get("password")));
                 userDAO.insertUser(params);
                 userVO.setLog_type("join");
@@ -288,8 +399,10 @@ public class restapiController {
                 for(Map<String,Object> coupon:joinCoupon) {
                 	mailSender.sendSimpleMessage(userVO.getEmail(), "쿠폰이 발급되었습니다", "["+coupon.get("coupon_name")+"] 쿠폰을 마이페이지에서 확인하세요.");
                 }
+           
             }
-
+	
+			
         } catch (Exception e) {
             resultMap.put("e", e);
         }
@@ -321,7 +434,7 @@ public class restapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
 
-            String email = (String)params.get("email");
+            String email = (String)params.get("email1");
             String password =(String)params.get("password");
             params.put("password",null);//패스워드 초기화
             if(email.isEmpty() || password.isEmpty()){
@@ -332,6 +445,7 @@ public class restapiController {
                 //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
                 Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
                 Object RefererUrl = session.getAttribute("RefererUrl");
+                
                 String product_cd=null;
                 if (!isEmpty((List<String>)session.getAttribute("today"))){
                     List<String> list = (List<String>)session.getAttribute("today");
@@ -863,9 +977,21 @@ public class restapiController {
 		HashMap<String, Object> error = new HashMap<String, Object>();
 
 		try {
+			if (deliveryInfoVO.getJibunAddress().isEmpty()) {
+				error.put(messageSource.getMessage("jibunAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
+			if (deliveryInfoVO.getExtraAddress().isEmpty()) {
+				error.put(messageSource.getMessage("extraAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
+			if (deliveryInfoVO.getRefund_jibunAddress().isEmpty()) {
+				error.put(messageSource.getMessage("refundjibunAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
+			if (deliveryInfoVO.getRefund_extraAddress().isEmpty()) {
+				error.put(messageSource.getMessage("refundextraAddress", "ko"), messageSource.getMessage("error.required", "ko"));
+			}
 			if (deliveryInfoVO.getReason().isEmpty()) {
 				error.put(messageSource.getMessage("reason", "ko"), messageSource.getMessage("error.required", "ko"));
-			}
+			}	
 
 			params.put("email", session.getAttribute("email"));
 			// 로그인 확인
@@ -1209,7 +1335,10 @@ public class restapiController {
 
 	// 장바구니 삭제
 	@RequestMapping(value = "/cart/deletecart", method = RequestMethod.POST, produces = "application/json")
-	public HashMap<String, Object> deleteCart(@RequestParam HashMap params, HttpSession session) {
+	public HashMap<String, Object> deleteCart(@RequestParam HashMap params,
+			HttpSession session) {
+		
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			cartDAO.deleteCart(params);
@@ -1297,9 +1426,11 @@ public class restapiController {
 	}
 
 	// 공통 리스트삭제
-	@RequestMapping(value = "/MyPage/commonListDelete", method = RequestMethod.POST, produces = "application/json")
-	public HashMap<String, Object> mypageListDelete(@RequestParam HashMap params, CommonVO commonVO,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/cart/commonListDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> mypageListDelete(@RequestParam HashMap params, CommonVO commonVO, 
+			HttpServletRequest request,HttpSession session) { 
+
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> error = new HashMap<String, Object>();
 		try {
@@ -1307,6 +1438,7 @@ public class restapiController {
 			// pk 필드명 pk
 			// 삭제할 배열 chk
 
+	
 			if (commonVO.getPk().equals(null) || commonVO.getPk().equals("")) {
 				error.put("Pk name", messageSource.getMessage("error.required", "ko"));
 			}
@@ -1316,11 +1448,12 @@ public class restapiController {
 //            if(mgCommonVO.getChk().size() <= 0){
 //                error.put("check box selector", messageSource.getMessage("error.required","ko"));
 //            }
+			
 			if (!isEmpty(error)) {
 				resultMap.put("validateError", error);
 			} else {
 				commonDAO.commonListDelete(commonVO);
-				resultMap.put("redirectUrl", request.getHeader("Referer"));
+				/*resultMap.put("redirectUrl", request.getHeader("Referer"));*/
 			}
 		} catch (Exception e) {
 

@@ -466,6 +466,19 @@
             </div>
         </div>
     </section>
+        <section class="subheader">
+        <div class="goods-slider-wrap">
+            <ul class="goods-slider">
+                <li><img src='${detail.file_1}' onerror="this.src='http://placehold.it/550'" ></li>
+                <li><img src='${detail.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
+            </ul>
+<%--            <div class="share-list">--%>
+<%--                <a href="#none"><i class="facebook-ic"></i></a>--%>
+<%--                <a href="#none"><i class="twitter-ic"></i></a>--%>
+<%--                <a href="#none"><i class="kakao-ic"></i></a>--%>
+<%--            </div>--%>
+        </div>
+    </section>
     <button class="btn btn_bottom btn-redcover buynow" id="formSubmit">바로 응모하기</button>
 </body>
 <script>

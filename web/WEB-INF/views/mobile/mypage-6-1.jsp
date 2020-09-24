@@ -57,6 +57,12 @@
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderChange?order_no=${list.no}'">${afn:getMessage('change_request',sessionScope.locale)}</button>
                 <button type="button" class="btn btn-blue" onclick="location.href='/MyPage/OrderRollback?order_no=${list.no}'">${afn:getMessage('rollback_req',sessionScope.locale)}</button>
                 </c:if>
+                   <c:if test="${list.payment_status eq 'M'}">
+                <button type="button" class="btn btn-red" onclick="location.href='/MyPage/OrderCancel?order_no=${list.order_no}'">${afn:getMessage('full_cancellation',sessionScope.locale)}</button>
+             
+                </c:if>
+                
+             
             </div>
             <hr>
             </c:forEach>

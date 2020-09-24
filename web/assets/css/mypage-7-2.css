@@ -262,7 +262,7 @@ input[id="ch-box"] {
     color: #232a32;
 }
 
-/* 라디오 버튼 */
+/* �씪�뵒�삤 踰꾪듉 */
 .input-ul{overflow: hidden;}
 .tab {display: none;}
 .r-sec3 .tab.on {
@@ -289,3 +289,27 @@ input[id="tab2-rd"]:checked + label
 input[id="tab1-rd"] {
     display: none;
 }
+/* 라디오 */
+.card-rd-box {
+    padding: 10px 0;
+    overflow: hidden;
+}
+input[type="radio"] {
+    display: none;
+}
+input[name="card-rd"] + label
+{
+    float: left;
+    display: block;
+    height: 28px;
+    background: url(../img/icon/but-g-1.png)no-repeat left center / 20px;
+    cursor: pointer;
+    padding-left: 26px;
+    line-height: 26px;
+    margin-right: 20px;
+}
+input[name="card-rd"]:checked + label
+{
+    background: url(../img/icon/but-g-2.png)no-repeat left center / 20px;
+}
+

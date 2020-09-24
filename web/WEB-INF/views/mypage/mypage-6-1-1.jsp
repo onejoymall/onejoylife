@@ -81,7 +81,13 @@
                                     <tr>
                                         <td class="body-td-tit">${afn:getMessage('reason',sessionScope.locale)}</td>
                                         <td colspan="2" class="body-td-txt1">
-                                            <input name="reason" type="text" class="select-op">
+                                            <input name="reason" type="text"  id="reason"  class="select-op">
+                                            <div class="card-rd-box">
+										     <input type="radio" id="card-rd1" name="card-rd" value="카드변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd1">${afn:getMessage('changeCard',sessionScope.locale)}</label>
+										     <input type="radio" id="card-rd2" name="card-rd" value="결제방식 변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd2">${afn:getMessage('changePay',sessionScope.locale)}</label>
+										</div>
                                         </td>
 <%--                                        <td class="body-td-txt1">--%>
 <%--                                            <input type="checkbox" id="ch-box">--%>
@@ -91,6 +97,12 @@
 <%--                                        </td>--%>
                                     </tr>
                                 </tbody>
+                                     <script>
+										function txInput(Obj,Str)
+										{
+										  document.getElementById(Obj).value = Str;
+										}
+									</script>
                             </table>
                         </div>
                         <div class="r-sec3">

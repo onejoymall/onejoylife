@@ -559,6 +559,7 @@ body{
 .sale-percent span{
     font-size:12px;
 }
+/*
 .share-ic{
     position: absolute;
     top:10px;
@@ -571,6 +572,21 @@ body{
     background-size:contain;
     opacity: 0.6;
 }
+*/
+.share-ic{
+    position: absolute;
+    bottom: -10px;
+    right: 43px;
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: url(../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size: contain;
+    opacity: 0.6;
+}
+
+
 .share-ic:hover{
     background:url(../img/share-hv.png)#da394d;
 }
@@ -1124,4 +1140,16 @@ input[type="radio"]+label, input[type="checkbox"]+label{
 
 .er {
     color:#da394d;
+}
+.share-ic2 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: url(../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size: contain;
+    opacity: 0.6;
 }

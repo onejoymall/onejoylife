@@ -621,7 +621,11 @@ public class MyPage {
         
         Device device = DeviceUtils.getCurrentDevice(request);
         if(device.isMobile()){
+        	if(pstatus1.equals("M")) {
+        		return "mobile/mypage-6-1-2";//미결제
+        		}else {
             return "mobile/mypage-6-1-1";
+        	}
         } else {
         	 if(pstatus1.equals("M")) {
         		 return "mypage/mypage-6-1-2";//미결제

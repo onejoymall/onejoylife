@@ -35,8 +35,28 @@ public class BoardVO extends SearchVO{
     private String realname;
     private String store_id;
     private String supplier_cd;
+    private String filelink;
+    private String email1;
+    
 
-    public String getSupplier_cd() {
+    
+    public String getEmail1() {
+		return email1;
+	}
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+
+	public String getFilelink() {
+		return filelink;
+	}
+
+	public void setFilelink(String filelink) {
+		this.filelink = filelink;
+	}
+
+	public String getSupplier_cd() {
         return supplier_cd;
     }
 

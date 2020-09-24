@@ -106,7 +106,7 @@
                     <td class="body-td2 padding-left">
                         <div class="fileBox">
                             <input type="text" class="fileName" name="fileName" readonly="readonly" >
-                            <label for="pdImg6" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}파일선택</label>
+                            <label for="pdImg6" class="btn_file">${afn:getMessage("chooseFile",sessionScope.locale)}</label>
                             <input type="file" id="pdImg6" name="uploadfile6" class="uploadBtnVideo1">
                             <button type="button" class="xBox">x</button>
                         </div>

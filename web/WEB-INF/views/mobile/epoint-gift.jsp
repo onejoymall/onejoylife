@@ -30,7 +30,7 @@
                                     <img src='${list.file_1}' onerror="this.src='http://placehold.it/400x300'" >
                                 </a>
             <!--                    <p class="saleBox">35%</p>-->
-                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
+                              
                             </div>
                             <a href="#" class="mainList-big-text">
                                 <p class="list-title"> ${list.giveaway_name}</p>
@@ -46,6 +46,7 @@
                                         <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
                                     </div>
                                     <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>${afn:getMessage("parti_rate_num",sessionScope.locale)}</p>
+                                 <a href="#" class="share-ic2" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                                 </div>
                             </a>
                         </li>

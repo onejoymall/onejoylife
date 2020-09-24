@@ -112,6 +112,29 @@ public class Help {
             return "help/csboard";
         }
     }
+    //1:1 문의
+    @RequestMapping(value="/Help/csBoardLargeOrder")
+    public String helpCsBoardLO(Model modelMap, BoardVO boardVO, HttpServletRequest request) {
+
+        BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used("15");
+        if (bgInfo == null) {
+            return "board/BoardGroupFail";
+        }
+
+        modelMap.addAttribute("bgno", 15);
+        modelMap.addAttribute("bgQuestionType", "LO");
+        modelMap.addAttribute("bgInfo", bgInfo);
+        boardVO.setQuestion_type("O");
+
+        modelMap.addAttribute("style", "help-4");
+        modelMap.addAttribute("leftNavOrder", "4");
+        Device device = DeviceUtils.getCurrentDevice(request);
+        if(device.isMobile()){
+            return "mobile/help-4-2";
+        } else {
+            return "help/csboard";
+        }
+    }
     //1:1 문의 완료
     @RequestMapping(value="/Help/csBoardDone")
     public String helpCsDone(Model model) {

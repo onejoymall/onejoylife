@@ -2468,15 +2468,19 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
-        String memo;
+        String memo; 
+        String email1;
         String subject =  messageSource.getMessage("BoardauthemailTitle","ko");
         memo = (String)params.get("rememo");
+        email1 =(String)params.get("email1");
+        userVO.setEmail(email1);
         try {
 
             //이메일 필수 체크
             if(userVO.getEmail().isEmpty()){
                 error.put("email", messageSource.getMessage("error.required","ko"));
             }
+            
 
             //이메일 유효성검사
             String regex ="^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";

@@ -208,7 +208,7 @@ function fn_replyReplySave(){
 							</tr>
 							<tr>
 								<td>이메일</td>
-								<td><c:out value="${boardInfo.email}" escapeXml="false"/></td>
+								<td><c:out value="${boardInfo.email1}" escapeXml="false"/></td>
 							</tr>
 							<tr>
 								<td>내용</td>
@@ -239,10 +239,11 @@ function fn_replyReplySave(){
 					<p>&nbsp;</p>
 
 					<c:if test="${bgInfo.bgreply=='Y'}">
+					
 						<div style="border: 1px solid; width: 100%; padding: 5px">
 							<form id="form1" name="form1">
 								<input type="hidden" id="brdno1" name="brdno" value="<c:out value="${boardInfo.brdno}"/>">
-								<input type="hidden" id="email" name="email" value="<c:out value="${boardInfo.email}" />">
+								<input type="hidden" id="email" name="email1" value="<c:out value='${boardInfo.email1}'/>">
 								작성자: <input type="text" id="rewriter1" name="rewriter" size="20" maxlength="20"> <br/>
 								<textarea id="rememo1" name="rememo" rows="3" cols="60" maxlength="500" placeholder="답변을 달아주세요."></textarea>
 								<button type="button" class="btn-default" id="mailSender" onclick="fn_SafeFormSubmit()">저장</button>

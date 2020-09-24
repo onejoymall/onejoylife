@@ -302,6 +302,12 @@
                         </table>
                     </div>
                 </div>
+			  	 <article class="banner-section">
+			        <div class="inner">
+			            <a href="${lineBannerList1.url}" class="img-box">
+			            <img src="${lineBannerList1.file_1}" /></a>
+			        </div>
+			    </article>
             </div>
         </div>
     </article>

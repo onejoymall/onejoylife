@@ -146,7 +146,7 @@ public class MgBoardController {
      * 글 저장.
      */
     @RequestMapping(value = "/Manager/boardSave")
-    public String boardSave(@RequestParam HashMap params, HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo) throws Exception{
+    public String boardSave(@RequestParam HashMap params, HttpServletRequest request, BoardVO boardInfo,BoardReplyVO boardReplyInfo,FileVO fileVO) throws Exception{
         String[] fileno = request.getParameterValues("fileno");
 
         try{
@@ -158,7 +158,7 @@ public class MgBoardController {
 
             boardInfo.setStore_id((String) params.get("product_store_id"));
             boardInfo.setSupplier_cd((String) params.get("product_supplier"));
-            boardSvc.insertBoard(boardInfo, filelist, fileno);
+            boardSvc.insertBoard(boardInfo, filelist, fileno, boardInfo, fileVO);
 
             if(boardInfo.getBgtype()!=null){
                 if(boardInfo.getBgtype().equals("faq")){

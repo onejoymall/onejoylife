@@ -37,15 +37,15 @@
 	            </ul>
 	        </ul>
         </c:forEach>
-        
+     
         <h2 class="pb-1 mt-4">${afn:getMessage('cancel_reason',sessionScope.locale)}</h2>
         <hr class="pb-1">
         <p class="text-md mt-1 mb-05">${afn:getMessage('reason',sessionScope.locale)}</p>
 		<input name="reason" id="reason" type="text" class="select-op">
-               <div class="card-rd-box">
+		 <div class="card-rd-box">
 		     <input type="radio" id="card-rd1" value="카드변경" name="card-rd" onclick="txInput('reason',this.value)">
 		     <label for="card-rd1">${afn:getMessage('changeCard',sessionScope.locale)}</label>
-		     <input type="radio" id="card-rd2" value="결제방식 변경" name="card-rd" onclick="txInput('reason',this.value)">
+		     <input type="radio" id="card-rd2" value="결제방식 변경"  name="card-rd" onclick="txInput('reason',this.value)">
 		     <label for="card-rd2">${afn:getMessage('changePay',sessionScope.locale)}</label>
 		</div>
 		   <script>
@@ -55,6 +55,7 @@
 				}
 		  </script>
         
+         <!--  
         <h2 class="pb-1 mt-4">${afn:getMessage('rollback_info',sessionScope.locale)}</h2>
         <hr class="pb-1">
         <p class="grey pb-05">${afn:getMessage('order_payment',sessionScope.locale)}</p>
@@ -65,11 +66,12 @@
         <h3 class="red"><fmt:formatNumber value="${paymentDetail.payment}" groupingUsed="true" />${afn:getMessage('korea_won',sessionScope.locale)}</h3>
         <p class="grey pt-2 pb-05">${afn:getMessage('pay_method',sessionScope.locale)}</p>
         <h3>${paymentDetail.pay_method}</h3>
-        
+         -->
+       <!-- 
         <h2 class="pb-1 mt-4">${afn:getMessage('rollback_account',sessionScope.locale)}</h2>
         <hr class="pb-1">
         <p class="text-md mt-1 mb-05">${afn:getMessage('bank_name',sessionScope.locale)}</p>
-        <!-- <input name="refund_bank" type="text" class="select-op"> -->
+        <!-- <input name="refund_bank" type="text" class="select-op">
         <select name="refund_bank" class="select-op">
             <c:if test="${not empty getSelectorList}">
                 <option value="">${afn:getMessage('bank_name',sessionScope.locale)}</option>
@@ -82,12 +84,92 @@
         <input type="text" name="refund_account"  class="select-op">
         <p class="text-md mt-1 mb-05">${afn:getMessage('account_name',sessionScope.locale)}</p>
         <input type="text" name="refund_holder" class="select-op">
+         -->   
     </section>
     <div class="bottomBtns">
         <ul>
-           <li><a href="#" id="formSubmit">${afn:getMessage('request',sessionScope.locale)}</a></li>
+           <!-- <li><a href="#" id="formSubmit">${afn:getMessage('request',sessionScope.locale)}</a></li>-->
+           <li><a href="#" id="payCancel">${afn:getMessage('request',sessionScope.locale)}</a></li> 
+    
         </ul>
     </div>
     </form>
         <c:import url="/layout/footer"/>
 <%--<%@ include file="/WEB-INF/views/mobile/layout/footer.jsp" %> --%>
+
+<script>
+$('#payCancel').on("click",function () {
+    var formData = $('#defaultForm').serialize();
+    var alertType;
+    var showText;
+
+    jQuery.ajax({
+        type: $('#defaultForm').attr('method'),
+        url: postUrl,
+        // enctype: 'multipart/form-data',
+        data: formData,
+        success: function (data) {
+            // console.log(data.validateError)
+            if (data.validateError) {
+                $('.validateError').empty();
+                console.log(data);
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " "+getMessageAjax('is')+" " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error',
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                if (data.success) {
+                    $.toast({
+                        text: 'success',
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        afterHidden: function () {
+                        	if(data.redirectUrl){
+                        		location.href=data.redirectUrl;	
+                        	}else{
+                        		location.reload();
+                        	}
+                        }
+                    });
+                } else{
+                	if(data.redirectUrl){
+                		location.href=data.redirectUrl;	
+                	}else{
+                		$.toast({
+                            text: "ERROR",
+                            showHideTransition: 'plain', //펴짐
+                            position: 'bottom-right',
+                            heading: 'Error',
+                            icon: 'error',
+                        });
+                	}
+                }
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("error");
+        }
+    });
+});
+
+
+</script>

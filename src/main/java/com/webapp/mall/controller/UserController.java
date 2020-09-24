@@ -81,7 +81,13 @@ public class UserController {
         Device device = DeviceUtils.getCurrentDevice(request);
 
         try{
-            session.setAttribute("RefererUrl",request.getHeader("Referer"));
+        	Object RefererUrl=session.getAttribute("RefererUrl");
+        	if(RefererUrl==null) {
+        		 session.setAttribute("RefererUrl",request.getHeader("Referer"));
+        	}else {
+        		 session.setAttribute("RefererUrl",RefererUrl);
+        	}
+          
             Object siteUrl = request.getRequestURL().toString()
                     .replaceAll(" " , "")
                     .replace(request.getRequestURI(),"");
@@ -197,8 +203,14 @@ public class UserController {
         }
     }
     @RequestMapping(value = "/sign/signUpDone")
-    public String signUpDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params)throws Exception{
+    public String signUpDone( ModelMap model,HttpServletRequest request,@RequestParam HashMap params, HttpSession session)throws Exception{
         Device device = DeviceUtils.getCurrentDevice(request);
+        Object RefererUrl=session.getAttribute("RefererUrl");
+        if(RefererUrl==null) {
+        		session.setAttribute("RefererUrl",request.getHeader("Referer"));
+		   	}else {
+		   		session.setAttribute("RefererUrl",RefererUrl);
+		   }
         model.addAttribute("style", "mem-com");
         if(device.isMobile()){
             return "mobile/mem-com";

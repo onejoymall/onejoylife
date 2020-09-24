@@ -3000,11 +3000,11 @@ body.black .img-box .saleBox{
 }
 .share-ic {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    bottom: 5px;
+    right: 40px;
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: url(../../img/share.png) center center no-repeat rgb(199, 199, 199);
     background-size: contain;
@@ -3139,9 +3139,10 @@ body.black .mainList-wrap ins{
     padding:5px 0 10px;
     font-size: 14px;
 }
-.progress-wrap{
-    width:100%;
-    padding-top:10px;
+.progress-wrap {
+    position: relative;
+    width: 80%;
+    padding-top: 10px;
     text-align: center;
 }
 .progress-bar {
@@ -4061,9 +4062,7 @@ input[type="password"] {
 .sale-percent span{
     font-size:12px;
 }
-.share-ic:hover{
-    background:url(../../img/share-hv.png)#da394d;
-}
+
 .info-price{
     font-size:16px;
     font-weight: 600;
@@ -4184,9 +4183,7 @@ select.order-select{
     color:#666;
     font-weight: 300;
 }
-.share-ic:hover{
-    background:url(../../img/share-hv.png)#da394d;
-}
+
 .point-pdt-title{
     width:100%;
     font-size:14px;
@@ -5172,13 +5169,13 @@ input[type=password]::placeholder{
 }
 
 
-.list-cartic{
-    position: absolute;
-    bottom: -5px;
+.list-cartic {
+     position: absolute;
+    bottom: 5px;
     right: 5px;
     width: 30px;
     height: 30px;
-    background:url(/assets/img/cartonly.png) no-repeat center center / 25px;
+    background: url(/assets/img/cartonly.png) no-repeat center center / 25px;
     background-color: rgba(0,0,0,0.1);
     border-radius: 50%;
 }
@@ -5365,3 +5362,26 @@ input[type=password]::placeholder{
     background:url(../../img/goods-view/lock-ic.svg) center center no-repeat;
     background-size:contain;
 }
+
+.ex-order {
+    border: 1px solid #62606b;
+    background: #fff;
+    color: #62606b;
+    padding: 5px 10px;
+    border-radius: 30px;
+    margin: 0 0 0 auto;
+    display: block;
+}
+.share-ic2 {
+    position: absolute;
+    top: 20px;
+    right: -34px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: url(http://onejoylife.com/assets/css/mobile/../../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background-size: contain;
+    opacity: 0.6;
+}
+

@@ -144,7 +144,7 @@ main{position: relative;}
     font-weight: 500;
 }
 .r-in-box {
-    height: 104px;/*05.29 수정*/
+    height: 104px;/*05.29 �닔�젙*/
     border-top: 1px solid #232a32;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     background: #f6f6f8;
@@ -415,7 +415,7 @@ table {
     margin-top: 100px;
     background: url(../img/cup.jpg) no-repeat center / cover;
 }
-/* 모달 팝업창 */
+/* 紐⑤떖 �뙘�뾽李� */
 .modal{
     display: none;
     position: fixed;
@@ -543,7 +543,7 @@ table {
     z-index: 998;
 }
 
-/* 05.29----추가 */
+/* 05.29----異붽� */
 .input-box3 {
     float: left;
     height: 50px;
@@ -560,4 +560,18 @@ table {
 }
 .txt-color1 a {
     color: #4159d3;
+}
+.r-in-p2 {
+    color: #9797a3;
+    float: left;
+}
+
+.ex-order {
+    border: 1px solid #62606b;
+    background: #fff;
+    color: #62606b;
+    padding: 5px 10px;
+    border-radius: 30px;
+    margin: 0 0 0 auto;
+    display: block;
 }

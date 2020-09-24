@@ -51,6 +51,18 @@
            <span>(0/250)</span>
            <textarea name="reason" id="reason" class="width-100"></textarea>
         </div>
+        <div class="card-rd-box">
+		     <input type="radio" id="card-rd1" value="카드변경" onclick="txInput('reason',this.value)">
+		     <label for="card-rd1">${afn:getMessage('changeCard',sessionScope.locale)}</label>
+		     <input type="radio" id="card-rd2" value="결제방식 변경" onclick="txInput('reason',this.value)">
+		     <label for="card-rd2">${afn:getMessage('changePay',sessionScope.locale)}</label>
+		</div>
+		   <script>
+			function txInput(Obj,Str)
+			{
+			  document.getElementById(Obj).value = Str;
+				}
+		  </script>
         
         <h2 class="pb-1 mt-4">${afn:getMessage('returncollection_informationinput',sessionScope.locale)}</h2>
         <hr class="pb-1">
@@ -68,7 +80,7 @@
         <p class="grey pt-2 pb-05">${afn:getMessage('return_courierservice',sessionScope.locale)}</p>
         <select class="full mb-05" name="refund_delivery_t_code">
             <c:forEach var="companyList" items="${companyList}" varStatus="status">
-			  <option value="${companyList.Name}">${companyList.Name}</option>
+			  <option value="${companyList.name}">${companyList.name}</option>
 			</c:forEach>
          </select>
         <p class="grey pt-2 pb-05">${afn:getMessage('return_invoicenumber',sessionScope.locale)}</p>

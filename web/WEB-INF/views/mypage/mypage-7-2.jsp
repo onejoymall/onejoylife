@@ -62,8 +62,20 @@
                                 <td class="body-td-txt1">
                                     <textarea name="reason" id="reason" cols="97" rows="4" class="area-content"></textarea>
                                     <p class="area-num">(0/20000)</p>
+                                    <div class="card-rd-box">
+										     <input type="radio" id="card-rd1" name="card-rd" value="카드변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd1">카드변경</label>
+										     <input type="radio" id="card-rd2" name="card-rd" value="결제방식 변경" onclick="txInput('reason',this.value)">
+										     <label for="card-rd2">결제방식 변경</label>
+										</div>
                                 </td>
                             </tr>
+                             <script>
+								function txInput(Obj,Str)
+								{
+								  document.getElementById(Obj).value = Str;
+								}
+							</script>
                             </tbody>
                         </table>
                     </div>
@@ -113,7 +125,7 @@
 
                                     <select name="refund_delivery_t_code" class="txt1-select">
                                         <c:forEach var="companyList" items="${companyList}" varStatus="status">
-                                            <option value="${companyList.Name}">${companyList.Name}</option>
+                                            <option value="${companyList.name}">${companyList.name}</option>
                                         </c:forEach>
                                     </select>
 

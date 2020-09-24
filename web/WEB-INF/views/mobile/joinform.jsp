@@ -160,9 +160,16 @@
             <div class="form-box">
                 <form method="POST" name="defaultJoinform" id="defaultJoinform">
                     <div class="join-cell">
-                        <input type="text" name="email" id="email" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}" required>
-                        <p class="error" id="emailValidation"></p>
+                      <div class="join-cell-in">
+                        <input type="text" name="email1" id="email1" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}" required>
+                         <button class="btn-auth" id="emailChk" type="button">중복체크</button>
+                        </div>
+                        <p class="error" id="emailValidation">
+                         &nbsp;</p>
+                        
                     </div>
+                    
+                    <!-- 
                     <div class="join-cell">
                         <div class="join-cell-in">
                             <input type="text" name="email_auth_code" id="email_auth_code" placeholder="${afn:getMessage('msg.sign.emailCerti_4inp',sessionScope.locale)}" class="num-txt" readonly>
@@ -172,9 +179,11 @@
                         </div>
                         <p class="error" id="email_auth_codeValidation"></p>
                     </div>
+                     -->
+                    
                     <div class="join-cell">
                         <div class="join-cell-in">
-                            <input type="text" name="phone" id="phone" class="num-txt" placeholder="${afn:getMessage('phone',sessionScope.locale)}" readonly>
+                            <input type="text" name="phone" id="phone" onclick="return auth_type_check();" class="num-txt" placeholder="${afn:getMessage('phone',sessionScope.locale)}" readonly>
                             <input name="sex" id="sex" type="hidden" readonly>
                             <input name="birth" id="birth" type="hidden" readonly>
                             <input name="username" id="username" type="hidden" readonly>
@@ -298,8 +307,8 @@
                         });
                     }else{
                         $('#mailSender').addClass("bg-secondary");
-                        $('#mailSender').text("${afn:getMessage("certi",sessionScope.locale)}");
-                        $('#email_auth_code').attr("placeholder","${afn:getMessage("msg.sign.certi_4input",sessionScope.locale)}");
+                        $('#mailSender').text("${afn:getMessage('certi',sessionScope.locale)}");
+                        $('#email_auth_code').attr("placeholder","${afn:getMessage('msg.sign.certi_4input',sessionScope.locale)}");
                         $('#email_auth_code').attr("readonly",false);
                         //인증버튼으로 변경
                         $('#mailSender').attr("id","mailauth");
@@ -324,17 +333,17 @@
             var pw = $('input[name=password]').val();
             var pw_cf = $('input[name=password_cf]').val();
             if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-                $("#passwordValidation").text("${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}");
+                $("#passwordValidation").text("${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}");
                 $('#passwordValidation').addClass("error-on");
                 $("#passwordValidation").removeClass("text-success");
             }else{
                 $("#passwordValidation").text('');
                 if(pw != pw_cf){
-                    $("#password_cfValidation").text("* ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
+                    $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
                     $('#password_cfValidation').addClass("error-on");
                     $("#password_cfValidation").removeClass("text-success");
                 }else{
-                    $("#password_cfValidation").text("* ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
+                    $("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
                     $("#password_cfValidation").addClass("text-success");
                 }
             }
@@ -390,7 +399,7 @@
                     }else{
                         $('#mailauth').removeClass("bg-secondary");
                         $('#mailauth').addClass("bg-success");
-                        $('#mailauth').text("${afn:getMessage("certiOk",sessionScope.locale)}");
+                        $('#mailauth').text("${afn:getMessage('certiOk',sessionScope.locale)}");
                         $('#email_auth_code').attr("readonly",true);
                         $('#email').attr("readonly",true);
                         //인증버튼으로 변경
@@ -411,6 +420,45 @@
             // $('#mailauth').addClass("bg-success");
             // $('#mailauth').text("인증완료");
         })
+        
+        
+         //이메일중복체크
+   $(document).on("click","#emailChk",function () {
+        $('.error').html('');
+        var formData = $('#defaultJoinform').serialize();
+        $('.loading-bar-wrap').removeClass("hidden");
+
+        jQuery.ajax({
+            type:"GET",
+            // contentType: 'application/json',
+            url:"/sign/emailChk1",
+            // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+            data:formData,
+
+            success : function(data) {
+                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                // TODO
+                console.log(data);
+                if(data.validateError){
+                    $.each(data.validateError, function (index, item) {
+                        if(index != "Error"){//일반에러메세지
+                            $('#'+index+'Validation').html(item);
+                            $('#'+index+'Validation').addClass("error-on");
+                        }
+                    });
+                }
+            },
+
+            complete : function(data) {
+                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                // TODO
+                $('.loading-bar-wrap').addClass("hidden");
+            },
+            error : function(xhr, status, error) {
+                console.log(xhr+status+error);
+            }
+        });
+    })
     </script>
 </body>
 </html>
