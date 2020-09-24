@@ -170,7 +170,7 @@ $(document).on("click","#paymentSubmit",function () {
     	    }
     	    toastr.info([
                 '<a href="/sign/login">'+ getMessageAjax('loginAndUse') +'</a><br>',
-                '<a href="/sign/signup">'+ getMessageAjax('JoinAndUse') +'</a><br>',
+                '<a href="#" class="openJoinPopup">'+ getMessageAjax('JoinAndUse') +'</a><br>',
                 '<a href="#" onclick="$(\'#defaultForm\').submit();">'+ getMessageAjax('nonMemOrder') +'</a>',
             ], getMessageAjax('msg.nonMemOrderTxt'))
         }else{
@@ -186,7 +186,7 @@ $(document).on("click","#paymentSubmit",function () {
     	    }
     	    toastr.info([
                 '<a href="/sign/login">'+ getMessageAjax('loginAndUse') +'</a><br>',
-                '<a href="/sign/signup">'+ getMessageAjax('JoinAndUse') +'</a><br>',
+                '<a href="#" class="openJoinPopup">'+ getMessageAjax('JoinAndUse') +'</a><br>',
                 '<a href="#" onclick="$(\'#defaultForm\').submit();">'+ getMessageAjax('nonMemOrder') +'</a>',
             ], getMessageAjax('msg.nonMemOrderTxt'))
         }else{
@@ -194,6 +194,12 @@ $(document).on("click","#paymentSubmit",function () {
         }
     }
 })
+$(document).on('click', '.openJoinPopup', function(e){/*targetClass에 들어갈 클래스 수정해서 사용*/
+    e.preventDefault();
+   $('#joinPop').addClass('on'); 
+}).on('click', '#joinPop .bg', function(){
+    $('#joinPop').removeClass('on'); 
+});
 //비회원 결제모바일
 $(document).on("click","#paymentSubmitM",function () {
 	var option_required_list = $("input[name=product_option_required]").val().split("|");
@@ -614,7 +620,7 @@ $(document).on("click",".ra-num",function () {
                             '         <div class="img-box">\n' +
                             '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
                             ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
-                            '             <i class="share-ic"></i>\n' +
+                          
                             '         </div>\n' +
                             '         <div class="product-info">\n' +
                             /*'             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +*/
@@ -635,7 +641,8 @@ $(document).on("click",".ra-num",function () {
 													html += '<span class="score-text"> '+ productList.review_cnt + reviewCount+'</span>';
 												}
                                   html += 	'<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+
-                            '		 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +
+                                		  '             <i class="share-ic"></i>\n' +
+                                		  '		 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +
                             '             </p>\n' +
                             '         </div>\n' +
                             '     </a>\n' +
@@ -680,7 +687,6 @@ $(document).on("click",".ra-num",function () {
                                 '         <div class="img-box">\n' +
                                 '             <img src="'+productList.file_1+'" onerror="this.src=\'http://placehold.it/190x190\'" height="190">\n' +
                                 ' 			   <p class="sale-percent">'+productList.percent_discount+'<span>%</span></p>\n'+
-                                '             <i class="share-ic"></i>\n' +
                                 '         </div>\n' +
                                 '         <div class="product-info">\n' +
                                 /*'             <p class="info-production">'+productList.product_made_company_name+'</p>\n' +*/
@@ -701,7 +707,8 @@ $(document).on("click",".ra-num",function () {
 														html += '<span class="score-text"> '+ productList.review_cnt + reviewCount+'</span>';
 													}
 	                                        html +='<input type="hidden" name="product_option_yn" value="'+productList.product_option_yn+'" />'+ 	
-	                            '			 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +	                            '             </p>\n' +
+	                                        		'             <i class="share-ic"></i>\n' +
+	                                        		'			 <a href="#" class="list-cartic" onclick="addShoppingBasketF(\''+productList.product_cd+'\');"></a>\n'  +	                            '             </p>\n' +
 	                            '         </div>\n' +
 	                            '     </a>\n' +
 	                            ' </li>' +
@@ -3777,9 +3784,9 @@ $(document).on("click",".ra-num",function () {
 
             // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
             if(roadAddr !== ''){
-                $('input[name=extraAddress]').val(extraRoadAddr);
+                $('input[name=refund_extraAddress]').val(extraRoadAddr);
             } else {
-                $('input[name=extraAddress]').val('');
+                $('input[name=refund_extraAddress]').val('');
             }
 //
 //            var guideTextBox =  $('input[name=refund_guide]');

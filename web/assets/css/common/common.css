@@ -629,8 +629,8 @@ input[class='styleClass']:checked + label
     position: absolute;
     bottom: -10px;
     right: 5px;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background:url(/assets/img/cartonly.png) no-repeat center center / 30px;
     background-color: rgba(0,0,0,0.1);
     border-radius: 50%;

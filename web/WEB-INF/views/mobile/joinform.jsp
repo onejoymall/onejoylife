@@ -298,8 +298,8 @@
                         });
                     }else{
                         $('#mailSender').addClass("bg-secondary");
-                        $('#mailSender').text("${afn:getMessage("certi",sessionScope.locale)}");
-                        $('#email_auth_code').attr("placeholder","${afn:getMessage("msg.sign.certi_4input",sessionScope.locale)}");
+                        $('#mailSender').text("${afn:getMessage('certi',sessionScope.locale)}");
+                        $('#email_auth_code').attr("placeholder","${afn:getMessage('msg.sign.certi_4input',sessionScope.locale)}");
                         $('#email_auth_code').attr("readonly",false);
                         //인증버튼으로 변경
                         $('#mailSender').attr("id","mailauth");
@@ -324,17 +324,17 @@
             var pw = $('input[name=password]').val();
             var pw_cf = $('input[name=password_cf]').val();
             if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-                $("#passwordValidation").text("${afn:getMessage("error.sign.pwdpattern",sessionScope.locale)}");
+                $("#passwordValidation").text("${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}");
                 $('#passwordValidation').addClass("error-on");
                 $("#passwordValidation").removeClass("text-success");
             }else{
                 $("#passwordValidation").text('');
                 if(pw != pw_cf){
-                    $("#password_cfValidation").text("* ${afn:getMessage("error.sign.pwdDis",sessionScope.locale)}");
+                    $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
                     $('#password_cfValidation').addClass("error-on");
                     $("#password_cfValidation").removeClass("text-success");
                 }else{
-                    $("#password_cfValidation").text("* ${afn:getMessage("msg.sign.pwdSuccess",sessionScope.locale)}");
+                    $("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
                     $("#password_cfValidation").addClass("text-success");
                 }
             }
@@ -390,7 +390,7 @@
                     }else{
                         $('#mailauth').removeClass("bg-secondary");
                         $('#mailauth').addClass("bg-success");
-                        $('#mailauth').text("${afn:getMessage("certiOk",sessionScope.locale)}");
+                        $('#mailauth').text("${afn:getMessage('certiOk',sessionScope.locale)}");
                         $('#email_auth_code').attr("readonly",true);
                         $('#email').attr("readonly",true);
                         //인증버튼으로 변경

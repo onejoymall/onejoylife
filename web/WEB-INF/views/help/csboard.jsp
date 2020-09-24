@@ -71,10 +71,11 @@
                             <tr class="sort-box">
                                 <td>${afn:getMessage("QA_type",sessionScope.locale)} *</td>
                                 <td>
+                                  <input type="hidden" name="lo" id="lo" <c:out value="${bgQuestionType}"/>"> 
                                     <select name="question_type" id="question_type">
                                         <option value="">${afn:getMessage("QA_choose",sessionScope.locale)}</option>
-                                        <option value="S">${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
-                                        <option value="O">${afn:getMessage("QA_order_payment",sessionScope.locale)}</option>
+                                        <option value="S" <c:if test="${bgQuestionType eq \"LO\"}">selected</c:if>>${afn:getMessage("QA_largeorder",sessionScope.locale)}</option>
+                                        <option value="O" >${afn:getMessage("orders_payments",sessionScope.locale)}</option>
                                         <option value="C">${afn:getMessage("QA_change_return_refund",sessionScope.locale)}</option>
                                         <option value="E">${afn:getMessage("QA_event",sessionScope.locale)}</option>
                                         <option value="D">${afn:getMessage("QA_delivery",sessionScope.locale)}</option>
@@ -139,6 +140,7 @@
     $('#phoneNum-1').on("change", function () {
         $('input[name=phone]').val($('#phoneNum-1').val()+"-"+$('#phoneNum-2').val()+"-"+$('#phoneNum-3').val());
     })
+
 
 </script>
 

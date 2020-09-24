@@ -2999,12 +2999,12 @@ body.black .img-box .saleBox{
     background:#ec407a;
 }
 .share-ic {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+  position: absolute;
+    bottom: 5px;
+    right: 40px;
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: url(../../img/share.png) center center no-repeat rgb(199, 199, 199);
     background-size: contain;
@@ -4061,9 +4061,7 @@ input[type="password"] {
 .sale-percent span{
     font-size:12px;
 }
-.share-ic:hover{
-    background:url(../../img/share-hv.png)#da394d;
-}
+
 .info-price{
     font-size:16px;
     font-weight: 600;
@@ -4184,9 +4182,7 @@ select.order-select{
     color:#666;
     font-weight: 300;
 }
-.share-ic:hover{
-    background:url(../../img/share-hv.png)#da394d;
-}
+
 .point-pdt-title{
     width:100%;
     font-size:14px;
@@ -5171,13 +5167,13 @@ input[type=password]::placeholder{
 }
 
 
-.list-cartic{
-    position: absolute;
-    bottom: -5px;
+.list-cartic {
+     position: absolute;
+    bottom: 5px;
     right: 5px;
     width: 30px;
     height: 30px;
-    background:url(/assets/img/cartonly.png) no-repeat center center / 25px;
+    background: url(/assets/img/cartonly.png) no-repeat center center / 25px;
     background-color: rgba(0,0,0,0.1);
     border-radius: 50%;
 }
