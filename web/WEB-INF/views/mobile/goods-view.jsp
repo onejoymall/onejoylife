@@ -720,6 +720,21 @@
             </div>
         </div>
     </section>
+    <section class="subheader">
+        <div class="goods-slider-wrap">
+            <ul class="goods-slider">
+                <li><img src='${list.file_1}' onerror="this.src='http://placehold.it/550'"></li>
+                 <c:if test="${not empty list.file_5}">
+                <li><img src='${list.file_5}' onerror="this.src='http://placehold.it/550'" ></li>
+                 </c:if>
+            </ul>
+<%--            <div class="share-list">--%>
+<%--                <a href="#none"><i class="facebook-ic"></i></a>--%>
+<%--                <a href="#none"><i class="twitter-ic"></i></a>--%>
+<%--                <a href="#none"><i class="kakao-ic"></i></a>--%>
+<%--            </div>--%>
+        </div>
+    </section>
     <button type="button" class="btn btn_bottom btn-redcover" id="btn_purchase">${afn:getMessage("buy",sessionScope.locale)}</button>
 
 <script>
