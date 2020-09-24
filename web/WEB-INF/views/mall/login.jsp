@@ -16,7 +16,7 @@
             <div class="login-out">
                 <div class="login-in">
                     <div class="in-box1">
-                        <label for="id-input" class="id-la">${afn:getMessage("idEmail",sessionScope.locale)}</label><input type="text" name="email" id="id-input" placeholder="${afn:getMessage('msg.login.idinputRequest',sessionScope.locale)}" class="form-con">
+                        <label for="id-input" class="id-la">${afn:getMessage("idEmail",sessionScope.locale)}</label><input type="text" name="email1" id="id-input" placeholder="${afn:getMessage('msg.login.idinputRequest',sessionScope.locale)}" class="form-con">
                     </div>
                     <div class="in-box2">
                         <label for="pw-input" class="id-la">${afn:getMessage("pwd",sessionScope.locale)}</label><input type="password" name="password" id="pw-input" placeholder="${afn:getMessage('msg.login.pwdinputRequest',sessionScope.locale)}" class="form-con">
@@ -87,7 +87,7 @@
 
     $('.login-but').on("click",function () {
         var formData = $('#defaultLoginForm').serialize();
-        var email = $('#email').val();
+        var email = $('#email1').val();
         var password = $('#password').val();
 
         jQuery.ajax({
