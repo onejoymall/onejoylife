@@ -268,7 +268,6 @@
                             </div>
                             <div class="mainList-sm-text">
                                 <p class="list-title">${list.giveaway_name}</p>
-                                <a href="#" class="share-ic" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                                 <p><ins><fmt:formatNumber value="${list.giveaway_payment}" groupingUsed="true" /> ${afn:getMessage("korea_won",sessionScope.locale)}</ins></p>
                                 <div class="progress-wrap">
                                     <p class="progress-now">${afn:getMessage("parti_rate",sessionScope.locale)} <b class="red">${list.parti_rate}%</b></p>
@@ -276,6 +275,7 @@
                                         <div class="progress-bar-active" style="width:${list.parti_rate}%"></div>
                                     </div>
                                     <p class="parti"><span><fmt:formatNumber value="${list.player_count}" groupingUsed="true" /></span>${afn:getMessage("partiPeople_count",sessionScope.locale)}</p>
+                                <a href="#" class="share-ic2" onclick="share_giveaway('${list.giveaway_id}', '${list.giveaway_name}')"></a>
                                 </div>
                             </div>
                         </a>
