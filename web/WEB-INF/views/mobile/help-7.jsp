@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/tlds/arr.tld" prefix="afn" %>
 <c:import url="/mobile/layout/sub-header"/>
 
 
@@ -33,13 +34,22 @@
     <div class="faq">
        <div class="faqTitle">
             <span><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></span>
-            <h4><c:out value="${listview.brdtitle}"/></h4>
+            <h4><c:out value="${listview.brdtitle}"/>
+            </h4>
+
         </div>
+
        <div class="faqAnswer">
             <p><c:out value="${listview.brdmemo}"/> </p>
           <%-- <div class="faqFile">
                <a href="#"><i class="ri-attachment-2"></i> 설치신청서.DOC</a>
            </div>--%>
+		<div class="faqFile">
+          <c:if test="${not empty listview.filename}">
+			    <img style="max-width: 100%; height: auto;" src="${listview.filelink}" onerror="this.src='http://placehold.it/300x300'" alt="${afn:getMessage('reviewImg',sessionScope.locale)}" />
+          </c:if>
+         </div>
+          <!-- class="ri-attachment-2" -->
         </div>
     </div>
 </c:forEach>

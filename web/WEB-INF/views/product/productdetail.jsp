@@ -631,7 +631,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w">
-                                    <input name="email" id="email" type="text" placeholder="이메일을 입력해주세요."  required>
+                                    <input name="email1" id="email" type="text" placeholder="이메일을 입력해주세요."  required>
                                     <a class="btn-auth" id="emailChk1"><span>중복체크</span></a>
                                 </div>
                             </td>
@@ -983,6 +983,7 @@ $('#formSignUpSubmit1').on("click",function () {
 
 	     //이메일인증
 	   $(document).on("click","#emailChk1",function () {
+		   alert("dd00")
 		   
 	        $('.er').html('');
 	        var formData = $('#defaultJoinform').serialize();
