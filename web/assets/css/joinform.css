@@ -133,3 +133,88 @@ input[id="ch"] {
     font-size:20px;
     font-weight: 300;
 }
+/*소셜 로그인*/
+.sns-login-wrap{
+    width:100%;
+}
+.sns-login-inner{
+    width:650px;
+    margin:0 auto;
+    padding:50px 0;
+}
+.sns-login-ttl{
+    width:100%;
+    text-align: center;
+    margin-bottom:30px;
+}
+.ttl-line{
+    display:inline-block;
+    width:220px;height:1px;
+    margin:0 10px;
+    background:#c1c1c1;
+    transform: translateY(-5px)
+}
+.sns-login-wrap button{
+    display:block;
+    margin:0 auto;
+    width:300px;
+    height:60px;
+    font-size: 16px;
+    text-indent: 30px;
+    position:relative;
+    margin-bottom: 20px;
+}
+.kko-login-btn{
+    color:#000;
+    background:#ffcf03;
+}
+.nv-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.fb-login-btn{
+    color:#ffffff;
+    background:#2257a6;
+}
+.ln-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.kko-login-btn{
+    color:#000;
+    background:#ffcf03;
+}
+.sns-login-wrap i{
+    display: inline-block;
+    margin-right:5px;
+    margin-bottom:-2px;
+    width:35px;
+    height:35px;
+    background-position: center center;
+    background-size:35px;
+    position:absolute;
+    top:12px;
+    left:30px;
+}
+.kko-ic{
+    background-image:url(../img/kakao1.png)
+}
+.nv-ic{
+    background-image:url(../img/nv1.png)
+}
+.fb-ic{
+    background-image:url(../img/fb1.png)
+}
+.ln-ic{
+    background-image:url(../img/line1.png)
+}
+.join-wrap{
+    float: left;
+    display: block;
+    width: 270px;
+    height: 114px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    font-weight: 900;
+}

@@ -556,14 +556,14 @@ input[id="ch"] {
 #joinPop .sns-login-inner{
     width:auto;
     margin:0 auto;
-    padding:30px 0;/*수정*/
+    padding:30px 0 0 0;/*수정*/
 }
 .sns-login-ttl{
     width:100%;
     text-align: center;
     margin-bottom:30px;
 }
-#joinPop .ttl-line{/*수정*/
+#joinPop .ttl-line{
     display:inline-block;
     width:30%;
     height:1px;
@@ -571,22 +571,59 @@ input[id="ch"] {
     background:#c1c1c1;
     transform: translateY(-5px)
 }
-.kko-login-btn{
+.sns-login-wrap button{
     display:block;
     margin:0 auto;
     width:300px;
     height:60px;
+    font-size: 16px;
+    text-indent: 30px;
+    position:relative;
+    margin-bottom: 20px;
+}
+.kko-login-btn{
     color:#000;
     background:#ffcf03;
-    font-size: 16px;
 }
-.kko-ic{
+.nv-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.fb-login-btn{
+    color:#ffffff;
+    background:#2257a6;
+}
+.ln-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.kko-login-btn{
+    color:#000;
+    background:#ffcf03;
+}
+.sns-login-wrap i{
     display: inline-block;
     margin-right:5px;
     margin-bottom:-2px;
-    width:16px;
-    height:16px;
-    background:url(../img/kakao1.png) center center / 16px;
+    width:35px;
+    height:35px;
+    background-position: center center;
+    background-size:35px;
+    position:absolute;
+    top:12px;
+    left:30px;
+}
+.kko-ic{
+    background-image:url(../img/kakao1.png)
+}
+.nv-ic{
+    background-image:url(../img/nv1.png)
+}
+.fb-ic{
+    background-image:url(../img/fb1.png)
+}
+.ln-ic{
+    background-image:url(../img/line1.png)
 }
 .join-wrap{
     float: left;

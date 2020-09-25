@@ -715,7 +715,10 @@
                         <div class="ttl-line"></div>
                      </div>
                      <button type="button" id="kakao-login-btn" class="kko-login-btn">
-                     <i class="kko-ic"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
+                     <i class="kko-ic"></i>카카오 계정으로 회원가입</button>
+                         <button type="button" class="nv-login-btn"><i class="nv-ic"></i>네이버 계정으로 회원가입</button>
+                         <button type="button" class="fb-login-btn"><i class="fb-ic"></i>페이스북 계정으로 회원가입</button>
+                         <button type="button" class="ln-login-btn"><i class="ln-ic"></i>LINE 계정으로 회원가입</button>
                       <!--  <a id="kakao-login-btn"></a> -->
                 </div>
             </div>
