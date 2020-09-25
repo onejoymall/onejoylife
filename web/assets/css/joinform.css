@@ -133,6 +133,7 @@ input[id="ch"] {
     font-size:20px;
     font-weight: 300;
 }
+
 /*소셜 로그인*/
 .sns-login-wrap{
     width:100%;
@@ -217,4 +218,16 @@ input[id="ch"] {
     text-align: center;
     line-height: 40px;
     font-weight: 900;
+
+
+.btn-success{
+    float: right;
+    background: #28a745!important;
+    color:#fff;
+    padding:10px 15px;
+    margin-top:9px;
+    margin-right:10px;
+    font-size:14px;
+    border-radius: 5px;
+
 }
