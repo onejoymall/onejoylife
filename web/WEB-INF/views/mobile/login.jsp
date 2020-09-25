@@ -24,7 +24,7 @@
             <a href="/"><div class="mo-logo"></div></a>
             <div class="mo-login-form">
                 <form name="defaultLoginForm" id="defaultLoginForm">
-                    <input type="text" for="id-input" name="email1" class="id-la" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}">
+                    <input type="text" for="id-input" name="email" class="id-la" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}">
                     <input type="password" for="pw-input" name="password" class="id-la" placeholder="${afn:getMessage('pwd',sessionScope.locale)}">
                     <span class="error" id="loginCheckError"></span>
                     <div class="check-save">

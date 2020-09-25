@@ -8,6 +8,15 @@
         email,
         log_type
         ) values (
+        #{email},
+        #{log_type}
+        )
+    </insert>
+        <insert id="insertUserHistory1" parameterType="com.webapp.manager.vo.MgUserVO">
+        insert into user_login_history(
+        email,
+        log_type
+        ) values (
         #{email1},
         #{log_type}
         )
@@ -21,6 +30,18 @@
     </select>
     <select id="getUserList" resultType="java.util.HashMap">
         /*getUserList*/
+        <![CDATA[
+        SELECT
+          A.*
+        FROM user A where email =#{email}
+        ]]>
+        <if test="level == 10"> <![CDATA[AND A.level >= 9 ]]></if>
+        <if test="level != null and level != 10"> <![CDATA[AND A.level= #{level} ]]></if>
+        <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
+        <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
+    </select>
+        <select id="getUserList1" resultType="java.util.HashMap">
+        /*getUserList1*/
         <![CDATA[
         SELECT
           A.*

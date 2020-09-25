@@ -74,13 +74,13 @@
         <input name = "return_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op">
         <p class="grey pt-2 pb-05">${afn:getMessage('postcode',sessionScope.locale)}</p>
         <input name = "postcode" type="text" value="${delivery.postcode}" class="select-op">
-        <button class="btn my-1" type="button" id="daumMapCall">${afn:getMessage('address_change',sessionScope.locale)}</button>
         <p class="grey pt-2 pb-05">${afn:getMessage('address',sessionScope.locale)}</p>
         <input name = "roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
         <input name = "jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
         <input name = "guide" type="hidden" value="${delivery.jibunAddress}" >
         <p class="grey pt-2 pb-05">${afn:getMessage('extraAddress',sessionScope.locale)}</p>
         <input name = "extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long">
+        <button class="btn my-1" type="button" id="daumMapCall">${afn:getMessage('address_change',sessionScope.locale)}</button>
         
         <h2 class="pb-1 mt-4">${afn:getMessage('changepro_deliv_info',sessionScope.locale)}</h2>
         <hr class="pb-1">
@@ -90,13 +90,13 @@
         <input name = "refund_user_phone" type="text" value="${delivery.delivery_user_phone}" class="select-op">
         <p class="grey pt-2 pb-05">${afn:getMessage('postcode',sessionScope.locale)}</p>
         <input name = "refund_postcode" type="text" value="${delivery.postcode}" class="select-op">
-        <button class="btn my-1" type="button" id="daumMapCall">${afn:getMessage('address_change',sessionScope.locale)}</button>
         <p class="grey pt-2 pb-05">${afn:getMessage('address',sessionScope.locale)}</p>
         <input name = "refund_roadAddress" type="text" value="${delivery.roadAddress}" class="select-op-long">
         <input name = "refund_jibunAddress" type="hidden" value="${delivery.jibunAddress}" >
         <input name = "refund_guide" type="hidden" value="${delivery.jibunAddress}" >
         <p class="grey pt-2 pb-05">${afn:getMessage('extraAddress',sessionScope.locale)}</p>
         <input name = "refund_extraAddress" type="text" value="${delivery.extraAddress}" class="select-op-long">
+        <button class="btn my-1" type="button" id="daumMapCall2">${afn:getMessage('address_change',sessionScope.locale)}</button>
         
     </section>
     <div class="bottomBtns">
