@@ -469,6 +469,7 @@ public class MyPage {
     @RequestMapping(value="/MyPage/OrderAndDelivery")
     public String myPageOrderAndDelivery(Model model, @RequestParam HashMap params, HttpSession session, MyPageVO myPageVO, HttpServletRequest request) throws Exception{
         try{
+        	   
             params.put("email",session.getAttribute("email"));
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
 

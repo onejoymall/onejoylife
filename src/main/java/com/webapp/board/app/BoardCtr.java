@@ -46,9 +46,10 @@ public class BoardCtr {
      public String boardList(@RequestParam HashMap params, BoardVO boardVO, ModelMap modelMap, HttpServletRequest request, HttpSession session )throws Exception {
         String returnString="";
         try{
-            params.put("email1",session.getAttribute("email"));
+            params.put("email",session.getAttribute("email"));
             //로그인 확인
             Map<String,Object> userInfo = userDAO.getLoginUserList(params);
+          //  Map<String,Object> userInfo = userDAO.getLoginUserList1(params);
             BoardGroupVO bgInfo = boardGroupSvc.selectBoardGroupOne4Used(boardVO.getBgno());
             if(!isEmpty(userInfo)){
                 if(bgInfo.getBgtype().equals("1:1")) {

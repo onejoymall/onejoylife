@@ -129,7 +129,7 @@ body{font-family: 'Noto Sans KR' !important;}
 .sns-login-inner{
     width:650px;
     margin:0 auto;
-    padding:50px 0;
+    padding:50px 0 0 0;
 }
 .sns-login-ttl{
     width:100%;
@@ -138,27 +138,64 @@ body{font-family: 'Noto Sans KR' !important;}
 }
 .ttl-line{
     display:inline-block;
-    width:225px;height:1px;
+    width:220px;height:1px;
     margin:0 10px;
     background:#c1c1c1;
     transform: translateY(-5px)
 }
-.kko-login-btn{
+.sns-login-wrap button{
     display:block;
     margin:0 auto;
     width:300px;
     height:60px;
-    color:#000;
-    background:#ffe500;
     font-size: 16px;
+    text-indent: 30px;
+    position:relative;
+    margin-bottom: 20px;
 }
-.kko-ic{
+.kko-login-btn{
+    color:#000;
+    background:#ffcf03;
+}
+.nv-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.fb-login-btn{
+    color:#ffffff;
+    background:#2257a6;
+}
+.ln-login-btn{
+    color:#ffffff;
+    background:#46c313;
+}
+.kko-login-btn{
+    color:#000;
+    background:#ffcf03;
+}
+.sns-login-wrap i{
     display: inline-block;
     margin-right:5px;
     margin-bottom:-2px;
-    width:16px;
-    height:16px;
-    background:url(../img/kakao1.png) center center / 16px;
+    width:35px;
+    height:35px;
+    background-position: center center;
+    background-size:35px;
+    position:absolute;
+    top:12px;
+    left:30px;
+}
+.kko-ic{
+    background-image:url(../img/kakao1.png)
+}
+.nv-ic{
+    background-image:url(../img/nv1.png)
+}
+.fb-ic{
+    background-image:url(../img/fb1.png)
+}
+.ln-ic{
+    background-image:url(../img/line1.png)
 }
 .join-wrap{
     float: left;
@@ -172,40 +209,6 @@ body{font-family: 'Noto Sans KR' !important;}
 }
 .link-a.kko{
     margin-top:10px;
-    background:#ffe500;
+    background:#ffcf03;
     color:#000;
 }
-/* 비회원 주문조회 */
-.nonmem {
-    overflow: hidden;
-    width: 650px;
-    margin: 30px auto;
-    display: none;
-}
-.nonmem-in {
-    width: calc(100% - 250px);
-    float: left;
-}
-.nonmem-in p {
-    display: inline-block;
-    line-height: 42px;
-    color: #696969;
-    font-weight: 900;
-    margin-right: 10px;
-}
-.nonmem-in input {
-    display: inline-block;
-    width: 300px;
-    height: 40px;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-.nonmem button {
-    width: 250px;
-    height: 87px;
-    float: left;
-    background: #da394d;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 900;
-} 

@@ -19,6 +19,7 @@ public class UserDAO {
         List<Map<String, Object>> getUserList = sql.selectList("mall.UserMapper.getUserList",params);
         return getUserList;
     }
+
     public List<Map<String, Object>> getMailUserList(Map<String, String> params) throws SQLException {
         List<Map<String, Object>> getMailUserList = sql.selectList("mall.UserMapper.getMailUserList",params);
         return getMailUserList;
@@ -40,6 +41,10 @@ public class UserDAO {
         return getLoginUserList;
     }
 
+    public Map<String, Object> getLoginUserList1(Map<String, String> params) throws SQLException {
+        Map<String, Object> getLoginUserList1 = sql.selectOne("mall.UserMapper.getUserList1",params);
+        return getLoginUserList1;
+    }
     public Map<String, Object> getUserStoreList(Map<String, String> params) throws SQLException {
         Map<String, Object> getUserStoreList = sql.selectOne("mall.UserMapper.getUserStoreList",params);
         return getUserStoreList;
@@ -79,6 +84,9 @@ public class UserDAO {
 
     public void insertUserHistory(UserVO userVO) throws SQLException{
         sql.insert("mall.UserMapper.insertUserHistory", userVO);
+    }
+    public void insertUserHistory1(UserVO userVO) throws SQLException{
+        sql.insert("mall.UserMapper.insertUserHistory1", userVO);
     }
 	public Map<String, Object> getUserConditionInfo(Integer user_id) {
 		 Map<String, Object> getUserConditionInfo = sql.selectOne("mall.UserMapper.getUserConditionInfo",user_id);

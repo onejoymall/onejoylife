@@ -178,7 +178,7 @@ public class restapiController {
 //                params.put("email",userVO.getEmail());
                 params.put("password",null);
                 params.put("phone",null);
-                Map<String, Object> userData= userDAO.getLoginUserList(params);
+                Map<String, Object> userData= userDAO.getLoginUserList1(params);
                 //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
                 if(!isEmpty(userData)){
                     //이메일 중복 메세지 출력
@@ -225,7 +225,7 @@ public class restapiController {
 //	                params.put("email",userVO.getEmail());
 	                params.put("password",null);
 	                params.put("phone",null);
-	                Map<String, Object> userData= userDAO.getLoginUserList(params);
+	                Map<String, Object> userData= userDAO.getLoginUserList1(params);
 	                //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
 	                if(!isEmpty(userData)){
 	                    //이메일 중복 메세지 출력
@@ -388,7 +388,7 @@ public class restapiController {
                 params.put("password", passwordEncoder.encode((String)params.get("password")));
                 userDAO.insertUser(params);
                 userVO.setLog_type("join");
-                userDAO.insertUserHistory(userVO);
+                userDAO.insertUserHistory1(userVO);
                 resultMap.put("redirectUrl", "/sign/signUpDone");
                 
                 params.put("coupon_condition","J");
@@ -434,7 +434,7 @@ public class restapiController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         try {
 
-            String email = (String)params.get("email1");
+            String email = (String)params.get("email");
             String password =(String)params.get("password");
             params.put("password",null);//패스워드 초기화
             if(email.isEmpty() || password.isEmpty()){

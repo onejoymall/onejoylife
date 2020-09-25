@@ -3260,7 +3260,7 @@ width: 100%;
 /* 로그인 */
 .login-main .mo-logo{
     height: 66px;
-    margin-top: 70px;
+ /*   margin-top: 70px;*/
     margin-bottom: 20px;
 }
 input[type="text"] {
@@ -3312,6 +3312,7 @@ body.black .check-save input[type=checkbox]+label{
     background:url(../../img/icon/checked.png) 50% no-repeat #ec5c51;
     background-size: 20px auto;
 }
+/*
 .btn-login ,.btn-kakao-login, .btn-join{
     display: block;
     width: 100%;
@@ -3321,6 +3322,65 @@ body.black .check-save input[type=checkbox]+label{
     background: #DA394D;
     font-size: 16px;
     text-align: center;
+}
+*/
+.btn-login ,.btn-kakao-login, .btn-nv-login, .btn-fb-login, .btn-ln-login, .btn-join{
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    background: #DA394D;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom:10px;
+}
+.btn-login{
+    margin-bottom:20px;
+}
+.btn-nv-login{
+    background: #46c313;
+    color: #fff!important;
+}
+.btn-fb-login{
+    background: #2257a6;
+    color: #fff!important;
+}
+.btn-ln-login{
+    background: #46c313;
+    color: #fff!important;
+}
+.kakao-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/kakao1.png) no-repeat center / contain;
+    vertical-align: -4px;
+    margin-right: 6px;
+}
+.nv-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/nv1.png) no-repeat center / contain;
+    vertical-align: -4px;
+    margin-right: 6px;
+}
+.fb-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/fb1.png) no-repeat center / contain;
+    vertical-align: -4px;
+    margin-right: 6px;
+}
+.ln-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/line1.png) no-repeat center / contain;
+    vertical-align: -4px;
+    margin-right: 6px;
 }
 body.black .btn-login{
     background:#ec407a;
