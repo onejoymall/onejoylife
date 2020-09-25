@@ -76,7 +76,7 @@
         });
 
         $('.btn-login').on("click",function () {
-        	alert("")
+        
             var formData = $('#defaultLoginForm').serialize();
             var email = $('#email').val();
             var password = $('#password').val();
