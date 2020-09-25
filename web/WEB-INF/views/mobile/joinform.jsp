@@ -404,6 +404,7 @@
                         $('#email').attr("readonly",true);
                         //인증버튼으로 변경
                         $('#mailauth').attr("id","");
+                        $('#mailauth').text("인증완료");
                     }
                 },
 
@@ -418,7 +419,7 @@
             });
             // $('#mailauth').removeClass("bg-secondary");
             // $('#mailauth').addClass("bg-success");
-            // $('#mailauth').text("인증완료");
+
         })
         
         
