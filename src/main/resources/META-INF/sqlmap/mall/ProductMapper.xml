@@ -911,7 +911,7 @@ and A.payment_status != 'N'
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 3) as file_3,
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 4) as file_4,
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 5) as file_5
-            FROM product A
+            FROM (select * from product order by product_id DESC LIMIT ${rowStart-1}, ${displayRowCount}) A
 			LEFT JOIN store B
 			on A.product_supplier = B.supplier_cd
 			LEFT JOIN (SELECT Z.product_class_name AS brand_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'B') C
@@ -919,7 +919,7 @@ and A.payment_status != 'N'
 			LEFT JOIN (SELECT Z.product_class_name AS origin_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'O') D
 			ON A.product_origin = D.product_class_code
 			where 1=1
-
+			order by product_id DESC
         ]]>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
@@ -940,7 +940,6 @@ and A.payment_status != 'N'
        			)
         	]]>
         </if>
-        LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getMgProductListCount" parameterType="com.webapp.manager.vo.ProductVO" resultType="Integer">
         <![CDATA[
