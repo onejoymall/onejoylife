@@ -152,53 +152,7 @@ public class restapiController {
 		}
 		return resultMap;
 	}
-	// 이메일 중복확인
-	@RequestMapping(value = "/sign/emailChk1", method = RequestMethod.GET, produces = "application/json")
 
-	public HashMap<String, Object> emailChk1(@RequestParam HashMap params, UserVO userVO,HttpServletRequest request, HttpSession session) {
-		HashMap<String, Object> error = new HashMap<String, Object>();
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		String memo;
-		String subject = messageSource.getMessage("authSendMailTitle", "ko");//
-		memo = messageSource.getMessage("atuhSendMailContent", "ko");//
-		userVO.setEmail(userVO.getEmail1());
-		try {
-
-			// 이메일 필수 체크
-			if (userVO.getEmail1().isEmpty()) {
-				error.put("email", messageSource.getMessage("error.required", "ko"));
-			}
-
-			// 이메일 유효성검사
-			String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
-			Boolean emailValidation = userVO.getEmail1().matches(regex);
-			if (emailValidation) {
-				// 이메일 중복확인
-//                params.put("email",userVO.getEmail());
-                params.put("password",null);
-                params.put("phone",null);
-                Map<String, Object> userData= userDAO.getLoginUserList1(params);
-                //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
-                if(!isEmpty(userData)){
-                    //이메일 중복 메세지 출력
-                    error.put("email", messageSource.getMessage("error.exsnIdExst","ko"));
-                }
-            }else{
-                error.put("email", messageSource.getMessage("error.emailForm","ko"));
-            }
-
-            if(!isEmpty(error)){
-                resultMap.put("validateError",error);
-            }else{
-              
-				userDAO.insertEmailAuth2(params);
-            }
-        } catch (Exception e) {
-            resultMap.put("e", e);
-        }
-        return resultMap;
-    }
 	// 이메일 중복확인
 		@RequestMapping(value = "/sign/emailChk", method = RequestMethod.GET, produces = "application/json")
 
@@ -213,19 +167,19 @@ public class restapiController {
 			try {
 
 				// 이메일 필수 체크
-				if (userVO.getEmail1().isEmpty()) {
+				if (userVO.getEmail().isEmpty()) {
 					error.put("email", messageSource.getMessage("error.required", "ko"));
 				}
 
 				// 이메일 유효성검사
 				String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
-				Boolean emailValidation = userVO.getEmail1().matches(regex);
+				Boolean emailValidation = userVO.getEmail().matches(regex);
 				if (emailValidation) {
 					// 이메일 중복확인
 //	                params.put("email",userVO.getEmail());
 	                params.put("password",null);
 	                params.put("phone",null);
-	                Map<String, Object> userData= userDAO.getLoginUserList1(params);
+	                Map<String, Object> userData= userDAO.getLoginUserList(params);
 	                //Spring 4.3 이후부터 import static org.springframework.util.CollectionUtils.isEmpty; 추가로 간단이 Map 의 null체크가 가능하다
 	                if(!isEmpty(userData)){
 	                    //이메일 중복 메세지 출력
@@ -239,7 +193,7 @@ public class restapiController {
 	                resultMap.put("validateError",error);
 	            }else{
 	              
-					userDAO.insertEmailAuth2(params);
+					userDAO.insertEmailAuth(params);
 	            }
 	        } catch (Exception e) {
 	            resultMap.put("e", e);
@@ -346,7 +300,7 @@ public class restapiController {
         
        		 Object siteUrl = session.getAttribute("RefererUrl");
 
-       		 if(userVO.getEmail1().isEmpty()){
+       		 if(userVO.getEmail().isEmpty()){
                 error.put("email", messageSource.getMessage("error.required","ko"));
             }
             /* 이메일 인증 필요없다하여 주석처리20200923
@@ -388,7 +342,7 @@ public class restapiController {
                 params.put("password", passwordEncoder.encode((String)params.get("password")));
                 userDAO.insertUser(params);
                 userVO.setLog_type("join");
-                userDAO.insertUserHistory1(userVO);
+                userDAO.insertUserHistory(userVO);
                 resultMap.put("redirectUrl", "/sign/signUpDone");
                 
                 params.put("coupon_condition","J");
@@ -445,7 +399,7 @@ public class restapiController {
                 //Spring Security 5 단방향 암호화 패스워드 일치 확인 을 위해 이메일로 사용자정보를 가져온후 처리
                 Map<String,Object> loginUserList = userDAO.getLoginUserList(params);
                 Object RefererUrl = session.getAttribute("RefererUrl");
-                
+
                 String product_cd=null;
                 if (!isEmpty((List<String>)session.getAttribute("today"))){
                     List<String> list = (List<String>)session.getAttribute("today");

@@ -4,15 +4,15 @@
 <%@ include file="/WEB-INF/views/mall/cert_conf.jsp"%>
 <%
     /* ============================================================================== */
-    /* =   ì¸ì¦ì°½ í˜¸ì¶œ ë° ìˆ˜ì‹  í˜ì´ì§€                                               = */
+    /* =   ÀÎÁõÃ¢ È£Ãâ ¹× ¼ö½Å ÆäÀÌÁö                                               = */
     /* = -------------------------------------------------------------------------- = */
-    /* =   í•´ë‹¹ í˜ì´ì§€ëŠ” ë°˜ë“œì‹œ ê°€ë§¹ì  ì„œë²„ì— ì—…ë¡œë“œ ë˜ì–´ì•¼ í•˜ë©°                    = */ 
-    /* =   ê°€ê¸‰ì  ìˆ˜ì •ì—†ì´ ì‚¬ìš©í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤.                                     = */
+    /* =   ÇØ´ç ÆäÀÌÁö´Â ¹İµå½Ã °¡¸ÍÁ¡ ¼­¹ö¿¡ ¾÷·Îµå µÇ¾î¾ß ÇÏ¸ç                    = */ 
+    /* =   °¡±ŞÀû ¼öÁ¤¾øÀÌ »ç¿ëÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.                                     = */
     /* ============================================================================== */
 %>
 <%!
     /* ============================================================================== */
-    /* =   null ê°’ì„ ì²˜ë¦¬í•˜ëŠ” ë©”ì†Œë“œ                                                = */
+    /* =   null °ªÀ» Ã³¸®ÇÏ´Â ¸Ş¼Òµå                                                = */
     /* = -------------------------------------------------------------------------- = */
     public String f_get_parm_str( String val )
     {
@@ -20,7 +20,7 @@
         return  val;
     }
 
-    //!!ì¤‘ìš” í•´ë‹¹ í•¨ìˆ˜ëŠ” year, month, day ë³€ìˆ˜ê°€ null ì¼ ê²½ìš° 00 ìœ¼ë¡œ ì¹˜í™˜í•©ë‹ˆë‹¤
+    //!!Áß¿ä ÇØ´ç ÇÔ¼ö´Â year, month, day º¯¼ö°¡ null ÀÏ °æ¿ì 00 À¸·Î Ä¡È¯ÇÕ´Ï´Ù
     public String f_get_parm_int( String val )
     {
         String ret_val = "";
@@ -55,13 +55,13 @@
 
     String up_hash       = "";
 	/*------------------------------------------------------------------------*/
-    /*  :: ì „ì²´ íŒŒë¼ë¯¸í„° ë‚¨ê¸°ê¸°                                               */
+    /*  :: ÀüÃ¼ ÆÄ¶ó¹ÌÅÍ ³²±â±â                                               */
     /*------------------------------------------------------------------------*/
     StringBuffer sbParam = new StringBuffer();
     CT_CLI       cc      = new CT_CLI();
-	//cc.setCharSetUtf8(); // UTF-8 ì²˜ë¦¬
+	//cc.setCharSetUtf8(); // UTF-8 Ã³¸®
     
-    // request ë¡œ ë„˜ì–´ì˜¨ ê°’ ì²˜ë¦¬
+    // request ·Î ³Ñ¾î¿Â °ª Ã³¸®
     Enumeration params = request.getParameterNames();
     while(params.hasMoreElements())
     {
@@ -130,7 +130,7 @@
                 cert_able_yn = f_get_parm_str( valParam[i] );
             }
 
-           // ì¸ì¦ì°½ìœ¼ë¡œ ë„˜ê¸°ëŠ” form ë°ì´í„° ìƒì„± í•„ë“œ
+           // ÀÎÁõÃ¢À¸·Î ³Ñ±â´Â form µ¥ÀÌÅÍ »ı¼º ÇÊµå
             sbParam.append( "<input type=\"hidden\" name=\"" + nmParam + "\" value=\"" + f_get_parm_str( valParam[i] ) + "\"/>" );
 
         }
@@ -138,10 +138,10 @@
 
     if ( req_tx.equals( "cert" ) )
     {
-        // !!up_hash ë°ì´í„° ìƒì„±ì‹œ ì£¼ì˜ ì‚¬í•­
-        // year , month , day ê°€ ë¹„ì–´ ìˆëŠ” ê²½ìš° "00" , "00" , "00" ìœ¼ë¡œ ì„¤ì •ì´ ë©ë‹ˆë‹¤
-        // ê·¸ì™¸ì˜ ê°’ì€ ì—†ì„ ê²½ìš° ""(null) ë¡œ ì„¸íŒ…í•˜ì‹œë©´ ë©ë‹ˆë‹¤.
-        // up_hash ë°ì´í„° ìƒì„±ì‹œ site_cd ì™€ ordr_idxx ëŠ” í•„ìˆ˜ ê°’ì…ë‹ˆë‹¤.
+        // !!up_hash µ¥ÀÌÅÍ »ı¼º½Ã ÁÖÀÇ »çÇ×
+        // year , month , day °¡ ºñ¾î ÀÖ´Â °æ¿ì "00" , "00" , "00" À¸·Î ¼³Á¤ÀÌ µË´Ï´Ù
+        // ±×¿ÜÀÇ °ªÀº ¾øÀ» °æ¿ì ""(null) ·Î ¼¼ÆÃÇÏ½Ã¸é µË´Ï´Ù.
+        // up_hash µ¥ÀÌÅÍ »ı¼º½Ã site_cd ¿Í ordr_idxx ´Â ÇÊ¼ö °ªÀÔ´Ï´Ù.
         if( cert_able_yn.equals( "Y" ) )
         {
             up_hash = cc.makeHashData( g_conf_ENC_KEY, site_cd   +
@@ -169,13 +169,13 @@
                                       );
         }
 
-        // ì¸ì¦ì°½ìœ¼ë¡œ ë„˜ê¸°ëŠ” form ë°ì´í„° ìƒì„± í•„ë“œ ( up_hash )
+        // ÀÎÁõÃ¢À¸·Î ³Ñ±â´Â form µ¥ÀÌÅÍ »ı¼º ÇÊµå ( up_hash )
         sbParam.append( "<input type=\"hidden\" name=\"up_hash\" value=\"" + up_hash + "\"/>" );
         
-        // KCP ë³¸ì¸í™•ì¸ ë¼ì´ë¸ŒëŸ¬ë¦¬ ë²„ì „ ì •ë³´
+        // KCP º»ÀÎÈ®ÀÎ ¶óÀÌºê·¯¸® ¹öÀü Á¤º¸
         sbParam.append( "<input type=\"hidden\" name=\"kcp_cert_lib_ver\" value=\"" + cc.getKCPLibVer() + "\"/>" );
         
-        cc = null; // ê°ì²´ í•´ì œ
+        cc = null; // °´Ã¼ ÇØÁ¦
     }
 %>
 
@@ -191,24 +191,24 @@
             {
                 var frm = document.form_auth;
 
-                // ì¸ì¦ ìš”ì²­ ì‹œ í˜¸ì¶œ í•¨ìˆ˜
+                // ÀÎÁõ ¿äÃ» ½Ã È£Ãâ ÇÔ¼ö
                 if ( frm.req_tx.value == "cert" )
                 {
-                    opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash ë°ì´í„° ê²€ì¦ì„ ìœ„í•œ í•„ë“œ
+                    opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash µ¥ÀÌÅÍ °ËÁõÀ» À§ÇÑ ÇÊµå
 
                     frm.action="<%= g_conf_gw_url %>";
                     frm.submit();
                 }
 
-                // ì¸ì¦ ê²°ê³¼ ë°ì´í„° ë¦¬í„´ í˜ì´ì§€ í˜¸ì¶œ í•¨ìˆ˜
+                // ÀÎÁõ °á°ú µ¥ÀÌÅÍ ¸®ÅÏ ÆäÀÌÁö È£Ãâ ÇÔ¼ö
                 else if ( ( frm.req_tx.value == "auth" || frm.req_tx.value == "otp_auth" ) )
                 {
-                    frm.action="./kcpcert_proc_res.jsp";
+                    frm.action="/sign/kcpcert_proc_res";
                     frm.submit();
                 }
                 else
                 {
-                    //alert ("req_tx ê°’ì„ í™•ì¸í•´ ì£¼ì„¸ìš”");
+                    //alert ("req_tx °ªÀ» È®ÀÎÇØ ÁÖ¼¼¿ä");
                 }
             }
         </script>

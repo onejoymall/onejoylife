@@ -12,15 +12,6 @@
         #{log_type}
         )
     </insert>
-        <insert id="insertUserHistory1" parameterType="com.webapp.manager.vo.MgUserVO">
-        insert into user_login_history(
-        email,
-        log_type
-        ) values (
-        #{email1},
-        #{log_type}
-        )
-    </insert>
     <select id="getFindUser" resultType="java.util.HashMap">
         <![CDATA[
         SELECT
@@ -40,18 +31,7 @@
         <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
         <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
     </select>
-        <select id="getUserList1" resultType="java.util.HashMap">
-        /*getUserList1*/
-        <![CDATA[
-        SELECT
-          A.*
-        FROM user A where email =#{email1}
-        ]]>
-        <if test="level == 10"> <![CDATA[AND A.level >= 9 ]]></if>
-        <if test="level != null and level != 10"> <![CDATA[AND A.level= #{level} ]]></if>
-        <if test="password != null"> <![CDATA[AND A.password= #{password} ]]></if>
-        <if test="phone != null"> <![CDATA[AND A.phone= #{phone} ]]></if>
-    </select>
+
     <select id="getUserStoreList" resultType="java.util.HashMap">
         SELECT
             email as email,
@@ -164,7 +144,7 @@
         username,email,password,lastname,firstname,email_auth_code,email_auth_status,refferal_code,iso_code,phone,level,group_id,sex,birth)
       VALUES (
         #{username},
-        #{email1},
+        #{email},
         #{password},
         #{lastname},
         #{firstname},
@@ -180,16 +160,7 @@
         )
         ]]>
     </insert>
-        <insert id="insertEmailAuth2" parameterType="String">
-    /*insertEmailAuth2*/
-        <![CDATA[
-        insert into email_auth(
-        email
-      )VALUES (
-        #{email1}
-        )
-        ]]>
-    </insert>
+
     <insert id="insertEmailAuth" parameterType="String">
     
         <![CDATA[

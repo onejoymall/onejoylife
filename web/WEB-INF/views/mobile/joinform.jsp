@@ -161,7 +161,7 @@
                 <form method="POST" name="defaultJoinform" id="defaultJoinform">
                     <div class="join-cell">
                       <div class="join-cell-in">
-                        <input type="text" name="email1" id="email1" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}" required>
+                        <input type="text" name="email" id="email" placeholder="${afn:getMessage('idEmail',sessionScope.locale)}" required>
                          <button class="btn-auth" id="emailChk" type="button">중복체크</button>
                         </div>
                         <p class="error" id="emailValidation">
@@ -337,7 +337,8 @@
                 $('#passwordValidation').addClass("error-on");
                 $("#passwordValidation").removeClass("text-success");
             }else{
-                $("#passwordValidation").text('');
+                $("#passwordValidation").addClass("text-success");
+                $("#passwordValidation").text("* ${afn:getMessage('msg.pw_use',sessionScope.locale)}");
                 if(pw != pw_cf){
                     $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
                     $('#password_cfValidation').addClass("error-on");
@@ -404,6 +405,7 @@
                         $('#email').attr("readonly",true);
                         //인증버튼으로 변경
                         $('#mailauth').attr("id","");
+                        $('#mailauth').text("인증완료");
                     }
                 },
 
@@ -418,20 +420,24 @@
             });
             // $('#mailauth').removeClass("bg-secondary");
             // $('#mailauth').addClass("bg-success");
-            // $('#mailauth').text("인증완료");
+
         })
-        
-        
-         //이메일중복체크
-   $(document).on("click","#emailChk",function () {
+        //이메일 다시 입력시 .join-cell input
+        $(document).on("propertychange change keyup paste input",".join-cell input[name=email]",function () {
+
+            $('#emailChk').removeClass('btn-success')
+            $('#emailChk').text('${afn:getMessage("duplication_check",sessionScope.locale)}');
+        });
+        //이메일중복체크
+        $(document).on("click","#emailChk",function () {
         $('.error').html('');
         var formData = $('#defaultJoinform').serialize();
         $('.loading-bar-wrap').removeClass("hidden");
-
+        var authMsgUsable = '${afn:getMessage("Usable",sessionScope.locale)}';
         jQuery.ajax({
             type:"GET",
             // contentType: 'application/json',
-            url:"/sign/emailChk1",
+            url:"/sign/emailChk",
             // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
             data:formData,
 
@@ -446,6 +452,9 @@
                             $('#'+index+'Validation').addClass("error-on");
                         }
                     });
+                }else{
+                    $('#emailChk').addClass('btn-success');
+                    $('#emailChk').text(authMsgUsable);
                 }
             },
 

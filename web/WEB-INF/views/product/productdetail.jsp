@@ -631,8 +631,8 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w">
-                                    <input name="email1" id="email" type="text" placeholder="이메일을 입력해주세요."  required>
-                                    <a class="btn-auth" id="emailChk1"><span>중복체크</span></a>
+                                    <input name="email" id="email" type="text" placeholder="이메일을 입력해주세요."  required>
+                                    <a class="btn-auth" id="emailChk"><span>중복체크</span></a>
                                 </div>
                             </td>
                         </tr>
@@ -734,79 +734,129 @@ $('.kko-login-btn').click(function () {
     window.open('https://kauth.kakao.com/oauth/authorize?client_id=edae5e01f6d81723613c9cd06f550593&redirect_uri=<c:out value="${siteUrl}"/>/Popup/kakao&response_type=code','_blank','width=750, height=900');
 });
 
-var pwCheck = false;
-$('#formSignUpSubmit1').on("click",function () {
-	
-    var password = $('#password').val();
-    var password_cf = $('#password_cf').val();
-    var formData = $('#defaultJoinform').serialize();
-     $('.er').html('');
+    var pwCheck = false;
+    $('#formSignUpSubmit1').on("click",function () {
 
-    if(!pwCheck){
- 	   $('#password_cfValidation').html('* ${afn:getMessage("error.sign.pwdcfMsg",sessionScope.locale)}');
-    }else if($('#ch').is(":checked")) {
-        $('.loading-bar-wrap').removeClass("hidden");
-            jQuery.ajax({
-                type:"GET",
-                // contentType: 'application/json',
-                url:"/sign/signupProc",
-                // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-                data:formData,
-                success : function(data) {
-                    // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-                    // TODO
-                    console.log(data)
-                    if(data.validateError){
-                        $.each(data.validateError, function (index, item) {
-                     	   console.log(data);
-                            if(index != "Error"){//일반에러메세지
-                                $('#'+index+'Validation').html(item);
-                            return;
-                            }
-                        });
-                    }else{
-                        location.href=data.redirectUrl;
+        var password = $('#password').val();
+        var password_cf = $('#password_cf').val();
+        var formData = $('#defaultJoinform').serialize();
+         $('.er').html('');
+
+        if(!pwCheck){
+           $('#password_cfValidation').html('* ${afn:getMessage("error.sign.pwdcfMsg",sessionScope.locale)}');
+        }else if($('#ch').is(":checked")) {
+            $('.loading-bar-wrap').removeClass("hidden");
+                jQuery.ajax({
+                    type:"GET",
+                    // contentType: 'application/json',
+                    url:"/sign/signupProc",
+                    // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+                    data:formData,
+                    success : function(data) {
+                        // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+                        // TODO
+                        console.log(data)
+                        if(data.validateError){
+                            $.each(data.validateError, function (index, item) {
+                               console.log(data);
+                                if(index != "Error"){//일반에러메세지
+                                    $('#'+index+'Validation').html(item);
+                                return;
+                                }
+                            });
+                        }else{
+                            location.href=data.redirectUrl;
+                        }
+
+                    },
+                    complete : function(data) {
+                        // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+                        // TODO
+                        $('.loading-bar-wrap').addClass("hidden");
+                    },
+                    error : function(xhr, status, error) {
+                        console.log(xhr+status+error);
                     }
+                });
 
-                },
-                complete : function(data) {
-                    // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-                    // TODO
-                    $('.loading-bar-wrap').addClass("hidden");
-                },
-                error : function(xhr, status, error) {
-                    console.log(xhr+status+error);
-                }
-            });
+        }else{
+           alert('${afn:getMessage("error.sign.termsRequest",sessionScope.locale)}');
+        }
+    })
 
+//이메일 다시 입력시
+$(document).on("propertychange change keyup paste input",".mem-id2 > input[name=email]",function () {
+
+    $('#emailChk').removeClass('btn-success')
+    $('#emailChk').text('${afn:getMessage("duplication_check",sessionScope.locale)}');
+});
+//이메일중복체크
+$(document).on("click","#emailChk",function () {
+    $('.er').html('');
+    var formData = $('#defaultJoinform').serialize();
+    $('.loading-bar-wrap').removeClass("hidden");
+
+    jQuery.ajax({
+        type:"GET",
+        // contentType: 'application/json',
+        url:"/sign/emailChk",
+        // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
+        data:formData,
+
+        success : function(data) {
+            // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
+            // TODO
+
+            if(data.validateError){
+                $.each(data.validateError, function (index, item) {
+                    if(index != "Error"){//일반에러메세지
+                        $('#'+index+'Validation').html(item);
+                    }
+                });
+            }else{
+                $('#emailChk').addClass('btn-success')
+                $('#emailChk').text('${afn:getMessage("Usable",sessionScope.locale)}')
+            }
+        },
+
+        complete : function(data) {
+            // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
+            // TODO
+            $('.loading-bar-wrap').addClass("hidden");
+        },
+        error : function(xhr, status, error) {
+            console.log(xhr+status+error);
+        }
+    });
+})
+// var mathPassword = "^(?=.*[0-9]+)[a-zA-Z][a-zA-Z0-9]{6,20}$";
+var regExp = /^[a-zA-Z0-9]{6,20}$/;
+//패스워드 체크
+$(document).on('input','input[name=password],input[name=password_cf]',function () {
+    pwCheck = false;
+    var pw = $('input[name=password]').val();
+    var pw_cf = $('input[name=password_cf]').val();
+    if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
+        $("#passwordValidation").text("* ${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}");
+        $("#passwordValidation").removeClass("text-success");
+        $("#password_cfValidation").text('');
     }else{
-       alert('${afn:getMessage("error.sign.termsRequest",sessionScope.locale)}');
+        $("#passwordValidation").addClass("text-success");
+        $("#passwordValidation").text("* ${afn:getMessage('msg.pw_use',sessionScope.locale)}");
+
+        if(pw != pw_cf){
+            $("#password_cfValidation").removeClass("text-success");
+            $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
+
+        }else{
+            pwCheck = true;
+            $("#password_cfValidation").addClass("text-success");
+            $("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
+        }
     }
 })
 
-   var regExp = /^[a-zA-Z0-9]{6,20}$/;
-    //패스워드 체크
-    $(document).on('input','input[name=password],input[name=password_cf]',function () {
-    	pwCheck = false;
-    	var pw = $('input[name=password]').val();
-    	var pw_cf = $('input[name=password_cf]').val();
-        if(!regExp.test(pw) || !isStrNumber(pw) || !isStrAlphabet(pw)){
-            $("#passwordValidation").text("* ${afn:getMessage('error.sign.pwdpattern',sessionScope.locale)}");
-            $("#passwordValidation").removeClass("text-success");
-            $("#password_cfValidation").text('');
-        }else{
-        	$("#passwordValidation").text('');
-        	if(pw != pw_cf){
-                $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
-                $("#password_cfValidation").removeClass("text-success");
-            }else{
-            	pwCheck = true;
-            	$("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
-                $("#password_cfValidation").addClass("text-success");
-            }
-        }
-    })
-    $(document).ready(function(){
+$(document).ready(function(){
         callQnalist('${param.product_cd}',1);
 
         $('.goods-slider').bxSlider({
@@ -982,48 +1032,6 @@ $('#formSignUpSubmit1').on("click",function () {
             $('html,body').stop().animate({scrollTop:tt});
         });//click
     });
-    
-
-	     //이메일인증
-	   $(document).on("click","#emailChk1",function () {
-		   alert("dd00")
-		   
-	        $('.er').html('');
-	        var formData = $('#defaultJoinform').serialize();
-	      $('.loading-bar-wrap').removeClass("hidden");
-
-	        jQuery.ajax({
-	            type:"GET",
-	            // contentType: 'application/json',
-	            url:"/sign/emailChk1",
-	            // dataType:"JSON", // 옵션이므로 JSON으로 받을게 아니면 안써도 됨
-	            data:formData,
-
-	            success : function(data) {
-	                // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
-	                // TODO
-	                
-	                if(data.validateError){
-	                    $.each(data.validateError, function (index, item) {
-	                        if(index != "Error"){//일반에러메세지
-	                            $('#'+index+'Validation').html(item);
-	                        }
-	                    });
-	                }
-	            },
-
-	            complete : function(data) {
-	                // 통신이 실패했어도 완료가 되었을 때 이 함수를 타게 된다.
-	                // TODO
-	               $('.loading-bar-wrap').addClass("hidden");
-	            },
-	            error : function(xhr, status, error) {
-	                console.log(xhr+status+error);
-	            }
-	        });
-	    })
-	    
-    
 </script>
 <c:import url="/layout/footer"/>
 <%-- <%@ include file="/WEB-INF/views/layout/footer.jsp" %> --%>

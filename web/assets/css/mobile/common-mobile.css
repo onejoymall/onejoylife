@@ -5440,8 +5440,12 @@ input[type=password]::placeholder{
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: url(http://onejoylife.com/assets/css/mobile/../../img/share.png) center center no-repeat rgb(199, 199, 199);
+    background: url(/assets/img/share.png) center center no-repeat rgb(199, 199, 199);
     background-size: contain;
     opacity: 0.6;
 }
 
+.btn-success{
+    background: #28a745!important;
+    color:#fff!important;
+}
