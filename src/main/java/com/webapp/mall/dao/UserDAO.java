@@ -41,10 +41,6 @@ public class UserDAO {
         return getLoginUserList;
     }
 
-    public Map<String, Object> getLoginUserList1(Map<String, String> params) throws SQLException {
-        Map<String, Object> getLoginUserList1 = sql.selectOne("mall.UserMapper.getUserList1",params);
-        return getLoginUserList1;
-    }
     public Map<String, Object> getUserStoreList(Map<String, String> params) throws SQLException {
         Map<String, Object> getUserStoreList = sql.selectOne("mall.UserMapper.getUserStoreList",params);
         return getUserStoreList;
@@ -72,9 +68,7 @@ public class UserDAO {
     public void insertEmailAuth(Map<String, String> params) throws SQLException {
         sql.insert("mall.UserMapper.insertEmailAuth", params);
     }
-    public void insertEmailAuth2(Map<String, String> params) throws SQLException {
-        sql.insert("mall.UserMapper.insertEmailAuth2", params);
-    }
+
     public void updatePasswordChangeMember(UserVO userVO) throws SQLException {
         sql.update("mall.UserMapper.updatePasswordChangeMember", userVO);
     }
@@ -85,9 +79,7 @@ public class UserDAO {
     public void insertUserHistory(UserVO userVO) throws SQLException{
         sql.insert("mall.UserMapper.insertUserHistory", userVO);
     }
-    public void insertUserHistory1(UserVO userVO) throws SQLException{
-        sql.insert("mall.UserMapper.insertUserHistory1", userVO);
-    }
+
 	public Map<String, Object> getUserConditionInfo(Integer user_id) {
 		 Map<String, Object> getUserConditionInfo = sql.selectOne("mall.UserMapper.getUserConditionInfo",user_id);
         return getUserConditionInfo;

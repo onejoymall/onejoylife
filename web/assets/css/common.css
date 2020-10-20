@@ -640,3 +640,8 @@ input[id="ch"] {
     background:#ffcf03;
     color:#000;
 }
+
+.btn-success{
+    background: #28a745!important;
+    color:#fff!important;
+}

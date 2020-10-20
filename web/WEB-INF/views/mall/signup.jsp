@@ -162,7 +162,7 @@
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("idEmail",sessionScope.locale)}</p>
                                 <div class="mem-id2 id2-w" >
-                                    <input name="email1" id="email1" type="text"  required>
+                                    <input name="email" id="email" type="text"  required>
                                      <button class="btn-auth" id="emailChk" type="button">중복체크</button>
                                 </div>
                             </td>
@@ -173,24 +173,7 @@
                                 &nbsp;
                             </td>
                         </tr>
-                      <!--  
-                        <tr>
-                            <td class="mem-td">
-                                <p class="mem-id1">${afn:getMessage("certiNum",sessionScope.locale)}</p>
-                                <div class="mem-id2 id2-w">
-                                    <input name="email_auth_code" id="email_auth_code" type="text" class="num-txt" readonly>
-                                    <button class="btn-auth" id="mailSender" type="button">${afn:getMessage("certiNumSend",sessionScope.locale)}</button>
-                                    <!-- <a href="" class="none"><span>인증완료</span></a>
-                                    <a href="" class="none"><span>300s</span></a> 
-                                </div>
-                            </td>
-                        </tr>
-                         -->
-                        <tr>
-                            <td class="er" id="email_auth_codeValidation">
-                                &nbsp;
-                            </td>
-                        </tr>
+
                         <tr>
                             <td class="mem-td">
                                 <p class="mem-id1">${afn:getMessage("phone",sessionScope.locale)}</p>
@@ -373,6 +356,12 @@ $('.kko-login-btn').click(function () {
             }
         });
     })
+    //이메일 다시 입력시
+    $(document).on("propertychange change keyup paste input",".mem-id2 > input[name=email]",function () {
+
+        $('#emailChk').removeClass('btn-success')
+        $('#emailChk').text('${afn:getMessage("duplication_check",sessionScope.locale)}');
+    });
     //이메일중복체크
    $(document).on("click","#emailChk",function () {
         $('.er').html('');
@@ -389,13 +378,16 @@ $('.kko-login-btn').click(function () {
             success : function(data) {
                 // 통신이 성공적으로 이루어졌을 때 이 함수를 타게 된다.
                 // TODO
-                console.log(data);
+
                 if(data.validateError){
                     $.each(data.validateError, function (index, item) {
                         if(index != "Error"){//일반에러메세지
                             $('#'+index+'Validation').html(item);
                         }
                     });
+                }else{
+                    $('#emailChk').addClass('btn-success')
+                    $('#emailChk').text('${afn:getMessage("Usable",sessionScope.locale)}')
                 }
             },
 
@@ -421,14 +413,17 @@ $('.kko-login-btn').click(function () {
             $("#passwordValidation").removeClass("text-success");
             $("#password_cfValidation").text('');
         }else{
-        	$("#passwordValidation").text('');
+            $("#passwordValidation").addClass("text-success");
+        	$("#passwordValidation").text("* ${afn:getMessage('msg.pw_use',sessionScope.locale)}");
+
         	if(pw != pw_cf){
-                $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
                 $("#password_cfValidation").removeClass("text-success");
+                $("#password_cfValidation").text("* ${afn:getMessage('error.sign.pwdDis',sessionScope.locale)}");
+
             }else{
             	pwCheck = true;
-            	$("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
                 $("#password_cfValidation").addClass("text-success");
+            	$("#password_cfValidation").text("* ${afn:getMessage('msg.sign.pwdSuccess',sessionScope.locale)}");
             }
         }
     })

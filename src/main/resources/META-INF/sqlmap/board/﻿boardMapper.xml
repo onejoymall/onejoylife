@@ -162,7 +162,7 @@
             (select Z.REWRITER from TBL_BOARDREPLY Z where Z.BRDNO = TB.BRDNO order by REORDER desc limit 1) as rewriter,
             (SELECT DATE_FORMAT(REDATE,'%Y-%m-%d %H:%i') FROM TBL_BOARDREPLY WHERE BRDNO=TB.BRDNO order by REORDER DESC limit 1) REDATE,
             question_type,(select Z.code_name from code Z where Z.code='question_type' and Z.code_value = TB.question_type) question_type_name,
-            BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email,email AS email1, phone, 
+            BGNO, BRDNO, BRDTITLE, BRDWRITER, BRDMEMO, DATE_FORMAT(BRDDATE,'%Y-%m-%d'),email, phone,
             order_no,password,usr_id,store_id, supplier_cd
           FROM TBL_BOARD TB
          WHERE BRDDELETEFLAG='N'

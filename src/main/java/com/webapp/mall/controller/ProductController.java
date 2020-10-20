@@ -623,10 +623,14 @@ public class ProductController {
                 //재결제
                 Map<String,Object> paymentDetail = paymentDAO.getPaymentDetail(params);
                 List<Map<String,Object>> paymentBundleList = paymentDAO.getPaymentBundleList(params);
-
+                if(isEmpty(paymentDetail)){
+                    //저장된 상품 세션이 없는경우 즉 url 직접입력한경우 첫화면으로 되돌린다
+                    return "redirect:/";
+                }
                 params.put("product_cd",paymentDetail.get("product_cd"));
                 params.put("product_live_type", "on");
                 Map<String,Object> detail = productDAO.getProductViewDetail(params);
+
                 //상품 금액
                 params.put("product_payment",paymentDetail.get("product_payment"));
                 //배송정보
@@ -832,9 +836,9 @@ public class ProductController {
             List<Map<String,Object>> selector = selectorDAO.getSelector(params);
             params.put("selector",selector);
         }
-
+        Map<String,Object> ItemList = productDAO.getProductViewDetail(params);
         //관리자가 지정한 배송구분별 배송비용을 출력한다.
-        String splitDeliveryPaymentString=(String)params.get("delivery_payment");//구분별 배송비
+        String splitDeliveryPaymentString=(String)ItemList.get("product_delivery_payment");//구분별 배송비
         String deliveryPutString="";
         String delivery_payment_class = (String) params.get("delivery_payment_class");
         if ("T".equals(delivery_payment_class)) {
