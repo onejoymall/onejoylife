@@ -911,7 +911,7 @@ and A.payment_status != 'N'
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 3) as file_3,
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 4) as file_4,
                 (select product_file.file_link from product_file where product_file.key_id = A.product_cd and product_file.file_order = 5) as file_5
-            FROM (select * from product order by product_id DESC LIMIT ${rowStart-1}, ${displayRowCount}) A
+            FROM product A
 			LEFT JOIN store B
 			on A.product_supplier = B.supplier_cd
 			LEFT JOIN (SELECT Z.product_class_name AS brand_name, Z.product_class_code FROM product_class_code Z WHERE Z.product_class_code_type = 'B') C
@@ -939,7 +939,7 @@ and A.payment_status != 'N'
        			)
         	]]>
         </if>
-        order by product_id DESC
+        order by A.product_id DESC LIMIT ${rowStart-1}, ${displayRowCount}
     </select>
     <select id="getMgProductListCount" parameterType="com.webapp.manager.vo.ProductVO" resultType="Integer">
         <![CDATA[
