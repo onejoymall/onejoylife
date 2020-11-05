@@ -19,7 +19,7 @@
         <![endif]
     -->
     <link href="<c:url value="/assets/css/jquery.bxslider.css" />"rel="stylesheet" type="text/css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js" />"></script>
     <script src="<c:url value="/assets/js/common-mobile.js" />"></script>
