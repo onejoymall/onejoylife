@@ -65,7 +65,7 @@
                                                                                
 			                               <div class="review-content-body-media-box">
 					                           <c:if test="${not empty listview.filename}">
-					                 			    <img src="${listview.filelink}" onerror="this.src='http://placehold.it/600x300'" alt="${afn:getMessage('reviewImg',sessionScope.locale)}" />
+					                 			    <img src="${listview.filelink}" onerror="this.src='https://placehold.it/600x300'" alt="${afn:getMessage('reviewImg',sessionScope.locale)}" />
 					                           </c:if>
 				                           </div>
                                            <div class="qna-content-body-a">

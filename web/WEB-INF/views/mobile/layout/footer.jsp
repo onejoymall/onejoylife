@@ -29,7 +29,7 @@ wcs_do();
         <li>${afn:getMessage('tel',sessionScope.locale)} : ${info.company_ph} / ${afn:getMessage('fax',sessionScope.locale)} : ${info.company_fax}</li>
         <li>${info.postcode} ${info.roadAddress} ${info.jibunAddress} ${info.extraAddress}</li>
         <li>${afn:getMessage('store_reg',sessionScope.locale)}: ${info.corporate_num}</li>
-        <li>${afn:getMessage('communications_sales_report',sessionScope.locale)}  ${info.cmnt_sales_busi_report} <a href="javascript:void(0)" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[${afn:getMessage('store_info_check',sessionScope.locale)}]</a></li>
+        <li>${afn:getMessage('communications_sales_report',sessionScope.locale)}  ${info.cmnt_sales_busi_report} <a href="javascript:void(0)" onclick="window.open('https://www.ftc.go.kr/bizCommPop.do?wrkr_no=4878801223','_blank','width=750, height=900');">[${afn:getMessage('store_info_check',sessionScope.locale)}]</a></li>
         <li>${afn:getMessage('privacy_infor_manager',sessionScope.locale)} : <a href="mailto:${info.personal_info_incharge_email}">${info.personal_info_incharge}(${info.personal_info_incharge_email})</a></li>
         <li>${afn:getMessage('customer_service',sessionScope.locale)} : ${info.company_ph} / ${info.personal_info_incharge_email}</li>
         <li>Copyright ${info.copyright}. All rights reserved.</li>

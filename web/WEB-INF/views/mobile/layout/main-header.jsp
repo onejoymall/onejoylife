@@ -19,11 +19,11 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta property="og:url" content="http://onejoy-life.com" />
+    <meta property="og:url" content="https://onejoy-life.com" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${afn:getMessage('ojl_prize',sessionScope.locale)}" />
     <meta property="og:description" content="" />
-    <meta property="og:image" content="http://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
+    <meta property="og:image" content="https://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
     <meta property="og:image:width" content="1100" />
     <meta property="og:image:height" content="265" />
     <link href="<c:url value="/assets/css/reset.css" />" rel="stylesheet" type="text/css">
@@ -31,7 +31,7 @@
     <link href="<c:url value="/assets/css/mobile/commonSub.css" />"rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400&display=swap&subset=korean" rel="stylesheet">
     <link href="<c:url value="/assets/css/jquery.bxslider.css" />"rel="stylesheet" type="text/css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -43,7 +43,7 @@
     <!-- timepicker -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
-	<script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+	<script type='text/javascript' src='https://wcs.naver.net/wcslog.js'></script>
 
 	<script type='text/javascript'> 
 	
