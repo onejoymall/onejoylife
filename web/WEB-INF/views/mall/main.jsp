@@ -46,7 +46,7 @@
 			<div class="point-bnr-inner">
 				<a href="<c:url value="${giveawayLineBanner.url}"/>"><img
 					src="${giveawayLineBanner.file_1}"
-					onerror="this.src='http://placehold.it/1100x265'" /></a>
+					onerror="this.src='https://placehold.it/1100x265'" /></a>
 			</div>
 		</div>
 		<div class="point-product-wrap">
@@ -63,7 +63,7 @@
 							<li><a
 								href="<c:url value="/giveaway/giveawaydetail?giveaway_id="/>${list.giveaway_id}">
 									<img src='${list.file_1}'
-									onerror="this.src='http://placehold.it/190x190'">
+									onerror="this.src='https://placehold.it/190x190'">
 									
 									<p class="point-pdt-title">${list.giveaway_name}</p>
 							</a>
@@ -113,7 +113,7 @@
 				<div class="mini-bnr-inner">
 					<a href="${lineBannerList1.url}"> <img
 						src="${lineBannerList1.file_1}"
-						onerror="this.src='http://placehold.it/200x30'" />
+						onerror="this.src='https://placehold.it/200x30'" />
 					</a>
 				</div>
 			</div>
@@ -160,13 +160,13 @@
 			<div class="mini-bnr-inner">
 				<a href="${lineBannerList2.url}"> <img
 					src="${lineBannerList2.file_1}"
-					onerror="this.src='http://placehold.it/200x30'" />
+					onerror="this.src='https://placehold.it/200x30'" />
 				</a>
 			</div>
 		</div>
 		<div class="mini-bnr-section mini-bnr-3">
 			<div class="mini-bnr-inner">
-				<a href="${lineBannerList3.url}"><img src="${lineBannerList3.file_1}" onerror="this.src='http://placehold.it/200x30'" /></a>
+				<a href="${lineBannerList3.url}"><img src="${lineBannerList3.file_1}" onerror="this.src='https://placehold.it/200x30'" /></a>
 			</div>
 		</div>
 	</article>
@@ -254,7 +254,7 @@
 							<li><a href="/product/productDetail?product_cd=${productMDList.product_cd}">
 									<div class="img-box">
 										<img src='${productMDList.file_1}'
-											onerror="this.src='http://placehold.it/190x190'" height="190">
+											onerror="this.src='https://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productMDList.percent_discount}<span>%</span></p>
 									
@@ -293,13 +293,13 @@
 		<div class="mini-bnr-section mini-bnr-2">
 			<div class="mini-bnr-inner">
 				<a href="${lineBannerList4.url}"> 
-				<img src="${lineBannerList4.file_1}" onerror="this.src='http://placehold.it/200x30'" />
+				<img src="${lineBannerList4.file_1}" onerror="this.src='https://placehold.it/200x30'" />
 				</a>
 			</div>
 		</div>
 		<div class="mini-bnr-section mini-bnr-3">
 			<div class="mini-bnr-inner">
-				<a href="${lineBannerList5.url}"> <img src="${lineBannerList5.file_1}" onerror="this.src='http://placehold.it/200x30'" />
+				<a href="${lineBannerList5.url}"> <img src="${lineBannerList5.file_1}" onerror="this.src='https://placehold.it/200x30'" />
 				</a>
 			</div>
 		</div>
@@ -347,7 +347,7 @@
 							<li><a
 								href="/product/productDetail?product_cd=${productSpList.product_cd}">
 									<div class="img-box">
-										<img src='${productSpList.file_1}'	onerror="this.src='http://placehold.it/190x190'" height="190">
+										<img src='${productSpList.file_1}'	onerror="this.src='https://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productSpList.percent_discount}<span>%</span></p>
 									
@@ -387,12 +387,12 @@
 		</div>
 		<div class="mini-bnr-section mini-bnr-5">
 			<div class="mini-bnr-inner">
-				<a href="${lineBannerList6.url}"> <img src="${lineBannerList6.file_1}" onerror="this.src='http://placehold.it/200x30'" /></a>
+				<a href="${lineBannerList6.url}"> <img src="${lineBannerList6.file_1}" onerror="this.src='https://placehold.it/200x30'" /></a>
 			</div>
 		</div>
 		<div class="mini-bnr-section mini-bnr-6">
 			<div class="mini-bnr-inner">
-				<a href="${lineBannerList7.url}"> <img src="${lineBannerList7.file_1}" onerror="this.src='http://placehold.it/200x30'" /> </a>
+				<a href="${lineBannerList7.url}"> <img src="${lineBannerList7.file_1}" onerror="this.src='https://placehold.it/200x30'" /> </a>
 			</div>
 		</div>
 	</article>
@@ -424,7 +424,7 @@
 								href="/product/productDetail?product_cd=${productList.product_cd}">
 									<div class="img-box">
 										<img src='${productList.file_1}'
-											onerror="this.src='http://placehold.it/190x190'" height="190">
+											onerror="this.src='https://placehold.it/190x190'" height="190">
 										<%--                                            <p class="sale-percent">35<span>%</span></p>--%>
 										<p class="sale-percent">${productList.percent_discount}
 											<span>%</span>

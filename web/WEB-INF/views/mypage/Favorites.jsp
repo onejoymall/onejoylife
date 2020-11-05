@@ -61,7 +61,7 @@
                                    	</td>
                                     <td class="my-lis-2">
                                     	<a href="/product/productDetail?product_cd=${list.product_cd}">
-	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
+	                                        <div><img src='${list.file_1}' onerror="this.src='https://placehold.it/100'" width="100"></div>
 	                                        <div class="my-lis-txt">
 		                                        <%-- <p>${list.product_made_company_name}</p> --%>
 		                                        <p class="lis-font-w">${list.product_name}</p>
@@ -140,7 +140,7 @@
                                    	</td>
                                     <td class="my-lis-2">
                                     	<a href="/product/productDetail?product_cd=${list.product_cd}">
-	                                        <div><img src='${list.file_1}' onerror="this.src='http://placehold.it/100'" width="100"></div>
+	                                        <div><img src='${list.file_1}' onerror="this.src='https://placehold.it/100'" width="100"></div>
 	                                        <div class="my-lis-txt">
 		                                        <p>${list.product_made_company_name}</p>
 		                                        <p class="lis-font-w">${list.product_name}</p>

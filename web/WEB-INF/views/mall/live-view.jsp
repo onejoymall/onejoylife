@@ -450,7 +450,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -522,7 +522,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -594,7 +594,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -666,7 +666,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -738,7 +738,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -810,7 +810,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -882,7 +882,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>
@@ -954,7 +954,7 @@
                                             아직 꼼꼼히 보진못했지만 이상 없는 듯 합니다. 모두 안심하고 구매하셔도 될 듯 합니다^^<br>
                                             감사합니다
                                             <div class="review-content-body-media-box">
-                                                <img src="http://placehold.it/600x300" alt="후기이미지" />
+                                                <img src="https://placehold.it/600x300" alt="후기이미지" />
                                             </div>
                                         </div>
                                     </div>

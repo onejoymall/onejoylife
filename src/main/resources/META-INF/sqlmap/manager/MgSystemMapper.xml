@@ -15,11 +15,10 @@
         )
     </insert>
     <insert id="insertSystemDeleteHistory" parameterType="com.webapp.manager.vo.MgCommonVO">
-        insert into product_delete_history(select * from product where ${pk} in
+        insert into product_delete_history select * from product where ${pk} in
         <foreach collection="chk" item="item" open="(" separator="," close=")">
              #{item}
         </foreach>
-        )
     </insert>
     <select id="systemHistoryList" parameterType="com.webapp.manager.vo.MgSystemVO" resultType="java.util.Map">
     select *

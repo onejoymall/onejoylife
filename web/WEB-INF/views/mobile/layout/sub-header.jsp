@@ -19,11 +19,11 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta property="og:url" content="http://onejoy-life.com" />
+    <meta property="og:url" content="https://onejoy-life.com" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="원조이라이프" />
     <meta property="og:description" content="" />
-    <meta property="og:image" content="http://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
+    <meta property="og:image" content="https://onejoy-life.com/fileupload/banner/2020/202005180644214820.jpg" />
     <meta property="og:image:width" content="1100" />
     <meta property="og:image:height" content="265" />
     <link href="<c:url value="/assets/css/reset.css" />" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
         <![endif]
     -->
     <link href="<c:url value="/assets/css/jquery.bxslider.css" />"rel="stylesheet" type="text/css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
     <script src="<c:url value="/assets/js/jquery.bxslider.min.js" />"></script>
     <script src="<c:url value="/assets/js/common-mobile.js" />"></script>
@@ -56,7 +56,7 @@
     <link rel='stylesheet' href='<c:url value="/assets/plugins/toast/jquery.toast.min.css"/>'/>
     <link href="<c:url value="/assets/css/toastr.css"/>" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="https://pay.naver.com/customer/js/mobile/naverPayButton.js" charset="UTF-8"></script>
-    <script type='text/javascript' src='http://wcs.naver.net/wcslog.js'></script> 
+    <script type='text/javascript' src='https://wcs.naver.net/wcslog.js'></script>
 
 	<script type='text/javascript'> 
 	
