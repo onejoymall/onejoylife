@@ -36,7 +36,7 @@
                     <button type="button" title="login" class="btn-login">${afn:getMessage("login",sessionScope.locale)}</button>
                 </form>
                 <button type="button" class="btn-kakao-login"><i class="kakao-icon"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
-                 <a href="" class="btn-nv-login"><i class="nv-icon"></i>네이버 계정으로 로그인</a>
+                 <button type="button" class="btn-nv-login"><i class="nv-icon"></i>네이버 계정으로 로그인</button>
                 <a href="" class="btn-fb-login"><i class="fb-icon"></i>페이스북 계정으로 로그인</a>
                 <a href="" class="btn-ln-login"><i class="ln-icon"></i>LINE 계정으로 로그인</a>
                 <div class="login-search">

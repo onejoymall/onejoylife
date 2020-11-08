@@ -44,9 +44,9 @@
                         <div class="ttl-line"></div>
                     </div>
                     <button type="button" class="kko-login-btn"><i class="kko-ic"></i>${afn:getMessage("msg.login.kakao",sessionScope.locale)}</button>
- 						 <button type="button" class="nv-login-btn"><i class="nv-ic"></i>네이버 계정으로 회원가입</button>
-                         <button type="button" class="fb-login-btn"><i class="fb-ic"></i>페이스북 계정으로 회원가입</button>
-                         <button type="button" class="ln-login-btn"><i class="ln-ic"></i>LINE 계정으로 회원가입</button>
+ 						 <button type="button" class="nv-login-btn"><i class="nv-ic"></i>네이버 계정으로 로그인</button>
+                         <button type="button" class="fb-login-btn"><i class="fb-ic"></i>페이스북 계정으로 로그인</button>
+                         <button type="button" class="ln-login-btn"><i class="ln-ic"></i>LINE 계정으로 로그인</button>
                    
                 </div>
             </div>
@@ -65,7 +65,7 @@
                         <li>${afn:getMessage("msg.login.benefitmsg",sessionScope.locale)}</li>
                     </ul>
                     <a href="<c:url value="/sign/signup"/>" class="link-a">${afn:getMessage("join",sessionScope.locale)}</a>
-                        <a href="#" class="link-a kko"><i class="kko-ic"></i>Kakao 계정으로 회원가입</a>
+                        <a href="#" class="link-a kko"><i class="kko-ic"></i>Kakao 계정으로 로그인</a>
                 </div>
                 <div class="link-nonmem">
                     <p class="txt-p2 txt-w">ㆍ ${afn:getMessage("msg.login.NmemOrderAndDelivery",sessionScope.locale)}</p>
