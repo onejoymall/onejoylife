@@ -1604,3 +1604,11 @@ $(".proposalDetailBtn, #proposalInsertBtn").click(function(){
 		$("#insertForm textarea[name=proposal_html]").summernote('code', "제안 상세 설명을 적어주세요.");
 	}
 });
+
+//네이버로그인
+$('.nv-login-btn').click(function () {
+    window.open('/sign/naverLogin','_blank','width=750, height=900');
+});
+$('.btn-nv-login').click(function () {
+    window.open('/sign/naverLogin','_blank','width=750, height=900');
+});
