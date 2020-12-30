@@ -8,7 +8,7 @@
             <h2 name="detail">상품리스트</h2>
             <div class="main-hd-btn-wrap">
 <%--                <button type="button" name="detail">상품 등록</button>--%>
-                <button type="button" class="ready"><i class="exel-ic"></i>일괄 등록/수정</button>
+                <button type="button" class="uploadModalBtn"><i class="exel-ic"></i>일괄 등록/수정</button>
             </div>
         </div>
         <div class="search-form">
@@ -1468,6 +1468,44 @@
                     <button type="button" id="storeApproval" class="btn-red">승인</button>
                     <button type="button" id="storeUpdateSubmit" class="btn-red">수정</button>
                 </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="uploadModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>엑셀 업로드</h2>
+            <button type="button" class="modal-close">x</button>
+        </div>
+        <form id="excelUploadForm" action="" method="POST">
+            <div class="modal-body clearfix">
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="80%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>양식</th>
+                        <td><button class="btn-default downlaodTemplateBtn" type="button" data-id="product"><i class="exel-ic"></i>양식 다운받기</button>
+                            <button class="btn-default downlaodHowToUseBtn" type="button" data-id="product"><i class="exel-ic"></i>사용방법</button></td>
+                    </tr>
+                    <tr>
+
+                        <th>업로드</th>
+                        <td>
+                            <div class="fileBox">
+                                <input type="text" class="fileName" name="fileName" readonly="readonly" placeholder="엑셀 파일 첨부">
+                                <label for="uploadBtnPrduct" class="btn_file">파일선택</label>
+                                <input type="file" id="uploadBtnPrduct" name="uploadfile" class="uploadBtnExcel">
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <button class="btn-red uploadExcelBtn" type="button" data-id="product">전송</button>
             </div>
         </form>
     </div>
