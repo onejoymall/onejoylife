@@ -722,3 +722,16 @@ input[class='styleClass']:checked + label
     text-align: center;
 }
 /*입점업체 신청 모달 end*/
+
+.modal, .uploadModal{
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.7);
+    line-height: 28px;
+}
