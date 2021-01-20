@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.jcodec.common.DictionaryCompressor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +57,11 @@ public class MgDownloadDAO {
 		List<Map<String,Object>> getGiveawayPartDtoList = sql.selectList("mall.MgDownloadMapper.getGiveawayPartDtoList",mgCommonVO);
     	return getGiveawayPartDtoList;
 	}
+    @Transactional
+    public void updateProduct(List<Map<String, Object>> list) throws SQLException {
+        for(Map<String, Object> map:list) {
+            map.put("product_id", Integer.parseInt((String) map.get("product_id")));
+            sql.insert("mall.MgDownloadMapper.updateProduct", map);
+        }
+    }
 }

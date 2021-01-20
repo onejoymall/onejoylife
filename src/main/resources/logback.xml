@@ -29,16 +29,17 @@
 	</logger>
 	
 	<!-- mybatis query log setting -->
-	<logger name="jdbc" level="OFF" />
-	<!-- <logger name="jdbc" level="WARN" >
+<!--	<logger name="jdbc" level="OFF" />-->
+	<logger name="jdbc" level="WARN" >
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
-	</logger> -->
-	<logger name="jdbc.sqlonly" level="OFF" /> 
-	<!--  <logger name="jdbc.sqlonly" level="DEBUG" >
-		<appender-ref ref="CONSOLE"/>
 	</logger>
-	 --> 
+<!--	<logger name="jdbc.sqlonly" level="OFF" /> -->
+	<logger name="jdbc.sqlonly" level="DEBUG" >
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE" />
+	</logger>
+
 	<logger name="jdbc.sqltiming" level="OFF" />
 	<logger name="jdbc.audit" level="OFF" />
 	<logger name="jdbc.resultset" level="OFF" />

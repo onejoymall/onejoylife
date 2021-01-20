@@ -228,7 +228,8 @@ public class MgExcelRestController {
 			
 			switch(type) {
 				//상품 엑셀업로드
-	    		case "product": 
+	    		case "product":
+					mgDownloadDAO.updateProduct(list);
 					break;
 					
 				//경품 엑셀업로드
