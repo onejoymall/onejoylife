@@ -60,7 +60,14 @@ public class MgDownloadDAO {
     @Transactional
     public void updateProduct(List<Map<String, Object>> list) throws SQLException {
         for(Map<String, Object> map:list) {
-            map.put("product_id", Integer.parseInt((String) map.get("product_id")));
+            //양식 다운로드 후 상품PK 입력시 'PK번호.0'으로 들어올 경우
+            String productIdVal = (String) map.get("product_id");
+            if(productIdVal.contains(".")){
+                String[] splitArr = productIdVal.split("[.]");
+                productIdVal = splitArr[0];
+            }
+            //map.put("product_id", Integer.parseInt((String) map.get("product_id")));
+            map.put("product_id", Integer.parseInt((String) productIdVal));
             sql.insert("mall.MgDownloadMapper.updateProduct", map);
         }
     }
