@@ -1517,7 +1517,7 @@
             url: '/Manager/productCategoryList',
             data: {"pd_category_upper_code":0},
             success: function (data) {
-                console.log(data.list);
+                // console.log(data.list);
                 var html="<option value=''>--</option>"
                 data.list.forEach(function(el){
                 	html += "<option class='subCategoryList' value='"+el.pd_category_id+"'>"+el.pd_category_name+"</option>";

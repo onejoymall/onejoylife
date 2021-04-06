@@ -453,11 +453,26 @@ public class MgExcelRestController {
         headerCellStyle.setDataFormat(generalFormat.getFormat("@"));
         
         Row headerRow = sheet.createRow(1);
+		Row headerRowEx = sheet.createRow(2);
         
         for(int i=0; i<column_val_arr.length; i++) {
         	Cell headerCell = headerRow.createCell(i);
+			Cell headerCellEx = headerRowEx.createCell(i);
         	headerCell.setCellStyle(headerCellStyle);
         	headerCell.setCellValue(column_name_arr[i]);
+        	//상품 일괄등록 예시
+			if(setting.get("type_value").equals("product")){
+				headerCellEx.setCellStyle(generalCellStyle);
+				if(headerCellEx.getColumnIndex() == 95){ //상품명
+					headerCellEx.setCellValue("상품명은 특수문자를 제외한 글자로 입력하세요.");
+				} else if(headerCellEx.getColumnIndex() == 102) { //상품코드
+					headerCellEx.setCellValue("상품코드는 P와 숫자 7자리를 입력하세요. (ex : P0000000)");
+				} else if(headerCellEx.getColumnIndex() == 83) { //판매가
+					headerCellEx.setCellValue("숫자로만 입력하세요.");
+				} else {
+					headerCellEx.setCellValue("");
+				}
+			}
         }
         
         //데이터 리스트

@@ -1419,7 +1419,7 @@ public class ManagerController {
 			  }
 			  if("Y".equals(coupon_cd)) {
 				  calculateCompanyVO.setCoupon_cd("!=''");
-				  calculateCompanyVO.setCoupon_cd_arr_str("Y");
+				  calculateCompanyVO.setCoupon_cd_arr_str("Y");                                                
 			  }	
 			  
 			  if("Y,N".equals(coupon_cd)) {
