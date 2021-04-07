@@ -43,8 +43,8 @@
             </div>
             <a href="" class="btn-kakao-login"><i class="kakao-icon"></i>${afn:getMessage("msg.sign.kakao",sessionScope.locale)}</a>
             <button class="btn-nv-login"><i class="nv-icon"></i>네이버 계정으로 회원가입</button>
-            <a href="" class="btn-fb-login"><i class="fb-icon"></i>페이스북 계정으로 회원가입</a>
-            <a href="" class="btn-ln-login"><i class="ln-icon"></i>LINE 계정으로 회원가입</a>
+<%--            <a href="" class="btn-fb-login"><i class="fb-icon"></i>페이스북 계정으로 회원가입</a>--%>
+<%--            <a href="" class="btn-ln-login"><i class="ln-icon"></i>LINE 계정으로 회원가입</a>--%>
         </div>
         <div class="mo-footer">
 
