@@ -140,18 +140,18 @@
 	
 	<select id="getCalculateCompanyCount" parameterType="com.webapp.manager.vo.CalculateCompanyVO" resultType="int">
 		/*getCalculateCompanyCount*/
-		  SELECT count(*)
+		SELECT count(*)
 		FROM payment_bundle d LEFT JOIN payment B ON d.order_no = B.order_no
-		 LEFT JOIN delivery_info C ON B.order_no = C.order_no
-		  LEFT JOIN product D ON d.product_cd = D.product_cd 
-		 LEFT JOIN store E ON D.product_store_id = E.store_id where 
-		1=1 
-		and B.order_no 
-		NOT LIKE 'GW%' 
-		and B.payment_status != 'N' 
+		LEFT JOIN delivery_info C ON B.order_no = C.order_no
+		LEFT JOIN product P ON d.product_cd = P.product_cd
+		LEFT JOIN store E ON P.product_store_id = E.store_id where
+		1=1
+		and B.order_no
+		NOT LIKE 'GW%'
+		and B.payment_status != 'N'
 		and d.payment_status != 'N'
-		 AND d.payment_status = 'O' 
-	<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+		AND d.payment_status = 'O'
+		<if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
       <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
         ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
       </foreach>
