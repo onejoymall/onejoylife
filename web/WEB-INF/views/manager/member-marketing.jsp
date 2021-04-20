@@ -287,9 +287,9 @@
                     </div>
                     <div class="right">
                         <select name="order" class="order-select">
-                            <option value="32">10개씩 보기</option>
-                            <option value="60">50개씩 보기</option>
-                            <option value="92">100개씩 보기</option>
+                            <option value="10"<c:if test="${searchVO.displayRowCount ==10}">selected</c:if>>10개씩 보기</option>
+                            <option value="50"<c:if test="${searchVO.displayRowCount ==50}">selected</c:if>>50개씩 보기</option>
+                            <option value="100"<c:if test="${searchVO.displayRowCount ==100}">selected</c:if>>100개씩 보기</option>
                         </select>
                     </div>
                 </div>
@@ -310,6 +310,7 @@
                             <td>관리자</td>
                             <td>회원아이디</td>
                             <td>유형</td>
+
                             <td>실행내용</td>
                             <td>일시</td>
                         </tr>
@@ -427,7 +428,7 @@
             
         </div>
     </main>
-    <!--모달팝업창-->
+<!--모달팝업창-->
     <div class="modal">
         <div class="modal-content">
             <div class="modal-header">

@@ -1169,26 +1169,31 @@ public class ManagerController {
     }
     //분류별 매출 협력사별
     @RequestMapping(value = "/Manager/class-sales-company")
-    public String managerClassSalesCompany(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
-    	try {
-//    		searchVO.setDisplayRowCount(10);
-//    		searchVO.pageCalculate(mgSalesDAO.getCategorySalesListCount(params));
-//    		params.put("displayRowCount", searchVO.getDisplayRowCount());
-//    		params.put("rowStart", searchVO.getRowStart());
-//    		List<Map<String, Object>> list = mgSalesDAO.getCategorySalesList(params);
-//    		
-//    		model.addAttribute("list", list);
-    		model.addAttribute("searchVO", searchVO);
-    		model.addAttribute("table_name", "payment");
-    		model.addAttribute("Pk", "payment_cd");
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	model.addAttribute("topNav", 5);
-    	model.addAttribute("style", "class-sales");
-    	model.addAttribute("postUrl", "/Manager/class-sales-company");
-//    	return "/manager/class-sales-company";
-    	return "tmp";
+    public String managerClassSalesComp(@RequestParam HashMap params, ModelMap model, SearchVO searchVO) throws Exception {
+        try {
+            if(params.get("sales_criteria") == null || params.get("sales_criteria").equals("")) {
+                params.put("sales_criteria","date");
+                searchVO.setSales_criteria("date");
+            }
+            searchVO.setDisplayRowCount(10);
+            searchVO.pageCalculate(mgSalesDAO.getCompSalesListCount(params));
+            params.put("displayRowCount", searchVO.getDisplayRowCount());
+            params.put("rowStart", searchVO.getRowStart());
+            List<Map<String, Object>> list = mgSalesDAO.getCompSalesList(params);
+
+            model.addAttribute("list", list);
+            model.addAttribute("params", params);
+            model.addAttribute("searchVO", searchVO);
+            model.addAttribute("table_name", "payment");
+            model.addAttribute("Pk", "payment_cd");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("topNav", 5);
+        model.addAttribute("style", "class-sales");
+        model.addAttribute("postUrl", "/Manager/class-sales-company");
+    	return "/manager/class-sales-company";
+//    	return "tmp";
     }
   //분류별 매출 사용자별
     @RequestMapping(value = "/Manager/class-sales-paymethod")

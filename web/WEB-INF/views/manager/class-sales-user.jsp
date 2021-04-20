@@ -14,14 +14,14 @@
                         <th data-id="/Manager/class-sales" class="list-tab">카테고리</th>
                         <th data-id="/Manager/class-sales-user" class="list-tab on">고객별</th>
                         <!-- <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th> -->
-                        <th data-id="/Manager/class-sales-company" class="ready">협력사별</th>
+                        <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th>
                         <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
                         <!-- <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
                         <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
                         <th data-id="/Manager/class-sales-gender" class="list-tab">성별매출</th> -->
-                        <th data-id="/Manager/class-sales-tax" class="ready">과면세별</th>
-                        <th data-id="/Manager/class-sales-age" class="ready">연령대별</th>
-                        <th data-id="/Manager/class-sales-gender" class="ready">성별매출</th>
+                        <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
+                        <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
+                        <th data-id="/Manager/class-sales-gender" class="list-tab">성별매출</th>
                     </tr>
                 </tbody>
             </table>
@@ -62,11 +62,11 @@
                                         <th>주문일</th>
 	                                    <td>
 		                                    <div class="input-box1">
-		                                        <button type="button" class="ra-num" data-id="con1">오늘</p>
-		                                        <button type="button" class="ra-num" data-id="con2">1주일</p>
-		                                        <button type="button" class="ra-num" data-id="con3">1개월</p>
-		                                        <button type="button" class="ra-num" data-id="con4">3개월</p>
-		                                        <button type="button" class="ra-num" data-id="con5">6개월</p>
+		                                        <button type="button" class="ra-num" data-id="con1">오늘</button>
+		                                        <button type="button" class="ra-num" data-id="con2">1주일</button>
+		                                        <button type="button" class="ra-num" data-id="con3">1개월</button>
+		                                        <button type="button" class="ra-num" data-id="con4">3개월</button>
+		                                        <button type="button" class="ra-num" data-id="con5">6개월</button>
 		                                    </div>
 		                                </td>
 		                                <%-- <td>
@@ -153,12 +153,12 @@
                             <c:if test="${not empty list}">
 		                        <c:forEach var="list" items="${list}">
 			                        <c:set var = "total1" value = "${total1 + list.payment_order_quantity}" />
-		                            <c:set var = "total2" value = "${total2 + list.product_count}" />
-		                            <c:set var = "total3" value = "${total3 + list.product_user_payment}" />
-		                            <c:set var = "total4" value = "${total4 + list.product_discount}" />
-		                            <c:set var = "total5" value = "${total5 + (list.product_user_payment - list.product_discount + list.product_delivery_payment)}" />
-		                            <c:set var = "total6" value = "${total6 + list.cancel_request_amount}" />
-		                            <c:set var = "total7" value = "${total7 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
+                                    <c:set var = "total2" value = "${total2 + list.product_count}" />
+                                    <c:set var = "total3" value = "${total3 + list.product_user_payment}" />
+                                    <c:set var = "total4" value = "${total4 + list.product_discount}" />
+                                    <c:set var = "total5" value = "${total5 + (list.product_user_payment - list.product_discount + list.product_delivery_payment)}" />
+                                    <c:set var = "total6" value = "${total6 + list.cancel_request_amount}" />
+                                    <c:set var = "total7" value = "${total7 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
 		                           <tr>
 		                                <td>${list.reg_date}</td>
 		                                <td>${list.email}</td>
@@ -172,7 +172,7 @@
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.cancel_request_amount}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount}" /></td>
 		                            </tr>
-		                        </c:forEach>
+                                </c:forEach>
 		                    </c:if>
                                 </tbody>
                                 <tfoot>

@@ -29,8 +29,16 @@ public class MgSalesDAO {
     	return getUserSalesList;
     }
     public Integer getUserSalesListCount(SearchVO params) throws SQLException{
-    	Integer getUserSalesListCount =sql.selectOne("mall.MgSalesMapper.getUserSalesListCount",params);
-    	return getUserSalesListCount;
+        Integer getUserSalesListCount =sql.selectOne("mall.MgSalesMapper.getUserSalesListCount",params);
+        return getUserSalesListCount;
+    }
+    public List<Map<String, Object>> getCompSalesList(HashMap params) throws SQLException {
+        List<Map<String, Object>> getCompSalesList = sql.selectList("mall.MgSalesMapper.getCompSalesList",params);
+        return getCompSalesList;
+    }
+    public Integer getCompSalesListCount(HashMap params) throws SQLException{
+        Integer getCompSalesListCount =sql.selectOne("mall.MgSalesMapper.getCompSalesListCount",params);
+        return getCompSalesListCount;
     }
     public List<Map<String, Object>> getPaymethodSalesList(SearchVO params) throws SQLException {
     	List<Map<String, Object>> getPaymethodSalesList = sql.selectList("mall.MgSalesMapper.getPaymethodSalesList",params);
