@@ -11,15 +11,15 @@
                 <colgroup></colgroup>
                 <tbody>
                     <tr>
-                        <th data-id="/Manager/class-sales" class="list-tab on">카테고리</th>
+                        <th data-id="/Manager/class-sales" class="list-tab">카테고리</th>
                         <th data-id="/Manager/class-sales-user" class="list-tab">고객별</th>
                         <!-- <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th> -->
                         <th data-id="/Manager/class-sales-company" class="ready">협력사별</th>
                         <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
-                        <!-- <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
-                        <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
+                        <th data-id="/Manager/class-sales-tax" class="list-tab on">과면세별</th>
+                        <!--<th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
                         <th data-id="/Manager/class-sales-gender" class="list-tab">성별매출</th> -->
-                        <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
+<%--                        <th data-id="/Manager/class-sales-tax" class="ready">과면세별</th>--%>
                         <th data-id="/Manager/class-sales-age" class="ready">연령대별</th>
                         <th data-id="/Manager/class-sales-gender" class="ready">성별매출</th>
                     </tr>
@@ -121,7 +121,7 @@
                                 <thead>
                                     <tr>
                                         <td rowspan="2">일자</td>
-                                        <td rowspan="2">카테고리</td>
+                                        <td rowspan="2">과면세</td>
                                         <td colspan="4">결제완료 주문</td>
                                         <td rowspan="2">결제합계</td>
                                         <td rowspan="2">환불합계</td>
@@ -155,7 +155,7 @@
 		                            <c:set var = "total9" value = "${total9 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
 		                           <tr>
 		                                <td>${list.reg_date}</td>
-		                                <td>${list.pd_category_name}</td>
+		                                <td>${list.product_tax_class}</td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.payment_order_quantity}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_count}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_user_payment}" /></td>

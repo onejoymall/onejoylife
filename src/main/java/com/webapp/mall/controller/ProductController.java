@@ -685,7 +685,9 @@ public class ProductController {
                 Integer deliveryPayment = deliveryPayment(detail);
                 model.addAttribute("deliveryPayment", deliveryPayment);
 
-                model.addAttribute("option", new String(((String) params.get("option_name")).getBytes("8859_1"), "UTF-8"));
+                if(params.get("option_name") != null) {
+                    model.addAttribute("option", new String(((String) params.get("option_name")).getBytes("8859_1"), "UTF-8"));
+                }
                 //보유 쿠폰
               
            
