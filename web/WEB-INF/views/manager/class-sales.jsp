@@ -13,8 +13,8 @@
                     <tr>
                         <th data-id="/Manager/class-sales" class="list-tab on">카테고리</th>
                         <th data-id="/Manager/class-sales-user" class="list-tab">고객별</th>
-                        <!-- <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th> -->
-                        <th data-id="/Manager/class-sales-company" class="ready">협력사별</th>
+                        <th data-id="/Manager/class-sales-company" class="list-tab">협력사별</th>
+<%--                        <th data-id="/Manager/class-sales-company" class="last-tab">협력사별</th>--%>
                         <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
                         <!-- <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
                         <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
@@ -61,11 +61,11 @@
                                         <th>주문일</th>
 	                                    <td>
 		                                    <div class="input-box1">
-		                                        <button type="button" class="ra-num" data-id="con1">오늘</p>
-		                                        <button type="button" class="ra-num" data-id="con2">1주일</p>
-		                                        <button type="button" class="ra-num" data-id="con3">1개월</p>
-		                                        <button type="button" class="ra-num" data-id="con4">3개월</p>
-		                                        <button type="button" class="ra-num" data-id="con5">6개월</p>
+                                                <button type="button" class="ra-num" data-id="con1">오늘</button>
+                                                <button type="button" class="ra-num" data-id="con2">1주일</button>
+                                                <button type="button" class="ra-num" data-id="con3">1개월</button>
+                                                <button type="button" class="ra-num" data-id="con4">3개월</button>
+                                                <button type="button" class="ra-num" data-id="con5">6개월</button>
 		                                    </div>
 		                                </td>
                                     </tr>
