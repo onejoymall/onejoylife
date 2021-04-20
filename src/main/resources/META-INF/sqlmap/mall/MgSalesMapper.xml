@@ -494,6 +494,112 @@ and A.payment_status != 'N'
 		LIMIT ${rowStart-1}, ${displayRowCount}
 	</select>
 
+	<select id="getGenSalesListCount" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) cnt
+		FROM (SELECT
+		<if test='sales_criteria == "date"'>
+			DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+		</if>
+		<if test='sales_criteria == "week"'>
+			CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+			'~',
+			DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+		</if>
+		<if test='sales_criteria == "month"'>
+			DATE_FORMAT(A.reg_date,'%Y.%m')
+		</if>
+		<if test='sales_criteria == "quater"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+		</if>
+		<if test='sales_criteria == "half"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+		</if>
+		<if test='sales_criteria == "year"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+		</if> reg_date,
+		CASE WHEN U.sex = '02' THEN '여자'
+		WHEN U.sex = '01' THEN '남자'
+		ELSE '' END AS gender
+		FROM payment A
+		left JOIN product C
+		ON A.product_CD = C.product_CD
+		left JOIN user U
+		ON U.usr_id = A.payment_user_id
+		left JOIN product_category D
+		ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1)
+		where 1=1
+		and A.order_no NOT LIKE 'GW%'
+		and A.payment_status != 'N'
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
+		</if>
+		<if test='category1 != null and category1 gt 0'>
+			AND (
+			FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+			OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+			OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
+			)
+		</if>
+		<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+		<if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+		GROUP BY 1,2) A
+	</select>
+	<select id="getGenSalesList" resultType="java.util.HashMap">
+		SELECT
+		<if test='sales_criteria == "date"'>
+			DATE_FORMAT(A.reg_date,'%Y.%m.%d')
+		</if>
+		<if test='sales_criteria == "week"'>
+			CONCAT(DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-1) DAY), '%Y.%m.%d'),
+			'~',
+			DATE_FORMAT(DATE_SUB(A.reg_date, INTERVAL (DAYOFWEEK(A.reg_date)-7) DAY), '%Y.%m.%d'))
+		</if>
+		<if test='sales_criteria == "month"'>
+			DATE_FORMAT(A.reg_date,'%Y.%m')
+		</if>
+		<if test='sales_criteria == "quater"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y '),concat(QUARTER(A.reg_date),'분기'))
+		</if>
+		<if test='sales_criteria == "half"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y '),if(QUARTER(A.reg_date) IN (1,2),'상반기','하반기'))
+		</if>
+		<if test='sales_criteria == "year"'>
+			concat(DATE_FORMAT(A.reg_date,'%Y'),'년')
+		</if> reg_date,
+		CASE WHEN U.sex = '02' THEN '여자'
+		WHEN U.sex = '01' THEN '남자'
+		ELSE '' END AS gender,
+		ifnull(COUNT(A.payment_cd),0) payment_order_quantity,
+		ifnull(COUNT(distinct C.product_id),0) product_count,
+		ifnull(sum(C.product_user_payment*A.payment_order_quantity),0) product_user_payment,
+		ifnull(SUM((C.product_user_payment-C.product_payment)*A.payment_order_quantity),0) product_discount,
+		ifnull(sum(IF(A.payment_status IN ('C','G'),A.payment,0)),0) cancel_request_amount
+		FROM payment A
+		left JOIN product C
+		ON A.product_CD = C.product_CD
+		left JOIN user U
+		ON U.usr_id = A.payment_user_id
+		left JOIN product_category D
+		ON D.pd_category_id = SUBSTRING_INDEX(C.product_ct,'|',1)
+		where 1=1
+		and A.order_no NOT LIKE 'GW%'
+		and A.payment_status != 'N'
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
+		</if>
+		<if test='category1 != null and category1 gt 0'>
+			AND (
+			FIND_IN_SET(#{category1},replace(product_ct,'|',','))
+			OR FIND_IN_SET(#{category2},replace(product_ct,'|',','))
+			OR FIND_IN_SET(#{category3},replace(product_ct,'|',','))
+			)
+		</if>
+		<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
+		<if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
+		GROUP BY 1,2
+		order by A.reg_date desc
+		LIMIT ${rowStart-1}, ${displayRowCount}
+	</select>
 
   <select id="getDateSalesList" parameterType="com.webapp.board.common.SearchVO" resultType="java.util.HashMap">
   	SELECT  DATE_FORMAT(A.reg_date,'%Y.%m.%d') reg_date,
