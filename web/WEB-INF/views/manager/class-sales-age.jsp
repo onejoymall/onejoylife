@@ -17,13 +17,13 @@
                         <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
                         <!-- <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th> -->
                         <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
-                        <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
-                        <th data-id="/Manager/class-sales-gender" class="list-tab on">성별매출</th>
+                        <th data-id="/Manager/class-sales-age" class="list-tab on">연령대별</th>
+                        <th data-id="/Manager/class-sales-gender" class="list-tab">성별매출</th>
                     </tr>
                 </tbody>
             </table>
             <div>
-                <div class="in-list-tab on" id="tab-on1">
+                <div class="in-list-tab on" id="tab-on6">
                     <div class="search-form">
                         <form name="" id="" class="listSrcForm" method="get">
                             <div class="keyword-src-wrap">
@@ -58,11 +58,11 @@
                                         <th>주문일</th>
 	                                    <td>
 		                                    <div class="input-box1">
-		                                        <button type="button" class="ra-num" data-id="con1">오늘</p>
-		                                        <button type="button" class="ra-num" data-id="con2">1주일</p>
-		                                        <button type="button" class="ra-num" data-id="con3">1개월</p>
-		                                        <button type="button" class="ra-num" data-id="con4">3개월</p>
-		                                        <button type="button" class="ra-num" data-id="con5">6개월</p>
+		                                        <button type="button" class="ra-num" data-id="con1">오늘</button>
+		                                        <button type="button" class="ra-num" data-id="con2">1주일</button>
+		                                        <button type="button" class="ra-num" data-id="con3">1개월</button>
+		                                        <button type="button" class="ra-num" data-id="con4">3개월</button>
+		                                        <button type="button" class="ra-num" data-id="con5">6개월</button>
 		                                    </div>
 		                                </td>
                                     </tr>
@@ -105,20 +105,19 @@
                                     <col width="7%">
                                     <col width="7%">
                                     <col width="7%">
-                                    <col width="7%">
-                                    <col width="7%">
-                                    <col width="9%">
+                                    <col width="10%">
                                     <col width="7%">
                                     <col width="7%">
                                     <col width="7%">
-                                    <col width="9%">
-                                    <col width="9%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="11%">
                                     <col width="10%">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <td rowspan="2">일자</td>
-                                        <td rowspan="2">성별</td>
+                                        <td rowspan="2">나이별</td>
                                         <td colspan="4">결제완료 주문</td>
                                         <td rowspan="2">결제합계</td>
                                         <td rowspan="2">환불합계</td>
@@ -152,7 +151,7 @@
 		                            <c:set var = "total9" value = "${total9 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
 		                           <tr>
 		                                <td>${list.reg_date}</td>
-		                                <td>${list.gender}</td>
+		                                <td>${list.age}</td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.payment_order_quantity}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_count}" /></td>
 		                                <td><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.product_user_payment}" /></td>
