@@ -57,7 +57,14 @@ public class MgSalesDAO {
         Integer getTaxSalesListCount =sql.selectOne("mall.MgSalesMapper.getTaxSalesListCount",params);
         return getTaxSalesListCount;
     }
-
+    public List<Map<String, Object>> getAgeSalesList(HashMap params) throws SQLException {
+        List<Map<String, Object>> getAgeSalesList = sql.selectList("mall.MgSalesMapper.getAgeSalesList",params);
+        return getAgeSalesList;
+    }
+    public Integer getAgeSalesListCount(HashMap params) throws SQLException{
+        Integer getAgeSalesListCount =sql.selectOne("mall.MgSalesMapper.getAgeSalesListCount",params);
+        return getAgeSalesListCount;
+    }
     public List<Map<String, Object>> getGenSalesList(HashMap params) throws SQLException {
         List<Map<String, Object>> getGenSalesList = sql.selectList("mall.MgSalesMapper.getGenSalesList",params);
         return getGenSalesList;
