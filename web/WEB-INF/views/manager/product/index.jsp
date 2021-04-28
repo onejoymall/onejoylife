@@ -8,6 +8,7 @@
             <h2 name="detail">상품리스트</h2>
             <div class="main-hd-btn-wrap">
 <%--                <button type="button" name="detail">상품 등록</button>--%>
+                <button type="button" name="imgup-btn">이미지 업로드</button><!--210422추가-->
                 <button type="button" class="uploadModalBtn"><i class="exel-ic"></i>일괄 등록/수정</button>
             </div>
         </div>
@@ -1320,7 +1321,7 @@
     </div>
 </div>
 
-<div class="modal modal1">
+<%--<div class="modal modal1">
     <div class="modal-content">
         <form name="defaultForm1" id="defaultForm1" method="multipart/form-data">
             <div class="modal-header">
@@ -1370,10 +1371,10 @@
                             <tr>
                                 <th>사업자등록번호</th>
                                 <td>
-<%--                                        <input type="radio" id="table-ra1" name="store_reg_type" value="D">--%>
-<%--                                        <label for="table-ra1">개인</label>--%>
-<%--                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">--%>
-<%--                                        <label for="table-ra2">법인</label>--%>
+&lt;%&ndash;                                        <input type="radio" id="table-ra1" name="store_reg_type" value="D">&ndash;%&gt;
+&lt;%&ndash;                                        <label for="table-ra1">개인</label>&ndash;%&gt;
+&lt;%&ndash;                                        <input type="radio" id="table-ra2" name="store_reg_type" VALUE="C">&ndash;%&gt;
+&lt;%&ndash;                                        <label for="table-ra2">법인</label>&ndash;%&gt;
                                     <input type="text" id="store_reg" name="store_reg">
                                     <button type="button" class="btn_file" id="storRegDupCheck">중복확인</button>
                                 </td>
@@ -1471,7 +1472,7 @@
             </div>
         </form>
     </div>
-</div>
+</div>--%>
 <div class="uploadModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1506,6 +1507,58 @@
 
                 </table>
                 <button class="btn-red uploadExcelBtn" type="button" data-id="product">전송</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal1"><!--210422추가-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>이미지 업로드</h2>
+            <button type="button" class="modal-close">×</button>
+        </div>
+        <form id="imgUploadForm" action="<c:url value="/Manager/imgFileListSave"/>" method="post" enctype="multipart/form-data">
+            <div class="modal-body clearfix">
+                <h3>첨부 파일 리스트</h3>
+                <button type="button" name="chk-del" class="btn-default right">선택삭제</button>
+                <button type="button" name="chk-all" class="btn-default right">전체선택</button>
+                <div class="table-out">
+                    <table class="file-list">
+                        <colgroup>
+                            <col width="3%">
+                            <col width="6%">
+                            <col width="91%">
+                        </colgroup>
+                        <tbody>
+                            <%--<tr>
+                                <td><input type="checkbox" id="1chk" name="1chk"></td>
+                                <td><img src="../assets/img/thumbs/main-thumb.jpg" alt=""></td>
+                                <td>main-thumb.jpg</td>
+                            </tr>--%>
+                        </tbody>
+                    </table>
+                </div>
+                <table class="goods-detail-table">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="80%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>파일 첨부</th>
+                        <td>
+                            <div class="fileBox">
+<%--                                <input type="text" class="fileName" id="fileName" name="fileName" readonly="readonly">--%>
+                                <label for="imgUpload" class="btn_file">파일찾기</label>
+                                <input multiple="multiple" type="file" id="imgUpload" name="uploadfile" class="imgUpload">
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button type="button" name="" id="imgUploadBtn" class="btn-red">등록하기</button>
             </div>
         </form>
     </div>
@@ -1610,6 +1663,41 @@ $("select[name=product_delivery_type]").on('click', function () {
         $("select[name=delivery_t_code]").attr("disabled", true);
     }
 })
+//이미지 업로드 팝업
+$('#imgUpload').on('change', function(object){
+    var sel_file;
+    var thisObject = $(this);
+    var filename = thisObject.val().split('/').pop().split('\\').pop();
+    var files = object.target.files;
+    var filesArr =Array.prototype.slice.call(files);
+    var html = "";
+
+    filesArr.forEach(function (f, idx) {
+        if(!f.type.match("image.*")){
+            alert("이미지파일만 등록 가능합니다.");
+            return false;
+        }
+        sel_file = f;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            html += "<tr>";
+            html += "<td><input type='checkbox' id='" + idx + "chk' name='" + idx + "chk'></td>";
+            html += "<td class='imgbox'><img src='" + e.target.result + "' alt=''></td>";
+            html += "<td>" + filesArr[idx].name + "</td>";
+            html += "<input type='hidden' class='fileName' id='fileName' name='fileName' value='" + filesArr[idx].name + "'>";
+            html += "</tr>"
+            $(".file-list > tbody").html(html);
+        }
+        reader.readAsDataURL(f);
+    })
+
+});
+
+//이미지 등록 팝업 초기화
+$(".modal-close").click(function(){
+    $(".imgUpload").val('');
+    $(".file-list > tbody > tr").remove();
+});
 </script>
 <script type="text/javascript" src="/assets/js/goods-add.js"></script>
 <script type="text/javascript" src="/assets/js/index.js"></script>

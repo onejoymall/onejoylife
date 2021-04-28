@@ -1545,6 +1545,35 @@ public class ManagerRestapiController {
         }
         return resultMap;
     }
+
+    //이미지 대량 등록
+    @RequestMapping(value = "/Manager/imgFileListSave", method = RequestMethod.POST, produces = "application/json")
+    public  HashMap<String, Object> ManagerImgFileListSave(@RequestParam HashMap params, BoardVO boardInfo, HttpServletRequest request, HttpSession session, FileVO fileVO){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HashMap<String, Object> error = new HashMap<String, Object>();
+        try{
+            FileUtil fs = new FileUtil();
+            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy");
+            fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
+
+            if(!isEmpty(error)){
+                resultMap.put("validateError",error);
+            }else{
+                if(!isEmpty(filelist)){
+                    fileVO.setFileorder(1);
+//                    mgProductDAO.deleteProductFile(filelist,fileVO);
+                    mgProductDAO.insertProductFile(filelist,fileVO);
+                }
+
+                resultMap.put("redirectUrl","/Manager/Product");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
     //경품 복사 등록
     @RequestMapping(value = "/Manager/giveawayCopyProc", method = RequestMethod.POST, produces = "application/json")
     public  HashMap<String, Object> managerGiveawayCopyProc(@RequestParam HashMap params, HttpServletRequest request, HttpSession session, ProductVO productVO, BoardVO boardInfo,FileVO fileVO){
