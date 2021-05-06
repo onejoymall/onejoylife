@@ -543,3 +543,24 @@ $('.main-title-box').click(function(){
         $(this).parents('.faq-data-item').addClass('active');
     }
 });
+
+//상품리스트 팝업 210422
+$(document).ready(function(){
+    $("button[name='imgup-btn']").click(function(){
+        $('.modal1').attr('style', 'display:block');
+        $('body').css("overflow", "hidden");
+    });
+    $("button[name='chk-del']").click(function(){
+        $('.file-list input:checkbox:checked').parents('tr').remove();
+    });
+    var chked = 0;
+    $("button[name='chk-all']").click(function(){
+        if(chked === 0){
+            $('.file-list input:checkbox').prop('checked',true);
+            chked = 1;
+        }else if(chked === 1){
+            $('.file-list input:checkbox').prop('checked',false);
+            chked = 0;
+        }
+    });
+});

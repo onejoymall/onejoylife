@@ -187,3 +187,48 @@ $('input[name=goods-seo]').click(function(){
 });
 $("input[name=product_validity_start]").datepicker();
 $("input[name=product_validity_end]").datepicker();
+
+//이미지 업로드(리스트)
+$(document).on("click","#imgUploadBtn",function () {
+    var formData = new FormData($('#imgUploadForm')[0]);
+    jQuery.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false, // 필수
+        contentType: false, // 필수
+        url:'/Manager/imgFileListSave',
+        success: function (data) {
+            console.log(data.validateError)
+            if (data.validateError) {
+                $('.validateError').empty();
+                $.each(data.validateError, function (index, item) {
+                    // $('#validateError'+index).removeClass('none');
+                    // $('#validateError'+index).html('* '+item);
+                    if(index == "Error"){//일반에러메세지
+                        alertType = "error";
+                        showText = item;
+                    }else{
+                        alertType = "error";
+                        showText = index + " (은) " + item;
+                    }
+                    // $.toast().reset('all');//토스트 초기화
+                    $.toast({
+                        text: showText,
+                        showHideTransition: 'plain', //펴짐
+                        position: 'bottom-right',
+                        heading: 'Error',
+                        icon: 'error'
+                    });
+                });
+
+            } else {
+                // loginAuth(data.access_token);
+                location.href=data.redirectUrl;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr, status, error);
+        }
+    });
+})

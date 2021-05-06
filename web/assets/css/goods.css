@@ -790,3 +790,60 @@ input[name=product_definition_value], input[name=giveaway_definition_value]{
     margin-right: 5px;
     line-height: 22px;
 }
+
+/*210422 추가*/
+.table-out{
+    width:100%;
+    max-height:480px;
+    min-height: 40px;
+    overflow:auto;
+    margin-bottom:20px;
+}
+.file-list{
+    width:100%;
+}
+.file-list tr {
+    height: 35px;
+    border: 1px solid #dadada;
+    text-align: left;
+    line-height: 0;
+}
+.file-list thead th{
+    padding:5px 10px;
+}
+.file-list thead{
+    background-color:#ededed;
+}
+.file-list thead th{
+    text-align: center;
+}
+.file-list tbody{
+    height:100px!important;
+    overflow: hidden;
+}
+.file-list tbody td:first-child{
+    padding:10px;
+}
+.file-list tbody td:nth-child(2){
+    padding:5px;
+}
+
+.btn-default.right{
+    height:auto;
+    margin:0 0 10px 5px;
+}
+
+.imgbox{
+    width:50px;
+    height:50px;
+    position:relative;
+}
+
+.imgbox img{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    max-width:40px;
+    max-height:40px;
+}
