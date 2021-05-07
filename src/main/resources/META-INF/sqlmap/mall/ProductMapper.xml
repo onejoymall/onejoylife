@@ -307,6 +307,23 @@ and A.payment_status != 'N'
         INSERT INTO product_file (key_id, file_name, real_name, file_size,file_link,file_order)
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
     </insert>
+    <select id="imgFilePk" resultType="int">
+        SELECT IFNULL(MAX(file_no),1) FROM img_file
+    </select>
+    <insert id="insertImgFile" parameterType="com.webapp.board.common.FileVO" >
+        INSERT INTO img_file (
+            file_name,
+            real_name,
+            file_size,
+            file_link
+        )
+        VALUES (
+            #{filename},
+            #{realname},
+            #{filesize},
+            #{filelink}
+        )
+    </insert>
     <insert id="insertProduct" parameterType="com.webapp.manager.vo.ProductVO">
        insert into product(
        <if test='product_approval_yn == "Y"'>product_approval_yn,</if>

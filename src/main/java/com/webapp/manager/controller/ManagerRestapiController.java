@@ -1553,7 +1553,8 @@ public class ManagerRestapiController {
         HashMap<String, Object> error = new HashMap<String, Object>();
         try{
             FileUtil fs = new FileUtil();
-            List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile(),downloadPath+"product");
+            int num = mgProductDAO.imgFilePk();
+            List<FileVO> filelist = fs.saveImgFiles(num, boardInfo.getUploadfile(),downloadPath+"product");
             SimpleDateFormat ft = new SimpleDateFormat("yyyy");
             fileVO.setFilepath("/fileupload/product/"+ft.format(new Date())+"/");
 
@@ -1563,7 +1564,8 @@ public class ManagerRestapiController {
                 if(!isEmpty(filelist)){
                     fileVO.setFileorder(1);
 //                    mgProductDAO.deleteProductFile(filelist,fileVO);
-                    mgProductDAO.insertProductFile(filelist,fileVO);
+
+                    mgProductDAO.insertImgFile(filelist,fileVO);
                 }
 
                 resultMap.put("redirectUrl","/Manager/Product");
