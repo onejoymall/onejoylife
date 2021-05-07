@@ -17,7 +17,7 @@
                 <th data-id="/Manager/class-sales-paymethod" class="list-tab">결제수단별</th>
                 <!-- <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th> -->
                 <th data-id="/Manager/class-sales-tax" class="list-tab">과면세별</th>
-                <th data-id="/Manager/class-sales-age" class="list-tab">연령대별</th>
+                <th data-id="/Manager/class-sales-age" class="ready">연령대별</th>
                 <th data-id="/Manager/class-sales-gender" class="list-tab">성별매출</th>
             </tr>
             </tbody>
