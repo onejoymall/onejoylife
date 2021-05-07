@@ -2,22 +2,32 @@ package com.webapp.board.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+
+import com.webapp.manager.dao.MgProductDAO;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+
 public class FileUtil {
 
     /**
      * 파일 업로드.
      */
-    public List<FileVO> saveAllFiles(List<MultipartFile> upfiles,String path) {
+    public List<FileVO> saveAllFiles(List<MultipartFile> upfiles, String path) {
         String filePath = path;
         List<FileVO> filelist = new ArrayList<FileVO>();
 
@@ -37,8 +47,36 @@ public class FileUtil {
             filelist.add(filedo);
         }
         return filelist;
-    }    
-    
+    }
+
+    /**
+     * 이미지 파일 업로드.
+     */
+    public List<FileVO> saveImgFiles(int num, List<MultipartFile> upfiles, String path) throws SQLException {
+        String filePath = path;
+        List<FileVO> filelist = new ArrayList<FileVO>();
+
+        for (MultipartFile uploadfile : upfiles ) {
+            if (uploadfile.getSize() == 0) {
+                continue;
+            }
+
+            String newName = getNewName();
+
+            num += 1;
+
+            saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
+
+            FileVO filedo = new FileVO();
+            filedo.setFilename(uploadfile.getOriginalFilename());
+            filedo.setRealname(num+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
+//            filedo.setRealname(newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
+            filedo.setFilesize(uploadfile.getSize());
+            filelist.add(filedo);
+        }
+        return filelist;
+    }
+
     /**
      * 파일 저장 경로 생성.
      */

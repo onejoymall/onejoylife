@@ -33,6 +33,23 @@ public class MgProductDAO {
             sql.insert("mall.ProductMapper.insertProductFile", f);
         }
     }
+
+    public int imgFilePk() throws SQLException{
+        int num = 0;
+        num = sql.selectOne("mall.ProductMapper.imgFilePk");
+        return num;
+    }
+
+    public void insertImgFile(List<FileVO> filelist,FileVO fileVO) throws SQLException{
+
+        for (FileVO f : filelist) {
+            f.setParentPK(fileVO.getParentPK());
+            f.setFilelink(fileVO.getFilepath()+f.getRealname());
+            f.setFileorder(fileVO.getFileorder());
+            sql.insert("mall.ProductMapper.insertImgFile", f);
+        }
+    }
+
     public void insertProductCopy(Map<String,Object> params) throws Exception{
         sql.insert("mall.ProductMapper.insertProductCopy",params);
     }
