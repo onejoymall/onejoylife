@@ -35,7 +35,7 @@ public class FileUtil {
             if (uploadfile.getSize() == 0) {
                 continue;
             }
-            
+
             String newName = getNewName();
             
             saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
@@ -65,7 +65,7 @@ public class FileUtil {
 
             num += 1;
 
-            saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", newName+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
+            saveFile(uploadfile, filePath + "/" + newName.substring(0,4) + "/", num+ "."+FilenameUtils.getExtension(uploadfile.getOriginalFilename()));
 
             FileVO filedo = new FileVO();
             filedo.setFilename(uploadfile.getOriginalFilename());
