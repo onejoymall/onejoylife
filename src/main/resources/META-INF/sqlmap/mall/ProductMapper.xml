@@ -308,7 +308,7 @@ and A.payment_status != 'N'
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize},#{filelink},#{fileorder})
     </insert>
     <select id="imgFilePk" resultType="int">
-        SELECT IFNULL(MAX(file_no),1) FROM img_file
+        SELECT IFNULL(MAX(file_no),0) FROM img_file
     </select>
     <insert id="insertImgFile" parameterType="com.webapp.board.common.FileVO" >
         INSERT INTO img_file (
