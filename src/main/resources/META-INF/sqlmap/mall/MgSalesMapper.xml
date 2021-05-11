@@ -488,7 +488,7 @@ and A.payment_status != 'N'
 		<if test="start_date != null and start_date != ''"><![CDATA[AND A.reg_date >= #{start_date} ]]></if>
 		<if test="end_date != null and end_date != ''"><![CDATA[AND A.reg_date < #{end_date} ]]></if>
 		GROUP BY 1,2
-		order by 1,2
+		order by A.reg_date desc
 		LIMIT ${rowStart-1}, ${displayRowCount}
 	</select>
 	<select id="getAgeSalesListCount" resultType="Integer">
