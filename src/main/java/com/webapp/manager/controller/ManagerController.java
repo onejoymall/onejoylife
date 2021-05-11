@@ -1255,7 +1255,7 @@ public class ManagerController {
             if(params.get("sales_criteria") == null || params.get("sales_criteria").equals("")) {
                 params.put("sales_criteria","date");
             }
-            searchVO.setDisplayRowCount(10);
+            searchVO.setDisplayRowCount(50);
             searchVO.pageCalculate(mgSalesDAO.getAgeSalesListCount(params));
             params.put("displayRowCount", searchVO.getDisplayRowCount());
             params.put("rowStart", searchVO.getRowStart());

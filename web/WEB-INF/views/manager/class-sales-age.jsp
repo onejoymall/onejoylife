@@ -150,7 +150,7 @@
                                     <c:set var = "total8" value = "${total8 + list.cancel_request_amount}" />
                                     <c:set var = "total9" value = "${total9 + (list.product_user_payment - list.product_discount + list.product_delivery_payment - list.cancel_request_amount)}" />
                                     <tr class="on6-sub" >
-                                        <c:if test="${status.count mod 6 == 0 or status.count == 1}">
+                                        <c:if test="${status.index mod 5 == 0 or status.count == 1}">
                                             <td rowspan="5"> ${list.reg_date}</td>
                                         </c:if>
                                         <td style="text-align: center">${list.age}</td>
