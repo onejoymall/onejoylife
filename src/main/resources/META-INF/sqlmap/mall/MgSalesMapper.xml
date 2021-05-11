@@ -583,7 +583,7 @@ and A.payment_status != 'N'
 		, sum(product_discount) as product_discount
 		, sum(cancel_request_amount) as cancel_request_amount
 		from t4
-		group by reg_date, age ASC
+		group by reg_date DESC, age ASC
 		) c
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
@@ -698,9 +698,9 @@ and A.payment_status != 'N'
 		, sum(product_discount) as product_discount
 		, sum(cancel_request_amount) as cancel_request_amount
 		from t4
-		group by reg_date, age
+		group by reg_date DESC, age ASC
 		) c
-		group by DATE_FORMAT(reg_date,'%Y.%m.%d'), age
+		group by DATE_FORMAT(reg_date,'%Y.%m.%d') DESC, age
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND pd_category_name LIKE CONCAT('%', #{searchKeyword},'%')
 		</if>
